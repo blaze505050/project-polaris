@@ -1,0 +1,480 @@
+/* ═══════════════════════════════════════════════════════════
+   AEROFORGE AI — ENGINEERING DESIGN SYSTEM v2.0
+   Professional Scientific UI Styling
+   ═══════════════════════════════════════════════════════════ */
+
+/* Monospace font stack for data display */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ── Surface Hierarchy (deep space layering) ── */
+  --af-bg: #040814;
+  --af-surface-1: #090f20;
+  --af-surface-2: #0f1830;
+  --af-surface-3: #162244;
+  --af-surface-elevated: #1c2d54;
+  --af-surface-interactive: #233764;
+
+  /* ── Legacy compatibility aliases ── */
+  --bg-primary: var(--af-bg);
+  --bg-secondary: var(--af-surface-1);
+  --bg-tertiary: var(--af-surface-2);
+  --bg-elevated: var(--af-surface-3);
+  --bg-interactive: var(--af-surface-interactive);
+
+  /* ── Brand & Semantic Colors ── */
+  --af-accent: #0EA5E9;
+  --af-accent-bright: #38bdf8;
+  --af-accent-warm: #F59E0B;
+  --af-success: #10B981;
+  --af-warning: #F59E0B;
+  --af-danger: #EF4444;
+  --af-info: #0EA5E9;
+
+  /* Legacy aliases */
+  --color-primary: var(--af-accent);
+  --color-secondary: #3B82F6;
+  --color-accent: var(--af-accent-warm);
+  --color-success: var(--af-success);
+  --color-warning: var(--af-warning);
+  --color-danger: var(--af-danger);
+  --color-info: var(--af-info);
+
+  /* ── Text Hierarchy ── */
+  --af-text-primary: #F1F5F9;
+  --af-text-secondary: #94A3B8;
+  --af-text-muted: #64748B;
+  --af-text-data: var(--af-accent);
+
+  /* Legacy aliases */
+  --text-primary: var(--af-text-primary);
+  --text-secondary: var(--af-text-secondary);
+  --text-tertiary: var(--af-text-muted);
+
+  /* ── Borders ── */
+  --af-border: rgba(255, 255, 255, 0.1);
+  --af-border-subtle: rgba(255, 255, 255, 0.05);
+  --af-border-accent: rgba(14, 165, 233, 0.25);
+  --af-border-hover: rgba(14, 165, 233, 0.4);
+
+  /* Legacy aliases */
+  --border-color: var(--af-border);
+  --border-color-light: var(--af-border-subtle);
+  --border-cyan-subtle: var(--af-border-accent);
+
+  /* ── Shadows ── */
+  --af-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --af-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --af-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+  --af-shadow-glow: 0 0 20px rgba(14, 165, 233, 0.08);
+
+  /* Legacy aliases */
+  --shadow-sm: var(--af-shadow-sm);
+  --shadow-md: var(--af-shadow-md);
+  --shadow-lg: var(--af-shadow-lg);
+
+  /* ── Spacing Scale (4px-based) ── */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+
+  /* ── Radii ── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 16px;
+
+  /* ── Motion Timing ── */
+  --af-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --af-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-micro: 150ms var(--af-ease);
+  --transition-fast: 150ms var(--af-ease);
+  --transition-normal: 250ms var(--af-ease);
+  --transition-slow: 400ms var(--af-ease);
+}
+
+/* ─── Base Typography ────────────────────────────────────── */
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--af-bg);
+  color: var(--af-text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Monospace for data/code */
+code,
+pre,
+.font-mono,
+[class*='mono'] {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Professional headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.25rem; font-weight: 700; }
+h2 { font-size: 1.875rem; font-weight: 700; }
+h3 { font-size: 1.5rem; font-weight: 600; }
+
+/* ─── Data Tables ────────────────────────────────────────── */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+table th {
+  background-color: var(--af-surface-1);
+  color: var(--af-text-secondary);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--af-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--af-border-subtle);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+table tbody tr:hover {
+  background-color: rgba(14, 165, 233, 0.04);
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Input Fields ───────────────────────────────────────── */
+
+input,
+textarea,
+select {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: var(--af-surface-1);
+  color: var(--af-text-primary);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: all var(--transition-fast);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--af-accent);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--af-surface-1); }
+::-webkit-scrollbar-thumb { background: var(--af-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--af-accent); }
+
+/* ─── Selection ──────────────────────────────────────────── */
+
+::selection {
+  background-color: var(--af-accent);
+  color: var(--af-bg);
+}
+
+/* ─── Card System ────────────────────────────────────────── */
+
+.card {
+  background-color: var(--af-surface-1);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  border-color: var(--af-border-hover);
+  box-shadow: var(--af-shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* ─── Tool Panel ─────────────────────────────────────────── */
+
+.tool-panel {
+  background-color: var(--af-surface-1);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  position: relative;
+}
+
+.tool-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--af-accent), transparent);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.tool-panel:hover::before {
+  opacity: 1;
+}
+
+/* ─── Solver Classification Badges ───────────────────────── */
+
+.solver-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.2rem 0.625rem;
+  background-color: rgba(14, 165, 233, 0.08);
+  color: var(--af-accent);
+  border: 1px solid var(--af-border-accent);
+  border-radius: var(--radius-sm);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+
+.solver-badge.analytical { color: var(--af-accent); border-color: rgba(14, 165, 233, 0.25); background-color: rgba(14, 165, 233, 0.08); }
+.solver-badge.numerical { color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); background-color: rgba(167, 139, 250, 0.08); }
+.solver-badge.experimental { color: var(--af-accent-warm); border-color: rgba(245, 158, 11, 0.25); background-color: rgba(245, 158, 11, 0.08); }
+.solver-badge.validated { color: var(--af-success); border-color: rgba(16, 185, 129, 0.25); background-color: rgba(16, 185, 129, 0.08); }
+
+/* ─── Data Instrument Display ────────────────────────────── */
+
+.data-instrument {
+  background-color: var(--af-surface-1);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+}
+
+.data-instrument .data-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--af-text-muted);
+  font-weight: 600;
+  margin-bottom: 0.125rem;
+}
+
+.data-instrument .data-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--af-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.data-instrument .data-unit {
+  font-size: 0.6875rem;
+  color: var(--af-text-secondary);
+  margin-left: 0.25rem;
+}
+
+/* ─── Status Indicators ──────────────────────────────────── */
+
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.status-indicator.normal { background-color: var(--af-success); }
+.status-indicator.warning { background-color: var(--af-warning); }
+.status-indicator.critical { background-color: var(--af-danger); }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ─── Data Visualization Containers ──────────────────────── */
+
+.data-container {
+  background-color: var(--af-surface-1);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--af-border-subtle);
+}
+
+.data-row:last-child {
+  border-bottom: none;
+}
+
+.data-label {
+  color: var(--af-text-secondary);
+  font-weight: 500;
+}
+
+.data-value {
+  color: var(--af-accent);
+  font-weight: 600;
+}
+
+/* ─── Grid System ────────────────────────────────────────── */
+
+.grid-container {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-auto-flow: dense;
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* ─── Professional Badge ─────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(14, 165, 233, 0.1);
+  color: var(--af-accent);
+  border: 1px solid var(--af-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 300ms ease-in-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.slide-in {
+  animation: slideIn 300ms ease-out;
+}
+
+/* ─── Print Styles ───────────────────────────────────────── */
+
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  table { border-collapse: collapse; }
+  table, table th, table td {
+    border: 1px solid #000;
+  }
+}
+
+/* ─── Accessibility ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --af-border: rgba(14, 165, 233, 0.5);
+    --af-border-subtle: rgba(14, 165, 233, 0.3);
+    --border-color: var(--af-border);
+    --border-color-light: var(--af-border-subtle);
+  }
+
+  button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* ─── Dark Mode (explicit) ───────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--af-bg);
+    color: var(--af-text-primary);
+  }
+}

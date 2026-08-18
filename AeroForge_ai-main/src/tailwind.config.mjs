@@ -1,0 +1,55 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+    content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './public/**/*.html'],
+    theme: {
+        extend: {
+            fontSize: {
+                xs: ['0.75rem', { lineHeight: '1.25', letterSpacing: '0.02em', fontWeight: '400' }],
+                sm: ['0.875rem', { lineHeight: '1.3', letterSpacing: '0.02em', fontWeight: '400' }],
+                base: ['1rem', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '400' }],
+                lg: ['1.125rem', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '500' }],
+                xl: ['1.25rem', { lineHeight: '1.5', letterSpacing: '0.02em', fontWeight: '500' }],
+                '2xl': ['1.5rem', { lineHeight: '1.4', letterSpacing: '0.02em', fontWeight: '600' }],
+                '3xl': ['1.875rem', { lineHeight: '1.3', letterSpacing: '0.02em', fontWeight: '600' }],
+                '4xl': ['2.25rem', { lineHeight: '1.2', letterSpacing: '0.02em', fontWeight: '700' }],
+                '5xl': ['3rem', { lineHeight: '1.1', letterSpacing: '0.02em', fontWeight: '700' }],
+                '6xl': ['3.75rem', { lineHeight: '1.1', letterSpacing: '0.02em', fontWeight: '700' }],
+                '7xl': ['4.5rem', { lineHeight: '1.05', letterSpacing: '0.02em', fontWeight: '700' }],
+                '8xl': ['6rem', { lineHeight: '1.05', letterSpacing: '0.02em', fontWeight: '700' }],
+                '9xl': ['8rem', { lineHeight: '1.05', letterSpacing: '0.02em', fontWeight: '700' }],
+            },
+            fontFamily: {
+                heading: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                paragraph: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                mono: "'JetBrains Mono', 'Courier New', monospace",
+            },
+            colors: {
+                destructive: '#EF4444',
+                'destructive-foreground': '#FFFFFF',
+                accent: '#0EA5E9',
+                'accent-foreground': '#FFFFFF',
+                'json-background': '#090f20',
+                background: '#090f20',
+                secondary: '#475569',
+                foreground: '#E2E8F0',
+                'secondary-foreground': '#CBD5E1',
+                'primary-foreground': '#FFFFFF',
+                primary: '#1E293B',
+                'af-bg': '#040814',
+                'af-surface-1': '#090f20',
+                'af-surface-2': '#0f1830',
+                'af-surface-3': '#162244',
+                'af-accent': '#0EA5E9',
+                'af-accent-warm': '#F59E0B',
+                'af-success': '#10B981',
+                'af-warning': '#F59E0B',
+                'af-danger': '#EF4444',
+            },
+        },
+    },
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
+    plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/typography')],
+}
+

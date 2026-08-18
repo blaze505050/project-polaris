@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>AeroForge AI — Project Polaris Engineering Research Environment</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AeroForge AI is an interactive Aerospace & Mechanical Engineering research workstation developed by Project Polaris. Features 40+ numerical solvers, CFD aerodynamics, structural FEA, orbital mechanics, and Physics AI neural operators." />
+    <meta name="keywords" content="Project Polaris, AeroForge AI, aerospace engineering, CFD aerodynamics, structural FEA, orbital mechanics, airfoil solver, Physics AI, Fourier neural operator" />
+    <meta name="author" content="Project Polaris & AeroForge Engineering Team" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://projectpolaris.in/aeroforge" />
+    <meta property="og:title" content="AeroForge AI — Project Polaris Engineering Research Environment" />
+    <meta property="og:description" content="Official engineering research platform of Project Polaris. 40+ numerical solvers, aerodynamics, structural FEA, and orbital mechanics in the browser." />
+    <meta property="og:image" content="/polaris-logo.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="AeroForge AI — Project Polaris" />
+    <meta property="twitter:description" content="Official engineering research workstation of Project Polaris." />
+    <meta property="twitter:image" content="/polaris-logo.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/polaris-logo.png" />
+    <link rel="apple-touch-icon" href="/polaris-logo.png" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Anti-flash theme init -->
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('aeroforge-theme') || 'system';
+          var resolved = t;
+          if (t === 'system') {
+            resolved = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          }
+          if (resolved === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.documentElement.style.colorScheme = 'light';
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.colorScheme = 'dark';
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "AeroForge AI",
+        "applicationCategory": "EngineeringApplication",
+        "operatingSystem": "Web Browser (Chrome, Firefox, Safari, Edge)",
+        "description": "Browser-based computational engineering workstation for aerospace aerodynamics, CFD, structural FEA, and orbital mechanics.",
+        "creator": {
+          "@type": "Organization",
+          "name": "Project Polaris",
+          "url": "https://projectpolaris.in/"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-[var(--af-bg)] text-foreground antialiased selection:bg-cyan-500/20 selection:text-cyan-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+

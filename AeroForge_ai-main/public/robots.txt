@@ -1,0 +1,5 @@
+# AeroForge AI — Robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://aeroforge-ai.com/sitemap.xml
