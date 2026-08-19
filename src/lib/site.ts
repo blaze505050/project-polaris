@@ -121,46 +121,98 @@ export const VALUES = [
   { name: "Leadership", note: "We encourage volunteers, participants and members to lead." },
 ] as const;
 
+export const WORKSHOPS = [
+  {
+    id: "rocket-fundamentals",
+    title: "Fundamentals of Rockets & Space Technology",
+    date: "2 July 2026",
+    mentor: "Prakhar Vishwakarma",
+    mentorTitle: "Missile Man of MP · Aerospace & Defence Projects",
+    mentorOrg: "Aerospace & Propulsion Lead",
+    linkedin: "https://www.linkedin.com/in/prakhar-vishwakarma/",
+    summary:
+      "Our first session introduced students to the fundamentals of rockets and space technology. Participants explored how rockets work, along with insights from the mentor's own journey and projects. The session also included an interactive Q&A and a Pitch and Win Challenge, where students shared what they had learned to make space science approachable beyond the classroom.",
+    highlights: [
+      "Rocket propulsion principles, specific impulse & thrust curves",
+      "Mentor's aerospace journey, defence projects & propulsion research",
+      "Interactive Q&A and Pitch & Win student challenge",
+      "Practical pathways for young builders to explore aerospace beyond textbooks"
+    ],
+    tag: "ROCKETRY & PROPULSION",
+  },
+  {
+    id: "isro-journey",
+    title: "From Dreaming About Space to Building India's Space Missions: A Journey to ISRO",
+    date: "12 July 2026",
+    mentor: "Ankit Gupta",
+    mentorTitle: "Scientist / Engineer 'SC'",
+    mentorOrg: "Master Control Facility, ISRO",
+    linkedin: "https://www.linkedin.com/in/ankit-gupta-isro/",
+    summary:
+      "In this session, Ankit Gupta took students through his journey from an early interest in aircraft and space to studying Aerospace Engineering and working at ISRO's Master Control Facility. Students explored ISRO's role across communication, weather forecasting, navigation, Earth observation, space science, and future missions, plus what happens after a satellite is launched: satellite tracking, orbit determination and prediction, collision avoidance, station keeping, and space situational awareness.",
+    highlights: [
+      "Journey from aspiring aerospace student to ISRO Satellite Operations Scientist",
+      "Post-launch operations: satellite tracking, orbit prediction & station keeping",
+      "Space Situational Awareness (SSA) & orbital collision avoidance maneuvers",
+      "Multidisciplinary careers across aerospace, AI, computer science, physics & math"
+    ],
+    tag: "ISRO & SATELLITE OPERATIONS",
+  },
+  {
+    id: "mystery-celestial-objects",
+    title: "Mystery Celestial Objects: Unraveling Stellar Evolution & Cosmic Phenomena",
+    date: "9 August 2026",
+    mentor: "Vranda Gupta",
+    mentorTitle: "Astronomy Educator & Founder",
+    mentorOrg: "Stellar Freaks",
+    linkedin: "https://www.linkedin.com/in/vranda-gupta-b34b742a7/",
+    summary:
+      "This interactive astronomy session explored galaxies, nebulae, stellar evolution, and cosmic phenomena. Rather than following a conventional lecture format, the session incorporated quizzes, discussions, rapid-fire facts, and hands-on activities. Students explored the structure of the Milky Way, stellar nurseries, and dying star remnants, concluding with a Build-a-Galaxy Challenge where participants designed and presented their own custom galaxies.",
+    highlights: [
+      "Galactic morphological classification & Milky Way architecture",
+      "Stellar life cycle: from hydrogen clouds to nebulae and stellar remnants",
+      "Interactive constellation hunting & astronomy rapid-fire quizzes",
+      "Build-a-Galaxy Challenge: hands-on galactic design & presentation"
+    ],
+    tag: "ASTRONOMY & ASTROPHYSICS",
+  },
+] as const;
+
 export const JOURNEY = [
   {
-    date: "7 June",
+    date: "7 June 2026",
     title: "Project Polaris begins",
-    note: "It started with a WhatsApp community — our founder and two or three friends.",
+    note: "It started with a WhatsApp community — our founder and a few passionate friends committed to learning by building.",
   },
   {
-    date: "12 June",
-    title: "Aaj Ka Gyan launches",
-    note: "A daily facts initiative inside the community. It still runs today.",
+    date: "12 June 2026",
+    title: "Aaj Ka Gyan daily facts",
+    note: "A daily scientific curiosity initiative inside the community that still runs every single morning.",
   },
   {
-    date: "June onwards",
-    title: "Content on Instagram and LinkedIn",
-    note: "Educational content moves beyond the community.",
+    date: "2 July 2026",
+    title: "Workshop 1: Fundamentals of Rockets",
+    note: "Prakhar Vishwakarma ('Missile Man of MP') led our inaugural session on rocket technology and student pitch challenges.",
   },
   {
-    date: "2 July",
-    title: "Fundamentals of Rocket Development",
-    note: "Our first session, with Mr. Prakhar Vishwakarma (Missile Man of MP).",
+    date: "12 July 2026",
+    title: "Workshop 2: Journey to ISRO & Space Missions",
+    note: "Ankit Gupta (Scientist/Engineer 'SC', ISRO MCF) led a masterclass on post-launch satellite tracking, orbit determination & SSA.",
   },
   {
-    date: "12 July",
-    title: "Session with an ISRO scientist",
-    note: "Our second session, with Mr. Ankit Gupta. 22 participants joined.",
+    date: "26 July 2026",
+    title: "Cosmic Conversations & Quizzes",
+    note: "Interactive constellation hunting challenges, astronomy trivia, and storytelling across our student community.",
   },
   {
-    date: "26 July",
-    title: "Cosmic Conversations",
-    note: "Storytelling, a quiz and a constellation-hunting challenge.",
+    date: "9 August 2026",
+    title: "Workshop 3: Stellar Evolution & Cosmic Objects",
+    note: "Vranda Gupta (Stellar Freaks) led an interactive exploration of nebulae, galaxies, and a collaborative Build-a-Galaxy challenge.",
   },
   {
-    date: "3 August",
-    title: "A team takes shape",
-    note: "Over 28 people have been part of the organisation. Currently 3 core members, 11 associates and 8 volunteers.",
-  },
-  {
-    date: "August",
-    title: "AeroForge AI Engineering Suite",
-    note: "Launch of AeroForge AI — browser-based CFD, orbital mechanics and structural FEA research environment.",
+    date: "August 2026",
+    title: "AeroForge AI & Digital Thread Launch",
+    note: "Launch of AeroForge AI — browser-based CFD, orbital mechanics, and structural FEA research lab built by Polaris students.",
   },
 ] as const;
 

@@ -29,7 +29,7 @@ import { Timeline } from "@/components/site/Timeline";
 import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { opportunitiesQuery } from "@/lib/db";
-import { JOURNEY, PATHWAY, SITE, STATS, TEAM_MEMBERS, TESTIMONIALS } from "@/lib/site";
+import { JOURNEY, PATHWAY, SITE, STATS, TEAM_MEMBERS, TESTIMONIALS, WORKSHOPS } from "@/lib/site";
 import heroImage from "@/assets/students-building.jpg";
 import nightImage from "@/assets/night-observation.jpg";
 import polarisLogo from "@/assets/polaris-logo.png";
@@ -348,6 +348,104 @@ function Home() {
                 <Link to="/programs">View All Programs</Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WORKSHOPS & EXPERT SESSIONS */}
+      <section className="section border-t border-border bg-surface/30">
+        <div className="shell">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeader
+              eyebrow="Hands-On Masterclasses"
+              title="Workshops with real practitioners"
+              lead="Direct interactions between young builders and leaders across ISRO, aerospace research, and astronomy initiatives."
+            />
+            <Button asChild variant="outline" className="rounded-full">
+              <Link to="/programs">Explore all programs</Link>
+            </Button>
+          </div>
+
+          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+            {WORKSHOPS.map((workshop, idx) => (
+              <article
+                key={workshop.id}
+                className="card-elevated flex flex-col justify-between p-7 md:p-8 border border-border bg-card transition-all duration-300 hover:border-primary/40"
+                style={{ animation: `fade-in-up 500ms ease-out ${idx * 100}ms both` }}
+              >
+                <div>
+                  <div className="font-ui flex flex-wrap items-center justify-between gap-2 text-xs mb-4">
+                    <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[10px] font-bold text-primary tracking-wider uppercase">
+                      {workshop.tag}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-muted-foreground font-mono text-[11px]">
+                      <Calendar className="size-3.5 text-primary" />
+                      <span>{workshop.date}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="text-xl font-display font-bold text-foreground leading-snug">
+                    {workshop.title}
+                  </h3>
+
+                  {/* Mentor Badge */}
+                  <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-surface-2 p-3">
+                    <div>
+                      <p className="font-display font-bold text-sm text-foreground">{workshop.mentor}</p>
+                      <p className="font-ui text-xs text-primary font-medium">{workshop.mentorTitle}</p>
+                      <p className="text-[11px] text-muted-foreground">{workshop.mentorOrg}</p>
+                    </div>
+                    {workshop.linkedin ? (
+                      <a
+                        href={workshop.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-lg p-2 text-muted-foreground hover:bg-surface hover:text-primary transition-colors"
+                        aria-label={`${workshop.mentor} LinkedIn Profile`}
+                        title={`View ${workshop.mentor}'s LinkedIn`}
+                      >
+                        <Linkedin className="size-4" />
+                      </a>
+                    ) : null}
+                  </div>
+
+                  <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+                    {workshop.summary}
+                  </p>
+
+                  {/* Session Highlights */}
+                  <div className="mt-5 space-y-2 border-t border-border pt-4">
+                    <p className="font-ui text-[11px] font-bold text-foreground uppercase tracking-wider">
+                      Session Highlights:
+                    </p>
+                    <ul className="space-y-1.5 text-xs text-muted-foreground">
+                      {workshop.highlights.map((h, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <CheckCircle2 className="size-3.5 text-primary shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-ui">
+                  <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Completed & Archived
+                  </span>
+                  <a
+                    href={SITE.communityUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary hover:underline font-semibold flex items-center gap-1"
+                  >
+                    <span>Community Notes</span>
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
