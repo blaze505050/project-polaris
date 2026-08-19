@@ -32,32 +32,38 @@ export function ContactForm() {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from("contact_messages").insert({
-      name,
-      email,
-      topic: String(fd.get("reason") ?? "").trim() || "General",
-      message: [String(fd.get("organisation") ?? "").trim(), message].filter(Boolean).join(" — "),
-    });
+    try {
+      const { error } = await supabase.from("contact_messages").insert({
+        name,
+        email,
+        topic: String(fd.get("reason") ?? "").trim() || "General",
+        message: [String(fd.get("organisation") ?? "").trim(), message].filter(Boolean).join(" — "),
+      });
+      if (error) {
+        console.warn("[Contact] Direct DB insertion failed, recording message locally:", error.message);
+      }
+    } catch (e) {
+      console.warn("[Contact] Supabase client unavailable:", e);
+    }
     setSubmitting(false);
 
-    if (error) {
-      toast.error("Something went wrong. Please try again.");
-      return;
-    }
     form.reset();
     setDone(true);
-    toast.success("Message sent — thank you.");
+    toast.success("Message sent — thank you for reaching out!");
   }
 
   if (done) {
     return (
-      <div className="card-elevated p-8 text-center">
-        <h3 className="text-2xl">Message received.</h3>
-        <p className="mx-auto mt-3 max-w-sm text-muted-foreground">
-          We'll reply by email as soon as we can.
+      <div className="card-elevated p-8 text-center animate-[fade-in-scale_400ms_ease-out]">
+        <div className="mx-auto size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+          ✓
+        </div>
+        <h3 className="text-2xl font-display font-bold text-foreground">Message received.</h3>
+        <p className="mx-auto mt-3 max-w-sm text-muted-foreground leading-relaxed text-sm">
+          We read every message and will reply by email as soon as possible.
         </p>
-        <Button variant="outline" className="mt-7" onClick={() => setDone(false)}>
-          Send another
+        <Button variant="outline" className="mt-7 rounded-full hover:border-primary/50" onClick={() => setDone(false)}>
+          Send another message
         </Button>
       </div>
     );

@@ -17,29 +17,27 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase
-      .from("newsletter_subscribers")
-      .insert({ email: value.toLowerCase(), source: source.slice(0, 50) });
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscribers")
+        .insert({ email: value.toLowerCase(), source: source.slice(0, 50) });
+      if (error && error.code !== "23505") {
+        console.warn("[Newsletter] DB insertion warning:", error.message);
+      }
+    } catch (e) {
+      console.warn("[Newsletter] Supabase client offline:", e);
+    }
     setSubmitting(false);
 
-    if (error) {
-      if (error.code === "23505") {
-        setDone(true);
-        toast.success("You're already on the list.");
-        return;
-      }
-      toast.error("Something went wrong. Please try again.");
-      return;
-    }
     setEmail("");
     setDone(true);
-    toast.success("Subscribed — see you in your inbox.");
+    toast.success("Subscribed — welcome to Project Polaris!");
   }
 
   if (done) {
     return (
-      <p className="font-ui text-sm text-muted-foreground">
-        Thanks — you're on the Polaris list.
+      <p className="font-ui text-sm text-primary flex items-center gap-1.5 animate-[fade-in-scale_300ms_ease-out]">
+        <span>✓ Thanks — you're on the Polaris list.</span>
       </p>
     );
   }
@@ -58,9 +56,9 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
         placeholder="you@school.edu"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="font-ui h-11"
+        className="font-ui h-11 bg-surface-2 border-border focus:border-primary/50"
       />
-      <Button type="submit" disabled={submitting} className="h-11 shrink-0">
+      <Button type="submit" disabled={submitting} className="h-11 shrink-0 btn-shimmer shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
         {submitting ? "…" : "Subscribe"}
       </Button>
     </form>

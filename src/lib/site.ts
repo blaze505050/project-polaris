@@ -203,11 +203,6 @@ export const TEAM_MEMBERS = [
     role: "Research Head",
     note: "Spearheading student research programs, simulation frameworks, and technical development pipelines.",
   },
-  {
-    name: "Aryan",
-    role: "Research Volunteer",
-    note: "Contributing to scientific literature exploration, workshop operations, and student outreach activities.",
-  },
 ] as const;
 
 export const WORKSHOPS = [
