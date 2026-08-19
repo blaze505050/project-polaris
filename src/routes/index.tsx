@@ -34,6 +34,10 @@ import { Newsletter } from "@/components/site/Newsletter";
 import { OpportunityCard } from "@/components/site/OpportunityCard";
 import { Timeline } from "@/components/site/Timeline";
 import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
+import { HeroHUD } from "@/components/site/HeroHUD";
+import { BentoGrid } from "@/components/site/BentoGrid";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { opportunitiesQuery } from "@/lib/db";
 import {
@@ -139,24 +143,25 @@ function Home() {
 
   return (
     <>
-      {/* HERO SECTION */}
+      {/* HERO SECTION WITH INTERACTIVE CONSTELLATION CANVAS & HUD */}
       <section className="veil relative overflow-hidden pt-28 pb-20 md:pt-40 md:pb-28">
-        <Starfield density={0.9} />
+        <ConstellationCanvas />
+        <Starfield density={0.85} />
         
-        {/* Ambient Aurora Glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/10 blur-[140px] pointer-events-none rounded-full" />
-        <div className="absolute bottom-0 left-1/3 w-[500px] h-[300px] bg-accent/5 blur-[120px] pointer-events-none rounded-full" />
-        <div className="blueprint absolute inset-0 opacity-40" aria-hidden="true" />
+        {/* Ambient Holographic Aurora Glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[650px] bg-gradient-to-tr from-primary/15 via-accent/10 to-transparent blur-[140px] pointer-events-none rounded-full" />
+        <div className="absolute bottom-0 left-1/3 w-[500px] h-[300px] bg-accent/8 blur-[120px] pointer-events-none rounded-full" />
+        <div className="blueprint absolute inset-0 opacity-30" aria-hidden="true" />
 
         <div className="shell relative grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
+          <div className="relative z-10">
             {/* Live Badge — stagger 0 */}
-            <div className={`${heroEntrance} inline-flex items-center gap-2.5 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs text-primary mb-8 backdrop-blur-md`} style={heroVisible ? stagger(0) : { opacity: 0 }}>
+            <div className={`${heroEntrance} inline-flex items-center gap-2.5 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs text-primary mb-8 backdrop-blur-xl shadow-[0_0_20px_-3px_rgba(197,157,255,0.25)]`} style={heroVisible ? stagger(0) : { opacity: 0 }}>
               <span className="relative flex size-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                 <span className="relative inline-flex rounded-full size-2 bg-primary"></span>
               </span>
-              <span className="font-ui font-semibold tracking-wide uppercase text-[0.7rem]">Student-Led Experiential Learning</span>
+              <span className="font-ui font-semibold tracking-wide uppercase text-[0.7rem]">Student-Led Deeptech & Space Research</span>
             </div>
 
             {/* Headline — stagger 1 */}
@@ -169,13 +174,12 @@ function Home() {
 
             {/* Description — stagger 2 */}
             <p className={`${heroEntrance} mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
-              Project Polaris gives students the chance to research, build, experiment and
-              collaborate on real problems — long before anyone tells them they're ready.
+              Project Polaris empowers students to research, engineer, simulate, and collaborate on real-world space science and deeptech problems — before traditional academia tells them they're ready.
             </p>
 
             {/* Hero CTAs — stagger 3 */}
             <div className={`${heroEntrance} mt-9 flex flex-wrap gap-3.5`} style={heroVisible ? stagger(3) : { opacity: 0 }}>
-              <Button asChild size="lg" className="rounded-full shadow-lg shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
+              <Button asChild size="lg" className="rounded-full shadow-xl shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
                 <Link to="/projects" className="flex items-center gap-2">
                   <FolderKanban className="size-4" />
                   <span>Explore Our Projects</span>
@@ -185,7 +189,7 @@ function Home() {
               <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 font-semibold backdrop-blur-md transition-all duration-300">
                 <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                   <MessageCircle className="size-4 text-primary" />
-                  <span>Join WhatsApp Community</span>
+                  <span>Join Community Free</span>
                 </a>
               </Button>
               <Button asChild size="lg" variant="ghost" className="rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 hover:scale-105 active:scale-95 font-semibold transition-all duration-300">
@@ -197,34 +201,15 @@ function Home() {
             </div>
 
             {/* Footer note — stagger 4 */}
-            <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-muted-foreground uppercase font-medium`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
-              Currently centred on space science · Open to school, college & self-taught learners
+            <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-muted-foreground uppercase font-medium flex items-center gap-2`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
+              <span className="size-1.5 rounded-full bg-primary" />
+              <span>120+ Active Builders · ISRO Masterclasses · Open Access</span>
             </p>
           </div>
 
-          {/* Hero Visual Card — stagger 2 */}
-          <div className={`${heroEntrance} relative group`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
-            <div className="overflow-hidden rounded-3xl border border-border bg-surface p-2 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.01]" style={{ animation: 'gentle-float 6s ease-in-out infinite' }}>
-              <picture>
-                <source srcSet={heroImageWebp} type="image/webp" />
-                <img
-                  src={heroImage}
-                  alt="Students building and experimenting in a Project Polaris workshop"
-                  width={800}
-                  height={600}
-                  fetchPriority="high"
-                  className="aspect-[4/3] w-full rounded-2xl object-cover"
-                />
-              </picture>
-            </div>
-            
-            <div className="font-ui absolute -bottom-5 left-6 rounded-full border border-border bg-background/90 px-5 py-2.5 text-xs text-slate-200 backdrop-blur-xl shadow-xl flex items-center gap-2.5">
-              <picture>
-                <source srcSet={polarisLogoWebp} type="image/webp" />
-                <img src={polarisLogo} alt="Polaris" className="size-4 rounded-full" />
-              </picture>
-              <span>Ideas → Projects → People who build</span>
-            </div>
+          {/* Hero Interactive HUD Centerpiece — stagger 2 */}
+          <div className={`${heroEntrance} relative z-10`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
+            <HeroHUD />
           </div>
         </div>
       </section>
@@ -234,7 +219,7 @@ function Home() {
         <div className="shell flex flex-wrap items-center justify-between gap-4 text-xs font-ui">
           <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle2 className="size-4 text-primary" />
-            <span>Fast registration · Free community access</span>
+            <span>Fast registration · Free community access · 100% Student-Led</span>
           </div>
           <div className="flex flex-wrap items-center gap-6">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="text-slate-100 hover:text-primary font-medium transition-colors flex items-center gap-1.5">
@@ -260,6 +245,9 @@ function Home() {
           </dl>
         </div>
       </section>
+
+      {/* APPLE / LINEAR STYLE BENTO GRID */}
+      <BentoGrid />
 
 
       {/* FIRST COURSE LAUNCH SPOTLIGHT */}
@@ -449,13 +437,14 @@ function Home() {
             {WHY_JOIN_PILLARS.map((pillar, i) => {
               const Icon = PILLAR_ICONS[pillar.icon] || Sparkles;
               return (
-                <article
+                <SpotlightCard
                   key={pillar.title}
-                  className="card-elevated p-8 flex flex-col justify-between hover:border-primary/50 transition-all duration-300 group"
+                  spotlightColor="rgba(197, 157, 255, 0.2)"
+                  className="p-8 flex flex-col justify-between hover:border-primary/50 transition-all duration-300 group"
                   style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
                 >
                   <div>
-                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-transform group-hover:scale-110">
+                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-transform group-hover:scale-110 shadow-sm border border-primary/20">
                       <Icon className="size-6" />
                     </div>
                     <h3 className="text-xl font-display font-bold text-foreground">{pillar.title}</h3>
@@ -465,12 +454,15 @@ function Home() {
                     <span>Explore opportunities</span>
                     <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
                   </div>
-                </article>
+                </SpotlightCard>
               );
             })}
 
             {/* CTA card for 6th grid item */}
-            <article className="card-elevated p-8 flex flex-col justify-between border-primary/40 bg-gradient-to-br from-primary/15 via-surface to-surface">
+            <SpotlightCard
+              spotlightColor="rgba(56, 189, 248, 0.25)"
+              className="p-8 flex flex-col justify-between border-primary/40 bg-gradient-to-br from-primary/15 via-slate-950/80 to-accent/10"
+            >
               <div>
                 <span className="eyebrow mb-3 text-primary">Get Started</span>
                 <h3 className="text-2xl font-display font-extrabold text-foreground">Ready to start building?</h3>
@@ -478,13 +470,13 @@ function Home() {
                   Join our WhatsApp community today. It is completely free and open to learners of all levels.
                 </p>
               </div>
-              <Button asChild className="mt-6 rounded-full bg-primary text-primary-foreground font-semibold">
+              <Button asChild className="mt-6 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-md btn-shimmer border-none">
                 <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                   <MessageCircle className="size-4" />
                   <span>Join Community Free</span>
                 </a>
               </Button>
-            </article>
+            </SpotlightCard>
           </div>
         </div>
       </section>
@@ -501,9 +493,10 @@ function Home() {
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {WHO_CAN_JOIN.map((item, idx) => (
-              <div
+              <SpotlightCard
                 key={item.category}
-                className="card-elevated p-6 flex flex-col justify-between hover:border-primary/40 transition-colors"
+                spotlightColor="rgba(197, 157, 255, 0.15)"
+                className="p-6 flex flex-col justify-between hover:border-primary/40 transition-colors"
                 style={{ animation: `fade-in-up 500ms ease-out ${idx * 60}ms both` }}
               >
                 <div>
@@ -520,7 +513,7 @@ function Home() {
                   <span>Learn how</span>
                   <ArrowRight className="size-3" />
                 </Link>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>

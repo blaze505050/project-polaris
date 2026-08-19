@@ -4,6 +4,9 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { Timeline } from "@/components/site/Timeline";
 import { NorthStar } from "@/components/site/NorthStar";
 import { SectionHeader } from "@/components/site/SectionHeader";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
+import { Starfield } from "@/components/site/Starfield";
 import { JOURNEY, VALUES, TEAM_MEMBERS, SITE } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
 import {
@@ -70,7 +73,7 @@ function About() {
       </PageHeader>
 
       {/* CORE PHILOSOPHY & THE GAP */}
-      <section className="section">
+      <section className="section relative overflow-hidden">
         <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 items-center">
           <div>
             <span className="font-ui text-xs font-semibold uppercase tracking-wider text-primary">The Provocation</span>
@@ -89,31 +92,36 @@ function About() {
           {/* Interactive Dilemma Cards */}
           <div className="grid gap-3.5 sm:grid-cols-2">
             {DILEMMA_QUESTIONS.map(({ text, icon: Icon }, i) => (
-              <div
+              <SpotlightCard
                 key={text}
-                className="card-elevated p-5 flex items-center gap-4 transition-all duration-300 hover:border-primary/50 group"
+                spotlightColor="rgba(197, 157, 255, 0.18)"
+                className="p-5 flex items-center gap-4 transition-all duration-300 hover:border-primary/50 group"
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 70}ms both` }}
               >
                 <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 transition-transform group-hover:scale-110">
                   <Icon className="size-5" />
                 </div>
                 <p className="font-display font-bold text-foreground text-sm leading-snug">{text}</p>
-              </div>
+              </SpotlightCard>
             ))}
-            <div className="card-elevated p-5 flex items-center gap-4 border-primary/40 bg-primary/5 sm:col-span-2">
+            <SpotlightCard
+              spotlightColor="rgba(56, 189, 248, 0.2)"
+              className="p-5 flex items-center gap-4 border-primary/40 bg-primary/5 sm:col-span-2"
+            >
               <CheckCircle2 className="size-6 text-primary shrink-0" />
               <p className="text-xs text-muted-foreground leading-relaxed">
                 What if every student had the opportunity to build, experiment, lead, fail, improve, and discover what they are capable of?
               </p>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </section>
 
-      {/* MANIFESTO SECTION */}
+      {/* MANIFESTO SECTION WITH INTERACTIVE CONSTELLATION */}
       <section className="section border-t border-border bg-surface/20 relative overflow-hidden">
+        <ConstellationCanvas className="opacity-40" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/10 blur-[150px] pointer-events-none rounded-full" />
-        <div className="shell relative max-w-4xl text-center">
+        <div className="shell relative z-10 max-w-4xl text-center">
           <span className="eyebrow mb-4">The Polaris Manifesto</span>
           <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground leading-tight">
             So, we built <span className="text-gradient-star">Polaris</span>.
