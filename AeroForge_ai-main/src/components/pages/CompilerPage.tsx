@@ -107,7 +107,9 @@ component Wing {
                     <h2 className="font-heading text-lg font-bold text-foreground">Design Definition</h2>
                   </div>
                   <button
+                    type="button"
                     onClick={handleCopy}
+                    aria-label="Copy design code to clipboard"
                     className="p-2 hover:bg-secondary/20 rounded transition-colors"
                     title="Copy code"
                   >
@@ -121,13 +123,16 @@ component Wing {
                 
                 <textarea
                   value={code}
+                  aria-label="Aerospace Component Design Definition Code Editor"
                   onChange={(e) => setCode(e.target.value)}
-                  className="w-full h-96 bg-primary border border-secondary/30 rounded-lg p-4 font-mono text-sm text-foreground focus:outline-none focus:border-aerospace-blue/50 resize-none"
+                  className="w-full h-96 bg-[#090f20] border border-secondary/40 rounded-lg p-4 md:p-5 font-mono text-sm text-slate-100 focus:outline-none focus:border-aerospace-blue/70 resize-none shadow-inner"
                 />
                 
                 <button
+                  type="button"
                   onClick={handleCompile}
                   disabled={isCompiling}
+                  aria-label="Compile design to production-ready CAD"
                   className="w-full group relative inline-flex items-center justify-center px-6 py-4 bg-gradient-to-r from-aerospace-blue to-aerospace-accent text-white font-mono text-sm uppercase tracking-wider hover:shadow-xl transition-all duration-300 rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10 flex items-center gap-2">
@@ -158,16 +163,16 @@ component Wing {
                   <h2 className="font-heading text-lg font-bold text-foreground">CAD Output</h2>
                 </div>
                 
-                <div className="bg-primary border border-secondary/30 rounded-lg p-4 h-96 overflow-auto">
+                <div className="bg-[#090f20] border border-secondary/40 rounded-lg p-4 md:p-5 h-96 overflow-auto shadow-inner">
                   {output ? (
-                    <pre className="font-mono text-xs text-foreground/80 whitespace-pre-wrap break-words">
+                    <pre className="font-mono text-xs text-emerald-300 whitespace-pre-wrap break-words">
                       {output}
                     </pre>
                   ) : (
                     <div className="h-full flex items-center justify-center text-center">
                       <div className="space-y-3">
-                        <AlertCircle className="w-8 h-8 text-secondary/50 mx-auto" />
-                        <p className="font-mono text-sm text-secondary-foreground">
+                        <AlertCircle className="w-8 h-8 text-slate-400 mx-auto" />
+                        <p className="font-mono text-sm text-slate-300">
                           Compile your design to see output
                         </p>
                       </div>
@@ -176,7 +181,11 @@ component Wing {
                 </div>
 
                 {output && (
-                  <button className="w-full group relative inline-flex items-center justify-center px-6 py-3 bg-secondary/20 border border-aerospace-blue/30 text-aerospace-blue font-mono text-sm uppercase tracking-wider hover:bg-secondary/30 transition-all duration-300 rounded-lg">
+                  <button
+                    type="button"
+                    aria-label="Download generated STEP CAD file"
+                    className="w-full group relative inline-flex items-center justify-center px-6 py-3 bg-secondary/20 border border-aerospace-blue/30 text-aerospace-blue font-mono text-sm uppercase tracking-wider hover:bg-secondary/30 transition-all duration-300 rounded-lg"
+                  >
                     <span className="relative z-10 flex items-center gap-2">
                       <Download className="w-4 h-4" />
                       Download STEP File

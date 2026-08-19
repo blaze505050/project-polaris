@@ -52,8 +52,10 @@ export function Footer() {
 
       <div className="shell grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:py-20">
         <div>
-          <Wordmark />
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
+          <Link to="/" aria-label="Project Polaris Home" className="inline-block">
+            <Wordmark />
+          </Link>
+          <p className="mt-4 max-w-sm text-sm text-slate-300">
             A student-led experiential learning organisation. {SITE.tagline}
           </p>
 

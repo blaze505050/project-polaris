@@ -128,8 +128,11 @@ function AeroForgeLab() {
         <div className="flex items-center gap-2 shrink-0 ml-3">
           {/* Transparency Trigger */}
           <button
+            type="button"
             onClick={() => setShowTransparency(true)}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-muted-foreground border border-border text-[11px] transition-colors"
+            aria-label="Open Project Polaris Governance & Transparency Charter"
+            aria-haspopup="dialog"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-slate-200 hover:text-white border border-border text-[11px] transition-colors"
             title="Read Project Polaris & AeroForge Transparency Charter"
           >
             <Shield className="size-3.5 text-primary" />
@@ -141,7 +144,8 @@ function AeroForgeLab() {
             href="/aeroforge/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-muted-foreground border border-border text-[11px] transition-colors"
+            aria-label="Open AeroForge in Standalone Tab"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-slate-200 hover:text-white border border-border text-[11px] transition-colors"
             title="Open AeroForge in Standalone Window"
           >
             <ExternalLink className="size-3.5 text-sky-400" />
@@ -150,7 +154,9 @@ function AeroForgeLab() {
 
           {/* Fullscreen Expand Toggle */}
           <button
+            type="button"
             onClick={() => setIsFullscreen(!isFullscreen)}
+            aria-label={isFullscreen ? "Exit Fullscreen mode" : "Expand AeroForge Lab to Full Viewport"}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 text-[11px] font-semibold transition-colors"
             title={isFullscreen ? "Exit Fullscreen" : "Expand to Full Viewport"}
           >

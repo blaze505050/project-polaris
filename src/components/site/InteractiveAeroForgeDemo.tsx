@@ -13,6 +13,8 @@ import {
   Play,
   RotateCcw,
   Sparkles,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
@@ -71,6 +73,17 @@ const PRESETS: ProblemPreset[] = [
   },
 ];
 
+const STAGES = [
+  { step: 1, label: "Problem" },
+  { step: 2, label: "Geometry" },
+  { step: 3, label: "Conditions" },
+  { step: 4, label: "Solve" },
+  { step: 5, label: "Streamlines" },
+  { step: 6, label: "Save" },
+  { step: 7, label: "Benchmark" },
+  { step: 8, label: "Artifact" },
+];
+
 export function InteractiveAeroForgeDemo() {
   const [selectedPreset, setSelectedPreset] = useState<ProblemPreset>(PRESETS[0]);
   const [naca, setNaca] = useState(PRESETS[0].defaultNaca);
@@ -82,6 +95,7 @@ export function InteractiveAeroForgeDemo() {
   const [isRunning, setIsRunning] = useState<boolean>(false);
   const [hasRun, setHasRun] = useState<boolean>(false);
   const [saved, setSaved] = useState<boolean>(false);
+  const [mobileStagesExpanded, setMobileStagesExpanded] = useState<boolean>(false);
 
   const handleSelectPreset = (p: ProblemPreset) => {
     setSelectedPreset(p);
@@ -140,8 +154,14 @@ export function InteractiveAeroForgeDemo() {
     setActiveStep(7);
   };
 
+  const currentStageInfo = STAGES.find((s) => s.step === activeStep) || STAGES[0];
+
   return (
-    <div className="rounded-3xl border border-primary/30 bg-card p-6 md:p-10 shadow-2xl backdrop-blur-2xl relative overflow-hidden font-sans text-foreground">
+    <section
+      role="region"
+      aria-label="Interactive AeroForge Space Physics Simulator"
+      className="rounded-3xl border border-primary/30 bg-card p-5 md:p-10 shadow-2xl backdrop-blur-2xl relative overflow-hidden font-sans text-foreground"
+    >
       {/* Decorative Glow */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[100px] pointer-events-none rounded-full" />
 
@@ -152,14 +172,14 @@ export function InteractiveAeroForgeDemo() {
             <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary bg-primary/10 border border-primary/30 px-3 py-1 rounded-full">
               INTERACTIVE DEMONSTRATION // 8-STAGE SIMULATOR
             </span>
-            <span className="text-[10px] font-mono text-amber-400/90 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">
               Reduced-Order Flow Model
             </span>
           </div>
           <h3 className="text-2xl md:text-3xl font-display font-extrabold text-foreground">
             See AeroForge in Action
           </h3>
-          <p className="text-xs text-muted-foreground font-sans mt-1">
+          <p className="text-xs text-slate-300 font-sans mt-1">
             Experience the full digital thread: configure parameters, run reduced-order physics solvers, and inspect live pressure contours.
           </p>
         </div>
@@ -170,7 +190,7 @@ export function InteractiveAeroForgeDemo() {
             size="sm"
             className="rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold font-ui px-5 shadow-lg shadow-primary/20"
           >
-            <Link to="/aeroforge" className="flex items-center gap-1.5">
+            <Link to="/aeroforge" aria-label="Launch Full AeroForge Lab" className="flex items-center gap-1.5">
               <span>Launch Full Lab</span>
               <ArrowRight className="size-3.5" />
             </Link>
@@ -178,27 +198,51 @@ export function InteractiveAeroForgeDemo() {
         </div>
       </div>
 
-      {/* 8-Stage Progress Tracker */}
-      <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 mb-8 text-center text-[10px] font-mono">
-        {[
-          { step: 1, label: "Problem" },
-          { step: 2, label: "Geometry" },
-          { step: 3, label: "Conditions" },
-          { step: 4, label: "Solve" },
-          { step: 5, label: "Streamlines" },
-          { step: 6, label: "Save" },
-          { step: 7, label: "Benchmark" },
-          { step: 8, label: "Artifact" },
-        ].map((s) => (
+      {/* Mobile Stage Accordion Header (under 768px) */}
+      <div className="block md:hidden mb-4">
+        <button
+          type="button"
+          onClick={() => setMobileStagesExpanded(!mobileStagesExpanded)}
+          aria-expanded={mobileStagesExpanded}
+          aria-label={`Simulation stage tracker. Currently on stage ${currentStageInfo.step} of 8: ${currentStageInfo.label}. Click to ${mobileStagesExpanded ? 'collapse' : 'expand'} stages list.`}
+          className="w-full flex items-center justify-between p-3.5 rounded-xl border border-primary/40 bg-surface text-left font-mono text-xs text-foreground"
+        >
+          <div className="flex items-center gap-2">
+            <span className="size-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[10px]">
+              {currentStageInfo.step}
+            </span>
+            <span className="text-slate-200">Stage {currentStageInfo.step}/8: <strong className="text-white font-bold">{currentStageInfo.label}</strong></span>
+          </div>
+          <div className="flex items-center gap-1 text-primary text-[11px] font-semibold">
+            <span>{mobileStagesExpanded ? "Collapse" : "All Stages"}</span>
+            {mobileStagesExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+          </div>
+        </button>
+      </div>
+
+      {/* 8-Stage Progress Tracker (Responsive Grid & Collapsible Mobile) */}
+      <div
+        role="tablist"
+        aria-label="Simulation Workflow Stages"
+        className={`${mobileStagesExpanded ? "grid" : "hidden md:grid"} grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2 mb-8 text-center text-[10px] font-mono`}
+      >
+        {STAGES.map((s) => (
           <button
             key={s.step}
-            onClick={() => setActiveStep(s.step)}
-            className={`p-2 rounded-xl border transition-all flex flex-col items-center gap-1 ${
+            type="button"
+            role="tab"
+            aria-selected={activeStep === s.step}
+            aria-label={`Step ${s.step}: ${s.label}`}
+            onClick={() => {
+              setActiveStep(s.step);
+              setMobileStagesExpanded(false);
+            }}
+            className={`p-2.5 rounded-xl border transition-all flex flex-col items-center gap-1 ${
               activeStep === s.step
                 ? "border-primary bg-primary/20 text-white font-bold shadow-md shadow-primary/10"
                 : activeStep > s.step || (hasRun && s.step <= 5)
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300"
-                : "border-border bg-surface text-muted-foreground hover:border-primary/30"
+                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-semibold"
+                : "border-border bg-surface text-slate-200 hover:border-primary/30 hover:text-white"
             }`}
           >
             <span className="size-4 rounded-full flex items-center justify-center text-[9px] font-bold bg-white/10">
@@ -218,15 +262,18 @@ export function InteractiveAeroForgeDemo() {
             <label className="text-xs font-mono text-foreground font-bold uppercase tracking-wider block">
               1. Choose Engineering Challenge
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               {PRESETS.map((p) => (
                 <button
                   key={p.id}
+                  type="button"
+                  aria-label={`Select Challenge ${p.name} in category ${p.category}`}
+                  aria-pressed={selectedPreset.id === p.id}
                   onClick={() => handleSelectPreset(p)}
-                  className={`p-3 rounded-xl border text-left transition-all ${
+                  className={`p-3.5 rounded-xl border text-left transition-all ${
                     selectedPreset.id === p.id
-                      ? "border-primary bg-primary/15 text-foreground"
-                      : "border-border bg-surface text-muted-foreground hover:border-primary/30"
+                      ? "border-primary bg-primary/15 text-foreground font-bold"
+                      : "border-border bg-surface text-slate-200 hover:border-primary/30 hover:text-white"
                   }`}
                 >
                   <span className="text-[9px] font-mono text-primary uppercase block font-semibold">{p.category}</span>
@@ -234,22 +281,28 @@ export function InteractiveAeroForgeDemo() {
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">{selectedPreset.description}</p>
+            <p className="text-[11px] text-slate-300 font-sans leading-relaxed">{selectedPreset.description}</p>
           </div>
 
           {/* Interactive Sliders */}
-          <div className="space-y-4 rounded-2xl border border-border bg-surface p-5 font-mono text-xs">
-            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">
+          <div className="space-y-4 rounded-2xl border border-border bg-surface p-4 md:p-5 font-mono text-xs">
+            <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider block">
               2 & 3. Physical Parameters & Geometry
             </span>
 
             {/* Mach Number */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-muted-foreground">Mach Number (M):</span>
+                <label htmlFor="mach-slider" className="text-slate-200 cursor-pointer">Mach Number (M):</label>
                 <span className="text-primary font-bold">{mach.toFixed(2)} M</span>
               </div>
               <input
+                id="mach-slider"
+                aria-label="Mach Number"
+                aria-valuemin={0.10}
+                aria-valuemax={1.80}
+                aria-valuenow={mach}
+                aria-valuetext={`${mach.toFixed(2)} Mach`}
                 type="range"
                 min="0.10"
                 max="1.80"
@@ -266,10 +319,16 @@ export function InteractiveAeroForgeDemo() {
             {/* Angle of Attack */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-muted-foreground">Angle of Attack (α):</span>
-                <span className="text-emerald-400 font-bold">{alpha.toFixed(1)}°</span>
+                <label htmlFor="alpha-slider" className="text-slate-200 cursor-pointer">Angle of Attack (α):</label>
+                <span className="text-emerald-300 font-bold">{alpha.toFixed(1)}°</span>
               </div>
               <input
+                id="alpha-slider"
+                aria-label="Angle of Attack in degrees"
+                aria-valuemin={-2.0}
+                aria-valuemax={14.0}
+                aria-valuenow={alpha}
+                aria-valuetext={`${alpha.toFixed(1)} degrees`}
                 type="range"
                 min="-2.0"
                 max="14.0"
@@ -286,10 +345,16 @@ export function InteractiveAeroForgeDemo() {
             {/* Altitude */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <span className="text-muted-foreground">Altitude (h):</span>
-                <span className="text-sky-400 font-bold">{altitude} km</span>
+                <label htmlFor="altitude-slider" className="text-slate-200 cursor-pointer">Altitude (h):</label>
+                <span className="text-sky-300 font-bold">{altitude} km</span>
               </div>
               <input
+                id="altitude-slider"
+                aria-label="Altitude in kilometers"
+                aria-valuemin={0}
+                aria-valuemax={25}
+                aria-valuenow={altitude}
+                aria-valuetext={`${altitude} kilometers`}
                 type="range"
                 min="0"
                 max="25"
@@ -307,6 +372,7 @@ export function InteractiveAeroForgeDemo() {
             <Button
               onClick={handleRunSimulation}
               disabled={isRunning}
+              aria-label="Execute analytical flow solver"
               className="w-full rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold font-ui py-5 mt-2 shadow-lg shadow-primary/20"
             >
               {isRunning ? (
@@ -327,18 +393,18 @@ export function InteractiveAeroForgeDemo() {
         {/* Right Column: Visualization & Results (Stages 5-8) */}
         <div className="lg:col-span-7 space-y-6">
           {/* Visual Airfoil & Streamline Preview Canvas */}
-          <div className="rounded-2xl border border-border bg-surface p-5 space-y-4 relative overflow-hidden font-mono">
-            <div className="flex items-center justify-between border-b border-border pb-3">
+          <div className="rounded-2xl border border-border bg-surface p-4 md:p-5 space-y-4 relative overflow-hidden font-mono">
+            <div className="flex items-center justify-between border-b border-border pb-3 flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs font-bold text-foreground">NACA {naca} Flow Field Contours</span>
               </div>
-              <span className="text-[10px] text-muted-foreground">Streamline Grid: 120 x 80</span>
+              <span className="text-[10px] text-slate-300">Streamline Grid: 120 x 80</span>
             </div>
 
             {/* Simulated Vector Streamlines SVG */}
             <div className="relative h-48 w-full bg-surface-2 rounded-xl border border-border flex items-center justify-center overflow-hidden">
-              <svg viewBox="0 0 500 200" className="w-full h-full">
+              <svg viewBox="0 0 500 200" aria-label={`NACA ${naca} flow streamlines at angle ${alpha} degrees`} className="w-full h-full">
                 <defs>
                   <linearGradient id="streamlineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
@@ -378,25 +444,25 @@ export function InteractiveAeroForgeDemo() {
             {/* Aerodynamic Telemetry Output Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-2 p-4 rounded-xl border border-border text-xs">
               <div>
-                <span className="text-[10px] text-muted-foreground block">LIFT (CL)</span>
+                <span className="text-[10px] text-slate-300 block">LIFT (CL)</span>
                 <span className="text-base font-bold text-primary">{calculations.cl}</span>
               </div>
               <div>
-                <span className="text-[10px] text-muted-foreground block">DRAG (CD)</span>
-                <span className="text-base font-bold text-emerald-400">{calculations.cd}</span>
+                <span className="text-[10px] text-slate-300 block">DRAG (CD)</span>
+                <span className="text-base font-bold text-emerald-300">{calculations.cd}</span>
               </div>
               <div>
-                <span className="text-[10px] text-muted-foreground block">L/D EFFICIENCY</span>
-                <span className="text-base font-bold text-sky-400">{calculations.ld}</span>
+                <span className="text-[10px] text-slate-300 block">L/D EFFICIENCY</span>
+                <span className="text-base font-bold text-sky-300">{calculations.ld}</span>
               </div>
               <div>
-                <span className="text-[10px] text-muted-foreground block">TRUE AIRSPEED</span>
-                <span className="text-base font-bold text-amber-400">{calculations.speedKmh} km/h</span>
+                <span className="text-[10px] text-slate-300 block">TRUE AIRSPEED</span>
+                <span className="text-base font-bold text-amber-300">{calculations.speedKmh} km/h</span>
               </div>
             </div>
 
             {/* Benchmark Validation Bar (Stages 6-8) */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3 bg-primary/10 border border-primary/20 rounded-xl text-xs">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 bg-primary/10 border border-primary/20 rounded-xl text-xs">
               <div className="flex items-center gap-2 text-primary font-semibold">
                 <FileCheck2 className="size-4 shrink-0" />
                 <span>NASA Abbott Empirical Benchmark Delta: {calculations.nasaBenchmarkDelta}</span>
@@ -407,6 +473,7 @@ export function InteractiveAeroForgeDemo() {
                   variant="outline"
                   onClick={handleSaveExperiment}
                   disabled={saved}
+                  aria-label={saved ? "Trial saved" : "Save Trial"}
                   className="rounded-lg text-xs font-bold"
                 >
                   {saved ? "✓ Saved in Workspace" : "Save Trial"}
@@ -416,7 +483,7 @@ export function InteractiveAeroForgeDemo() {
                   size="sm"
                   className="rounded-lg bg-primary text-primary-foreground font-bold text-xs"
                 >
-                  <Link to="/aeroforge">
+                  <Link to="/aeroforge" aria-label="Open Full AeroForge Lab">
                     Open Lab
                   </Link>
                 </Button>
@@ -425,6 +492,6 @@ export function InteractiveAeroForgeDemo() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

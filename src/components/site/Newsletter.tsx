@@ -63,7 +63,12 @@ export function Newsletter({ className = "" }: { className?: string }) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-2">
               <div className="flex items-center gap-2">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
                 <input
+                  id="newsletter-email"
+                  aria-label="Email address"
                   type="email"
                   value={email}
                   onChange={(e) => {

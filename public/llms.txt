@@ -1,0 +1,31 @@
+# Project Polaris
+
+> Project Polaris is a student-led experiential learning organisation where learners research, build, experiment, and solve real-world challenges, starting with space science and computational engineering.
+
+Project Polaris provides hands-on workshops with industry scientists, the browser-based AeroForge space laboratory with 40+ numerical solvers, collaborative engineering projects, and open community learning.
+
+## Main Navigation & Pages
+
+- [Home](https://projectpolaris.in/): Landing page with mission, core initiatives, workshops, and simulator preview.
+- [AeroForge Space Lab](https://projectpolaris.in/aeroforge): High-fidelity browser-based space engineering laboratory and physics simulator.
+- [Programs](https://projectpolaris.in/programs): Overview of masterclasses, community challenges, CanSat prototyping, and research.
+- [Courses](https://projectpolaris.in/courses): Student learning courses and practical curricula.
+- [Projects](https://projectpolaris.in/projects): Student-built hardware, software, and research initiatives.
+- [Showcase](https://projectpolaris.in/showcase): Gallery of student work and open submissions.
+- [Opportunities](https://projectpolaris.in/opportunities): Open roles, volunteer applications, and student tracks.
+- [Resources](https://projectpolaris.in/resources): Curated study guides, solvers, datasets, and guides.
+- [About](https://projectpolaris.in/about): Mission, backstory, team, and experiential learning philosophy.
+- [Impact](https://projectpolaris.in/impact): Real metrics, timeline, and growth since June 2026.
+- [For Schools](https://projectpolaris.in/schools): School workshops, astronomy nights, and experiential modules.
+- [Get Involved](https://projectpolaris.in/get-involved): How students, mentors, and institutions can participate.
+- [Contact](https://projectpolaris.in/contact): Official communication channels and partner inquiries.
+
+## Platforms & Interactive Tools
+
+- [AeroForge Lab Simulation](https://projectpolaris.in/aeroforge): Interactive aerodynamics, orbital mechanics, and propulsion solvers.
+- [Student Portal](https://projectpolaris.in/portal): Course tracking, quiz grades, mentor feedback, and certificates.
+
+## Community & Direct Links
+
+- [WhatsApp Community](https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX): Real-time daily discussions, Aaj Ka Gyan, and announcements.
+- [Volunteer Portal](https://polaris-volunteer-program-8.my.canva.site): Apply to become a volunteer or student associate.

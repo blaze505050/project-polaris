@@ -3,17 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <meta
+      name="description"
+      content="Project Polaris is a student-led experiential learning organisation where students research, build, experiment and collaborate on real problems — starting with space science."
+    />
     <title>Project Polaris — Learn by Building</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      />
+    </noscript>
   </head>
   <body class="bg-background text-foreground antialiased selection:bg-primary/30 selection:text-primary">
-    <div id="root"></div>
+    <div id="root">
+      <a href="#main" class="sr-only focus:not-sr-only">Skip to content</a>
+      <header role="banner" class="sr-only">
+        <nav aria-label="Main Navigation" role="navigation">
+          <a href="/" aria-label="Project Polaris Home">Project Polaris</a>
+          <a href="/aeroforge">AeroForge Lab</a>
+          <a href="/programs">Programs</a>
+          <a href="/projects">Projects</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy Policy</a>
+        </nav>
+      </header>
+      <main id="main">
+        <h1 class="sr-only">Learning through Building, rather than Building after learning.</h1>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

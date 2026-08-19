@@ -113,12 +113,15 @@ export default function ProfessionalDataPanel({
       className="bg-[#131924]/60 backdrop-blur-md border border-[#00F0FF]/20 rounded overflow-hidden"
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[#00F0FF]/10">
+      <div className="flex items-center justify-between p-4 border-b border-[#00F0FF]/10 flex-wrap gap-2">
         <div className="flex items-center gap-3">
           {collapsible && (
             <button
+              type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-secondary-foreground hover:text-[#00F0FF] transition-colors"
+              aria-label={isExpanded ? `Collapse ${title} panel` : `Expand ${title} panel`}
+              aria-expanded={isExpanded}
+              className="text-slate-300 hover:text-[#00F0FF] transition-colors p-1 rounded"
             >
               {isExpanded ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
@@ -130,8 +133,10 @@ export default function ProfessionalDataPanel({
         <div className="flex items-center gap-2">
           {copyable && (
             <button
+              type="button"
               onClick={handleCopy}
-              className="p-2 text-secondary-foreground hover:text-[#00F0FF] transition-colors"
+              aria-label={`Copy ${title} JSON to clipboard`}
+              className="p-2 text-slate-300 hover:text-[#00F0FF] transition-colors rounded"
               title="Copy to clipboard"
             >
               <Copy size={14} />
@@ -139,8 +144,10 @@ export default function ProfessionalDataPanel({
           )}
           {downloadable && (
             <button
+              type="button"
               onClick={handleDownload}
-              className="p-2 text-secondary-foreground hover:text-[#00F0FF] transition-colors"
+              aria-label={`Download ${title} as JSON file`}
+              className="p-2 text-slate-300 hover:text-[#00F0FF] transition-colors rounded"
               title="Download as JSON"
             >
               <Download size={14} />

@@ -53,8 +53,8 @@ export function Navbar() {
           : "border-b border-transparent bg-transparent",
       )}
     >
-      <nav aria-label="Main" className="shell flex h-16 items-center justify-between gap-4 md:h-20">
-        <Link to="/" aria-label="Project Polaris — home" className="shrink-0">
+      <nav role="navigation" aria-label="Main Navigation" className="shell flex h-16 items-center justify-between gap-4 md:h-20">
+        <Link to="/" aria-label="Project Polaris Home" className="shrink-0">
           <Wordmark />
         </Link>
 

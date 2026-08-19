@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import polarisLogoWebp from "@/assets/polaris-logo.webp";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 export function NorthStar({ className }: { className?: string }) {
@@ -15,15 +16,18 @@ export function NorthStar({ className }: { className?: string }) {
 export function Wordmark({ className }: { className?: string }) {
   return (
     <span className={cn("flex items-center gap-3 group", className)}>
-      <img
-        src={polarisLogo}
-        alt="Project Polaris Logo"
-        width={36}
-        height={36}
-        className="size-9 rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
-      />
+      <picture>
+        <source srcSet={polarisLogoWebp} type="image/webp" />
+        <img
+          src={polarisLogo}
+          alt="Project Polaris Logo"
+          width={36}
+          height={36}
+          className="size-9 rounded-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      </picture>
       <span className="leading-none">
-        <span className="eyebrow-muted block text-[0.62rem] font-semibold tracking-wider text-primary/80 uppercase">Project</span>
+        <span className="block text-[0.7rem] font-bold tracking-widest text-primary uppercase">Project</span>
         <span className="font-display block text-xl font-bold tracking-tight text-foreground">
           Polaris
         </span>
@@ -31,4 +35,3 @@ export function Wordmark({ className }: { className?: string }) {
     </span>
   );
 }
-

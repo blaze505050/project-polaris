@@ -30,8 +30,11 @@ import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { opportunitiesQuery } from "@/lib/db";
 import { JOURNEY, PATHWAY, SITE, STATS, TEAM_MEMBERS, TESTIMONIALS, WORKSHOPS } from "@/lib/site";
+import heroImageWebp from "@/assets/students-building.webp";
 import heroImage from "@/assets/students-building.jpg";
+import nightImageWebp from "@/assets/night-observation.webp";
 import nightImage from "@/assets/night-observation.jpg";
+import polarisLogoWebp from "@/assets/polaris-logo.webp";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 /** Stagger delay helper for hero entrance animations */
@@ -172,17 +175,24 @@ function Home() {
           {/* Hero Visual Card — stagger 2 */}
           <div className={`${heroEntrance} relative group`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
             <div className="overflow-hidden rounded-3xl border border-border bg-surface p-2 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.01]" style={{ animation: 'gentle-float 6s ease-in-out infinite' }}>
-              <img
-                src={heroImage}
-                alt="Students building and experimenting in a Project Polaris workshop"
-                width={1600}
-                height={1104}
-                className="aspect-[4/3] w-full rounded-2xl object-cover"
-              />
+              <picture>
+                <source srcSet={heroImageWebp} type="image/webp" />
+                <img
+                  src={heroImage}
+                  alt="Students building and experimenting in a Project Polaris workshop"
+                  width={800}
+                  height={600}
+                  fetchPriority="high"
+                  className="aspect-[4/3] w-full rounded-2xl object-cover"
+                />
+              </picture>
             </div>
             
-            <div className="font-ui absolute -bottom-5 left-6 rounded-full border border-border bg-background/90 px-5 py-2.5 text-xs text-muted-foreground backdrop-blur-xl shadow-xl flex items-center gap-2.5">
-              <img src={polarisLogo} alt="Polaris" className="size-4 rounded-full" />
+            <div className="font-ui absolute -bottom-5 left-6 rounded-full border border-border bg-background/90 px-5 py-2.5 text-xs text-slate-200 backdrop-blur-xl shadow-xl flex items-center gap-2.5">
+              <picture>
+                <source srcSet={polarisLogoWebp} type="image/webp" />
+                <img src={polarisLogo} alt="Polaris" className="size-4 rounded-full" />
+              </picture>
               <span>Ideas → Projects → People who build</span>
             </div>
           </div>
@@ -197,13 +207,13 @@ function Home() {
             <span>Fast registration · Free community access</span>
           </div>
           <div className="flex flex-wrap items-center gap-6">
-            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5">
+            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="text-slate-100 hover:text-primary font-medium transition-colors flex items-center gap-1.5">
               <MessageCircle className="size-3.5 text-primary" /> WhatsApp Community ↗
             </a>
-            <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5">
+            <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="text-slate-100 hover:text-primary font-medium transition-colors flex items-center gap-1.5">
               <HeartHandshake className="size-3.5 text-primary" /> Volunteer Portal ↗
             </a>
-            <a href={SITE.associateFormUrl} target="_blank" rel="noreferrer" className="text-slate-300 hover:text-primary transition-colors flex items-center gap-1.5">
+            <a href={SITE.associateFormUrl} target="_blank" rel="noreferrer" className="text-slate-100 hover:text-primary font-medium transition-colors flex items-center gap-1.5">
               <UserPlus className="size-3.5 text-primary" /> Associate Form ↗
             </a>
           </div>
@@ -243,28 +253,28 @@ function Home() {
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-foreground text-sm">Aerodynamics & CFD</h4>
+                  <h3 className="font-bold text-foreground text-sm">Aerodynamics & CFD</h3>
                   <p className="text-xs text-muted-foreground mt-1">Airfoil analysers, compressible flows, boundary layer estimation, and Mach sweeps.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-foreground text-sm">Orbital Mechanics</h4>
+                  <h3 className="font-bold text-foreground text-sm">Orbital Mechanics</h3>
                   <p className="text-xs text-muted-foreground mt-1">Keplerian orbit prediction, 2-body numerical integrators, and satellite ground tracks.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-foreground text-sm">Structural Lab</h4>
+                  <h3 className="font-bold text-foreground text-sm">Structural Lab</h3>
                   <p className="text-xs text-muted-foreground mt-1">Beam bending mechanics, Mohr's circle, thin-walled pressure vessel stress analysis.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-foreground text-sm">ISA Atmosphere Solver</h4>
+                  <h3 className="font-bold text-foreground text-sm">ISA Atmosphere Solver</h3>
                   <p className="text-xs text-muted-foreground mt-1">Accurate international standard atmosphere solver up to the mesosphere.</p>
                 </div>
               </li>
@@ -283,26 +293,26 @@ function Home() {
 
           <div className="relative group justify-self-center lg:justify-self-end w-full max-w-[450px]">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 blur-xl opacity-30 rounded-3xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
+            <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-6 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center justify-between border-b border-border pb-3.5 mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-500/80" />
                   <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
                   <span className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
-                <span className="text-[10px] font-mono text-muted-foreground">aeroforge-simulation-node · Illustrative example</span>
+                <span className="text-[10px] font-mono text-slate-300">aeroforge-simulation-node · Illustrative example</span>
               </div>
-              <div className="space-y-4 font-mono text-xs text-muted-foreground">
-                <div className="text-primary">// Initiating computational flow solver</div>
-                <div className="text-muted-foreground">&gt; aeroforge-solver --airfoil naca4412 --mach 0.8 --alpha 4.0</div>
-                <div className="bg-surface-2 p-3 rounded-lg border border-border text-[11px] leading-relaxed">
-                  <span className="text-accent"> Reynolds Number:</span> 3.1e6 <br />
-                  <span className="text-accent"> Lift Coefficient (Cl):</span> 0.824 <br />
-                  <span className="text-accent"> Drag Coefficient (Cd):</span> 0.0125 <br />
-                  <span className="text-accent"> L/D Ratio:</span> 65.92 <br />
-                  <span className="text-green-400"> ✓ Convergence reached in 143 iterations</span>
+              <div className="space-y-3.5 font-mono text-xs text-slate-200">
+                <div className="text-primary font-semibold">// Initiating computational flow solver</div>
+                <div className="text-slate-100 font-medium">&gt; aeroforge-solver --airfoil naca4412 --mach 0.8 --alpha 4.0</div>
+                <div className="bg-surface-2 p-4 rounded-xl border border-border text-[11px] leading-relaxed text-slate-200">
+                  <span className="text-sky-300 font-semibold"> Reynolds Number:</span> <span className="text-white">3.1e6</span> <br />
+                  <span className="text-sky-300 font-semibold"> Lift Coefficient (Cl):</span> <span className="text-white">0.824</span> <br />
+                  <span className="text-sky-300 font-semibold"> Drag Coefficient (Cd):</span> <span className="text-white">0.0125</span> <br />
+                  <span className="text-sky-300 font-semibold"> L/D Ratio:</span> <span className="text-white">65.92</span> <br />
+                  <span className="text-emerald-300 font-semibold"> ✓ Convergence reached in 143 iterations</span>
                 </div>
-                <div className="flex items-center justify-between text-[10px] text-muted-foreground pt-2 border-t border-border">
+                <div className="flex items-center justify-between text-[10px] text-slate-300 pt-2 border-t border-border">
                   <span>RAM: 124MB</span>
                   <span>CPU: 4.2%</span>
                   <span>Latency: 12ms</span>
@@ -430,7 +440,7 @@ function Home() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-ui">
-                  <span className="text-emerald-400 font-semibold flex items-center gap-1.5">
+                  <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
                     <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
                     Completed & Archived
                   </span>
@@ -616,14 +626,17 @@ function Home() {
       <section className="section border-t border-border">
         <div className="shell grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
           <div className="overflow-hidden rounded-3xl border border-border shadow-2xl">
-            <img
-              src={nightImage}
-              alt="Students observing the night sky through a telescope"
-              width={1408}
-              height={1008}
-              loading="lazy"
-              className="aspect-[4/3] w-full object-cover"
-            />
+            <picture>
+              <source srcSet={nightImageWebp} type="image/webp" />
+              <img
+                src={nightImage}
+                alt="Students observing the night sky through a telescope"
+                width={800}
+                height={600}
+                loading="lazy"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </picture>
           </div>
           <div>
             <p className="eyebrow mb-6">Current Focus</p>
