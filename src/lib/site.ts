@@ -13,7 +13,6 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
-  { label: "AeroForge Lab", to: "/aeroforge" },
   { label: "Projects", to: "/projects" },
   { label: "Programs", to: "/programs" },
   { label: "Get Involved", to: "/get-involved" },

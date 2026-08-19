@@ -100,13 +100,6 @@ export function Navbar() {
 
           <ThemeToggle />
 
-          <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex rounded-full font-medium border-primary/30 hover:bg-primary/10 transition-all duration-300">
-            <Link to="/aeroforge" className="flex items-center gap-1.5">
-              <Rocket className="size-3.5 text-primary" />
-              <span>AeroForge Lab</span>
-            </Link>
-          </Button>
-
           <Button asChild size="sm" className="hidden sm:inline-flex rounded-full font-medium">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
               <MessageCircle className="size-3.5" />
@@ -162,9 +155,8 @@ export function Navbar() {
         </ul>
         <div className="shell flex flex-col gap-3 pb-8">
           <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none">
-            <Link to="/aeroforge" className="flex items-center justify-center gap-2">
-              <Rocket className="size-4" />
-              <span>Launch AeroForge Lab</span>
+            <Link to="/projects" className="flex items-center justify-center gap-2">
+              <span>Explore Our Projects</span>
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="rounded-full">
