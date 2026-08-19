@@ -14,6 +14,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "AeroForge Lab", to: "/aeroforge" },
+  { label: "Projects", to: "/projects" },
   { label: "Programs", to: "/programs" },
   { label: "Get Involved", to: "/get-involved" },
   { label: "Contact", to: "/contact" },
@@ -364,5 +365,29 @@ export const PROJECTS = [
     team: "Community + Outreach",
     blurb:
       "A ready-to-run space science workshop kit enabling any school to host hands-on Polaris experimentation sessions with their students.",
+  },
+  {
+    slug: "polaris-ai",
+    name: "Polaris AI",
+    stage: "Coming soon",
+    team: "AI + Education Team",
+    blurb:
+      "An AI-powered educational companion that helps students explore space science concepts, generate interactive study aids, and receive guided problem-solving assistance across physics, astronomy, and engineering topics.",
+  },
+  {
+    slug: "research-digest",
+    name: "Polaris Research Digest",
+    stage: "Planned",
+    team: "Research + Content",
+    blurb:
+      "A curated, student-written monthly digest summarising the latest space science and engineering research in accessible language — bridging the gap between academia and young builders.",
+  },
+  {
+    slug: "space-weather-dashboard",
+    name: "Space Weather Dashboard",
+    stage: "Planned",
+    team: "Data + Visualisation",
+    blurb:
+      "A real-time dashboard tracking solar activity, geomagnetic storms, and auroral forecasts — built by students, for student observers and amateur astronomers.",
   },
 ] as const;

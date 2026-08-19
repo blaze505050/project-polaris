@@ -13,17 +13,18 @@ import {
   MessageCircle,
   ExternalLink,
   Linkedin,
-  Rocket,
   Calendar,
   HeartHandshake,
   UserPlus,
   CheckCircle2,
+  FolderKanban,
+  Mail,
+  Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { Starfield } from "@/components/site/Starfield";
 import { Newsletter } from "@/components/site/Newsletter";
-import { InteractiveAeroForgeDemo } from "@/components/site/InteractiveAeroForgeDemo";
 import { OpportunityCard } from "@/components/site/OpportunityCard";
 import { Timeline } from "@/components/site/Timeline";
 import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
@@ -146,9 +147,9 @@ function Home() {
             {/* Hero CTAs — stagger 3 */}
             <div className={`${heroEntrance} mt-9 flex flex-wrap gap-3.5`} style={heroVisible ? stagger(3) : { opacity: 0 }}>
               <Button asChild size="lg" className="rounded-full shadow-lg shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none">
-                <Link to="/aeroforge" className="flex items-center gap-2">
-                  <Rocket className="size-4" />
-                  <span>Launch AeroForge Lab</span>
+                <Link to="/projects" className="flex items-center gap-2">
+                  <FolderKanban className="size-4" />
+                  <span>Explore Our Projects</span>
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
@@ -231,102 +232,6 @@ function Home() {
         </div>
       </section>
 
-      {/* AEROFORGE SHOWCASE */}
-      <section className="section border-b border-border bg-surface/30 relative overflow-hidden">
-        {/* Glow */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[120px] pointer-events-none rounded-full" />
-        
-        <div className="shell grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <span className="eyebrow mb-4 block">Flagship Platform</span>
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground leading-tight">
-              AeroForge AI <span className="text-gradient-star">Space Engineering Lab</span>
-            </h2>
-            <p className="mt-6 text-muted-foreground text-lg leading-relaxed">
-              We believe in learning by doing. AeroForge is our custom, student-built aerospace and mechanical research laboratory running right in your browser.
-            </p>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              Equipped with over 40 numerical solvers, aerospace atmospheric models, structural calculators, orbital trajectory integrators, and aerodynamics tools.
-            </p>
-
-            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-bold text-foreground text-sm">Aerodynamics & CFD</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Airfoil analysers, compressible flows, boundary layer estimation, and Mach sweeps.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-bold text-foreground text-sm">Orbital Mechanics</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Keplerian orbit prediction, 2-body numerical integrators, and satellite ground tracks.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-bold text-foreground text-sm">Structural Lab</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Beam bending mechanics, Mohr's circle, thin-walled pressure vessel stress analysis.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <h3 className="font-bold text-foreground text-sm">ISA Atmosphere Solver</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Accurate international standard atmosphere solver up to the mesosphere.</p>
-                </div>
-              </li>
-            </ul>
-
-            <div className="mt-10">
-              <Button asChild size="lg" className="rounded-full shadow-lg shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none">
-                <Link to="/aeroforge" className="flex items-center gap-2">
-                  <Rocket className="size-4" />
-                  <span>Launch AeroForge Lab</span>
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="relative group justify-self-center lg:justify-self-end w-full max-w-[450px]">
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 blur-xl opacity-30 rounded-3xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 md:p-6 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center justify-between border-b border-border pb-3.5 mb-4">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-green-500/80" />
-                </div>
-                <span className="text-[10px] font-mono text-slate-300">aeroforge-simulation-node · Illustrative example</span>
-              </div>
-              <div className="space-y-3.5 font-mono text-xs text-slate-200">
-                <div className="text-primary font-semibold">// Initiating computational flow solver</div>
-                <div className="text-slate-100 font-medium">&gt; aeroforge-solver --airfoil naca4412 --mach 0.8 --alpha 4.0</div>
-                <div className="bg-surface-2 p-4 rounded-xl border border-border text-[11px] leading-relaxed text-slate-200">
-                  <span className="text-sky-300 font-semibold"> Reynolds Number:</span> <span className="text-white">3.1e6</span> <br />
-                  <span className="text-sky-300 font-semibold"> Lift Coefficient (Cl):</span> <span className="text-white">0.824</span> <br />
-                  <span className="text-sky-300 font-semibold"> Drag Coefficient (Cd):</span> <span className="text-white">0.0125</span> <br />
-                  <span className="text-sky-300 font-semibold"> L/D Ratio:</span> <span className="text-white">65.92</span> <br />
-                  <span className="text-emerald-300 font-semibold"> ✓ Convergence reached in 143 iterations</span>
-                </div>
-                <div className="flex items-center justify-between text-[10px] text-slate-300 pt-2 border-t border-border">
-                  <span>RAM: 124MB</span>
-                  <span>CPU: 4.2%</span>
-                  <span>Latency: 12ms</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Full Interactive Hands-on Demonstration Sandbox */}
-          <div className="lg:col-span-2 pt-6">
-            <InteractiveAeroForgeDemo />
-          </div>
-        </div>
-      </section>
 
       {/* FIRST COURSE LAUNCH SPOTLIGHT */}
       <section className="section">
@@ -684,6 +589,99 @@ function Home() {
         </div>
       </section>
 
+      {/* NEWSLETTER SECTION */}
+      <section className="section border-t border-border relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/8 blur-[160px] pointer-events-none rounded-full" />
+        <div className="shell relative">
+          <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card/60 backdrop-blur-2xl p-8 md:p-12 shadow-2xl">
+            <div className="text-center">
+              <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary/15 text-primary mb-6 ring-8 ring-primary/5">
+                <Mail className="size-6" />
+              </div>
+              <p className="eyebrow mb-3">Stay in the Loop</p>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Get weekly updates from <span className="text-gradient-star">Polaris</span>
+              </h2>
+              <p className="mt-4 text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                Workshops, project launches, community stories, and learning resources — delivered to your inbox every week.
+              </p>
+            </div>
+            <Newsletter className="mt-8 max-w-xl mx-auto" />
+          </div>
+        </div>
+      </section>
+
+      {/* JOIN WHATSAPP COMMUNITY */}
+      <section className="section border-t border-border bg-surface/20 relative overflow-hidden">
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[140px] pointer-events-none rounded-full" />
+        <div className="shell relative">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <p className="eyebrow mb-4 !text-emerald-400">Community</p>
+              <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
+                Join <span className="text-emerald-400">400+ builders</span> on WhatsApp
+              </h2>
+              <p className="mt-6 text-muted-foreground leading-relaxed max-w-lg">
+                Our WhatsApp community is where daily learning happens — "Aaj Ka Gyan" science posts, live workshop announcements, project discussions, and real conversations between students and mentors.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {[
+                  "Daily educational content & science discussions",
+                  "First access to workshop registrations",
+                  "Project collaboration & team formation",
+                  "Direct interaction with mentors & experts",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                    <CheckCircle2 className="size-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-white border-none shadow-lg shadow-emerald-500/25 font-semibold">
+                  <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                    <MessageCircle className="size-4" />
+                    <span>Join WhatsApp Community</span>
+                    <ArrowRight className="size-4" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="rounded-full border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+                  <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                    <HeartHandshake className="size-4" />
+                    <span>Volunteer Program</span>
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            {/* Community stats card */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-primary/10 blur-xl opacity-30 rounded-3xl" />
+              <div className="relative rounded-3xl border border-emerald-500/20 bg-card/60 backdrop-blur-2xl p-7 md:p-8 shadow-2xl">
+                <div className="grid grid-cols-2 gap-6">
+                  {[
+                    { value: "400+", label: "Community Members", color: "text-emerald-400" },
+                    { value: "3", label: "Expert Workshops", color: "text-primary" },
+                    { value: "28+", label: "Team Contributors", color: "text-sky-400" },
+                    { value: "7+", label: "Active Projects", color: "text-amber-400" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="text-center p-4 rounded-2xl bg-surface/50 border border-border">
+                      <span className={`font-display text-3xl font-extrabold ${stat.color}`}>{stat.value}</span>
+                      <p className="font-ui text-xs text-muted-foreground mt-1.5 font-medium">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 pt-5 border-t border-border text-center">
+                  <p className="text-xs text-muted-foreground font-ui">
+                    Started June 7th, 2026 · Growing every day
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FINAL CTA */}
       <section className="veil relative overflow-hidden border-t border-border">
         <Starfield density={0.8} />
@@ -696,19 +694,18 @@ function Home() {
           <p className="mx-auto mt-6 max-w-xl text-muted-foreground">{SITE.tagline}</p>
           <div className="mt-10 flex flex-col justify-center items-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none px-8">
-              <Link to="/aeroforge" className="flex items-center gap-2">
-                <Rocket className="size-4" />
-                <span>Launch AeroForge Lab</span>
+              <Link to="/projects" className="flex items-center gap-2">
+                <FolderKanban className="size-4" />
+                <span>Explore Our Projects</span>
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 backdrop-blur-md px-8">
-              <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
-                Join WhatsApp Community
+              <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                <MessageCircle className="size-4" />
+                <span>Join the Community</span>
               </a>
             </Button>
           </div>
-
-          <Newsletter className="mt-16 max-w-4xl mx-auto text-left" />
         </div>
       </section>
     </>
