@@ -37,26 +37,38 @@ function NotFoundComponent() {
 }
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
-  console.error(error);
+  console.error("[Project Polaris Root Error]:", error);
   const router = useRouter();
 
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <h1 className="font-display text-2xl">This page didn't load</h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Something went wrong on our end. Try again, or head back home.
+    <div className="flex min-h-[75vh] items-center justify-center px-4 py-12">
+      <div className="max-w-lg w-full text-center rounded-3xl border border-destructive/30 bg-card/80 backdrop-blur-2xl p-8 md:p-10 shadow-2xl">
+        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive mb-6 ring-8 ring-destructive/5">
+          <span className="text-2xl font-bold">!</span>
+        </div>
+        <p className="eyebrow mb-2 !text-destructive">Runtime Alert</p>
+        <h1 className="font-display text-3xl font-bold text-foreground">Application Encountered an Issue</h1>
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+          We encountered an unexpected error while initializing this section. You can retry the operation or return to the main dashboard.
         </p>
+
+        {error?.message && (
+          <div className="mt-5 text-left p-3.5 rounded-xl bg-surface border border-border text-xs font-mono text-muted-foreground overflow-auto max-h-36">
+            <span className="text-destructive font-semibold">Error:</span> {error.message}
+          </div>
+        )}
+
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button
             onClick={() => {
               router.invalidate();
               reset();
             }}
+            className="rounded-full bg-primary text-primary-foreground font-semibold px-6"
           >
             Try again
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="rounded-full px-6">
             <a href="/">Go home</a>
           </Button>
         </div>

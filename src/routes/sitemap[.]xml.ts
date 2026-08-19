@@ -24,6 +24,7 @@ const PAGES: { path: string; priority: string; changefreq: string }[] = [
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
+  component: () => null,
   server: {
     handlers: {
       GET: async () => {
