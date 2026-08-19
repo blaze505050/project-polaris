@@ -3,6 +3,10 @@
   "cleanUrls": false,
   "rewrites": [
     {
+      "source": "/aeroforge/:match*",
+      "destination": "/aeroforge/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
