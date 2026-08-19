@@ -141,7 +141,7 @@ function AeroForgeLab() {
 
           {/* Standalone View */}
           <a
-            href="/aeroforge/index.html"
+            href="/aeroforge/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open AeroForge in Standalone Tab"
