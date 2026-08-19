@@ -8,7 +8,7 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { Starfield } from "@/components/site/Starfield";
-import { JOURNEY, VALUES, TEAM_MEMBERS, SITE } from "@/lib/site";
+import { JOURNEY, VALUES, TEAM_MEMBERS, DEPARTMENTS, RECOGNITION_SYSTEM, WORKING_CULTURE, SITE } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
 import {
   ExternalLink,
@@ -23,6 +23,9 @@ import {
   Flame,
   CheckCircle2,
   Calendar,
+  Layers,
+  HeartHandshake,
+  BookOpen,
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
@@ -231,11 +234,11 @@ function About() {
           <div className="mt-8 rounded-2xl border border-border bg-card/60 p-6 md:p-8 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
               <h3 className="font-display font-bold text-foreground text-lg">Full Team & Advisory Board Roster Updating Soon</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground font-body">
                 We are currently expanding our core departments, volunteer network, and advisory board across schools and universities. Official member portraits and bios will be published shortly.
               </p>
             </div>
-            <Button asChild variant="outline" className="rounded-full shrink-0">
+            <Button asChild variant="outline" className="rounded-full shrink-0 font-ui">
               <Link to="/get-involved" className="flex items-center gap-2">
                 <span>Join the Team</span>
                 <ArrowRight className="size-4" />
@@ -245,11 +248,105 @@ function About() {
         </div>
       </section>
 
-      {/* CORE VALUES */}
+      {/* ORGANISATIONAL DEPARTMENTS */}
+      <section className="section border-t border-border bg-surface/10">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <p className="eyebrow mb-3 text-accent">Organisational Structure</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              Our Core Departments
+            </h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground leading-relaxed font-body">
+              Project Polaris operates through specialized student departments that collaborate to achieve our experiential learning mission.
+            </p>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {DEPARTMENTS.map((dept, idx) => (
+                <article
+                  key={dept.name}
+                  className="card-elevated p-7 flex flex-col justify-between border-white/10 hover:border-accent/40 transition-all duration-300 h-full"
+                >
+                  <div>
+                    <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-ui text-[10px] uppercase font-bold tracking-wider mb-4">
+                      {dept.role}
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-foreground">{dept.name}</h3>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">{dept.blurb}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* RECOGNITION SYSTEM & WORKING CULTURE */}
       <section className="section border-t border-border">
         <div className="shell">
           <ScrollReveal direction="up">
-            <p className="eyebrow mb-5">Our Values</p>
+            <div className="grid gap-12 lg:grid-cols-2">
+              {/* Recognition System */}
+              <div className="card-elevated p-8 md:p-10 border-accent/25 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-accent font-ui text-xs uppercase font-bold tracking-wider mb-3">
+                    <Award className="size-4" />
+                    <span>Reward Framework</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+                    Recognition System
+                  </h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">
+                    We recognize genuine student contributions through a structured, merit-based reward system that validates real-world skills.
+                  </p>
+
+                  <ul className="mt-6 space-y-3 font-ui text-xs text-foreground">
+                    {RECOGNITION_SYSTEM.map((item) => (
+                      <li key={item} className="flex items-center gap-3 p-2.5 rounded-lg bg-surface-2 border border-border">
+                        <CheckCircle2 className="size-4 text-accent shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Working Culture */}
+              <div className="card-elevated p-8 md:p-10 border-primary/25 relative overflow-hidden flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-primary font-ui text-xs uppercase font-bold tracking-wider mb-3">
+                    <HeartHandshake className="size-4" />
+                    <span>Values in Action</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+                    Working Culture
+                  </h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">
+                    Every volunteer, associate, and core team member operates with professional standards and high peer empathy.
+                  </p>
+
+                  <div className="mt-6 space-y-2.5">
+                    {WORKING_CULTURE.map(({ rule, detail }) => (
+                      <div key={rule} className="p-3 rounded-lg bg-surface-2 border border-border flex items-start gap-3">
+                        <span className="size-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
+                        <div>
+                          <p className="font-ui font-semibold text-xs text-foreground">{rule}</p>
+                          <p className="text-[11px] text-muted-foreground mt-0.5 font-body">{detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* CORE VALUES */}
+      <section className="section border-t border-border bg-surface/20">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <p className="eyebrow mb-5 text-accent">Our Values</p>
             <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold">What we hold ourselves to</h2>
             <dl className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
               {VALUES.map((value) => (

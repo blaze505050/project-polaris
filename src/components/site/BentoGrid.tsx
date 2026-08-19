@@ -4,11 +4,11 @@ import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
 import {
-  Cpu,
-  Orbit,
   Sparkles,
-  Radio,
-  FileText,
+  Orbit,
+  BookOpen,
+  Users,
+  Award,
   ArrowRight,
   ExternalLink,
   Flame,
@@ -16,10 +16,11 @@ import {
   Calendar,
   Layers,
   ChevronRight,
+  Compass,
 } from "lucide-react";
 
 export function BentoGrid() {
-  const [activeSolver, setActiveSolver] = useState<"cfd" | "orbital" | "fea">("cfd");
+  const [activeTab, setActiveTab] = useState<"research" | "content" | "operations">("research");
 
   return (
     <section className="section relative overflow-hidden">
@@ -29,94 +30,89 @@ export function BentoGrid() {
 
       <div className="shell">
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono font-semibold uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-ui font-semibold uppercase tracking-wider mb-4">
             <Sparkles className="size-3.5" />
-            <span>The Polaris Ecosystem</span>
+            <span>Experiential Learning Ecosystem</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-foreground tracking-tight">
-            Built for Builders, Powered by Real Science
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foreground tracking-tight">
+            Learn by Building, Rather than Building After Learning.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            From browser-based physics supercomputing to hands-on satellite payloads and ISRO masterclasses — explore how Polaris transforms curiosity into authentic engineering.
+            Project Polaris bridges the gap between traditional textbooks and real-world skills through student-led research, daily learning, and hands-on masterclasses.
           </p>
         </div>
 
         {/* BENTO GRID CONTAINER */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-5 md:gap-6">
-          {/* 1. MAIN HERO BENTO: AeroForge AI Lab (Span 7 cols) */}
+          {/* 1. MAIN HERO BENTO: Student Innovation & AeroForge (Span 7 cols) */}
           <SpotlightCard
             spotlightColor="rgba(197, 157, 255, 0.22)"
             className="lg:col-span-7 flex flex-col justify-between border border-primary/25 bg-gradient-to-br from-slate-950/90 via-slate-900/60 to-primary/5 p-7 md:p-9"
           >
             <div>
               <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-xs font-mono font-bold text-primary">
-                  <Cpu className="size-3.5" />
-                  FLAGSHIP PROJECT
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-xs font-ui font-bold text-primary">
+                  <Compass className="size-3.5" />
+                  STUDENT INNOVATION LAB
                 </span>
-                <span className="font-mono text-xs text-muted-foreground">40+ Physics Solvers Online</span>
+                <span className="font-ui text-xs text-accent font-semibold">100% Student-Created</span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-                AeroForge AI Simulation Lab
+                AeroForge Simulation Suite
               </h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xl">
-                A full-stack, browser-native aerospace research suite built completely by students. Perform 2D/3D compressible CFD, two-body & restricted three-body orbital propagation, and structural FEA without expensive workstation licenses.
+              <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xl font-body">
+                An interactive engineering and aerodynamics research platform built completely by students. Designed to make high-level physics accessible to curious learners across schools and universities.
               </p>
 
-              {/* Interactive Solver Switcher */}
+              {/* Department Overview Switcher */}
               <div className="mt-6 p-4 rounded-xl border border-white/10 bg-slate-950/80 backdrop-blur-md">
-                <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-3 mb-3 text-xs font-mono">
-                  <span className="text-muted-foreground">Sim Engine:</span>
+                <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-3 mb-3 text-xs font-ui">
+                  <span className="text-muted-foreground">Focus Area:</span>
                   <div className="flex gap-1.5">
-                    {(["cfd", "orbital", "fea"] as const).map((s) => (
+                    {(["research", "content", "operations"] as const).map((tab) => (
                       <button
-                        key={s}
-                        onClick={() => setActiveSolver(s)}
-                        className={`px-2.5 py-1 rounded-md transition-all font-semibold uppercase ${
-                          activeSolver === s
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`px-3 py-1 rounded-md transition-all font-semibold capitalize ${
+                          activeTab === tab
                             ? "bg-primary text-primary-foreground shadow-sm"
                             : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                         }`}
                       >
-                        {s}
+                        {tab}
                       </button>
                     ))}
                   </div>
                 </div>
 
-                {/* Simulated Visual Graph Preview */}
-                <div className="h-28 rounded-lg bg-black/40 border border-white/5 p-3 flex flex-col justify-between font-mono text-[11px] text-muted-foreground relative overflow-hidden">
-                  <div className="absolute inset-0 blueprint opacity-25" />
-                  <div className="flex justify-between items-center z-10">
-                    <span className="text-primary font-bold">
-                      {activeSolver === "cfd" && "Compressible Navier-Stokes (Mach 2.4)"}
-                      {activeSolver === "orbital" && "Runge-Kutta 4th Order LEO Orbit"}
-                      {activeSolver === "fea" && "Von Mises Stress Tensor (Inconel 718)"}
-                    </span>
-                    <span className="text-emerald-400 flex items-center gap-1">
-                      <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
-                      Converged
-                    </span>
-                  </div>
-
-                  {/* Animated Waveform Simulation */}
-                  <div className="h-10 w-full flex items-end gap-1 z-10 pt-2">
-                    {[40, 65, 30, 85, 95, 45, 60, 75, 50, 90, 100, 70, 80, 55, 65, 90, 85, 95, 60, 75, 80].map(
-                      (h, idx) => (
-                        <div
-                          key={idx}
-                          className="flex-1 bg-gradient-to-t from-primary/40 to-accent rounded-t-sm transition-all duration-500"
-                          style={{ height: `${activeSolver === "cfd" ? h : activeSolver === "orbital" ? (h * 1.2) % 100 : (h * 0.8) % 100}%` }}
-                        />
-                      )
-                    )}
-                  </div>
-
-                  <div className="flex justify-between text-[10px] text-slate-400 z-10">
-                    <span>Mesh: 24,000 Cells</span>
-                    <span>Residual: 1.42e-6</span>
-                  </div>
+                {/* Focus Preview Box */}
+                <div className="rounded-lg bg-black/40 border border-white/5 p-4 font-body text-xs text-slate-300 relative overflow-hidden">
+                  <div className="blueprint-grid absolute inset-0 opacity-20 pointer-events-none" />
+                  {activeTab === "research" && (
+                    <div className="relative z-10 space-y-2">
+                      <div className="font-display font-bold text-sm text-primary">Research Department</div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Conducts scientific inquiry, verifies information, supports educational modules, and builds interactive simulation tools that make physics and space science tangible.
+                      </p>
+                    </div>
+                  )}
+                  {activeTab === "content" && (
+                    <div className="relative z-10 space-y-2">
+                      <div className="font-display font-bold text-sm text-accent">Content Department</div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Curates daily "Aaj Ka Gyan" themed science drops, weekend polls, interactive quizzes, and educational publications across student channels.
+                      </p>
+                    </div>
+                  )}
+                  {activeTab === "operations" && (
+                    <div className="relative z-10 space-y-2">
+                      <div className="font-display font-bold text-sm text-emerald-400">Operations Department</div>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Manages community coordination, volunteer onboarding, workshop scheduling, and student fellowship initiatives.
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -124,12 +120,12 @@ export function BentoGrid() {
             <div className="mt-7 flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/40">
               <Button asChild size="default" className="rounded-full font-semibold shadow-md bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none btn-shimmer">
                 <Link to="/aeroforge" className="flex items-center gap-2">
-                  <span>Launch AeroForge Lab</span>
+                  <span>Open Simulation Workstation</span>
                   <ArrowRight className="size-4" />
                 </Link>
               </Button>
-              <Link to="/projects" className="text-xs font-ui text-muted-foreground hover:text-primary font-semibold flex items-center gap-1">
-                <span>View project architecture</span>
+              <Link to="/about" className="text-xs font-ui text-muted-foreground hover:text-primary font-semibold flex items-center gap-1">
+                <span>Learn about our departments</span>
                 <ChevronRight className="size-3" />
               </Link>
             </div>
@@ -277,40 +273,40 @@ export function BentoGrid() {
             </Button>
           </SpotlightCard>
 
-          {/* 5. OPEN RESEARCH & PUBLICATIONS (Span 4 cols) */}
+          {/* 5. STUDENT RECOGNITION & GROWTH SYSTEM (Span 4 cols) */}
           <SpotlightCard
-            spotlightColor="rgba(56, 189, 248, 0.2)"
+            spotlightColor="rgba(212, 175, 55, 0.2)"
             className="lg:col-span-4 flex flex-col justify-between border border-accent/20 bg-slate-950/80 p-6 md:p-7"
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs font-mono font-bold text-accent">
-                  <FileText className="size-3.5" />
-                  PUBLICATIONS
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-xs font-ui font-bold text-accent">
+                  <Award className="size-3.5" />
+                  RECOGNITION SYSTEM
                 </span>
-                <span className="font-mono text-xs text-muted-foreground">Open Access</span>
+                <span className="font-ui text-xs text-muted-foreground">Merit-Driven</span>
               </div>
 
-              <h3 className="text-xl font-display font-bold text-foreground">Student Research & Papers</h3>
-              <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                Encouraging school and college students to draft authentic literature reviews, simulation papers, and astronomical observation logs.
+              <h3 className="text-xl font-display font-bold text-foreground">Points, Badges & Letters</h3>
+              <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
+                We celebrate real student contributions with a verified recognition framework — validating skills for future admissions and careers.
               </p>
 
               <div className="mt-4 p-3 rounded-lg border border-border bg-surface-2 space-y-2">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="size-4 text-accent shrink-0 mt-0.5" />
-                  <span className="text-xs text-foreground">Peer-reviewed format & methodology</span>
+                  <span className="text-xs text-foreground font-ui">Contribution Points & Performance Badges</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="size-4 text-accent shrink-0 mt-0.5" />
-                  <span className="text-xs text-foreground">Sky Atlas community observation logs</span>
+                  <span className="text-xs text-foreground font-ui">Official Recommendation Letters & Awards</span>
                 </div>
               </div>
             </div>
 
             <Button asChild variant="outline" size="sm" className="mt-6 w-full rounded-full border-white/20 hover:border-accent/50">
-              <Link to="/get-involved" className="flex items-center justify-center gap-1.5">
-                <span>Join Research Cohort</span>
+              <Link to="/get-involved" className="flex items-center justify-center gap-1.5 font-ui">
+                <span>Explore Opportunities</span>
                 <ArrowRight className="size-3.5" />
               </Link>
             </Button>

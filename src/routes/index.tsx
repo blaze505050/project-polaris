@@ -37,7 +37,7 @@ import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
-import { HeroHUD } from "@/components/site/HeroHUD";
+import { PolarisStarCenterpiece } from "@/components/site/PolarisStarCenterpiece";
 import { BentoGrid } from "@/components/site/BentoGrid";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { opportunitiesQuery } from "@/lib/db";
@@ -157,44 +157,44 @@ function Home() {
         <div className="shell relative grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative z-10">
             {/* Live Badge — stagger 0 */}
-            <div className={`${heroEntrance} inline-flex items-center gap-2.5 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs text-primary mb-8 backdrop-blur-xl shadow-[0_0_20px_-3px_rgba(197,157,255,0.25)]`} style={heroVisible ? stagger(0) : { opacity: 0 }}>
+            <div className={`${heroEntrance} inline-flex items-center gap-2.5 rounded-full border border-accent/40 bg-accent/10 px-4 py-1.5 text-xs text-accent mb-8 backdrop-blur-xl shadow-[0_0_20px_-3px_rgba(212,175,55,0.25)]`} style={heroVisible ? stagger(0) : { opacity: 0 }}>
               <span className="relative flex size-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full size-2 bg-primary"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full size-2 bg-accent"></span>
               </span>
-              <span className="font-ui font-semibold tracking-wide uppercase text-[0.7rem]">Student-Led Deeptech & Space Research</span>
+              <span className="font-ui font-semibold tracking-wide uppercase text-[0.7rem]">Student-Led Experiential Learning Organization</span>
             </div>
 
             {/* Headline — stagger 1 */}
-            <h1 className={`${heroEntrance} text-4xl sm:text-5xl lg:text-[4.25rem] font-display font-extrabold tracking-tight text-foreground leading-[1.15]`} style={heroVisible ? stagger(1) : { opacity: 0 }}>
-              Learning through <span className="text-gradient-star">Building</span>,
-              <span className="block text-lg sm:text-xl lg:text-2xl text-muted-foreground font-ui font-medium tracking-normal mt-4">
-                rather than Building after learning.
+            <h1 className={`${heroEntrance} text-4xl sm:text-5xl lg:text-[4.25rem] font-display font-bold tracking-tight text-foreground leading-[1.15]`} style={heroVisible ? stagger(1) : { opacity: 0 }}>
+              Learn by <span className="text-gradient-star">Building</span>,
+              <span className="block text-2xl sm:text-3xl lg:text-4xl text-slate-300 font-body italic tracking-normal mt-3 font-normal">
+                rather than building after learning.
               </span>
             </h1>
 
             {/* Description — stagger 2 */}
-            <p className={`${heroEntrance} mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
-              Project Polaris empowers students to research, engineer, simulate, and collaborate on real-world space science and deeptech problems — before traditional academia tells them they're ready.
+            <p className={`${heroEntrance} mt-7 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed font-body`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
+              Project Polaris empowers middle school, high school, and college students to explore, build, and solve meaningful real-world problems through workshops, research, mentorship, and experiential opportunities.
             </p>
 
             {/* Hero CTAs — stagger 3 */}
             <div className={`${heroEntrance} mt-9 flex flex-wrap gap-3.5`} style={heroVisible ? stagger(3) : { opacity: 0 }}>
               <Button asChild size="lg" className="rounded-full shadow-xl shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
-                <Link to="/projects" className="flex items-center gap-2">
+                <Link to="/projects" className="flex items-center gap-2 font-ui">
                   <FolderKanban className="size-4" />
                   <span>Explore Our Projects</span>
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 font-semibold backdrop-blur-md transition-all duration-300">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-                  <MessageCircle className="size-4 text-primary" />
+              <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-accent/50 hover:scale-105 active:scale-95 font-semibold backdrop-blur-md transition-all duration-300">
+                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 font-ui">
+                  <MessageCircle className="size-4 text-accent" />
                   <span>Join Community Free</span>
                 </a>
               </Button>
               <Button asChild size="lg" variant="ghost" className="rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 hover:scale-105 active:scale-95 font-semibold transition-all duration-300">
-                <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 font-ui">
                   <span>Volunteer Program</span>
                   <ExternalLink className="size-3.5 opacity-70" />
                 </a>
@@ -203,14 +203,14 @@ function Home() {
 
             {/* Footer note — stagger 4 */}
             <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-muted-foreground uppercase font-medium flex items-center gap-2`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
-              <span className="size-1.5 rounded-full bg-primary" />
-              <span>120+ Active Builders · ISRO Masterclasses · Open Access</span>
+              <span className="size-1.5 rounded-full bg-accent" />
+              <span>120+ Active Builders · ISRO Masterclasses · Daily Learning</span>
             </p>
           </div>
 
-          {/* Hero Interactive HUD Centerpiece — stagger 2 */}
+          {/* Hero Polaris Photographic Centerpiece — stagger 2 */}
           <div className={`${heroEntrance} relative z-10`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
-            <HeroHUD />
+            <PolarisStarCenterpiece />
           </div>
         </div>
       </section>

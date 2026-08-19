@@ -152,6 +152,46 @@ export const WHY_JOIN_PILLARS = [
   },
 ] as const;
 
+export const DEPARTMENTS = [
+  {
+    name: "Research Department",
+    role: "Inquiry & Tools",
+    blurb:
+      "Conducts research, verifies information, supports educational content, develops research projects, and promotes evidence-based learning. The department also creates effective projects and tools that help students learn more effectively.",
+  },
+  {
+    name: "Content Department",
+    role: "Knowledge & Media",
+    blurb:
+      "Creates educational content across various platforms including articles, social media, presentations, videos, and learning resources — including our daily morning 'Aaj Ka Gyan' drops.",
+  },
+  {
+    name: "Operations Department",
+    role: "Community & Execution",
+    blurb:
+      "Ensures smooth execution of organizational processes, volunteer management, documentation, scheduling, workshop logistics, and internal coordination across all cohorts.",
+  },
+] as const;
+
+export const RECOGNITION_SYSTEM = [
+  "Performance Score & Contribution Points",
+  "Digital Badges & Verified Certificates",
+  "Leadership Opportunities in Core Initiatives",
+  "Official Recommendation Letters",
+  "Special Awards & Annual Recognitions",
+  "Exclusive Mentorship & Learning Opportunities",
+] as const;
+
+export const WORKING_CULTURE = [
+  { rule: "Be respectful", detail: "Value every peer's perspective and support an inclusive environment." },
+  { rule: "Take ownership", detail: "Own assigned initiatives from start to finish with proactive initiative." },
+  { rule: "Communicate professionally", detail: "Maintain transparent, clear, and prompt communication." },
+  { rule: "Meet deadlines", detail: "Respect team timelines and deliverables with high consistency." },
+  { rule: "Be open to feedback", detail: "Embrace constructive reviews as opportunities for rapid growth." },
+  { rule: "Support fellow members", detail: "Collaborate, share knowledge, and lift others up as you grow." },
+  { rule: "Continuously learn", detail: "Stay curious, experiment fearlessly, and improve every day." },
+] as const;
+
 export const WHO_CAN_JOIN = [
   {
     category: "School Students",
