@@ -263,7 +263,7 @@ export function BentoGrid() {
                   <span className="text-foreground">J2000 RA / Dec</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Telemetry:</span>
+                  <span>Access:</span>
                   <span className="text-primary font-bold">Open Access Stargazing</span>
                 </div>
               </div>

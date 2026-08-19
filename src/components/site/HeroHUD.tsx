@@ -37,18 +37,18 @@ export function HeroHUD() {
           <span className="text-[10px] font-mono text-primary/80 uppercase tracking-widest mt-0.5">Core Active</span>
           <span className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-mono text-emerald-400">
             <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
-            LIVE TELEMETRY
+            RESEARCH ACTIVE
           </span>
         </div>
 
-        {/* Floating Metric 1: Top Left - Orbital Telemetry */}
+        {/* Floating Metric 1: Top Left - Sky Atlas Catalog */}
         <div className="absolute -top-4 -left-4 sm:-left-8 card-glow p-3.5 flex items-center gap-3 backdrop-blur-xl border border-white/15 animate-[float-slow_6s_ease-in-out_infinite] shadow-lg">
           <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-            <Radio className="size-4 animate-pulse" />
+            <Compass className="size-4 animate-pulse" />
           </div>
           <div>
-            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">Ground Station Telemetry</div>
-            <div className="font-mono text-xs font-bold text-foreground">{telemetry.altitude.toLocaleString()} km · LEO Downlink</div>
+            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">Sky Atlas Catalog</div>
+            <div className="font-mono text-xs font-bold text-foreground">110 Deep-Sky Messier Objects</div>
           </div>
         </div>
 

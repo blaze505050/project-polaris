@@ -97,7 +97,7 @@ const WHAT_WE_DO = [
   {
     icon: Hammer,
     name: "Innovation & Build Projects",
-    note: "Collaborative student teams building real initiatives: AeroForge AI simulation workstation, Orbital Telemetry Hub, and Sky Atlas.",
+    note: "Collaborative student teams building real initiatives: AeroForge AI simulation workstation, Sky Atlas observation database, and Polaris AI.",
   },
   {
     icon: Atom,

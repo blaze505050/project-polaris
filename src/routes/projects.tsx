@@ -27,13 +27,13 @@ export const Route = createFileRoute("/projects")({
       {
         name: "description",
         content:
-          "Student-built Polaris engineering projects and research platforms: AeroForge AI Lab, Orbital Telemetry Hub, Sky Atlas, Polaris AI, Research Digest, and more.",
+          "Student-built Polaris engineering projects and research platforms: AeroForge AI Lab, Sky Atlas, Polaris AI, Research Digest, Space Weather Dashboard, and more.",
       },
       { property: "og:title", content: "Projects & Innovation Labs — Project Polaris" },
       {
         property: "og:description",
         content:
-          "Real things our students are building — from interactive aerospace simulators to orbital telemetry hubs and AI learning companions.",
+          "Real things our students are building — from interactive aerospace simulators to deep-sky observation logs and AI learning companions.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -87,7 +87,6 @@ const ARC = [
 
 const PROJECT_ICONS: Record<string, typeof Rocket> = {
   "aeroforge-ai": Rocket,
-  "orbital-telemetry": Radio,
   "sky-atlas": Compass,
   "schools-outreach-kit": Layers,
   "polaris-ai": Bot,

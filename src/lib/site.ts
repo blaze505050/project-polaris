@@ -396,20 +396,20 @@ export const PROJECTS = [
     featured: true,
   },
   {
-    slug: "orbital-telemetry",
-    name: "Orbital Telemetry Hub",
-    stage: "In progress",
-    team: "Space Tech Team",
-    blurb:
-      "A distributed, student-operated software ground station network for tracking amateur satellites, decoding orbital telemetry, and open science data logging.",
-  },
-  {
     slug: "sky-atlas",
     name: "Sky Atlas",
     stage: "In progress",
     team: "Research + Tech",
     blurb:
       "An open, student-maintained astronomical observation log and constellation guide built from our community night-sky challenges.",
+  },
+  {
+    slug: "research-digest",
+    name: "Polaris Research Digest",
+    stage: "In progress",
+    team: "Research + Content",
+    blurb:
+      "A curated, student-written monthly digest summarising the latest space science and engineering research in accessible language — bridging the gap between academia and young builders.",
   },
   {
     slug: "schools-outreach-kit",
@@ -426,14 +426,6 @@ export const PROJECTS = [
     team: "AI + Education Team",
     blurb:
       "An AI-powered educational companion that helps students explore space science concepts, generate interactive study aids, and receive guided problem-solving assistance across physics, astronomy, and engineering topics.",
-  },
-  {
-    slug: "research-digest",
-    name: "Polaris Research Digest",
-    stage: "Planned",
-    team: "Research + Content",
-    blurb:
-      "A curated, student-written monthly digest summarising the latest space science and engineering research in accessible language — bridging the gap between academia and young builders.",
   },
   {
     slug: "space-weather-dashboard",

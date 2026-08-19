@@ -20,15 +20,15 @@ const DESCRIPTION =
 
 const FLAGSHIP: ShowcaseProject[] = [
   {
-    id: "orbital-telemetry",
-    title: "Orbital Telemetry Hub",
+    id: "aeroforge-ai",
+    title: "AeroForge AI",
     category: "software",
     summary:
-      "A distributed software ground station network for tracking amateur satellites, decoding live orbital telemetry, and open science logging.",
+      "Browser-based engineering research workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics.",
     description: null,
-    team: "Space Tech Team",
-    link: null,
-    stage: "in_progress",
+    team: "Core Engineering Team",
+    link: "/aeroforge",
+    stage: "active",
     created_at: "",
   },
   {

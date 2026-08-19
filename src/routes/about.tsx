@@ -324,7 +324,7 @@ function About() {
                 "International Workshop Expansions",
                 "Innovation Fellowships & Grants",
                 "Institutional School & College Partnerships",
-                "Orbital Simulators & Ground Station Networks",
+                "Interactive Engineering Simulators & Labs",
                 "1-on-1 Mentorship Networks",
                 "Global Student Builder Community",
               ].map((goal) => (
