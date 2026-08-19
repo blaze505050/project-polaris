@@ -46,14 +46,22 @@ export type Resource = {
 export const opportunitiesQuery = queryOptions({
   queryKey: ["opportunities"],
   queryFn: async (): Promise<Opportunity[]> => {
-    const { data, error } = await supabase
-      .from("opportunities")
-      .select("*")
-      .eq("published", true)
-      .order("featured", { ascending: false })
-      .order("created_at", { ascending: true });
-    if (error) throw error;
-    return (data ?? []) as unknown as Opportunity[];
+    try {
+      const { data, error } = await supabase
+        .from("opportunities")
+        .select("*")
+        .eq("published", true)
+        .order("featured", { ascending: false })
+        .order("created_at", { ascending: true });
+      if (error) {
+        console.warn("[Supabase] Failed to fetch opportunities, falling back to empty list:", error.message);
+        return [];
+      }
+      return (data ?? []) as unknown as Opportunity[];
+    } catch (err) {
+      console.warn("[Supabase] Error in opportunitiesQuery:", err);
+      return [];
+    }
   },
 });
 
@@ -61,39 +69,63 @@ export const opportunityQuery = (slug: string) =>
   queryOptions({
     queryKey: ["opportunity", slug],
     queryFn: async (): Promise<Opportunity | null> => {
-      const { data, error } = await supabase
-        .from("opportunities")
-        .select("*")
-        .eq("slug", slug)
-        .eq("published", true)
-        .maybeSingle();
-      if (error) throw error;
-      return (data as unknown as Opportunity) ?? null;
+      try {
+        const { data, error } = await supabase
+          .from("opportunities")
+          .select("*")
+          .eq("slug", slug)
+          .eq("published", true)
+          .maybeSingle();
+        if (error) {
+          console.warn(`[Supabase] Failed to fetch opportunity ${slug}:`, error.message);
+          return null;
+        }
+        return (data as unknown as Opportunity) ?? null;
+      } catch (err) {
+        console.warn(`[Supabase] Error in opportunityQuery for ${slug}:`, err);
+        return null;
+      }
     },
   });
 
 export const eventsQuery = queryOptions({
   queryKey: ["events"],
   queryFn: async (): Promise<PolarisEvent[]> => {
-    const { data, error } = await supabase
-      .from("events")
-      .select("*")
-      .eq("published", true)
-      .order("event_date", { ascending: false });
-    if (error) throw error;
-    return (data ?? []) as unknown as PolarisEvent[];
+    try {
+      const { data, error } = await supabase
+        .from("events")
+        .select("*")
+        .eq("published", true)
+        .order("event_date", { ascending: false });
+      if (error) {
+        console.warn("[Supabase] Failed to fetch events, falling back to empty list:", error.message);
+        return [];
+      }
+      return (data ?? []) as unknown as PolarisEvent[];
+    } catch (err) {
+      console.warn("[Supabase] Error in eventsQuery:", err);
+      return [];
+    }
   },
 });
 
 export const resourcesQuery = queryOptions({
   queryKey: ["resources"],
   queryFn: async (): Promise<Resource[]> => {
-    const { data, error } = await supabase
-      .from("resources")
-      .select("*")
-      .eq("published", true)
-      .order("created_at", { ascending: true });
-    if (error) throw error;
-    return (data ?? []) as unknown as Resource[];
+    try {
+      const { data, error } = await supabase
+        .from("resources")
+        .select("*")
+        .eq("published", true)
+        .order("created_at", { ascending: true });
+      if (error) {
+        console.warn("[Supabase] Failed to fetch resources, falling back to empty list:", error.message);
+        return [];
+      }
+      return (data ?? []) as unknown as Resource[];
+    } catch (err) {
+      console.warn("[Supabase] Error in resourcesQuery:", err);
+      return [];
+    }
   },
 });
