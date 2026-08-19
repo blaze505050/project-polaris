@@ -13,6 +13,7 @@ import {
   MessageCircle,
   ExternalLink,
   Linkedin,
+  Rocket,
   Calendar,
   HeartHandshake,
   UserPlus,
