@@ -3,9 +3,23 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Timeline } from "@/components/site/Timeline";
 import { NorthStar } from "@/components/site/NorthStar";
+import { SectionHeader } from "@/components/site/SectionHeader";
 import { JOURNEY, VALUES, TEAM_MEMBERS, SITE } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
-import { ExternalLink, Linkedin, Users } from "lucide-react";
+import {
+  ExternalLink,
+  Linkedin,
+  Users,
+  Compass,
+  Hammer,
+  Lightbulb,
+  Sparkles,
+  Award,
+  ArrowRight,
+  Flame,
+  CheckCircle2,
+  Calendar,
+} from "lucide-react";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -14,242 +28,291 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Why Project Polaris exists, what we believe, and where a student-led experiential learning organisation is heading.",
+          "What if education wasn't just about passing exams? Discover why Project Polaris was built to turn curiosity into action and students into builders.",
       },
       { property: "og:title", content: "About — Project Polaris" },
       {
         property: "og:description",
-        content: "Why we started, what we believe, and why we chose the name Polaris.",
+        content:
+          "A platform where curiosity becomes action, ideas become projects, and students become builders.",
       },
     ],
   }),
   component: About,
 });
 
+const DILEMMA_QUESTIONS = [
+  { text: "Build something real?", icon: Hammer },
+  { text: "Speak in front of an audience?", icon: Sparkles },
+  { text: "Meet scientists and innovators?", icon: Users },
+  { text: "Conduct authentic research?", icon: Lightbulb },
+  { text: "Turn ideas into meaningful action?", icon: Flame },
+];
+
 function About() {
   return (
     <>
       <PageHeader
-        eyebrow="About"
-        title="Education should create builders, not just learners."
-        lead="Project Polaris is a student-led initiative making practical, hands-on education accessible to every learner."
-      />
+        eyebrow="About Us"
+        title="We believe education should create builders, not just learners."
+        lead="Project Polaris is a student-led initiative dedicated to making practical, hands-on education accessible to every learner."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
+            <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
+              Join Our Community
+            </a>
+          </Button>
+          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+            <Link to="/projects">Explore Projects</Link>
+          </Button>
+        </div>
+      </PageHeader>
 
+      {/* CORE PHILOSOPHY & THE GAP */}
       <section className="section">
-        <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">What is Project Polaris?</h2>
-          <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <p>
-              Project Polaris is an education organisation focused on helping students learn through
-              building, researching, collaborating and solving real-world problems. We work with
-              middle-school students, high-school students, college students, and anyone who simply
-              wants to learn.
+        <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 items-center">
+          <div>
+            <span className="font-ui text-xs font-semibold uppercase tracking-wider text-primary">The Provocation</span>
+            <h2 className="mt-3 text-3xl md:text-5xl font-display font-extrabold text-foreground leading-[1.15]">
+              What if education wasn't just about <span className="text-gradient-star">passing exams?</span>
+            </h2>
+            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+              Millions of students learn every single day. They solve equations, memorise formulas, and study for grades.
+              Yet how many actually get the chance to discover their true potential?
             </p>
-            <p>
-              Rather than focusing on theoretical knowledge alone, we create opportunities where
-              students gain practical experience: working on projects, conducting research,
-              participating in workshops, collaborating with professionals, and contributing to
-              initiatives that create measurable impact.
-            </p>
-            <p className="text-foreground font-medium">
-              We believe every student deserves access to quality learning opportunities regardless
-              of their background or financial condition.
+            <p className="mt-4 text-foreground font-semibold">
+              That is the gap we are determined to close.
             </p>
           </div>
+
+          {/* Interactive Dilemma Cards */}
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            {DILEMMA_QUESTIONS.map(({ text, icon: Icon }, i) => (
+              <div
+                key={text}
+                className="card-elevated p-5 flex items-center gap-4 transition-all duration-300 hover:border-primary/50 group"
+                style={{ animation: `fade-in-up 500ms ease-out ${i * 70}ms both` }}
+              >
+                <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 transition-transform group-hover:scale-110">
+                  <Icon className="size-5" />
+                </div>
+                <p className="font-display font-bold text-foreground text-sm leading-snug">{text}</p>
+              </div>
+            ))}
+            <div className="card-elevated p-5 flex items-center gap-4 border-primary/40 bg-primary/5 sm:col-span-2">
+              <CheckCircle2 className="size-6 text-primary shrink-0" />
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                What if every student had the opportunity to build, experiment, lead, fail, improve, and discover what they are capable of?
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* MANIFESTO SECTION */}
+      <section className="section border-t border-border bg-surface/20 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/10 blur-[150px] pointer-events-none rounded-full" />
+        <div className="shell relative max-w-4xl text-center">
+          <span className="eyebrow mb-4">The Polaris Manifesto</span>
+          <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground leading-tight">
+            So, we built <span className="text-gradient-star">Polaris</span>.
+          </h2>
+          <div className="mt-8 space-y-4 font-display text-xl md:text-2xl text-muted-foreground font-medium">
+            <p className="text-slate-400">Not another coaching institute.</p>
+            <p className="text-slate-400">Not another passive student club.</p>
+            <p className="text-foreground font-bold text-2xl md:text-3xl pt-2">
+              A platform where <span className="text-primary">curiosity becomes action</span>.
+            </p>
+            <p className="text-foreground font-bold text-2xl md:text-3xl">
+              Where <span className="text-primary">ideas become projects</span>.
+            </p>
+            <p className="text-foreground font-bold text-2xl md:text-3xl">
+              Where <span className="text-gradient-star">students become builders</span>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* MISSION & VISION */}
+      <section className="section border-t border-border">
+        <div className="shell grid gap-10 md:grid-cols-2">
+          <article className="card-elevated p-8 md:p-10 border-primary/30 relative overflow-hidden">
+            <div className="absolute top-0 right-0 size-32 bg-primary/10 blur-2xl pointer-events-none rounded-full" />
+            <p className="eyebrow mb-5 text-primary">Our Mission</p>
+            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
+              To make practical, high-quality education accessible and affordable by providing students with real-world experiences, industry exposure, and opportunities to build skills that truly matter.
+            </p>
+            <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
+              Through expert-led workshops, research opportunities, innovation challenges, and hands-on projects, we empower students to discover their potential and turn ideas into impact.
+            </p>
+          </article>
+
+          <article className="card-elevated p-8 md:p-10 border-accent/30 relative overflow-hidden">
+            <div className="absolute top-0 right-0 size-32 bg-accent/10 blur-2xl pointer-events-none rounded-full" />
+            <p className="eyebrow mb-5 text-accent">Our Vision</p>
+            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
+              We envision a future where education is no longer limited by textbooks, classrooms, or examinations.
+            </p>
+            <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
+              To build one of the world's most impactful student communities — one that nurtures curiosity, encourages innovation, and empowers young minds to become researchers, entrepreneurs, scientists, engineers, creators, and leaders capable of shaping the future.
+            </p>
+          </article>
         </div>
       </section>
 
       {/* TEAM SECTION */}
       <section className="section border-t border-border bg-surface/30">
         <div className="shell">
-          <div className="max-w-2xl mb-12">
-            <p className="eyebrow mb-3">Our Team</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Who is behind Project Polaris?</h2>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              Project Polaris is driven by a passionate network of student leaders, associates, volunteers, and guest speakers who believe in hands-on learning.
-            </p>
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+            <div>
+              <p className="eyebrow mb-3">Leadership & Team</p>
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                Behind Project Polaris
+              </h2>
+              <p className="mt-3 max-w-2xl text-muted-foreground leading-relaxed">
+                Project Polaris is founded, built, and led by students who believe in practical learning and scientific exploration.
+              </p>
+            </div>
+            <span className="font-ui text-xs font-semibold px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary">
+              100% Student-Led Initiative
+            </span>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {TEAM_MEMBERS.map((member, i) => (
               <article
                 key={member.name}
-                className="card-elevated p-7 flex flex-col justify-between"
+                className="card-elevated p-7 flex flex-col justify-between hover:border-primary/40 transition-all duration-300"
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
               >
                 <div>
                   <div className="flex items-center justify-between">
-                    <img src={polarisLogo} alt="Polaris Logo" className="size-8 rounded-full" />
-                    {"link" in member && member.link ? (
-                      <a
-                        href={member.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-400 hover:text-primary transition-colors p-1"
-                        aria-label={`${member.name} LinkedIn`}
-                      >
-                        <Linkedin className="size-4" />
-                      </a>
-                    ) : null}
+                    <img src={polarisLogo} alt="Polaris Logo" className="size-9 rounded-full ring-2 ring-primary/20" />
+                    <span className="size-2 rounded-full bg-primary/60" />
                   </div>
                   <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
                   <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
                 </div>
 
-                {"link" in member && member.link ? (
-                  <a
-                    href={member.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-ui mt-6 inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-semibold"
-                  >
-                    <span>View LinkedIn Profile</span>
-                    <ExternalLink className="size-3" />
-                  </a>
-                ) : null}
+                <div className="mt-6 border-t border-border/50 pt-4 flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="font-mono">Project Polaris</span>
+                  <span className="text-primary font-medium">Core Roster</span>
+                </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className="section border-t border-border">
-        <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
-          <div>
-            <p className="eyebrow mb-5">Why we started</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              "What do you want to become?" is the wrong first question.
-            </h2>
-          </div>
-          <div className="space-y-5 text-muted-foreground leading-relaxed">
-            <p>
-              Countless students spend years preparing for exams, yet rarely get the chance to build
-              something meaningful, conduct real research, work with mentors, or collaborate on
-              projects that create impact. Curiosity gives way to marks. Creativity gets limited by
-              textbooks. Learning becomes something to memorise instead of experience.
-            </p>
-            <p>
-              We believed education could be different — not by replacing schools, but by
-              complementing them with the opportunities traditional systems struggle to provide.
-            </p>
-            <p className="border-l-2 border-primary pl-6 font-display text-xl text-foreground font-medium">
-              What if students didn't have to wait until college or a job to start creating,
-              researching, innovating and leading?
-            </p>
-            <p>That question became our starting point.</p>
+          {/* Team Notice Card */}
+          <div className="mt-8 rounded-2xl border border-border bg-card/60 p-6 md:p-8 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center md:text-left">
+              <h3 className="font-display font-bold text-foreground text-lg">Full Team & Advisory Board Roster Updating Soon</h3>
+              <p className="text-sm text-muted-foreground">
+                We are currently expanding our core departments, volunteer network, and advisory board across schools and universities. Official member portraits and bios will be published shortly.
+              </p>
+            </div>
+            <Button asChild variant="outline" className="rounded-full shrink-0">
+              <Link to="/get-involved" className="flex items-center gap-2">
+                <span>Join the Team</span>
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      <section className="section border-t border-border">
-        <div className="shell grid gap-10 md:grid-cols-2">
-          <article className="card-elevated p-8 md:p-10 border-primary/30">
-            <p className="eyebrow mb-5">Our mission</p>
-            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
-              To make practical, high-quality education accessible and affordable by giving students
-              real-world experiences, industry exposure and opportunities to build skills that truly
-              matter.
-            </p>
-          </article>
-          <article className="card-elevated p-8 md:p-10 border-accent/30">
-            <p className="eyebrow mb-5 text-accent">Our vision</p>
-            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
-              A future where education isn't limited by textbooks, classrooms or examinations — and
-              where every learner can experiment, innovate, collaborate and contribute, regardless of
-              background.
-            </p>
-          </article>
-        </div>
-      </section>
-
-
+      {/* CORE VALUES */}
       <section className="section border-t border-border">
         <div className="shell">
-          <p className="eyebrow mb-5">Core values</p>
+          <p className="eyebrow mb-5">Our Values</p>
           <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold">What we hold ourselves to</h2>
-          <dl className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map((value) => (
-              <div key={value.name} className="bg-background p-6">
-                <dt className="font-display text-lg font-semibold">{value.name}</dt>
-                <dd className="mt-2 text-sm text-muted-foreground">{value.note}</dd>
+              <div key={value.name} className="bg-background p-6 hover:bg-surface transition-colors">
+                <dt className="font-display text-lg font-semibold text-foreground">{value.name}</dt>
+                <dd className="mt-2 text-sm text-muted-foreground leading-relaxed">{value.note}</dd>
               </div>
             ))}
           </dl>
         </div>
       </section>
 
+      {/* WHY POLARIS */}
       <section className="veil section relative overflow-hidden border-t border-border">
-        <div className="shell relative grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="shell relative grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 items-center">
           <div>
-            <NorthStar className="size-8 text-primary" />
-            <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold">Why "Polaris"?</h2>
+            <NorthStar className="size-10 text-primary" />
+            <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold">Why the name "Polaris"?</h2>
           </div>
           <div className="space-y-5 text-muted-foreground leading-relaxed">
             <p>
-              For centuries, the North Star has guided explorers through uncertainty. It doesn't tell
+              For centuries, the North Star has guided explorers through uncertainty. It does not tell
               you where to go — it tells you where you are.
             </p>
             <p>
-              In the same way, we want to guide students toward opportunities, purpose, practical
-              learning, experimentation and meaningful action in a world that keeps changing shape.
+              In the same way, we guide students toward opportunities, purpose, practical
+              learning, experimentation, and meaningful action in a fast-evolving world.
             </p>
-            <p className="text-foreground">
-              Project Polaris isn't just another student community. It's built on the belief that
-              learning becomes meaningful when it's applied, that leadership is earned by creating
-              value, and that young people build extraordinary things when given the right
-              environment.
+            <p className="text-foreground font-medium">
+              Project Polaris is built on the conviction that learning becomes memorable when it is applied, that leadership is earned by creating value, and that young people build extraordinary things when given the right environment.
             </p>
           </div>
         </div>
       </section>
 
+      {/* JOURNEY */}
       <section className="section border-t border-border">
         <div className="shell grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
           <div>
-            <p className="eyebrow mb-5">Our journey</p>
+            <p className="eyebrow mb-5">Our Journey</p>
             <h2 className="text-3xl md:text-4xl font-display font-bold">Everything so far</h2>
-            <p className="mt-5 text-sm text-muted-foreground">
-              Short, honest and still very early.
+            <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
+              Transparent, honest, and still very early. Every step has been driven by students who care.
             </p>
           </div>
           <Timeline items={JOURNEY} />
         </div>
       </section>
 
+      {/* WHERE WE'RE GOING */}
       <section className="section border-t border-border bg-surface/30">
-        <div className="shell max-w-3xl">
-          <p className="eyebrow mb-5">Where we're going</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold">The long version of this project</h2>
-          <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+        <div className="shell max-w-4xl">
+          <p className="eyebrow mb-5">Future Roadmaps</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold">Where we are heading next</h2>
+          <p className="mt-3 text-muted-foreground">Programs, fellowships, camps, and global cohorts currently in development.</p>
+
+          <ul className="mt-10 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             {[
-              "Launch structured online courses",
-              "Expand workshops internationally",
-              "Build research collaborations",
-              "Develop innovation fellowships",
-              "Partner with educational institutions",
-              "Create mentorship programs",
-              "Build a global student community",
-              "Support student-led innovations",
-              "Provide educational trips and camps",
+              "Student Research Programs & Publications",
+              "Educational Camps & Space Science Trips",
+              "Structured Online Project-Based Courses",
+              "International Workshop Expansions",
+              "Innovation Fellowships & Grants",
+              "Institutional School & College Partnerships",
+              "CanSat & Hardware Prototype Launches",
+              "1-on-1 Mentorship Networks",
+              "Global Student Builder Community",
             ].map((goal) => (
               <li
                 key={goal}
-                className="font-ui rounded-lg border border-border px-4 py-3 text-sm text-muted-foreground"
+                className="font-ui rounded-xl border border-border bg-card/60 p-4 text-sm text-muted-foreground flex items-center gap-2.5 backdrop-blur-md"
               >
-                {goal}
+                <span className="size-1.5 rounded-full bg-primary shrink-0" />
+                <span>{goal}</span>
               </li>
             ))}
           </ul>
+
           <div className="mt-12 flex flex-wrap gap-3">
-            <Button asChild>
+            <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
               <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
                 Join Community
               </a>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="lg" className="rounded-full">
               <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer">
-                Volunteer Program
+                Apply to Volunteer Program
               </a>
             </Button>
           </div>

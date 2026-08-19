@@ -26,10 +26,22 @@ export const Route = createFileRoute("/community")({
 });
 
 const RITUALS = [
-  { name: "Aaj Ka Gyan", note: "A daily piece of curated knowledge shared with the whole community." },
-  { name: "Live expert sessions", note: "Workshops with speakers from ISRO, missile development & academic leaders." },
-  { name: "Saturday Polls & Discussions", note: "Open threads where members discuss space science and engineering questions." },
-  { name: "Quizzes & challenges", note: "Low-stakes constellation-hunting challenges and astronomy quizzes." },
+  {
+    name: "Aaj Ka Gyan (Mon–Fri)",
+    note: "Daily curated scientific facts based on weekly themes released every morning to spark daily curiosity.",
+  },
+  {
+    name: "Saturday Community Polls",
+    note: "Weekly interactive polls prepared by the content team to test intuition and ignite debate.",
+  },
+  {
+    name: "Live Expert Masterclasses",
+    note: "Interactive workshops with scientists from ISRO, missile development leaders & university professors.",
+  },
+  {
+    name: "Research & Build Cohorts",
+    note: "Small teams collaborating on authentic research papers, hardware prototypes, and open-source models.",
+  },
 ];
 
 function Community() {

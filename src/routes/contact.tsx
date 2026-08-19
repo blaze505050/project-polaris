@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
 import { ContactForm } from "@/components/site/ContactForm";
 import { SITE } from "@/lib/site";
-import { Mail, Instagram, Linkedin, MessageCircle, HeartHandshake, UserPlus, Clock } from "lucide-react";
+import { Mail, Instagram, Linkedin, MessageCircle, HeartHandshake, UserPlus, Clock, Phone, FileText } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -32,8 +32,15 @@ function Contact() {
         <div className="shell grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="space-y-8">
             <div className="card-elevated p-6 space-y-4">
-              <p className="eyebrow mb-2">Email Us Directly</p>
+              <p className="eyebrow mb-2">Direct Contact Channels</p>
               <div className="space-y-3 font-mono text-sm">
+                <a
+                  href={`tel:${SITE.phone.replace(/\s+/g, '')}`}
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <Phone className="size-4 text-primary shrink-0" />
+                  <span>{SITE.phone}</span>
+                </a>
                 <a
                   href={`mailto:${SITE.emails[0]}`}
                   className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"

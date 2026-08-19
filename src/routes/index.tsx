@@ -21,6 +21,11 @@ import {
   FolderKanban,
   Mail,
   Send,
+  BookOpen,
+  GraduationCap,
+  Building2,
+  Atom,
+  Lightbulb,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -31,7 +36,17 @@ import { Timeline } from "@/components/site/Timeline";
 import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
 import { useReveal, useCountUp } from "@/hooks/use-reveal";
 import { opportunitiesQuery } from "@/lib/db";
-import { JOURNEY, PATHWAY, SITE, STATS, TEAM_MEMBERS, TESTIMONIALS, WORKSHOPS } from "@/lib/site";
+import {
+  JOURNEY,
+  PATHWAY,
+  SITE,
+  STATS,
+  TEAM_MEMBERS,
+  TESTIMONIALS,
+  WORKSHOPS,
+  WHY_JOIN_PILLARS,
+  WHO_CAN_JOIN,
+} from "@/lib/site";
 import heroImageWebp from "@/assets/students-building.webp";
 import heroImage from "@/assets/students-building.jpg";
 import nightImageWebp from "@/assets/night-observation.webp";
@@ -66,38 +81,51 @@ export const Route = createFileRoute("/")({
 const WHAT_WE_DO = [
   {
     icon: Presentation,
-    name: "Workshops",
-    note: "Interactive sessions conducted by ISRO scientists, missile experts, educators & mentors.",
+    name: "Interactive Masterclasses & Webinars",
+    note: "Live masterclasses and Q&As conducted by ISRO scientists, aerospace propulsion leads, and astronomy educators.",
   },
   {
     icon: Sparkles,
-    name: "Community Learning",
-    note: "Daily educational content (Aaj Ka Gyan), polls, discussions and learning challenges.",
+    name: "Daily Learning (Aaj Ka Gyan)",
+    note: "Mon–Fri daily facts based on weekly scientific themes, plus weekend thought-provoking Saturday polls and quizzes.",
   },
   {
     icon: Hammer,
-    name: "Innovation Projects",
-    note: "Collaborative projects like CanSat prototypes and Sky Atlas built by student teams.",
+    name: "Innovation & Build Projects",
+    note: "Collaborative student teams building real initiatives: AeroForge AI simulation workstation, CanSat hardware, and Sky Atlas.",
+  },
+  {
+    icon: Atom,
+    name: "Research Initiatives & Papers",
+    note: "Student-led literature reviews, research mentorship, scientific documentation, and interdisciplinary fellowships.",
   },
   {
     icon: Compass,
-    name: "Mentorship",
-    note: "Connecting learners with mentors who can guide them academically and professionally.",
+    name: "Mentorship & Guidance",
+    note: "Connecting curious students directly with researchers and industry leaders for academic and career direction.",
   },
   {
     icon: CalendarRange,
-    name: "Events & Competitions",
-    note: "Webinars, speaker sessions, quizzes, star-hunting challenges and community meetups.",
+    name: "Camps, Events & Competitions",
+    note: "Star-hunting observation nights, pitch challenges, hackathons, and educational camps currently in development.",
   },
 ];
 
 const GAPS = [
-  "Years of preparing for exams, with few chances to build anything",
-  "Curiosity that gives way to marks",
-  "Creativity limited by the boundaries of a textbook",
-  "Almost no access to researchers, engineers or mentors",
-  "Learning that becomes memorisation instead of experience",
+  "Years of preparing for exams, with few chances to build anything real",
+  "Curiosity that gets replaced by marks and memorisation",
+  "Creativity limited by the rigid boundaries of standard textbooks",
+  "Almost no direct access to practicing scientists, researchers or engineers",
+  "Learning that remains theoretical instead of an authentic hands-on experience",
 ];
+
+const PILLAR_ICONS: Record<string, React.ElementType> = {
+  BookOpen,
+  Sparkles,
+  Hammer,
+  Users,
+  FolderKanban,
+};
 
 function Home() {
   const { data, isLoading, isError } = useQuery(opportunitiesQuery);
@@ -369,47 +397,130 @@ function Home() {
       {/* BEHIND PROJECT POLARIS - THE TEAM */}
       <section className="section border-t border-border bg-surface/20">
         <div className="shell">
-          <SectionHeader
-            eyebrow="Behind Project Polaris"
-            title="Built and led by students, for students"
-            lead="Over 28 passionate individuals have contributed to shaping Project Polaris. Meet the people driving this movement."
-            align="center"
-          />
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+            <SectionHeader
+              eyebrow="Behind Project Polaris"
+              title="Built and led by students, for students"
+              lead="Meet the student leaders driving the vision, research, and community ecosystem at Project Polaris."
+            />
+            <Button asChild variant="outline" className="rounded-full">
+              <Link to="/about" className="flex items-center gap-2">
+                <span>Our Full Story & Team</span>
+                <ArrowRight className="size-3.5" />
+              </Link>
+            </Button>
+          </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {TEAM_MEMBERS.map((member) => (
-              <article key={member.name} className="card-elevated p-7 flex flex-col justify-between">
+              <article key={member.name} className="card-elevated p-7 flex flex-col justify-between hover:border-primary/40 transition-all duration-300">
                 <div>
                   <div className="flex items-center justify-between">
-                    <img src={polarisLogo} alt="Polaris Logo" className="size-8 rounded-full" />
-                    {"link" in member && member.link ? (
-                      <a
-                        href={member.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-slate-400 hover:text-primary transition-colors p-1"
-                        aria-label={`${member.name} LinkedIn`}
-                      >
-                        <Linkedin className="size-4" />
-                      </a>
-                    ) : null}
+                    <img src={polarisLogo} alt="Polaris Logo" className="size-9 rounded-full ring-2 ring-primary/20" />
+                    <span className="size-2 rounded-full bg-primary/60" />
                   </div>
                   <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
                   <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
                 </div>
 
-                {"link" in member && member.link ? (
-                  <a
-                    href={member.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-ui mt-6 inline-flex items-center gap-1.5 text-xs text-primary hover:underline font-semibold"
-                  >
-                    View LinkedIn Profile <ExternalLink className="size-3" />
-                  </a>
-                ) : null}
+                <div className="mt-6 border-t border-border/50 pt-4 flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="font-mono">Project Polaris</span>
+                  <span className="text-primary font-medium">Core Member</span>
+                </div>
               </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY JOIN PROJECT POLARIS? (5 PILLARS FROM CANVA DRAFT) */}
+      <section className="section border-t border-border relative overflow-hidden">
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/8 blur-[160px] pointer-events-none rounded-full" />
+        <div className="shell relative">
+          <SectionHeader
+            eyebrow="Why Join Polaris?"
+            title="Build real skills. Shape your own trajectory."
+            lead="Project Polaris provides the ecosystem, mentorship, and collaborators you need to turn theoretical curiosity into tangible impact."
+            align="center"
+          />
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {WHY_JOIN_PILLARS.map((pillar, i) => {
+              const Icon = PILLAR_ICONS[pillar.icon] || Sparkles;
+              return (
+                <article
+                  key={pillar.title}
+                  className="card-elevated p-8 flex flex-col justify-between hover:border-primary/50 transition-all duration-300 group"
+                  style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
+                >
+                  <div>
+                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-transform group-hover:scale-110">
+                      <Icon className="size-6" />
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-foreground">{pillar.title}</h3>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{pillar.description}</p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-border/50 flex items-center gap-2 text-xs font-ui text-primary font-semibold">
+                    <span>Explore opportunities</span>
+                    <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </article>
+              );
+            })}
+
+            {/* CTA card for 6th grid item */}
+            <article className="card-elevated p-8 flex flex-col justify-between border-primary/40 bg-gradient-to-br from-primary/15 via-surface to-surface">
+              <div>
+                <span className="eyebrow mb-3 text-primary">Get Started</span>
+                <h3 className="text-2xl font-display font-extrabold text-foreground">Ready to start building?</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                  Join our WhatsApp community today. It is completely free and open to learners of all levels.
+                </p>
+              </div>
+              <Button asChild className="mt-6 rounded-full bg-primary text-primary-foreground font-semibold">
+                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                  <MessageCircle className="size-4" />
+                  <span>Join Community Free</span>
+                </a>
+              </Button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* WHO CAN JOIN? (AUDIENCE PATHWAYS FROM CANVA DRAFT) */}
+      <section className="section border-t border-border bg-surface/20">
+        <div className="shell">
+          <SectionHeader
+            eyebrow="Open to Everyone"
+            title="Who is Project Polaris for?"
+            lead="Whether you are in middle school, completing your degree, teaching, or working in industry — there is a role for you."
+            align="center"
+          />
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {WHO_CAN_JOIN.map((item, idx) => (
+              <div
+                key={item.category}
+                className="card-elevated p-6 flex flex-col justify-between hover:border-primary/40 transition-colors"
+                style={{ animation: `fade-in-up 500ms ease-out ${idx * 60}ms both` }}
+              >
+                <div>
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/30 bg-primary/10 px-2.5 py-0.5 rounded-full inline-block mb-4">
+                    {item.badge}
+                  </span>
+                  <h3 className="font-display font-bold text-foreground text-lg">{item.category}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+                </div>
+                <Link
+                  to="/get-involved"
+                  className="font-ui mt-5 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                >
+                  <span>Learn how</span>
+                  <ArrowRight className="size-3" />
+                </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -421,8 +532,8 @@ function Home() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeader
               eyebrow="What We Do"
-              title="Five core ways students engage with Polaris"
-              lead="Each one is an active initiative you can participate in right now."
+              title="Active ways students engage with Polaris"
+              lead="Each one is a live, ongoing initiative you can participate in right now."
             />
             <Button asChild variant="outline" className="rounded-full">
               <Link to="/programs">All programs</Link>
@@ -431,15 +542,20 @@ function Home() {
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {WHAT_WE_DO.map(({ icon: Icon, name, note }) => (
-              <article key={name} className="card-elevated group p-7">
-                <Icon className="size-6 text-primary" aria-hidden="true" />
-                <h3 className="mt-5 text-xl font-display font-bold text-foreground">{name}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{note}</p>
+              <article key={name} className="card-elevated group p-7 flex flex-col justify-between">
+                <div>
+                  <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-transform group-hover:scale-110">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                  <h3 className="text-xl font-display font-bold text-foreground">{name}</h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{note}</p>
+                </div>
                 <Link
                   to="/programs"
-                  className="font-ui mt-6 inline-flex items-center gap-1.5 text-sm text-primary opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 font-semibold"
+                  className="font-ui mt-6 inline-flex items-center gap-1.5 text-sm text-primary font-semibold hover:underline"
                 >
-                  Explore <ArrowRight className="size-3.5" />
+                  <span>Explore program details</span>
+                  <ArrowRight className="size-3.5" />
                 </Link>
               </article>
             ))}

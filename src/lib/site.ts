@@ -6,6 +6,8 @@ export const SITE = {
   communityUrl: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
   volunteerUrl: "https://polaris-volunteer-program-8.my.canva.site",
   associateFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
+  feedbackFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
+  phone: "+91 97970 42664",
   emails: ["project.polaris8@gmail.com", "contactprojectpolaris@gmail.com"],
   instagramUrl: "https://www.instagram.com/project_polaris_?igsh=cGR3aGdkdjd2Y2hm",
   linkedinCompanyUrl: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",
@@ -16,109 +18,196 @@ export const NAV_LINKS = [
   { label: "Projects", to: "/projects" },
   { label: "Programs", to: "/programs" },
   { label: "Get Involved", to: "/get-involved" },
+  { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ] as const;
 
 export const PROGRAMS = [
   {
     slug: "workshops",
-    name: "Workshops",
+    name: "Interactive Workshops & Webinars",
     blurb:
-      "Interactive sessions conducted by industry experts, educators, professionals, researchers and experienced mentors.",
+      "Interactive sessions and live masterclasses conducted by ISRO scientists, missile researchers, educators, and domain experts.",
     purpose:
       "To put students in the same room as people who actually do the work, and let them ask real questions.",
-    who: "Open to the whole community — middle school upwards.",
+    who: "Open to the whole community — school, college & self-taught learners.",
     gain: [
-      "Direct exposure to practitioners",
-      "Practical context beyond textbooks",
-      "A reason to keep going",
+      "Direct exposure to practitioners and ISRO scientists",
+      "Practical context far beyond textbook theory",
+      "Real-world aerospace & engineering pathways",
     ],
     experience:
-      "Live sessions with an expert, space for questions, and follow-up discussion inside the community.",
+      "Live masterclasses, interactive Q&As, student pitch challenges, and community discussions.",
   },
   {
     slug: "community-learning",
-    name: "Community Learning",
-    blurb: "Daily educational content, discussions, quizzes and learning challenges.",
-    purpose: "To make learning a daily habit rather than an event.",
-    who: "Everyone in the Polaris community.",
+    name: "Community Learning & Rituals",
+    blurb: "Daily educational content (Aaj Ka Gyan), Saturday polls, quizzes, and collaborative discussions.",
+    purpose: "To make scientific curiosity and learning a daily habit rather than an occasional event.",
+    who: "Everyone in the Polaris student community.",
     gain: [
-      "A daily learning rhythm",
-      "Peers who are genuinely curious",
-      "Low-pressure entry into the ecosystem",
+      "A consistent daily learning rhythm",
+      "Mon–Fri curated scientific facts based on weekly themes",
+      "Low-pressure entry into active exploration",
     ],
     experience:
-      "Aaj Ka Gyan every day, Saturday Polls every week, plus quizzes, challenges and open discussion.",
+      "Aaj Ka Gyan daily facts every morning, Saturday Polls every weekend, plus star-hunting quizzes and open problem-solving threads.",
   },
   {
     slug: "innovation-projects",
-    name: "Innovation Projects",
+    name: "Innovation & Build Projects",
     blurb:
-      "Collaborative projects that solve real-world problems while helping students build practical skills.",
+      "Collaborative student-led projects that solve real-world problems while helping learners build practical skills.",
     purpose:
-      "To let students experience the full arc of building something: scope, attempt, fail, improve, ship.",
-    who: "School students, college students and self-taught learners willing to work in a team.",
+      "To let students experience the full arc of building something real: scope, attempt, fail, improve, and ship.",
+    who: "School students, college builders, and passionate makers willing to collaborate.",
     gain: [
-      "A finished project you can point to",
-      "Teamwork under real constraints",
-      "Mentor feedback",
+      "A finished portfolio project you can demonstrate",
+      "Hands-on engineering and teamwork under real constraints",
+      "Technical mentor feedback and code reviews",
     ],
     experience:
-      "A small team, a real problem, a build phase, and a showcase to the community at the end.",
+      "Small focused teams working on initiatives like CanSat atmospheric payloads, AeroForge AI research lab, and Sky Atlas open logs.",
   },
   {
     slug: "mentorship",
-    name: "Mentorship",
+    name: "Mentorship & Guidance",
     blurb:
-      "Connecting learners with mentors who can guide them academically, professionally and personally.",
+      "Connecting learners with mentors who can guide them academically, technically, and professionally.",
     purpose:
-      "To close the access gap — most students never get to speak to someone doing the work they admire.",
-    who: "Students seeking guidance, and professionals willing to give a little time.",
+      "To close the access gap — most students rarely get to interact directly with researchers and industry leaders.",
+    who: "Students seeking guidance, and professionals passionate about giving back.",
     gain: [
-      "Perspective from someone further along",
-      "Honest feedback",
-      "Direction, not just information",
+      "Perspective from researchers and engineers further along the path",
+      "Honest, personalized technical feedback",
+      "Clear direction and roadmap planning",
     ],
     experience:
-      "A conversation, then ongoing guidance where both sides want it. Mentors can also run a single session.",
+      "Direct 1-on-1 conversations, group roundtables, and project-based advisory.",
   },
   {
     slug: "events",
-    name: "Events",
+    name: "Events & Competitions",
     blurb:
-      "Competitions, webinars, speaker sessions, hackathons, bootcamps and community activities.",
-    purpose: "To create moments where the community shows up together and something happens.",
-    who: "Open to all members; some formats are team-based.",
-    gain: ["Momentum", "Collaborators", "Something to build towards"],
-    experience: "Announced in the community ahead of time, run live, and documented afterwards.",
+      "Competitions, webinars, speaker sessions, astronomy challenges, bootcamps, and community activities.",
+    purpose: "To create high-energy moments where the entire community converges to build, learn, and showcase.",
+    who: "Open to all members; includes individual and team challenge formats.",
+    gain: ["Momentum & urgency", "Cross-disciplinary collaborators", "Tangible achievements and awards"],
+    experience: "Announced in the community ahead of time, executed live, and archived for ongoing study.",
   },
   {
     slug: "research",
-    name: "Research Initiative (Upcoming)",
+    name: "Research & Fellowship Program (In Progress)",
     blurb:
-      "Upcoming student-led research initiatives, literature reviews, scientific exploration and interdisciplinary collaboration.",
+      "Student-led research initiatives, literature reviews, scientific exploration, educational camps, and interdisciplinary collaboration.",
     purpose:
-      "To give students a real experience of how knowledge is produced — questions, evidence, verification and documentation.",
-    who: "High-school and college students interested in scientific writing.",
+      "To give young students early authentic experience with research methodology: formulating hypotheses, gathering evidence, simulating, and publishing.",
+    who: "High-school and college students interested in scientific research and technical writing.",
     gain: [
-      "Structured research methodology",
-      "Evidence-based thinking",
-      "Guidance from mentors",
+      "Structured research methodology & literature survey training",
+      "Evidence-based scientific writing and peer review",
+      "Guidance from senior researchers and academicians",
     ],
     experience:
-      "Currently in development — launching soon to connect curious minds with research projects.",
+      "Currently in active development — connecting curious young minds with research cohorts, educational trips, and fellowship opportunities.",
   },
 ] as const;
 
 export const VALUES = [
-  { name: "Learn by Building", note: "Real learning happens when knowledge is applied." },
-  { name: "Curiosity", note: "We encourage questioning, exploration and continuous learning." },
-  { name: "Innovation", note: "We embrace creativity and seek better ways to solve problems." },
-  { name: "Integrity", note: "We value honesty, transparency and accountability." },
-  { name: "Collaboration", note: "Great ideas emerge when diverse minds work together." },
-  { name: "Accessibility", note: "Learning opportunities should be available to everyone." },
-  { name: "Excellence", note: "We continuously improve everything we build." },
-  { name: "Leadership", note: "We encourage volunteers, participants and members to lead." },
+  { name: "Learn by Building", note: "Real learning happens when knowledge is immediately applied to real problems." },
+  { name: "Curiosity", note: "We encourage questioning, deep exploration, and continuous learning." },
+  { name: "Innovation", note: "We embrace bold creativity and seek better ways to solve problems." },
+  { name: "Integrity", note: "We value honesty, transparency, rigorous verification, and accountability." },
+  { name: "Collaboration", note: "Great breakthroughs happen when diverse, passionate minds work together." },
+  { name: "Accessibility", note: "Practical learning opportunities should be accessible to everyone regardless of background." },
+  { name: "Excellence", note: "We continuously refine, test, and improve everything we build." },
+  { name: "Leadership", note: "We empower students, volunteers, and participants to take initiative and lead." },
+] as const;
+
+export const WHY_JOIN_PILLARS = [
+  {
+    title: "Learn Beyond Textbooks",
+    description: "Gain practical, high-impact knowledge through live masterclasses with ISRO scientists, interactive workshops, and hands-on experiments.",
+    icon: "BookOpen",
+  },
+  {
+    title: "Develop Future-Ready Skills",
+    description: "Strengthen leadership, scientific communication, teamwork, research methodology, critical thinking, and structured problem-solving.",
+    icon: "Sparkles",
+  },
+  {
+    title: "Work on Meaningful Projects",
+    description: "Collaborate with passionate peers on real projects like CanSat prototypes, AeroForge AI simulation lab, and open observational astronomy atlases.",
+    icon: "Hammer",
+  },
+  {
+    title: "Connect With Inspiring People",
+    description: "Meet ambitious students, scientists, innovators, industry professionals, educators, and mentors who share your curiosity and ambition.",
+    icon: "Users",
+  },
+  {
+    title: "Build Your Portfolio",
+    description: "Showcase verified contributions, published research notes, live code repositories, leadership roles, and recognized community achievements.",
+    icon: "FolderKanban",
+  },
+] as const;
+
+export const WHO_CAN_JOIN = [
+  {
+    category: "School Students",
+    description: "Middle and high school students who want to explore space science, experiment with hardware, and discover their true potential.",
+    badge: "Grade 6–12",
+  },
+  {
+    category: "College Students",
+    description: "Undergraduate and graduate builders looking to apply engineering, physics, coding, or research skills in collaborative teams.",
+    badge: "Higher Ed",
+  },
+  {
+    category: "Professionals & Mentors",
+    description: "Engineers, scientists, and researchers eager to deliver masterclasses, guide student projects, or provide career mentorship.",
+    badge: "Mentorship",
+  },
+  {
+    category: "Educators & Teachers",
+    description: "Teachers looking to integrate experiential learning workshops and interactive science challenges into their classrooms.",
+    badge: "Education",
+  },
+  {
+    category: "Schools, NGOs & Startups",
+    description: "Educational institutions and organizations seeking to co-host workshops, sponsor access, and empower young innovators.",
+    badge: "Partnerships",
+  },
+] as const;
+
+export const STATS = [
+  { value: "120+", label: "Community members", note: "Curious students & builders learning together." },
+  { value: "90+", label: "Aaj Ka Gyan posts", note: "Daily curated scientific knowledge drops." },
+  { value: "25+", label: "Volunteers & contributors", note: "Students leading content, ops & research." },
+  { value: "10+", label: "Webinars & sessions", note: "Conducted & scheduled expert masterclasses." },
+] as const;
+
+export const TEAM_MEMBERS = [
+  {
+    name: "Avishi Khare",
+    role: "Founder & Lead",
+    note: "Leading the core vision, community ecosystem, and student-led initiatives at Project Polaris.",
+  },
+  {
+    name: "Anshika Singh",
+    role: "Content Head",
+    note: "Directing educational content curation, daily Aaj Ka Gyan series, and community scientific publications.",
+  },
+  {
+    name: "Gnana Aditya Suvvari",
+    role: "Research Head",
+    note: "Spearheading student research programs, simulation frameworks, and technical development pipelines.",
+  },
+  {
+    name: "Aryan",
+    role: "Research Volunteer",
+    note: "Contributing to scientific literature exploration, workshop operations, and student outreach activities.",
+  },
 ] as const;
 
 export const WORKSHOPS = [
@@ -276,37 +365,7 @@ export const INVOLVEMENT_PATHS = [
 
 export type InvolvementRole = (typeof INVOLVEMENT_PATHS)[number]["id"];
 
-export const STATS = [
-  { value: "4", label: "Workshops conducted", note: "Expert-led sessions run end to end." },
-  { value: "1000+", label: "Students engaged", note: "Across sessions, community and content." },
-  { value: "28+", label: "Team members so far", note: "Core, associates and volunteers." },
-  { value: "100%", label: "Student-led", note: "Built and run by students, for students." },
-] as const;
-
 export const COURSE_LAUNCH_DATE = "August 20th";
-
-export const TEAM_MEMBERS = [
-  {
-    name: "Founder & Core Leads",
-    role: "Core Engineering & Operations",
-    note: "Driving strategic vision, physics engineering pipelines, and student community growth.",
-  },
-  {
-    name: "Associates Team",
-    role: "11 Associate Members",
-    note: "Leading design, operations, scientific outreach, and technical initiatives.",
-  },
-  {
-    name: "Volunteers Network",
-    role: "8 Active Volunteers",
-    note: "Supporting day-to-day community activities, event hosting, and educational content.",
-  },
-  {
-    name: "Guest Mentors & Speakers",
-    role: "Domain Experts",
-    note: "Researchers from ISRO, aerospace propulsion labs, and academic institutions.",
-  },
-] as const;
 
 export const TESTIMONIALS = [
   {
