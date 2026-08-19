@@ -55,7 +55,7 @@ function Community() {
         title="A room where curiosity is normal."
         lead="Students, researchers, mentors, educators and professionals learning in public — together."
       >
-        <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
+        <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
           <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
             <MessageCircle className="size-4" />
             <span>Join WhatsApp Community</span>

@@ -75,13 +75,13 @@ function GetInvolved() {
         lead="Whether you're a student, an associate, a volunteer or a mentor — there is a place for you to build and lead here."
       >
         <div className="flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
+          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
             <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
               <HeartHandshake className="size-4" />
               <span>Apply to Volunteer Program</span>
             </a>
           </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 transition-all duration-300">
             <a href={SITE.associateFormUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
               <UserPlus className="size-4" />
               <span>Associate Application Form</span>

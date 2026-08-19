@@ -58,12 +58,12 @@ function About() {
         lead="Project Polaris is a student-led initiative dedicated to making practical, hands-on education accessible to every learner."
       >
         <div className="flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
+          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join Our Community
             </a>
           </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 transition-all duration-300">
             <Link to="/projects">Explore Projects</Link>
           </Button>
         </div>

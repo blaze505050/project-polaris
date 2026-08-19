@@ -175,20 +175,20 @@ function Home() {
 
             {/* Hero CTAs — stagger 3 */}
             <div className={`${heroEntrance} mt-9 flex flex-wrap gap-3.5`} style={heroVisible ? stagger(3) : { opacity: 0 }}>
-              <Button asChild size="lg" className="rounded-full shadow-lg shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none">
+              <Button asChild size="lg" className="rounded-full shadow-lg shadow-primary/25 font-semibold bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
                 <Link to="/projects" className="flex items-center gap-2">
                   <FolderKanban className="size-4" />
                   <span>Explore Our Projects</span>
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 font-semibold backdrop-blur-md">
+              <Button asChild size="lg" variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 font-semibold backdrop-blur-md transition-all duration-300">
                 <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                   <MessageCircle className="size-4 text-primary" />
                   <span>Join WhatsApp Community</span>
                 </a>
               </Button>
-              <Button asChild size="lg" variant="ghost" className="rounded-full text-muted-foreground hover:text-foreground font-semibold">
+              <Button asChild size="lg" variant="ghost" className="rounded-full text-muted-foreground hover:text-foreground hover:bg-white/5 hover:scale-105 active:scale-95 font-semibold transition-all duration-300">
                 <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                   <span>Volunteer Program</span>
                   <ExternalLink className="size-3.5 opacity-70" />
