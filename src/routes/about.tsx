@@ -64,8 +64,8 @@ function About() {
         <div className="shell">
           <div className="max-w-2xl mb-12">
             <p className="eyebrow mb-3">Our Team</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white">Who is behind Project Polaris?</h2>
-            <p className="mt-4 text-slate-300 leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Who is behind Project Polaris?</h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">
               Project Polaris is driven by a passionate network of student leaders, associates, volunteers, and guest speakers who believe in hands-on learning.
             </p>
           </div>
@@ -74,7 +74,7 @@ function About() {
             {TEAM_MEMBERS.map((member, i) => (
               <article
                 key={member.name}
-                className="card-elevated p-7 flex flex-col justify-between bg-slate-900/60"
+                className="card-elevated p-7 flex flex-col justify-between"
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
               >
                 <div>
@@ -92,9 +92,9 @@ function About() {
                       </a>
                     ) : null}
                   </div>
-                  <h3 className="mt-5 text-xl font-display font-bold text-white">{member.name}</h3>
+                  <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
                   <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
-                  <p className="mt-3 text-sm text-slate-300 leading-relaxed">{member.note}</p>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
                 </div>
 
                 {"link" in member && member.link ? (
@@ -118,11 +118,11 @@ function About() {
         <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
           <div>
             <p className="eyebrow mb-5">Why we started</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
               "What do you want to become?" is the wrong first question.
             </h2>
           </div>
-          <div className="space-y-5 text-slate-300 leading-relaxed">
+          <div className="space-y-5 text-muted-foreground leading-relaxed">
             <p>
               Countless students spend years preparing for exams, yet rarely get the chance to build
               something meaningful, conduct real research, work with mentors, or collaborate on
@@ -133,7 +133,7 @@ function About() {
               We believed education could be different — not by replacing schools, but by
               complementing them with the opportunities traditional systems struggle to provide.
             </p>
-            <p className="border-l-2 border-primary pl-6 font-display text-xl text-white font-medium">
+            <p className="border-l-2 border-primary pl-6 font-display text-xl text-foreground font-medium">
               What if students didn't have to wait until college or a job to start creating,
               researching, innovating and leading?
             </p>
@@ -146,7 +146,7 @@ function About() {
         <div className="shell grid gap-10 md:grid-cols-2">
           <article className="card-elevated p-8 md:p-10 border-primary/30">
             <p className="eyebrow mb-5">Our mission</p>
-            <p className="font-display text-xl leading-relaxed md:text-2xl text-white font-bold">
+            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
               To make practical, high-quality education accessible and affordable by giving students
               real-world experiences, industry exposure and opportunities to build skills that truly
               matter.
@@ -154,7 +154,7 @@ function About() {
           </article>
           <article className="card-elevated p-8 md:p-10 border-accent/30">
             <p className="eyebrow mb-5 text-accent">Our vision</p>
-            <p className="font-display text-xl leading-relaxed md:text-2xl text-white font-bold">
+            <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
               A future where education isn't limited by textbooks, classrooms or examinations — and
               where every learner can experiment, innovate, collaborate and contribute, regardless of
               background.

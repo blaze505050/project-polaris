@@ -111,17 +111,17 @@ function ProjectCard({ project, index }: { project: ShowcaseProject; index: numb
           <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-primary font-semibold">
             {SHOWCASE_CATEGORY_LABELS[project.category] ?? project.category}
           </span>
-          <span className="rounded-full border border-white/10 bg-slate-900/60 px-3 py-1 text-slate-300 font-medium">
+          <span className="rounded-full border border-border bg-surface px-3 py-1 text-muted-foreground font-medium">
             {SHOWCASE_STAGE_LABELS[project.stage] ?? project.stage}
           </span>
           {project.team ? (
-            <span className="rounded-full border border-white/10 bg-slate-900/40 px-3 py-1 text-slate-400 font-mono text-[11px]">{project.team}</span>
+            <span className="rounded-full border border-border bg-surface-2 px-3 py-1 text-muted-foreground font-mono text-[11px]">{project.team}</span>
           ) : null}
         </div>
-        <h3 className="mt-5 text-2xl font-display font-bold text-white">{project.title}</h3>
-        <p className="mt-3 text-sm text-slate-300 leading-relaxed">{project.summary}</p>
+        <h3 className="mt-5 text-2xl font-display font-bold text-foreground">{project.title}</h3>
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
         {project.description ? (
-          <p className="mt-3 text-sm text-slate-400 leading-relaxed">{project.description}</p>
+          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{project.description}</p>
         ) : null}
       </div>
       {project.link ? (
@@ -184,7 +184,7 @@ function Showcase() {
                   "font-ui rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 cursor-pointer " +
                   (category === c.value
                     ? "border-primary bg-primary/20 text-primary shadow-sm"
-                    : "border-white/10 bg-slate-900/40 text-slate-400 hover:border-white/20 hover:text-white")
+                    : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground")
                 }
               >
                 {c.label}

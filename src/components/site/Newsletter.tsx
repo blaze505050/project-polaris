@@ -36,17 +36,17 @@ export function Newsletter({ className = "" }: { className?: string }) {
   };
 
   return (
-    <div className={`rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-slate-900/60 to-slate-950/80 p-6 md:p-8 ${className}`}>
+    <div className={`rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-surface/60 to-surface-2/80 p-6 md:p-8 ${className}`}>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary font-ui mb-3">
             <Mail className="size-3.5" />
             <span>Project Polaris Dispatch</span>
           </div>
-          <h3 className="text-xl md:text-2xl font-display font-bold text-white tracking-tight">
+          <h3 className="text-xl md:text-2xl font-display font-bold text-foreground tracking-tight">
             Stay in the loop with student engineering & research
           </h3>
-          <p className="mt-2 text-sm text-slate-300 font-sans leading-relaxed">
+          <p className="mt-2 text-sm text-muted-foreground font-sans leading-relaxed">
             Get quarterly field notes on AeroForge updates, new rocketry workshops, upcoming space science challenges, and student build logs. Zero spam.
           </p>
         </div>
@@ -73,7 +73,7 @@ export function Newsletter({ className = "" }: { className?: string }) {
                   placeholder="Enter your student or work email"
                   required
                   disabled={status === "loading"}
-                  className="w-full rounded-xl border border-white/15 bg-slate-900/80 px-4 py-2.5 text-sm text-white placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-sans"
+                  className="w-full rounded-xl border border-input bg-surface px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-sans"
                 />
                 <Button
                   type="submit"
@@ -89,13 +89,13 @@ export function Newsletter({ className = "" }: { className?: string }) {
               </div>
 
               {status === "error" && (
-                <div className="flex items-center gap-1.5 text-xs text-rose-400 pl-1">
+                <div className="flex items-center gap-1.5 text-xs text-destructive pl-1">
                   <AlertCircle className="size-3.5 shrink-0" />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
-              <p className="text-[11px] text-slate-400 pl-1">
+              <p className="text-[11px] text-muted-foreground pl-1">
                 By subscribing you agree to our{" "}
                 <a href="/privacy" className="text-primary hover:underline">
                   Privacy Policy

@@ -49,7 +49,7 @@ export function Navbar() {
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
         mounted ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
         scrolled || open
-          ? "border-b border-white/10 bg-[#04060e]/85 backdrop-blur-xl shadow-lg"
+          ? "border-b border-border bg-background/85 backdrop-blur-xl shadow-lg"
           : "border-b border-transparent bg-transparent",
       )}
     >
@@ -59,13 +59,13 @@ export function Navbar() {
         </Link>
 
         {/* Minimalist Nav Items */}
-        <ul className="font-ui hidden items-center gap-2 md:flex rounded-full border border-white/10 bg-slate-900/50 px-4 py-1.5 backdrop-blur-md">
+        <ul className="font-ui hidden items-center gap-2 md:flex rounded-full border border-border bg-surface/50 px-4 py-1.5 backdrop-blur-md">
           {NAV_LINKS.map((link) => (
             <li key={link.to}>
               <Link
                 to={link.to}
-                className="relative rounded-full px-3.5 py-1.5 text-xs md:text-sm font-medium text-slate-300 transition-colors hover:text-white"
-                activeProps={{ className: "text-white bg-white/10 font-semibold" }}
+                className="relative rounded-full px-3.5 py-1.5 text-xs md:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "text-foreground bg-primary-soft font-semibold" }}
                 activeOptions={{ exact: link.to === "/" }}
                 {...(pathname === link.to ? { "aria-current": "page" as const } : {})}
               >
@@ -138,7 +138,7 @@ export function Navbar() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-[#04060e]/95 backdrop-blur-2xl md:hidden"
+        className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-background/95 backdrop-blur-2xl md:hidden"
       >
         <ul className="shell flex flex-col py-4">
           {NAV_LINKS.map((link, i) => (
@@ -150,7 +150,7 @@ export function Navbar() {
             >
               <Link
                 to={link.to}
-                className="font-ui block border-b border-white/5 py-3 text-base text-slate-300"
+                className="font-ui block border-b border-border/50 py-3 text-base text-muted-foreground"
                 activeProps={{ className: "text-primary font-semibold" }}
                 activeOptions={{ exact: link.to === "/" }}
                 {...(pathname === link.to ? { "aria-current": "page" as const } : {})}

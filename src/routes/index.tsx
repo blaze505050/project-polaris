@@ -127,15 +127,15 @@ function Home() {
             </div>
 
             {/* Headline — stagger 1 */}
-            <h1 className={`${heroEntrance} text-4xl sm:text-5xl lg:text-[4.25rem] font-display font-extrabold tracking-tight text-white leading-[1.15]`} style={heroVisible ? stagger(1) : { opacity: 0 }}>
+            <h1 className={`${heroEntrance} text-4xl sm:text-5xl lg:text-[4.25rem] font-display font-extrabold tracking-tight text-foreground leading-[1.15]`} style={heroVisible ? stagger(1) : { opacity: 0 }}>
               Learning through <span className="text-gradient-star">Building</span>,
-              <span className="block text-lg sm:text-xl lg:text-2xl text-slate-300 font-ui font-medium tracking-normal mt-4">
+              <span className="block text-lg sm:text-xl lg:text-2xl text-muted-foreground font-ui font-medium tracking-normal mt-4">
                 rather than Building after learning.
               </span>
             </h1>
 
             {/* Description — stagger 2 */}
-            <p className={`${heroEntrance} mt-7 max-w-xl text-lg text-slate-300 leading-relaxed`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
+            <p className={`${heroEntrance} mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
               Project Polaris gives students the chance to research, build, experiment and
               collaborate on real problems — long before anyone tells them they're ready.
             </p>
@@ -155,7 +155,7 @@ function Home() {
                   <span>Join WhatsApp Community</span>
                 </a>
               </Button>
-              <Button asChild size="lg" variant="ghost" className="rounded-full text-slate-300 hover:text-white font-semibold">
+              <Button asChild size="lg" variant="ghost" className="rounded-full text-muted-foreground hover:text-foreground font-semibold">
                 <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                   <span>Volunteer Program</span>
                   <ExternalLink className="size-3.5 opacity-70" />
@@ -164,14 +164,14 @@ function Home() {
             </div>
 
             {/* Footer note — stagger 4 */}
-            <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-slate-400 uppercase font-medium`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
+            <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-muted-foreground uppercase font-medium`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
               Currently centred on space science · Open to school, college & self-taught learners
             </p>
           </div>
 
           {/* Hero Visual Card — stagger 2 */}
           <div className={`${heroEntrance} relative group`} style={heroVisible ? stagger(2) : { opacity: 0 }}>
-            <div className="overflow-hidden rounded-3xl border border-white/15 bg-slate-900/60 p-2 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.01]" style={{ animation: 'gentle-float 6s ease-in-out infinite' }}>
+            <div className="overflow-hidden rounded-3xl border border-border bg-surface p-2 shadow-2xl backdrop-blur-xl transition-transform duration-500 group-hover:scale-[1.01]" style={{ animation: 'gentle-float 6s ease-in-out infinite' }}>
               <img
                 src={heroImage}
                 alt="Students building and experimenting in a Project Polaris workshop"
@@ -181,7 +181,7 @@ function Home() {
               />
             </div>
             
-            <div className="font-ui absolute -bottom-5 left-6 rounded-full border border-white/15 bg-[#04060e]/90 px-5 py-2.5 text-xs text-slate-200 backdrop-blur-xl shadow-xl flex items-center gap-2.5">
+            <div className="font-ui absolute -bottom-5 left-6 rounded-full border border-border bg-background/90 px-5 py-2.5 text-xs text-muted-foreground backdrop-blur-xl shadow-xl flex items-center gap-2.5">
               <img src={polarisLogo} alt="Polaris" className="size-4 rounded-full" />
               <span>Ideas → Projects → People who build</span>
             </div>
@@ -190,9 +190,9 @@ function Home() {
       </section>
 
       {/* QUICK ACTION BAR */}
-      <section className="border-y border-white/10 bg-slate-950/60 backdrop-blur-md py-4">
+      <section className="border-y border-border bg-surface/60 backdrop-blur-md py-4">
         <div className="shell flex flex-wrap items-center justify-between gap-4 text-xs font-ui">
-          <div className="flex items-center gap-2 text-slate-300">
+          <div className="flex items-center gap-2 text-muted-foreground">
             <CheckCircle2 className="size-4 text-primary" />
             <span>Fast registration · Free community access</span>
           </div>
@@ -211,9 +211,9 @@ function Home() {
       </section>
 
       {/* STATS */}
-      <section className="border-b border-white/10 bg-surface/30">
+      <section className="border-b border-border bg-surface/30">
         <div className="shell">
-          <dl className="grid grid-cols-2 gap-px overflow-hidden bg-white/10 lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-px overflow-hidden bg-border lg:grid-cols-4">
             {STATS.map((s, i) => (
               <StatCell key={s.label} stat={s} index={i} />
             ))}
@@ -222,20 +222,20 @@ function Home() {
       </section>
 
       {/* AEROFORGE SHOWCASE */}
-      <section className="section border-b border-white/10 bg-[#060B18]/60 relative overflow-hidden">
+      <section className="section border-b border-border bg-surface/30 relative overflow-hidden">
         {/* Glow */}
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-primary/10 blur-[120px] pointer-events-none rounded-full" />
         
         <div className="shell grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <span className="eyebrow mb-4 block">Flagship Platform</span>
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white leading-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground leading-tight">
               AeroForge AI <span className="text-gradient-star">Space Engineering Lab</span>
             </h2>
-            <p className="mt-6 text-slate-300 text-lg leading-relaxed">
+            <p className="mt-6 text-muted-foreground text-lg leading-relaxed">
               We believe in learning by doing. AeroForge is our custom, student-built aerospace and mechanical research laboratory running right in your browser.
             </p>
-            <p className="mt-4 text-slate-400 leading-relaxed">
+            <p className="mt-4 text-muted-foreground leading-relaxed">
               Equipped with over 40 numerical solvers, aerospace atmospheric models, structural calculators, orbital trajectory integrators, and aerodynamics tools.
             </p>
 
@@ -243,29 +243,29 @@ function Home() {
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white text-sm">Aerodynamics & CFD</h4>
-                  <p className="text-xs text-slate-400 mt-1">Airfoil analysers, compressible flows, boundary layer estimation, and Mach sweeps.</p>
+                  <h4 className="font-bold text-foreground text-sm">Aerodynamics & CFD</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Airfoil analysers, compressible flows, boundary layer estimation, and Mach sweeps.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white text-sm">Orbital Mechanics</h4>
-                  <p className="text-xs text-slate-400 mt-1">Keplerian orbit prediction, 2-body numerical integrators, and satellite ground tracks.</p>
+                  <h4 className="font-bold text-foreground text-sm">Orbital Mechanics</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Keplerian orbit prediction, 2-body numerical integrators, and satellite ground tracks.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white text-sm">Structural Lab</h4>
-                  <p className="text-xs text-slate-400 mt-1">Beam bending mechanics, Mohr's circle, thin-walled pressure vessel stress analysis.</p>
+                  <h4 className="font-bold text-foreground text-sm">Structural Lab</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Beam bending mechanics, Mohr's circle, thin-walled pressure vessel stress analysis.</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-white text-sm">ISA Atmosphere Solver</h4>
-                  <p className="text-xs text-slate-400 mt-1">Accurate international standard atmosphere solver up to the mesosphere.</p>
+                  <h4 className="font-bold text-foreground text-sm">ISA Atmosphere Solver</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Accurate international standard atmosphere solver up to the mesosphere.</p>
                 </div>
               </li>
             </ul>
@@ -283,26 +283,26 @@ function Home() {
 
           <div className="relative group justify-self-center lg:justify-self-end w-full max-w-[450px]">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 blur-xl opacity-30 rounded-3xl" />
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#080d1e] p-6 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
+            <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-red-500/80" />
                   <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
                   <span className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
-                <span className="text-[10px] font-mono text-slate-400">aeroforge-simulation-node</span>
+                <span className="text-[10px] font-mono text-muted-foreground">aeroforge-simulation-node · Illustrative example</span>
               </div>
-              <div className="space-y-4 font-mono text-xs text-slate-300">
+              <div className="space-y-4 font-mono text-xs text-muted-foreground">
                 <div className="text-primary">// Initiating computational flow solver</div>
-                <div className="text-slate-400">&gt; aeroforge-solver --airfoil naca4412 --mach 0.8 --alpha 4.0</div>
-                <div className="bg-slate-950/80 p-3 rounded-lg border border-white/5 text-[11px] leading-relaxed">
+                <div className="text-muted-foreground">&gt; aeroforge-solver --airfoil naca4412 --mach 0.8 --alpha 4.0</div>
+                <div className="bg-surface-2 p-3 rounded-lg border border-border text-[11px] leading-relaxed">
                   <span className="text-accent"> Reynolds Number:</span> 3.1e6 <br />
                   <span className="text-accent"> Lift Coefficient (Cl):</span> 0.824 <br />
                   <span className="text-accent"> Drag Coefficient (Cd):</span> 0.0125 <br />
                   <span className="text-accent"> L/D Ratio:</span> 65.92 <br />
                   <span className="text-green-400"> ✓ Convergence reached in 143 iterations</span>
                 </div>
-                <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-white/5">
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground pt-2 border-t border-border">
                   <span>RAM: 124MB</span>
                   <span>CPU: 4.2%</span>
                   <span>Latency: 12ms</span>
@@ -353,7 +353,7 @@ function Home() {
       </section>
 
       {/* BEHIND PROJECT POLARIS - THE TEAM */}
-      <section className="section border-t border-white/10 bg-surface/20">
+      <section className="section border-t border-border bg-surface/20">
         <div className="shell">
           <SectionHeader
             eyebrow="Behind Project Polaris"
@@ -364,7 +364,7 @@ function Home() {
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {TEAM_MEMBERS.map((member) => (
-              <article key={member.name} className="card-elevated p-7 flex flex-col justify-between bg-slate-900/60">
+              <article key={member.name} className="card-elevated p-7 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
                     <img src={polarisLogo} alt="Polaris Logo" className="size-8 rounded-full" />
@@ -380,9 +380,9 @@ function Home() {
                       </a>
                     ) : null}
                   </div>
-                  <h3 className="mt-5 text-xl font-display font-bold text-white">{member.name}</h3>
+                  <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
                   <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
-                  <p className="mt-3 text-sm text-slate-300 leading-relaxed">{member.note}</p>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
                 </div>
 
                 {"link" in member && member.link ? (
@@ -402,7 +402,7 @@ function Home() {
       </section>
 
       {/* WHAT WE DO */}
-      <section className="section border-t border-white/10">
+      <section className="section border-t border-border">
         <div className="shell">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeader
@@ -419,8 +419,8 @@ function Home() {
             {WHAT_WE_DO.map(({ icon: Icon, name, note }) => (
               <article key={name} className="card-elevated group p-7">
                 <Icon className="size-6 text-primary" aria-hidden="true" />
-                <h3 className="mt-5 text-xl font-display font-bold text-white">{name}</h3>
-                <p className="mt-3 text-sm text-slate-300 leading-relaxed">{note}</p>
+                <h3 className="mt-5 text-xl font-display font-bold text-foreground">{name}</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{note}</p>
                 <Link
                   to="/programs"
                   className="font-ui mt-6 inline-flex items-center gap-1.5 text-sm text-primary opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 font-semibold"
@@ -434,7 +434,7 @@ function Home() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="section border-t border-white/10 bg-surface/20">
+      <section className="section border-t border-border bg-surface/20">
         <div className="shell">
           <SectionHeader
             eyebrow="Community Voice"
@@ -445,13 +445,13 @@ function Home() {
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t, idx) => (
-              <article key={idx} className="card-elevated p-7 flex flex-col justify-between bg-slate-900/60">
+              <article key={idx} className="card-elevated p-7 flex flex-col justify-between">
                 <div>
                   <Quote className="size-6 text-primary/40 mb-4" />
-                  <p className="text-sm text-slate-300 italic leading-relaxed">"{t.quote}"</p>
+                  <p className="text-sm text-muted-foreground italic leading-relaxed">"{t.quote}"</p>
                 </div>
-                <div className="mt-6 border-t border-white/10 pt-4">
-                  <p className="font-display font-bold text-sm text-white">{t.author}</p>
+                <div className="mt-6 border-t border-border pt-4">
+                  <p className="font-display font-bold text-sm text-foreground">{t.name}</p>
                   <p className="text-xs text-primary font-ui mt-0.5">{t.event}</p>
                 </div>
               </article>
@@ -461,17 +461,17 @@ function Home() {
       </section>
 
       {/* PROBLEM / THE GAP */}
-      <section className="section border-t border-white/10">
+      <section className="section border-t border-border">
         <div className="shell grid gap-14 lg:grid-cols-2 lg:gap-20">
           <div>
             <p className="eyebrow mb-6">The Gap</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-white leading-tight">
+            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
               Every student is asked what they want to become.
             </h2>
             <p className="mt-6 font-display text-2xl text-primary md:text-3xl">
               Almost none are asked what problem they want to solve.
             </p>
-            <p className="mt-6 max-w-lg text-slate-300 leading-relaxed">
+            <p className="mt-6 max-w-lg text-muted-foreground leading-relaxed">
               We don't think schools are the problem. We think there's a gap next to them — the
               part where you actually try something, get it wrong, and try again.
             </p>
@@ -480,12 +480,12 @@ function Home() {
             {GAPS.map((gap, i) => (
               <li
                 key={gap}
-                className="flex items-baseline gap-5 border-b border-white/10 py-5 first:border-t"
+                className="flex items-baseline gap-5 border-b border-border py-5 first:border-t"
               >
                 <span className="font-ui text-xs font-semibold text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="text-slate-300">{gap}</span>
+                <span className="text-muted-foreground">{gap}</span>
               </li>
             ))}
           </ul>
@@ -493,7 +493,7 @@ function Home() {
       </section>
 
       {/* SOLUTION / PATHWAY */}
-      <section className="section relative overflow-hidden border-t border-white/10 bg-surface/30">
+      <section className="section relative overflow-hidden border-t border-border bg-surface/30">
         <div className="shell relative">
           <SectionHeader
             eyebrow="So We Built Polaris"
@@ -502,12 +502,12 @@ function Home() {
             align="center"
           />
 
-          <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
             {PATHWAY.map((item, i) => (
-              <li key={item.step} className="group bg-[#04060e] p-7 transition-colors hover:bg-slate-900/80">
+              <li key={item.step} className="group bg-background p-7 transition-colors hover:bg-surface">
                 <span className="font-ui text-xs font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 text-xl font-display font-bold text-white">{item.step}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{item.note}</p>
+                <h3 className="mt-3 text-xl font-display font-bold text-foreground">{item.step}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{item.note}</p>
               </li>
             ))}
           </ol>
@@ -515,9 +515,9 @@ function Home() {
       </section>
 
       {/* CURRENT FOCUS WITH PHOTO */}
-      <section className="section border-t border-white/10">
+      <section className="section border-t border-border">
         <div className="shell grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <div className="overflow-hidden rounded-3xl border border-white/15 shadow-2xl">
+          <div className="overflow-hidden rounded-3xl border border-border shadow-2xl">
             <img
               src={nightImage}
               alt="Students observing the night sky through a telescope"
@@ -529,13 +529,13 @@ function Home() {
           </div>
           <div>
             <p className="eyebrow mb-6">Current Focus</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-white">Start with space. Think beyond it.</h2>
-            <p className="mt-6 text-slate-300 leading-relaxed">
+            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">Start with space. Think beyond it.</h2>
+            <p className="mt-6 text-muted-foreground leading-relaxed">
               Right now almost everything we run is centred around space science — because that's
               what fascinates most of our community. It gives us a shared language and a genuinely
               hard set of problems to learn on.
             </p>
-            <p className="mt-4 text-slate-300 leading-relaxed">
+            <p className="mt-4 text-muted-foreground leading-relaxed">
               It is a starting point, not a boundary. The long-term work is experiential learning
               across disciplines.
             </p>
@@ -544,7 +544,7 @@ function Home() {
                 (tag) => (
                   <li
                     key={tag}
-                    className="font-ui rounded-full border border-white/10 bg-slate-900/60 px-4 py-1.5 text-xs text-slate-300"
+                    className="font-ui rounded-full border border-border bg-surface px-4 py-1.5 text-xs text-muted-foreground"
                   >
                     {tag}
                   </li>
@@ -556,12 +556,12 @@ function Home() {
       </section>
 
       {/* JOURNEY */}
-      <section className="section border-t border-white/10 bg-surface/20">
+      <section className="section border-t border-border bg-surface/20">
         <div className="shell grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div>
             <p className="eyebrow mb-6">Where We Are</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-white">We're early. We're building.</h2>
-            <p className="mt-6 text-slate-300 leading-relaxed">
+            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">We're early. We're building.</h2>
+            <p className="mt-6 text-muted-foreground leading-relaxed">
               We started on 7 June with a WhatsApp group and a few friends. Here's honestly
               everything that has happened since — no inflated numbers.
             </p>
@@ -574,15 +574,15 @@ function Home() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="veil relative overflow-hidden border-t border-white/10">
+      <section className="veil relative overflow-hidden border-t border-border">
         <Starfield density={0.8} />
         <div className="shell relative py-24 text-center md:py-32">
           <Users className="mx-auto size-7 text-primary" aria-hidden="true" />
-          <h2 className="mx-auto mt-8 max-w-3xl text-3xl md:text-5xl font-display font-bold text-white">
+          <h2 className="mx-auto mt-8 max-w-3xl text-3xl md:text-5xl font-display font-bold text-foreground">
             The future doesn't belong only to those who study it.
             <span className="block text-gradient-star mt-2">It belongs to those who build it.</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-slate-300">{SITE.tagline}</p>
+          <p className="mx-auto mt-6 max-w-xl text-muted-foreground">{SITE.tagline}</p>
           <div className="mt-10 flex flex-col justify-center items-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none px-8">
               <Link to="/aeroforge" className="flex items-center gap-2">
@@ -612,7 +612,7 @@ function StatCell({ stat, index }: { stat: typeof STATS[number]; index: number }
 
   return (
     <div
-      className="bg-[#04060e] px-6 py-9 text-center"
+      className="bg-background px-6 py-9 text-center"
       style={{ animation: `fade-in-up 500ms ease-out ${index * 100}ms both` }}
     >
       <dt className="sr-only">{stat.label}</dt>
@@ -620,8 +620,8 @@ function StatCell({ stat, index }: { stat: typeof STATS[number]; index: number }
         <span ref={ref} className="font-display block text-4xl text-gradient-star font-extrabold md:text-5xl">
           {isNaN(numericPart) ? stat.value : `${count}${suffix}`}
         </span>
-        <span className="font-ui mt-3 block text-sm font-semibold text-slate-200">{stat.label}</span>
-        <span className="mt-1 block text-xs text-slate-400">{stat.note}</span>
+        <span className="font-ui mt-3 block text-sm font-semibold text-foreground">{stat.label}</span>
+        <span className="mt-1 block text-xs text-muted-foreground">{stat.note}</span>
       </dd>
     </div>
   );

@@ -87,7 +87,7 @@ function AeroForgeLab() {
   }, []);
 
   return (
-    <div className={`relative w-full bg-[#040814] flex flex-col ${isFullscreen ? "fixed inset-0 z-50 h-screen" : "h-[calc(100dvh-4rem)] md:h-[calc(100dvh-4.5rem)] pt-16 md:pt-20"}`}>
+    <div className={`relative w-full bg-background flex flex-col ${isFullscreen ? "fixed inset-0 z-50 h-screen" : "h-[calc(100dvh-4rem)] md:h-[calc(100dvh-4.5rem)] pt-16 md:pt-20"}`}>
       {/* Transparency & Security Modal */}
       <TransparencyModal
         isOpen={showTransparency}
@@ -95,7 +95,7 @@ function AeroForgeLab() {
       />
 
       {/* Top Security & Transparency Control Bar */}
-      <div className="w-full bg-slate-950 border-b border-white/10 px-4 md:px-6 py-2 flex items-center justify-between text-xs font-mono text-white/70 shrink-0 z-20">
+      <div className="w-full bg-surface border-b border-border px-4 md:px-6 py-2 flex items-center justify-between text-xs font-mono text-muted-foreground shrink-0 z-20">
         {/* Breadcrumb & Provenance */}
         <div className="flex items-center gap-2 overflow-x-auto py-0.5">
           <Link
@@ -112,7 +112,7 @@ function AeroForgeLab() {
             <span>Projects</span>
           </Link>
           <ChevronRight className="size-3 text-white/30 shrink-0" />
-          <span className="text-white font-bold flex items-center gap-1.5 shrink-0">
+          <span className="text-foreground font-bold flex items-center gap-1.5 shrink-0">
             <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>AeroForge AI Lab</span>
           </span>
@@ -126,7 +126,7 @@ function AeroForgeLab() {
           {/* Transparency Trigger */}
           <button
             onClick={() => setShowTransparency(true)}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 text-[11px] transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-muted-foreground border border-border text-[11px] transition-colors"
             title="Read Project Polaris & AeroForge Transparency Charter"
           >
             <Shield className="size-3.5 text-primary" />
@@ -138,7 +138,7 @@ function AeroForgeLab() {
             href="/aeroforge/index.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-white/80 border border-white/10 text-[11px] transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-2 hover:bg-surface-3 text-muted-foreground border border-border text-[11px] transition-colors"
             title="Open AeroForge in Standalone Window"
           >
             <ExternalLink className="size-3.5 text-sky-400" />
@@ -167,10 +167,10 @@ function AeroForgeLab() {
       </div>
 
       {/* Main Sandbox Iframe */}
-      <div className="relative flex-1 w-full h-full overflow-hidden bg-[#040814]">
+      <div className="relative flex-1 w-full h-full overflow-hidden bg-background">
         {/* Loading Overlay */}
         {isLoading && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#040814] text-white font-mono text-xs space-y-3">
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background text-foreground font-mono text-xs space-y-3">
             <div className="size-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             <div className="flex items-center gap-2 text-primary font-semibold">
               <Cpu className="size-4 animate-pulse" />

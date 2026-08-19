@@ -36,14 +36,14 @@ function Contact() {
               <div className="space-y-3 font-mono text-sm">
                 <a
                   href={`mailto:${SITE.emails[0]}`}
-                  className="flex items-center gap-3 text-slate-300 hover:text-primary transition-colors"
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="size-4 text-primary shrink-0" />
                   <span>{SITE.emails[0]}</span>
                 </a>
                 <a
                   href={`mailto:${SITE.emails[1]}`}
-                  className="flex items-center gap-3 text-slate-300 hover:text-primary transition-colors"
+                  className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="size-4 text-primary shrink-0" />
                   <span>{SITE.emails[1]}</span>
@@ -67,7 +67,7 @@ function Contact() {
                   href={SITE.instagramUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-3 text-slate-300 hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Instagram className="size-4 text-primary shrink-0" />
                   <span>Follow on Instagram ↗</span>
@@ -76,7 +76,7 @@ function Contact() {
                   href={SITE.linkedinCompanyUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-3 text-slate-300 hover:text-primary transition-colors"
+                  className="inline-flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Linkedin className="size-4 text-primary shrink-0" />
                   <span>Project Polaris LinkedIn Page ↗</span>
@@ -108,11 +108,11 @@ function Contact() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-slate-900/60 p-5 flex items-start gap-3">
+            <div className="rounded-xl border border-border bg-surface p-5 flex items-start gap-3">
               <Clock className="size-5 text-primary shrink-0 mt-0.5" />
               <div>
-                <p className="font-ui text-xs font-semibold text-white uppercase tracking-wider mb-1">Response time</p>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="font-ui text-xs font-semibold text-foreground uppercase tracking-wider mb-1">Response time</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   We are a student-led team — we review incoming messages daily and usually respond within 24-48 hours.
                 </p>
               </div>

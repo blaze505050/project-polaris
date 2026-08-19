@@ -232,15 +232,15 @@
   }
 
   ::selection {
-    background: rgba(197, 157, 255, 0.35);
-    color: #ffffff;
+    background: var(--color-primary-soft, rgba(197, 157, 255, 0.35));
+    color: var(--color-foreground);
   }
 
   /* Sleek scrollbar */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: rgba(197,157,255,0.3); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -307,17 +307,17 @@
 }
 
 @utility glass-panel {
-  background: rgba(15, 23, 42, 0.55);
+  background: var(--color-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border);
 }
 
 @utility card-elevated {
-  background: rgba(15, 23, 42, 0.55);
+  background: var(--color-card);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lift);
   transition:
@@ -328,9 +328,9 @@
 
   &:hover {
     transform: translateY(-4px);
-    border-color: rgba(197, 157, 255, 0.3);
+    border-color: var(--color-ring);
     box-shadow: var(--shadow-card-hover);
-    background: rgba(30, 41, 59, 0.7);
+    background: var(--color-surface-2);
   }
 
   &:active {
@@ -345,14 +345,14 @@
 }
 
 @utility text-gradient-star {
-  background-image: linear-gradient(135deg, #ffffff 0%, #c59dff 50%, #38bdf8 100%);
+  background-image: linear-gradient(135deg, #ffffff 0%, var(--color-primary) 50%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-cosmic {
-  background-image: linear-gradient(135deg, #f8fafc 20%, #c59dff 100%);
+  background-image: linear-gradient(135deg, var(--color-foreground) 20%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

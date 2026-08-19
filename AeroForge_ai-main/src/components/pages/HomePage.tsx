@@ -79,7 +79,7 @@ const PROBLEM_ENTRIES = [
   { title: 'Design a Rocket Nozzle', desc: 'Nozzle expansion ratios, chamber pressure & thrust curves', icon: Rocket, path: '/aerolab', tag: 'PROPULSION' },
   { title: 'Study a Beam', desc: 'Euler-Bernoulli bending stress, deflection & shear diagrams', icon: Layers, path: '/mechlab', tag: 'STRUCTURES' },
   { title: 'Analyze an Orbit', desc: 'Keplerian elements, porkchop plots & ground station tracks', icon: Orbit, path: '/astrolab/orbital-mechanics', tag: 'ASTROSPACE' },
-  { title: 'Run Physics AI', desc: 'Neural Operator surrogate inference for instant 14ms flow fields', icon: Brain, path: '/physics-ai', tag: 'EXPERIMENTAL' },
+  { title: 'Run Physics AI', desc: 'Fourier Neural Operator surrogate model for rapid flow field estimation', icon: Brain, path: '/physics-ai', tag: 'EXPERIMENTAL' },
   { title: 'Research a Topic', desc: 'arXiv & OpenAlex paper search with instant IEEE/BibTeX citations', icon: BookOpen, path: '/documentation?tab=research', tag: 'LITERATURE' },
   { title: 'Validate Benchmarks', desc: 'Compare results directly against Abbott wind tunnel data & ISO tables', icon: CheckCircle2, path: '/validation', tag: 'VERIFICATION' },
 ];

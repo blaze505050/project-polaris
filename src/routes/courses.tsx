@@ -51,7 +51,7 @@ function Courses() {
               <span>Get Notified on WhatsApp</span>
             </a>
           </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+          <Button asChild variant="outline" size="lg" className="rounded-full">
             <Link to="/programs">Explore Programs</Link>
           </Button>
         </div>
@@ -60,7 +60,7 @@ function Courses() {
       {/* LAUNCH BANNER SECTION */}
       <section className="section">
         <div className="shell">
-          <div className="card-elevated relative overflow-hidden p-8 md:p-14 text-center border border-primary/40 bg-gradient-to-b from-primary/15 via-slate-900/60 to-slate-950/80">
+          <div className="card-elevated relative overflow-hidden p-8 md:p-14 text-center border border-primary/40 bg-gradient-to-b from-primary/15 via-surface/60 to-surface-2/80">
             <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/20 text-primary mb-6 ring-8 ring-primary/10">
               <Rocket className="size-8" />
             </div>
@@ -69,11 +69,11 @@ function Courses() {
               <Calendar className="size-3.5" /> Launch Date: August 20th
             </span>
 
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground max-w-3xl mx-auto">
               Our First Course Launches On <span className="text-gradient-star">August 20th</span>
             </h2>
 
-            <p className="mt-6 text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               We're preparing a brand-new experiential learning experience designed specifically for students who want to build, experiment, and solve real-world problems.
             </p>
 
@@ -83,7 +83,7 @@ function Courses() {
                   Join Community for Early Access
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 px-7">
+              <Button asChild variant="outline" size="lg" className="rounded-full px-7">
                 <Link to="/contact">Contact Team</Link>
               </Button>
             </div>
@@ -95,19 +95,19 @@ function Courses() {
       <section className="section border-t border-border bg-surface/30">
         <div className="shell">
           <p className="eyebrow mb-5">How Polaris courses work</p>
-          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-white">Short, practical, and finished.</h2>
-          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-foreground">Short, practical, and finished.</h2>
+          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {HOW.map((h, i) => (
               <li
                 key={h.step}
-                className="bg-[#04060e] p-7 hover:bg-slate-900/80 transition-colors"
+                className="bg-background p-7 hover:bg-surface transition-colors"
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 70}ms both` }}
               >
                 <span className="font-ui text-xs font-bold text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-3 text-lg font-display font-bold text-white">{h.step}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{h.note}</p>
+                <h3 className="mt-3 text-lg font-display font-bold text-foreground">{h.step}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{h.note}</p>
               </li>
             ))}
           </ol>
@@ -118,8 +118,8 @@ function Courses() {
       <section className="section border-t border-border">
         <div className="shell max-w-2xl text-center">
           <GraduationCap className="mx-auto size-6 text-primary" aria-hidden="true" />
-          <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold text-white">Want to teach or mentor a course?</h2>
-          <p className="mt-5 text-slate-300 leading-relaxed">
+          <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold text-foreground">Want to teach or mentor a course?</h2>
+          <p className="mt-5 text-muted-foreground leading-relaxed">
             If you work in space science, engineering, tech or research, you can design and lead a Polaris
             course with our support.
           </p>
@@ -127,7 +127,7 @@ function Courses() {
             <Button asChild className="rounded-full shadow-md">
               <Link to="/get-involved">Become a Mentor</Link>
             </Button>
-            <Button asChild variant="outline" className="rounded-full border-white/20 hover:bg-white/10">
+            <Button asChild variant="outline" className="rounded-full">
               <Link to="/contact">Talk to Us</Link>
             </Button>
           </div>

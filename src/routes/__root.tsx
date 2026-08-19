@@ -89,13 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Alice&family=Space+Grotesk:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap",
       },
     ],
     scripts: [
       {
         children:
-          "try{var t=localStorage.getItem('polaris-theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.style.colorScheme='light'}}catch(e){}",
+          "try{var t=localStorage.getItem('polaris-theme');if(t==='light'||(!t&&window.matchMedia('(prefers-color-scheme: light)').matches)){document.documentElement.classList.add('light');document.documentElement.setAttribute('data-theme','light');document.documentElement.style.colorScheme='light'}}catch(e){}",
       },
       {
         type: "application/ld+json",

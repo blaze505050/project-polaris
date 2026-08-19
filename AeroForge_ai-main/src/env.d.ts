@@ -15,9 +15,12 @@ declare global {
   }
 
   interface ImportMetaEnv {
-    readonly BASE_NAME: string;
+    readonly BASE_NAME?: string;
+    readonly BASE_URL?: string;
+    readonly VITE_PHYSICS_AI_API_URL?: string;
     readonly MODE?: string;
     readonly DEV?: boolean;
+    readonly PROD?: boolean;
   }
 }
 

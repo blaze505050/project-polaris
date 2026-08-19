@@ -70,7 +70,7 @@ function Projects() {
           <Button asChild className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
             <Link to="/join">Join a project team</Link>
           </Button>
-          <Button asChild variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+          <Button asChild variant="outline" className="rounded-full">
             <Link to="/opportunities">See open roles</Link>
           </Button>
         </div>
@@ -89,7 +89,7 @@ function Projects() {
               <article
                 key={p.slug}
                 className={`card-elevated flex flex-col p-7 md:p-8 justify-between ${
-                  "featured" in p && p.featured ? "border-primary/50 bg-gradient-to-b from-primary/10 via-slate-900/80 to-slate-950/90 shadow-xl shadow-primary/5 md:col-span-2" : ""
+                  "featured" in p && p.featured ? "border-primary/50 bg-gradient-to-b from-primary/10 via-surface/80 to-surface-2/90 shadow-xl shadow-primary/5 md:col-span-2" : ""
                 }`}
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 100}ms both` }}
               >
@@ -99,25 +99,25 @@ function Projects() {
                       className={
                         p.stage.includes("Active") || p.stage === "In progress"
                           ? "inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-primary font-semibold"
-                          : "inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-slate-900/60 px-3 py-1 text-slate-400"
+                        : "inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-2 px-3 py-1 text-muted-foreground"
                       }
                     >
                       <span className="size-1.5 rounded-full bg-primary animate-pulse" />
                       <span>{p.stage}</span>
                     </span>
-                    <span className="rounded-full border border-white/10 bg-slate-900/40 px-3 py-1 text-slate-400 font-mono text-[11px]">{p.team}</span>
+                    <span className="rounded-full border border-border bg-surface px-3 py-1 text-muted-foreground font-mono text-[11px]">{p.team}</span>
                     {"featured" in p && p.featured && (
                       <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2.5 py-0.5 text-amber-400 font-mono text-[10px] uppercase font-bold">
                         ★ Flagship Environment
                       </span>
                     )}
                   </div>
-                  <h2 className="mt-5 text-2xl font-display font-bold text-white">{p.name}</h2>
-                  <p className="mt-3 text-sm text-slate-300 leading-relaxed">{p.blurb}</p>
+                  <h2 className="mt-5 text-2xl font-display font-bold text-foreground">{p.name}</h2>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{p.blurb}</p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between flex-wrap gap-3">
-                  <span className="text-xs text-slate-500 font-mono">
+                <div className="mt-6 pt-4 border-t border-border flex items-center justify-between flex-wrap gap-3">
+                  <span className="text-xs text-muted-foreground font-mono">
                     {"featured" in p && p.featured ? "40+ Solvers • WebGL 3D" : "Status: Active Development"}
                   </span>
                   {"link" in p && p.link ? (
@@ -143,15 +143,15 @@ function Projects() {
       <section className="section border-t border-border bg-surface/30">
         <div className="shell">
           <p className="eyebrow mb-5">How a project runs</p>
-          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-white">Scope, build, test, showcase.</h2>
-          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-foreground">Scope, build, test, showcase.</h2>
+          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {ARC.map((a, i) => (
-              <li key={a.step} className="bg-[#04060e] p-7 hover:bg-slate-900/80 transition-colors">
+              <li key={a.step} className="bg-background p-7 hover:bg-surface transition-colors">
                 <span className="font-ui text-xs font-bold text-primary">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-3 text-lg font-display font-bold text-white">{a.step}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{a.note}</p>
+                <h3 className="mt-3 text-lg font-display font-bold text-foreground">{a.step}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a.note}</p>
               </li>
             ))}
           </ol>
@@ -161,15 +161,15 @@ function Projects() {
       <section className="section border-t border-border">
         <div className="shell max-w-2xl text-center">
           <Hammer className="mx-auto size-6 text-primary" aria-hidden="true" />
-          <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold text-white">Have a project idea?</h2>
-          <p className="mt-5 text-slate-300 leading-relaxed">
+          <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold text-foreground">Have a project idea?</h2>
+          <p className="mt-5 text-muted-foreground leading-relaxed">
             If you can describe the problem, we can help you find the team to build it.
           </p>
           <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
             <Button asChild className="rounded-full shadow-md">
               <Link to="/contact">Pitch your idea</Link>
             </Button>
-            <Button asChild variant="outline" className="rounded-full border-white/20 hover:bg-white/10">
+            <Button asChild variant="outline" className="rounded-full">
               <Link to="/get-involved">Mentor a team</Link>
             </Button>
           </div>

@@ -111,7 +111,7 @@ function Schools() {
           <Button asChild className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
             <a href="#request">Request a collaboration</a>
           </Button>
-          <Button asChild variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
+          <Button asChild variant="outline" className="rounded-full">
             <Link to="/programs">See our programs</Link>
           </Button>
         </div>
@@ -132,8 +132,8 @@ function Schools() {
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
               >
                 <f.icon className="size-6 text-primary" aria-hidden="true" />
-                <h2 className="mt-5 text-2xl font-display font-bold text-white">{f.name}</h2>
-                <p className="mt-3 text-sm text-slate-300 leading-relaxed">{f.note}</p>
+                <h2 className="mt-5 text-2xl font-display font-bold text-foreground">{f.name}</h2>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{f.note}</p>
               </article>
             ))}
           </div>
@@ -143,13 +143,13 @@ function Schools() {
       <section className="section border-t border-border bg-surface/30">
         <div className="shell">
           <p className="eyebrow mb-5">How it works</p>
-          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-white">From request to running session.</h2>
-          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold text-foreground">From request to running session.</h2>
+          <ol className="mt-14 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (
-              <li key={s.step} className="bg-[#04060e] p-7 hover:bg-slate-900/80 transition-colors">
+              <li key={s.step} className="bg-background p-7 hover:bg-surface transition-colors">
                 <span className="font-ui text-xs font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 text-lg font-display font-bold text-white">{s.step}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{s.note}</p>
+                <h3 className="mt-3 text-lg font-display font-bold text-foreground">{s.step}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.note}</p>
               </li>
             ))}
           </ol>
@@ -173,12 +173,12 @@ function Schools() {
       <section className="section border-t border-border bg-surface/30">
         <div className="shell max-w-3xl">
           <p className="eyebrow mb-5">Questions</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-white">Before you ask</h2>
-          <dl className="mt-10 divide-y divide-white/10 border-y border-white/10">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">Before you ask</h2>
+          <dl className="mt-10 divide-y divide-border border-y border-border">
             {FAQS.map((f) => (
               <div key={f.q} className="py-6">
-                <dt className="text-lg font-display font-semibold text-white">{f.q}</dt>
-                <dd className="mt-2 text-sm text-slate-300 leading-relaxed">{f.a}</dd>
+                <dt className="text-lg font-display font-semibold text-foreground">{f.q}</dt>
+                <dd className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.a}</dd>
               </div>
             ))}
           </dl>

@@ -54,15 +54,15 @@ function Community() {
       <section className="section">
         <div className="shell">
           <SectionHeader eyebrow="How it runs" title="Small rituals, kept consistently" />
-          <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {RITUALS.map((ritual, i) => (
               <div
                 key={ritual.name}
-                className="bg-[#04060e] p-6 hover:bg-slate-900/80 transition-colors"
+                className="bg-background p-6 hover:bg-surface transition-colors"
                 style={{ animation: `fade-in-up 500ms ease-out ${i * 70}ms both` }}
               >
-                <h3 className="font-display text-lg font-bold text-white">{ritual.name}</h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">{ritual.note}</p>
+                <h3 className="font-display text-lg font-bold text-foreground">{ritual.name}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{ritual.note}</p>
               </div>
             ))}
           </div>
@@ -79,15 +79,15 @@ function Community() {
               <EmptyState title="No upcoming public sessions listed yet" note="New sessions are announced in the WhatsApp community first." />
             ) : null}
             {!isLoading && !isError && events.length > 0 ? (
-              <ul className="divide-y divide-white/10 border-y border-white/10">
+              <ul className="divide-y divide-border border-y border-border">
                 {events.map((event) => (
                   <li key={event.id} className="grid gap-4 py-7 md:grid-cols-[0.3fr_1fr] md:gap-10 items-start">
-                    <div className="font-ui text-sm text-slate-400 flex items-center gap-2">
+                    <div className="font-ui text-sm text-muted-foreground flex items-center gap-2">
                       <Calendar className="size-3.5 text-primary shrink-0" />
                       <span>{formatDate(event.event_date) ?? "Date to be announced"}</span>
                     </div>
                     <div>
-                      <h3 className="text-xl font-display font-bold text-white">{event.title}</h3>
+                      <h3 className="text-xl font-display font-bold text-foreground">{event.title}</h3>
                       {event.speaker ? (
                         <p className="font-ui mt-1.5 text-sm text-primary font-semibold">
                           {event.speaker}
@@ -95,7 +95,7 @@ function Community() {
                         </p>
                       ) : null}
                       {event.description ? (
-                        <p className="mt-3 max-w-2xl text-sm text-slate-300 leading-relaxed">{event.description}</p>
+                        <p className="mt-3 max-w-2xl text-sm text-muted-foreground leading-relaxed">{event.description}</p>
                       ) : null}
                       {event.registration_link ? (
                         <a
