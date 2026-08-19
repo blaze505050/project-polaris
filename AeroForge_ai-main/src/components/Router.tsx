@@ -105,6 +105,7 @@ const router = createBrowserRouter(
       children: [
         // Core Pages
         { index: true, element: <HomePage /> },
+        { path: 'index.html', element: <HomePage /> },
         { path: 'dashboard', element: <DashboardPage /> },
         { path: 'projects', element: <ProjectsPage /> },
         { path: 'projects/:projectId', element: <ProjectWorkspacePage /> },

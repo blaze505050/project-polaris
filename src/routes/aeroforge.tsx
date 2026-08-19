@@ -78,12 +78,15 @@ function AeroForgeLab() {
 
     window.addEventListener("message", handleMessage);
 
-    // Initial theme sync check
-    const stored = (localStorage.getItem("polaris-theme") as ThemePreference) || "system";
-    const resolved = getResolvedTheme(stored);
-    syncThemeToIframe(resolved);
+    // Safety timeout to ensure loading state dismisses
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
 
-    return () => window.removeEventListener("message", handleMessage);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("message", handleMessage);
+    };
   }, []);
 
   return (
