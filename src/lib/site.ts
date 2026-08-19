@@ -67,7 +67,7 @@ export const PROGRAMS = [
       "Technical mentor feedback and code reviews",
     ],
     experience:
-      "Small focused teams working on initiatives like CanSat atmospheric payloads, AeroForge AI research lab, and Sky Atlas open logs.",
+      "Small focused teams working on initiatives like AeroForge AI research lab, Sky Atlas astronomical catalogs, and student research digests.",
   },
   {
     slug: "mentorship",
@@ -137,7 +137,7 @@ export const WHY_JOIN_PILLARS = [
   },
   {
     title: "Work on Meaningful Projects",
-    description: "Collaborate with passionate peers on real projects like CanSat prototypes, AeroForge AI simulation lab, and open observational astronomy atlases.",
+    description: "Collaborate with passionate peers on real projects like the AeroForge AI simulation workstation, Sky Atlas open observational logs, and research tools.",
     icon: "Hammer",
   },
   {
@@ -370,7 +370,7 @@ export const TESTIMONIALS = [
     event: "ISRO Scientist Session",
   },
   {
-    quote: "Rocket fundamentals broke down complex propulsion concepts into actionable design principles. It sparked our team's interest in building a CanSat payload.",
+    quote: "Rocket fundamentals broke down complex propulsion concepts into actionable design principles. It sparked our team's interest in building interactive aerospace simulation tools.",
     name: "Undergraduate Builder",
     role: "Innovation Team",
     event: "Rocketry Workshop",
@@ -396,12 +396,12 @@ export const PROJECTS = [
     featured: true,
   },
   {
-    slug: "cansat-prototype",
-    name: "CanSat Prototype",
+    slug: "orbital-telemetry",
+    name: "Orbital Telemetry Hub",
     stage: "In progress",
-    team: "Innovation team",
+    team: "Space Tech Team",
     blurb:
-      "A soda-can sized satellite payload with atmospheric sensors, real-time telemetry transmitter, and passive recovery system, built end to end by students.",
+      "A distributed, student-operated software ground station network for tracking amateur satellites, decoding orbital telemetry, and open science data logging.",
   },
   {
     slug: "sky-atlas",

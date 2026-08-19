@@ -41,14 +41,14 @@ export function HeroHUD() {
           </span>
         </div>
 
-        {/* Floating Metric 1: Top Left - CanSat Altitude */}
+        {/* Floating Metric 1: Top Left - Orbital Telemetry */}
         <div className="absolute -top-4 -left-4 sm:-left-8 card-glow p-3.5 flex items-center gap-3 backdrop-blur-xl border border-white/15 animate-[float-slow_6s_ease-in-out_infinite] shadow-lg">
           <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
             <Radio className="size-4 animate-pulse" />
           </div>
           <div>
-            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">CanSat Telemetry</div>
-            <div className="font-mono text-xs font-bold text-foreground">{telemetry.altitude.toLocaleString()} m · 915 MHz</div>
+            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">Ground Station Telemetry</div>
+            <div className="font-mono text-xs font-bold text-foreground">{telemetry.altitude.toLocaleString()} km · LEO Downlink</div>
           </div>
         </div>
 

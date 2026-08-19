@@ -43,13 +43,13 @@ const PRESETS: ProblemPreset[] = [
   },
   {
     id: "naca0012",
-    name: "Symmetric CanSat Fin",
+    name: "Symmetric Rocket Stabilizer Fin",
     category: "Aerospace",
     defaultNaca: "0012",
     defaultMach: 0.20,
     defaultAlpha: 2.5,
     defaultAltitude: 2,
-    description: "Evaluates aerodynamic stabilization moment and zero-lift drag for atmospheric payload descent.",
+    description: "Evaluates aerodynamic stabilization moment and zero-lift drag for atmospheric vehicle ascent.",
   },
   {
     id: "sc20714",

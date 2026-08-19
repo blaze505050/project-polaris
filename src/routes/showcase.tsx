@@ -20,13 +20,13 @@ const DESCRIPTION =
 
 const FLAGSHIP: ShowcaseProject[] = [
   {
-    id: "cansat-prototype",
-    title: "CanSat Prototype",
-    category: "hardware",
+    id: "orbital-telemetry",
+    title: "Orbital Telemetry Hub",
+    category: "software",
     summary:
-      "A soda-can sized satellite payload with sensors, telemetry and a recovery system, built end to end by students.",
+      "A distributed software ground station network for tracking amateur satellites, decoding live orbital telemetry, and open science logging.",
     description: null,
-    team: "Innovation team",
+    team: "Space Tech Team",
     link: null,
     stage: "in_progress",
     created_at: "",

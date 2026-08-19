@@ -35,6 +35,7 @@ import { OpportunityCard } from "@/components/site/OpportunityCard";
 import { Timeline } from "@/components/site/Timeline";
 import { LoadingCards, ErrorState } from "@/components/site/StateBlocks";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { HeroHUD } from "@/components/site/HeroHUD";
 import { BentoGrid } from "@/components/site/BentoGrid";
@@ -96,7 +97,7 @@ const WHAT_WE_DO = [
   {
     icon: Hammer,
     name: "Innovation & Build Projects",
-    note: "Collaborative student teams building real initiatives: AeroForge AI simulation workstation, CanSat hardware, and Sky Atlas.",
+    note: "Collaborative student teams building real initiatives: AeroForge AI simulation workstation, Orbital Telemetry Hub, and Sky Atlas.",
   },
   {
     icon: Atom,
@@ -253,130 +254,134 @@ function Home() {
       {/* FIRST COURSE LAUNCH SPOTLIGHT */}
       <section className="section">
         <div className="shell">
-          <div className="card-elevated relative overflow-hidden p-8 md:p-14 text-center border border-primary/30 bg-gradient-to-b from-primary/10 via-slate-900/60 to-slate-950/80">
-            <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/20 text-primary mb-6 ring-8 ring-primary/10">
-              <Rocket className="size-8" />
+          <ScrollReveal direction="scale">
+            <div className="card-elevated relative overflow-hidden p-8 md:p-14 text-center border border-primary/30 bg-gradient-to-b from-primary/10 via-slate-900/60 to-slate-950/80">
+              <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-primary/20 text-primary mb-6 ring-8 ring-primary/10">
+                <Rocket className="size-8 animate-pulse" />
+              </div>
+
+              <span className="font-ui inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
+                <Calendar className="size-3.5" /> Launch Date: August 20th
+              </span>
+
+              <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white max-w-3xl mx-auto">
+                Our First Course Launches On <span className="text-gradient-star">August 20th</span>
+              </h2>
+
+              <p className="mt-5 text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                We are introducing our very first hands-on student course. Designed around practical building, real-world problems, and mentor guidance.
+              </p>
+
+              <div className="mt-9 flex flex-wrap justify-center gap-4">
+                <Button asChild size="lg" className="rounded-full shadow-lg bg-gradient-to-r from-primary to-accent hover:opacity-95 text-primary-foreground border-none btn-shimmer">
+                  <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
+                    Join Community for Enrolment Updates
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 hover:border-primary/50">
+                  <Link to="/programs">View All Programs</Link>
+                </Button>
+              </div>
             </div>
-
-            <span className="font-ui inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-4">
-              <Calendar className="size-3.5" /> Launch Date: August 20th
-            </span>
-
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-white max-w-3xl mx-auto">
-              Our First Course Launches On <span className="text-gradient-star">August 20th</span>
-            </h2>
-
-            <p className="mt-5 text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              We are introducing our very first hands-on student course. Designed around practical building, real-world problems, and mentor guidance.
-            </p>
-
-            <div className="mt-9 flex flex-wrap justify-center gap-4">
-              <Button asChild size="lg" className="rounded-full">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
-                  Join Community for Enrolment Updates
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full">
-                <Link to="/programs">View All Programs</Link>
-              </Button>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* WORKSHOPS & EXPERT SESSIONS */}
       <section className="section border-t border-border bg-surface/30">
         <div className="shell">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeader
-              eyebrow="Hands-On Masterclasses"
-              title="Workshops with real practitioners"
-              lead="Direct interactions between young builders and leaders across ISRO, aerospace research, and astronomy initiatives."
-            />
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to="/programs">Explore all programs</Link>
-            </Button>
-          </div>
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <SectionHeader
+                eyebrow="Hands-On Masterclasses"
+                title="Workshops with real practitioners"
+                lead="Direct interactions between young builders and leaders across ISRO, aerospace research, and astronomy initiatives."
+              />
+              <Button asChild variant="outline" className="rounded-full">
+                <Link to="/programs">Explore all programs</Link>
+              </Button>
+            </div>
+          </ScrollReveal>
 
           <div className="mt-14 grid gap-8 lg:grid-cols-3">
             {WORKSHOPS.map((workshop, idx) => (
-              <article
-                key={workshop.id}
-                className="card-elevated flex flex-col justify-between p-7 md:p-8 border border-border bg-card transition-all duration-300 hover:border-primary/40"
-                style={{ animation: `fade-in-up 500ms ease-out ${idx * 100}ms both` }}
-              >
-                <div>
-                  <div className="font-ui flex flex-wrap items-center justify-between gap-2 text-xs mb-4">
-                    <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[10px] font-bold text-primary tracking-wider uppercase">
-                      {workshop.tag}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-muted-foreground font-mono text-[11px]">
-                      <Calendar className="size-3.5 text-primary" />
-                      <span>{workshop.date}</span>
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-display font-bold text-foreground leading-snug">
-                    {workshop.title}
-                  </h3>
-
-                  {/* Mentor Badge */}
-                  <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-surface-2 p-3">
-                    <div>
-                      <p className="font-display font-bold text-sm text-foreground">{workshop.mentor}</p>
-                      <p className="font-ui text-xs text-primary font-medium">{workshop.mentorTitle}</p>
-                      <p className="text-[11px] text-muted-foreground">{workshop.mentorOrg}</p>
+              <ScrollReveal key={workshop.id} direction="up" delay={idx * 120}>
+                <article
+                  className="card-elevated flex flex-col justify-between p-7 md:p-8 border border-border bg-card transition-all duration-300 hover:border-primary/40 h-full"
+                >
+                  <div>
+                    <div className="font-ui flex flex-wrap items-center justify-between gap-2 text-xs mb-4">
+                      <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 font-mono text-[10px] font-bold text-primary tracking-wider uppercase">
+                        {workshop.tag}
+                      </span>
+                      <span className="flex items-center gap-1.5 text-muted-foreground font-mono text-[11px]">
+                        <Calendar className="size-3.5 text-primary" />
+                        <span>{workshop.date}</span>
+                      </span>
                     </div>
-                    {workshop.linkedin ? (
-                      <a
-                        href={workshop.linkedin}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-lg p-2 text-muted-foreground hover:bg-surface hover:text-primary transition-colors"
-                        aria-label={`${workshop.mentor} LinkedIn Profile`}
-                        title={`View ${workshop.mentor}'s LinkedIn`}
-                      >
-                        <Linkedin className="size-4" />
-                      </a>
-                    ) : null}
-                  </div>
 
-                  <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
-                    {workshop.summary}
-                  </p>
+                    <h3 className="text-xl font-display font-bold text-foreground leading-snug">
+                      {workshop.title}
+                    </h3>
 
-                  {/* Session Highlights */}
-                  <div className="mt-5 space-y-2 border-t border-border pt-4">
-                    <p className="font-ui text-[11px] font-bold text-foreground uppercase tracking-wider">
-                      Session Highlights:
+                    {/* Mentor Badge */}
+                    <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-surface-2 p-3">
+                      <div>
+                        <p className="font-display font-bold text-sm text-foreground">{workshop.mentor}</p>
+                        <p className="font-ui text-xs text-primary font-medium">{workshop.mentorTitle}</p>
+                        <p className="text-[11px] text-muted-foreground">{workshop.mentorOrg}</p>
+                      </div>
+                      {workshop.linkedin ? (
+                        <a
+                          href={workshop.linkedin}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="rounded-lg p-2 text-muted-foreground hover:bg-surface hover:text-primary transition-colors"
+                          aria-label={`${workshop.mentor} LinkedIn Profile`}
+                          title={`View ${workshop.mentor}'s LinkedIn`}
+                        >
+                          <Linkedin className="size-4" />
+                        </a>
+                      ) : null}
+                    </div>
+
+                    <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+                      {workshop.summary}
                     </p>
-                    <ul className="space-y-1.5 text-xs text-muted-foreground">
-                      {workshop.highlights.map((h, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="size-3.5 text-primary shrink-0 mt-0.5" />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
 
-                <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-ui">
-                  <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
-                    <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                    Completed & Archived
-                  </span>
-                  <a
-                    href={SITE.communityUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-primary hover:underline font-semibold flex items-center gap-1"
-                  >
-                    <span>Community Notes</span>
-                    <ExternalLink className="size-3" />
-                  </a>
-                </div>
-              </article>
+                    {/* Session Highlights */}
+                    <div className="mt-5 space-y-2 border-t border-border pt-4">
+                      <p className="font-ui text-[11px] font-bold text-foreground uppercase tracking-wider">
+                        Session Highlights:
+                      </p>
+                      <ul className="space-y-1.5 text-xs text-muted-foreground">
+                        {workshop.highlights.map((h, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <CheckCircle2 className="size-3.5 text-primary shrink-0 mt-0.5" />
+                            <span>{h}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-ui">
+                    <span className="text-emerald-300 font-semibold flex items-center gap-1.5">
+                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                      Completed & Archived
+                    </span>
+                    <a
+                      href={SITE.communityUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-primary hover:underline font-semibold flex items-center gap-1"
+                    >
+                      <span>Community Notes</span>
+                      <ExternalLink className="size-3" />
+                    </a>
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -385,38 +390,42 @@ function Home() {
       {/* BEHIND PROJECT POLARIS - THE TEAM */}
       <section className="section border-t border-border bg-surface/20">
         <div className="shell">
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
-            <SectionHeader
-              eyebrow="Behind Project Polaris"
-              title="Built and led by students, for students"
-              lead="Meet the student leaders driving the vision, research, and community ecosystem at Project Polaris."
-            />
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to="/about" className="flex items-center gap-2">
-                <span>Our Full Story & Team</span>
-                <ArrowRight className="size-3.5" />
-              </Link>
-            </Button>
-          </div>
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+              <SectionHeader
+                eyebrow="Behind Project Polaris"
+                title="Built and led by students, for students"
+                lead="Meet the student leaders driving the vision, research, and community ecosystem at Project Polaris."
+              />
+              <Button asChild variant="outline" className="rounded-full">
+                <Link to="/about" className="flex items-center gap-2">
+                  <span>Our Full Story & Team</span>
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </Button>
+            </div>
+          </ScrollReveal>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {TEAM_MEMBERS.map((member) => (
-              <article key={member.name} className="card-elevated p-7 flex flex-col justify-between hover:border-primary/40 transition-all duration-300">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <img src={polarisLogo} alt="Polaris Logo" className="size-9 rounded-full ring-2 ring-primary/20" />
-                    <span className="size-2 rounded-full bg-primary/60" />
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {TEAM_MEMBERS.map((member, idx) => (
+              <ScrollReveal key={member.name} direction="up" delay={idx * 100}>
+                <article className="card-elevated p-7 flex flex-col justify-between hover:border-primary/40 transition-all duration-300 h-full">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <img src={polarisLogo} alt="Polaris Logo" className="size-9 rounded-full ring-2 ring-primary/20" />
+                      <span className="size-2 rounded-full bg-primary/60" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
+                    <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
                   </div>
-                  <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
-                  <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
-                </div>
 
-                <div className="mt-6 border-t border-border/50 pt-4 flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="font-mono">Project Polaris</span>
-                  <span className="text-primary font-medium">Core Member</span>
-                </div>
-              </article>
+                  <div className="mt-6 border-t border-border/50 pt-4 flex items-center justify-between text-xs text-muted-foreground">
+                    <span className="font-mono">Project Polaris</span>
+                    <span className="text-primary font-medium">Core Member</span>
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -426,57 +435,61 @@ function Home() {
       <section className="section border-t border-border relative overflow-hidden">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/8 blur-[160px] pointer-events-none rounded-full" />
         <div className="shell relative">
-          <SectionHeader
-            eyebrow="Why Join Polaris?"
-            title="Build real skills. Shape your own trajectory."
-            lead="Project Polaris provides the ecosystem, mentorship, and collaborators you need to turn theoretical curiosity into tangible impact."
-            align="center"
-          />
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow="Why Join Polaris?"
+              title="Build real skills. Shape your own trajectory."
+              lead="Project Polaris provides the ecosystem, mentorship, and collaborators you need to turn theoretical curiosity into tangible impact."
+              align="center"
+            />
+          </ScrollReveal>
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {WHY_JOIN_PILLARS.map((pillar, i) => {
               const Icon = PILLAR_ICONS[pillar.icon] || Sparkles;
               return (
-                <SpotlightCard
-                  key={pillar.title}
-                  spotlightColor="rgba(197, 157, 255, 0.2)"
-                  className="p-8 flex flex-col justify-between hover:border-primary/50 transition-all duration-300 group"
-                  style={{ animation: `fade-in-up 500ms ease-out ${i * 80}ms both` }}
-                >
-                  <div>
-                    <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-transform group-hover:scale-110 shadow-sm border border-primary/20">
-                      <Icon className="size-6" />
+                <ScrollReveal key={pillar.title} direction="up" delay={i * 80}>
+                  <SpotlightCard
+                    spotlightColor="rgba(197, 157, 255, 0.2)"
+                    className="p-8 flex flex-col justify-between hover:border-primary/50 transition-all duration-300 group h-full"
+                  >
+                    <div>
+                      <div className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-6 transition-transform group-hover:scale-110 shadow-sm border border-primary/20">
+                        <Icon className="size-6" />
+                      </div>
+                      <h3 className="text-xl font-display font-bold text-foreground">{pillar.title}</h3>
+                      <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{pillar.description}</p>
                     </div>
-                    <h3 className="text-xl font-display font-bold text-foreground">{pillar.title}</h3>
-                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{pillar.description}</p>
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-border/50 flex items-center gap-2 text-xs font-ui text-primary font-semibold">
-                    <span>Explore opportunities</span>
-                    <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </SpotlightCard>
+                    <div className="mt-6 pt-4 border-t border-border/50 flex items-center gap-2 text-xs font-ui text-primary font-semibold">
+                      <span>Explore opportunities</span>
+                      <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </SpotlightCard>
+                </ScrollReveal>
               );
             })}
 
             {/* CTA card for 6th grid item */}
-            <SpotlightCard
-              spotlightColor="rgba(56, 189, 248, 0.25)"
-              className="p-8 flex flex-col justify-between border-primary/40 bg-gradient-to-br from-primary/15 via-slate-950/80 to-accent/10"
-            >
-              <div>
-                <span className="eyebrow mb-3 text-primary">Get Started</span>
-                <h3 className="text-2xl font-display font-extrabold text-foreground">Ready to start building?</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                  Join our WhatsApp community today. It is completely free and open to learners of all levels.
-                </p>
-              </div>
-              <Button asChild className="mt-6 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-md btn-shimmer border-none">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-                  <MessageCircle className="size-4" />
-                  <span>Join Community Free</span>
-                </a>
-              </Button>
-            </SpotlightCard>
+            <ScrollReveal direction="up" delay={400}>
+              <SpotlightCard
+                spotlightColor="rgba(56, 189, 248, 0.25)"
+                className="p-8 flex flex-col justify-between border-primary/40 bg-gradient-to-br from-primary/15 via-slate-950/80 to-accent/10 h-full"
+              >
+                <div>
+                  <span className="eyebrow mb-3 text-primary">Get Started</span>
+                  <h3 className="text-2xl font-display font-extrabold text-foreground">Ready to start building?</h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                    Join our WhatsApp community today. It is completely free and open to learners of all levels.
+                  </p>
+                </div>
+                <Button asChild className="mt-6 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold shadow-md btn-shimmer border-none">
+                  <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                    <MessageCircle className="size-4" />
+                    <span>Join Community Free</span>
+                  </a>
+                </Button>
+              </SpotlightCard>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -484,36 +497,38 @@ function Home() {
       {/* WHO CAN JOIN? (AUDIENCE PATHWAYS FROM CANVA DRAFT) */}
       <section className="section border-t border-border bg-surface/20">
         <div className="shell">
-          <SectionHeader
-            eyebrow="Open to Everyone"
-            title="Who is Project Polaris for?"
-            lead="Whether you are in middle school, completing your degree, teaching, or working in industry — there is a role for you."
-            align="center"
-          />
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow="Open to Everyone"
+              title="Who is Project Polaris for?"
+              lead="Whether you are in middle school, completing your degree, teaching, or working in industry — there is a role for you."
+              align="center"
+            />
+          </ScrollReveal>
 
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {WHO_CAN_JOIN.map((item, idx) => (
-              <SpotlightCard
-                key={item.category}
-                spotlightColor="rgba(197, 157, 255, 0.15)"
-                className="p-6 flex flex-col justify-between hover:border-primary/40 transition-colors"
-                style={{ animation: `fade-in-up 500ms ease-out ${idx * 60}ms both` }}
-              >
-                <div>
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/30 bg-primary/10 px-2.5 py-0.5 rounded-full inline-block mb-4">
-                    {item.badge}
-                  </span>
-                  <h3 className="font-display font-bold text-foreground text-lg">{item.category}</h3>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{item.description}</p>
-                </div>
-                <Link
-                  to="/get-involved"
-                  className="font-ui mt-5 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+              <ScrollReveal key={item.category} direction="up" delay={idx * 60}>
+                <SpotlightCard
+                  spotlightColor="rgba(197, 157, 255, 0.15)"
+                  className="p-6 flex flex-col justify-between hover:border-primary/40 transition-colors h-full"
                 >
-                  <span>Learn how</span>
-                  <ArrowRight className="size-3" />
-                </Link>
-              </SpotlightCard>
+                  <div>
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/30 bg-primary/10 px-2.5 py-0.5 rounded-full inline-block mb-4">
+                      {item.badge}
+                    </span>
+                    <h3 className="font-display font-bold text-foreground text-lg">{item.category}</h3>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+                  </div>
+                  <Link
+                    to="/get-involved"
+                    className="font-ui mt-5 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
+                  >
+                    <span>Learn how</span>
+                    <ArrowRight className="size-3" />
+                  </Link>
+                </SpotlightCard>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -522,35 +537,39 @@ function Home() {
       {/* WHAT WE DO */}
       <section className="section border-t border-border">
         <div className="shell">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeader
-              eyebrow="What We Do"
-              title="Active ways students engage with Polaris"
-              lead="Each one is a live, ongoing initiative you can participate in right now."
-            />
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to="/programs">All programs</Link>
-            </Button>
-          </div>
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <SectionHeader
+                eyebrow="What We Do"
+                title="Active ways students engage with Polaris"
+                lead="Each one is a live, ongoing initiative you can participate in right now."
+              />
+              <Button asChild variant="outline" className="rounded-full">
+                <Link to="/programs">All programs</Link>
+              </Button>
+            </div>
+          </ScrollReveal>
 
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {WHAT_WE_DO.map(({ icon: Icon, name, note }) => (
-              <article key={name} className="card-elevated group p-7 flex flex-col justify-between">
-                <div>
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-transform group-hover:scale-110">
-                    <Icon className="size-5" aria-hidden="true" />
+            {WHAT_WE_DO.map(({ icon: Icon, name, note }, idx) => (
+              <ScrollReveal key={name} direction="up" delay={idx * 80}>
+                <article className="card-elevated group p-7 flex flex-col justify-between h-full">
+                  <div>
+                    <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary mb-5 transition-transform group-hover:scale-110">
+                      <Icon className="size-5" aria-hidden="true" />
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-foreground">{name}</h3>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{note}</p>
                   </div>
-                  <h3 className="text-xl font-display font-bold text-foreground">{name}</h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{note}</p>
-                </div>
-                <Link
-                  to="/programs"
-                  className="font-ui mt-6 inline-flex items-center gap-1.5 text-sm text-primary font-semibold hover:underline"
-                >
-                  <span>Explore program details</span>
-                  <ArrowRight className="size-3.5" />
-                </Link>
-              </article>
+                  <Link
+                    to="/programs"
+                    className="font-ui mt-6 inline-flex items-center gap-1.5 text-sm text-primary font-semibold hover:underline"
+                  >
+                    <span>Explore program details</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -559,25 +578,29 @@ function Home() {
       {/* TESTIMONIALS */}
       <section className="section border-t border-border bg-surface/20">
         <div className="shell">
-          <SectionHeader
-            eyebrow="Community Voice"
-            title="What workshop participants say"
-            lead="Real feedback from students and attendees across our expert sessions and workshops."
-            align="center"
-          />
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow="Community Voice"
+              title="What workshop participants say"
+              lead="Real feedback from students and attendees across our expert sessions and workshops."
+              align="center"
+            />
+          </ScrollReveal>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t, idx) => (
-              <article key={idx} className="card-elevated p-7 flex flex-col justify-between">
-                <div>
-                  <Quote className="size-6 text-primary/40 mb-4" />
-                  <p className="text-sm text-muted-foreground italic leading-relaxed">"{t.quote}"</p>
-                </div>
-                <div className="mt-6 border-t border-border pt-4">
-                  <p className="font-display font-bold text-sm text-foreground">{t.name}</p>
-                  <p className="text-xs text-primary font-ui mt-0.5">{t.event}</p>
-                </div>
-              </article>
+              <ScrollReveal key={idx} direction="up" delay={idx * 100}>
+                <article className="card-elevated p-7 flex flex-col justify-between h-full">
+                  <div>
+                    <Quote className="size-6 text-primary/40 mb-4" />
+                    <p className="text-sm text-muted-foreground italic leading-relaxed">"{t.quote}"</p>
+                  </div>
+                  <div className="mt-6 border-t border-border pt-4">
+                    <p className="font-display font-bold text-sm text-foreground">{t.name}</p>
+                    <p className="text-xs text-primary font-ui mt-0.5">{t.event}</p>
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -585,117 +608,131 @@ function Home() {
 
       {/* PROBLEM / THE GAP */}
       <section className="section border-t border-border">
-        <div className="shell grid gap-14 lg:grid-cols-2 lg:gap-20">
-          <div>
-            <p className="eyebrow mb-6">The Gap</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
-              Every student is asked what they want to become.
-            </h2>
-            <p className="mt-6 font-display text-2xl text-primary md:text-3xl">
-              Almost none are asked what problem they want to solve.
-            </p>
-            <p className="mt-6 max-w-lg text-muted-foreground leading-relaxed">
-              We don't think schools are the problem. We think there's a gap next to them — the
-              part where you actually try something, get it wrong, and try again.
-            </p>
-          </div>
-          <ul className="space-y-0 self-center">
-            {GAPS.map((gap, i) => (
-              <li
-                key={gap}
-                className="flex items-baseline gap-5 border-b border-border py-5 first:border-t"
-              >
-                <span className="font-ui text-xs font-semibold text-primary">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-muted-foreground">{gap}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
+              <div>
+                <p className="eyebrow mb-6">The Gap</p>
+                <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
+                  Every student is asked what they want to become.
+                </h2>
+                <p className="mt-6 font-display text-2xl text-primary md:text-3xl">
+                  Almost none are asked what problem they want to solve.
+                </p>
+                <p className="mt-6 max-w-lg text-muted-foreground leading-relaxed">
+                  We don't think schools are the problem. We think there's a gap next to them — the
+                  part where you actually try something, get it wrong, and try again.
+                </p>
+              </div>
+              <ul className="space-y-0 self-center">
+                {GAPS.map((gap, i) => (
+                  <li
+                    key={gap}
+                    className="flex items-baseline gap-5 border-b border-border py-5 first:border-t"
+                  >
+                    <span className="font-ui text-xs font-semibold text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-muted-foreground">{gap}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* SOLUTION / PATHWAY */}
       <section className="section relative overflow-hidden border-t border-border bg-surface/30">
         <div className="shell relative">
-          <SectionHeader
-            eyebrow="So We Built Polaris"
-            title="What if learning started with building?"
-            lead="Not another coaching institute. Not another student club. A place where curiosity becomes action, ideas become projects, and students become builders."
-            align="center"
-          />
+          <ScrollReveal direction="up">
+            <SectionHeader
+              eyebrow="So We Built Polaris"
+              title="What if learning started with building?"
+              lead="Not another coaching institute. Not another student club. A place where curiosity becomes action, ideas become projects, and students become builders."
+              align="center"
+            />
 
-          <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {PATHWAY.map((item, i) => (
-              <li key={item.step} className="group bg-background p-7 transition-colors hover:bg-surface">
-                <span className="font-ui text-xs font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 text-xl font-display font-bold text-foreground">{item.step}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{item.note}</p>
-              </li>
-            ))}
-          </ol>
+            <ol className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+              {PATHWAY.map((item, i) => (
+                <li key={item.step} className="group bg-background p-7 transition-colors hover:bg-surface">
+                  <span className="font-ui text-xs font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className="mt-3 text-xl font-display font-bold text-foreground">{item.step}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{item.note}</p>
+                </li>
+              ))}
+            </ol>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* CURRENT FOCUS WITH PHOTO */}
       <section className="section border-t border-border">
-        <div className="shell grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-2xl">
-            <picture>
-              <source srcSet={nightImageWebp} type="image/webp" />
-              <img
-                src={nightImage}
-                alt="Students observing the night sky through a telescope"
-                width={800}
-                height={600}
-                loading="lazy"
-                className="aspect-[4/3] w-full object-cover"
-              />
-            </picture>
-          </div>
-          <div>
-            <p className="eyebrow mb-6">Current Focus</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">Start with space. Think beyond it.</h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Right now almost everything we run is centred around space science — because that's
-              what fascinates most of our community. It gives us a shared language and a genuinely
-              hard set of problems to learn on.
-            </p>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              It is a starting point, not a boundary. The long-term work is experiential learning
-              across disciplines.
-            </p>
-            <ul className="mt-8 flex flex-wrap gap-2">
-              {["Astronomy", "Rocketry", "Space science", "Engineering", "Research", "Technology"].map(
-                (tag) => (
-                  <li
-                    key={tag}
-                    className="font-ui rounded-full border border-border bg-surface px-4 py-1.5 text-xs text-muted-foreground"
-                  >
-                    {tag}
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+              <div className="overflow-hidden rounded-3xl border border-border shadow-2xl">
+                <picture>
+                  <source srcSet={nightImageWebp} type="image/webp" />
+                  <img
+                    src={nightImage}
+                    alt="Students observing the night sky through a telescope"
+                    width={800}
+                    height={600}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                </picture>
+              </div>
+              <div>
+                <p className="eyebrow mb-6">Current Focus</p>
+                <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">Start with space. Think beyond it.</h2>
+                <p className="mt-6 text-muted-foreground leading-relaxed">
+                  Right now almost everything we run is centred around space science — because that's
+                  what fascinates most of our community. It gives us a shared language and a genuinely
+                  hard set of problems to learn on.
+                </p>
+                <p className="mt-4 text-muted-foreground leading-relaxed">
+                  It is a starting point, not a boundary. The long-term work is experiential learning
+                  across disciplines.
+                </p>
+                <ul className="mt-8 flex flex-wrap gap-2">
+                  {["Astronomy", "Rocketry", "Space science", "Engineering", "Research", "Technology"].map(
+                    (tag) => (
+                      <li
+                        key={tag}
+                        className="font-ui rounded-full border border-border bg-surface px-4 py-1.5 text-xs text-muted-foreground"
+                      >
+                        {tag}
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* JOURNEY */}
       <section className="section border-t border-border bg-surface/20">
-        <div className="shell grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-          <div>
-            <p className="eyebrow mb-6">Where We Are</p>
-            <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">We're early. We're building.</h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              We started on 7 June with a WhatsApp group and a few friends. Here's honestly
-              everything that has happened since — no inflated numbers.
-            </p>
-            <Button asChild variant="outline" className="mt-8 rounded-full">
-              <Link to="/impact">Read the full story</Link>
-            </Button>
-          </div>
-          <Timeline items={JOURNEY.slice(0, 5)} />
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+              <div>
+                <p className="eyebrow mb-6">Where We Are</p>
+                <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground">We're early. We're building.</h2>
+                <p className="mt-6 text-muted-foreground leading-relaxed">
+                  We started on 7 June with a WhatsApp group and a few friends. Here's honestly
+                  everything that has happened since — no inflated numbers.
+                </p>
+                <Button asChild variant="outline" className="mt-8 rounded-full">
+                  <Link to="/impact">Read the full story</Link>
+                </Button>
+              </div>
+              <Timeline items={JOURNEY.slice(0, 5)} />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -703,21 +740,23 @@ function Home() {
       <section className="section border-t border-border relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/8 blur-[160px] pointer-events-none rounded-full" />
         <div className="shell relative">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card/60 backdrop-blur-2xl p-8 md:p-12 shadow-2xl">
-            <div className="text-center">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary/15 text-primary mb-6 ring-8 ring-primary/5">
-                <Mail className="size-6" />
+          <ScrollReveal direction="scale">
+            <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-card/60 backdrop-blur-2xl p-8 md:p-12 shadow-2xl">
+              <div className="text-center">
+                <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-primary/15 text-primary mb-6 ring-8 ring-primary/5">
+                  <Mail className="size-6" />
+                </div>
+                <p className="eyebrow mb-3">Stay in the Loop</p>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+                  Get weekly updates from <span className="text-gradient-star">Polaris</span>
+                </h2>
+                <p className="mt-4 text-muted-foreground max-w-lg mx-auto leading-relaxed">
+                  Workshops, project launches, community stories, and learning resources — delivered to your inbox every week.
+                </p>
               </div>
-              <p className="eyebrow mb-3">Stay in the Loop</p>
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                Get weekly updates from <span className="text-gradient-star">Polaris</span>
-              </h2>
-              <p className="mt-4 text-muted-foreground max-w-lg mx-auto leading-relaxed">
-                Workshops, project launches, community stories, and learning resources — delivered to your inbox every week.
-              </p>
+              <Newsletter className="mt-8 max-w-xl mx-auto" />
             </div>
-            <Newsletter className="mt-8 max-w-xl mx-auto" />
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -725,16 +764,17 @@ function Home() {
       <section className="section border-t border-border bg-surface/20 relative overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 blur-[140px] pointer-events-none rounded-full" />
         <div className="shell relative">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-            <div>
-              <p className="eyebrow mb-4 !text-emerald-400">Community</p>
-              <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
-                Join <span className="text-emerald-400">400+ builders</span> on WhatsApp
-              </h2>
-              <p className="mt-6 text-muted-foreground leading-relaxed max-w-lg">
-                Our WhatsApp community is where daily learning happens — "Aaj Ka Gyan" science posts, live workshop announcements, project discussions, and real conversations between students and mentors.
-              </p>
-              <ul className="mt-6 space-y-3">
+          <ScrollReveal direction="up">
+            <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+              <div>
+                <p className="eyebrow mb-4 !text-emerald-400">Community</p>
+                <h2 className="text-3xl md:text-[2.75rem] font-display font-bold text-foreground leading-tight">
+                  Join <span className="text-emerald-400">400+ builders</span> on WhatsApp
+                </h2>
+                <p className="mt-6 text-muted-foreground leading-relaxed max-w-lg">
+                  Our WhatsApp community is where daily learning happens — "Aaj Ka Gyan" science posts, live workshop announcements, project discussions, and real conversations between students and mentors.
+                </p>
+                <ul className="mt-6 space-y-3">
                 {[
                   "Daily educational content & science discussions",
                   "First access to workshop registrations",
@@ -789,6 +829,7 @@ function Home() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 

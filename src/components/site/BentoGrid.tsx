@@ -234,7 +234,7 @@ export function BentoGrid() {
             </Button>
           </SpotlightCard>
 
-          {/* 4. CANSAT & HARDWARE SANDBOX (Span 4 cols) */}
+          {/* 4. SKY ATLAS & OBSERVATIONAL ASTRONOMY (Span 4 cols) */}
           <SpotlightCard
             spotlightColor="rgba(197, 157, 255, 0.2)"
             className="lg:col-span-4 flex flex-col justify-between border border-primary/20 bg-slate-950/80 p-6 md:p-7"
@@ -242,36 +242,36 @@ export function BentoGrid() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-xs font-mono font-bold text-primary">
-                  <Radio className="size-3.5" />
-                  HARDWARE BUILDS
+                  <Orbit className="size-3.5" />
+                  SKY ATLAS
                 </span>
-                <span className="font-mono text-xs text-emerald-400">Prototype Active</span>
+                <span className="font-mono text-xs text-emerald-400">Live Observation Logs</span>
               </div>
 
-              <h3 className="text-xl font-display font-bold text-foreground">CanSat Satellite Payload</h3>
+              <h3 className="text-xl font-display font-bold text-foreground">Sky Atlas Network</h3>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                A soda-can sized atmospheric research payload built by students with onboard IMU, barometric telemetry, and RF transmitter link.
+                An open, student-maintained deep-sky catalog and constellation mapping database built from our community night observation challenges.
               </p>
 
               <div className="mt-4 p-3 rounded-lg border border-border bg-surface-2 space-y-1.5 font-mono text-[11px]">
                 <div className="flex justify-between text-muted-foreground">
-                  <span>MCU:</span>
-                  <span className="text-foreground">RP2040 Dual ARM Cortex</span>
+                  <span>Catalogs:</span>
+                  <span className="text-foreground">Messier + NGC + IC</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Sensors:</span>
-                  <span className="text-foreground">BMP280 + MPU6050</span>
+                  <span>Coord System:</span>
+                  <span className="text-foreground">J2000 RA / Dec</span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Downlink:</span>
-                  <span className="text-primary font-bold">915 MHz LoRa RF</span>
+                  <span>Telemetry:</span>
+                  <span className="text-primary font-bold">Open Access Stargazing</span>
                 </div>
               </div>
             </div>
 
             <Button asChild variant="outline" size="sm" className="mt-6 w-full rounded-full border-white/20 hover:border-primary/50">
               <Link to="/projects" className="flex items-center justify-center gap-1.5">
-                <span>Explore CanSat Specs</span>
+                <span>Explore Sky Atlas</span>
                 <ArrowRight className="size-3.5" />
               </Link>
             </Button>

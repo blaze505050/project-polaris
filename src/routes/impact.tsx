@@ -39,7 +39,7 @@ const NEXT = [
   },
   {
     title: "Student-built projects",
-    note: "CanSat hardware, an open sky atlas and a student research digest, all built in small teams.",
+    note: "AeroForge AI research lab, an open sky atlas and a student research digest, all built in collaborative teams.",
   },
 ];
 

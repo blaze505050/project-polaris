@@ -52,7 +52,7 @@ const PATHS = [
   },
   {
     name: "Schools, Colleges & NGOs",
-    note: "Partner with us to host hands-on space science workshops, CanSat payloads, and science hackathons for your students.",
+    note: "Partner with us to host hands-on space science workshops, rocketry simulation labs, and science hackathons for your students.",
     action: "Partner with Us",
     link: "/schools",
     external: false,
