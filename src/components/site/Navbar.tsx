@@ -1,33 +1,27 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, Instagram, Linkedin, MessageCircle, Rocket } from "lucide-react";
+import { Menu, X, ArrowUpRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Wordmark } from "./NorthStar";
 import { ThemeToggle } from "./ThemeToggle";
 
+const NAV_ITEMS = [
+  { label: "Projects", to: "/projects" },
+  { label: "AeroForge Lab", to: "/aeroforge" },
+  { label: "Showcase", to: "/showcase" },
+  { label: "Programs", to: "/programs" },
+  { label: "About", to: "/about" },
+] as const;
+
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [mounted, setMounted] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
-  // Entrance animation
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  // Scroll tracking + progress bar
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 12);
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(docHeight > 0 ? Math.min(window.scrollY / docHeight, 1) : 0);
-    };
-    onScroll();
+    const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -46,64 +40,55 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        mounted ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-200",
         scrolled || open
-          ? "border-b border-border bg-background/85 backdrop-blur-xl shadow-lg"
-          : "border-b border-transparent bg-transparent",
+          ? "border-b border-border bg-background/90 backdrop-blur-md"
+          : "border-b border-transparent bg-background/40 backdrop-blur-sm",
       )}
     >
-      <nav role="navigation" aria-label="Main Navigation" className="shell flex h-16 items-center justify-between gap-4 md:h-20">
+      <nav aria-label="Main Navigation" className="shell flex h-14 items-center justify-between gap-4">
+        {/* Brand */}
         <Link to="/" aria-label="Project Polaris Home" className="shrink-0">
           <Wordmark />
         </Link>
 
-        {/* Minimalist Nav Items */}
-        <ul className="font-ui hidden items-center gap-2 md:flex rounded-full border border-border bg-surface/50 px-4 py-1.5 backdrop-blur-md">
-          {NAV_LINKS.map((link) => (
-            <li key={link.to}>
+        {/* Center Nav Links */}
+        <div className="hidden md:flex items-center gap-1">
+          {NAV_ITEMS.map((link) => {
+            const isActive = pathname === link.to || (link.to !== "/" && pathname.startsWith(link.to));
+            return (
               <Link
+                key={link.to}
                 to={link.to}
-                className="relative rounded-full px-3.5 py-1.5 text-xs md:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground bg-primary-soft font-semibold" }}
-                activeOptions={{ exact: link.to === "/" }}
-                {...(pathname === link.to ? { "aria-current": "page" as const } : {})}
+                className={cn(
+                  "px-3 py-1.5 text-xs font-medium rounded-md transition-colors",
+                  isActive
+                    ? "text-foreground bg-surface-2 font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-surface/50",
+                )}
+                {...(isActive ? { "aria-current": "page" as const } : {})}
               >
                 {link.label}
               </Link>
-            </li>
-          ))}
-        </ul>
+            );
+          })}
+        </div>
 
-        <div className="flex items-center gap-2.5">
-          {/* Social Links */}
-          <div className="hidden sm:flex items-center gap-1.5 border-r border-white/10 pr-3 mr-1">
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Project Polaris Instagram"
-              className="p-2 rounded-full text-slate-400 hover:text-primary hover:bg-white/5 transition-all duration-200 hover:scale-110"
-            >
-              <Instagram className="size-4" />
-            </a>
-            <a
-              href={SITE.linkedinCompanyUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Project Polaris LinkedIn Company Page"
-              className="p-2 rounded-full text-slate-400 hover:text-primary hover:bg-white/5 transition-all duration-200 hover:scale-110"
-            >
-              <Linkedin className="size-4" />
-            </a>
-          </div>
-
+        {/* Right Utility Actions */}
+        <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          <Button asChild size="sm" className="hidden sm:inline-flex rounded-full font-medium">
-            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
-              <MessageCircle className="size-3.5" />
-              <span>Join WhatsApp</span>
+          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-8 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/portal" className="flex items-center gap-1.5">
+              <User className="size-3.5" />
+              <span>Workspace</span>
+            </Link>
+          </Button>
+
+          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-3 text-xs font-medium bg-foreground text-background hover:bg-foreground/90 rounded-md">
+            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+              <span>Community</span>
+              <ArrowUpRight className="size-3 opacity-70" />
             </a>
           </Button>
 
@@ -113,75 +98,40 @@ export function Navbar() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="flex size-10 items-center justify-center rounded-full border border-white/10 text-white transition-colors hover:border-primary md:hidden"
+            className="flex size-8 items-center justify-center rounded-md border border-border text-muted-foreground hover:text-foreground md:hidden"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
         </div>
       </nav>
-
-      {/* Scroll Progress Indicator */}
-      <div
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-accent to-primary transition-none"
-        style={{ width: `${scrollProgress * 100}%`, opacity: scrollProgress > 0.01 ? 1 : 0 }}
-        aria-hidden="true"
-      />
 
       {/* Mobile Drawer */}
       <div
         id="mobile-nav"
         hidden={!open}
-        className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-background/95 backdrop-blur-2xl md:hidden"
+        className="border-b border-border bg-background px-4 py-4 md:hidden"
       >
-        <ul className="shell flex flex-col py-4">
-          {NAV_LINKS.map((link, i) => (
-            <li
+        <div className="flex flex-col gap-1">
+          {NAV_ITEMS.map((link) => (
+            <Link
               key={link.to}
-              style={{
-                animation: open ? `fade-in-up 350ms ease-out ${80 * i}ms both` : "none",
-              }}
+              to={link.to}
+              className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-surface-2 rounded-md"
+              activeProps={{ className: "text-foreground bg-surface-2 font-semibold" }}
             >
-              <Link
-                to={link.to}
-                className="font-ui block border-b border-border/50 py-3 text-base text-muted-foreground"
-                activeProps={{ className: "text-primary font-semibold" }}
-                activeOptions={{ exact: link.to === "/" }}
-                {...(pathname === link.to ? { "aria-current": "page" as const } : {})}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div className="shell flex flex-col gap-3 pb-8">
-          <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground border-none">
-            <Link to="/projects" className="flex items-center justify-center gap-2">
-              <span>Explore Our Projects</span>
+              {link.label}
             </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="rounded-full">
-            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2">
-              <MessageCircle className="size-4" />
-              <span>Join WhatsApp Community</span>
-            </a>
-          </Button>
-          <div className="flex justify-center gap-6 pt-3">
-            <a
-              href={SITE.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary"
-            >
-              <Instagram className="size-4" /> Instagram
-            </a>
-            <a
-              href={SITE.linkedinCompanyUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 text-sm text-slate-400 hover:text-primary"
-            >
-              <Linkedin className="size-4" /> LinkedIn
-            </a>
+          ))}
+          <div className="pt-3 mt-2 border-t border-border flex flex-col gap-2">
+            <Button asChild variant="outline" size="sm" className="w-full justify-center">
+              <Link to="/portal">Student Workspace</Link>
+            </Button>
+            <Button asChild size="sm" className="w-full justify-center bg-foreground text-background">
+              <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                <span>Join Community</span>
+                <ArrowUpRight className="size-3.5" />
+              </a>
+            </Button>
           </div>
         </div>
       </div>

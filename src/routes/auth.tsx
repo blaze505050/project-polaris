@@ -99,45 +99,45 @@ function AuthPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Student Portal"
-        title="Your Polaris Learning Dashboard."
-        lead="One place for your course, attendance, assignments, quiz scores, project progress, mentor feedback, skills, portfolio and certificate status."
+        eyebrow="Student Authentication"
+        title="Access your engineering workspace."
+        lead="Manage active simulation solvers, peer review logs, technical roadmaps, and AI mentor sessions."
       />
 
       <section className="section">
-        <div className="shell grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:gap-20">
-          <div className="card-elevated p-7 md:p-9">
-            <div className="font-ui mb-7 flex gap-1 rounded-full border border-border p-1 text-sm">
+        <div className="shell grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 items-start">
+          <div className="card-premium p-6 sm:p-8">
+            <div className="mb-6 flex gap-1 rounded-lg border border-border bg-surface-2 p-1 text-xs font-mono">
               {(["signup", "signin"] as const).map((m) => (
                 <button
                   key={m}
                   type="button"
                   onClick={() => setMode(m)}
                   className={
-                    "flex-1 rounded-full px-4 py-2 transition-colors " +
+                    "flex-1 rounded py-1.5 transition-colors " +
                     (mode === m
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-surface-3 text-foreground font-bold shadow-sm"
                       : "text-muted-foreground hover:text-foreground")
                   }
                 >
-                  {m === "signup" ? "Create account" : "Sign in"}
+                  {m === "signup" ? "Create Account" : "Sign In"}
                 </button>
               ))}
             </div>
 
-            <form onSubmit={onSubmit} className="space-y-5">
+            <form onSubmit={onSubmit} className="space-y-4 font-mono text-xs">
               {mode === "signup" && (
-                <div className="space-y-2">
-                  <Label htmlFor="full_name">Full name</Label>
-                  <Input id="full_name" name="full_name" maxLength={100} required autoComplete="name" />
+                <div className="space-y-1.5">
+                  <Label htmlFor="full_name" className="text-foreground text-xs">Full Name</Label>
+                  <Input id="full_name" name="full_name" maxLength={100} required autoComplete="name" className="bg-background border-border h-9" />
                 </div>
               )}
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" type="email" maxLength={255} required autoComplete="email" />
+              <div className="space-y-1.5">
+                <Label htmlFor="email" className="text-foreground text-xs">Email Address</Label>
+                <Input id="email" name="email" type="email" maxLength={255} required autoComplete="email" className="bg-background border-border h-9" />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="password" className="text-foreground text-xs">Password</Label>
                 <Input
                   id="password"
                   name="password"
@@ -146,51 +146,50 @@ function AuthPage() {
                   maxLength={72}
                   required
                   autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                  className="bg-background border-border h-9"
                 />
               </div>
-              <Button type="submit" disabled={busy} className="w-full">
-                {busy ? "Please wait…" : mode === "signup" ? "Create my portal account" : "Sign in"}
+              <Button type="submit" disabled={busy} className="w-full h-9 bg-foreground text-background font-medium text-xs mt-2">
+                {busy ? "Processing…" : mode === "signup" ? "Initialize Workspace Account" : "Sign In to Workspace"}
               </Button>
             </form>
 
-            <div className="my-6 flex items-center gap-3 text-xs text-muted-foreground">
+            <div className="my-5 flex items-center gap-3 text-[11px] font-mono text-muted-foreground">
               <span className="h-px flex-1 bg-border" />
-              <span className="font-ui">or</span>
+              <span>OR</span>
               <span className="h-px flex-1 bg-border" />
             </div>
 
-            <Button type="button" variant="outline" className="w-full" onClick={google}>
+            <Button type="button" variant="outline" className="w-full h-9 text-xs font-mono" onClick={google}>
               Continue with Google
             </Button>
 
-            <p className="mt-6 text-xs text-muted-foreground">
-              Creating a portal account is free. Paid courses, bootcamps and space camps are enrolled
-              separately.
+            <p className="mt-5 text-[11px] font-mono text-muted-foreground leading-relaxed">
+              Open to all learners. Workspace accounts include access to community discussion channels and baseline simulation tools.
             </p>
           </div>
 
-          <div>
-            <p className="eyebrow mb-5">What you get</p>
-            <h2 className="text-3xl md:text-4xl">Progress you can actually see</h2>
-            <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
+          <div className="space-y-6">
+            <div>
+              <p className="eyebrow mb-2">Workspace Capabilities</p>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                Progress backed by real artifacts.
+              </h2>
+            </div>
+
+            <ul className="space-y-3 font-mono text-xs">
               {[
-                "Course enrolment and attendance record",
-                "Assignments completed vs assigned",
-                "Quiz scores over time",
-                "Project progress across your build",
-                "Mentor feedback written for you",
-                "Skills, portfolio link and certificate status",
-              ].map((line) => (
-                <li key={line} className="flex gap-3 border-b border-border pb-4">
-                  <span aria-hidden="true" className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" />
-                  {line}
+                { title: "Sprint Backlog & Deliverables", desc: "Live tracking of numerical verification scripts and sprint tasks." },
+                { title: "Polaris AI Engineering Co-Pilot", desc: "Structured reviews of aerodynamic relations, code, and literature." },
+                { title: "Domain Practitioner Endorsements", desc: "Verified written feedback from ISRO & propulsion mentors." },
+                { title: "Open-Source Verification", desc: "Linked GitHub repositories and reproducible technical documentation." },
+              ].map((item, i) => (
+                <li key={i} className="p-3.5 rounded-lg border border-border bg-surface-2/40">
+                  <div className="text-foreground font-semibold mb-0.5">{item.title}</div>
+                  <div className="text-muted-foreground text-[11px] font-sans">{item.desc}</div>
                 </li>
               ))}
             </ul>
-            <p className="mt-7 text-sm text-muted-foreground">
-              While the platform grows, the Polaris team keeps your dashboard updated after each session,
-              assignment and review.
-            </p>
           </div>
         </div>
       </section>

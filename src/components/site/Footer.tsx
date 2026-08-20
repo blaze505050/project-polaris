@@ -46,29 +46,23 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="relative border-t border-border bg-surface/40">
-      {/* Gradient shimmer divider */}
-      <div className="section-divider" aria-hidden="true" />
-
-      <div className="shell grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:py-20">
+    <footer className="border-t border-border bg-surface/30">
+      <div className="shell grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:py-16">
         <div>
           <Link to="/" aria-label="Project Polaris Home" className="inline-block">
             <Wordmark />
           </Link>
-          <p className="mt-4 max-w-sm text-sm text-slate-300">
+          <p className="mt-3 max-w-xs text-xs text-muted-foreground leading-relaxed">
             A student-led experiential learning organisation. {SITE.tagline}
           </p>
 
-          <div className="mt-6 flex flex-col gap-2 text-xs text-muted-foreground">
-            <a href={`mailto:${SITE.emails[0]}`} className="inline-flex items-center gap-2 hover:text-primary transition-colors">
-              <Mail className="size-3.5 text-primary" /> {SITE.emails[0]}
-            </a>
-            <a href={`mailto:${SITE.emails[1]}`} className="inline-flex items-center gap-2 hover:text-primary transition-colors">
-              <Mail className="size-3.5 text-primary" /> {SITE.emails[1]}
+          <div className="mt-4 flex flex-col gap-1.5 text-xs text-muted-foreground font-mono">
+            <a href={`mailto:${SITE.emails[0]}`} className="hover:text-foreground transition-colors">
+              {SITE.emails[0]}
             </a>
           </div>
 
-          <div className="mt-6 flex items-center gap-3">
+          <div className="mt-5 flex items-center gap-2">
             {SOCIAL_LINKS.map(({ href, label, Icon }) => (
               <a
                 key={label}
@@ -76,9 +70,9 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={label}
-                className="group flex size-9 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-all duration-250 hover:border-primary hover:text-primary hover:scale-110 hover:shadow-[0_0_12px_-3px_rgba(197,157,255,0.3)]"
+                className="flex size-7 items-center justify-center rounded-md border border-border bg-surface text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
               >
-                <Icon className="size-4 transition-transform duration-200 group-hover:scale-110" />
+                <Icon className="size-3.5" />
               </a>
             ))}
           </div>
@@ -86,8 +80,8 @@ export function Footer() {
 
         {COLUMNS.map((col) => (
           <nav key={col.heading} aria-label={col.heading}>
-            <h2 className="eyebrow-muted mb-5">{col.heading}</h2>
-            <ul className="space-y-3">
+            <h3 className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3.5">{col.heading}</h3>
+            <ul className="space-y-2 text-xs">
               {col.links.map((link) => (
                 <li key={link.label}>
                   {"external" in link && link.external ? (
@@ -95,14 +89,15 @@ export function Footer() {
                       href={link.to}
                       target="_blank"
                       rel="noreferrer"
-                      className="font-ui text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
                     >
-                      {link.label} ↗
+                      <span>{link.label}</span>
+                      <span className="text-[10px] opacity-60">↗</span>
                     </a>
                   ) : (
                     <Link
                       to={link.to}
-                      className="font-ui text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -114,9 +109,9 @@ export function Footer() {
         ))}
       </div>
 
-      <div className="shell flex flex-col gap-3 border-t border-border py-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-ui">© {new Date().getFullYear()} Project Polaris. Built by students.</p>
-        <p className="font-ui">Currently centred on space science. Not limited to it.</p>
+      <div className="shell flex flex-col gap-2 border-t border-border py-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between font-mono">
+        <p>© {new Date().getFullYear()} Project Polaris. Student-Led.</p>
+        <p className="text-[11px]">Experiential Learning · Space Science & Engineering</p>
       </div>
     </footer>
   );
