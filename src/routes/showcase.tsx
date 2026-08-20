@@ -1,15 +1,14 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ExternalLink, Sparkles, ArrowRight } from "lucide-react";
+import { ExternalLink, Sparkles, ArrowRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
-import { SectionHeader } from "@/components/site/SectionHeader";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ProjectSubmissionForm } from "@/components/site/ProjectSubmissionForm";
 import {
   SHOWCASE_CATEGORIES,
   SHOWCASE_CATEGORY_LABELS,
-  SHOWCASE_STAGE_LABELS,
   showcaseQuery,
   type ShowcaseProject,
 } from "@/lib/showcase";
@@ -21,50 +20,50 @@ const DESCRIPTION =
 const FLAGSHIP: ShowcaseProject[] = [
   {
     id: "aeroforge-ai",
-    title: "AeroForge AI",
+    title: "AeroForge AI Simulation Workstation",
     category: "software",
     summary:
       "Browser-based engineering research workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics.",
     description: null,
     team: "Core Engineering Team",
     link: "/aeroforge",
-    stage: "active",
+    stage: "in_progress",
     created_at: "",
   },
   {
     id: "sky-atlas",
-    title: "Sky Atlas",
+    title: "Sky Atlas Deep-Sky Network",
     category: "software",
     summary:
-      "An open, student-maintained observation log and constellation guide built from our night-sky challenges.",
+      "An open, student-maintained deep-sky catalog and constellation mapping database with observations recorded across community stargazing nights.",
     description: null,
-    team: "Research + Tech",
-    link: null,
+    team: "Astrophysics Squad",
+    link: "/projects",
     stage: "in_progress",
     created_at: "",
   },
   {
     id: "polaris-research-digest",
-    title: "Polaris Research Digest",
+    title: "Polaris Daily Science Digest",
     category: "research",
     summary:
-      "A recurring student-written digest that summarises and verifies recent space science research.",
+      "A recurring student-written and peer-reviewed technical digest that summarises and verifies recent space science research papers.",
     description: null,
-    team: "Research department",
-    link: null,
-    stage: "idea",
+    team: "Research Department",
+    link: "/programs",
+    stage: "in_progress",
     created_at: "",
   },
   {
     id: "schools-outreach-kit",
-    title: "Schools Outreach Kit",
+    title: "Schools Experiential Science Kit",
     category: "outreach",
     summary:
-      "A ready-to-run workshop kit so any school can host a Polaris session with their own students.",
+      "A ready-to-run interactive laboratory curriculum and telescope workshop kit for middle and high schools.",
     description: null,
-    team: "Community + Outreach",
-    link: null,
-    stage: "idea",
+    team: "Outreach Team",
+    link: "/schools",
+    stage: "in_progress",
     created_at: "",
   },
 ];
@@ -102,46 +101,49 @@ export const Route = createFileRoute("/showcase")({
 
 function ProjectCard({ project, index }: { project: ShowcaseProject; index: number }) {
   return (
-    <article
-      className="card-elevated flex flex-col p-7 md:p-8 justify-between"
-      style={{ animation: `fade-in-up 500ms ease-out ${index * 80}ms both` }}
-    >
-      <div>
-        <div className="font-ui flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-primary font-semibold">
-            {SHOWCASE_CATEGORY_LABELS[project.category] ?? project.category}
-          </span>
-          <span className="rounded-full border border-border bg-surface px-3 py-1 text-muted-foreground font-medium">
-            {SHOWCASE_STAGE_LABELS[project.stage] ?? project.stage}
-          </span>
-          {project.team ? (
-            <span className="rounded-full border border-border bg-surface-2 px-3 py-1 text-muted-foreground font-mono text-[11px]">{project.team}</span>
-          ) : null}
+    <ScrollReveal direction="up" delay={index * 60}>
+      <article className="card-premium p-6 md:p-7 flex flex-col justify-between h-full">
+        <div>
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono mb-4">
+            <span className="px-2 py-0.5 rounded bg-surface-2 border border-border text-primary font-semibold">
+              {SHOWCASE_CATEGORY_LABELS[project.category] ?? project.category}
+            </span>
+            {project.team ? (
+              <span className="text-muted-foreground text-[11px]">{project.team}</span>
+            ) : null}
+          </div>
+          <h3 className="text-xl font-bold text-foreground">{project.title}</h3>
+          <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
         </div>
-        <h3 className="mt-5 text-2xl font-display font-bold text-foreground">{project.title}</h3>
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{project.summary}</p>
-        {project.description ? (
-          <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{project.description}</p>
+        {project.link ? (
+          <div className="mt-6 pt-4 border-t border-border flex items-center justify-between text-xs font-mono">
+            <span className="text-[11px] text-muted-foreground">Open-Access</span>
+            {project.link.startsWith("/") ? (
+              <Link to={project.link} className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1">
+                <span>View Platform</span>
+                <ArrowRight className="size-3" />
+              </Link>
+            ) : (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
+              >
+                <span>External Link</span>
+                <ExternalLink className="size-3" />
+              </a>
+            )}
+          </div>
         ) : null}
-      </div>
-      {project.link ? (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer nofollow ugc"
-          className="font-ui mt-6 inline-flex items-center gap-2 text-sm text-primary underline-offset-4 hover:underline font-semibold"
-        >
-          <span>View project</span>
-          <ExternalLink className="size-3.5" aria-hidden="true" />
-        </a>
-      ) : null}
-    </article>
+      </article>
+    </ScrollReveal>
   );
 }
 
 function Showcase() {
   const [category, setCategory] = useState("all");
-  const { data, isLoading } = useQuery(showcaseQuery);
+  const { data } = useQuery(showcaseQuery);
 
   const projects = useMemo(() => {
     const all = [...FLAGSHIP, ...(data ?? [])];
@@ -151,93 +153,67 @@ function Showcase() {
   return (
     <>
       <PageHeader
-        eyebrow="Showcase"
-        title="Projects built by students, published in public."
-        lead="Everything here was scoped, built and tested by students. Browse by category — and if you've built something, submit it and we'll review it for the showcase."
+        eyebrow="Student Showcase"
+        title="Artifacts and platforms built in public."
+        lead="Everything here was scoped, written, simulated, and tested by student engineers and researchers."
       >
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <Button asChild className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
-            <a href="#submit">Submit your project</a>
+        <div className="flex flex-wrap items-center gap-3">
+          <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium">
+            <a href="#submit" className="flex items-center gap-1.5">
+              <Plus className="size-3.5" />
+              <span>Submit your project</span>
+            </a>
           </Button>
-          <Button asChild variant="outline" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10">
-            <Link to="/opportunities">Join a project team</Link>
+          <Button asChild variant="outline" size="sm" className="h-9 px-4">
+            <Link to="/opportunities">Join a build team</Link>
           </Button>
         </div>
       </PageHeader>
 
       <section className="section">
         <div className="shell">
-          <SectionHeader
-            eyebrow="Browse"
-            title="Filter by category"
-            lead="New submissions appear here once a student team has reviewed them."
-          />
-
-          <div className="mt-10 flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2 border-b border-border pb-6 font-mono text-xs">
             {SHOWCASE_CATEGORIES.map((c) => (
               <button
                 key={c.value}
                 type="button"
                 onClick={() => setCategory(c.value)}
-                aria-pressed={category === c.value}
-                className={
-                  "font-ui rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 cursor-pointer " +
-                  (category === c.value
-                    ? "border-primary bg-primary/20 text-primary shadow-sm"
-                    : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground")
-                }
+                className={`px-3 py-1.5 rounded-md transition-colors ${
+                  category === c.value
+                    ? "bg-surface-3 text-foreground font-bold border border-border-strong"
+                    : "bg-surface-2 text-muted-foreground hover:text-foreground border border-border"
+                }`}
               >
                 {c.label}
               </button>
             ))}
           </div>
 
-          {projects.length === 0 ? (
-            <p className="mt-12 text-sm text-muted-foreground">
-              {isLoading ? "Loading projects…" : "Nothing in this category yet — yours could be first."}
-            </p>
-          ) : (
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              {projects.map((p, i) => (
-                <ProjectCard key={p.id} project={p} index={i} />
-              ))}
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {projects.map((p, i) => (
+              <ProjectCard key={p.id} project={p} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SUBMIT PROJECT SECTION */}
+      <section id="submit" className="section border-t border-border bg-surface/20 scroll-mt-20">
+        <div className="shell max-w-2xl mx-auto">
+          <ScrollReveal direction="up">
+            <div className="text-center mb-8">
+              <p className="eyebrow mb-2">Open Submission</p>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                Add your project to the showcase
+              </h2>
+              <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Built something at school, university, or independently? Submit your project for review by our student engineering team.
+              </p>
             </div>
-          )}
-        </div>
-      </section>
-
-      <section id="submit" className="section scroll-mt-24 border-t border-border bg-surface/30">
-        <div className="shell">
-          <SectionHeader
-            eyebrow="Submit"
-            title="Add your project"
-            lead="Built something as part of Polaris, at school, or on your own? Send it in. We review every submission before publishing."
-            align="center"
-          />
-          <div className="mx-auto mt-12 max-w-3xl">
             <ProjectSubmissionForm />
-          </div>
-        </div>
-      </section>
-
-      <section className="section border-t border-border">
-        <div className="shell max-w-2xl text-center">
-          <Sparkles className="mx-auto size-6 text-primary" aria-hidden="true" />
-          <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold text-white">Want help finishing an idea?</h2>
-          <p className="mt-5 text-slate-300 leading-relaxed">
-            Bring the problem. We'll help you find a team, a mentor and a deadline.
-          </p>
-          <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-            <Button asChild className="rounded-full shadow-md">
-              <Link to="/join">Join Polaris</Link>
-            </Button>
-            <Button asChild variant="outline" className="rounded-full border-white/20 hover:bg-white/10">
-              <Link to="/projects">See our builds</Link>
-            </Button>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
   );
 }
-

@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export const Route = createFileRoute("/terms")({
   head: () => ({
@@ -21,49 +22,29 @@ export const Route = createFileRoute("/terms")({
 
 const SECTIONS = [
   {
-    heading: "Who we are",
+    heading: "Institutional Scope",
     body: [
-      "Project Polaris is a student-led experiential learning initiative. We are not a school, a coaching institute, or an accredited academic body, and nothing we issue is a formal academic qualification.",
+      "Project Polaris is a student-led experiential engineering and research organisation. We provide collaborative projects, simulation platforms, and peer cohorts. We are not an accredited university or granting body, and participation does not confer formal academic degrees.",
     ],
   },
   {
-    heading: "Participation",
+    heading: "Participation & Cohort Standards",
     body: [
-      "Community programs and resources are free and open to the people described on each program page. Courses, bootcamps, mini courses and space camps are paid; fees are shown clearly before you enrol and we may offer scholarships where available.",
-      "Places may be limited, and we may decline or end a participation where someone is inactive, misrepresents themselves, or breaks our community rules.",
-      "Certificates, badges and recommendation letters are issued for genuine contribution only.",
+      "Participation in open community challenges, masterclasses, and open-source simulators is open to all students. In specialised build cohorts, contributors are expected to actively collaborate and respect peer reviews.",
+      "Credentials and verified project trajectories are awarded solely based on authentic technical contributions and project milestones.",
     ],
   },
   {
-    heading: "Your work",
+    heading: "Intellectual Property & Open Source",
     body: [
-      "You keep ownership of what you create at Polaris. By taking part, you allow us to showcase your work — with credit — on our website, community and social channels.",
-      "Do not submit work that is plagiarised or that you do not have the right to share.",
+      "Students retain original copyright and ownership of the code, hardware designs, and research digests they build at Project Polaris. By submitting work to the public showcase, you grant Polaris the right to feature and credit your work.",
+      "Contributors must ensure all submitted code, models, and data sets are original or properly cited under open-source licenses.",
     ],
   },
   {
-    heading: "Community conduct",
+    heading: "Community Conduct",
     body: [
-      "Be respectful. Harassment, discrimination, spam, self-promotion without permission, and sharing of misinformation are not allowed and can lead to removal from the community.",
-    ],
-  },
-  {
-    heading: "This website",
-    body: [
-      "Content here is provided for information. We try to keep dates, sessions and opportunities accurate, but details can change and some sections describe programs that are still being finalised.",
-      "Links to external sites are provided for convenience; we are not responsible for their content.",
-    ],
-  },
-  {
-    heading: "Liability",
-    body: [
-      "Participation is voluntary and at your own risk. Project Polaris is not liable for indirect losses arising from use of this site or from taking part in a program.",
-    ],
-  },
-  {
-    heading: "Changes",
-    body: [
-      "These terms may be updated as the organisation grows. The current version always lives on this page.",
+      "We maintain a rigorous, welcoming, and high-empathy environment. Harassment, plagiarised work, commercial spam, and destructive behavior will result in removal from community channels and build teams.",
     ],
   },
 ];
@@ -72,35 +53,37 @@ function Terms() {
   return (
     <>
       <PageHeader
-        eyebrow="Legal"
-        title="Terms & Conditions"
-        lead="What you can expect from Project Polaris, and what we expect from participants."
+        eyebrow="Legal & Governance"
+        title="Terms of Service"
+        lead="Standards of collaboration, code ownership, and conduct across Project Polaris."
       />
 
       <section className="section">
-        <div className="shell max-w-3xl">
-          <p className="font-ui text-xs tracking-wide text-muted-foreground uppercase">
-            Last updated: August 2026
-          </p>
-          <div className="mt-12 space-y-12">
-            {SECTIONS.map((s) => (
-              <article key={s.heading}>
-                <h2 className="text-2xl">{s.heading}</h2>
-                {s.body.map((p) => (
-                  <p key={p} className="mt-4 text-muted-foreground">
-                    {p}
-                  </p>
-                ))}
-              </article>
-            ))}
-          </div>
-          <p className="mt-14 text-sm text-muted-foreground">
-            See also our{" "}
-            <Link to="/privacy" className="text-primary underline-offset-4 hover:underline">
-              Privacy Policy
-            </Link>
-            .
-          </p>
+        <div className="shell max-w-3xl mx-auto">
+          <ScrollReveal direction="up">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Effective: August 2026
+            </span>
+            <div className="mt-8 space-y-8 divide-y divide-border">
+              {SECTIONS.map((s, i) => (
+                <article key={s.heading} className={i > 0 ? "pt-8" : ""}>
+                  <h2 className="text-xl font-bold text-foreground">{s.heading}</h2>
+                  <div className="mt-3 space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {s.body.map((p, idx) => (
+                      <p key={idx}>{p}</p>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="mt-12 pt-6 border-t border-border text-xs text-muted-foreground">
+              See also our{" "}
+              <Link to="/privacy" className="text-primary font-semibold hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>

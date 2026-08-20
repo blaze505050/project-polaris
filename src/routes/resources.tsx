@@ -1,12 +1,51 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookOpen, Code, FileText, Globe } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { EmptyState, ErrorState, LoadingCards } from "@/components/site/StateBlocks";
-import { resourcesQuery } from "@/lib/db";
+import { resourcesQuery, type Resource } from "@/lib/db";
 import { RESOURCE_CATEGORIES, RESOURCE_CATEGORY_LABELS, formatDate } from "@/lib/labels";
-import { cn } from "@/lib/utils";
+
+const CURATED_RESOURCES: Resource[] = [
+  {
+    id: "cfd-aerodynamics-primer",
+    title: "Introduction to Aerodynamic CFD Solvers & Boundary Layers",
+    category: "guide",
+    description: "A student reference guide explaining Navier-Stokes approximations, pressure coefficients, and NACA airfoil mesh resolution.",
+    author: "Polaris Propulsion & Aero Guild",
+    url: "/aeroforge",
+    published_date: "2026-08-15",
+  },
+  {
+    id: "orbital-mechanics-handbook",
+    title: "Two-Body Keplerian Dynamics & Hohmann Transfer Notebook",
+    category: "reading",
+    description: "Python and numerical formulas for calculating orbital eccentricity, semi-major axis, vis-viva velocity, and delta-v budgets.",
+    author: "Astrophysics Research Team",
+    url: "/projects",
+    published_date: "2026-08-10",
+  },
+  {
+    id: "deep-sky-observational-protocol",
+    title: "Standard Astrophotography Calibration & Stacking Protocol",
+    category: "session",
+    description: "Field manual for telescope alignment, dark frame calibration, and photometry processing for student observation networks.",
+    author: "Astronomy Outreach",
+    url: "/community",
+    published_date: "2026-08-05",
+  },
+  {
+    id: "isro-propulsion-masterclass-notes",
+    title: "Liquid Rocket Engine Cycle Architecture & Injector Mechanics",
+    category: "session",
+    description: "Archived lecture notes from the ISRO Masterclass covering expander, staged combustion, and gas-generator cycles.",
+    author: "Masterclass Archive",
+    url: "/programs",
+    published_date: "2026-07-28",
+  },
+];
 
 export const Route = createFileRoute("/resources")({
   head: () => ({
@@ -15,7 +54,7 @@ export const Route = createFileRoute("/resources")({
       {
         name: "description",
         content:
-          "Guides, session recaps, reading lists and learning material shared openly by the Project Polaris community.",
+          "Open guides, session recaps, numerical solvers, and engineering reading lists shared openly by Project Polaris.",
       },
       { property: "og:title", content: "Resources — Project Polaris" },
       { property: "og:description", content: "Guides, recaps and reading lists for student builders." },
@@ -27,80 +66,84 @@ export const Route = createFileRoute("/resources")({
 function Resources() {
   const { data, isLoading, isError } = useQuery(resourcesQuery);
   const [category, setCategory] = useState("all");
-  const items = (data ?? []).filter((r) => category === "all" || r.category === category);
+  
+  const allResources = [...CURATED_RESOURCES, ...(data ?? [])];
+  const items = allResources.filter((r) => category === "all" || r.category === category);
 
   return (
     <>
       <PageHeader
-        eyebrow="Resources"
-        title="Everything we learn, shared back."
-        lead="Session recaps, guides and reading lists — shared openly with the community."
+        eyebrow="Open Resources"
+        title="Everything we build and learn, documented."
+        lead="Technical manuals, solver blueprints, and lecture notes curated by student researchers."
       />
 
       <section className="section">
         <div className="shell">
-          <div className="flex flex-wrap items-center gap-2 border-b border-border pb-8">
+          <div className="flex flex-wrap items-center gap-2 border-b border-border pb-6 font-mono text-xs">
             {RESOURCE_CATEGORIES.map((cat) => (
               <button
                 key={cat.value}
                 type="button"
                 onClick={() => setCategory(cat.value)}
-                aria-pressed={category === cat.value}
-                className={cn(
-                  "font-ui rounded-full border px-3.5 py-1.5 text-xs transition-colors",
+                className={`px-3 py-1.5 rounded-md transition-colors ${
                   category === cat.value
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-border text-muted-foreground hover:border-border-strong hover:text-foreground",
-                )}
+                    ? "bg-surface-3 text-foreground font-bold border border-border-strong"
+                    : "bg-surface-2 text-muted-foreground hover:text-foreground border border-border"
+                }`}
               >
                 {cat.label}
               </button>
             ))}
           </div>
 
-          <div className="mt-12">
-            {isLoading ? <LoadingCards count={6} /> : null}
+          <div className="mt-8">
+            {isLoading ? <LoadingCards count={4} /> : null}
             {isError ? <ErrorState /> : null}
-            {!isLoading && !isError && items.length === 0 ? (
+            {!isLoading && items.length === 0 ? (
               <EmptyState
-                title="Nothing here yet"
-                note="We publish material after each session — check back soon."
+                title="Nothing in this category yet"
+                note="We publish technical notes after each sprint — check back soon."
               />
             ) : null}
-            {!isLoading && !isError && items.length > 0 ? (
-              <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {items.map((resource) => (
-                  <li key={resource.id} className="card-elevated group relative flex flex-col p-6">
-                    <span className="eyebrow-muted">
-                      {RESOURCE_CATEGORY_LABELS[resource.category] ?? resource.category}
-                    </span>
-                    <h2 className="mt-4 text-xl">
-                      {resource.url ? (
-                        <a
-                          href={resource.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="after:absolute after:inset-0"
-                        >
-                          {resource.title}
-                        </a>
-                      ) : (
-                        resource.title
-                      )}
-                    </h2>
-                    {resource.description ? (
-                      <p className="mt-3 flex-1 text-sm text-muted-foreground">{resource.description}</p>
-                    ) : null}
-                    <div className="font-ui mt-6 flex items-center justify-between text-xs text-muted-foreground">
-                      <span>{resource.author ?? "Project Polaris"}</span>
-                      <span className="flex items-center gap-1.5">
-                        {formatDate(resource.published_date)}
-                        {resource.url ? <ArrowUpRight className="size-3.5 text-primary" /> : null}
-                      </span>
-                    </div>
-                  </li>
+            {!isLoading && items.length > 0 ? (
+              <div className="grid gap-4 md:grid-cols-2">
+                {items.map((resource, i) => (
+                  <ScrollReveal key={resource.id} direction="up" delay={i * 60}>
+                    <article className="card-premium p-6 flex flex-col justify-between h-full group relative">
+                      <div>
+                        <div className="flex items-center justify-between text-xs font-mono mb-3">
+                          <span className="px-2 py-0.5 rounded bg-surface-2 border border-border text-primary font-medium text-[11px]">
+                            {RESOURCE_CATEGORY_LABELS[resource.category] ?? resource.category}
+                          </span>
+                          <span className="text-muted-foreground text-[11px]">{formatDate(resource.published_date)}</span>
+                        </div>
+                        <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                          {resource.url ? (
+                            <a
+                              href={resource.url}
+                              target={resource.url.startsWith("http") ? "_blank" : undefined}
+                              rel={resource.url.startsWith("http") ? "noreferrer" : undefined}
+                              className="after:absolute after:inset-0"
+                            >
+                              {resource.title}
+                            </a>
+                          ) : (
+                            resource.title
+                          )}
+                        </h3>
+                        {resource.description ? (
+                          <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{resource.description}</p>
+                        ) : null}
+                      </div>
+                      <div className="mt-5 pt-3 border-t border-border flex items-center justify-between text-xs font-mono text-muted-foreground">
+                        <span className="text-[11px]">{resource.author ?? "Project Polaris"}</span>
+                        <ArrowUpRight className="size-3.5 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                    </article>
+                  </ScrollReveal>
                 ))}
-              </ul>
+              </div>
             ) : null}
           </div>
         </div>

@@ -3,18 +3,12 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Timeline } from "@/components/site/Timeline";
 import { NorthStar } from "@/components/site/NorthStar";
-import { SectionHeader } from "@/components/site/SectionHeader";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
-import { Starfield } from "@/components/site/Starfield";
 import { JOURNEY, VALUES, TEAM_MEMBERS, DEPARTMENTS, RECOGNITION_SYSTEM, WORKING_CULTURE, SITE } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
 import {
   ExternalLink,
-  Linkedin,
   Users,
-  Compass,
   Hammer,
   Lightbulb,
   Sparkles,
@@ -22,10 +16,7 @@ import {
   ArrowRight,
   Flame,
   CheckCircle2,
-  Calendar,
-  Layers,
   HeartHandshake,
-  BookOpen,
 } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
@@ -49,296 +40,216 @@ export const Route = createFileRoute("/about")({
 });
 
 const DILEMMA_QUESTIONS = [
-  { text: "Build something real?", icon: Hammer },
-  { text: "Speak in front of an audience?", icon: Sparkles },
-  { text: "Meet scientists and innovators?", icon: Users },
-  { text: "Conduct authentic research?", icon: Lightbulb },
-  { text: "Turn ideas into meaningful action?", icon: Flame },
+  { text: "Build authentic physics & software systems?", icon: Hammer },
+  { text: "Present research in front of peers and engineers?", icon: Sparkles },
+  { text: "Meet ISRO scientists and propulsion innovators?", icon: Users },
+  { text: "Conduct verified, peer-reviewed experiments?", icon: Lightbulb },
+  { text: "Turn textbook theory into public platforms?", icon: Flame },
 ];
 
 function About() {
   return (
     <>
       <PageHeader
-        eyebrow="About Us"
-        title="We believe education should create builders, not just learners."
-        lead="Project Polaris is a student-led initiative dedicated to making practical, hands-on education accessible to every learner."
+        eyebrow="About Polaris"
+        title="We believe education should create builders, not just test takers."
+        lead="Project Polaris is an experiential engineering and science organisation turning curiosity into public artifacts."
       >
-        <div className="flex flex-wrap gap-3">
-          <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent hover:opacity-95 hover:scale-105 active:scale-95 text-primary-foreground border-none btn-shimmer transition-all duration-300">
+        <div className="flex flex-wrap items-center gap-3">
+          <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
-              Join Our Community
+              Join WhatsApp Community
             </a>
           </Button>
-          <Button asChild variant="outline" size="lg" className="rounded-full border-white/20 bg-white/5 hover:bg-white/10 hover:border-primary/50 hover:scale-105 active:scale-95 transition-all duration-300">
+          <Button asChild variant="outline" size="sm" className="h-9 px-4">
             <Link to="/projects">Explore Projects</Link>
           </Button>
         </div>
       </PageHeader>
 
-      {/* CORE PHILOSOPHY & THE GAP */}
-      <section className="section relative overflow-hidden">
+      {/* CORE PHILOSOPHY */}
+      <section className="section">
         <div className="shell">
           <ScrollReveal direction="up">
-            <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 items-center">
+            <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-center">
               <div>
-                <span className="font-ui text-xs font-semibold uppercase tracking-wider text-primary">The Provocation</span>
-                <h2 className="mt-3 text-3xl md:text-5xl font-display font-extrabold text-foreground leading-[1.15]">
-                  What if education wasn't just about <span className="text-gradient-star">passing exams?</span>
+                <p className="eyebrow mb-2">The Provocation</p>
+                <h2 className="text-2xl sm:text-4xl font-bold text-foreground leading-tight">
+                  What if education wasn't just about passing exams?
                 </h2>
-                <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                  Millions of students learn every single day. They solve equations, memorise formulas, and study for grades.
-                  Yet how many actually get the chance to discover their true potential?
+                <p className="mt-4 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Millions of students memorize formulas and solve problem sets for grades every year. Yet very few ever get to configure a CFD mesh, calculate orbital state vectors, or present to a propulsion engineer.
                 </p>
-                <p className="mt-4 text-foreground font-semibold">
-                  That is the gap we are determined to close.
+                <p className="mt-3 text-xs sm:text-sm text-foreground font-semibold">
+                  Polaris closes that gap through sprint-based build cohorts.
                 </p>
               </div>
 
-              {/* Interactive Dilemma Cards */}
-              <div className="grid gap-3.5 sm:grid-cols-2">
+              {/* Dilemma Cards */}
+              <div className="grid gap-3 sm:grid-cols-2">
                 {DILEMMA_QUESTIONS.map(({ text, icon: Icon }, i) => (
-                  <ScrollReveal key={text} direction="up" delay={i * 60}>
-                    <SpotlightCard
-                      spotlightColor="rgba(197, 157, 255, 0.18)"
-                      className="p-5 flex items-center gap-4 transition-all duration-300 hover:border-primary/50 group h-full"
-                    >
-                      <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 transition-transform group-hover:scale-110">
-                        <Icon className="size-5" />
+                  <ScrollReveal key={text} direction="up" delay={i * 50}>
+                    <div className="card-premium p-4 flex items-center gap-3 h-full">
+                      <div className="flex size-8 items-center justify-center rounded bg-surface-2 text-primary shrink-0 border border-border">
+                        <Icon className="size-4" />
                       </div>
-                      <p className="font-display font-bold text-foreground text-sm leading-snug">{text}</p>
-                    </SpotlightCard>
+                      <p className="text-xs font-semibold text-foreground leading-snug">{text}</p>
+                    </div>
                   </ScrollReveal>
                 ))}
-                <ScrollReveal direction="up" delay={300} className="sm:col-span-2">
-                  <SpotlightCard
-                    spotlightColor="rgba(56, 189, 248, 0.2)"
-                    className="p-5 flex items-center gap-4 border-primary/40 bg-primary/5 h-full"
-                  >
-                    <CheckCircle2 className="size-6 text-primary shrink-0" />
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      What if every student had the opportunity to build, experiment, lead, fail, improve, and discover what they are capable of?
-                    </p>
-                  </SpotlightCard>
-                </ScrollReveal>
               </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* MANIFESTO SECTION WITH INTERACTIVE CONSTELLATION */}
-      <section className="section border-t border-border bg-surface/20 relative overflow-hidden">
-        <ConstellationCanvas className="opacity-40" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/10 blur-[150px] pointer-events-none rounded-full" />
-        <div className="shell relative z-10 max-w-4xl text-center">
-          <ScrollReveal direction="scale">
-            <span className="eyebrow mb-4">The Polaris Manifesto</span>
-            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-foreground leading-tight">
-              So, we built <span className="text-gradient-star">Polaris</span>.
-            </h2>
-            <div className="mt-8 space-y-4 font-display text-xl md:text-2xl text-muted-foreground font-medium">
-              <p className="text-slate-400">Not another coaching institute.</p>
-              <p className="text-slate-400">Not another passive student club.</p>
-              <p className="text-foreground font-bold text-2xl md:text-3xl pt-2">
-                A platform where <span className="text-primary">curiosity becomes action</span>.
-              </p>
-              <p className="text-foreground font-bold text-2xl md:text-3xl">
-                Where <span className="text-primary">ideas become projects</span>.
-              </p>
-              <p className="text-foreground font-bold text-2xl md:text-3xl">
-                Where <span className="text-gradient-star">students become builders</span>.
-              </p>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* MISSION & VISION */}
-      <section className="section border-t border-border">
+      <section className="section border-t border-border bg-surface/20">
         <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="grid gap-10 md:grid-cols-2">
-              <article className="card-elevated p-8 md:p-10 border-primary/30 relative overflow-hidden">
-                <div className="absolute top-0 right-0 size-32 bg-primary/10 blur-2xl pointer-events-none rounded-full" />
-                <p className="eyebrow mb-5 text-primary">Our Mission</p>
-                <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
-                  To make practical, high-quality education accessible and affordable by providing students with real-world experiences, industry exposure, and opportunities to build skills that truly matter.
-                </p>
-                <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
-                  Through expert-led workshops, research opportunities, innovation challenges, and hands-on projects, we empower students to discover their potential and turn ideas into impact.
+          <div className="grid gap-6 md:grid-cols-2">
+            <ScrollReveal direction="up" delay={0}>
+              <article className="card-premium p-6 md:p-8 h-full">
+                <p className="eyebrow mb-2">Our Mission</p>
+                <h3 className="text-lg font-bold text-foreground leading-snug">
+                  To make experiential engineering education universally accessible by giving students real-world simulation tools, research mentors, and build sprints.
+                </h3>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Through expert masterclasses, computational research cohorts, and software development, we empower students to turn theoretical physics into tangible systems.
                 </p>
               </article>
+            </ScrollReveal>
 
-              <article className="card-elevated p-8 md:p-10 border-accent/30 relative overflow-hidden">
-                <div className="absolute top-0 right-0 size-32 bg-accent/10 blur-2xl pointer-events-none rounded-full" />
-                <p className="eyebrow mb-5 text-accent">Our Vision</p>
-                <p className="font-display text-xl leading-relaxed md:text-2xl text-foreground font-bold">
-                  We envision a future where education is no longer limited by textbooks, classrooms, or examinations.
-                </p>
-                <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
-                  To build one of the world's most impactful student communities — one that nurtures curiosity, encourages innovation, and empowers young minds to become researchers, entrepreneurs, scientists, engineers, creators, and leaders capable of shaping the future.
+            <ScrollReveal direction="up" delay={80}>
+              <article className="card-premium p-6 md:p-8 h-full">
+                <p className="eyebrow mb-2">Our Vision</p>
+                <h3 className="text-lg font-bold text-foreground leading-snug">
+                  A future where engineering capabilities are measured by working artifacts and verified technical portfolios, not rote test scores.
+                </h3>
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  Building one of the world's most disciplined student research communities — empowering young builders to become computational scientists and engineers.
                 </p>
               </article>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
       {/* TEAM SECTION */}
-      <section className="section border-t border-border bg-surface/30">
+      <section className="section border-t border-border">
         <div className="shell">
           <ScrollReveal direction="up">
-            <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
               <div>
-                <p className="eyebrow mb-3">Leadership & Team</p>
-                <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-                  Behind Project Polaris
-                </h2>
-                <p className="mt-3 max-w-2xl text-muted-foreground leading-relaxed">
-                  Project Polaris is founded, built, and led by students who believe in practical learning and scientific exploration.
+                <p className="eyebrow mb-1">Leadership</p>
+                <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Behind Project Polaris</h2>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Project Polaris is founded and led by students who believe in open computational tools and authentic science.
                 </p>
               </div>
-              <span className="font-ui text-xs font-semibold px-4 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary">
-                100% Student-Led Initiative
+              <span className="font-mono text-xs text-primary px-3 py-1 rounded bg-surface-2 border border-border">
+                Student-Led Initiative
               </span>
             </div>
           </ScrollReveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TEAM_MEMBERS.map((member, i) => (
-              <ScrollReveal key={member.name} direction="up" delay={i * 100}>
-                <article
-                  className="card-elevated p-7 flex flex-col justify-between hover:border-primary/40 transition-all duration-300 h-full"
-                >
+              <ScrollReveal key={member.name} direction="up" delay={i * 60}>
+                <article className="card-premium p-6 flex flex-col justify-between h-full">
                   <div>
                     <div className="flex items-center justify-between">
-                      <img src={polarisLogo} alt="Polaris Logo" className="size-9 rounded-full ring-2 ring-primary/20" />
-                      <span className="size-2 rounded-full bg-primary/60" />
+                      <img src={polarisLogo} alt="Polaris Logo" className="size-7 rounded-full border border-border" />
+                      <span className="size-1.5 rounded-full bg-primary" />
                     </div>
-                    <h3 className="mt-5 text-xl font-display font-bold text-foreground">{member.name}</h3>
-                    <p className="font-ui text-xs text-primary font-semibold mt-1">{member.role}</p>
-                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{member.note}</p>
+                    <h3 className="mt-4 text-base font-bold text-foreground">{member.name}</h3>
+                    <p className="font-mono text-xs text-primary mt-0.5">{member.role}</p>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{member.note}</p>
                   </div>
-
-                  <div className="mt-6 border-t border-border/50 pt-4 flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="font-mono">Project Polaris</span>
-                    <span className="text-primary font-medium">Core Member</span>
+                  <div className="mt-5 pt-3 border-t border-border flex items-center justify-between text-xs font-mono text-muted-foreground">
+                    <span className="text-[11px]">Polaris Core</span>
+                    <span className="text-primary text-[11px]">Engineering</span>
                   </div>
                 </article>
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Team Notice Card */}
-          <div className="mt-8 rounded-2xl border border-border bg-card/60 p-6 md:p-8 backdrop-blur-xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-1 text-center md:text-left">
-              <h3 className="font-display font-bold text-foreground text-lg">Full Team & Advisory Board Roster Updating Soon</h3>
-              <p className="text-sm text-muted-foreground font-body">
-                We are currently expanding our core departments, volunteer network, and advisory board across schools and universities. Official member portraits and bios will be published shortly.
-              </p>
-            </div>
-            <Button asChild variant="outline" className="rounded-full shrink-0 font-ui">
-              <Link to="/get-involved" className="flex items-center gap-2">
-                <span>Join the Team</span>
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
+      {/* CORE DEPARTMENTS */}
+      <section className="section border-t border-border bg-surface/20">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <p className="eyebrow mb-2">Architecture</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Core Departments</h2>
+          </ScrollReveal>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {DEPARTMENTS.map((dept, idx) => (
+              <ScrollReveal key={dept.name} direction="up" delay={idx * 60}>
+                <article className="card-premium p-6 h-full flex flex-col justify-between">
+                  <div>
+                    <span className="px-2 py-0.5 rounded bg-surface-2 border border-border font-mono text-[10px] text-primary uppercase font-bold tracking-wider">
+                      {dept.role}
+                    </span>
+                    <h3 className="mt-3 text-base font-bold text-foreground">{dept.name}</h3>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{dept.blurb}</p>
+                  </div>
+                </article>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ORGANISATIONAL DEPARTMENTS */}
-      <section className="section border-t border-border bg-surface/10">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <p className="eyebrow mb-3 text-accent">Organisational Structure</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
-              Our Core Departments
-            </h2>
-            <p className="mt-3 max-w-2xl text-muted-foreground leading-relaxed font-body">
-              Project Polaris operates through specialized student departments that collaborate to achieve our experiential learning mission.
-            </p>
-
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
-              {DEPARTMENTS.map((dept, idx) => (
-                <article
-                  key={dept.name}
-                  className="card-elevated p-7 flex flex-col justify-between border-white/10 hover:border-accent/40 transition-all duration-300 h-full"
-                >
-                  <div>
-                    <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-ui text-[10px] uppercase font-bold tracking-wider mb-4">
-                      {dept.role}
-                    </div>
-                    <h3 className="text-xl font-display font-bold text-foreground">{dept.name}</h3>
-                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">{dept.blurb}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* RECOGNITION SYSTEM & WORKING CULTURE */}
+      {/* RECOGNITION & CULTURE */}
       <section className="section border-t border-border">
         <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="grid gap-12 lg:grid-cols-2">
-              {/* Recognition System */}
-              <div className="card-elevated p-8 md:p-10 border-accent/25 relative overflow-hidden flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 text-accent font-ui text-xs uppercase font-bold tracking-wider mb-3">
-                    <Award className="size-4" />
-                    <span>Reward Framework</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-                    Recognition System
-                  </h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">
-                    We recognize genuine student contributions through a structured, merit-based reward system that validates real-world skills.
-                  </p>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <ScrollReveal direction="up" delay={0}>
+              <div className="card-premium p-6 md:p-8 h-full">
+                <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase mb-3">
+                  <Award className="size-4" />
+                  <span>Merit-Based Recognition</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">Recognition Framework</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  We recognize verified student contributions through a structured, merit-based reward system that validates real engineering skills.
+                </p>
 
-                  <ul className="mt-6 space-y-3 font-ui text-xs text-foreground">
-                    {RECOGNITION_SYSTEM.map((item) => (
-                      <li key={item} className="flex items-center gap-3 p-2.5 rounded-lg bg-surface-2 border border-border">
-                        <CheckCircle2 className="size-4 text-accent shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                <ul className="mt-6 space-y-2 text-xs">
+                  {RECOGNITION_SYSTEM.map((item) => (
+                    <li key={item} className="flex items-center gap-2.5 p-2 rounded bg-surface-2 border border-border">
+                      <CheckCircle2 className="size-3.5 text-primary shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={80}>
+              <div className="card-premium p-6 md:p-8 h-full">
+                <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase mb-3">
+                  <HeartHandshake className="size-4" />
+                  <span>Operating Principles</span>
+                </div>
+                <h3 className="text-xl font-bold text-foreground">Working Culture</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Every volunteer, associate, and core team member operates with professional standards, code peer reviews, and high empathy.
+                </p>
+
+                <div className="mt-6 space-y-2">
+                  {WORKING_CULTURE.map(({ rule, detail }) => (
+                    <div key={rule} className="p-2.5 rounded bg-surface-2 border border-border">
+                      <p className="font-semibold text-xs text-foreground">{rule}</p>
+                      <p className="text-[11px] text-muted-foreground mt-0.5">{detail}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {/* Working Culture */}
-              <div className="card-elevated p-8 md:p-10 border-primary/25 relative overflow-hidden flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 text-primary font-ui text-xs uppercase font-bold tracking-wider mb-3">
-                    <HeartHandshake className="size-4" />
-                    <span>Values in Action</span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-                    Working Culture
-                  </h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed font-body">
-                    Every volunteer, associate, and core team member operates with professional standards and high peer empathy.
-                  </p>
-
-                  <div className="mt-6 space-y-2.5">
-                    {WORKING_CULTURE.map(({ rule, detail }) => (
-                      <div key={rule} className="p-3 rounded-lg bg-surface-2 border border-border flex items-start gap-3">
-                        <span className="size-1.5 rounded-full bg-primary shrink-0 mt-1.5" />
-                        <div>
-                          <p className="font-ui font-semibold text-xs text-foreground">{rule}</p>
-                          <p className="text-[11px] text-muted-foreground mt-0.5 font-body">{detail}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
@@ -346,106 +257,39 @@ function About() {
       <section className="section border-t border-border bg-surface/20">
         <div className="shell">
           <ScrollReveal direction="up">
-            <p className="eyebrow mb-5 text-accent">Our Values</p>
-            <h2 className="max-w-2xl text-3xl md:text-4xl font-display font-bold">What we hold ourselves to</h2>
-            <dl className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-              {VALUES.map((value) => (
-                <div key={value.name} className="bg-background p-6 hover:bg-surface transition-colors">
-                  <dt className="font-display text-lg font-semibold text-foreground">{value.name}</dt>
-                  <dd className="mt-2 text-sm text-muted-foreground leading-relaxed">{value.note}</dd>
-                </div>
-              ))}
-            </dl>
+            <p className="eyebrow mb-2">Values</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">What we hold ourselves to</h2>
           </ScrollReveal>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {VALUES.map((value, i) => (
+              <ScrollReveal key={value.name} direction="up" delay={i * 50}>
+                <div className="card-premium p-6 h-full">
+                  <h3 className="font-bold text-sm text-foreground">{value.name}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{value.note}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* WHY POLARIS */}
-      <section className="veil section relative overflow-hidden border-t border-border">
-        <div className="shell relative">
-          <ScrollReveal direction="up">
-            <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 items-center">
-              <div>
-                <NorthStar className="size-10 text-primary" />
-                <h2 className="mt-6 text-3xl md:text-4xl font-display font-bold">Why the name "Polaris"?</h2>
-              </div>
-              <div className="space-y-5 text-muted-foreground leading-relaxed">
-                <p>
-                  For centuries, the North Star has guided explorers through uncertainty. It does not tell
-                  you where to go — it tells you where you are.
-                </p>
-                <p>
-                  In the same way, we guide students toward opportunities, purpose, practical
-                  learning, experimentation, and meaningful action in a fast-evolving world.
-                </p>
-                <p className="text-foreground font-medium">
-                  Project Polaris is built on the conviction that learning becomes memorable when it is applied, that leadership is earned by creating value, and that young people build extraordinary things when given the right environment.
-                </p>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* JOURNEY */}
       <section className="section border-t border-border">
         <div className="shell">
           <ScrollReveal direction="up">
-            <div className="grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] items-center">
               <div>
-                <p className="eyebrow mb-5">Our Journey</p>
-                <h2 className="text-3xl md:text-4xl font-display font-bold">Everything so far</h2>
-                <p className="mt-5 text-sm text-muted-foreground leading-relaxed">
-                  Transparent, honest, and still very early. Every step has been driven by students who care.
+                <NorthStar className="size-8 text-primary" />
+                <h2 className="mt-4 text-2xl sm:text-3xl font-bold text-foreground">Why the name "Polaris"?</h2>
+              </div>
+              <div className="space-y-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                <p>
+                  For centuries, the North Star has guided explorers through uncharted territory. It does not dictate where you go — it provides an immutable reference point for where you are.
+                </p>
+                <p>
+                  In the same way, Project Polaris guides student engineers toward practical computation, simulation tools, and verified research trajectories.
                 </p>
               </div>
-              <Timeline items={JOURNEY} />
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* WHERE WE'RE GOING */}
-      <section className="section border-t border-border bg-surface/30">
-        <div className="shell max-w-4xl">
-          <ScrollReveal direction="up">
-            <p className="eyebrow mb-5">Future Roadmaps</p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold">Where we are heading next</h2>
-            <p className="mt-3 text-muted-foreground">Programs, fellowships, camps, and global cohorts currently in development.</p>
-
-            <ul className="mt-10 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-              {[
-                "Student Research Programs & Publications",
-                "Educational Camps & Space Science Trips",
-                "Structured Online Project-Based Courses",
-                "International Workshop Expansions",
-                "Innovation Fellowships & Grants",
-                "Institutional School & College Partnerships",
-                "Interactive Engineering Simulators & Labs",
-                "1-on-1 Mentorship Networks",
-                "Global Student Builder Community",
-              ].map((goal) => (
-                <li
-                  key={goal}
-                  className="font-ui rounded-xl border border-border bg-card/60 p-4 text-sm text-muted-foreground flex items-center gap-2.5 backdrop-blur-md"
-                >
-                  <span className="size-1.5 rounded-full bg-primary shrink-0" />
-                  <span>{goal}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-12 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="rounded-full shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
-                  Join Community
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-full">
-                <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer">
-                  Apply to Volunteer Program
-                </a>
-              </Button>
             </div>
           </ScrollReveal>
         </div>

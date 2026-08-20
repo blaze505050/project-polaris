@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/PageHeader";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -21,48 +22,36 @@ export const Route = createFileRoute("/privacy")({
 
 const SECTIONS = [
   {
-    heading: "What we collect",
+    heading: "What We Collect",
     body: [
-      "When you apply to join, contact us, or register for a session, we collect the details you type into that form — typically your name, email address, and whatever context you choose to share about yourself.",
-      "Community programs and resources are free to access. For paid courses, bootcamps and space camps, we collect the information needed to process your enrolment and payment, including whatever payment details the secure payment provider asks for.",
+      "When you apply to join, submit contact messages, or register for a workshop, we collect the details you enter into the form — typically your name, email address, school affiliation, and engineering interests.",
+      "Open community resources and software tools are accessible without registration. For specialised cohort programs, we collect the necessary project and technical background to place you into the appropriate sprint team.",
     ],
   },
   {
-    heading: "Why we collect it",
+    heading: "Why We Collect It",
     body: [
-      "To respond to you, review applications, place people into programs, and share updates about sessions and opportunities you asked about.",
-      "We may look at aggregate numbers — how many people applied, attended, or completed something — to understand whether our programs are working.",
+      "To review engineering project submissions, coordinate cohort sprint teams, communicate event details, and share peer-reviewed student research digests.",
+      "We aggregate non-identifiable usage statistics (such as simulator session counts and project completions) solely to verify and improve curriculum effectiveness.",
     ],
   },
   {
-    heading: "Who can see it",
+    heading: "Data Privacy & Access Control",
     body: [
-      "Only the Project Polaris core team and the coordinators of the program you applied to.",
-      "We do not sell your information, and we do not share it with advertisers.",
+      "Submissions are strictly accessible only by the Project Polaris core engineering and outreach team.",
+      "We do not sell, monetize, or share your personal information with third-party advertisers or external commercial brokers.",
     ],
   },
   {
-    heading: "Where it is stored",
+    heading: "Students & Youth Under 18",
     body: [
-      "Submissions are stored in our managed cloud database with access restricted to authorised team members.",
+      "Many of our contributors are middle, high school, and university students. We collect only the minimum required information to facilitate project cohorts, and parents or guardians may request record removal at any time.",
     ],
   },
   {
-    heading: "Students under 18",
+    heading: "Data Deletion & Rights",
     body: [
-      "Many of our participants are school students. We only ask for the minimum information needed to run a program, and a parent or guardian can contact us at any time to review or remove a young person's details.",
-    ],
-  },
-  {
-    heading: "Your choices",
-    body: [
-      "You can ask us to correct or delete your information, or to stop contacting you, at any time. Write to us through the contact page and we will act on it.",
-    ],
-  },
-  {
-    heading: "Changes",
-    body: [
-      "If this policy changes, the updated version will be posted on this page. Project Polaris is a young, student-led organisation and our practices will keep improving.",
+      "You have the right to inspect, update, or permanently delete your stored application records at any time. Simply submit a deletion request through our contact page.",
     ],
   },
 ];
@@ -71,35 +60,37 @@ function Privacy() {
   return (
     <>
       <PageHeader
-        eyebrow="Legal"
+        eyebrow="Legal & Governance"
         title="Privacy Policy"
-        lead="Plain language, no dark patterns. This is everything we do with the information you give us."
+        lead="Transparent, disciplined, and privacy-first. Everything we do with the data you entrust to us."
       />
 
       <section className="section">
-        <div className="shell max-w-3xl">
-          <p className="font-ui text-xs tracking-wide text-muted-foreground uppercase">
-            Last updated: August 2026
-          </p>
-          <div className="mt-12 space-y-12">
-            {SECTIONS.map((s) => (
-              <article key={s.heading}>
-                <h2 className="text-2xl">{s.heading}</h2>
-                {s.body.map((p) => (
-                  <p key={p} className="mt-4 text-muted-foreground">
-                    {p}
-                  </p>
-                ))}
-              </article>
-            ))}
-          </div>
-          <p className="mt-14 text-sm text-muted-foreground">
-            Questions about this policy?{" "}
-            <Link to="/contact" className="text-primary underline-offset-4 hover:underline">
-              Contact the team
-            </Link>
-            .
-          </p>
+        <div className="shell max-w-3xl mx-auto">
+          <ScrollReveal direction="up">
+            <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
+              Effective: August 2026
+            </span>
+            <div className="mt-8 space-y-8 divide-y divide-border">
+              {SECTIONS.map((s, i) => (
+                <article key={s.heading} className={i > 0 ? "pt-8" : ""}>
+                  <h2 className="text-xl font-bold text-foreground">{s.heading}</h2>
+                  <div className="mt-3 space-y-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {s.body.map((p, idx) => (
+                      <p key={idx}>{p}</p>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="mt-12 pt-6 border-t border-border text-xs text-muted-foreground">
+              Questions about this policy?{" "}
+              <Link to="/contact" className="text-primary font-semibold hover:underline">
+                Contact the engineering team
+              </Link>
+              .
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>

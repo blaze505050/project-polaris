@@ -13,21 +13,23 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { BackToTop } from "@/components/ui/back-to-top";
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4">
       <div className="max-w-md text-center">
         <p className="eyebrow">Off course</p>
-        <h1 className="mt-4 font-display text-5xl">404</h1>
+        <h1 className="mt-4 font-display text-5xl font-bold">404</h1>
         <p className="mt-4 text-sm text-muted-foreground">
           This page doesn't exist. Let's get you back to something useful.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild>
+          <Button asChild size="sm">
             <Link to="/">Go home</Link>
           </Button>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" size="sm">
             <Link to="/opportunities">Explore opportunities</Link>
           </Button>
         </div>
@@ -42,33 +44,34 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-[75vh] items-center justify-center px-4 py-12">
-      <div className="max-w-lg w-full text-center rounded-3xl border border-destructive/30 bg-card/80 backdrop-blur-2xl p-8 md:p-10 shadow-2xl">
-        <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-destructive/10 text-destructive mb-6 ring-8 ring-destructive/5">
-          <span className="text-2xl font-bold">!</span>
+      <div className="max-w-lg w-full text-center rounded-xl border border-destructive/30 bg-card p-8 md:p-10 shadow-2xl">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-lg bg-destructive/10 text-destructive mb-6 border border-destructive/20 font-bold font-mono">
+          !
         </div>
         <p className="eyebrow mb-2 !text-destructive">Runtime Alert</p>
-        <h1 className="font-display text-3xl font-bold text-foreground">Application Encountered an Issue</h1>
-        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+        <h1 className="text-2xl font-bold text-foreground">Application Encountered an Issue</h1>
+        <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
           We encountered an unexpected error while initializing this section. You can retry the operation or return to the main dashboard.
         </p>
 
         {error?.message && (
-          <div className="mt-5 text-left p-3.5 rounded-xl bg-surface border border-border text-xs font-mono text-muted-foreground overflow-auto max-h-36">
+          <div className="mt-5 text-left p-3.5 rounded-lg bg-surface border border-border text-xs font-mono text-muted-foreground overflow-auto max-h-36">
             <span className="text-destructive font-semibold">Error:</span> {error.message}
           </div>
         )}
 
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Button
+            size="sm"
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="rounded-full bg-primary text-primary-foreground font-semibold px-6"
+            className="px-5 bg-foreground text-background"
           >
             Try again
           </Button>
-          <Button asChild variant="outline" className="rounded-full px-6">
+          <Button asChild variant="outline" size="sm" className="px-5">
             <a href="/">Go home</a>
           </Button>
         </div>
@@ -86,13 +89,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Project Polaris is a student-led experiential learning organisation where students research, build and solve real problems.",
+          "Project Polaris is a student-led experiential engineering organisation where students research, build and solve real problems.",
       },
       { property: "og:site_name", content: "Project Polaris" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "color-scheme", content: "dark light" },
-      { name: "theme-color", content: "#050505" },
+      { name: "theme-color", content: "#090a0f" },
     ],
     links: [
       { rel: "icon", href: "/polaris-logo.png", type: "image/png" },
@@ -101,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
       },
     ],
     scripts: [
@@ -158,18 +161,19 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <HeadContent />
+      <ScrollProgress />
       <a
         href="#main"
-        className="font-ui sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-full focus:bg-primary focus:px-5 focus:py-3 focus:text-sm focus:text-primary-foreground"
+        className="font-mono sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-xs focus:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-ring"
       >
         Skip to content
       </a>
       <Navbar />
       <main id="main">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </main>
       <Footer />
+      <BackToTop />
       <Toaster position="top-center" />
     </QueryClientProvider>
   );
