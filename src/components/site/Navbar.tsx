@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, ArrowUpRight, User } from "lucide-react";
+import { Menu, X, ArrowUpRight, User, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -10,8 +10,8 @@ import { ThemeToggle } from "./ThemeToggle";
 const NAV_ITEMS = [
   { label: "Projects", to: "/projects" },
   { label: "Programs", to: "/programs" },
-  { label: "About & Showcase", to: "/about" },
-  { label: "Contact Us", to: "/contact" },
+  { label: "Showcase", to: "/showcase" },
+  { label: "Research", to: "/research" },
 ] as const;
 
 export function Navbar() {
@@ -37,18 +37,14 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300 pointer-events-none py-3 px-4 sm:px-6",
-      )}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 pointer-events-none py-3 px-4 sm:px-6">
       <nav
         aria-label="Main Navigation"
         className={cn(
           "max-w-5xl mx-auto h-12 sm:h-14 px-4 sm:px-6 rounded-full flex items-center justify-between gap-4 pointer-events-auto transition-all duration-300",
           scrolled || open
-            ? "bg-background/75 backdrop-blur-2xl border border-white/12 shadow-[0_16px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.15)]"
-            : "bg-surface/60 backdrop-blur-xl border border-white/8 shadow-[0_8px_30px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.08)]",
+            ? "bg-background/80 backdrop-blur-2xl border border-white/12 shadow-[0_16px_40px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.15)]"
+            : "bg-surface/65 backdrop-blur-xl border border-white/8 shadow-[0_8px_30px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.08)]",
         )}
       >
         {/* Brand */}
@@ -85,13 +81,13 @@ export function Navbar() {
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-8 px-3 text-xs font-mono font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-white/[0.06]">
             <Link to="/portal" className="flex items-center gap-1.5">
               <User className="size-3.5 text-primary" />
-              <span>Portal</span>
+              <span>Workspace</span>
             </Link>
           </Button>
 
-          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-4 text-xs font-mono font-semibold bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background hover:brightness-110 rounded-full shadow-[0_2px_12px_rgba(197,157,255,0.25)] transition-transform active:scale-95">
+          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-4 text-xs font-mono font-bold bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background hover:brightness-110 rounded-full shadow-[0_2px_12px_rgba(197,157,255,0.25)] transition-transform active:scale-95">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
-              <span>Community</span>
+              <span>Join Community</span>
               <ArrowUpRight className="size-3 text-background font-bold" />
             </a>
           </Button>
@@ -142,5 +138,3 @@ export function Navbar() {
     </header>
   );
 }
-
-

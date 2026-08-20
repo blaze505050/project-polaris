@@ -1,13 +1,15 @@
 export const SITE = {
   name: "Project Polaris",
-  tagline: "Learn by building, rather than building after learning.",
-  taglineAlt: "Learn by building, rather than building by learning.",
+  headline: "Build real engineering projects.",
+  subheadline: "Learn everything you need along the way.",
+  tagline: "Learning through Building, rather than Building after learning.",
+  taglineAlt: "Learn by building, rather than building after learning.",
   description:
-    "Project Polaris is a student-led experiential learning organization dedicated to bridging the gap between traditional education and real-world skills through workshops, innovation challenges, research programs, mentorship, and hands-on experiences.",
+    "Project Polaris is a student engineering ecosystem where ambitious students build simulations, software, research projects and physical systems with mentors and peers.",
   mission:
     "To make practical, hands-on, and industry-relevant learning accessible to every student by creating opportunities to build, experiment, collaborate, and innovate.",
   vision:
-    "To become India's most trusted experiential learning ecosystem where students develop future-ready skills through real-world experiences.",
+    "To build one of the world's most impactful student engineering communities—one that empowers young minds to become builders, researchers, and innovators.",
   communityUrl: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
   volunteerUrl: "https://polaris-volunteer-program-8.my.canva.site",
   associateFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
@@ -18,19 +20,38 @@ export const SITE = {
   linkedinCompanyUrl: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",
 } as const;
 
+export const THREE_PILLARS = [
+  {
+    key: "BUILD",
+    title: "Build Real Projects",
+    description: "Build authentic physics simulations, astronomical databases, data pipelines, and computational aerospace models with verifiable code.",
+    badge: "Engineering Core",
+  },
+  {
+    key: "LEARN",
+    title: "Learn What You Need",
+    description: "Learn on-demand through mentor office hours, ISRO scientist masterclasses, peer code reviews, and structured problem roadmaps.",
+    badge: "Cohorts & Mentors",
+  },
+  {
+    key: "CONNECT",
+    title: "Connect in Squads",
+    description: "Collaborate in small sprint squads of 3–5 builders. Tackle open challenges, conduct research, and ship together.",
+    badge: "Sprint Teams",
+  },
+] as const;
+
 export const BRAND_POSITIONING = {
   line1: "Project Polaris is not a coaching institute.",
   line2: "Project Polaris is not just another student community.",
-  line3: "Project Polaris is an experiential learning ecosystem where students learn by building, researching, experimenting, and solving real-world problems.",
+  line3: "Project Polaris is a student engineering ecosystem where students learn by building, researching, experimenting, and solving real-world problems.",
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Home", to: "/" },
   { label: "Projects", to: "/projects" },
   { label: "Programs", to: "/programs" },
-  { label: "Get Involved", to: "/get-involved" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
+  { label: "Showcase", to: "/showcase" },
+  { label: "Research", to: "/research" },
 ] as const;
 
 export const BRAND_VALUES = [
@@ -57,200 +78,109 @@ export const VALUES = [
   { name: "Student Empowerment", note: "We put students in the driver's seat to lead projects, departments, and public masterclasses." },
 ] as const;
 
-export const PROGRAMS = [
+export const HOW_IT_WORKS_STEPS = [
   {
-    slug: "workshops",
-    name: "Interactive Workshops & Webinars",
-    blurb:
-      "Interactive sessions and live masterclasses conducted by ISRO scientists, missile researchers, educators, and domain experts.",
-    purpose:
-      "To put students in the same room as people who actually do the work, and let them ask real questions.",
-    who: "Open to the whole community — school, college & self-taught learners.",
-    gain: [
-      "Direct exposure to practitioners and ISRO scientists",
-      "Practical context far beyond textbook theory",
-      "Real-world aerospace & engineering pathways",
-    ],
-    experience:
-      "Live masterclasses, interactive Q&As, student pitch challenges, and community discussions.",
+    step: "01",
+    title: "Choose a Project",
+    desc: "Pick from curated engineering challenges across aerospace CFD, orbital mechanics, observational astronomy, and physics AI.",
   },
   {
-    slug: "community-learning",
-    name: "Community Learning & Rituals",
-    blurb: "Daily educational content (Aaj Ka Gyan), Saturday polls, quizzes, and collaborative discussions.",
-    purpose: "To make scientific curiosity and learning a daily habit rather than an occasional event.",
-    who: "Everyone in the Polaris student community.",
-    gain: [
-      "A consistent daily learning rhythm",
-      "Mon–Fri curated scientific facts based on weekly themes",
-      "Low-pressure entry into active exploration",
-    ],
-    experience:
-      "Aaj Ka Gyan daily facts every morning, Saturday Polls every weekend, plus star-hunting quizzes and open problem-solving threads.",
+    step: "02",
+    title: "Learn What You Need",
+    desc: "Access reduced-order equations, open tutorials, mentor sessions with aerospace practitioners, and starter repositories.",
   },
   {
-    slug: "innovation-projects",
-    name: "Innovation & Build Projects",
-    blurb:
-      "Collaborative student-led projects that solve real-world problems while helping learners build practical skills.",
-    purpose:
-      "To let students experience the full arc of building something real: scope, attempt, fail, improve, and ship.",
-    who: "School students, college builders, and passionate makers willing to collaborate.",
-    gain: [
-      "A finished portfolio project you can demonstrate",
-      "Hands-on engineering and teamwork under real constraints",
-      "Technical mentor feedback and code reviews",
-    ],
-    experience:
-      "Small focused teams working on initiatives like AeroForge AI research lab, Sky Atlas astronomical catalogs, and student research digests.",
+    step: "03",
+    title: "Build With a Squad",
+    desc: "Collaborate in focused sprint teams of 3–5 builders with weekly check-ins, architectural reviews, and pair programming.",
   },
   {
-    slug: "mentorship",
-    name: "Mentorship & Guidance",
-    blurb:
-      "Connecting learners with mentors who can guide them academically, technically, and professionally.",
-    purpose:
-      "To close the access gap — most students rarely get to interact directly with researchers and industry leaders.",
-    who: "Students seeking guidance, and professionals passionate about giving back.",
-    gain: [
-      "Perspective from researchers and engineers further along the path",
-      "Honest, personalized technical feedback",
-      "Clear direction and roadmap planning",
-    ],
-    experience:
-      "Direct 1-on-1 conversations, group roundtables, and project-based advisory.",
-  },
-  {
-    slug: "events",
-    name: "Events & Competitions",
-    blurb:
-      "Competitions, webinars, speaker sessions, astronomy challenges, bootcamps, and community activities.",
-    purpose: "To create high-energy moments where the entire community converges to build, learn, and showcase.",
-    who: "Open to all members; includes individual and team challenge formats.",
-    gain: ["Momentum & urgency", "Cross-disciplinary collaborators", "Tangible achievements and awards"],
-    experience: "Announced in the community ahead of time, executed live, and archived for ongoing study.",
-  },
-  {
-    slug: "research",
-    name: "Research & Fellowship Program (In Progress)",
-    blurb:
-      "Student-led research initiatives, literature reviews, scientific exploration, educational camps, and interdisciplinary collaboration.",
-    purpose:
-      "To give young students early authentic experience with research methodology: formulating hypotheses, gathering evidence, simulating, and publishing.",
-    who: "High-school and college students interested in scientific research and technical writing.",
-    gain: [
-      "Structured research methodology & literature survey training",
-      "Evidence-based scientific writing and peer review",
-      "Guidance from senior researchers and academicians",
-    ],
-    experience:
-      "Currently in active development — connecting curious young minds with research cohorts, educational trips, and fellowship opportunities.",
+    step: "04",
+    title: "Ship Your Work",
+    desc: "Deploy live interactive web applications, publish peer-reviewed technical reports, and build a verified portfolio of artifacts.",
   },
 ] as const;
 
-export const WHY_JOIN_PILLARS = [
+export const VERIFIED_DELIVERABLES = [
   {
-    title: "Learn Beyond Textbooks",
-    description: "Gain practical, high-impact knowledge through live masterclasses with ISRO scientists, interactive workshops, and hands-on experiments.",
-    icon: "BookOpen",
+    title: "Working Simulation & Software",
+    desc: "A deployed web application or interactive physics workbench running real mathematical solvers.",
   },
   {
-    title: "Develop Future-Ready Skills",
-    description: "Strengthen leadership, scientific communication, teamwork, research methodology, critical thinking, and structured problem-solving.",
-    icon: "Sparkles",
+    title: "Public GitHub Repository",
+    desc: "Clean commits, reproducible code, comprehensive README documentation, and open-source licensing.",
   },
   {
-    title: "Work on Meaningful Projects",
-    description: "Collaborate with passionate peers on real projects like the AeroForge AI simulation workstation, Sky Atlas open observational logs, and research tools.",
-    icon: "Hammer",
+    title: "Technical Report & Whitepaper",
+    desc: "Written analysis detailing governing equations, assumptions, boundary conditions, and benchmark validation.",
   },
   {
-    title: "Connect With Inspiring People",
-    description: "Meet ambitious students, scientists, innovators, industry professionals, educators, and mentors who share your curiosity and ambition.",
-    icon: "Users",
+    title: "Portfolio Showcase Page",
+    desc: "A permanent public artifact page on Project Polaris showcasing your role and contributions.",
   },
   {
-    title: "Build Your Portfolio",
-    description: "Showcase verified contributions, published research notes, live code repositories, leadership roles, and recognized community achievements.",
-    icon: "FolderKanban",
-  },
-] as const;
-
-export const DEPARTMENTS = [
-  {
-    name: "Research Department",
-    role: "Inquiry & Tools",
-    blurb:
-      "Conducts research, verifies information, supports educational content, develops research projects, and promotes evidence-based learning. The department also creates effective projects and tools that help students learn more effectively.",
+    title: "Mentor Review & Feedback",
+    desc: "Constructive evaluation and endorsements from practicing aerospace engineers and domain researchers.",
   },
   {
-    name: "Content Department",
-    role: "Knowledge & Media",
-    blurb:
-      "Creates educational content across various platforms including articles, social media, presentations, videos, and learning resources — including our daily morning 'Aaj Ka Gyan' drops.",
-  },
-  {
-    name: "Operations Department",
-    role: "Community & Execution",
-    blurb:
-      "Ensures smooth execution of organizational processes, volunteer management, documentation, scheduling, workshop logistics, and internal coordination across all cohorts.",
+    title: "Team Contribution Record",
+    desc: "Demonstrated sprint execution, collaboration history, and engineering leadership credentials.",
   },
 ] as const;
 
-export const RECOGNITION_SYSTEM = [
-  "Performance Score & Contribution Points",
-  "Digital Badges & Verified Certificates",
-  "Leadership Opportunities in Core Initiatives",
-  "Official Recommendation Letters",
-  "Special Awards & Annual Recognitions",
-  "Exclusive Mentorship & Learning Opportunities",
-] as const;
-
-export const WORKING_CULTURE = [
-  { rule: "Be respectful", detail: "Value every peer's perspective and support an inclusive environment." },
-  { rule: "Take ownership", detail: "Own assigned initiatives from start to finish with proactive initiative." },
-  { rule: "Communicate professionally", detail: "Maintain transparent, clear, and prompt communication." },
-  { rule: "Meet deadlines", detail: "Respect team timelines and deliverables with high consistency." },
-  { rule: "Be open to feedback", detail: "Embrace constructive reviews as opportunities for rapid growth." },
-  { rule: "Support fellow members", detail: "Collaborate, share knowledge, and lift others up as you grow." },
-  { rule: "Continuously learn", detail: "Stay curious, experiment fearlessly, and improve every day." },
-] as const;
-
-export const WHO_CAN_JOIN = [
+export const BUILD_SQUADS = [
   {
-    category: "School Students",
-    description: "Middle and high school students who want to explore space science, experiment with hardware, and discover their true potential.",
-    badge: "Grade 6–12",
+    id: "aero-cfd-engine",
+    name: "Aero CFD Engine",
+    category: "AEROSPACE",
+    level: "Intermediate",
+    members: "4 / 5 builders",
+    stack: "TypeScript · WebGL · Navier-Stokes",
+    currentMilestone: "Compressible shock wave & transonic drag rise modeling",
+    progress: 78,
+    projectSlug: "aeroforge-ai",
   },
   {
-    category: "College Students",
-    description: "Undergraduate and graduate builders looking to apply engineering, physics, coding, or research skills in collaborative teams.",
-    badge: "Higher Ed",
+    id: "orbital-state-propagator",
+    name: "Orbital State Propagator",
+    category: "ASTRODYNAMICS",
+    level: "Advanced",
+    members: "2 / 4 builders",
+    stack: "Python · Astrodynamics · RK4",
+    currentMilestone: "N-Body gravitational perturbation & J2 zonal harmonics",
+    progress: 55,
+    projectSlug: "aeroforge-ai",
   },
   {
-    category: "Professionals & Mentors",
-    description: "Engineers, scientists, and researchers eager to deliver masterclasses, guide student projects, or provide career mentorship.",
-    badge: "Mentorship",
+    id: "deep-sky-fits-telemetry",
+    name: "Sky Atlas FITS Telemetry",
+    category: "ASTRONOMY",
+    level: "Beginner",
+    members: "3 / 5 builders",
+    stack: "FITS · React · Astronomy Data",
+    currentMilestone: "Messier 42 photometer spectral calibration pipeline",
+    progress: 85,
+    projectSlug: "sky-atlas",
   },
   {
-    category: "Educators & Teachers",
-    description: "Teachers looking to integrate experiential learning workshops and interactive science challenges into their classrooms.",
-    badge: "Education",
-  },
-  {
-    category: "Schools, NGOs & Startups",
-    description: "Educational institutions and organizations seeking to co-host workshops, sponsor access, and empower young innovators.",
-    badge: "Partnerships",
+    id: "sounding-rocket-avionics",
+    name: "Sounding Rocket Telemetry",
+    category: "HARDWARE & DATA",
+    level: "Intermediate",
+    members: "3 / 4 builders",
+    stack: "C++ · ESP32 · Kalman Filter",
+    currentMilestone: "Barometric altitude sensor fusion & apogee detection",
+    progress: 62,
+    projectSlug: "schools-outreach-kit",
   },
 ] as const;
 
 export const STATS = [
-  { value: "50+", label: "Engineering tools & solvers", note: "Across AeroForge CFD, structural & orbital suites." },
-  { value: "120+", label: "Community members", note: "Curious students & builders learning together." },
-  { value: "90+", label: "Aaj Ka Gyan posts", note: "Daily curated scientific knowledge drops." },
-  { value: "25+", label: "Volunteers & contributors", note: "Students leading content, ops & research." },
-  { value: "10+", label: "Webinars & masterclasses", note: "Conducted with ISRO scientists & propulsion leads." },
-  { value: "3.7k+", label: "Network reach & impressions", note: "Across student stargazing & science drops." },
+  { value: "40+", label: "Physics solvers", note: "CFD, FEA, orbital & propulsion suites." },
+  { value: "10+", label: "Active project squads", note: "Student teams building open systems." },
+  { value: "120+", label: "Community builders", note: "Curious students & mentors learning together." },
+  { value: "90+", label: "Aaj Ka Gyan posts", note: "Daily curated scientific inquiry drops." },
+  { value: "100%", label: "Open source & free", note: "No barrier to start experimenting." },
 ] as const;
 
 export const TEAM_MEMBERS = [
@@ -283,6 +213,131 @@ export const TEAM_MEMBERS = [
     name: "Aryan",
     role: "Research Volunteer",
     note: "Supporting physics simulation verification, literature surveys, and student research digests.",
+  },
+] as const;
+
+export const PROJECTS = [
+  {
+    slug: "aeroforge-ai",
+    name: "AeroForge AI Simulation Workstation",
+    category: "AEROSPACE & CFD",
+    level: "Intermediate / Advanced",
+    duration: "4–6 weeks",
+    stack: "Python · TypeScript · WebGL · Physics",
+    team: "Core Engineering Squad",
+    members: "4 / 5 members",
+    progress: 88,
+    stage: "Active beta",
+    blurb:
+      "Browser-based engineering research workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics.",
+    roadmap: ["01 Understand", "02 Model", "03 Implement", "04 Validate", "05 Ship"],
+    deliverables: ["Working Simulation", "GitHub Repository", "Technical Report", "Showcase Page", "Mentor Review"],
+    cta: "Launch AeroForge Lab",
+    link: "/projects",
+    featured: true,
+    github: "https://github.com/blaze505050/project-polaris",
+    demo: "/aeroforge/index.html",
+  },
+  {
+    slug: "sky-atlas",
+    name: "Sky Atlas Deep-Sky Network",
+    category: "ASTRONOMY",
+    level: "Beginner / Intermediate",
+    duration: "3–4 weeks",
+    stack: "FITS · Astronomy Data · React",
+    team: "Astrophysics Squad",
+    members: "3 / 5 members",
+    progress: 75,
+    stage: "In progress",
+    blurb:
+      "An open, student-maintained deep-sky catalog and constellation mapping database with observations recorded across community stargazing nights.",
+    roadmap: ["01 Catalog", "02 Ingest", "03 Calibrate", "04 Map", "05 Publish"],
+    deliverables: ["Celestial Database", "FITS Viewer", "Observation Log", "Star Guide"],
+    link: "/projects",
+    github: "https://github.com/blaze505050/project-polaris",
+  },
+  {
+    slug: "research-digest",
+    name: "Polaris Science & Research Digest",
+    category: "TECHNICAL RESEARCH",
+    level: "All Skill Levels",
+    duration: "Recurring Bi-Weekly",
+    stack: "LaTeX · Peer Review · Literature Survey",
+    team: "Research & Content Department",
+    members: "5 / 6 members",
+    progress: 90,
+    stage: "Active Publication",
+    blurb:
+      "A recurring student-written and peer-reviewed technical digest that summarizes and verifies recent space science and propulsion research papers.",
+    roadmap: ["01 Survey", "02 Hypothesize", "03 Verify", "04 Peer Review", "05 Release"],
+    deliverables: ["PDF Digest", "Technical Summary", "Citation Index", "Community AMA"],
+    link: "/research",
+  },
+  {
+    slug: "schools-outreach-kit",
+    name: "Schools Experiential Science Kit",
+    category: "K-12 OUTREACH",
+    level: "Beginner",
+    duration: "2 weeks",
+    stack: "Optics · Rocket Telemetry · Lab Curriculum",
+    team: "Outreach Team",
+    members: "3 / 4 members",
+    progress: 65,
+    stage: "In progress",
+    blurb:
+      "A ready-to-run interactive laboratory curriculum, stomp rocket telemetry kit, and telescope workshop modules for middle and high schools.",
+    roadmap: ["01 Scope", "02 Build Kit", "03 Test in Schools", "04 Refine", "05 Deploy"],
+    deliverables: ["Curriculum Modules", "Hardware Specs", "Facilitator Guide", "Student Worksheets"],
+    link: "/schools",
+  },
+] as const;
+
+export const PROGRAMS = [
+  {
+    slug: "workshops",
+    name: "Masterclasses & Expert Cohorts",
+    blurb:
+      "Interactive sessions and live masterclasses conducted by ISRO scientists, missile researchers, educators, and domain experts.",
+    purpose:
+      "To put students in the same room as people who actually do the work, and let them ask real questions.",
+    who: "Open to the whole community — school, college & self-taught learners.",
+    gain: [
+      "Direct exposure to practitioners and ISRO scientists",
+      "Practical context far beyond textbook theory",
+      "Real-world aerospace & engineering pathways",
+    ],
+    experience:
+      "Live masterclasses, interactive Q&As, student pitch challenges, and community discussions.",
+  },
+  {
+    slug: "innovation-projects",
+    name: "Build Squad Sprints",
+    blurb:
+      "Collaborative student-led sprint squads that build open-source simulations, research digests, and physical prototypes.",
+    purpose:
+      "To let students experience the full arc of building something real: scope, model, implement, test, and ship.",
+    who: "School students, college builders, and passionate makers willing to collaborate in teams.",
+    gain: [
+      "A finished portfolio project you can demonstrate",
+      "Hands-on engineering and teamwork under real constraints",
+      "Technical mentor feedback and code reviews",
+    ],
+    experience:
+      "Small focused teams working on initiatives like AeroForge AI research lab, Sky Atlas astronomical catalogs, and student research digests.",
+  },
+  {
+    slug: "community-learning",
+    name: "Daily Science Drops (Aaj Ka Gyan)",
+    blurb: "Daily educational content, Saturday problem polls, quizzes, and collaborative technical discussions.",
+    purpose: "To make scientific curiosity and learning a daily habit rather than an occasional event.",
+    who: "Everyone in the Polaris student community.",
+    gain: [
+      "A consistent daily learning rhythm",
+      "Mon–Fri curated scientific facts based on weekly themes",
+      "Low-pressure entry into active exploration",
+    ],
+    experience:
+      "Aaj Ka Gyan daily facts every morning, Saturday Polls every weekend, plus star-hunting quizzes and open problem-solving threads.",
   },
 ] as const;
 
@@ -347,173 +402,52 @@ export const JOURNEY = [
   {
     date: "7 June 2026",
     title: "Project Polaris begins",
-    note: "It started with a WhatsApp community — our founder and a few passionate friends committed to learning by building.",
+    note: "Started with a WhatsApp community committed to learning by building real engineering systems.",
   },
   {
     date: "12 June 2026",
     title: "Aaj Ka Gyan daily facts",
-    note: "A daily scientific curiosity initiative inside the community that still runs every single morning.",
+    note: "A daily scientific curiosity initiative inside the community that runs every single morning.",
   },
   {
     date: "2 July 2026",
     title: "Workshop 1: Fundamentals of Rockets",
-    note: "Prakhar Vishwakarma ('Missile Man of MP') led our inaugural session on rocket technology and student pitch challenges.",
+    note: "Prakhar Vishwakarma ('Missile Man of MP') led our inaugural session on rocket technology.",
   },
   {
     date: "12 July 2026",
     title: "Workshop 2: Journey to ISRO & Space Missions",
-    note: "Ankit Gupta (Scientist/Engineer 'SC', ISRO MCF) led a masterclass on post-launch satellite tracking, orbit determination & SSA.",
-  },
-  {
-    date: "26 July 2026",
-    title: "Cosmic Conversations & Quizzes",
-    note: "Interactive constellation hunting challenges, astronomy trivia, and storytelling across our student community.",
+    note: "Ankit Gupta (Scientist/Engineer 'SC', ISRO MCF) led a masterclass on satellite tracking & orbit determination.",
   },
   {
     date: "9 August 2026",
     title: "Workshop 3: Stellar Evolution & Cosmic Objects",
-    note: "Vranda Gupta (Stellar Freaks) led an interactive exploration of nebulae, galaxies, and a collaborative Build-a-Galaxy challenge.",
+    note: "Vranda Gupta (Stellar Freaks) led an interactive exploration of stellar physics and galaxy modeling.",
   },
   {
     date: "August 2026",
-    title: "AeroForge AI & Digital Thread Launch",
-    note: "Launch of AeroForge AI — browser-based CFD, orbital mechanics, and structural FEA research lab built by Polaris students.",
+    title: "AeroForge AI Simulation Suite Launch",
+    note: "Launch of AeroForge AI — browser-based CFD, orbital mechanics, and structural FEA workstation built by Polaris students.",
   },
 ] as const;
 
-export const PATHWAY = [
-  { step: "Discover", note: "Find a question that actually interests you." },
-  { step: "Learn", note: "Sessions, content and people who have done it before." },
-  { step: "Build", note: "Turn the idea into something that exists." },
-  { step: "Collaborate", note: "Work with people who are better than you at something." },
-  { step: "Share", note: "Present, publish, teach it back." },
-  { step: "Lead", note: "Run the next thing yourself." },
+export const RECOGNITION_SYSTEM = [
+  "Performance Score & Contribution Points",
+  "Digital Badges & Verified Certificates",
+  "Leadership Opportunities in Core Initiatives",
+  "Official Recommendation Letters from Mentors",
+  "Special Awards & Annual Recognitions",
+  "Exclusive Mentorship & Learning Opportunities",
 ] as const;
 
-export const RECOGNITION = [
-  "Performance Score",
-  "Contribution Points",
-  "Digital Badges",
-  "Certificates",
-  "Leadership Opportunities",
-  "Recommendation Letters",
-  "Special Awards",
-  "Exclusive Learning Opportunities",
-] as const;
+export const RECOGNITION = RECOGNITION_SYSTEM;
 
-export const INVOLVEMENT_PATHS = [
-  {
-    id: "student",
-    title: "I'm a Student",
-    note: "Join projects, workshops and community activities.",
-    cta: "Join as a Student",
-    link: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
-  },
-  {
-    id: "associate",
-    title: "I'm an Associate",
-    note: "Apply to become an Associate and take on core leadership & project responsibilities.",
-    cta: "Apply as Associate",
-    link: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
-  },
-  {
-    id: "volunteer",
-    title: "I'm a Volunteer",
-    note: "Help with research, content, operations and community initiatives.",
-    cta: "Apply to Volunteer Program",
-    link: "https://polaris-volunteer-program-8.my.canva.site",
-  },
-  {
-    id: "mentor",
-    title: "I'm a Mentor",
-    note: "Share knowledge, guide learners and conduct sessions.",
-    cta: "Become a Mentor",
-    link: "/contact",
-  },
-  {
-    id: "educator",
-    title: "I'm an Educator",
-    note: "Collaborate with Polaris and bring opportunities to your students.",
-    cta: "Collaborate With Us",
-    link: "/contact",
-  },
-] as const;
-
-export type InvolvementRole = (typeof INVOLVEMENT_PATHS)[number]["id"];
-
-export const COURSE_LAUNCH_DATE = "August 20th";
-
-export const TESTIMONIALS = [
-  {
-    quote: "The ISRO scientist session gave me insights into actual space missions that no textbook ever touched. Asking questions directly to practitioners changed my whole perspective.",
-    name: "Engineering Student",
-    role: "Polaris Community Member",
-    event: "ISRO Scientist Session",
-  },
-  {
-    quote: "Rocket fundamentals broke down complex propulsion concepts into actionable design principles. It sparked our team's interest in building interactive aerospace simulation tools.",
-    name: "Undergraduate Builder",
-    role: "Innovation Team",
-    event: "Rocketry Workshop",
-  },
-  {
-    quote: "Interactive guidance and open discussion gave us clear direction on how to turn our theoretical physics ideas into working simulation models and real projects.",
-    name: "High School Student",
-    role: "Community Member",
-    event: "Interactive Builder Session",
-  },
-] as const;
-
-export const PROJECTS = [
-  {
-    slug: "aeroforge-ai",
-    name: "AeroForge AI",
-    stage: "Active beta",
-    team: "Core Engineering Team",
-    blurb:
-      "Browser-based engineering research workstation. Features 40+ physics solvers across CFD aerodynamics, structural FEA, orbital propagation, optimization, and Physics AI neural operators.",
-    cta: "Launch AeroForge Lab",
-    link: "/aeroforge",
-    featured: true,
-  },
-  {
-    slug: "sky-atlas",
-    name: "Sky Atlas",
-    stage: "In progress",
-    team: "Research + Tech",
-    blurb:
-      "An open, student-maintained astronomical observation log and constellation guide built from our community night-sky challenges.",
-  },
-  {
-    slug: "research-digest",
-    name: "Polaris Research Digest",
-    stage: "In progress",
-    team: "Research + Content",
-    blurb:
-      "A curated, student-written monthly digest summarising the latest space science and engineering research in accessible language — bridging the gap between academia and young builders.",
-  },
-  {
-    slug: "schools-outreach-kit",
-    name: "Schools Outreach Kit",
-    stage: "Planned",
-    team: "Community + Outreach",
-    blurb:
-      "A ready-to-run space science workshop kit enabling any school to host hands-on Polaris experimentation sessions with their students.",
-  },
-  {
-    slug: "polaris-ai",
-    name: "Polaris AI",
-    stage: "Coming soon",
-    team: "AI + Education Team",
-    blurb:
-      "An AI-powered educational companion that helps students explore space science concepts, generate interactive study aids, and receive guided problem-solving assistance across physics, astronomy, and engineering topics.",
-  },
-  {
-    slug: "space-weather-dashboard",
-    name: "Space Weather Dashboard",
-    stage: "Planned",
-    team: "Data + Visualisation",
-    blurb:
-      "A real-time dashboard tracking solar activity, geomagnetic storms, and auroral forecasts — built by students, for student observers and amateur astronomers.",
-  },
+export const WORKING_CULTURE = [
+  { rule: "Be respectful", detail: "Value every peer's perspective and support an inclusive environment." },
+  { rule: "Take ownership", detail: "Own assigned initiatives from start to finish with proactive initiative." },
+  { rule: "Communicate professionally", detail: "Maintain transparent, clear, and prompt communication." },
+  { rule: "Meet deadlines", detail: "Respect team timelines and deliverables with high consistency." },
+  { rule: "Be open to feedback", detail: "Embrace constructive reviews as opportunities for rapid growth." },
+  { rule: "Support fellow members", detail: "Collaborate, share knowledge, and lift others up as you grow." },
+  { rule: "Continuously learn", detail: "Stay curious, experiment fearlessly, and improve every day." },
 ] as const;

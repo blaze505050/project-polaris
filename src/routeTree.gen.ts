@@ -24,6 +24,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProgramRouteImport } from './routes/program'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as ResearchRouteImport } from './routes/research'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
@@ -107,6 +108,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResearchRoute = ResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/research': typeof ResearchRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/research': typeof ResearchRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/research': typeof ResearchRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/program'
     | '/programs'
     | '/projects'
+    | '/research'
     | '/resources'
     | '/schools'
     | '/showcase'
@@ -263,6 +273,7 @@ export interface FileRouteTypes {
     | '/program'
     | '/programs'
     | '/projects'
+    | '/research'
     | '/resources'
     | '/schools'
     | '/showcase'
@@ -288,6 +299,7 @@ export interface FileRouteTypes {
     | '/program'
     | '/programs'
     | '/projects'
+    | '/research'
     | '/resources'
     | '/schools'
     | '/showcase'
@@ -314,6 +326,7 @@ export interface RootRouteChildren {
   ProgramRoute: typeof ProgramRoute
   ProgramsRoute: typeof ProgramsRoute
   ProjectsRoute: typeof ProjectsRoute
+  ResearchRoute: typeof ResearchRoute
   ResourcesRoute: typeof ResourcesRoute
   SchoolsRoute: typeof SchoolsRoute
   ShowcaseRoute: typeof ShowcaseRoute
@@ -430,6 +443,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/research': {
+      id: '/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -516,6 +536,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProgramRoute: ProgramRoute,
   ProgramsRoute: ProgramsRoute,
   ProjectsRoute: ProjectsRoute,
+  ResearchRoute: ResearchRoute,
   ResourcesRoute: ResourcesRoute,
   SchoolsRoute: SchoolsRoute,
   ShowcaseRoute: ShowcaseRoute,
