@@ -98,18 +98,18 @@ function Home() {
                   <Link to="/projects" className="flex items-center gap-2">
                     <FolderKanban className="size-4 text-primary" />
                     <span>Explore Project Builds</span>
-                    <ArrowRight className="size-3.5" />
+                    <ArrowRight className="size-3.5 text-primary" />
                   </Link>
                 </Button>
                 <Button asChild variant="outline" size="default" className="h-11 px-6 rounded-lg font-medium border-border hover:bg-surface-2 font-mono text-xs hover:border-primary/40 transition-transform active:scale-95">
-                  <Link to="/aeroforge" className="flex items-center gap-2">
-                    <Cpu className="size-4 text-primary" />
-                    <span>Launch AeroForge AI Lab</span>
+                  <Link to="/join" className="flex items-center gap-2">
+                    <Sparkles className="size-4 text-gold" />
+                    <span>Join Build Squads</span>
                   </Link>
                 </Button>
                 <Button asChild variant="ghost" size="default" className="h-11 px-4 text-xs font-mono text-muted-foreground hover:text-foreground">
                   <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
-                    <span>WhatsApp Community</span>
+                    <span className="text-[#e8d7ff]">WhatsApp Community</span>
                     <ArrowUpRight className="size-3.5 text-gold" />
                   </a>
                 </Button>
@@ -131,19 +131,19 @@ function Home() {
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
-                  {(["aeroforge", "skyatlas", "digest"] as const).map((tab) => (
+                  {(["skyatlas", "digest", "outreach"] as const).map((tab) => (
                     <button
                       key={tab}
-                      onClick={() => setActiveWorkbenchTab(tab)}
+                      onClick={() => setActiveWorkbenchTab(tab as any)}
                       className={`px-3 py-1.5 rounded text-xs font-mono transition-all ${
                         activeWorkbenchTab === tab
                           ? "bg-surface-3 text-primary font-bold border border-primary/30 shadow-inner"
                           : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
                       }`}
                     >
-                      {tab === "aeroforge" && "AeroForge CFD Workstation"}
-                      {tab === "skyatlas" && "Sky Atlas Network"}
+                      {tab === "skyatlas" && "Sky Atlas Deep-Sky Network"}
                       {tab === "digest" && "Daily Research Telemetry"}
+                      {tab === "outreach" && "Schools Science Kits"}
                     </button>
                   ))}
                 </div>
@@ -151,76 +151,65 @@ function Home() {
 
               {/* Interactive Workbench Content */}
               <div className="p-6 md:p-8">
-                {activeWorkbenchTab === "aeroforge" && (
+                {(activeWorkbenchTab === "skyatlas" || (activeWorkbenchTab as string) === "aeroforge") && (
                   <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
                     <div>
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
-                        <Terminal className="size-3" />
-                        <span>FLAGSHIP SIMULATION WORKSTATION</span>
+                        <Orbit className="size-3 text-primary" />
+                        <span>DEEP-SKY OBSERVATION NETWORK</span>
                       </div>
                       <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
-                        AeroForge Computational Physics Suite
+                        Sky Atlas Astrophotography & Celestial Database
                       </h3>
                       <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
-                        A browser-based aerospace & mechanical simulation workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics. Built by students, for students.
+                        An open observational registry and deep-sky catalog curated by students during community night-sky challenges, telescope workshops, and astrophotography sessions.
                       </p>
 
                       <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
                         <div className="p-3 rounded-lg border border-border bg-surface-2">
-                          <div className="text-muted-foreground text-[10px] uppercase">Physics Solvers</div>
-                          <div className="text-sm font-bold text-foreground mt-0.5">40+ Active</div>
+                          <div className="text-muted-foreground text-[10px] uppercase">Cataloged</div>
+                          <div className="text-sm font-bold text-foreground mt-0.5">180+ Targets</div>
                         </div>
                         <div className="p-3 rounded-lg border border-border bg-surface-2">
-                          <div className="text-muted-foreground text-[10px] uppercase">Aerodynamics</div>
-                          <div className="text-sm font-bold text-primary mt-0.5">CFD Mesh</div>
+                          <div className="text-muted-foreground text-[10px] uppercase">Observations</div>
+                          <div className="text-sm font-bold text-primary mt-0.5">Verified</div>
                         </div>
                         <div className="p-3 rounded-lg border border-border bg-surface-2">
-                          <div className="text-muted-foreground text-[10px] uppercase">Access Model</div>
-                          <div className="text-sm font-bold text-emerald-400 mt-0.5">100% Free</div>
+                          <div className="text-muted-foreground text-[10px] uppercase">Open Data</div>
+                          <div className="text-sm font-bold text-gold mt-0.5">FITS / PNG</div>
                         </div>
                       </div>
 
                       <div className="mt-6 flex items-center gap-3 font-mono">
                         <Button asChild size="sm" className="h-8 px-4 text-xs bg-foreground text-background font-medium">
-                          <Link to="/aeroforge">Launch Full Lab →</Link>
+                          <Link to="/projects">Explore Projects →</Link>
                         </Button>
-                        <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground">
-                          View Technical Docs
-                        </Link>
                       </div>
                     </div>
 
-                    {/* Telemetry Visual Box */}
+                    {/* Sky Atlas Telemetry Visual Box */}
                     <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs space-y-3">
                       <div className="flex items-center justify-between text-muted-foreground border-b border-border pb-2">
-                        <span className="text-primary font-semibold">NACA 2412 Airfoil CFD</span>
-                        <span className="text-[11px] text-emerald-400 font-bold">● CONVERGED</span>
+                        <span className="text-primary font-semibold">M42 Orion Nebula</span>
+                        <span className="text-[11px] text-emerald-400 font-bold">● RESOLVED</span>
                       </div>
                       <div className="space-y-1.5 text-[11px]">
                         <div className="flex justify-between py-0.5">
-                          <span className="text-muted-foreground">Mach Number (M):</span>
-                          <span className="text-foreground">0.32 Subsonic</span>
+                          <span className="text-muted-foreground">Right Ascension (RA):</span>
+                          <span className="text-foreground">05h 35m 17.3s</span>
                         </div>
                         <div className="flex justify-between py-0.5">
-                          <span className="text-muted-foreground">Angle of Attack (α):</span>
-                          <span className="text-foreground">4.50°</span>
+                          <span className="text-muted-foreground">Declination (Dec):</span>
+                          <span className="text-foreground">-05° 23′ 28″</span>
                         </div>
                         <div className="flex justify-between py-0.5">
-                          <span className="text-muted-foreground">Lift Coefficient (Cl):</span>
-                          <span className="text-primary font-bold">0.684</span>
+                          <span className="text-muted-foreground">Distance:</span>
+                          <span className="text-primary font-bold">1,344 light-years</span>
                         </div>
                         <div className="flex justify-between py-0.5">
-                          <span className="text-muted-foreground">Drag Coefficient (Cd):</span>
-                          <span className="text-foreground">0.0092</span>
+                          <span className="text-muted-foreground">Spectral Filter:</span>
+                          <span className="text-gold font-bold">H-alpha + OIII</span>
                         </div>
-                        <div className="flex justify-between py-0.5">
-                          <span className="text-muted-foreground">Reynolds Number (Re):</span>
-                          <span className="text-gold font-bold">3.20 × 10⁶</span>
-                        </div>
-                      </div>
-                      <div className="pt-2 border-t border-border flex items-center justify-between text-[10px] text-muted-foreground">
-                        <span>Boundary Layer: Spalart-Allmaras</span>
-                        <span className="text-primary">Residual: 1.4e-6</span>
                       </div>
                     </div>
                   </div>
@@ -339,6 +328,66 @@ function Home() {
                       </p>
                       <div className="p-2 rounded bg-surface-2 text-[11px] text-foreground font-mono">
                         Δv = I_sp · g_0 · ln(m_0 / m_f)
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeWorkbenchTab === "outreach" && (
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
+                        <Sparkles className="size-3 text-gold" />
+                        <span>K-12 EXPERIENTIAL LEARNING</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                        School Outreach & Laboratory Kits
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
+                        Curriculum modules, telescope night kits, and space science challenges designed to turn traditional school science clubs into active engineering labs.
+                      </p>
+
+                      <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Students Reached</div>
+                          <div className="text-sm font-bold text-foreground mt-0.5">500+ Active</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Tiers</div>
+                          <div className="text-sm font-bold text-primary mt-0.5">4 Formats</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Cost</div>
+                          <div className="text-sm font-bold text-emerald-400 mt-0.5">Free Kits</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex items-center gap-3 font-mono">
+                        <Button asChild size="sm" className="h-8 px-4 text-xs bg-foreground text-background font-medium">
+                          <Link to="/schools">Explore School Kits →</Link>
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Outreach Visual Box */}
+                    <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs space-y-3">
+                      <div className="flex items-center justify-between text-muted-foreground border-b border-border pb-2">
+                        <span className="text-primary font-semibold">Laboratory Modules</span>
+                        <span className="text-[11px] text-emerald-400 font-bold">● READY TO RUN</span>
+                      </div>
+                      <div className="space-y-1.5 text-[11px]">
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Optics & Telescopes:</span>
+                          <span className="text-foreground">Dobsonian / Refractor assembly</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Rocketry Physics:</span>
+                          <span className="text-foreground">Stomp & water rocket telemetry</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Orbital Mechanics:</span>
+                          <span className="text-primary font-bold">2-Body gravity simulator</span>
+                        </div>
                       </div>
                     </div>
                   </div>

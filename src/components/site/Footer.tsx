@@ -7,11 +7,10 @@ const COLUMNS = [
   {
     heading: "Explore",
     links: [
-      { label: "About", to: "/about" },
+      { label: "About & Showcase", to: "/about" },
+      { label: "Projects & AeroForge", to: "/projects" },
       { label: "Programs", to: "/programs" },
       { label: "Courses", to: "/courses" },
-      { label: "Projects", to: "/projects" },
-      { label: "Showcase", to: "/showcase" },
       { label: "Opportunities", to: "/opportunities" },
       { label: "Resources", to: "/resources" },
     ],

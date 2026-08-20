@@ -9,10 +9,9 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { label: "Projects", to: "/projects" },
-  { label: "AeroForge Lab", to: "/aeroforge" },
-  { label: "Showcase", to: "/showcase" },
   { label: "Programs", to: "/programs" },
-  { label: "About", to: "/about" },
+  { label: "About & Showcase", to: "/about" },
+  { label: "Contact Us", to: "/contact" },
 ] as const;
 
 export function Navbar() {
