@@ -204,7 +204,7 @@ function Home() {
             {/* Footer note — stagger 4 */}
             <p className={`${heroEntrance} font-ui mt-8 text-xs tracking-wider text-muted-foreground uppercase font-medium flex items-center gap-2`} style={heroVisible ? stagger(4) : { opacity: 0 }}>
               <span className="size-1.5 rounded-full bg-accent" />
-              <span>120+ Active Builders · ISRO Masterclasses · Daily Learning</span>
+              <span>120+ Active Builders · Hands-On Projects · Daily Learning</span>
             </p>
           </div>
 
