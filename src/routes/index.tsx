@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { BentoGrid } from "@/components/site/BentoGrid";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { SITE, STATS, BRAND_POSITIONING } from "@/lib/site";
+import { SITE, STATS, BRAND_POSITIONING, TEAM_MEMBERS } from "@/lib/site";
 import polarisLogoWebp from "@/assets/polaris-logo.webp";
 import polarisLogo from "@/assets/polaris-logo.png";
 
