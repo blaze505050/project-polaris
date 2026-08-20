@@ -52,12 +52,15 @@ export function Footer() {
           <Link to="/" aria-label="Project Polaris Home" className="inline-block">
             <Wordmark />
           </Link>
-          <p className="mt-3 max-w-xs text-xs text-muted-foreground leading-relaxed">
-            A student-led experiential learning organisation. {SITE.tagline}
+          <p className="mt-3.5 max-w-xs text-xs text-muted-foreground leading-relaxed font-body">
+            A student-led experiential learning ecosystem.{" "}
+            <span className="text-primary italic font-medium block mt-1">
+              "Learn by building rather than building after learning."
+            </span>
           </p>
 
           <div className="mt-4 flex flex-col gap-1.5 text-xs text-muted-foreground font-mono">
-            <a href={`mailto:${SITE.emails[0]}`} className="hover:text-foreground transition-colors">
+            <a href={`mailto:${SITE.emails[0]}`} className="hover:text-primary transition-colors">
               {SITE.emails[0]}
             </a>
           </div>

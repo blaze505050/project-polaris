@@ -11,25 +11,31 @@ import {
   Orbit,
   Check,
   Terminal,
+  Sparkles,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BentoGrid } from "@/components/site/BentoGrid";
-import { SITE, STATS } from "@/lib/site";
+import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { SITE, STATS, BRAND_POSITIONING } from "@/lib/site";
+import polarisLogoWebp from "@/assets/polaris-logo.webp";
+import polarisLogo from "@/assets/polaris-logo.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Project Polaris — Learn by Building" },
+      { title: "Project Polaris — Learn by Building Rather Than Building After Learning" },
       {
         name: "description",
         content:
-          "A student-led experiential engineering and research organisation. Students research, build, and deploy real systems — starting with space science.",
+          "Project Polaris is a student-led experiential engineering and research ecosystem. Learn by building rather than building after learning.",
       },
-      { property: "og:title", content: "Project Polaris — Learn by Building" },
+      { property: "og:title", content: "Project Polaris — Learn by Building Rather Than Building After Learning" },
       {
         property: "og:description",
         content:
-          "Where curiosity becomes action. Open-source engineering platforms, daily science drops, and student-led research cohorts.",
+          "Where curiosity becomes action. Open-source aerospace simulation platforms, daily science drops, and student-led research cohorts.",
       },
     ],
   }),
@@ -41,244 +47,330 @@ function Home() {
 
   return (
     <>
-      {/* ── HERO SECTION ── */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 border-b border-border">
-        <div className="shell">
-          <div className="max-w-3xl">
-            {/* Minimalist Status Chip */}
-            <div className="inline-flex items-center gap-2 rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground mb-6 font-mono">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-primary font-medium">Project Polaris</span>
-              <span className="text-white/30">/</span>
-              <span>Student-Led Experiential Engineering</span>
-            </div>
+      {/* ── HERO SECTION WITH INTERACTIVE CONSTELLATION BACKDROP ── */}
+      <section className="relative pt-24 pb-16 md:pt-36 md:pb-28 border-b border-border overflow-hidden">
+        {/* Dynamic interactive starfield backdrop */}
+        <ConstellationCanvas className="opacity-40 pointer-events-none" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[600px] bg-primary/10 blur-[140px] pointer-events-none rounded-full" />
+        <div className="absolute top-1/4 right-10 size-[300px] bg-gold/5 blur-[100px] pointer-events-none rounded-full" />
 
-            {/* Official Tagline Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-foreground leading-[1.12]">
-              Learn by building,{" "}
-              <span className="text-primary italic font-normal block sm:inline">
-                rather than building after learning.
-              </span>
-            </h1>
+        <div className="shell relative z-10">
+          <div className="max-w-4xl">
+            {/* Minimalist Brand Logo & Status Chip */}
+            <ScrollReveal direction="fade">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/25 bg-surface-2/80 backdrop-blur-md px-3.5 py-1.5 text-xs text-muted-foreground mb-8 shadow-sm">
+                <picture>
+                  <source srcSet={polarisLogoWebp} type="image/webp" />
+                  <img
+                    src={polarisLogo}
+                    alt="Project Polaris Official Logo"
+                    className="size-4 rounded-full object-cover ring-1 ring-primary/40"
+                  />
+                </picture>
+                <span className="font-semibold text-foreground">Project Polaris</span>
+                <span className="text-white/20">|</span>
+                <span className="text-primary font-mono text-[11px]">Experiential Learning Ecosystem</span>
+                <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              </div>
+            </ScrollReveal>
 
-            {/* Positioning & Value Proposition */}
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed font-body">
-              Project Polaris is an experiential learning ecosystem where students explore, build, and solve real-world problems through aerospace simulations, astrophysics tools, and research cohorts.
-            </p>
+            {/* Official Brand Headline & Caption */}
+            <ScrollReveal direction="up" delay={80}>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight text-foreground leading-[1.08]">
+                Learn by building{" "}
+                <span className="block mt-1 sm:mt-2 text-3xl sm:text-5xl md:text-6xl font-normal italic bg-gradient-to-r from-primary via-[#e8d7ff] to-gold bg-clip-text text-transparent">
+                  rather than building after learning.
+                </span>
+              </h1>
+            </ScrollReveal>
+
+            {/* Value Proposition */}
+            <ScrollReveal direction="up" delay={140}>
+              <p className="mt-6 text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed font-body">
+                We are a student-led ecosystem bridging traditional education and real-world engineering through interactive physics simulation platforms, deep-sky astronomy networks, and peer-reviewed research cohorts.
+              </p>
+            </ScrollReveal>
 
             {/* Primary Actions */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button asChild size="default" className="h-10 px-5 rounded-md font-medium bg-foreground text-background hover:bg-foreground/90 font-mono text-xs">
-                <Link to="/projects" className="flex items-center gap-2">
-                  <FolderKanban className="size-4" />
-                  <span>Explore Builds</span>
-                  <ArrowRight className="size-3.5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="default" className="h-10 px-5 rounded-md font-medium border-border hover:bg-surface-2 font-mono text-xs">
-                <Link to="/aeroforge" className="flex items-center gap-2">
-                  <Cpu className="size-4 text-primary" />
-                  <span>Launch AeroForge Lab</span>
-                </Link>
-              </Button>
-              <Button asChild variant="ghost" size="default" className="h-10 px-4 text-xs font-mono text-muted-foreground hover:text-foreground">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
-                  <span>WhatsApp Community</span>
-                  <ArrowUpRight className="size-3.5 text-gold" />
-                </a>
-              </Button>
-            </div>
+            <ScrollReveal direction="up" delay={200}>
+              <div className="mt-8 flex flex-wrap items-center gap-3.5">
+                <Button asChild size="default" className="h-11 px-6 rounded-lg font-medium bg-foreground text-background hover:bg-foreground/90 font-mono text-xs shadow-lg transition-transform active:scale-95">
+                  <Link to="/projects" className="flex items-center gap-2">
+                    <FolderKanban className="size-4 text-primary" />
+                    <span>Explore Project Builds</span>
+                    <ArrowRight className="size-3.5" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="default" className="h-11 px-6 rounded-lg font-medium border-border hover:bg-surface-2 font-mono text-xs hover:border-primary/40 transition-transform active:scale-95">
+                  <Link to="/aeroforge" className="flex items-center gap-2">
+                    <Cpu className="size-4 text-primary" />
+                    <span>Launch AeroForge AI Lab</span>
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" size="default" className="h-11 px-4 text-xs font-mono text-muted-foreground hover:text-foreground">
+                  <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+                    <span>WhatsApp Community</span>
+                    <ArrowUpRight className="size-3.5 text-gold" />
+                  </a>
+                </Button>
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* ── WORKBENCH PREVIEW CONTAINER ── */}
-          <div className="mt-14 rounded-xl border border-border bg-surface shadow-2xl overflow-hidden">
-            {/* Top Toolbar */}
-            <div className="flex items-center justify-between border-b border-border bg-surface-2 px-4 py-2.5 text-xs">
-              <div className="flex items-center gap-2">
-                <span className="size-2.5 rounded-full bg-border-strong" />
-                <span className="size-2.5 rounded-full bg-border-strong" />
-                <span className="size-2.5 rounded-full bg-border-strong" />
-                <span className="ml-2 font-mono text-[11px] text-muted-foreground hidden sm:inline">
-                  polaris://active-r&d-workbench
-                </span>
+          <ScrollReveal direction="up" delay={260}>
+            <div className="mt-16 rounded-xl border border-border bg-surface/90 backdrop-blur-xl shadow-2xl overflow-hidden">
+              {/* Top Toolbar */}
+              <div className="flex items-center justify-between border-b border-border bg-surface-2 px-4 py-3 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="size-2.5 rounded-full bg-destructive/60" />
+                  <span className="size-2.5 rounded-full bg-gold/60" />
+                  <span className="size-2.5 rounded-full bg-emerald-400/60" />
+                  <span className="ml-2 font-mono text-[11px] text-muted-foreground hidden sm:inline">
+                    polaris://active-engineering-workbench
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  {(["aeroforge", "skyatlas", "digest"] as const).map((tab) => (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveWorkbenchTab(tab)}
+                      className={`px-3 py-1.5 rounded text-xs font-mono transition-all ${
+                        activeWorkbenchTab === tab
+                          ? "bg-surface-3 text-primary font-bold border border-primary/30 shadow-inner"
+                          : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
+                      }`}
+                    >
+                      {tab === "aeroforge" && "AeroForge CFD Workstation"}
+                      {tab === "skyatlas" && "Sky Atlas Network"}
+                      {tab === "digest" && "Daily Research Telemetry"}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center gap-1">
-                {(["aeroforge", "skyatlas", "digest"] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveWorkbenchTab(tab)}
-                    className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
-                      activeWorkbenchTab === tab
-                        ? "bg-surface-3 text-foreground font-semibold"
-                        : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {tab === "aeroforge" && "AeroForge CFD"}
-                    {tab === "skyatlas" && "Sky Atlas"}
-                    {tab === "digest" && "Daily Research"}
-                  </button>
-                ))}
+
+              {/* Interactive Workbench Content */}
+              <div className="p-6 md:p-8">
+                {activeWorkbenchTab === "aeroforge" && (
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
+                        <Terminal className="size-3" />
+                        <span>FLAGSHIP SIMULATION WORKSTATION</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                        AeroForge Computational Physics Suite
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
+                        A browser-based aerospace & mechanical simulation workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics. Built by students, for students.
+                      </p>
+
+                      <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Physics Solvers</div>
+                          <div className="text-sm font-bold text-foreground mt-0.5">40+ Active</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Aerodynamics</div>
+                          <div className="text-sm font-bold text-primary mt-0.5">CFD Mesh</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Access Model</div>
+                          <div className="text-sm font-bold text-emerald-400 mt-0.5">100% Free</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex items-center gap-3 font-mono">
+                        <Button asChild size="sm" className="h-8 px-4 text-xs bg-foreground text-background font-medium">
+                          <Link to="/aeroforge">Launch Full Lab →</Link>
+                        </Button>
+                        <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground">
+                          View Technical Docs
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Telemetry Visual Box */}
+                    <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs space-y-3">
+                      <div className="flex items-center justify-between text-muted-foreground border-b border-border pb-2">
+                        <span className="text-primary font-semibold">NACA 2412 Airfoil CFD</span>
+                        <span className="text-[11px] text-emerald-400 font-bold">● CONVERGED</span>
+                      </div>
+                      <div className="space-y-1.5 text-[11px]">
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Mach Number (M):</span>
+                          <span className="text-foreground">0.32 Subsonic</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Angle of Attack (α):</span>
+                          <span className="text-foreground">4.50°</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Lift Coefficient (Cl):</span>
+                          <span className="text-primary font-bold">0.684</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Drag Coefficient (Cd):</span>
+                          <span className="text-foreground">0.0092</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Reynolds Number (Re):</span>
+                          <span className="text-gold font-bold">3.20 × 10⁶</span>
+                        </div>
+                      </div>
+                      <div className="pt-2 border-t border-border flex items-center justify-between text-[10px] text-muted-foreground">
+                        <span>Boundary Layer: Spalart-Allmaras</span>
+                        <span className="text-primary">Residual: 1.4e-6</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeWorkbenchTab === "skyatlas" && (
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
+                        <Orbit className="size-3" />
+                        <span>DEEP-SKY OBSERVATION NETWORK</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                        Sky Atlas Astrophotography Database
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
+                        An open observational registry and deep-sky catalog curated by students during community night-sky challenges, telescope workshops, and astrophotography sessions.
+                      </p>
+
+                      <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Cataloged</div>
+                          <div className="text-sm font-bold text-foreground mt-0.5">180+ Targets</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Observations</div>
+                          <div className="text-sm font-bold text-primary mt-0.5">Verified</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Open Data</div>
+                          <div className="text-sm font-bold text-gold mt-0.5">FITS / PNG</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex items-center gap-3 font-mono">
+                        <Button asChild size="sm" className="h-8 px-4 text-xs bg-foreground text-background font-medium">
+                          <Link to="/projects">Explore Catalog →</Link>
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Sky Atlas Telemetry Visual Box */}
+                    <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs space-y-3">
+                      <div className="flex items-center justify-between text-muted-foreground border-b border-border pb-2">
+                        <span className="text-primary font-semibold">M42 Orion Nebula</span>
+                        <span className="text-[11px] text-emerald-400 font-bold">● RESOLVED</span>
+                      </div>
+                      <div className="space-y-1.5 text-[11px]">
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Right Ascension (RA):</span>
+                          <span className="text-foreground">05h 35m 17.3s</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Declination (Dec):</span>
+                          <span className="text-foreground">-05° 23′ 28″</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Distance:</span>
+                          <span className="text-primary font-bold">1,344 light-years</span>
+                        </div>
+                        <div className="flex justify-between py-0.5">
+                          <span className="text-muted-foreground">Spectral Filter:</span>
+                          <span className="text-gold font-bold">H-alpha + OIII</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {activeWorkbenchTab === "digest" && (
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
+                        <Sparkles className="size-3 text-gold" />
+                        <span>DAILY SCIENTIFIC INQUIRY</span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                        Aaj Ka Gyan & Research Summaries
+                      </h3>
+                      <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
+                        Curated daily science drops based on weekly themes. Published every morning to make curiosity and technical rigor a consistent habit.
+                      </p>
+
+                      <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Daily Drops</div>
+                          <div className="text-sm font-bold text-foreground mt-0.5">90+ Issues</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Community</div>
+                          <div className="text-sm font-bold text-primary mt-0.5">120+ Active</div>
+                        </div>
+                        <div className="p-3 rounded-lg border border-border bg-surface-2">
+                          <div className="text-muted-foreground text-[10px] uppercase">Cadence</div>
+                          <div className="text-sm font-bold text-gold mt-0.5">Mon–Fri</div>
+                        </div>
+                      </div>
+
+                      <div className="mt-6 flex items-center gap-3 font-mono">
+                        <Button asChild size="sm" className="h-8 px-4 text-xs bg-foreground text-background font-medium">
+                          <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
+                            Join WhatsApp Drops →
+                          </a>
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Digest Visual Box */}
+                    <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs space-y-3">
+                      <div className="flex items-center justify-between text-muted-foreground border-b border-border pb-2">
+                        <span className="text-primary font-semibold">Today's Topic: Rocket Propulsion</span>
+                        <span className="text-[11px] text-primary font-bold">● DROP #92</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground leading-relaxed font-body">
+                        "The Tsiolkovsky rocket equation shows that increasing specific impulse (Isp) yields exponential fuel mass savings compared to simply increasing structural mass."
+                      </p>
+                      <div className="p-2 rounded bg-surface-2 text-[11px] text-foreground font-mono">
+                        Δv = I_sp · g_0 · ln(m_0 / m_f)
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-            {/* Interactive Workbench Content */}
-            <div className="p-6 md:p-8">
-              {activeWorkbenchTab === "aeroforge" && (
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
-                      <Terminal className="size-3" />
-                      <span>FLAGSHIP R&D PLATFORM</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                      AeroForge Simulation Workstation
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      A browser-based aerospace & physics simulation laboratory built by student engineers. Includes 40+ numerical solvers, CFD aerodynamics, structural FEA, and orbital propulsion modeling.
-                    </p>
-
-                    <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Solvers</div>
-                        <div className="text-sm font-bold text-foreground mt-0.5">40+ Active</div>
-                      </div>
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Aerodynamics</div>
-                        <div className="text-sm font-bold text-primary mt-0.5">CFD Grid</div>
-                      </div>
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Access</div>
-                        <div className="text-sm font-bold text-emerald-400 mt-0.5">Open 100%</div>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 flex items-center gap-3">
-                      <Button asChild size="sm" className="h-8 px-3 text-xs bg-foreground text-background">
-                        <Link to="/aeroforge">Open Full Simulator →</Link>
-                      </Button>
-                      <Link to="/projects" className="text-xs text-muted-foreground hover:text-foreground">
-                        View Documentation
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs text-muted-foreground space-y-3">
-                    <div className="flex items-center justify-between border-b border-border pb-2 text-[11px]">
-                      <span className="text-foreground font-semibold">Telemetry Output</span>
-                      <span className="text-emerald-400">● Solver Converged</span>
-                    </div>
-                    <div className="space-y-1.5 text-[11px]">
-                      <div className="flex justify-between">
-                        <span>Mach Number:</span>
-                        <span className="text-foreground">2.14 (Supersonic Regime)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Dynamic Pressure (q):</span>
-                        <span className="text-foreground">48.2 kPa</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Boundary Layer δ:</span>
-                        <span className="text-foreground">1.42 mm (Turbulent)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Specific Impulse (Isp):</span>
-                        <span className="text-primary">3,120 s (Ion Thruster)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeWorkbenchTab === "skyatlas" && (
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-accent/10 text-accent border border-accent/20 mb-3">
-                      <Orbit className="size-3" />
-                      <span>ASTROPHYSICS DATABASE</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                      Sky Atlas Observation Network
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      An open, student-maintained deep-sky catalog and constellation mapping database with observations recorded across community stargazing nights and telescope workshops.
-                    </p>
-
-                    <div className="mt-5 grid grid-cols-3 gap-2.5 font-mono text-xs">
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Objects</div>
-                        <div className="text-sm font-bold text-foreground mt-0.5">110 Messier</div>
-                      </div>
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Coordinates</div>
-                        <div className="text-sm font-bold text-accent mt-0.5">J2000 Epoch</div>
-                      </div>
-                      <div className="p-3 rounded-lg border border-border bg-surface-2">
-                        <div className="text-muted-foreground text-[10px] uppercase">Format</div>
-                        <div className="text-sm font-bold text-emerald-400 mt-0.5">Open Data</div>
-                      </div>
-                    </div>
-
-                    <div className="mt-6 flex items-center gap-3">
-                      <Button asChild size="sm" className="h-8 px-3 text-xs bg-foreground text-background">
-                        <Link to="/projects">Explore Sky Atlas →</Link>
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs text-muted-foreground space-y-2">
-                    <div className="text-[11px] text-foreground font-semibold border-b border-border pb-2">
-                      Recent Deep-Sky Log: M31 Andromeda Galaxy
-                    </div>
-                    <div className="text-[11px] space-y-1">
-                      <p>• RA: 00h 42m 44.3s | Dec: +41° 16′ 09″</p>
-                      <p>• Distance: 2.537 Mly | Mag: 3.44</p>
-                      <p className="text-slate-300">Observation Notes: Prominent spiral dust lanes visible through 8" Dobsonian during community observation night.</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {activeWorkbenchTab === "digest" && (
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center">
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono bg-gold/10 text-gold border border-gold/20 mb-3">
-                      <Flame className="size-3" />
-                      <span>DAILY LEARNING RITUAL</span>
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground">
-                      Aaj Ka Gyan (Daily Science Drops)
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      Every weekday morning, our student content team releases verified deeptech insights based on weekly scientific themes — sparking daily discussions across 400+ members.
-                    </p>
-
-                    <div className="mt-6 flex items-center gap-3">
-                      <Button asChild size="sm" className="h-8 px-3 text-xs bg-foreground text-background">
-                        <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
-                          Join WhatsApp Channel →
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="rounded-lg border border-border bg-background p-4 font-mono text-xs text-muted-foreground">
-                    <div className="flex justify-between items-center text-[11px] text-foreground font-semibold border-b border-border pb-2 mb-2">
-                      <span>Today's Drop #94</span>
-                      <span className="text-primary font-normal">Theme: Ion Propulsion</span>
-                    </div>
-                    <p className="text-xs text-slate-300 italic leading-relaxed">
-                      "Why Hall-effect thrusters achieve 3000+ s specific impulse by accelerating xenon ions via electrostatic fields, requiring 10x less propellant mass than chemical rockets for interplanetary trajectories."
-                    </p>
-                  </div>
-                </div>
-              )}
+      {/* ── BRAND POSITIONING SECTION ── */}
+      <section className="border-b border-border bg-surface-2/40 py-16">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-3xl mx-auto text-center space-y-4">
+              <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold">
+                Brand Identity & Positioning
+              </span>
+              <div className="space-y-2 text-base sm:text-lg text-muted-foreground font-body leading-relaxed">
+                <p className="font-medium text-foreground/80">{BRAND_POSITIONING.line1}</p>
+                <p className="font-medium text-foreground/80">{BRAND_POSITIONING.line2}</p>
+                <p className="text-foreground text-lg sm:text-xl font-bold font-display text-primary pt-2">
+                  {BRAND_POSITIONING.line3}
+                </p>
+              </div>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ── STATS BAR ── */}
-      <section className="border-b border-border bg-surface-2/40 py-6">
+      <section className="border-b border-border bg-surface py-8">
         <div className="shell">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {STATS.map((s) => (

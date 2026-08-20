@@ -51,18 +51,18 @@ function About() {
   return (
     <>
       <PageHeader
-        eyebrow="About Polaris"
-        title="We believe education should create builders, not just test takers."
-        lead="Project Polaris is an experiential engineering and science organisation turning curiosity into public artifacts."
+        eyebrow="Project Polaris"
+        title="Learn by building rather than building after learning."
+        lead="We are a student-led experiential learning ecosystem bridging traditional education and real-world skills through workshops, research programs, mentorship, and hands-on experiences."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium">
+          <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium font-mono text-xs">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join WhatsApp Community
             </a>
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4">
-            <Link to="/projects">Explore Projects</Link>
+          <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs">
+            <Link to="/projects">Explore Builds</Link>
           </Button>
         </div>
       </PageHeader>
@@ -73,15 +73,15 @@ function About() {
           <ScrollReveal direction="up">
             <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] items-center">
               <div>
-                <p className="eyebrow mb-2">The Provocation</p>
-                <h2 className="text-2xl sm:text-4xl font-bold text-foreground leading-tight">
-                  What if education wasn't just about passing exams?
+                <p className="eyebrow mb-2 text-primary font-mono text-xs">The Provocation</p>
+                <h2 className="text-2xl sm:text-4xl font-bold font-display text-foreground leading-tight">
+                  What if education wasn't just about memorising textbooks?
                 </h2>
-                <p className="mt-4 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  Millions of students memorize formulas and solve problem sets for grades every year. Yet very few ever get to configure a CFD mesh, calculate orbital state vectors, or present to a propulsion engineer.
+                <p className="mt-4 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
+                  Millions of students solve theoretical problems for grades, yet rarely build a computational physics simulation, track celestial orbits, or present research to real scientists.
                 </p>
-                <p className="mt-3 text-xs sm:text-sm text-foreground font-semibold">
-                  Polaris closes that gap through sprint-based build cohorts.
+                <p className="mt-3 text-xs sm:text-sm text-foreground font-semibold font-body">
+                  Project Polaris empowers students to learn through active building, experimentation, and peer collaboration.
                 </p>
               </div>
 
@@ -89,7 +89,7 @@ function About() {
               <div className="grid gap-3 sm:grid-cols-2">
                 {DILEMMA_QUESTIONS.map(({ text, icon: Icon }, i) => (
                   <ScrollReveal key={text} direction="up" delay={i * 50}>
-                    <div className="card-premium p-4 flex items-center gap-3 h-full">
+                    <div className="card-premium p-4 flex items-center gap-3 h-full hover:border-primary/40 transition-colors">
                       <div className="flex size-8 items-center justify-center rounded bg-surface-2 text-primary shrink-0 border border-border">
                         <Icon className="size-4" />
                       </div>
@@ -108,25 +108,25 @@ function About() {
         <div className="shell">
           <div className="grid gap-6 md:grid-cols-2">
             <ScrollReveal direction="up" delay={0}>
-              <article className="card-premium p-6 md:p-8 h-full">
-                <p className="eyebrow mb-2">Our Mission</p>
-                <h3 className="text-lg font-bold text-foreground leading-snug">
-                  To make experiential engineering education universally accessible by giving students real-world simulation tools, research mentors, and build sprints.
+              <article className="card-premium p-6 md:p-8 h-full border-primary/20 bg-surface-2/40">
+                <p className="eyebrow mb-2 text-primary font-mono text-xs uppercase tracking-wider">Our Mission</p>
+                <h3 className="text-lg sm:text-xl font-bold font-display text-foreground leading-snug">
+                  {SITE.mission}
                 </h3>
-                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-                  Through expert masterclasses, computational research cohorts, and software development, we empower students to turn theoretical physics into tangible systems.
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-body">
+                  Through workshops, innovation challenges, research programs, mentorship, and industry collaborations, we empower students to explore, build, and solve meaningful problems.
                 </p>
               </article>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={80}>
-              <article className="card-premium p-6 md:p-8 h-full">
-                <p className="eyebrow mb-2">Our Vision</p>
-                <h3 className="text-lg font-bold text-foreground leading-snug">
-                  A future where engineering capabilities are measured by working artifacts and verified technical portfolios, not rote test scores.
+              <article className="card-premium p-6 md:p-8 h-full border-gold/20 bg-surface-2/40">
+                <p className="eyebrow mb-2 text-gold font-mono text-xs uppercase tracking-wider">Our Vision</p>
+                <h3 className="text-lg sm:text-xl font-bold font-display text-foreground leading-snug">
+                  {SITE.vision}
                 </h3>
-                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-                  Building one of the world's most disciplined student research communities — empowering young builders to become computational scientists and engineers.
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-body">
+                  To create a generation of curious thinkers, innovators, and future leaders who learn beyond textbooks through authentic building and scientific inquiry.
                 </p>
               </article>
             </ScrollReveal>
