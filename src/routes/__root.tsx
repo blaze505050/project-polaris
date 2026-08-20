@@ -15,22 +15,89 @@ import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { BackToTop } from "@/components/ui/back-to-top";
+import { NorthStar } from "@/components/site/NorthStar";
+import {
+  Compass,
+  Rocket,
+  FolderKanban,
+  MessageCircle,
+  ArrowRight,
+  RotateCcw,
+  Home as HomeIcon,
+  HelpCircle,
+} from "lucide-react";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-[70vh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <p className="eyebrow">Off course</p>
-        <h1 className="mt-4 font-display text-5xl font-bold">404</h1>
-        <p className="mt-4 text-sm text-muted-foreground">
-          This page doesn't exist. Let's get you back to something useful.
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button asChild size="sm">
-            <Link to="/">Go home</Link>
+    <div className="relative min-h-[80vh] flex items-center justify-center px-4 py-20 overflow-hidden">
+      {/* Ambient Celestial Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-96 bg-primary/10 blur-[130px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/3 right-1/4 size-64 bg-gold/5 blur-[100px] pointer-events-none rounded-full" />
+
+      <div className="max-w-xl w-full text-center relative z-10 space-y-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-primary/10 text-primary border border-primary/25 shadow-sm">
+          <NorthStar className="size-3.5 text-gold animate-spin-slow" />
+          <span>Coordinates Not Found</span>
+        </div>
+
+        <h1 className="text-7xl sm:text-9xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary via-[#e8d7ff] to-gold bg-clip-text text-transparent leading-none">
+          404
+        </h1>
+
+        <div className="space-y-2">
+          <h2 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+            Lost in Deep Space?
+          </h2>
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed font-body">
+            The orbital trajectory or page you are looking for has decayed or does not exist. Let's recalculate your state vectors.
+          </p>
+        </div>
+
+        {/* Quick Route Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-xs font-mono text-left">
+          <Link
+            to="/"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+          >
+            <HomeIcon className="size-4 text-primary mb-1.5" />
+            <span className="font-bold text-foreground block">Home</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">Main platform</span>
+          </Link>
+          <Link
+            to="/projects"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+          >
+            <FolderKanban className="size-4 text-gold mb-1.5" />
+            <span className="font-bold text-foreground block">Projects</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">AeroForge Lab</span>
+          </Link>
+          <Link
+            to="/about"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+          >
+            <Compass className="size-4 text-primary mb-1.5" />
+            <span className="font-bold text-foreground block">About</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">Showcase & story</span>
+          </Link>
+          <Link
+            to="/contact"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+          >
+            <MessageCircle className="size-4 text-emerald-400 mb-1.5" />
+            <span className="font-bold text-foreground block">Contact</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">Direct message</span>
+          </Link>
+        </div>
+
+        <div className="pt-4 flex items-center justify-center gap-3">
+          <Button asChild size="default" className="h-10 px-6 font-mono text-xs bg-foreground text-background font-bold shadow-lg">
+            <Link to="/">
+              <HomeIcon className="size-3.5 mr-1.5" />
+              Return Home
+            </Link>
           </Button>
-          <Button asChild variant="outline" size="sm">
-            <Link to="/opportunities">Explore opportunities</Link>
+          <Button asChild variant="outline" size="default" className="h-10 px-5 font-mono text-xs border-border hover:border-primary/40">
+            <Link to="/contact">Report Broken Link</Link>
           </Button>
         </div>
       </div>
@@ -44,35 +111,38 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-[75vh] items-center justify-center px-4 py-12">
-      <div className="max-w-lg w-full text-center rounded-xl border border-destructive/30 bg-card p-8 md:p-10 shadow-2xl">
-        <div className="mx-auto flex size-12 items-center justify-center rounded-lg bg-destructive/10 text-destructive mb-6 border border-destructive/20 font-bold font-mono">
+      <div className="max-w-lg w-full text-center rounded-2xl border border-destructive/30 bg-surface/90 backdrop-blur-xl p-8 md:p-10 shadow-2xl">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-destructive/10 text-destructive mb-6 border border-destructive/20 font-bold font-mono text-lg">
           !
         </div>
-        <p className="eyebrow mb-2 !text-destructive">Runtime Alert</p>
-        <h1 className="text-2xl font-bold text-foreground">Application Encountered an Issue</h1>
-        <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-          We encountered an unexpected error while initializing this section. You can retry the operation or return to the main dashboard.
+        <span className="font-mono text-xs text-destructive uppercase tracking-widest font-semibold block mb-2">
+          Telemetry Alert
+        </span>
+        <h1 className="text-2xl font-bold font-display text-foreground">Application Encountered an Exception</h1>
+        <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-body">
+          We encountered an unexpected state while initializing this component. You can reload this state or return to the main hub.
         </p>
 
         {error?.message && (
-          <div className="mt-5 text-left p-3.5 rounded-lg bg-surface border border-border text-xs font-mono text-muted-foreground overflow-auto max-h-36">
-            <span className="text-destructive font-semibold">Error:</span> {error.message}
+          <div className="mt-5 text-left p-3.5 rounded-lg bg-background border border-border text-xs font-mono text-muted-foreground overflow-auto max-h-36">
+            <span className="text-destructive font-semibold">Message:</span> {error.message}
           </div>
         )}
 
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 font-mono text-xs">
           <Button
             size="sm"
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="px-5 bg-foreground text-background"
+            className="h-9 px-5 bg-foreground text-background font-bold"
           >
-            Try again
+            <RotateCcw className="size-3.5 mr-1.5" />
+            Retry Component
           </Button>
-          <Button asChild variant="outline" size="sm" className="px-5">
-            <a href="/">Go home</a>
+          <Button asChild variant="outline" size="sm" className="h-9 px-5 border-border hover:border-primary/40">
+            <a href="/">Go to Home</a>
           </Button>
         </div>
       </div>

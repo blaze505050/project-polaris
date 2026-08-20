@@ -126,7 +126,7 @@ function AboutAndShowcase() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
-  const { data: dbProjects = [] } = useQuery(showcaseQuery());
+  const { data: dbProjects = [] } = useQuery(showcaseQuery);
 
   const projects = useMemo(() => {
     const list = dbProjects.length > 0 ? dbProjects : FLAGSHIP_SHOWCASE;
