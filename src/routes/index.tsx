@@ -419,14 +419,19 @@ function Home() {
       </section>
 
       {/* ── STATS BAR ── */}
-      <section className="border-b border-border bg-surface py-8">
+      <section className="border-b border-border bg-gradient-to-r from-surface-2/60 via-surface/80 to-surface-2/60 py-10">
         <div className="shell">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {STATS.map((s) => (
-              <div key={s.label}>
-                <div className="text-2xl sm:text-3xl font-bold text-foreground font-mono">{s.value}</div>
-                <div className="text-xs text-muted-foreground font-medium mt-1">{s.label}</div>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+            {STATS.map((s, idx) => (
+              <ScrollReveal key={s.label} direction="up" delay={idx * 30}>
+                <div className="p-4 rounded-xl border border-border/80 bg-surface/80 backdrop-blur hover:border-primary/40 transition-all group">
+                  <div className="text-2xl sm:text-3xl font-bold font-mono bg-gradient-to-r from-primary via-[#e8d7ff] to-gold bg-clip-text text-transparent group-hover:scale-105 transition-transform">
+                    {s.value}
+                  </div>
+                  <div className="text-xs font-semibold text-foreground mt-1.5 leading-snug">{s.label}</div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block line-clamp-1">{s.note}</div>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -441,13 +446,13 @@ function Home() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
             <div>
               <p className="eyebrow">The Educational Gap</p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground leading-tight">
                 Students spend years memorizing theories without ever building a system.
               </h2>
-              <p className="mt-4 text-muted-foreground leading-relaxed text-sm sm:text-base">
+              <p className="mt-4 text-muted-foreground leading-relaxed text-xs sm:text-sm font-body">
                 Standard curricula focus on high-stakes testing and textbook definitions. Students rarely get to touch simulation solvers, debug real data, or publish verified findings with mentors.
               </p>
-              <p className="mt-3 text-muted-foreground leading-relaxed text-sm sm:text-base">
+              <p className="mt-3 text-[#e8d7ff] font-semibold leading-relaxed text-xs sm:text-sm font-body">
                 Polaris is the parallel track where curiosity becomes practical engineering.
               </p>
             </div>
@@ -479,55 +484,55 @@ function Home() {
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
               <p className="eyebrow">Active R&D Initiatives</p>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+              <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                 Software, physics solvers & observational data.
               </h2>
             </div>
-            <Button asChild variant="outline" size="sm">
+            <Button asChild variant="outline" size="sm" className="font-mono text-xs">
               <Link to="/projects" className="flex items-center gap-1.5">
-                <span>View all projects</span>
-                <ArrowRight className="size-3" />
+                <span>View all projects & simulators</span>
+                <ArrowRight className="size-3 text-primary" />
               </Link>
             </Button>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
             {/* Card 1: AeroForge */}
-            <div className="card-premium p-6 flex flex-col justify-between">
+            <div className="card-premium p-6 flex flex-col justify-between hover:border-primary/40 transition-colors">
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-muted-foreground mb-4">
                   <span className="text-primary font-semibold">Aerospace & CFD</span>
-                  <span className="text-emerald-400">● Live Lab</span>
+                  <span className="text-emerald-400">● 50+ Solvers</span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground">AeroForge AI Suite</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold font-display text-foreground">AeroForge AI Suite</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
                   40+ numerical physics solvers across supersonic aerodynamics, orbital maneuvers, and structural finite element analysis.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
-                <span className="text-[11px] font-mono text-muted-foreground">Open Workbench</span>
-                <Link to="/aeroforge" className="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
-                  <span>Launch</span>
+                <span className="text-[11px] font-mono text-muted-foreground">Embedded in Projects</span>
+                <Link to="/projects" className="text-xs text-primary font-semibold hover:underline flex items-center gap-1 font-mono">
+                  <span>Launch Lab</span>
                   <ArrowRight className="size-3" />
                 </Link>
               </div>
             </div>
 
             {/* Card 2: Sky Atlas */}
-            <div className="card-premium p-6 flex flex-col justify-between">
+            <div className="card-premium p-6 flex flex-col justify-between hover:border-primary/40 transition-colors">
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-muted-foreground mb-4">
-                  <span className="text-accent font-semibold">Astrophysics</span>
-                  <span>In Progress</span>
+                  <span className="text-primary font-semibold">Astrophysics</span>
+                  <span className="text-gold">● Active Squad</span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground">Sky Atlas Network</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold font-display text-foreground">Sky Atlas Network</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
                   Community-maintained deep-sky catalog mapping Messier, NGC, and IC celestial objects using observational telemetry.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
                 <span className="text-[11px] font-mono text-muted-foreground">110 Objects</span>
-                <Link to="/projects" className="text-xs text-accent font-semibold hover:underline flex items-center gap-1">
+                <Link to="/projects" className="text-xs text-primary font-semibold hover:underline flex items-center gap-1 font-mono">
                   <span>Explore</span>
                   <ArrowRight className="size-3" />
                 </Link>
@@ -535,25 +540,75 @@ function Home() {
             </div>
 
             {/* Card 3: Research Digest */}
-            <div className="card-premium p-6 flex flex-col justify-between">
+            <div className="card-premium p-6 flex flex-col justify-between hover:border-primary/40 transition-colors">
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-muted-foreground mb-4">
                   <span className="text-gold font-semibold">Scientific Inquiries</span>
-                  <span>Weekly</span>
+                  <span className="text-primary">● Weekly</span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground">Polaris Research Digest</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-bold font-display text-foreground">Polaris Research Digest</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
                   Peer-reviewed literature summaries, verification papers, and student fellowship documentation across space technology.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
                 <span className="text-[11px] font-mono text-muted-foreground">Student Authors</span>
-                <Link to="/programs" className="text-xs text-gold font-semibold hover:underline flex items-center gap-1">
+                <Link to="/programs" className="text-xs text-gold font-semibold hover:underline flex items-center gap-1 font-mono">
                   <span>Read Digest</span>
                   <ArrowRight className="size-3" />
                 </Link>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CORE TEAM LEADERSHIP (FROM CANVA) ── */}
+      <section className="section border-b border-border">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
+                  Core Leadership
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                  Meet the Team Behind Project Polaris
+                </h2>
+                <p className="mt-1 text-xs text-muted-foreground font-body">
+                  Student founders, department heads, and volunteers building the next generation of experiential learning.
+                </p>
+              </div>
+              <Button asChild variant="outline" size="sm" className="font-mono text-xs border-primary/30 text-primary hover:bg-primary/10">
+                <Link to="/about">
+                  <span>Full Team & Values</span>
+                  <ArrowRight className="size-3 ml-1" />
+                </Link>
+              </Button>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {TEAM_MEMBERS.map((member, i) => (
+              <ScrollReveal key={member.name} direction="up" delay={i * 40}>
+                <div className="card-premium p-5 flex flex-col justify-between h-full hover:border-primary/40 transition-colors">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-primary/15 text-primary border border-primary/25 font-bold uppercase">
+                        {member.role}
+                      </span>
+                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                    </div>
+                    <h3 className="text-base font-bold font-display text-foreground">{member.name}</h3>
+                    <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed font-body">{member.note}</p>
+                  </div>
+                  <div className="mt-4 pt-2.5 border-t border-border flex items-center justify-between text-[11px] font-mono text-muted-foreground">
+                    <span>Project Polaris</span>
+                    <span className="text-primary">Core Member</span>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>

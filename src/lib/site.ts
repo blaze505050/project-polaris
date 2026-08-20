@@ -245,17 +245,24 @@ export const WHO_CAN_JOIN = [
 ] as const;
 
 export const STATS = [
+  { value: "50+", label: "Engineering tools & solvers", note: "Across AeroForge CFD, structural & orbital suites." },
   { value: "120+", label: "Community members", note: "Curious students & builders learning together." },
   { value: "90+", label: "Aaj Ka Gyan posts", note: "Daily curated scientific knowledge drops." },
   { value: "25+", label: "Volunteers & contributors", note: "Students leading content, ops & research." },
-  { value: "10+", label: "Webinars & sessions", note: "Conducted & scheduled expert masterclasses." },
+  { value: "10+", label: "Webinars & masterclasses", note: "Conducted with ISRO scientists & propulsion leads." },
+  { value: "3.7k+", label: "Network reach & impressions", note: "Across student stargazing & science drops." },
 ] as const;
 
 export const TEAM_MEMBERS = [
   {
     name: "Avishi Khare",
-    role: "Founder & Lead",
-    note: "Leading the core vision, community ecosystem, and student-led initiatives at Project Polaris.",
+    role: "Founder",
+    note: "Leading the core vision, community ecosystem, and student-led initiatives across Project Polaris.",
+  },
+  {
+    name: "Manya Sharma",
+    role: "Founding Member",
+    note: "Co-founding partner driving foundational community outreach, youth engagement, and curriculum design.",
   },
   {
     name: "Anshika Singh",
@@ -266,6 +273,16 @@ export const TEAM_MEMBERS = [
     name: "Gnana Aditya Suvvari",
     role: "Research Head",
     note: "Spearheading student research programs, simulation frameworks, and technical development pipelines.",
+  },
+  {
+    name: "Kanishk Sandhu",
+    role: "Operations Head",
+    note: "Overseeing logistics, workshop execution, volunteer coordination, and cohort operations.",
+  },
+  {
+    name: "Aryan",
+    role: "Research Volunteer",
+    note: "Supporting physics simulation verification, literature surveys, and student research digests.",
   },
 ] as const;
 
