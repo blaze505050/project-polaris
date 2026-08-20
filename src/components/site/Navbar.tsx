@@ -53,7 +53,7 @@ export function Navbar() {
         </Link>
 
         {/* Center Nav Links */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1 font-mono">
           {NAV_ITEMS.map((link) => {
             const isActive = pathname === link.to || (link.to !== "/" && pathname.startsWith(link.to));
             return (
@@ -61,9 +61,9 @@ export function Navbar() {
                 key={link.to}
                 to={link.to}
                 className={cn(
-                  "px-3 py-1.5 text-xs font-medium rounded-md transition-colors",
+                  "px-3 py-1.5 text-xs rounded-md transition-colors",
                   isActive
-                    ? "text-foreground bg-surface-2 font-semibold"
+                    ? "text-primary bg-surface-2 font-semibold border border-primary/20"
                     : "text-muted-foreground hover:text-foreground hover:bg-surface/50",
                 )}
                 {...(isActive ? { "aria-current": "page" as const } : {})}
@@ -78,17 +78,17 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-8 px-2.5 text-xs font-medium text-muted-foreground hover:text-foreground">
+          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-8 px-2.5 text-xs font-mono font-medium text-muted-foreground hover:text-foreground">
             <Link to="/portal" className="flex items-center gap-1.5">
-              <User className="size-3.5" />
-              <span>Workspace</span>
+              <User className="size-3.5 text-primary" />
+              <span>Portal</span>
             </Link>
           </Button>
 
-          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-3 text-xs font-medium bg-foreground text-background hover:bg-foreground/90 rounded-md">
+          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-3 text-xs font-mono font-medium bg-foreground text-background hover:bg-foreground/90 rounded-md">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
               <span>Community</span>
-              <ArrowUpRight className="size-3 opacity-70" />
+              <ArrowUpRight className="size-3 text-gold" />
             </a>
           </Button>
 

@@ -1,8 +1,13 @@
 export const SITE = {
   name: "Project Polaris",
-  tagline: "Learning through Building, rather than Building after learning.",
+  tagline: "Learn by building, rather than building after learning.",
+  taglineAlt: "Learn by building, rather than building by learning.",
   description:
-    "Project Polaris is a student-led experiential learning organisation. Students research, build, experiment and collaborate on real problems — starting with space science.",
+    "Project Polaris is a student-led experiential learning organization dedicated to bridging the gap between traditional education and real-world skills through workshops, innovation challenges, research programs, mentorship, and hands-on experiences.",
+  mission:
+    "To make practical, hands-on, and industry-relevant learning accessible to every student by creating opportunities to build, experiment, collaborate, and innovate.",
+  vision:
+    "To become India's most trusted experiential learning ecosystem where students develop future-ready skills through real-world experiences.",
   communityUrl: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
   volunteerUrl: "https://polaris-volunteer-program-8.my.canva.site",
   associateFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
@@ -13,6 +18,12 @@ export const SITE = {
   linkedinCompanyUrl: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",
 } as const;
 
+export const BRAND_POSITIONING = {
+  line1: "Project Polaris is not a coaching institute.",
+  line2: "Project Polaris is not just another student community.",
+  line3: "Project Polaris is an experiential learning ecosystem where students learn by building, researching, experimenting, and solving real-world problems.",
+} as const;
+
 export const NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "Projects", to: "/projects" },
@@ -20,6 +31,30 @@ export const NAV_LINKS = [
   { label: "Get Involved", to: "/get-involved" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
+] as const;
+
+export const BRAND_VALUES = [
+  "Curiosity",
+  "Innovation",
+  "Practical Learning",
+  "Accessibility",
+  "Collaboration",
+  "Excellence",
+  "Integrity",
+  "Growth Mindset",
+  "Student Empowerment",
+] as const;
+
+export const VALUES = [
+  { name: "Curiosity", note: "We encourage questioning, deep exploration, and continuous inquiry beyond textbook bounds." },
+  { name: "Innovation", note: "We embrace bold creativity and seek better, computational ways to solve engineering problems." },
+  { name: "Practical Learning", note: "Real learning happens when knowledge is immediately applied to build and test real systems." },
+  { name: "Accessibility", note: "Industry-relevant tools and research opportunities should be universally open to all students." },
+  { name: "Collaboration", note: "Breakthroughs happen when diverse, passionate student minds work together in agile sprint cohorts." },
+  { name: "Excellence", note: "We continuously refine, test, simulate, and verify everything we build to high engineering standards." },
+  { name: "Integrity", note: "We value honesty, rigorous scientific verification, academic ethics, and transparency." },
+  { name: "Growth Mindset", note: "We view obstacles as learning moments and encourage fearless experimentation." },
+  { name: "Student Empowerment", note: "We put students in the driver's seat to lead projects, departments, and public masterclasses." },
 ] as const;
 
 export const PROGRAMS = [
@@ -111,17 +146,6 @@ export const PROGRAMS = [
     experience:
       "Currently in active development — connecting curious young minds with research cohorts, educational trips, and fellowship opportunities.",
   },
-] as const;
-
-export const VALUES = [
-  { name: "Learn by Building", note: "Real learning happens when knowledge is immediately applied to real problems." },
-  { name: "Curiosity", note: "We encourage questioning, deep exploration, and continuous learning." },
-  { name: "Innovation", note: "We embrace bold creativity and seek better ways to solve problems." },
-  { name: "Integrity", note: "We value honesty, transparency, rigorous verification, and accountability." },
-  { name: "Collaboration", note: "Great breakthroughs happen when diverse, passionate minds work together." },
-  { name: "Accessibility", note: "Practical learning opportunities should be accessible to everyone regardless of background." },
-  { name: "Excellence", note: "We continuously refine, test, and improve everything we build." },
-  { name: "Leadership", note: "We empower students, volunteers, and participants to take initiative and lead." },
 ] as const;
 
 export const WHY_JOIN_PILLARS = [

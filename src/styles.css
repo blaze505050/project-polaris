@@ -17,8 +17,8 @@
   --radius-2xl: 16px;
 
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Alice", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
@@ -55,85 +55,86 @@
 :root {
   --radius: 0.5rem;
 
-  /* Obsidian / Charcoal Minimal Dark Surface Hierarchy */
-  --background: #090a0f;
-  --foreground: #f4f4f6;
-  --surface: #11131c;
-  --surface-2: #171a26;
-  --surface-3: #1f2333;
-  --surface-elevated: #1a1d2b;
+  /* Official Brand Palette: Black #050505 & Deep Space Obsidian */
+  --background: #050505;
+  --foreground: #ffffff;
+  --surface: #0e0d16;
+  --surface-2: #141320;
+  --surface-3: #1c192d;
+  --surface-elevated: #181528;
 
-  --card: #11131c;
-  --card-foreground: #f4f4f6;
-  --popover: #11131c;
-  --popover-foreground: #f4f4f6;
+  --card: #0e0d16;
+  --card-foreground: #ffffff;
+  --popover: #0e0d16;
+  --popover-foreground: #ffffff;
 
-  /* Disciplined Technical Accent */
-  --primary: #38bdf8;
-  --primary-foreground: #090a0f;
-  --primary-soft: rgba(56, 189, 248, 0.1);
+  /* Official Primary: Light Purple #C59DFF */
+  --primary: #C59DFF;
+  --primary-foreground: #050505;
+  --primary-soft: rgba(197, 157, 255, 0.12);
 
-  --secondary: #171a26;
-  --secondary-foreground: #f4f4f6;
+  --secondary: #141320;
+  --secondary-foreground: #ffffff;
 
-  --muted: #171a26;
-  --muted-foreground: #94a3b8;
+  --muted: #141320;
+  --muted-foreground: #a1a1aa;
 
-  --accent: #818cf8;
-  --accent-foreground: #090a0f;
+  /* Official Secondary / Additional: Gold #D4AF37 */
+  --accent: #C59DFF;
+  --accent-foreground: #050505;
 
-  --gold: #f59e0b;
-  --gold-foreground: #090a0f;
+  --gold: #D4AF37;
+  --gold-foreground: #050505;
 
   --destructive: #f43f5e;
   --destructive-foreground: #ffffff;
   --success: #10b981;
 
   /* Crisp 1px Subtle Borders */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #38bdf8;
+  --border: rgba(197, 157, 255, 0.12);
+  --border-strong: rgba(197, 157, 255, 0.24);
+  --input: rgba(197, 157, 255, 0.15);
+  --ring: #C59DFF;
 }
 
 .light,
 [data-theme="light"] {
   --background: #ffffff;
-  --foreground: #090a0f;
-  --surface: #f8fafc;
-  --surface-2: #f1f5f9;
-  --surface-3: #e2e8f0;
+  --foreground: #050505;
+  --surface: #faf7ff;
+  --surface-2: #f3ecff;
+  --surface-3: #e8dbff;
   --surface-elevated: #ffffff;
 
   --card: #ffffff;
-  --card-foreground: #090a0f;
+  --card-foreground: #050505;
   --popover: #ffffff;
-  --popover-foreground: #090a0f;
+  --popover-foreground: #050505;
 
-  --primary: #0284c7;
+  --primary: #8b5cf6;
   --primary-foreground: #ffffff;
-  --primary-soft: rgba(2, 132, 199, 0.08);
+  --primary-soft: rgba(139, 92, 246, 0.1);
 
-  --secondary: #f1f5f9;
-  --secondary-foreground: #090a0f;
+  --secondary: #f3ecff;
+  --secondary-foreground: #050505;
 
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --muted: #f3ecff;
+  --muted-foreground: #6b7280;
 
-  --accent: #6366f1;
+  --accent: #8b5cf6;
   --accent-foreground: #ffffff;
 
-  --gold: #d97706;
+  --gold: #D4AF37;
   --gold-foreground: #ffffff;
 
   --destructive: #e11d48;
   --destructive-foreground: #ffffff;
   --success: #059669;
 
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.18);
-  --input: rgba(0, 0, 0, 0.12);
-  --ring: #0284c7;
+  --border: rgba(139, 92, 246, 0.15);
+  --border-strong: rgba(139, 92, 246, 0.28);
+  --input: rgba(139, 92, 246, 0.18);
+  --ring: #8b5cf6;
 }
 
 /* ──────────────────────────────────────────────────────────

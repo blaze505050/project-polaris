@@ -48,43 +48,43 @@ function Home() {
             {/* Minimalist Status Chip */}
             <div className="inline-flex items-center gap-2 rounded-md border border-border bg-surface-2 px-2.5 py-1 text-xs text-muted-foreground mb-6 font-mono">
               <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-primary font-medium">Project Polaris</span>
+              <span className="text-white/30">/</span>
               <span>Student-Led Experiential Engineering</span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
+            {/* Official Tagline Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold tracking-tight text-foreground leading-[1.12]">
               Learn by building,{" "}
-              <span className="text-muted-foreground font-normal block sm:inline">
-                not after.
+              <span className="text-primary italic font-normal block sm:inline">
+                rather than building after learning.
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Project Polaris bridges the gap between academic theory and real-world engineering. 
-              Students collaborate on active simulation platforms, observational astrophysics tools, 
-              and research papers with guidance from industry practitioners.
+            {/* Positioning & Value Proposition */}
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed font-body">
+              Project Polaris is an experiential learning ecosystem where students explore, build, and solve real-world problems through aerospace simulations, astrophysics tools, and research cohorts.
             </p>
 
             {/* Primary Actions */}
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button asChild size="default" className="h-10 px-4 rounded-md font-medium bg-foreground text-background hover:bg-foreground/90">
-                <Link to="/projects" className="flex items-center gap-1.5">
+              <Button asChild size="default" className="h-10 px-5 rounded-md font-medium bg-foreground text-background hover:bg-foreground/90 font-mono text-xs">
+                <Link to="/projects" className="flex items-center gap-2">
                   <FolderKanban className="size-4" />
-                  <span>Explore Projects</span>
+                  <span>Explore Builds</span>
                   <ArrowRight className="size-3.5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="default" className="h-10 px-4 rounded-md font-medium border-border hover:bg-surface-2">
-                <Link to="/aeroforge" className="flex items-center gap-1.5">
+              <Button asChild variant="outline" size="default" className="h-10 px-5 rounded-md font-medium border-border hover:bg-surface-2 font-mono text-xs">
+                <Link to="/aeroforge" className="flex items-center gap-2">
                   <Cpu className="size-4 text-primary" />
                   <span>Launch AeroForge Lab</span>
                 </Link>
               </Button>
-              <Button asChild variant="ghost" size="default" className="h-10 px-3 text-xs text-muted-foreground hover:text-foreground">
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+              <Button asChild variant="ghost" size="default" className="h-10 px-4 text-xs font-mono text-muted-foreground hover:text-foreground">
+                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
                   <span>WhatsApp Community</span>
-                  <ArrowUpRight className="size-3" />
+                  <ArrowUpRight className="size-3.5 text-gold" />
                 </a>
               </Button>
             </div>
