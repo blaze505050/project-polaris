@@ -58,7 +58,7 @@ function Home() {
           <div className="max-w-4xl">
             {/* Minimalist Brand Logo & Status Chip */}
             <ScrollReveal direction="fade">
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/25 bg-surface-2/80 backdrop-blur-md px-3.5 py-1.5 text-xs text-muted-foreground mb-8 shadow-sm">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-xl px-4 py-1.5 text-xs text-muted-foreground mb-8 shadow-[0_4px_20px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.15)]">
                 <picture>
                   <source srcSet={polarisLogoWebp} type="image/webp" />
                   <img
@@ -94,20 +94,20 @@ function Home() {
             {/* Primary Actions */}
             <ScrollReveal direction="up" delay={200}>
               <div className="mt-8 flex flex-wrap items-center gap-3.5">
-                <Button asChild size="default" className="h-11 px-6 rounded-lg font-medium bg-foreground text-background hover:bg-foreground/90 font-mono text-xs shadow-lg transition-transform active:scale-95">
+                <Button asChild size="default" className="h-11 px-7 rounded-full font-semibold bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background hover:brightness-110 font-mono text-xs shadow-[0_4px_20px_rgba(197,157,255,0.3)] transition-all duration-300 active:scale-95">
                   <Link to="/projects" className="flex items-center gap-2">
-                    <FolderKanban className="size-4 text-primary" />
+                    <FolderKanban className="size-4 text-background" />
                     <span>Explore Project Builds</span>
-                    <ArrowRight className="size-3.5 text-primary" />
+                    <ArrowRight className="size-3.5 text-background" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="default" className="h-11 px-6 rounded-lg font-medium border-border hover:bg-surface-2 font-mono text-xs hover:border-primary/40 transition-transform active:scale-95">
+                <Button asChild variant="outline" size="default" className="h-11 px-6 rounded-full font-medium border-white/12 bg-white/[0.04] backdrop-blur-xl hover:bg-white/[0.08] font-mono text-xs hover:border-primary/40 transition-all duration-300 active:scale-95 shadow-sm">
                   <Link to="/join" className="flex items-center gap-2">
                     <Sparkles className="size-4 text-gold" />
                     <span>Join Build Squads</span>
                   </Link>
                 </Button>
-                <Button asChild variant="ghost" size="default" className="h-11 px-4 text-xs font-mono text-muted-foreground hover:text-foreground">
+                <Button asChild variant="ghost" size="default" className="h-11 px-4 text-xs font-mono text-muted-foreground hover:text-foreground rounded-full hover:bg-white/[0.04]">
                   <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
                     <span className="text-[#e8d7ff]">WhatsApp Community</span>
                     <ArrowUpRight className="size-3.5 text-gold" />
@@ -117,15 +117,15 @@ function Home() {
             </ScrollReveal>
           </div>
 
-          {/* ── WORKBENCH PREVIEW CONTAINER ── */}
+          {/* ── WORKBENCH PREVIEW CONTAINER (APPLE GLASS) ── */}
           <ScrollReveal direction="up" delay={260}>
-            <div className="mt-16 rounded-xl border border-border bg-surface/90 backdrop-blur-xl shadow-2xl overflow-hidden">
+            <div className="mt-16 rounded-2xl border border-white/10 bg-surface/75 backdrop-blur-2xl shadow-[0_24px_60px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.12)] overflow-hidden">
               {/* Top Toolbar */}
-              <div className="flex items-center justify-between border-b border-border bg-surface-2 px-4 py-3 text-xs">
+              <div className="flex items-center justify-between border-b border-white/8 bg-white/[0.02] px-5 py-3 text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="size-2.5 rounded-full bg-destructive/60" />
-                  <span className="size-2.5 rounded-full bg-gold/60" />
-                  <span className="size-2.5 rounded-full bg-emerald-400/60" />
+                  <span className="size-2.5 rounded-full bg-destructive/60 shadow-[0_0_8px_rgba(244,63,94,0.4)]" />
+                  <span className="size-2.5 rounded-full bg-gold/60 shadow-[0_0_8px_rgba(212,175,55,0.4)]" />
+                  <span className="size-2.5 rounded-full bg-emerald-400/60 shadow-[0_0_8px_rgba(52,211,153,0.4)]" />
                   <span className="ml-2 font-mono text-[11px] text-muted-foreground hidden sm:inline">
                     polaris://active-engineering-workbench
                   </span>
@@ -135,15 +135,15 @@ function Home() {
                     <button
                       key={tab}
                       onClick={() => setActiveWorkbenchTab(tab as any)}
-                      className={`px-3 py-1.5 rounded text-xs font-mono transition-all ${
+                      className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all duration-200 ${
                         activeWorkbenchTab === tab
-                          ? "bg-surface-3 text-primary font-bold border border-primary/30 shadow-inner"
-                          : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
+                          ? "bg-primary/20 text-primary font-bold border border-primary/30 shadow-[0_2px_10px_rgba(197,157,255,0.15)]"
+                          : "text-muted-foreground hover:text-foreground hover:bg-white/[0.04]"
                       }`}
                     >
-                      {tab === "skyatlas" && "Sky Atlas Deep-Sky Network"}
-                      {tab === "digest" && "Daily Research Telemetry"}
-                      {tab === "outreach" && "Schools Science Kits"}
+                      {tab === "skyatlas" && "Sky Atlas Deep-Sky"}
+                      {tab === "digest" && "Research Telemetry"}
+                      {tab === "outreach" && "Schools Lab Kits"}
                     </button>
                   ))}
                 </div>
