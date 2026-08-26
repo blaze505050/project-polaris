@@ -4,9 +4,10 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useLocation,
   HeadContent,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/site/Navbar";
@@ -16,15 +17,12 @@ import { Button } from "@/components/ui/button";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { NorthStar } from "@/components/site/NorthStar";
+import { getOrganizationSchema } from "@/lib/structured-data";
+import { initAnalytics, trackPageView } from "@/lib/analytics";
 import {
-  Compass,
-  Rocket,
   FolderKanban,
-  MessageCircle,
-  ArrowRight,
-  RotateCcw,
   Home as HomeIcon,
-  HelpCircle,
+  RotateCcw,
 } from "lucide-react";
 
 function NotFoundComponent() {
@@ -36,7 +34,7 @@ function NotFoundComponent() {
 
       <div className="max-w-xl w-full text-center relative z-10 space-y-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-primary/10 text-primary border border-primary/25 shadow-sm">
-          <NorthStar className="size-3.5 text-gold animate-spin-slow" />
+          <NorthStar className="size-3.5 text-primary" />
           <span>Coordinates Not Found</span>
         </div>
 
@@ -45,10 +43,10 @@ function NotFoundComponent() {
         </h1>
 
         <div className="space-y-2">
-          <h2 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+          <h2 className="text-xl sm:text-2xl font-bold font-sans text-foreground">
             Lost in Deep Space?
           </h2>
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed font-body">
+          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed font-sans">
             The orbital trajectory or page you are looking for has decayed or does not exist. Let's recalculate your state vectors.
           </p>
         </div>
@@ -57,7 +55,7 @@ function NotFoundComponent() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 text-xs font-mono text-left">
           <Link
             to="/"
-            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-colors block"
           >
             <HomeIcon className="size-4 text-primary mb-1.5" />
             <span className="font-bold text-foreground block">Home</span>
@@ -65,32 +63,30 @@ function NotFoundComponent() {
           </Link>
           <Link
             to="/projects"
-            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-colors block"
           >
-            <FolderKanban className="size-4 text-gold mb-1.5" />
+            <FolderKanban className="size-4 text-primary mb-1.5" />
             <span className="font-bold text-foreground block">Projects</span>
             <span className="text-[10px] text-muted-foreground block mt-0.5">AeroForge Lab</span>
           </Link>
           <Link
             to="/about"
-            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-colors block"
           >
-            <Compass className="size-4 text-primary mb-1.5" />
-            <span className="font-bold text-foreground block">About</span>
-            <span className="text-[10px] text-muted-foreground block mt-0.5">Showcase & story</span>
+            <span className="font-bold text-foreground block">About Us</span>
+            <span className="text-[10px] text-muted-foreground block mt-0.5">Mission & team</span>
           </Link>
           <Link
             to="/contact"
-            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-all block"
+            className="p-3 rounded-lg border border-border bg-surface hover:border-primary/40 hover:bg-surface-2 transition-colors block"
           >
-            <MessageCircle className="size-4 text-emerald-400 mb-1.5" />
             <span className="font-bold text-foreground block">Contact</span>
             <span className="text-[10px] text-muted-foreground block mt-0.5">Direct message</span>
           </Link>
         </div>
 
         <div className="pt-4 flex items-center justify-center gap-3">
-          <Button asChild size="default" className="h-10 px-6 font-mono text-xs bg-foreground text-background font-bold shadow-lg">
+          <Button asChild size="default" className="h-10 px-6 font-mono text-xs bg-primary text-primary-foreground font-bold shadow-sm hover:bg-primary/90">
             <Link to="/">
               <HomeIcon className="size-3.5 mr-1.5" />
               Return Home
@@ -111,15 +107,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-[75vh] items-center justify-center px-4 py-12">
-      <div className="max-w-lg w-full text-center rounded-2xl border border-destructive/30 bg-surface/90 backdrop-blur-xl p-8 md:p-10 shadow-2xl">
+      <div className="max-w-lg w-full text-center rounded-xl border border-destructive/30 bg-card p-8 md:p-10 shadow-lg">
         <div className="mx-auto flex size-12 items-center justify-center rounded-xl bg-destructive/10 text-destructive mb-6 border border-destructive/20 font-bold font-mono text-lg">
           !
         </div>
         <span className="font-mono text-xs text-destructive uppercase tracking-widest font-semibold block mb-2">
           Telemetry Alert
         </span>
-        <h1 className="text-2xl font-bold font-display text-foreground">Application Encountered an Exception</h1>
-        <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-body">
+        <h1 className="text-2xl font-bold font-sans text-foreground">Application Encountered an Exception</h1>
+        <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-sans">
           We encountered an unexpected state while initializing this component. You can reload this state or return to the main hub.
         </p>
 
@@ -136,7 +132,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="h-9 px-5 bg-foreground text-background font-bold"
+            className="h-9 px-5 bg-primary text-primary-foreground font-bold hover:bg-primary/90"
           >
             <RotateCcw className="size-3.5 mr-1.5" />
             Retry Component
@@ -159,19 +155,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Project Polaris is a student-led experiential engineering organisation where students research, build and solve real problems.",
+          "Project Polaris is a student-led experiential engineering and research ecosystem bridging textbook education with real simulation software and physical systems.",
       },
       { property: "og:site_name", content: "Project Polaris" },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://projectpolaris.in/" },
+      { property: "og:image", content: "https://projectpolaris.in/polaris-logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@project_polaris" },
       { name: "color-scheme", content: "dark light" },
-      { name: "theme-color", content: "#090a0f" },
+      { name: "theme-color", content: "#0a0b0e" },
+      { name: "google-site-verification", content: "google-site-verification-polaris" },
+      { name: "msvalidate.01", content: "bing-site-verification-polaris" },
     ],
     links: [
       { rel: "icon", href: "/polaris-logo.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/polaris-logo.png" },
+      { rel: "canonical", href: "https://projectpolaris.in/" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
+      { rel: "dns-prefetch", href: "https://fonts.gstatic.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
@@ -184,39 +188,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@graph": [
-            {
-              "@type": "Organization",
-              "@id": "https://projectpolaris.in/#organization",
-              name: "Project Polaris",
-              url: "https://projectpolaris.in/",
-              logo: "https://projectpolaris.in/polaris-logo.png",
-              description:
-                "A student-led experiential learning organisation bridging traditional education and real-world space & engineering practice.",
-              slogan: "Learning through Building, rather than Building after learning.",
-              foundingDate: "2026-06-07",
-              sameAs: [
-                "https://www.instagram.com/project_polaris_?igsh=cGR3aGdkdjd2Y2hm",
-                "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/"
-              ]
-            },
-            {
-              "@type": "SoftwareApplication",
-              "@id": "https://projectpolaris.in/aeroforge/#app",
-              name: "AeroForge AI",
-              url: "https://projectpolaris.in/aeroforge",
-              applicationCategory: "EngineeringApplication",
-              operatingSystem: "All modern web browsers",
-              description:
-                "Browser-based aerospace and mechanical simulation workstation with 40+ numerical solvers, CFD aerodynamics, structural FEA, and orbital mechanics.",
-              creator: {
-                "@id": "https://projectpolaris.in/#organization"
-              }
-            }
-          ]
-        }),
+        children: JSON.stringify(getOrganizationSchema()),
       },
     ],
   }),
@@ -227,6 +199,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const location = useLocation();
+
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -239,7 +220,7 @@ function RootComponent() {
         Skip to content
       </a>
       <Navbar />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Outlet />
       </main>
       <Footer />
@@ -248,4 +229,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

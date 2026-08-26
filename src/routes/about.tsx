@@ -29,6 +29,8 @@ import {
   BookOpen,
 } from "lucide-react";
 
+import { getBreadcrumbSchema } from "@/lib/structured-data";
+
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
@@ -43,6 +45,22 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content:
           "Building real things. Learning along the way. The story, leadership, and operating culture of Project Polaris.",
+      },
+      { property: "og:url", content: "https://projectpolaris.in/about" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://projectpolaris.in/about" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          getBreadcrumbSchema([
+            { name: "Home", item: "/" },
+            { name: "About Us", item: "/about" },
+          ])
+        ),
       },
     ],
   }),

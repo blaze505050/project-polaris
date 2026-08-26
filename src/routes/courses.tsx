@@ -29,6 +29,7 @@ import {
   type LearningLevel,
 } from "@/lib/learning";
 import { SITE } from "@/lib/site";
+import { getCoursesSchema } from "@/lib/structured-data";
 
 interface CoursesSearchParams {
   type?: LearningType;
@@ -53,6 +54,17 @@ export const Route = createFileRoute("/courses")({
         property: "og:description",
         content:
           "Practical learning for curious students. Masterclasses, self-paced skills, and hands-on cohorts.",
+      },
+      { property: "og:url", content: "https://projectpolaris.in/courses" },
+      { property: "og:type", content: "website" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://projectpolaris.in/courses" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(getCoursesSchema()),
       },
     ],
   }),
