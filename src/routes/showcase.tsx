@@ -117,7 +117,7 @@ function ShowcasePage() {
           <Button
             onClick={() => setShowSubmitModal(true)}
             size="sm"
-            className="h-9 px-4 bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background font-bold font-mono text-xs shadow-md transition-transform active:scale-95"
+            className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors"
           >
             <Plus className="size-3.5 mr-1" />
             Submit Your Project

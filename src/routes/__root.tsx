@@ -40,7 +40,7 @@ function NotFoundComponent() {
           <span>Coordinates Not Found</span>
         </div>
 
-        <h1 className="text-7xl sm:text-9xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary via-[#e8d7ff] to-gold bg-clip-text text-transparent leading-none">
+        <h1 className="text-7xl sm:text-9xl font-sans font-bold tracking-tight text-foreground/20 leading-none">
           404
         </h1>
 

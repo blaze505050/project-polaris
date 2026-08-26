@@ -74,7 +74,7 @@ function ResearchPage() {
         lead="We believe young students should learn real research methodology: formulating hypotheses, simulating physical constraints, verifying code, and publishing findings."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background font-bold font-mono text-xs shadow-md">
+          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join Research Cohort
             </a>

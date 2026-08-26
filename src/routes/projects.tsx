@@ -64,7 +64,7 @@ function ProjectsPage() {
         lead="Small sprint teams, real physical constraints, reproducible code and models. Explore our flagship AeroForge simulation laboratory and active sprint squads."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-5 bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background font-bold font-mono text-xs shadow-md transition-transform active:scale-95">
+          <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
             <a href="#aeroforge-lab">
               <Cpu className="size-4 mr-1.5" />
               Launch AeroForge Lab

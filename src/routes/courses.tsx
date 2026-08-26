@@ -83,7 +83,7 @@ function CoursesPage() {
         lead="Workshops, short courses, bootcamps and projects designed around demonstrable skills and real systems."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background font-bold font-mono text-xs shadow-md">
+          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join WhatsApp Community
             </a>
@@ -351,7 +351,7 @@ function CoursesPage() {
               <Button onClick={() => setActiveItemModal(null)} variant="ghost" size="sm" className="text-xs">
                 Back to Catalog
               </Button>
-              <Button asChild size="sm" className="h-9 px-5 bg-gradient-to-r from-primary to-gold text-background font-bold text-xs shadow-md">
+              <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-bold text-xs shadow-sm hover:bg-primary/90 transition-colors">
                 <a href={activeItemModal.link || SITE.communityUrl} target="_blank" rel="noreferrer">
                   {activeItemModal.ctaText || "Enroll Now"}
                 </a>

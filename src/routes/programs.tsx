@@ -47,7 +47,7 @@ function ProgramsPage() {
         lead="Move from discovering a concept to mastering equations, building simulation software, and defending technical research."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background font-bold font-mono text-xs shadow-md">
+          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
             <Link to="/courses">Explore Learning Catalog</Link>
           </Button>
           <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40">

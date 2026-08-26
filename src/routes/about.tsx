@@ -179,7 +179,7 @@ function AboutPage() {
       </section>
 
       {/* ── LEADERSHIP & TEAM ── */}
-      <section className="section border-t border-white/8 bg-surface-2/20">
+      <section className="section border-t border-white/8 bg-surface-2/10" id="team">
         <div className="shell">
           <ScrollReveal direction="up">
             <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
@@ -187,12 +187,12 @@ function AboutPage() {
                 <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
                   Core Team
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">Behind Project Polaris</h2>
-                <p className="mt-1 text-xs text-muted-foreground font-body">
+                <h2 className="text-2xl sm:text-3xl font-bold font-sans text-foreground">Behind Project Polaris</h2>
+                <p className="mt-1 text-xs text-muted-foreground font-sans">
                   Founded and led by students who believe in open computational tools, reproducible science, and peer-to-peer building.
                 </p>
               </div>
-              <span className="font-mono text-xs text-gold px-3 py-1 rounded-full bg-surface-2 border border-gold/30">
+              <span className="font-mono text-xs text-muted-foreground px-3 py-1 rounded-md bg-surface border border-white/8">
                 Student-Led Ecosystem
               </span>
             </div>
@@ -200,20 +200,20 @@ function AboutPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TEAM_MEMBERS.map((member, i) => (
-              <ScrollReveal key={member.name} direction="up" delay={i * 50}>
-                <article className="p-6 rounded-2xl border border-white/8 bg-surface/80 backdrop-blur-xl flex flex-col justify-between h-full hover:border-primary/30 transition-colors">
+              <ScrollReveal key={member.name} direction="up" delay={i * 30}>
+                <article className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
                   <div>
                     <div className="flex items-center justify-between">
-                      <img src={polarisLogo} alt="Polaris Logo" className="size-7 rounded-full border border-primary/30" />
-                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <img src={polarisLogo} alt="Polaris Logo" className="size-7 object-contain" />
+                      <span className="size-1.5 rounded-full bg-emerald-400" />
                     </div>
-                    <h3 className="mt-4 text-base font-bold text-foreground font-display">{member.name}</h3>
+                    <h3 className="mt-3 text-base font-bold text-foreground font-sans">{member.name}</h3>
                     <p className="font-mono text-xs text-primary mt-0.5">{member.role}</p>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">{member.note}</p>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans">{member.note}</p>
                   </div>
-                  <div className="mt-5 pt-3 border-t border-white/6 flex items-center justify-between text-xs font-mono text-muted-foreground">
+                  <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-xs font-mono text-muted-foreground">
                     <span className="text-[11px]">Polaris Core</span>
-                    <span className="text-primary text-[11px]">Member</span>
+                    <span className="text-primary text-[11px]">Lead</span>
                   </div>
                 </article>
               </ScrollReveal>
@@ -222,46 +222,79 @@ function AboutPage() {
         </div>
       </section>
 
+      {/* ── OUR JOURNEY ── */}
+      <section className="section border-t border-white/8" id="journey">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-8">
+              <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
+                Milestones & Timeline
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-bold font-sans text-foreground">
+                Our Journey
+              </h2>
+              <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-sans">
+                How a small student community grew into an active experiential engineering ecosystem.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 font-mono">
+            {JOURNEY.map((item, idx) => (
+              <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-white/16 transition-colors">
+                  <div>
+                    <span className="text-xs font-medium text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+                      {item.date}
+                    </span>
+                    <h3 className="mt-3 text-base font-bold font-sans text-foreground">{item.title}</h3>
+                    <p className="mt-2 text-xs text-muted-foreground font-sans leading-relaxed">{item.note}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── RECOGNITION & CULTURE ── */}
-      <section className="section border-t border-white/8">
+      <section className="section border-t border-white/8 bg-surface-2/10">
         <div className="shell">
           <div className="grid gap-6 lg:grid-cols-2">
             <ScrollReveal direction="up" delay={0}>
-              <div className="p-6 md:p-8 rounded-2xl border border-primary/20 bg-surface/80 backdrop-blur-xl h-full">
-                <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase mb-3">
-                  <Award className="size-4 text-gold" />
-                  <span>Merit-Based Recognition</span>
+              <div className="p-6 md:p-7 rounded-xl border border-white/8 bg-card h-full">
+                <div className="text-xs font-mono text-primary uppercase mb-2 font-medium">
+                  Merit-Based Recognition
                 </div>
-                <h3 className="text-xl font-bold font-display text-foreground">Recognition Framework</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
+                <h3 className="text-xl font-bold font-sans text-foreground">Recognition Framework</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans">
                   We recognize verified student contributions through a structured, merit-based reward system that validates real engineering skills.
                 </p>
 
-                <ul className="mt-6 space-y-2 text-xs font-body">
-                  {RECOGNITION_SYSTEM.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5 p-2.5 rounded-lg bg-surface-2 border border-white/6">
-                      <CheckCircle2 className="size-3.5 text-primary shrink-0" />
+                <div className="mt-5 space-y-2 text-xs font-sans">
+                  {RECOGNITION_SYSTEM.map((item, idx) => (
+                    <div key={item} className="flex items-center gap-3 p-2.5 rounded-lg bg-surface border border-white/6">
+                      <span className="font-mono text-[11px] text-muted-foreground font-semibold">0{idx + 1}</span>
                       <span className="text-foreground/90">{item}</span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={80}>
-              <div className="p-6 md:p-8 rounded-2xl border border-gold/20 bg-surface/80 backdrop-blur-xl h-full">
-                <div className="flex items-center gap-2 text-xs font-mono text-gold uppercase mb-3">
-                  <HeartHandshake className="size-4 text-primary" />
-                  <span>Operating Principles</span>
+              <div className="p-6 md:p-7 rounded-xl border border-white/8 bg-card h-full">
+                <div className="text-xs font-mono text-primary uppercase mb-2 font-medium">
+                  Operating Principles
                 </div>
-                <h3 className="text-xl font-bold font-display text-foreground">Working Culture</h3>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">
+                <h3 className="text-xl font-bold font-sans text-foreground">Working Culture</h3>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans">
                   Every volunteer, associate, and core team member operates with professional standards, code peer reviews, and high empathy.
                 </p>
 
-                <div className="mt-6 space-y-2 font-body">
+                <div className="mt-5 space-y-2 font-sans">
                   {WORKING_CULTURE.map(({ rule, detail }) => (
-                    <div key={rule} className="p-2.5 rounded-lg bg-surface-2 border border-white/6">
+                    <div key={rule} className="p-2.5 rounded-lg bg-surface border border-white/6">
                       <p className="font-semibold text-xs text-primary">{rule}</p>
                       <p className="text-[11px] text-muted-foreground mt-0.5">{detail}</p>
                     </div>
@@ -274,20 +307,20 @@ function AboutPage() {
       </section>
 
       {/* ── CORE VALUES ── */}
-      <section className="section border-t border-white/8 bg-surface-2/20">
+      <section className="section border-t border-white/8">
         <div className="shell">
           <ScrollReveal direction="up">
             <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
               Guiding Principles
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">Our 9 Core Values</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold font-sans text-foreground">Our 9 Core Values</h2>
           </ScrollReveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {VALUES.map((value, i) => (
-              <ScrollReveal key={value.name} direction="up" delay={i * 40}>
-                <div className="p-6 rounded-2xl border border-white/8 bg-surface/70 backdrop-blur-xl h-full hover:border-primary/30 transition-colors">
-                  <h3 className="font-bold text-sm text-primary font-display">{value.name}</h3>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-body">{value.note}</p>
+              <ScrollReveal key={value.name} direction="up" delay={i * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card h-full hover:border-white/16 transition-colors">
+                  <h3 className="font-bold text-sm text-primary font-sans">{value.name}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed font-sans">{value.note}</p>
                 </div>
               </ScrollReveal>
             ))}

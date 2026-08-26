@@ -42,9 +42,9 @@ export const THREE_PILLARS = [
 ] as const;
 
 export const BRAND_POSITIONING = {
-  line1: "Project Polaris is not a coaching institute.",
-  line2: "Project Polaris is not just another student community.",
-  line3: "Project Polaris is a student engineering ecosystem where students learn by building, researching, experimenting, and solving real-world problems.",
+  line1: "A student-led space and physics engineering ecosystem.",
+  line2: "Bridging academic theory with real engineering practice through open-source software, physical prototypes, and peer research cohorts.",
+  line3: "Students build numerical physics simulations, launch telemetry kits, and publish technical research alongside mentors.",
 } as const;
 
 export const NAV_LINKS = [

@@ -10,13 +10,13 @@ import {
   BookOpen,
   GraduationCap,
   Flame,
-  FileText,
   Hammer,
   Users,
-  Cpu,
   Calendar,
   HeartHandshake,
   MessageCircle,
+  HelpCircle,
+  FolderGit2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SITE } from "@/lib/site";
@@ -24,73 +24,24 @@ import { cn } from "@/lib/utils";
 import { Wordmark } from "./NorthStar";
 import { ThemeToggle } from "./ThemeToggle";
 
-const LEARN_ITEMS = [
+const ABOUT_ITEMS = [
   {
-    label: "Workshops",
-    desc: "Live expert-led masterclasses (60–90m)",
-    to: "/courses?type=workshop",
+    label: "About Us",
+    desc: "Mission, vision, and student engineering culture",
+    to: "/about",
     icon: Sparkles,
   },
   {
-    label: "Mini-Courses",
-    desc: "Short, practical skill modules (2–7h)",
-    to: "/courses?type=course",
-    icon: GraduationCap,
-  },
-  {
-    label: "Bootcamps",
-    desc: "Cohort-based deep dives with mentors (3–6w)",
-    to: "/courses?type=bootcamp",
-    icon: Flame,
-  },
-  {
-    label: "Resources",
-    desc: "Free guides, notes & interactive tools",
-    to: "/resources",
-    icon: FileText,
-  },
-] as const;
-
-const BUILD_ITEMS = [
-  {
-    label: "Projects",
-    desc: "Student engineering platforms & software",
-    to: "/projects",
-    icon: Hammer,
-  },
-  {
-    label: "Build Squads",
-    desc: "Active sprint teams of 3–5 builders",
-    to: "/projects#squads",
-    icon: Users,
-  },
-  {
-    label: "AeroForge Lab",
-    desc: "40+ CFD, FEA & orbital mechanics solvers",
-    to: "/projects#aeroforge-lab",
-    icon: Cpu,
-  },
-] as const;
-
-const COMMUNITY_ITEMS = [
-  {
-    label: "Live Events",
-    desc: "Webinars, masterclasses & pitch challenges",
-    to: "/programs",
+    label: "Our Journey",
+    desc: "Timeline of community milestones and sessions",
+    to: "/about#journey",
     icon: Calendar,
   },
   {
-    label: "Mentorship",
-    desc: "Direct guidance from researchers & engineers",
-    to: "/about",
-    icon: HeartHandshake,
-  },
-  {
-    label: "Student Community",
-    desc: "WhatsApp community & daily Aaj Ka Gyan drops",
-    to: SITE.communityUrl,
-    external: true,
-    icon: MessageCircle,
+    label: "Our Team",
+    desc: "The student leads, researchers, and volunteers",
+    to: "/about#team",
+    icon: Users,
   },
 ] as const;
 
@@ -146,30 +97,30 @@ export function Navbar() {
           <Wordmark />
         </Link>
 
-        {/* Center Nav Dropdowns */}
+        {/* Center Nav Items */}
         <div className="hidden md:flex items-center gap-1 font-mono text-xs">
-          {/* Learn Dropdown */}
+          {/* About Us Dropdown (About Us, Our Journey, Our Team) */}
           <div className="relative">
             <button
               type="button"
-              onClick={() => setActiveDropdown(activeDropdown === "learn" ? null : "learn")}
+              onClick={() => setActiveDropdown(activeDropdown === "about" ? null : "about")}
               className={cn(
                 "px-3 py-1.5 rounded-full flex items-center gap-1 transition-all duration-200",
-                pathname.startsWith("/courses") || pathname.startsWith("/resources") || activeDropdown === "learn"
+                pathname.startsWith("/about") || activeDropdown === "about"
                   ? "text-foreground bg-primary/20 font-bold border border-primary/30"
                   : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
               )}
             >
-              <span>Learn</span>
-              <ChevronDown className={cn("size-3 transition-transform", activeDropdown === "learn" && "rotate-180")} />
+              <span>About Us</span>
+              <ChevronDown className={cn("size-3 transition-transform", activeDropdown === "about" && "rotate-180")} />
             </button>
 
-            {activeDropdown === "learn" && (
+            {activeDropdown === "about" && (
               <div className="absolute top-full left-0 mt-2 w-72 rounded-2xl border border-white/12 bg-surface/95 backdrop-blur-2xl p-2 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50">
                 <div className="text-[10px] uppercase font-bold text-primary px-3 py-1 tracking-wider">
-                  The Learning Ladder
+                  Organization
                 </div>
-                {LEARN_ITEMS.map((item) => (
+                {ABOUT_ITEMS.map((item) => (
                   <Link
                     key={item.label}
                     to={item.to}
@@ -193,131 +144,70 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Build Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setActiveDropdown(activeDropdown === "build" ? null : "build")}
-              className={cn(
-                "px-3 py-1.5 rounded-full flex items-center gap-1 transition-all duration-200",
-                pathname.startsWith("/projects") || activeDropdown === "build"
-                  ? "text-foreground bg-primary/20 font-bold border border-primary/30"
-                  : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
-              )}
-            >
-              <span>Build</span>
-              <ChevronDown className={cn("size-3 transition-transform", activeDropdown === "build" && "rotate-180")} />
-            </button>
-
-            {activeDropdown === "build" && (
-              <div className="absolute top-full left-0 mt-2 w-72 rounded-2xl border border-white/12 bg-surface/95 backdrop-blur-2xl p-2 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50">
-                <div className="text-[10px] uppercase font-bold text-primary px-3 py-1 tracking-wider">
-                  Engineering & Sprints
-                </div>
-                {BUILD_ITEMS.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.to}
-                    onClick={() => setActiveDropdown(null)}
-                    className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-white/[0.08] transition-colors group"
-                  >
-                    <div className="size-7 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-colors shrink-0 mt-0.5">
-                      <item.icon className="size-3.5" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                        {item.label}
-                      </div>
-                      <div className="text-[11px] text-muted-foreground font-body leading-tight mt-0.5">
-                        {item.desc}
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Community Dropdown */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setActiveDropdown(activeDropdown === "community" ? null : "community")}
-              className={cn(
-                "px-3 py-1.5 rounded-full flex items-center gap-1 transition-all duration-200",
-                pathname.startsWith("/community") || pathname.startsWith("/programs") || activeDropdown === "community"
-                  ? "text-foreground bg-primary/20 font-bold border border-primary/30"
-                  : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
-              )}
-            >
-              <span>Community</span>
-              <ChevronDown className={cn("size-3 transition-transform", activeDropdown === "community" && "rotate-180")} />
-            </button>
-
-            {activeDropdown === "community" && (
-              <div className="absolute top-full left-0 mt-2 w-72 rounded-2xl border border-white/12 bg-surface/95 backdrop-blur-2xl p-2 shadow-2xl animate-in fade-in zoom-in-95 duration-150 z-50">
-                <div className="text-[10px] uppercase font-bold text-primary px-3 py-1 tracking-wider">
-                  Network & Cohorts
-                </div>
-                {COMMUNITY_ITEMS.map((item) => (
-                  "external" in item && item.external ? (
-                    <a
-                      key={item.label}
-                      href={item.to}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setActiveDropdown(null)}
-                      className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-white/[0.08] transition-colors group"
-                    >
-                      <div className="size-7 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-emerald-400 shrink-0 mt-0.5">
-                        <item.icon className="size-3.5" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-foreground group-hover:text-emerald-400 transition-colors flex items-center gap-1">
-                          <span>{item.label}</span>
-                          <ArrowUpRight className="size-2.5 opacity-60" />
-                        </div>
-                        <div className="text-[11px] text-muted-foreground font-body leading-tight mt-0.5">
-                          {item.desc}
-                        </div>
-                      </div>
-                    </a>
-                  ) : (
-                    <Link
-                      key={item.label}
-                      to={item.to}
-                      onClick={() => setActiveDropdown(null)}
-                      className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-white/[0.08] transition-colors group"
-                    >
-                      <div className="size-7 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background transition-colors shrink-0 mt-0.5">
-                        <item.icon className="size-3.5" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                          {item.label}
-                        </div>
-                        <div className="text-[11px] text-muted-foreground font-body leading-tight mt-0.5">
-                          {item.desc}
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Showcase Direct Link */}
+          {/* Our Courses */}
           <Link
-            to="/showcase"
+            to="/courses"
             className={cn(
               "px-3 py-1.5 rounded-full transition-all duration-200",
-              pathname.startsWith("/showcase")
+              pathname === "/courses" && !location.search.includes("type=workshop")
                 ? "text-foreground bg-primary/20 font-bold border border-primary/30"
                 : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
             )}
           >
-            Showcase
+            Our Courses
+          </Link>
+
+          {/* Our Workshops */}
+          <Link
+            to="/courses"
+            search={{ type: "workshop" }}
+            className={cn(
+              "px-3 py-1.5 rounded-full transition-all duration-200",
+              pathname === "/programs" || pathname.startsWith("/courses?type=workshop")
+                ? "text-foreground bg-primary/20 font-bold border border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
+            )}
+          >
+            Our Workshops
+          </Link>
+
+          {/* What We've Done */}
+          <Link
+            to="/showcase"
+            className={cn(
+              "px-3 py-1.5 rounded-full transition-all duration-200",
+              pathname.startsWith("/showcase") || pathname.startsWith("/projects")
+                ? "text-foreground bg-primary/20 font-bold border border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
+            )}
+          >
+            What We've Done
+          </Link>
+
+          {/* Get Involved */}
+          <Link
+            to="/get-involved"
+            className={cn(
+              "px-3 py-1.5 rounded-full transition-all duration-200",
+              pathname.startsWith("/get-involved") || pathname.startsWith("/join")
+                ? "text-foreground bg-primary/20 font-bold border border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
+            )}
+          >
+            Get Involved
+          </Link>
+
+          {/* Contact Us */}
+          <Link
+            to="/contact"
+            className={cn(
+              "px-3 py-1.5 rounded-full transition-all duration-200",
+              pathname.startsWith("/contact")
+                ? "text-foreground bg-primary/20 font-bold border border-primary/30"
+                : "text-muted-foreground hover:text-foreground hover:bg-white/[0.06]",
+            )}
+          >
+            Contact Us
           </Link>
         </div>
 
@@ -325,17 +215,17 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex h-8 px-3 text-xs font-mono font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-white/[0.06]">
+          <Button asChild variant="ghost" size="sm" className="hidden lg:inline-flex h-8 px-3 text-xs font-mono font-medium text-muted-foreground hover:text-foreground rounded-full hover:bg-white/[0.06]">
             <Link to="/portal" className="flex items-center gap-1.5">
               <User className="size-3.5 text-primary" />
               <span>Workspace</span>
             </Link>
           </Button>
 
-          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-4 text-xs font-mono font-bold bg-gradient-to-r from-primary via-[#e8d7ff] to-gold text-background hover:brightness-110 rounded-full shadow-[0_2px_12px_rgba(197,157,255,0.25)] transition-transform active:scale-95">
+          <Button asChild size="sm" className="hidden sm:inline-flex h-8 px-4 text-xs font-mono font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-[0_2px_12px_rgba(197,157,255,0.25)] transition-transform active:scale-95">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
-              <span>Join Polaris</span>
-              <ArrowUpRight className="size-3 text-background font-bold" />
+              <span>Join Community</span>
+              <ArrowUpRight className="size-3 font-bold" />
             </a>
           </Button>
 
@@ -359,43 +249,70 @@ export function Navbar() {
         className="mt-2 max-w-5xl mx-auto rounded-2xl border border-white/12 bg-surface/95 backdrop-blur-2xl p-4 md:hidden pointer-events-auto shadow-2xl space-y-3 animate-in fade-in zoom-in-95 duration-200 font-mono text-xs"
       >
         <div className="space-y-1">
-          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">Learn</div>
+          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">About Polaris</div>
           <div className="grid grid-cols-2 gap-1">
-            {LEARN_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-1 pt-2 border-t border-white/8">
-          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">Build</div>
-          <div className="grid grid-cols-2 gap-1">
-            {BUILD_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-1 pt-2 border-t border-white/8">
-          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">Community & Showcase</div>
-          <div className="grid grid-cols-2 gap-1">
-            <Link to="/programs" className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground">
-              Live Events
+            <Link
+              to="/about"
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <Sparkles className="size-3 text-primary" />
+              <span>About Us</span>
             </Link>
-            <Link to="/showcase" className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground">
-              Showcase
+            <Link
+              to="/about#journey"
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <Calendar className="size-3 text-primary" />
+              <span>Our Journey</span>
+            </Link>
+            <Link
+              to="/about#team"
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <Users className="size-3 text-primary" />
+              <span>Our Team</span>
+            </Link>
+            <Link
+              to="/showcase"
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <Hammer className="size-3 text-primary" />
+              <span>What We've Done</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="space-y-1 pt-2 border-t border-white/8">
+          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">Programs & Learning</div>
+          <div className="grid grid-cols-2 gap-1">
+            <Link
+              to="/courses"
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <GraduationCap className="size-3 text-primary" />
+              <span>Our Courses</span>
+            </Link>
+            <Link
+              to="/courses"
+              search={{ type: "workshop" }}
+              className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5"
+            >
+              <Flame className="size-3 text-primary" />
+              <span>Our Workshops</span>
+            </Link>
+          </div>
+        </div>
+
+        <div className="space-y-1 pt-2 border-t border-white/8">
+          <div className="text-[10px] text-primary uppercase font-bold px-3 py-1">Get Connected</div>
+          <div className="grid grid-cols-2 gap-1">
+            <Link to="/get-involved" className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5">
+              <HeartHandshake className="size-3 text-primary" />
+              <span>Get Involved</span>
+            </Link>
+            <Link to="/contact" className="px-3 py-2 rounded-xl bg-surface-2/60 text-muted-foreground hover:text-foreground flex items-center gap-1.5">
+              <HelpCircle className="size-3 text-primary" />
+              <span>Contact Us</span>
             </Link>
           </div>
         </div>
@@ -404,7 +321,7 @@ export function Navbar() {
           <Button asChild variant="outline" size="sm" className="w-full justify-center rounded-xl font-mono text-xs border-white/10">
             <Link to="/portal">Student Workspace</Link>
           </Button>
-          <Button asChild size="sm" className="w-full justify-center bg-gradient-to-r from-primary to-gold text-background font-mono text-xs font-bold rounded-xl shadow-md">
+          <Button asChild size="sm" className="w-full justify-center bg-primary text-primary-foreground font-mono text-xs font-bold rounded-xl shadow-md">
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
               <span>Join WhatsApp Community</span>
               <ArrowUpRight className="size-3.5" />
@@ -415,3 +332,4 @@ export function Navbar() {
     </header>
   );
 }
+
