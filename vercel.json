@@ -7,7 +7,7 @@
       "destination": "/aeroforge/index.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!.*\\.[\\w]+$).*)",
       "destination": "/index.html"
     }
   ],
