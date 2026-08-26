@@ -165,7 +165,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@project_polaris" },
       { name: "color-scheme", content: "dark light" },
       { name: "theme-color", content: "#0a0b0e" },
-      { name: "google-site-verification", content: "google-site-verification-polaris" },
+      { name: "google-site-verification", content: "googled78f9368e7e1e969" },
       { name: "msvalidate.01", content: "bing-site-verification-polaris" },
     ],
     links: [
