@@ -15,114 +15,130 @@ import {
   Award,
   MessageCircle,
   CheckCircle,
+  Activity,
+  Zap,
+  Globe,
+  Radio,
 } from "lucide-react";
 import polarisLogo from "@/assets/polaris-logo.png";
 
-export interface EcosystemHub {
+export interface BrainSector {
   id: string;
   name: string;
   category: string;
-  lat: number; // degrees -90 to 90
-  lon: number; // degrees -180 to 180
+  lobeRole: string; // The cognitive function in the Polaris Digital Brain
+  lat: number;
+  lon: number;
   icon: any;
   status: string;
   headline: string;
   description: string;
+  telemetry: string;
   activeDetails: string[];
   ctaLabel: string;
   ctaUrl: string;
   isExternal?: boolean;
 }
 
-export const ECOSYSTEM_HUBS: EcosystemHub[] = [
-  {
-    id: "hub-masterclasses",
-    name: "Live Masterclasses Hub",
-    category: "Expert Workshops",
-    lat: 35,
-    lon: -40,
-    icon: Calendar,
-    status: "Active • 29 August 2026",
-    headline: "Exploring the Star Universe: A Journey into Astronomy",
-    description:
-      "Interactive live masterclasses hosted by scientists and researchers. Deep-dive into cosmos physics, ISRO careers, rocket development, and astronomy.",
-    activeDetails: [
-      "Speaker: Scientist Baldev Krishan Sharma (Cosmo-scientist)",
-      "Interactive Q&A and practical astronomy activity",
-      "Free verified participation certificate for all attendees",
-    ],
-    ctaLabel: "Register for 29th Aug Workshop →",
-    ctaUrl: "https://forms.gle/EaZUGjUd7spcQfoF7",
-    isExternal: true,
-  },
+export const POLARIS_BRAIN_SECTORS: BrainSector[] = [
   {
     id: "hub-aeroforge",
-    name: "AeroForge AI Simulation Lab",
-    category: "Computational Workstation",
+    name: "Computational Engine (AeroForge AI)",
+    category: "Physics Simulation Core",
+    lobeRole: "Analytical & Simulation Cortex",
     lat: 15,
     lon: 45,
     icon: Cpu,
-    status: "Production • 40+ Solvers",
-    headline: "Browser-Based Numerical Aerospace Simulation",
+    status: "Active • 40+ Numerical Solvers",
+    telemetry: "40+ CFD, FEA, Keplerian physics solvers running live in browser",
+    headline: "Democratizing High-End Aerospace & Numerical Physics",
     description:
-      "Our open-source physics laboratory. Practice transonic CFD airfoil aerodynamics, Keplerian orbital mechanics, and structural FEA directly in your browser without supercomputing clusters.",
+      "The computational core of Polaris. Instead of abstract textbook formulas, students simulate compressible transonic aerodynamics, orbital satellite maneuvers, and structural finite element stress directly in their browsers.",
     activeDetails: [
-      "Euler & Navier-Stokes compressible flow grid solvers",
-      "4th-Order Runge-Kutta orbital trajectory integrators",
-      "Interactive WebGL 2.0 pressure and stress contour mapping",
+      "Navier-Stokes Euler compressible aerodynamic mesh solvers",
+      "Runge-Kutta 4th order orbital trajectory & Lagrange point stationkeeping",
+      "Interactive WebGL 2.0 pressure, Mach shock, and von Mises stress contours",
     ],
     ctaLabel: "Launch AeroForge Lab →",
     ctaUrl: "/projects#aeroforge-lab",
   },
   {
+    id: "hub-masterclasses",
+    name: "Scientist & Masterclass Network",
+    category: "Expert Knowledge Transfer",
+    lobeRole: "Direct Mentorship Cortex",
+    lat: 38,
+    lon: -40,
+    icon: Calendar,
+    status: "Active • 29 August Masterclass",
+    telemetry: "100+ session participants, ISRO scientists & astrophysics mentors",
+    headline: "Direct Dialogue with Scientists & Practicing Engineers",
+    description:
+      "The knowledge-acquisition lobe. Connecting curious students directly with ISRO scientists, missile engineers, and astrophysicists through interactive masterclasses, live Q&As, and practical activities.",
+    activeDetails: [
+      "Upcoming: 'Exploring the Star Universe' with Scientist Baldev Krishan Sharma",
+      "Past Sessions with ISRO Scientist Ankit Gupta & Missile Man Prakhar Vishwakarma",
+      "Verified participation certificates and direct Q&A interactive format",
+    ],
+    ctaLabel: "Register for 29th Aug Masterclass (Free) →",
+    ctaUrl: "https://forms.gle/EaZUGjUd7spcQfoF7",
+    isExternal: true,
+  },
+  {
     id: "hub-sprints",
-    name: "Remote Industry Project Sprints",
-    category: "Collaborative Engineering",
+    name: "Collaborative Industry Sprints",
+    category: "Experiential Squads",
+    lobeRole: "Collaborative Build Cortex",
     lat: -25,
     lon: 10,
     icon: Layers,
-    status: "Open for Squads",
-    headline: "Collaborate Remotely on Industry-Standard Problem Briefs",
+    status: "Open for Squads (4 Domains)",
+    telemetry: "Remote squads solving authentic industry briefs with code reviews",
+    headline: "Solve Authentic Industry Problem Specs in Remote Squads",
     description:
-      "Work in remote squads (2–4 explorers) on real engineering briefs across Aero, Astro, CSE & Systems. Get reviewed weekly by aerospace scientists and earn verified portfolio credits.",
+      "The collaborative execution lobe. Remote squads (2–4 students) tackle industry-standard problem statements across Aero, Astro, CSE, and Systems Engineering with weekly mentor code reviews and co-author credits.",
     activeDetails: [
-      "4 Domains: Aero CFD, PINNs, Exoplanet Photometry, CubeSat FEA",
-      "Weekly 1-on-1 and squad technical code/physics reviews",
-      "Verified digital credentials and co-author paper credits",
+      "4 Tracks: Transonic CFD, PINNs AI, Exoplanet Photometry, CubeSat FEA",
+      "Weekly 1-on-1 and squad technical critique from aerospace researchers",
+      "Verified digital portfolio credentials and public repository recognition",
     ],
     ctaLabel: "Explore Sprint Squads →",
     ctaUrl: "/programs",
   },
   {
     id: "hub-volunteers",
-    name: "Student Volunteer Corps",
-    category: "Student Leadership",
+    name: "Student Leadership & Volunteer Corps",
+    category: "Ecosystem Operations",
+    lobeRole: "Operational Nervous System",
     lat: 48,
     lon: 110,
     icon: Users,
-    status: "28+ Active Contributors",
+    status: "28+ Core Contributors",
+    telemetry: "Student-led operations, outreach, research, and content pipelines",
     headline: "Built by Students, for Students",
     description:
-      "Join our student leadership corps across Operations, Outreach, Research, and Content. Gain hands-on leadership, coordinate scientist sessions, and build open resources.",
+      "The driving nervous system of Polaris. Our active student volunteer corps coordinates scientist sessions, moderates community cohorts, writes open educational resources, and leads national outreach.",
     activeDetails: [
-      "4 Specialized Tracks: Operations, Outreach, Research, Content",
-      "Direct collaboration with core engineering and outreach leads",
-      "Official leadership certificates and recommendations",
+      "4 Specialized Tracks: Operations, Outreach, Research, and Content",
+      "Direct collaboration with founding team on real strategic initiatives",
+      "Verified leadership recommendations and executive experience",
     ],
     ctaLabel: "Apply to Volunteer Corps →",
     ctaUrl: "/get-involved#volunteers",
   },
   {
     id: "hub-chapters",
-    name: "Polaris Chapters Network",
-    category: "Regional Expansion",
+    name: "Regional Chapters Network",
+    category: "Geographic Expansion",
+    lobeRole: "Decentralized Regional Cortex",
     lat: -40,
     lon: 85,
     icon: Compass,
-    status: "Launching Soon",
+    status: "Launching Soon (Tier-2/3 Cities)",
+    telemetry: "Bringing astronomy toolkits and build sprints to regional hubs",
     headline: "Reaching Tier 2, 3 Cities & Remote Regions",
     description:
-      "Democratizing space science and engineering education across school and university student chapters in regional cities with observation toolkits and build kits.",
+      "The spatial distribution lobe. Establishing student-led space and physics chapters at schools and universities in Tier-2/3 cities, providing observation kits, workshop curricula, and regional build sprints.",
     activeDetails: [
       "Official institutional chapter kits and observation tools",
       "Telescopic night sky observation events and CFD workshops",
@@ -133,53 +149,59 @@ export const ECOSYSTEM_HUBS: EcosystemHub[] = [
   },
   {
     id: "hub-publications",
-    name: "Publications & Articles Portal",
-    category: "Knowledge & Research",
+    name: "Research Commons & Articles Portal",
+    category: "Open Knowledge",
+    lobeRole: "Memory & Publication Cortex",
     lat: -10,
     lon: -110,
     icon: BookOpen,
-    status: "Open Submissions",
+    status: "Weekly Drops • Open Submissions",
+    telemetry: "Curated research explainers, Aaj Ka Gyan drops, and student papers",
     headline: "Explore. Learn. Share.",
     description:
-      "A platform for original scientific explainers, research notebooks, and student perspectives. Weekly newsletter drops delivered straight to your WhatsApp.",
+      "The shared memory lobe. A repository of student-written technical explainers, computational notebooks, research hypotheses, and weekly curated science dispatch drops.",
     activeDetails: [
-      "Curated categories: Science, Technology, Research, Perspectives",
+      "Curated categories: Science, Technology, Research, Student Perspectives",
       "Weekly curated newsletter dispatch on innovations & competitions",
-      "Open student submission portal with editorial reviews",
+      "Open student submission portal with editorial reviews via Tally",
     ],
-    ctaLabel: "Read Articles & Newsletter →",
+    ctaLabel: "Read Articles & Submit →",
     ctaUrl: "/articles",
   },
   {
     id: "hub-spotlight",
-    name: "Polaris Spotlight",
-    category: "Editorial Recognition",
+    name: "Merit Spotlight & Recognition",
+    category: "Verified Proof-of-Work",
+    lobeRole: "Recognition & Reward Cortex",
     lat: 25,
     lon: -140,
     icon: Award,
-    status: "Monthly Recognition",
+    status: "Editorial Recognition",
+    telemetry: "Noticing the students who go out and build with what they learn",
     headline: "Recognising the People & Ideas Moving Polaris Forward",
     description:
-      "Editorial recognition for exceptional student projects, breakthrough simulation models, competition winners, and top community contributors.",
+      "The recognition lobe. Polaris selectively highlights standout student projects, breakthrough simulation models, competition winners, and top community contributors with editorial profiles.",
     activeDetails: [
-      "Editorial spotlights with full project journeys and technical specs",
-      "Features for standout simulation builders and student researchers",
+      "Editorial features on student breakthroughs and open-source simulators",
       "Verified badges linked to portfolio proof-of-work",
+      "Recognising impact, curiosity, and tangible building",
     ],
     ctaLabel: "Explore Polaris Spotlight →",
     ctaUrl: "/spotlight",
   },
   {
     id: "hub-community",
-    name: "Community & Daily Knowledge Drops",
-    category: "Explorer Network",
+    name: "Synaptic Community Network",
+    category: "Peer Connection",
+    lobeRole: "Collective Synapse",
     lat: -45,
     lon: -40,
     icon: MessageCircle,
     status: "230+ Active Explorers",
+    telemetry: "Daily 'Aaj Ka Gyan' drops, astrophysics quizzes, and peer collabs",
     headline: "More Than a Community. An Environment to Explore.",
     description:
-      "Connect directly with curious students, participate in daily astrophysics quizzes, receive 'Aaj Ka Gyan' knowledge drops, and discuss space missions.",
+      "The real-time peer synapse. Connect directly with curious students, participate in daily astrophysics quizzes, receive 'Aaj Ka Gyan' knowledge drops, and debate space missions.",
     activeDetails: [
       "Daily 'Aaj Ka Gyan' aerospace knowledge drops",
       "Weekly astrophysical quizzes and interactive challenges",
@@ -191,12 +213,19 @@ export const ECOSYSTEM_HUBS: EcosystemHub[] = [
   },
 ];
 
+interface PulseParticle {
+  hubIndex: number;
+  progress: number;
+  speed: number;
+}
+
 export function PolarisEcosystemGlobe() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [selectedHub, setSelectedHub] = useState<EcosystemHub>(ECOSYSTEM_HUBS[0]);
-  const [hoveredHub, setHoveredHub] = useState<EcosystemHub | null>(null);
+  const [selectedSector, setSelectedSector] = useState<BrainSector>(POLARIS_BRAIN_SECTORS[0]);
+  const [hoveredSector, setHoveredSector] = useState<BrainSector | null>(null);
+  const [activeViewMode, setActiveViewMode] = useState<"brain" | "flowchart">("brain");
 
   // 3D Globe Rotation Angles (in radians)
   const rotationRef = useRef({ rotX: 0.25, rotY: -0.4 });
@@ -204,15 +233,24 @@ export function PolarisEcosystemGlobe() {
   const lastMousePosRef = useRef({ x: 0, y: 0 });
   const autoRotateRef = useRef(true);
 
-  // Focus on a specific hub on the globe
-  const focusHub = (hub: EcosystemHub) => {
-    setSelectedHub(hub);
-    autoRotateRef.current = false;
-    // Calculate target rotation angles to bring this hub to the front facing camera
-    const targetRotY = -((hub.lon * Math.PI) / 180) - Math.PI / 2;
-    const targetRotX = ((hub.lat * Math.PI) / 180) * 0.5;
+  // Synaptic electric pulses traveling between Polaris Core and Sector nodes
+  const pulsesRef = useRef<PulseParticle[]>([
+    { hubIndex: 0, progress: 0.1, speed: 0.012 },
+    { hubIndex: 1, progress: 0.4, speed: 0.015 },
+    { hubIndex: 2, progress: 0.7, speed: 0.011 },
+    { hubIndex: 3, progress: 0.2, speed: 0.014 },
+    { hubIndex: 4, progress: 0.5, speed: 0.013 },
+    { hubIndex: 5, progress: 0.8, speed: 0.016 },
+    { hubIndex: 6, progress: 0.3, speed: 0.012 },
+    { hubIndex: 7, progress: 0.6, speed: 0.014 },
+  ]);
 
-    // Smooth tween
+  const focusSector = (sector: BrainSector) => {
+    setSelectedSector(sector);
+    autoRotateRef.current = false;
+    const targetRotY = -((sector.lon * Math.PI) / 180) - Math.PI / 2;
+    const targetRotX = ((sector.lat * Math.PI) / 180) * 0.5;
+
     rotationRef.current = {
       rotX: targetRotX,
       rotY: targetRotY,
@@ -226,6 +264,7 @@ export function PolarisEcosystemGlobe() {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let time = 0;
 
     const handleResize = () => {
       if (!containerRef.current || !canvas) return;
@@ -249,65 +288,61 @@ export function PolarisEcosystemGlobe() {
       const radius = Math.min(width, height) * 0.38;
 
       ctx.clearRect(0, 0, width, height);
+      time += 0.02;
 
-      // Auto-rotation when not interacting
+      // Auto-rotation when idle
       if (autoRotateRef.current) {
-        rotationRef.current.rotY += 0.003;
+        rotationRef.current.rotY += 0.0025;
       }
 
       const { rotX, rotY } = rotationRef.current;
 
-      // ── Helper 3D Projection ──
+      // ── 3D Projection Math ──
       const project3D = (latDeg: number, lonDeg: number, r: number) => {
         const phi = (latDeg * Math.PI) / 180;
         const theta = (lonDeg * Math.PI) / 180;
 
-        // Spherical to 3D Cartesian
         let x = r * Math.cos(phi) * Math.sin(theta);
         let y = -r * Math.sin(phi);
         let z = r * Math.cos(phi) * Math.cos(theta);
 
-        // Rotate Y (longitude)
         const cosY = Math.cos(rotY);
         const sinY = Math.sin(rotY);
         const x1 = x * cosY + z * sinY;
         const z1 = -x * sinY + z * cosY;
 
-        // Rotate X (latitude/tilt)
         const cosX = Math.cos(rotX);
         const sinX = Math.sin(rotX);
         const y2 = y * cosX - z1 * sinX;
         const z2 = y * sinX + z1 * cosX;
 
-        // Perspective scale factor
         const scale = 1 + z2 / (r * 3.5);
         return {
           px: centerX + x1 * scale,
           py: centerY + y2 * scale,
           pz: z2,
-          visible: z2 > -r * 0.25, // Front facing
+          visible: z2 > -r * 0.3,
         };
       };
 
-      // 1. Draw outer ambient atmosphere glow
-      const atmGrad = ctx.createRadialGradient(centerX, centerY, radius * 0.8, centerX, centerY, radius * 1.35);
-      atmGrad.addColorStop(0, "rgba(165, 180, 252, 0.08)");
-      atmGrad.addColorStop(0.5, "rgba(165, 180, 252, 0.02)");
-      atmGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
-      ctx.fillStyle = atmGrad;
+      // 1. Atmosphere Neural Glow
+      const glowGrad = ctx.createRadialGradient(centerX, centerY, radius * 0.7, centerX, centerY, radius * 1.4);
+      glowGrad.addColorStop(0, "rgba(165, 180, 252, 0.08)");
+      glowGrad.addColorStop(0.6, "rgba(165, 180, 252, 0.02)");
+      glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = glowGrad;
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radius * 1.35, 0, Math.PI * 2);
+      ctx.arc(centerX, centerY, radius * 1.4, 0, Math.PI * 2);
       ctx.fill();
 
-      // 2. Draw Sphere Latitude & Longitude Wireframe Grid
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+      // 2. Neural Sphere Lattice Rings
+      ctx.strokeStyle = "rgba(165, 180, 252, 0.05)";
       ctx.lineWidth = 1;
 
-      // Latitude Rings
-      [-60, -30, 0, 30, 60].forEach((lat) => {
+      [-50, -25, 0, 25, 50].forEach((lat) => {
         ctx.beginPath();
         let first = true;
-        for (let lon = -180; lon <= 180; lon += 10) {
+        for (let lon = -180; lon <= 180; lon += 12) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible) {
             if (first) {
@@ -323,11 +358,10 @@ export function PolarisEcosystemGlobe() {
         ctx.stroke();
       });
 
-      // Longitude Meridians
-      [-150, -100, -50, 0, 50, 100, 150].forEach((lon) => {
+      [-120, -60, 0, 60, 120].forEach((lon) => {
         ctx.beginPath();
         let first = true;
-        for (let lat = -80; lat <= 80; lat += 8) {
+        for (let lat = -75; lat <= 75; lat += 10) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible) {
             if (first) {
@@ -343,12 +377,12 @@ export function PolarisEcosystemGlobe() {
         ctx.stroke();
       });
 
-      // 3. Draw Celestial Dotted Surface Stars
-      for (let lat = -70; lat <= 70; lat += 20) {
-        for (let lon = -170; lon <= 170; lon += 25) {
+      // 3. Synaptic Particle Cloud (Neural Dust)
+      for (let lat = -65; lat <= 65; lat += 25) {
+        for (let lon = -160; lon <= 160; lon += 30) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible && pt.pz > 0) {
-            const alpha = Math.max(0.05, (pt.pz / radius) * 0.3);
+            const alpha = Math.max(0.04, (pt.pz / radius) * 0.25);
             ctx.fillStyle = `rgba(165, 180, 252, ${alpha})`;
             ctx.beginPath();
             ctx.arc(pt.px, pt.py, 1.2, 0, Math.PI * 2);
@@ -357,61 +391,92 @@ export function PolarisEcosystemGlobe() {
         }
       }
 
-      // 4. Draw Central Polaris North Star Core
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 14, 0, Math.PI * 2);
-      ctx.fillStyle = "#0a0b0e";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(165, 180, 252, 0.8)";
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      // 5. Draw Connection Beams & Active Hub Nodes
-      ECOSYSTEM_HUBS.forEach((hub) => {
+      // 4. Draw Inter-Synaptic Connection Lines & Animated Electrical Pulses
+      POLARIS_BRAIN_SECTORS.forEach((hub, idx) => {
         const pt = project3D(hub.lat, hub.lon, radius);
-        const isSelected = selectedHub.id === hub.id;
-        const isHovered = hoveredHub?.id === hub.id;
+        const isSelected = selectedSector.id === hub.id;
+        const isHovered = hoveredSector?.id === hub.id;
 
         if (pt.visible) {
-          // Connection beam to Polaris Center
+          // Neural Synapse Filament Line to Polaris Brain Core
           ctx.beginPath();
           ctx.moveTo(centerX, centerY);
           ctx.lineTo(pt.px, pt.py);
           if (isSelected || isHovered) {
-            ctx.strokeStyle = "rgba(165, 180, 252, 0.7)";
-            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = "rgba(165, 180, 252, 0.85)";
+            ctx.lineWidth = 2;
           } else {
-            ctx.strokeStyle = "rgba(165, 180, 252, 0.12)";
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = "rgba(165, 180, 252, 0.15)";
+            ctx.lineWidth = 1;
           }
           ctx.stroke();
 
-          // Hub Node Star
-          const nodeRadius = isSelected ? 8 : isHovered ? 7 : 5.5;
+          // Sector Star Node
+          const nodeRadius = isSelected ? 8.5 : isHovered ? 7.5 : 5.5;
           ctx.beginPath();
           ctx.arc(pt.px, pt.py, nodeRadius, 0, Math.PI * 2);
-          ctx.fillStyle = isSelected ? "#a5b4fc" : "#111318";
+          ctx.fillStyle = isSelected ? "#a5b4fc" : "#0f1117";
           ctx.fill();
-          ctx.strokeStyle = isSelected ? "#ffffff" : "rgba(165, 180, 252, 0.6)";
-          ctx.lineWidth = isSelected ? 2 : 1;
+          ctx.strokeStyle = isSelected ? "#ffffff" : "rgba(165, 180, 252, 0.7)";
+          ctx.lineWidth = isSelected ? 2.5 : 1;
           ctx.stroke();
 
-          // Pulsing Halo on Selected Node
+          // Pulsing Synaptic Ring around selected node
           if (isSelected || isHovered) {
+            const pulseRadius = nodeRadius + 4 + Math.sin(time * 3) * 3;
             ctx.beginPath();
-            ctx.arc(pt.px, pt.py, nodeRadius + 5, 0, Math.PI * 2);
-            ctx.strokeStyle = "rgba(165, 180, 252, 0.35)";
-            ctx.lineWidth = 1;
+            ctx.arc(pt.px, pt.py, pulseRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(165, 180, 252, 0.4)";
+            ctx.lineWidth = 1.2;
             ctx.stroke();
           }
 
           // Node Label
           ctx.font = `${isSelected ? "bold 11px" : "10px"} Inter, sans-serif`;
-          ctx.fillStyle = isSelected ? "#ffffff" : "rgba(255, 255, 255, 0.7)";
+          ctx.fillStyle = isSelected ? "#ffffff" : "rgba(255, 255, 255, 0.75)";
           ctx.textAlign = "center";
-          ctx.fillText(hub.name.split(" ")[0], pt.px, pt.py + (isSelected ? 18 : 16));
+          ctx.fillText(hub.name.split(" ")[0], pt.px, pt.py + (isSelected ? 20 : 16));
         }
       });
+
+      // 5. Draw Animated Neural Pulse Packets Traveling Along Synapses
+      pulsesRef.current.forEach((pulse) => {
+        pulse.progress += pulse.speed;
+        if (pulse.progress > 1) pulse.progress = 0;
+
+        const hub = POLARIS_BRAIN_SECTORS[pulse.hubIndex];
+        const pt = project3D(hub.lat, hub.lon, radius);
+
+        if (pt.visible) {
+          const pulseX = centerX + (pt.px - centerX) * pulse.progress;
+          const pulseY = centerY + (pt.py - centerY) * pulse.progress;
+
+          ctx.beginPath();
+          ctx.arc(pulseX, pulseY, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = "#ffffff";
+          ctx.shadowColor = "#a5b4fc";
+          ctx.shadowBlur = 8;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      });
+
+      // 6. Central Polaris Brain Core
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 15, 0, Math.PI * 2);
+      ctx.fillStyle = "#0a0b0e";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(165, 180, 252, 0.9)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      const coreGlow = ctx.createRadialGradient(centerX, centerY, 2, centerX, centerY, 28);
+      coreGlow.addColorStop(0, "rgba(165, 180, 252, 0.4)");
+      coreGlow.addColorStop(1, "rgba(165, 180, 252, 0)");
+      ctx.fillStyle = coreGlow;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 28, 0, Math.PI * 2);
+      ctx.fill();
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -422,7 +487,7 @@ export function PolarisEcosystemGlobe() {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
     };
-  }, [selectedHub, hoveredHub]);
+  }, [selectedSector, hoveredSector]);
 
   // Drag Event Handlers for 3D rotation
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -446,109 +511,129 @@ export function PolarisEcosystemGlobe() {
   };
 
   return (
-    <div className="rounded-2xl border border-white/8 bg-surface/50 backdrop-blur-xl overflow-hidden font-sans space-y-6 p-6 md:p-8">
-      {/* ── Header & Topic Navigation Filter Pills ── */}
+    <div className="rounded-2xl border border-primary/25 bg-surface/70 backdrop-blur-2xl overflow-hidden font-sans space-y-6 p-6 md:p-8 relative shadow-2xl">
+      {/* ── 1. DIGITAL BRAIN HUD / TELEMETRY STATUS BAR ── */}
       <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/8 pb-5">
-        <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase font-semibold mb-1">
-            <Sparkles className="size-3.5" />
-            <span>Interactive Celestial Navigator</span>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase font-semibold">
+            <Radio className="size-3.5 text-emerald-400 animate-pulse" />
+            <span>Digital Brain of Project Polaris</span>
+            <span className="text-white/20">|</span>
+            <span className="text-muted-foreground">Neural Ecosystem Architecture</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
-            The Polaris Ecosystem Globe
+          <h2 className="text-2xl sm:text-4xl font-bold font-display text-foreground leading-tight">
+            The Polaris Brain: Complete Ecosystem at a Glance
           </h2>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Click any initiative node or drag the 3D globe to inspect everything happening in our universe.
+          <p className="text-xs text-muted-foreground max-w-2xl">
+            Polaris is not a fragmented collection of courses — it is an interconnected digital brain built to turn curiosity into verifiable, real-world engineering impact.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-[11px] text-muted-foreground bg-surface-2 px-3 py-1.5 rounded-full border border-white/8">
-          <Move className="size-3 text-primary animate-pulse" />
-          <span>Drag 3D Globe to Rotate</span>
+        {/* Live Telemetry Pill */}
+        <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-2 border border-white/8 text-muted-foreground">
+            <Activity className="size-3 text-primary" />
+            <span>Telemetry: <strong className="text-emerald-400">8 Sectors Firing</strong></span>
+          </div>
+          <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-2 border border-white/8 text-muted-foreground">
+            <Move className="size-3 text-primary" />
+            <span>Drag to Rotate 3D Brain</span>
+          </div>
         </div>
       </div>
 
-      {/* Hub Filter Pills */}
+      {/* ── 2. SECTOR FILTER BUTTONS ── */}
       <div className="flex flex-wrap gap-1.5 text-xs">
-        {ECOSYSTEM_HUBS.map((hub) => {
-          const isSelected = selectedHub.id === hub.id;
-          const Icon = hub.icon;
+        {POLARIS_BRAIN_SECTORS.map((sector) => {
+          const isSelected = selectedSector.id === sector.id;
+          const Icon = sector.icon;
           return (
             <button
-              key={hub.id}
+              key={sector.id}
               type="button"
-              onClick={() => focusHub(hub)}
-              onMouseEnter={() => setHoveredHub(hub)}
-              onMouseLeave={() => setHoveredHub(null)}
+              onClick={() => focusSector(sector)}
+              onMouseEnter={() => setHoveredSector(sector)}
+              onMouseLeave={() => setHoveredSector(null)}
               className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 text-xs ${
                 isSelected
-                  ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                  ? "bg-primary text-primary-foreground font-semibold shadow-[0_0_15px_rgba(165,180,252,0.3)]"
                   : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8 hover:border-white/20"
               }`}
             >
               <Icon className="size-3.5" />
-              <span>{hub.name}</span>
+              <span>{sector.name.split("(")[0]}</span>
             </button>
           );
         })}
       </div>
 
-      {/* ── Main Canvas & Inspector Area ── */}
-      <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr] items-center min-h-[460px]">
-        {/* Left: 3D Interactive Canvas */}
+      {/* ── 3. MAIN 3D BRAIN CANVAS & COGNITIVE SECTOR INSPECTOR ── */}
+      <div className="grid gap-6 lg:grid-cols-[1.3fr_0.9fr] items-center min-h-[480px]">
+        {/* Left: 3D Neural Sphere Canvas */}
         <div
           ref={containerRef}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
-          className="relative size-full min-h-[380px] sm:min-h-[440px] rounded-xl bg-card border border-white/6 overflow-hidden cursor-grab active:cursor-grabbing flex items-center justify-center select-none"
+          className="relative size-full min-h-[380px] sm:min-h-[460px] rounded-xl bg-card border border-white/8 overflow-hidden cursor-grab active:cursor-grabbing flex items-center justify-center select-none"
         >
           <canvas ref={canvasRef} className="size-full absolute inset-0 pointer-events-none" />
 
-          {/* Central Polaris Star Badge Overlay */}
+          {/* Central Polaris Star Core Logo Overlay */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
-            <img src={polarisLogo} alt="Polaris Center" className="size-6 mx-auto object-contain" />
+            <img src={polarisLogo} alt="Polaris Neural Core" className="size-6 mx-auto object-contain" />
+          </div>
+
+          {/* Subtle Canvas Watermark */}
+          <div className="absolute bottom-3 left-3 text-[10px] font-mono text-muted-foreground/60 pointer-events-none">
+            3D Neural Projection Core • Drag with Mouse / Touch
           </div>
         </div>
 
-        {/* Right: Dynamic Hub Inspector Card */}
-        <div className="p-6 md:p-7 rounded-xl border border-primary/20 bg-card space-y-5 flex flex-col justify-between h-full">
+        {/* Right: Dynamic Cognitive Sector Inspector Panel */}
+        <div className="p-6 md:p-7 rounded-xl border border-primary/30 bg-card space-y-5 flex flex-col justify-between h-full">
           <div className="space-y-4">
             <div className="flex items-center justify-between text-xs">
               <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25 font-semibold text-[10px] uppercase font-mono">
-                {selectedHub.category}
+                {selectedSector.lobeRole}
               </span>
               <span className="text-[11px] text-emerald-400 font-mono flex items-center gap-1">
                 <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>{selectedHub.status}</span>
+                <span>{selectedSector.status}</span>
               </span>
             </div>
 
             <div>
               <div className="flex items-center gap-2.5 mb-1.5">
                 <div className="size-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-                  <selectedHub.icon className="size-4" />
+                  <selectedSector.icon className="size-4" />
                 </div>
                 <h3 className="text-xl font-bold font-display text-foreground">
-                  {selectedHub.name}
+                  {selectedSector.name}
                 </h3>
               </div>
               <p className="text-xs text-primary font-medium font-display">
-                "{selectedHub.headline}"
+                "{selectedSector.headline}"
               </p>
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              {selectedHub.description}
+              {selectedSector.description}
             </p>
+
+            {/* Telemetry Metric Box */}
+            <div className="p-3 rounded-lg bg-surface-2 border border-white/6 text-xs text-foreground/90 font-mono flex items-center gap-2">
+              <Zap className="size-3.5 text-primary shrink-0" />
+              <span>{selectedSector.telemetry}</span>
+            </div>
 
             <div className="space-y-2 pt-1">
               <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider block font-mono">
-                What's Happening in this Sector
+                Active Operations in this Sector
               </span>
               <ul className="space-y-1.5 text-xs text-foreground/90 font-medium">
-                {selectedHub.activeDetails.map((detail) => (
+                {selectedSector.activeDetails.map((detail) => (
                   <li key={detail} className="flex items-start gap-2">
                     <CheckCircle className="size-3.5 text-primary shrink-0 mt-0.5" />
                     <span>{detail}</span>
@@ -559,14 +644,14 @@ export function PolarisEcosystemGlobe() {
           </div>
 
           <div className="pt-4 border-t border-white/6 flex items-center justify-between gap-3">
-            {selectedHub.isExternal ? (
+            {selectedSector.isExternal ? (
               <Button
                 asChild
                 size="default"
                 className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
               >
-                <a href={selectedHub.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
-                  <span>{selectedHub.ctaLabel}</span>
+                <a href={selectedSector.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                  <span>{selectedSector.ctaLabel}</span>
                   <ExternalLink className="size-3.5" />
                 </a>
               </Button>
@@ -576,8 +661,8 @@ export function PolarisEcosystemGlobe() {
                 size="default"
                 className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
               >
-                <Link to={selectedHub.ctaUrl} className="flex items-center justify-center gap-1.5">
-                  <span>{selectedHub.ctaLabel}</span>
+                <Link to={selectedSector.ctaUrl} className="flex items-center justify-center gap-1.5">
+                  <span>{selectedSector.ctaLabel}</span>
                   <ArrowRight className="size-3.5" />
                 </Link>
               </Button>
