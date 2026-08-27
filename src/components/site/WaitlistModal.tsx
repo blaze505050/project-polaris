@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { saveUserSubmission } from "@/lib/cms-store";
 import { Sparkles, CheckCircle2, Bell, X } from "lucide-react";
 
 interface WaitlistModalProps {
@@ -27,20 +28,13 @@ export function WaitlistModal({
     e.preventDefault();
     if (!email) return;
 
-    // Save to local waitlist storage
-    try {
-      const existing = JSON.parse(localStorage.getItem("polaris_waitlist_entries") || "[]");
-      existing.push({
-        name,
-        email,
-        interest: interest || programTitle,
-        programTitle,
-        timestamp: new Date().toISOString(),
-      });
-      localStorage.setItem("polaris_waitlist_entries", JSON.stringify(existing));
-    } catch {
-      // ignore
-    }
+    saveUserSubmission({
+      type: "waitlist",
+      name: name || "Explorer",
+      email,
+      programTitle,
+      message: interest || `Priority waitlist registration for ${programTitle}`,
+    });
 
     setSubmitted(true);
   };

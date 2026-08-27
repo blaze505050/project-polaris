@@ -621,3 +621,107 @@ export function saveIndustrySprints(sprints: IndustrySprintProject[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(INDUSTRY_SPRINTS_KEY, JSON.stringify(sprints));
 }
+
+// ── 3. USER SUBMISSIONS & BACKEND DATA STORE ──
+
+export interface UserSubmission {
+  id: string;
+  type: "waitlist" | "sprint_application" | "contact_inquiry" | "chapter_lead" | "newsletter";
+  name: string;
+  email: string;
+  phone?: string;
+  programTitle?: string;
+  domain?: string;
+  squadMembers?: string;
+  message?: string;
+  timestamp: string;
+}
+
+const SUBMISSIONS_KEY = "polaris_user_submissions";
+
+const INITIAL_SUBMISSIONS: UserSubmission[] = [
+  {
+    id: "sub-1",
+    type: "waitlist",
+    name: "Aarav Sharma",
+    email: "aarav.sharma@example.com",
+    programTitle: "Polaris Innovation Program",
+    message: "Interested in physical rocketry hardware prototypes and CFD aerodynamics.",
+    timestamp: "2026-08-25T14:20:00.000Z",
+  },
+  {
+    id: "sub-2",
+    type: "sprint_application",
+    name: "Sneha Patel",
+    email: "sneha.p@example.com",
+    domain: "Aerospace & Rocketry",
+    programTitle: "Transonic Airfoil CFD & Shock Wave Modeling",
+    squadMembers: "Sneha Patel, Rohan Verma",
+    message: "We have basic OpenFOAM experience and want to learn supersonic grid generation.",
+    timestamp: "2026-08-26T11:15:00.000Z",
+  },
+  {
+    id: "sub-3",
+    type: "contact_inquiry",
+    name: "Dr. K. N. Rao",
+    email: "knrao@institute.edu",
+    message: "Interested in organizing a Polaris satellite simulation workshop for our undergraduate engineering department.",
+    timestamp: "2026-08-26T16:40:00.000Z",
+  },
+  {
+    id: "sub-4",
+    type: "chapter_lead",
+    name: "Vikram Mehta",
+    email: "vikram.m@college.org",
+    programTitle: "Regional Chapter Lead",
+    message: "Want to launch a Polaris chapter at our university in Indore.",
+    timestamp: "2026-08-27T09:30:00.000Z",
+  },
+];
+
+export function getUserSubmissions(): UserSubmission[] {
+  if (typeof window === "undefined") return INITIAL_SUBMISSIONS;
+  try {
+    const raw = localStorage.getItem(SUBMISSIONS_KEY);
+    if (!raw) {
+      localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(INITIAL_SUBMISSIONS));
+      return INITIAL_SUBMISSIONS;
+    }
+    return JSON.parse(raw);
+  } catch {
+    return INITIAL_SUBMISSIONS;
+  }
+}
+
+export function saveUserSubmission(
+  submission: Omit<UserSubmission, "id" | "timestamp">
+): UserSubmission {
+  const current = getUserSubmissions();
+  const newEntry: UserSubmission = {
+    ...submission,
+    id: `sub-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+    timestamp: new Date().toISOString(),
+  };
+
+  const updated = [newEntry, ...current];
+  if (typeof window !== "undefined") {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(updated));
+  }
+  return newEntry;
+}
+
+export function deleteUserSubmission(id: string): UserSubmission[] {
+  const current = getUserSubmissions();
+  const updated = current.filter((s) => s.id !== id);
+  if (typeof window !== "undefined") {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(updated));
+  }
+  return updated;
+}
+
+export function clearAllUserSubmissions() {
+  if (typeof window !== "undefined") {
+    localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([]));
+  }
+}
+

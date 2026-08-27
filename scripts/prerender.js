@@ -106,6 +106,14 @@ const ROUTES = [
     subheading: "Guidelines for open, collaborative, and verified learning.",
     canonical: `${SITE_URL}/terms`,
   },
+  {
+    path: "/404",
+    title: "404 — Coordinates Not Found | Project Polaris",
+    description: "The orbital trajectory or page you are looking for does not exist.",
+    heading: "Coordinates Not Found",
+    subheading: "Lost in deep space? Return to the main Polaris platform.",
+    canonical: `${SITE_URL}/404`,
+  },
 ];
 
 async function prerender() {

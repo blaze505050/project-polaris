@@ -9,9 +9,13 @@ import {
   saveArticles,
   getSpotlights,
   saveSpotlights,
+  getUserSubmissions,
+  deleteUserSubmission,
+  clearAllUserSubmissions,
   type ProgramEvent,
   type ArticleItem,
   type SpotlightEntry,
+  type UserSubmission,
 } from "@/lib/cms-store";
 import {
   User,
@@ -27,6 +31,12 @@ import {
   ArrowRight,
   ExternalLink,
   Lock,
+  Download,
+  Database,
+  Mail,
+  FileSpreadsheet,
+  RefreshCw,
+  Search,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -57,7 +67,10 @@ function DashboardPage() {
   const [programs, setProgramsState] = useState<ProgramEvent[]>(getPrograms());
   const [articles, setArticlesState] = useState<ArticleItem[]>(getArticles());
   const [spotlights, setSpotlightsState] = useState<SpotlightEntry[]>(getSpotlights());
-  const [activeCmsSection, setActiveCmsSection] = useState<"programs" | "articles" | "spotlight">("programs");
+  const [submissions, setSubmissionsState] = useState<UserSubmission[]>(getUserSubmissions());
+  const [activeCmsSection, setActiveCmsSection] = useState<"programs" | "articles" | "spotlight" | "submissions">("programs");
+  const [submissionFilter, setSubmissionFilter] = useState<string>("all");
+  const [submissionSearch, setSubmissionSearch] = useState<string>("");
   const [statusFeedback, setStatusFeedback] = useState<string | null>(null);
 
   // New Program Form State
@@ -208,6 +221,76 @@ function DashboardPage() {
     setStatusFeedback("✓ Spotlight removed.");
     setTimeout(() => setStatusFeedback(null), 3000);
   };
+
+  // Submissions Handlers
+  const handleDeleteSubmission = (id: string) => {
+    const updated = deleteUserSubmission(id);
+    setSubmissionsState(updated);
+    setStatusFeedback("✓ User submission removed.");
+    setTimeout(() => setStatusFeedback(null), 3000);
+  };
+
+  const handleClearAllSubmissions = () => {
+    if (window.confirm("Are you sure you want to clear all user submissions? This cannot be undone.")) {
+      clearAllUserSubmissions();
+      setSubmissionsState([]);
+      setStatusFeedback("✓ All user submissions cleared.");
+      setTimeout(() => setStatusFeedback(null), 3000);
+    }
+  };
+
+  const handleExportCSV = () => {
+    const headers = ["ID", "Type", "Name", "Email", "Phone", "Program_or_Topic", "Domain", "Squad_Members", "Message_or_Details", "Submitted_At"];
+    const rows = submissions.map((s) => [
+      `"${s.id}"`,
+      `"${s.type}"`,
+      `"${(s.name || "").replace(/"/g, '""')}"`,
+      `"${(s.email || "").replace(/"/g, '""')}"`,
+      `"${(s.phone || "").replace(/"/g, '""')}"`,
+      `"${(s.programTitle || "").replace(/"/g, '""')}"`,
+      `"${(s.domain || "").replace(/"/g, '""')}"`,
+      `"${(s.squadMembers || "").replace(/"/g, '""')}"`,
+      `"${(s.message || "").replace(/"/g, '""')}"`,
+      `"${s.timestamp}"`,
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `polaris_user_submissions_${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setStatusFeedback("✓ Exported submissions to CSV!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+  };
+
+  const handleExportJSON = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(submissions, null, 2));
+    const link = document.createElement("a");
+    link.setAttribute("href", dataStr);
+    link.setAttribute("download", `polaris_user_submissions_${new Date().toISOString().split("T")[0]}.json`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setStatusFeedback("✓ Exported submissions to JSON!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+  };
+
+  const filteredSubmissions = submissions.filter((s) => {
+    if (submissionFilter !== "all" && s.type !== submissionFilter) return false;
+    if (submissionSearch) {
+      const q = submissionSearch.toLowerCase();
+      return (
+        s.name.toLowerCase().includes(q) ||
+        s.email.toLowerCase().includes(q) ||
+        (s.programTitle && s.programTitle.toLowerCase().includes(q)) ||
+        (s.message && s.message.toLowerCase().includes(q))
+      );
+    }
+    return true;
+  });
 
   return (
     <>
@@ -403,6 +486,18 @@ function DashboardPage() {
                       }`}
                     >
                       Spotlight Manager ({spotlights.length})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveCmsSection("submissions")}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 ${
+                        activeCmsSection === "submissions"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-surface-2 text-muted-foreground border border-white/8"
+                      }`}
+                    >
+                      <Database className="size-3.5" />
+                      <span>User Data & Submissions ({submissions.length})</span>
                     </button>
                   </div>
                   <span className="text-[11px] text-emerald-400 font-mono flex items-center gap-1">
@@ -715,6 +810,234 @@ function DashboardPage() {
                           </button>
                         </div>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ── D. USER DATA & SUBMISSIONS CENTER ── */}
+                {activeCmsSection === "submissions" && (
+                  <div className="space-y-6">
+                    {/* Header & Export Actions */}
+                    <div className="p-6 rounded-2xl border border-primary/25 bg-card space-y-5">
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                          <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase font-semibold mb-1">
+                            <Database className="size-3.5 text-primary" />
+                            <span>Live User Data & Form Submissions</span>
+                          </div>
+                          <h3 className="text-xl font-bold font-display text-foreground">
+                            Submissions & Lead Center
+                          </h3>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Real-time records from Waitlists, Sprint Squad applications, Contact inquiries, and Chapter Leads.
+                          </p>
+                        </div>
+
+                        {/* Export Buttons */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs">
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={handleExportCSV}
+                            className="h-9 px-4 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 flex items-center gap-1.5 shadow-sm"
+                          >
+                            <FileSpreadsheet className="size-3.5" />
+                            <span>Export CSV (Excel)</span>
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={handleExportJSON}
+                            className="h-9 px-3.5 border-white/10 hover:border-white/20 text-foreground flex items-center gap-1.5"
+                          >
+                            <Download className="size-3.5" />
+                            <span>Export JSON</span>
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={handleClearAllSubmissions}
+                            className="h-9 px-3 text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+                          >
+                            <Trash2 className="size-3.5" />
+                            <span>Clear All</span>
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Summary Metrics */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-mono text-xs">
+                        <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
+                          <div className="text-[10px] text-muted-foreground uppercase">Total Records</div>
+                          <div className="text-xl font-bold text-foreground mt-1">{submissions.length}</div>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
+                          <div className="text-[10px] text-muted-foreground uppercase">Waitlist Signups</div>
+                          <div className="text-xl font-bold text-primary mt-1">
+                            {submissions.filter((s) => s.type === "waitlist").length}
+                          </div>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
+                          <div className="text-[10px] text-muted-foreground uppercase">Sprint Applications</div>
+                          <div className="text-xl font-bold text-emerald-400 mt-1">
+                            {submissions.filter((s) => s.type === "sprint_application").length}
+                          </div>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
+                          <div className="text-[10px] text-muted-foreground uppercase">Direct Inquiries</div>
+                          <div className="text-xl font-bold text-sky-400 mt-1">
+                            {submissions.filter((s) => s.type === "contact_inquiry" || s.type === "chapter_lead").length}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Filter & Search Bar */}
+                      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/6">
+                        <div className="flex flex-wrap gap-1.5 text-xs">
+                          {[
+                            { label: "All Records", val: "all" },
+                            { label: "Waitlists", val: "waitlist" },
+                            { label: "Sprint Squads", val: "sprint_application" },
+                            { label: "Contact Inquiries", val: "contact_inquiry" },
+                            { label: "Chapter Leads", val: "chapter_lead" },
+                          ].map((f) => (
+                            <button
+                              key={f.val}
+                              type="button"
+                              onClick={() => setSubmissionFilter(f.val)}
+                              className={`px-3 py-1 rounded-lg text-xs transition-colors ${
+                                submissionFilter === f.val
+                                  ? "bg-primary text-primary-foreground font-semibold"
+                                  : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"
+                              }`}
+                            >
+                              {f.label}
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="relative w-full sm:w-64">
+                          <Search className="size-3.5 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2" />
+                          <input
+                            type="text"
+                            placeholder="Search name, email, topic..."
+                            value={submissionSearch}
+                            onChange={(e) => setSubmissionSearch(e.target.value)}
+                            className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Submissions Table / Cards */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between text-xs text-muted-foreground px-1">
+                        <span>Showing {filteredSubmissions.length} submissions</span>
+                        <button
+                          type="button"
+                          onClick={() => setSubmissionsState(getUserSubmissions())}
+                          className="flex items-center gap-1 hover:text-foreground transition-colors"
+                        >
+                          <RefreshCw className="size-3" />
+                          <span>Refresh Live Data</span>
+                        </button>
+                      </div>
+
+                      {filteredSubmissions.length === 0 ? (
+                        <div className="p-8 rounded-xl border border-white/8 bg-card text-center text-xs text-muted-foreground space-y-1">
+                          <p className="font-semibold text-foreground">No submissions found</p>
+                          <p>When users submit waitlist forms, sprint applications, or contact inquiries, they will appear here live.</p>
+                        </div>
+                      ) : (
+                        <div className="grid gap-3">
+                          {filteredSubmissions.map((s) => (
+                            <div
+                              key={s.id}
+                              className="p-4 md:p-5 rounded-xl border border-white/8 bg-card flex flex-col md:flex-row md:items-start justify-between gap-4 text-xs hover:border-white/16 transition-colors"
+                            >
+                              <div className="space-y-2 flex-1">
+                                <div className="flex flex-wrap items-center gap-2">
+                                  <span
+                                    className={`px-2.5 py-0.5 rounded-full font-mono text-[10px] uppercase font-semibold border ${
+                                      s.type === "waitlist"
+                                        ? "bg-primary/10 text-primary border-primary/20"
+                                        : s.type === "sprint_application"
+                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                        : s.type === "chapter_lead"
+                                        ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
+                                        : "bg-sky-500/10 text-sky-400 border-sky-500/20"
+                                    }`}
+                                  >
+                                    {s.type.replace("_", " ")}
+                                  </span>
+
+                                  <span className="text-[11px] text-muted-foreground font-mono">
+                                    {new Date(s.timestamp).toLocaleString("en-IN", {
+                                      dateStyle: "medium",
+                                      timeStyle: "short",
+                                    })}
+                                  </span>
+                                </div>
+
+                                <div>
+                                  <div className="text-sm font-bold font-display text-foreground">
+                                    {s.name}
+                                  </div>
+                                  <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mt-0.5 font-mono">
+                                    <a href={`mailto:${s.email}`} className="text-primary hover:underline flex items-center gap-1">
+                                      <Mail className="size-3" />
+                                      <span>{s.email}</span>
+                                    </a>
+                                    {s.phone && (
+                                      <span className="flex items-center gap-1">
+                                        <span>📞 {s.phone}</span>
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {s.programTitle && (
+                                  <div className="text-xs text-foreground/90 font-medium pt-1">
+                                    <span className="text-muted-foreground">Target Program:</span> {s.programTitle}
+                                  </div>
+                                )}
+
+                                {s.squadMembers && (
+                                  <div className="text-xs text-foreground/90 font-medium">
+                                    <span className="text-muted-foreground">Squad Members:</span> {s.squadMembers}
+                                  </div>
+                                )}
+
+                                {s.message && (
+                                  <div className="p-3 rounded-lg bg-surface-2 border border-white/6 text-xs text-muted-foreground leading-relaxed mt-2">
+                                    "{s.message}"
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="pt-2 md:pt-0 flex md:flex-col items-center justify-end gap-2 shrink-0">
+                                <a
+                                  href={`mailto:${s.email}?subject=Project Polaris: Regarding your ${s.programTitle || "inquiry"}`}
+                                  className="h-8 px-3 rounded-lg bg-surface-2 hover:bg-surface border border-white/10 text-foreground text-xs flex items-center gap-1 font-medium transition-colors"
+                                >
+                                  <Mail className="size-3 text-primary" />
+                                  <span>Reply</span>
+                                </a>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteSubmission(s.id)}
+                                  className="p-2 rounded-lg text-rose-400 hover:bg-rose-500/10 transition-colors"
+                                  title="Delete record"
+                                >
+                                  <Trash2 className="size-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
+import { saveUserSubmission } from "@/lib/cms-store";
 import {
   Handshake,
   Users,
@@ -46,6 +47,16 @@ function GetInvolvedPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.email) return;
+
+    saveUserSubmission({
+      type: "contact_inquiry",
+      name: formData.name || "Inquirer",
+      email: formData.email,
+      programTitle: formData.subject || "General Inquiry",
+      message: formData.message,
+    });
+
     setFormSubmitted(true);
   };
 
