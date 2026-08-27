@@ -82,6 +82,28 @@ export interface SpotlightEntry {
   links?: { label: string; url: string }[];
 }
 
+export interface IndustrySprintProject {
+  id: string;
+  title: string;
+  domain: "Aerospace & Rocketry" | "Astrophysics & Space Science" | "CSE & AI for Science" | "Mechanical & Systems";
+  difficulty: "Foundational" | "Intermediate" | "Industry Standard";
+  sprintDuration: string;
+  teamSize: string;
+  overview: string;
+  industryProblem: string;
+  deliverables: string[];
+  skillsGained: string[];
+  mentorship: {
+    lead: string;
+    role: string;
+    reviewCadence: string;
+  };
+  tier: "Open Sprint (Free)" | "Industry Fellowship (Certified & Mentored)";
+  price?: string;
+  credits: string;
+  status: "Open for Squads" | "Active Sprint" | "Upcoming";
+}
+
 export interface TeamMemberNode {
   id: string;
   name: string;
@@ -96,6 +118,117 @@ export interface TeamMemberNode {
 }
 
 // ── 1. SEED DATA ──
+
+export const INITIAL_INDUSTRY_SPRINTS: IndustrySprintProject[] = [
+  {
+    id: "sprint-cfd-transonic",
+    title: "Transonic Airfoil CFD & Supercritical Shock Wave Simulation",
+    domain: "Aerospace & Rocketry",
+    difficulty: "Industry Standard",
+    sprintDuration: "4 Weeks Sprint",
+    teamSize: "2–4 Explorers per Squad (or Solo)",
+    overview:
+      "Model transonic flow over RAE 2822 and NASA SC(2) supercritical airfoils. Capture shockwave-boundary layer interactions and calculate wave drag rise using numerical finite volume solvers.",
+    industryProblem:
+      "Modern aerospace firms require fast aerodynamic mesh validation and drag prediction before wind tunnel prototyping.",
+    deliverables: [
+      "Compressible Navier-Stokes Euler mesh solver script",
+      "Interactive pressure coefficient (Cp) contour dashboard",
+      "Technical verification report co-authored with sprint squad",
+    ],
+    skillsGained: ["Computational Fluid Dynamics (CFD)", "Aerodynamics", "Python / C++", "Mesh Generation"],
+    mentorship: {
+      lead: "Aerospace Research Mentor",
+      role: "Ex-ISRO / Aerodynamics Fellow",
+      reviewCadence: "Weekly Code & Mesh Critique Sessions",
+    },
+    tier: "Industry Fellowship (Certified & Mentored)",
+    price: "Cohort Fellowship",
+    credits: "Verified Digital Credential + Co-Author Paper Credit",
+    status: "Open for Squads",
+  },
+  {
+    id: "sprint-pinn-fluid",
+    title: "Physics-Informed Neural Networks (PINNs) for Fluid Flow",
+    domain: "CSE & AI for Science",
+    difficulty: "Industry Standard",
+    sprintDuration: "4 Weeks Sprint",
+    teamSize: "2–3 Explorers per Squad",
+    overview:
+      "Train deep neural networks that directly enforce the Navier-Stokes partial differential equations in their loss functions for instantaneous surrogate fluid field prediction.",
+    industryProblem:
+      "High-resolution CFD takes hours to compute. AI-surrogate physical models enable real-time aerodynamic control in autonomous aerial vehicles.",
+    deliverables: [
+      "PyTorch / JAX PINN training pipeline",
+      "Loss convergence analysis against ground-truth CFD benchmarks",
+      "Public GitHub repository with reproducible Google Colab notebook",
+    ],
+    skillsGained: ["Deep Learning / PINNs", "PyTorch / JAX", "Differential Equations", "Scientific Computing"],
+    mentorship: {
+      lead: "AI for Science Lead",
+      role: "Computational Physics Researcher",
+      reviewCadence: "Weekly Model Architecture Review",
+    },
+    tier: "Industry Fellowship (Certified & Mentored)",
+    price: "Cohort Fellowship",
+    credits: "Verified GitHub Badge + Spotlight Feature",
+    status: "Open for Squads",
+  },
+  {
+    id: "sprint-exoplanet-photometry",
+    title: "Deep Sky Photometry & Exoplanet Transit Light Curve Modeling",
+    domain: "Astrophysics & Space Science",
+    difficulty: "Intermediate",
+    sprintDuration: "3 Weeks Sprint",
+    teamSize: "2–4 Explorers per Squad",
+    overview:
+      "Analyze raw telescopic FITS imagery from Kepler/TESS space telescopes. Extract differential photometric fluxes, filter instrumental noise, and calculate exoplanetary radius and orbital semi-major axis.",
+    industryProblem:
+      "Astronomical sky surveys generate petabytes of raw observational data requiring automated, noise-robust transit detection pipelines.",
+    deliverables: [
+      "Automated light curve detrending & transit fitting script",
+      "MCMC parameter estimation for planetary radius & inclination",
+      "Published observational write-up in Polaris Community Articles",
+    ],
+    skillsGained: ["Astronomical Photometry", "AstroPy / FITS", "MCMC Statistical Modeling", "Astrophysics"],
+    mentorship: {
+      lead: "Astrophysics Fellow",
+      role: "Observational Astronomer",
+      reviewCadence: "Bi-weekly Astrometry & Data Review",
+    },
+    tier: "Open Sprint (Free)",
+    price: "100% Free",
+    credits: "Polaris Student Showcase Feature + Open Source Contributor Badge",
+    status: "Open for Squads",
+  },
+  {
+    id: "sprint-cubesat-fea",
+    title: "CubeSat Chassis Finite Element Analysis (FEA) & Thermal Control",
+    domain: "Mechanical & Systems",
+    difficulty: "Industry Standard",
+    sprintDuration: "4 Weeks Sprint",
+    teamSize: "2–4 Explorers per Squad",
+    overview:
+      "Design a modular 3U CubeSat chassis adhering to standard launch vehicle random vibration launch profiles (NASA GEVS) and orbital solar thermal radiation extremes.",
+    industryProblem:
+      "CubeSats must withstand severe acoustic and vibrational launch loads (up to 14g RMS) without structural failure or thermal damage in eclipse.",
+    deliverables: [
+      "CAD model with mass budget optimization (< 4.0 kg)",
+      "Modal, random vibration, and harmonic stress analysis report",
+      "Transient orbital thermal equilibrium simulation",
+    ],
+    skillsGained: ["Finite Element Analysis (FEA)", "Structural Dynamics", "CAD / STEP Modeling", "Thermal Engineering"],
+    mentorship: {
+      lead: "Structural Systems Lead",
+      role: "Satellite Systems Engineer",
+      reviewCadence: "Weekly Design Review & Stress Verification",
+    },
+    tier: "Industry Fellowship (Certified & Mentored)",
+    price: "Cohort Fellowship",
+    credits: "Verified Engineering Credential + Portfolio Case Study",
+    status: "Open for Squads",
+  },
+];
 
 export const INITIAL_PROGRAMS: ProgramEvent[] = [
   {
@@ -469,4 +602,22 @@ export function getSpotlights(): SpotlightEntry[] {
 export function saveSpotlights(spotlights: SpotlightEntry[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.SPOTLIGHT, JSON.stringify(spotlights));
+}
+
+const INDUSTRY_SPRINTS_KEY = "polaris_cms_industry_sprints";
+
+export function getIndustrySprints(): IndustrySprintProject[] {
+  if (typeof window === "undefined") return INITIAL_INDUSTRY_SPRINTS;
+  try {
+    const raw = localStorage.getItem(INDUSTRY_SPRINTS_KEY);
+    if (!raw) return INITIAL_INDUSTRY_SPRINTS;
+    return JSON.parse(raw);
+  } catch {
+    return INITIAL_INDUSTRY_SPRINTS;
+  }
+}
+
+export function saveIndustrySprints(sprints: IndustrySprintProject[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(INDUSTRY_SPRINTS_KEY, JSON.stringify(sprints));
 }

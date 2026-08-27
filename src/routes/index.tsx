@@ -621,8 +621,15 @@ function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid gap-4 sm:grid-cols-3 font-sans">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-sans">
             {[
+              {
+                title: "Remote Industry Sprints",
+                status: "Open for Squads",
+                desc: "Collaborate in remote squads on industry-standard problems across Aero, Astro, CSE, and Systems with scientist reviews.",
+                cta: "Explore Sprints →",
+                to: "/programs",
+              },
               {
                 title: "Polaris Innovation Program",
                 status: "Coming Soon",
