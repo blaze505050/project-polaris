@@ -13,28 +13,36 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
 import { Route as AeroforgeRouteImport } from './routes/aeroforge'
 import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ChaptersRouteImport } from './routes/chapters'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as JoinRouteImport } from './routes/join'
+import { Route as MaintenanceRouteImport } from './routes/maintenance'
+import { Route as PaymentFailedRouteImport } from './routes/payment-failed'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ProgramRouteImport } from './routes/program'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ResearchRouteImport } from './routes/research'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SpotlightRouteImport } from './routes/spotlight'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as AuthenticatedPortalRouteImport } from './routes/_authenticated/portal'
 import { Route as OpportunitiesIndexRouteImport } from './routes/opportunities.index'
 import { Route as OpportunitiesSlugRouteImport } from './routes/opportunities.$slug'
@@ -56,6 +64,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessDeniedRoute = AccessDeniedRouteImport.update({
+  id: '/access-denied',
+  path: '/access-denied',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AeroforgeRoute = AeroforgeRouteImport.update({
@@ -88,6 +101,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CoursesRoute = CoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
@@ -113,6 +131,16 @@ const JoinRoute = JoinRouteImport.update({
   path: '/join',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MaintenanceRoute = MaintenanceRouteImport.update({
+  id: '/maintenance',
+  path: '/maintenance',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentFailedRoute = PaymentFailedRouteImport.update({
+  id: '/payment-failed',
+  path: '/payment-failed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -133,9 +161,19 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResearchRoute = ResearchRouteImport.update({
   id: '/research',
   path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResourcesRoute = ResourcesRouteImport.update({
@@ -163,9 +201,19 @@ const SpotlightRoute = SpotlightRouteImport.update({
   path: '/spotlight',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedPortalRoute = AuthenticatedPortalRouteImport.update({
@@ -188,28 +236,36 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/aeroforge': typeof AeroforgeRoute
   '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
   '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/payment-failed': typeof PaymentFailedRoute
   '/privacy': typeof PrivacyRoute
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/research': typeof ResearchRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/spotlight': typeof SpotlightRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
   '/opportunities/': typeof OpportunitiesIndexRoute
@@ -218,28 +274,36 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/aeroforge': typeof AeroforgeRoute
   '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
   '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/payment-failed': typeof PaymentFailedRoute
   '/privacy': typeof PrivacyRoute
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/research': typeof ResearchRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/spotlight': typeof SpotlightRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
   '/opportunities': typeof OpportunitiesIndexRoute
@@ -250,28 +314,36 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/access-denied': typeof AccessDeniedRoute
   '/aeroforge': typeof AeroforgeRoute
   '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
   '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/courses': typeof CoursesRoute
   '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
+  '/maintenance': typeof MaintenanceRoute
+  '/payment-failed': typeof PaymentFailedRoute
   '/privacy': typeof PrivacyRoute
   '/program': typeof ProgramRoute
   '/programs': typeof ProgramsRoute
   '/projects': typeof ProjectsRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/research': typeof ResearchRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/spotlight': typeof SpotlightRoute
+  '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/_authenticated/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
   '/opportunities/': typeof OpportunitiesIndexRoute
@@ -282,28 +354,36 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/about'
+    | '/access-denied'
     | '/aeroforge'
     | '/articles'
     | '/auth'
     | '/chapters'
     | '/community'
     | '/contact'
+    | '/cookies'
     | '/courses'
     | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
+    | '/maintenance'
+    | '/payment-failed'
     | '/privacy'
     | '/program'
     | '/programs'
     | '/projects'
+    | '/refund-policy'
     | '/research'
+    | '/reset-password'
     | '/resources'
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
     | '/spotlight'
+    | '/support'
     | '/terms'
+    | '/verify-email'
     | '/portal'
     | '/opportunities/$slug'
     | '/opportunities/'
@@ -312,28 +392,36 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/about'
+    | '/access-denied'
     | '/aeroforge'
     | '/articles'
     | '/auth'
     | '/chapters'
     | '/community'
     | '/contact'
+    | '/cookies'
     | '/courses'
     | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
+    | '/maintenance'
+    | '/payment-failed'
     | '/privacy'
     | '/program'
     | '/programs'
     | '/projects'
+    | '/refund-policy'
     | '/research'
+    | '/reset-password'
     | '/resources'
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
     | '/spotlight'
+    | '/support'
     | '/terms'
+    | '/verify-email'
     | '/portal'
     | '/opportunities/$slug'
     | '/opportunities'
@@ -343,28 +431,36 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/404'
     | '/about'
+    | '/access-denied'
     | '/aeroforge'
     | '/articles'
     | '/auth'
     | '/chapters'
     | '/community'
     | '/contact'
+    | '/cookies'
     | '/courses'
     | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
+    | '/maintenance'
+    | '/payment-failed'
     | '/privacy'
     | '/program'
     | '/programs'
     | '/projects'
+    | '/refund-policy'
     | '/research'
+    | '/reset-password'
     | '/resources'
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
     | '/spotlight'
+    | '/support'
     | '/terms'
+    | '/verify-email'
     | '/_authenticated/portal'
     | '/opportunities/$slug'
     | '/opportunities/'
@@ -375,28 +471,36 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
+  AccessDeniedRoute: typeof AccessDeniedRoute
   AeroforgeRoute: typeof AeroforgeRoute
   ArticlesRoute: typeof ArticlesRoute
   AuthRoute: typeof AuthRoute
   ChaptersRoute: typeof ChaptersRoute
   CommunityRoute: typeof CommunityRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   CoursesRoute: typeof CoursesRoute
   DashboardRoute: typeof DashboardRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   ImpactRoute: typeof ImpactRoute
   JoinRoute: typeof JoinRoute
+  MaintenanceRoute: typeof MaintenanceRoute
+  PaymentFailedRoute: typeof PaymentFailedRoute
   PrivacyRoute: typeof PrivacyRoute
   ProgramRoute: typeof ProgramRoute
   ProgramsRoute: typeof ProgramsRoute
   ProjectsRoute: typeof ProjectsRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ResearchRoute: typeof ResearchRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ResourcesRoute: typeof ResourcesRoute
   SchoolsRoute: typeof SchoolsRoute
   ShowcaseRoute: typeof ShowcaseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SpotlightRoute: typeof SpotlightRoute
+  SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
   OpportunitiesSlugRoute: typeof OpportunitiesSlugRoute
   OpportunitiesIndexRoute: typeof OpportunitiesIndexRoute
 }
@@ -429,6 +533,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/access-denied': {
+      id: '/access-denied'
+      path: '/access-denied'
+      fullPath: '/access-denied'
+      preLoaderRoute: typeof AccessDeniedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aeroforge': {
@@ -473,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/courses': {
       id: '/courses'
       path: '/courses'
@@ -508,6 +626,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/maintenance': {
+      id: '/maintenance'
+      path: '/maintenance'
+      fullPath: '/maintenance'
+      preLoaderRoute: typeof MaintenanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-failed': {
+      id: '/payment-failed'
+      path: '/payment-failed'
+      fullPath: '/payment-failed'
+      preLoaderRoute: typeof PaymentFailedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -536,11 +668,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/research': {
       id: '/research'
       path: '/research'
       fullPath: '/research'
       preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resources': {
@@ -578,11 +724,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpotlightRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/portal': {
@@ -625,28 +785,36 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   R404Route: R404Route,
   AboutRoute: AboutRoute,
+  AccessDeniedRoute: AccessDeniedRoute,
   AeroforgeRoute: AeroforgeRoute,
   ArticlesRoute: ArticlesRoute,
   AuthRoute: AuthRoute,
   ChaptersRoute: ChaptersRoute,
   CommunityRoute: CommunityRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   CoursesRoute: CoursesRoute,
   DashboardRoute: DashboardRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   ImpactRoute: ImpactRoute,
   JoinRoute: JoinRoute,
+  MaintenanceRoute: MaintenanceRoute,
+  PaymentFailedRoute: PaymentFailedRoute,
   PrivacyRoute: PrivacyRoute,
   ProgramRoute: ProgramRoute,
   ProgramsRoute: ProgramsRoute,
   ProjectsRoute: ProjectsRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ResearchRoute: ResearchRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ResourcesRoute: ResourcesRoute,
   SchoolsRoute: SchoolsRoute,
   ShowcaseRoute: ShowcaseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SpotlightRoute: SpotlightRoute,
+  SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
   OpportunitiesSlugRoute: OpportunitiesSlugRoute,
   OpportunitiesIndexRoute: OpportunitiesIndexRoute,
 }

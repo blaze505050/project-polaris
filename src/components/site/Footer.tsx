@@ -119,12 +119,16 @@ export function Footer() {
             <NorthStar className="size-3 text-primary" />
             <span>© {new Date().getFullYear()} Project Polaris. Built by students, for students.</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <span>•</span>
-            <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
             <span>•</span>
-            <Link to="/get-involved" className="hover:text-foreground transition-colors">Get Involved</Link>
+            <Link to="/cookies" className="hover:text-foreground transition-colors">Cookie Preferences</Link>
+            <span>•</span>
+            <Link to="/refund-policy" className="hover:text-foreground transition-colors">Refund & Cancellation</Link>
+            <span>•</span>
+            <Link to="/support" className="hover:text-foreground transition-colors">Help & Support</Link>
           </div>
         </div>
       </div>
