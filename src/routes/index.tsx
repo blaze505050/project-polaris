@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { PolarisEcosystemGlobe } from "@/components/site/PolarisEcosystemGlobe";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { getPrograms, INITIAL_PAST_SESSIONS } from "@/lib/cms-store";
 import { SITE } from "@/lib/site";
@@ -337,7 +338,16 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. WHAT'S HAPPENING NOW (FEATURED 29TH AUGUST SESSION) ── */}
+      {/* ── 3. THE POLARIS ECOSYSTEM GLOBE & SYSTEM MAP ── */}
+      <section className="section border-b border-white/8 bg-surface-2/10" id="ecosystem-globe">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <PolarisEcosystemGlobe />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── 4. WHAT'S HAPPENING NOW (FEATURED 29TH AUGUST SESSION) ── */}
       <section className="section border-b border-white/8" id="whats-happening-now">
         <div className="shell">
           <ScrollReveal direction="up">
