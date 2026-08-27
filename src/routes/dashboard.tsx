@@ -118,7 +118,7 @@ function DashboardPage() {
       setAdminAuthenticated(true);
       setAdminError("");
     } else {
-      setAdminError("Invalid admin access key. (Hint: 'polaris2026' or 'admin')");
+      setAdminError("Invalid admin access key. Please check your credentials.");
     }
   };
 
@@ -431,7 +431,7 @@ function DashboardPage() {
                 <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-2">
                   <input
                     type="password"
-                    placeholder="Enter admin passcode (e.g. polaris2026)"
+                    placeholder="Enter admin passcode"
                     value={adminPasscode}
                     onChange={(e) => setAdminPasscode(e.target.value)}
                     className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 text-center"
