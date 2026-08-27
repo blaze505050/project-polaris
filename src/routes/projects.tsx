@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Button } from "@/components/ui/button";
 import { InteractiveAeroForgeDemo } from "@/components/site/InteractiveAeroForgeDemo";
-import { Cpu, ArrowRight, ExternalLink, Code, Layers, Sparkles } from "lucide-react";
+import { Cpu, ArrowRight, Code, Layers, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -30,14 +31,20 @@ export const Route = createFileRoute("/projects")({
 function ProjectsPage() {
   return (
     <>
-      {/* ── 1. PROJECTS HERO ── */}
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+      {/* ── 1. PROJECTS HERO (Parallax Background + Display Type) ── */}
+      <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border">
+        <ParallaxImage
+          src="/media/rocket-assembly.jpg"
+          alt="Space launch vehicle assembly and simulation laboratory"
+          intensity={0.2}
+          overlay={0.78}
+          kenBurns={true}
+          className="absolute inset-0 size-full pointer-events-none"
+        />
+
+        <div className="shell relative z-10 max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Engineering & Software
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight">
               Projects & Labs
             </h1>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -49,9 +56,9 @@ function ProjectsPage() {
             <Button
               asChild
               size="sm"
-              className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors shadow-sm text-xs"
+              className="h-10 px-6 bg-primary text-primary-foreground font-bold rounded-full hover:bg-primary/90 transition-colors shadow-sm text-xs active:scale-[0.97]"
             >
-              <a href="#aeroforge-lab" className="flex items-center gap-1.5">
+              <a href="#aeroforge-lab" className="flex items-center gap-2">
                 <Cpu className="size-3.5" />
                 <span>Launch AeroForge Lab</span>
               </a>
@@ -60,7 +67,7 @@ function ProjectsPage() {
               asChild
               variant="outline"
               size="sm"
-              className="h-9 px-4 text-xs font-medium border-white/10 hover:border-white/20"
+              className="h-10 px-5 text-xs font-medium rounded-full border-white/15 bg-surface/80 backdrop-blur-md hover:bg-surface-2 text-foreground active:scale-[0.97]"
             >
               <Link to="/spotlight">View Student Artifacts</Link>
             </Button>
@@ -69,7 +76,7 @@ function ProjectsPage() {
       </section>
 
       {/* ── 2. FLAGSHIP PROJECT: AEROFORGE AI LAB ── */}
-      <section className="section border-b border-white/8" id="aeroforge-lab">
+      <section className="section border-b border-border" id="aeroforge-lab">
         <div className="shell space-y-8 font-sans">
           <ScrollReveal direction="up">
             <div className="max-w-3xl">
@@ -95,11 +102,11 @@ function ProjectsPage() {
         </div>
       </section>
 
-      {/* ── 3. COMPUTATIONAL SOFTWARE LABS ── */}
-      <section className="section bg-surface-2/10" id="software-labs">
+      {/* ── 3. COMPUTATIONAL SOFTWARE LABS (Allowed Eyebrow 1 of 1) ── */}
+      <section className="section bg-surface/20" id="software-labs">
         <div className="shell font-sans space-y-6">
           <div className="max-w-2xl mb-8">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+            <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
               Active Repositories
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
@@ -132,16 +139,16 @@ function ProjectsPage() {
               },
             ].map((lab, i) => (
               <ScrollReveal key={lab.title} direction="up" delay={i * 30}>
-                <div className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
+                <div className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full card-gold-hover">
                   <div className="space-y-3">
-                    <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 inline-block">
+                    <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 inline-block font-mono">
                       {lab.status}
                     </span>
                     <h3 className="text-base font-bold font-display text-foreground">{lab.title}</h3>
                     <p className="text-xs text-muted-foreground leading-relaxed">{lab.desc}</p>
                   </div>
                   <div className="mt-5 pt-3 border-t border-white/6 flex items-center justify-between text-[11px] text-muted-foreground">
-                    <span className="font-mono">{lab.tech}</span>
+                    <span className="font-mono text-primary">{lab.tech}</span>
                   </div>
                 </div>
               </ScrollReveal>

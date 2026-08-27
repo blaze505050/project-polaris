@@ -1,21 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { ParallaxImage } from "@/components/ui/parallax-image";
 import { TeamConstellation } from "@/components/site/TeamConstellation";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
 import {
   Compass,
   Target,
   Sparkles,
-  Award,
-  ArrowRight,
-  HeartHandshake,
-  CheckCircle2,
-  XCircle,
-  HelpCircle,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import polarisLogo from "@/assets/polaris-logo.png";
-import nightObservationImg from "@/assets/night-observation.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -54,17 +47,23 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <>
-      {/* ── 1. ABOUT HERO / STATEMENT ── */}
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-5 font-sans">
+      {/* ── 1. ABOUT HERO / STATEMENT (Parallax Deep Space + Display Type) ── */}
+      <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border">
+        <ParallaxImage
+          src="/media/nebula-hero.jpg"
+          alt="Cosmic nebula deep space"
+          intensity={0.2}
+          overlay={0.72}
+          kenBurns={true}
+          className="absolute inset-0 size-full pointer-events-none"
+        />
+
+        <div className="shell relative z-10 max-w-4xl mx-auto text-center space-y-5 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Our Identity
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight leading-tight">
               About Project Polaris
             </h1>
-            <p className="mt-4 text-lg sm:text-2xl font-display text-primary/95 font-medium max-w-2xl mx-auto leading-snug">
+            <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug">
               Project Polaris is a student-led organisation which aims to provide an experiential learning ecosystem to students.
             </p>
           </ScrollReveal>
@@ -80,16 +79,16 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 2. MISSION & VISION ── */}
-      <section className="section border-b border-white/8 bg-surface-2/20" id="mission-vision">
+      {/* ── 2. MISSION & VISION (Allowed Eyebrow 1 of 2) ── */}
+      <section className="section border-b border-border bg-surface/30" id="mission-vision">
         <div className="shell">
           <div className="grid gap-6 md:grid-cols-2 font-sans max-w-4xl mx-auto">
             {/* Mission Card */}
             <ScrollReveal direction="up" delay={0}>
-              <div className="p-7 md:p-8 rounded-xl border border-primary/20 bg-card h-full flex flex-col justify-between space-y-4">
+              <div className="p-7 md:p-8 rounded-xl border border-primary/25 bg-card h-full flex flex-col justify-between space-y-4 shadow-lg card-gold-hover">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase mb-2 font-semibold">
-                    <Target className="size-4" />
+                    <Target className="size-4 text-gold" />
                     <span>OUR MISSION</span>
                   </div>
                   <h3 className="text-xl font-bold font-display text-foreground leading-snug">
@@ -99,7 +98,7 @@ function AboutPage() {
                     By creating continuous opportunities to build, experiment, collaborate, and innovate directly with mentors and peers.
                   </p>
                 </div>
-                <div className="pt-3 border-t border-white/6 text-[11px] text-primary font-medium">
+                <div className="pt-3 border-t border-white/6 text-[11px] text-primary font-medium font-mono">
                   Built by Students, for Students
                 </div>
               </div>
@@ -107,10 +106,10 @@ function AboutPage() {
 
             {/* Vision Card */}
             <ScrollReveal direction="up" delay={60}>
-              <div className="p-7 md:p-8 rounded-xl border border-white/10 bg-card h-full flex flex-col justify-between space-y-4">
+              <div className="p-7 md:p-8 rounded-xl border border-white/10 bg-card h-full flex flex-col justify-between space-y-4 shadow-lg hover:border-primary/30 transition-colors">
                 <div>
                   <div className="flex items-center gap-2 text-xs font-mono text-primary uppercase mb-2 font-semibold">
-                    <Compass className="size-4" />
+                    <Compass className="size-4 text-gold" />
                     <span>OUR VISION</span>
                   </div>
                   <h3 className="text-xl font-bold font-display text-foreground leading-snug">
@@ -120,7 +119,7 @@ function AboutPage() {
                     Where students develop future-ready skills, critical thinking, and technical confidence through real-world experiences.
                   </p>
                 </div>
-                <div className="pt-3 border-t border-white/6 text-[11px] text-muted-foreground">
+                <div className="pt-3 border-t border-white/6 text-[11px] text-muted-foreground font-mono">
                   Empowering Every Curious Mind
                 </div>
               </div>
@@ -130,13 +129,10 @@ function AboutPage() {
       </section>
 
       {/* ── 3. WHAT PROJECT POLARIS IS NOT ── */}
-      <section className="section border-b border-white/8" id="what-we-are-not">
+      <section className="section border-b border-border" id="what-we-are-not">
         <div className="shell">
           <ScrollReveal direction="up">
             <div className="max-w-2xl mx-auto text-center mb-10 space-y-2">
-              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
-                Clear Differentiation
-              </span>
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                 What Project Polaris Is NOT
               </h2>
@@ -168,10 +164,10 @@ function AboutPage() {
             ].map((card, i) => (
               <ScrollReveal key={card.statement} direction="up" delay={i * 30}>
                 <div
-                  className={`p-6 rounded-xl border h-full flex flex-col justify-between transition-colors ${
+                  className={`p-6 rounded-xl border h-full flex flex-col justify-between transition-all duration-200 ${
                     card.highlight
-                      ? "border-primary/40 bg-primary/10 shadow-[0_0_20px_rgba(165,180,252,0.1)]"
-                      : "border-white/8 bg-card hover:border-white/16"
+                      ? "border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(124,196,232,0.15)]"
+                      : "border-white/8 bg-card hover:border-white/20"
                   }`}
                 >
                   <div>
@@ -200,15 +196,12 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4. WHY WE STARTED ── */}
-      <section className="section border-b border-white/8 bg-surface-2/20" id="why-we-started">
+      {/* ── 4. WHY WE STARTED (Integrated Astronomical Visual) ── */}
+      <section className="section border-b border-border bg-surface/20" id="why-we-started">
         <div className="shell">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
             <ScrollReveal direction="up">
               <div className="space-y-4 font-sans">
-                <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
-                  The Genesis
-                </span>
                 <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                   Why We Started
                 </h2>
@@ -224,20 +217,22 @@ function AboutPage() {
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Inspired by the North Star, Polaris aims to guide students toward practical learning, meaningful opportunities, and purpose — regardless of their age, background, or location.
                 </p>
-                <div className="p-4 rounded-xl bg-card border border-primary/20 text-xs font-medium text-primary">
-                  "Because learning becomes meaningful when you apply it."
+                <div className="p-4 rounded-xl bg-card border border-primary/20 text-xs font-medium text-primary flex items-center gap-2">
+                  <Sparkles className="size-4 text-gold shrink-0" />
+                  <span>"Because learning becomes meaningful when you apply it."</span>
                 </div>
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={40}>
-              <div className="relative rounded-2xl overflow-hidden border border-white/8 bg-card aspect-[4/3] flex items-center justify-center p-8">
+            <ScrollReveal direction="clip" delay={40}>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card aspect-[4/3] flex items-center justify-center p-8 shadow-xl">
                 <img
-                  src={nightObservationImg}
+                  src="/media/telescope-milkyway.jpg"
                   alt="Night Sky Observation & Astronomy"
+                  loading="lazy"
                   className="absolute inset-0 size-full object-cover opacity-60 hover:opacity-80 transition-opacity duration-500"
                 />
-                <div className="relative z-10 p-5 rounded-xl bg-background/80 backdrop-blur-md border border-white/10 text-center max-w-xs font-sans">
+                <div className="relative z-10 p-5 rounded-xl bg-background/85 backdrop-blur-md border border-white/12 text-center max-w-xs font-sans shadow-2xl">
                   <img src={polarisLogo} alt="Polaris North Star" className="size-8 mx-auto mb-2 object-contain" />
                   <div className="text-xs font-bold font-display text-foreground">Guided by the North Star</div>
                   <div className="text-[11px] text-muted-foreground mt-0.5">A clear direction for curious explorers</div>
@@ -248,12 +243,12 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 5. PEOPLE BEHIND POLARIS (INTERACTIVE TEAM CONSTELLATION) ── */}
+      {/* ── 5. PEOPLE BEHIND POLARIS (Allowed Eyebrow 2 of 2) ── */}
       <section className="section" id="team-constellation">
         <div className="shell space-y-6">
           <ScrollReveal direction="up">
             <div className="max-w-2xl mb-6 font-sans">
-              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
                 Core Constellation
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
@@ -265,7 +260,7 @@ function AboutPage() {
             </div>
           </ScrollReveal>
 
-          {/* The Interactive Draggable Constellation Canvas & Profile Inspector */}
+          {/* Interactive Team Constellation Canvas & Profile Inspector */}
           <ScrollReveal direction="up" delay={40}>
             <TeamConstellation />
           </ScrollReveal>

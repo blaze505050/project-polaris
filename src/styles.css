@@ -4,8 +4,11 @@
 
 /*
  * PROJECT POLARIS DESIGN SYSTEM
- * Minimalist + Intelligent + Calm + Premium
- * Inspired by Linear, Vercel, Notion, and Raycast
+ * Refined with: Impeccable (kinpaku tokens), Taste Skill (anti-slop), Emil Kowalski (animation philosophy)
+ *
+ * Easing: cubic-bezier(0.23, 1, 0.32, 1) for all enter/exit (strong ease-out, Kowalski spec)
+ * Duration: UI ≤ 300ms, scroll reveals 500–700ms, hover 160ms, press 120ms
+ * Properties: transform + opacity only (GPU composited). clip-path for image reveals.
  */
 
 @theme inline {
@@ -56,54 +59,67 @@
 :root {
   --radius: 0.5rem;
 
-  /* Refined Engineering Dark Palette */
-  --background: #0a0b0e;
-  --foreground: #f3f4f6;
-  --surface: #111318;
-  --surface-2: #171a21;
-  --surface-3: #1f232c;
-  --surface-elevated: #151820;
+  /* ── Kowalski Easing Curves ── */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-  --card: #111318;
-  --card-foreground: #f3f4f6;
-  --popover: #111318;
-  --popover-foreground: #f3f4f6;
+  /* ── Fluid Display Type ── */
+  --font-size-display: clamp(3rem, 6vw, 5.5rem);
+  --font-size-headline: clamp(1.75rem, 3.5vw, 3rem);
 
-  /* Refined Primary: Sophisticated Indigo / Periwinkle */
-  --primary: #a5b4fc;
-  --primary-foreground: #0a0b0e;
-  --primary-soft: rgba(165, 180, 252, 0.1);
+  /* ── Impeccable Accent ── */
+  --kinpaku-gold: #f0c746;
 
-  --secondary: #171a21;
-  --secondary-foreground: #f3f4f6;
+  /* ── Dark Palette — Celestial Blue + Warm Gold ── */
+  --background: #080a0f;
+  --foreground: #e8eaed;
+  --surface: #0d1017;
+  --surface-2: #141820;
+  --surface-3: #1a1f2b;
+  --surface-elevated: #121620;
 
-  --muted: #171a21;
-  --muted-foreground: #9ca3af;
+  --card: #0f1219;
+  --card-foreground: #e8eaed;
+  --popover: #0f1219;
+  --popover-foreground: #e8eaed;
 
-  --accent: #a5b4fc;
-  --accent-foreground: #0a0b0e;
+  /* Primary: Celestial blue — specific to space, not generic indigo */
+  --primary: #7cc4e8;
+  --primary-foreground: #080a0f;
+  --primary-soft: rgba(124, 196, 232, 0.08);
 
-  --gold: #d4af37;
-  --gold-foreground: #0a0b0e;
+  --secondary: #141820;
+  --secondary-foreground: #e8eaed;
+
+  --muted: #141820;
+  --muted-foreground: #8a919c;
+
+  --accent: #7cc4e8;
+  --accent-foreground: #080a0f;
+
+  /* Gold — Polaris star accent, Impeccable-inspired */
+  --gold: #f0c746;
+  --gold-foreground: #080a0f;
 
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --success: #10b981;
 
-  /* Hairline Clean 1px Borders */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #a5b4fc;
+  /* Hairline borders */
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --input: rgba(255, 255, 255, 0.09);
+  --ring: #7cc4e8;
 }
 
 .light,
 [data-theme="light"] {
-  --background: #fcfcfd;
+  --background: #fafbfd;
   --foreground: #090a0f;
-  --surface: #f4f5f8;
-  --surface-2: #e9ecf2;
-  --surface-3: #dde1ea;
+  --surface: #f0f2f6;
+  --surface-2: #e4e7ee;
+  --surface-3: #d8dce6;
   --surface-elevated: #ffffff;
 
   --card: #ffffff;
@@ -111,30 +127,30 @@
   --popover: #ffffff;
   --popover-foreground: #090a0f;
 
-  --primary: #4f46e5;
+  --primary: #1d6e8e;
   --primary-foreground: #ffffff;
-  --primary-soft: rgba(79, 70, 229, 0.08);
+  --primary-soft: rgba(29, 110, 142, 0.07);
 
-  --secondary: #f4f5f8;
+  --secondary: #f0f2f6;
   --secondary-foreground: #090a0f;
 
-  --muted: #f4f5f8;
-  --muted-foreground: #6b7280;
+  --muted: #f0f2f6;
+  --muted-foreground: #5c6370;
 
-  --accent: #4f46e5;
+  --accent: #1d6e8e;
   --accent-foreground: #ffffff;
 
-  --gold: #b45309;
+  --gold: #b48a18;
   --gold-foreground: #ffffff;
 
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
   --success: #059669;
 
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.16);
-  --input: rgba(0, 0, 0, 0.1);
-  --ring: #4f46e5;
+  --border: rgba(0, 0, 0, 0.07);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --input: rgba(0, 0, 0, 0.09);
+  --ring: #1d6e8e;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -167,8 +183,8 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sans);
     font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.025em;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
     color: var(--foreground);
     text-wrap: balance;
   }
@@ -192,6 +208,19 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--muted-foreground); }
+
+  /* ── Button Tactile Feedback (Kowalski: buttons must feel responsive) ── */
+  button,
+  [role="button"],
+  a[class*="bg-primary"],
+  a[class*="bg-gold"] {
+    transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
+  }
+
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+  }
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -234,7 +263,7 @@
 }
 
 /* ──────────────────────────────────────────────────────────
-   CARD & SURFACE UTILITIES (CLEAN, NO EXCESSIVE GLOW)
+   CARD & SURFACE UTILITIES
    ────────────────────────────────────────────────────────── */
 
 .card-elevated,
@@ -242,7 +271,7 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 200ms var(--ease-out), background-color 200ms var(--ease-out);
 }
 
 .card-elevated:hover,
@@ -265,10 +294,10 @@
 /* ── Scroll-reveal entrance animation ── */
 @utility reveal-up {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(24px);
   transition:
-    opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
   will-change: opacity, transform;
 
   &.is-visible {
@@ -278,25 +307,25 @@
 }
 
 @utility glass-panel {
-  background: rgba(14, 13, 24, 0.65);
+  background: rgba(8, 10, 15, 0.72);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 @utility glass-card {
-  background: rgba(14, 13, 22, 0.55);
+  background: rgba(12, 14, 22, 0.6);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(197, 157, 255, 0.12);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-  
+  border: 1px solid rgba(124, 196, 232, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 300ms var(--ease-out), border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(197, 157, 255, 0.35);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(124, 196, 232, 0.2);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -304,29 +333,29 @@
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 @utility glass-dock {
-  background: rgba(10, 10, 16, 0.7);
+  background: rgba(8, 10, 15, 0.75);
   backdrop-filter: blur(20px) saturate(190%);
   -webkit-backdrop-filter: blur(20px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 @utility apple-button {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(197, 157, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-  
+  transition: all 200ms var(--ease-out);
+  box-shadow: 0 4px 16px rgba(124, 196, 232, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
   &:hover {
     transform: translateY(-1px) scale(1.01);
-    box-shadow: 0 6px 22px rgba(197, 157, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 22px rgba(124, 196, 232, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
-  
+
   &:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 }
 
@@ -334,8 +363,8 @@
   opacity: 0;
   transform: scale(0.96) translateY(12px);
   transition:
-    opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
   will-change: opacity, transform;
 
   &.is-visible {
@@ -346,12 +375,77 @@
 
 @utility reveal-fade {
   opacity: 0;
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 600ms var(--ease-out);
   will-change: opacity;
 
   &.is-visible {
     opacity: 1;
   }
+}
+
+/* ── Image reveal: clip-path wipe from bottom ── */
+@utility reveal-clip {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 800ms var(--ease-out);
+  will-change: clip-path;
+
+  &.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ── Parallax image wrapper ── */
+.parallax-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.parallax-wrap img {
+  transition: transform 100ms linear;
+  will-change: transform;
+}
+
+/* ── Gold accent glow for cards on hover ── */
+.card-gold-hover {
+  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+.card-gold-hover:hover {
+  border-color: rgba(240, 199, 70, 0.2);
+  box-shadow: 0 0 24px -8px rgba(240, 199, 70, 0.08);
+}
+
+/* ── Cinematic section (full-bleed image with overlay) ── */
+.cinematic-section {
+  position: relative;
+  overflow: hidden;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--background) 0%,
+    rgba(8, 10, 15, 0.35) 30%,
+    rgba(8, 10, 15, 0.35) 70%,
+    var(--background) 100%
+  );
+  pointer-events: none;
+}
+
+.cinematic-section img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -361,7 +455,7 @@
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -431,6 +525,19 @@
   }
 }
 
+/* ── Slow Ken Burns for hero images ── */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate(-1%, -1%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
 /* ──────────────────────────────────────────────────────────
    REDUCED MOTION
    ────────────────────────────────────────────────────────── */
@@ -443,8 +550,12 @@
     scroll-behavior: auto !important;
   }
 
-  .reveal-up {
+  .reveal-up,
+  .reveal-scale,
+  .reveal-fade,
+  .reveal-clip {
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
   }
 }
