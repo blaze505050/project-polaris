@@ -13,10 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AeroforgeRouteImport } from './routes/aeroforge'
+import { Route as ArticlesRouteImport } from './routes/articles'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ChaptersRouteImport } from './routes/chapters'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as GetInvolvedRouteImport } from './routes/get-involved'
 import { Route as ImpactRouteImport } from './routes/impact'
 import { Route as JoinRouteImport } from './routes/join'
@@ -29,6 +32,7 @@ import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as SchoolsRouteImport } from './routes/schools'
 import { Route as ShowcaseRouteImport } from './routes/showcase'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SpotlightRouteImport } from './routes/spotlight'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedPortalRouteImport } from './routes/_authenticated/portal'
 import { Route as OpportunitiesIndexRouteImport } from './routes/opportunities.index'
@@ -53,9 +57,19 @@ const AeroforgeRoute = AeroforgeRouteImport.update({
   path: '/aeroforge',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArticlesRoute = ArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChaptersRoute = ChaptersRouteImport.update({
+  id: '/chapters',
+  path: '/chapters',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunityRoute = CommunityRouteImport.update({
@@ -71,6 +85,11 @@ const ContactRoute = ContactRouteImport.update({
 const CoursesRoute = CoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GetInvolvedRoute = GetInvolvedRouteImport.update({
@@ -133,6 +152,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SpotlightRoute = SpotlightRouteImport.update({
+  id: '/spotlight',
+  path: '/spotlight',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -158,10 +182,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/aeroforge': typeof AeroforgeRoute
+  '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
+  '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
@@ -174,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/spotlight': typeof SpotlightRoute
   '/terms': typeof TermsRoute
   '/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
@@ -183,10 +211,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/aeroforge': typeof AeroforgeRoute
+  '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
+  '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
@@ -199,6 +230,7 @@ export interface FileRoutesByTo {
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/spotlight': typeof SpotlightRoute
   '/terms': typeof TermsRoute
   '/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
@@ -210,10 +242,13 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/aeroforge': typeof AeroforgeRoute
+  '/articles': typeof ArticlesRoute
   '/auth': typeof AuthRoute
+  '/chapters': typeof ChaptersRoute
   '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
+  '/dashboard': typeof DashboardRoute
   '/get-involved': typeof GetInvolvedRoute
   '/impact': typeof ImpactRoute
   '/join': typeof JoinRoute
@@ -226,6 +261,7 @@ export interface FileRoutesById {
   '/schools': typeof SchoolsRoute
   '/showcase': typeof ShowcaseRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/spotlight': typeof SpotlightRoute
   '/terms': typeof TermsRoute
   '/_authenticated/portal': typeof AuthenticatedPortalRoute
   '/opportunities/$slug': typeof OpportunitiesSlugRoute
@@ -237,10 +273,13 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/aeroforge'
+    | '/articles'
     | '/auth'
+    | '/chapters'
     | '/community'
     | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
@@ -253,6 +292,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
+    | '/spotlight'
     | '/terms'
     | '/portal'
     | '/opportunities/$slug'
@@ -262,10 +302,13 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/aeroforge'
+    | '/articles'
     | '/auth'
+    | '/chapters'
     | '/community'
     | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
@@ -278,6 +321,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
+    | '/spotlight'
     | '/terms'
     | '/portal'
     | '/opportunities/$slug'
@@ -288,10 +332,13 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/aeroforge'
+    | '/articles'
     | '/auth'
+    | '/chapters'
     | '/community'
     | '/contact'
     | '/courses'
+    | '/dashboard'
     | '/get-involved'
     | '/impact'
     | '/join'
@@ -304,6 +351,7 @@ export interface FileRouteTypes {
     | '/schools'
     | '/showcase'
     | '/sitemap.xml'
+    | '/spotlight'
     | '/terms'
     | '/_authenticated/portal'
     | '/opportunities/$slug'
@@ -315,10 +363,13 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AeroforgeRoute: typeof AeroforgeRoute
+  ArticlesRoute: typeof ArticlesRoute
   AuthRoute: typeof AuthRoute
+  ChaptersRoute: typeof ChaptersRoute
   CommunityRoute: typeof CommunityRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
+  DashboardRoute: typeof DashboardRoute
   GetInvolvedRoute: typeof GetInvolvedRoute
   ImpactRoute: typeof ImpactRoute
   JoinRoute: typeof JoinRoute
@@ -331,6 +382,7 @@ export interface RootRouteChildren {
   SchoolsRoute: typeof SchoolsRoute
   ShowcaseRoute: typeof ShowcaseRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SpotlightRoute: typeof SpotlightRoute
   TermsRoute: typeof TermsRoute
   OpportunitiesSlugRoute: typeof OpportunitiesSlugRoute
   OpportunitiesIndexRoute: typeof OpportunitiesIndexRoute
@@ -366,11 +418,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AeroforgeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/articles': {
+      id: '/articles'
+      path: '/articles'
+      fullPath: '/articles'
+      preLoaderRoute: typeof ArticlesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chapters': {
+      id: '/chapters'
+      path: '/chapters'
+      fullPath: '/chapters'
+      preLoaderRoute: typeof ChaptersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/community': {
@@ -392,6 +458,13 @@ declare module '@tanstack/react-router' {
       path: '/courses'
       fullPath: '/courses'
       preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/get-involved': {
@@ -478,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/spotlight': {
+      id: '/spotlight'
+      path: '/spotlight'
+      fullPath: '/spotlight'
+      preLoaderRoute: typeof SpotlightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -525,10 +605,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AeroforgeRoute: AeroforgeRoute,
+  ArticlesRoute: ArticlesRoute,
   AuthRoute: AuthRoute,
+  ChaptersRoute: ChaptersRoute,
   CommunityRoute: CommunityRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
+  DashboardRoute: DashboardRoute,
   GetInvolvedRoute: GetInvolvedRoute,
   ImpactRoute: ImpactRoute,
   JoinRoute: JoinRoute,
@@ -541,6 +624,7 @@ const rootRouteChildren: RootRouteChildren = {
   SchoolsRoute: SchoolsRoute,
   ShowcaseRoute: ShowcaseRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SpotlightRoute: SpotlightRoute,
   TermsRoute: TermsRoute,
   OpportunitiesSlugRoute: OpportunitiesSlugRoute,
   OpportunitiesIndexRoute: OpportunitiesIndexRoute,

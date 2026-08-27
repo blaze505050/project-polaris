@@ -1,60 +1,62 @@
 import { Link } from "@tanstack/react-router";
-import { SITE } from "@/lib/site";
 import { Wordmark, NorthStar } from "./NorthStar";
-import { MessageCircle, Instagram, Linkedin, ArrowUpRight, Github } from "lucide-react";
+import { MessageCircle, Instagram, Linkedin, Mail, Send } from "lucide-react";
 
-const COLUMNS = [
+const FOOTER_COLUMNS = [
+  {
+    heading: "Platform",
+    links: [
+      { label: "Home", to: "/" },
+      { label: "About Us", to: "/about" },
+      { label: "Programs & Events", to: "/programs" },
+      { label: "Projects & Labs", to: "/projects" },
+      { label: "Polaris Chapters", to: "/chapters" },
+    ],
+  },
   {
     heading: "Explore",
     links: [
-      { label: "Projects & AeroForge", to: "/projects" },
-      { label: "Programs & Cohorts", to: "/programs" },
-      { label: "Student Showcase", to: "/showcase" },
-      { label: "Technical Research", to: "/research" },
-      { label: "For Schools", to: "/schools" },
+      { label: "Articles & Newsletter", to: "/articles" },
+      { label: "Polaris Spotlight", to: "/spotlight" },
+      { label: "Get Involved", to: "/get-involved" },
+      { label: "Student Dashboard", to: "/dashboard" },
     ],
   },
   {
-    heading: "Organization",
+    heading: "Connect & Apply",
     links: [
-      { label: "About Polaris", to: "/about" },
-      { label: "Student Workspace", to: "/portal" },
-      { label: "Volunteer Program", to: SITE.volunteerUrl, external: true },
-      { label: "Associate Form", to: SITE.associateFormUrl, external: true },
-      { label: "Contact Us", to: "/contact" },
-    ],
-  },
-  {
-    heading: "Legal & Policies",
-    links: [
-      { label: "Privacy Policy", to: "/privacy" },
-      { label: "Terms & Conditions", to: "/terms" },
+      { label: "Volunteer Operations", to: "https://forms.gle/ZXaxJH9k2ZUXVdYz6", external: true },
+      { label: "Volunteer Outreach", to: "https://forms.gle/WoKGodwNCBp5wkcn8", external: true },
+      { label: "Volunteer Research", to: "https://forms.gle/SnMhq9gNDLWmNqCF7", external: true },
+      { label: "Volunteer Content", to: "https://forms.gle/qUtQhWUNhmWtuSQu8", external: true },
+      { label: "Partner With Us", to: "https://tally.so/r/LZL56l", external: true },
     ],
   },
 ] as const;
 
 const SOCIAL_LINKS = [
-  { href: SITE.communityUrl, label: "WhatsApp Community", Icon: MessageCircle },
-  { href: SITE.instagramUrl, label: "Instagram", Icon: Instagram },
-  { href: SITE.linkedinCompanyUrl, label: "LinkedIn", Icon: Linkedin },
-  { href: "https://github.com/blaze505050/project-polaris", label: "GitHub", Icon: Github },
+  { href: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX", label: "WhatsApp Community", Icon: MessageCircle },
+  { href: "https://whatsapp.com/channel/0029VbDrFjTDJ6H506hXDG2h", label: "WhatsApp Channel", Icon: Send },
+  { href: "https://www.instagram.com/project_polaris_?igsi=MTM1cWxldXBlM2sybA==", label: "Instagram", Icon: Instagram },
+  { href: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/", label: "LinkedIn", Icon: Linkedin },
+  { href: "mailto:projectpolaris.8@gmail.com", label: "Email Us", Icon: Mail },
 ] as const;
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/8 bg-surface-2/40 text-xs">
-      <div className="shell py-14">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <footer className="border-t border-white/8 bg-surface-2/30 text-xs font-sans">
+      <div className="shell py-12 sm:py-14">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand Column */}
-          <div className="space-y-4">
+          <div className="space-y-3.5">
             <Link to="/" aria-label="Project Polaris Home" className="inline-block">
               <Wordmark />
             </Link>
-            <p className="font-display italic text-foreground/90 text-sm">
-              Build real things. Learn along the way.
+            <p className="font-display text-primary/95 text-sm font-medium">
+              Learn by building, rather than building after learning.
             </p>
-            <p className="text-muted-foreground text-xs leading-relaxed max-w-sm font-body">
-              Project Polaris is a student engineering ecosystem where students build simulations, software, research, and real-world systems.
+            <p className="text-muted-foreground text-xs leading-relaxed max-w-sm">
+              A student-led experiential engineering ecosystem built by students, for students. Bridging the gap between traditional education and real-world learning.
             </p>
 
             {/* Social Links */}
@@ -72,12 +74,15 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            <div className="text-[11px] text-muted-foreground pt-1">
+              Contact: <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">projectpolaris.8@gmail.com</a>
+            </div>
           </div>
 
           {/* Navigation Columns */}
-          {COLUMNS.map((col) => (
-            <div key={col.heading} className="space-y-3 font-mono">
-              <h4 className="font-bold text-foreground text-xs uppercase tracking-wider text-primary">
+          {FOOTER_COLUMNS.map((col) => (
+            <div key={col.heading} className="space-y-3">
+              <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider text-primary">
                 {col.heading}
               </h4>
               <ul className="space-y-2 text-xs">
@@ -91,7 +96,7 @@ export function Footer() {
                         className="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
                       >
                         <span>{link.label}</span>
-                        <ArrowUpRight className="size-2.5 opacity-60" />
+                        <span className="text-[10px] opacity-60">↗</span>
                       </a>
                     ) : (
                       <Link
@@ -109,17 +114,17 @@ export function Footer() {
         </div>
 
         {/* Bottom Baseline Bar */}
-        <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-muted-foreground">
+        <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground">
           <div className="flex items-center gap-2">
-            <NorthStar className="size-3 text-gold" />
-            <span>© {new Date().getFullYear()} Project Polaris. 100% Free & Open Source.</span>
+            <NorthStar className="size-3 text-primary" />
+            <span>© {new Date().getFullYear()} Project Polaris. Built by students, for students.</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <span>•</span>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms</Link>
             <span>•</span>
-            <Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link>
+            <Link to="/get-involved" className="hover:text-foreground transition-colors">Get Involved</Link>
           </div>
         </div>
       </div>

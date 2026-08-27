@@ -6,7 +6,12 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://projectpolaris.in/courses</loc>
+    <loc>https://projectpolaris.in/about</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://projectpolaris.in/programs</loc>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
@@ -16,54 +21,29 @@
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://projectpolaris.in/showcase</loc>
+    <loc>https://projectpolaris.in/chapters</loc>
     <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://projectpolaris.in/articles</loc>
+    <changefreq>daily</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://projectpolaris.in/aeroforge</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.90</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/research</loc>
+    <loc>https://projectpolaris.in/spotlight</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/resources</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/programs</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://projectpolaris.in/get-involved</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://projectpolaris.in/schools</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/community</loc>
+    <loc>https://projectpolaris.in/dashboard</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://projectpolaris.in/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://projectpolaris.in/privacy</loc>

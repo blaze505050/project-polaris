@@ -1,146 +1,365 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/site/PageHeader";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { SITE } from "@/lib/site";
-import { ExternalLink, UserPlus, HeartHandshake, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Handshake,
+  Users,
+  Send,
+  MessageCircle,
+  Instagram,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  CheckCircle,
+  FileText,
+  Building,
+  GraduationCap,
+} from "lucide-react";
 
 export const Route = createFileRoute("/get-involved")({
   head: () => ({
     meta: [
-      { title: "Get Involved — Project Polaris" },
+      { title: "Get Involved & Partnerships — Project Polaris" },
       {
         name: "description",
         content:
-          "Join as a student, associate, mentor, speaker, volunteer, school or partner organisation — and help build practical learning for everyone.",
+          "Partner with Polaris as a school, institution, or mentor. Join our core team, apply to the volunteer program, or get in touch.",
       },
-      { property: "og:title", content: "Get Involved — Project Polaris" },
-      { property: "og:description", content: "Ways to contribute: students, associates, mentors, volunteers, schools and partners." },
+      { property: "og:title", content: "Get Involved & Partnerships — Project Polaris" },
+      {
+        property: "og:description",
+        content:
+          "Collaborate with Project Polaris to expand experiential aerospace and science learning.",
+      },
+      { property: "og:url", content: "https://projectpolaris.in/get-involved" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://projectpolaris.in/get-involved" }],
   }),
-  component: GetInvolved,
+  component: GetInvolvedPage,
 });
 
-const PATHS = [
-  {
-    name: "Join Core Team & Lead",
-    note: "Take ownership of engineering departments, lead software architectures, manage sprints, and shape the direction of Project Polaris.",
-    action: "Apply as Team Lead / Associate",
-    link: SITE.associateFormUrl,
-    external: true,
-  },
-  {
-    name: "Become a Research Volunteer",
-    note: "Assist in running data analyses, writing technical digests, managing community build challenges, and supporting astronomy outreach.",
-    action: "Volunteer Program Portal",
-    link: SITE.volunteerUrl,
-    external: true,
-  },
-  {
-    name: "Deliver a Masterclass or Mentor",
-    note: "Inspire student builders by delivering technical workshops, CFD masterclasses, or sprint code reviews in your domain of expertise.",
-    action: "Propose a Masterclass",
-    link: "/contact",
-    external: false,
-  },
-  {
-    name: "Join as a Student Learner",
-    note: "Join the open community, access daily space science telemetry drops (Aaj Ka Gyan), weekly challenges, and collaborative build cohorts.",
-    action: "Join WhatsApp Community",
-    link: SITE.communityUrl,
-    external: true,
-  },
-  {
-    name: "Schools & Educational Institutions",
-    note: "Partner with us to host hands-on aerospace workshops, telescope observation nights, and computational science labs for your students.",
-    action: "Request School Collaboration",
-    link: "/schools",
-    external: false,
-  },
-  {
-    name: "Scientific Advisory",
-    note: "Provide research guidance, peer-review support, and institutional backing to empower student researchers and builders.",
-    action: "Connect with Founders",
-    link: "/contact",
-    external: false,
-  },
-];
+function GetInvolvedPage() {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
 
-function GetInvolved() {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+  };
+
   return (
     <>
-      <PageHeader
-        eyebrow="Get Involved"
-        title="More than one way to build with us."
-        lead="Whether you're a student engineer, an associate, a volunteer or an industry mentor — there is an active track for you."
-      >
-        <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium">
-            <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-              <HeartHandshake className="size-3.5" />
-              <span>Apply to Volunteer</span>
-            </a>
-          </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4">
-            <a href={SITE.associateFormUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-              <UserPlus className="size-3.5" />
-              <span>Associate Application</span>
-            </a>
-          </Button>
+      {/* ── 1. HERO SECTION ── */}
+      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
+        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+          <ScrollReveal direction="up">
+            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
+              Collaborate & Build
+            </span>
+            <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
+              Get Involved with Polaris
+            </h1>
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Whether you are an institution looking to partner, an educator, or a student ready to join our engineering and volunteer cohorts.
+            </p>
+          </ScrollReveal>
         </div>
-      </PageHeader>
+      </section>
 
-      <section className="section">
-        <div className="shell">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {PATHS.map((path, i) => (
-              <ScrollReveal key={path.name} direction="up" delay={i * 60}>
-                <article className="card-premium flex flex-col p-6 h-full justify-between">
-                  <div>
-                    <span className="font-mono text-xs text-primary font-bold">0{i + 1}</span>
-                    <h3 className="mt-2 text-lg font-bold text-foreground">{path.name}</h3>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{path.note}</p>
+      {/* ── 2. PARTNERSHIPS & JOIN TEAM TRACKS ── */}
+      <section className="section border-b border-white/8 bg-surface-2/15" id="tracks">
+        <div className="shell font-sans">
+          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+            {/* Track 1: Partner With Us */}
+            <ScrollReveal direction="up" delay={0}>
+              <div className="p-7 md:p-8 rounded-2xl border border-primary/25 bg-card flex flex-col justify-between h-full space-y-5">
+                <div className="space-y-3">
+                  <div className="size-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                    <Building className="size-5" />
                   </div>
-                  <div className="mt-6 pt-4 border-t border-border">
-                    {path.external ? (
-                      <a
-                        href={path.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
-                      >
-                        <span>{path.action}</span>
-                        <ExternalLink className="size-3" />
-                      </a>
-                    ) : (
-                      <Link
-                        to={path.link}
-                        className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
-                      >
-                        <span>{path.action}</span>
-                        <ArrowRight className="size-3" />
-                      </Link>
-                    )}
+                  <h2 className="text-2xl font-bold font-display text-foreground">
+                    Partner With Us
+                  </h2>
+                  <p className="text-xs text-primary font-medium">
+                    For Schools, Institutions, Universities, Organizations & Mentors
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Collaborate to bring experiential astronomy workshops, browser-based CFD/FEA simulation labs, and scientist masterclasses to your students without high infrastructure barriers.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/6">
+                  <Button
+                    asChild
+                    size="default"
+                    className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
+                  >
+                    <a href="https://tally.so/r/LZL56l" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                      <span>Submit Partnership Inquiry ↗</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Track 2: Join Our Core Team */}
+            <ScrollReveal direction="up" delay={40}>
+              <div className="p-7 md:p-8 rounded-2xl border border-white/10 bg-card flex flex-col justify-between h-full space-y-5">
+                <div className="space-y-3">
+                  <div className="size-10 rounded-xl bg-surface-2 border border-white/8 flex items-center justify-center text-primary">
+                    <Users className="size-5" />
                   </div>
-                </article>
-              </ScrollReveal>
-            ))}
+                  <h2 className="text-2xl font-bold font-display text-foreground">
+                    Join Our Core Team
+                  </h2>
+                  <p className="text-xs text-primary font-medium">
+                    For Student Leaders, Engineers, Researchers & Designers
+                  </p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Work directly with founders and domain leads. Build simulation pipelines, coordinate ISRO speaker sessions, manage community programs, and direct national outreach.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/6">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="default"
+                    className="w-full h-10 border-white/15 hover:border-white/25 text-foreground font-semibold rounded-lg text-xs"
+                  >
+                    <a href="https://tally.so/r/RGy8ad" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                      <span>Apply to Core Team ↗</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      <section className="section border-t border-border bg-surface/20">
-        <div className="shell max-w-2xl mx-auto text-center">
-          <ScrollReveal direction="up">
-            <p className="eyebrow mb-2">Direct Contact</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Have a specific idea or proposal?</h2>
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              If your proposal doesn't fit a standard category, get in touch directly. We review every message.
+      {/* ── 3. VOLUNTEER PROGRAM BY DEPARTMENT ── */}
+      <section className="section border-b border-white/8" id="volunteers">
+        <div className="shell font-sans space-y-6">
+          <div className="max-w-2xl">
+            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+              Student Volunteer Corps
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+              Volunteer Departments
+            </h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              Choose your department and register via dedicated Google Forms.
             </p>
-            <Button asChild size="sm" className="mt-6 h-9 px-5 bg-foreground text-background font-medium">
-              <Link to="/contact">Send a Message</Link>
-            </Button>
-          </ScrollReveal>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                dept: "Operations",
+                desc: "Session schedules, platform moderation, student certificates & event execution.",
+                form: "https://forms.gle/ZXaxJH9k2ZUXVdYz6",
+              },
+              {
+                dept: "Outreach",
+                desc: "School connections, university astronomy clubs & regional tier-2/3 expansion.",
+                form: "https://forms.gle/WoKGodwNCBp5wkcn8",
+              },
+              {
+                dept: "Research",
+                desc: "Aerospace physics numerical modeling, study datasets & explainer notebooks.",
+                form: "https://forms.gle/SnMhq9gNDLWmNqCF7",
+              },
+              {
+                dept: "Content & Design",
+                desc: "Technical writing, social media explainers, graphic assets & article reviews.",
+                form: "https://forms.gle/qUtQhWUNhmWtuSQu8",
+              },
+            ].map((d, i) => (
+              <ScrollReveal key={d.dept} direction="up" delay={i * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
+                  <div>
+                    <h3 className="text-base font-bold font-display text-foreground">{d.dept}</h3>
+                    <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{d.desc}</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-white/6">
+                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground">
+                      <a href={d.form} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                        <span>Register for {d.dept} ↗</span>
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div className="pt-2">
+            <a
+              href="https://drive.google.com/file/d/1YxoWvwXBQvJQ9gewJyEYhez-C1NpLPph/view?usp=drive_link"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs text-primary font-medium hover:underline"
+            >
+              <FileText className="size-3.5" />
+              <span>Read Full Volunteer Program Description Document ↗</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. INBUILT GENERAL INQUIRIES FORM ── */}
+      <section className="section border-b border-white/8 bg-surface-2/15" id="contact-form">
+        <div className="shell max-w-2xl mx-auto font-sans space-y-6">
+          <div className="text-center space-y-1">
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+              General Inquiries & Contact
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              Send us a direct message and our team will get back to you within 24–48 hours.
+            </p>
+          </div>
+
+          <div className="p-6 md:p-8 rounded-2xl border border-white/8 bg-card">
+            {formSubmitted ? (
+              <div className="text-center py-8 space-y-3">
+                <CheckCircle className="size-10 text-primary mx-auto" />
+                <h3 className="text-lg font-bold font-display text-foreground">Message Received</h3>
+                <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+                  Thank you for reaching out to Project Polaris. Our team will review your inquiry and follow up shortly.
+                </p>
+                <Button onClick={() => setFormSubmitted(false)} variant="outline" size="sm" className="mt-2 text-xs">
+                  Send Another Note
+                </Button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <label htmlFor="inquiry-name" className="font-medium text-foreground">Your Name</label>
+                    <input
+                      id="inquiry-name"
+                      type="text"
+                      required
+                      placeholder="e.g. Aditya Sharma"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label htmlFor="inquiry-email" className="font-medium text-foreground">Email Address</label>
+                    <input
+                      id="inquiry-email"
+                      type="email"
+                      required
+                      placeholder="e.g. aditya@example.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="inquiry-subject" className="font-medium text-foreground">Subject / Context</label>
+                  <input
+                    id="inquiry-subject"
+                    type="text"
+                    required
+                    placeholder="e.g. Workshop inquiry for DPS school students"
+                    value={formData.subject}
+                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <label htmlFor="inquiry-message" className="font-medium text-foreground">Your Message</label>
+                  <textarea
+                    id="inquiry-message"
+                    required
+                    rows={4}
+                    placeholder="Tell us what you'd like to explore, build, or collaborate on..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs resize-none"
+                  />
+                </div>
+
+                <Button type="submit" size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs">
+                  <span>Send Message</span>
+                </Button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. OUR SOCIALS ── */}
+      <section className="section" id="socials">
+        <div className="shell max-w-3xl mx-auto text-center font-sans space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+              Connect Across Official Channels
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              Follow real-time announcements, discussion channels, and publications.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 pt-2">
+            {[
+              {
+                name: "WhatsApp Community",
+                note: "Daily discussions & quizzes",
+                url: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
+                icon: MessageCircle,
+              },
+              {
+                name: "WhatsApp Channel",
+                note: "Broadcast updates & events",
+                url: "https://whatsapp.com/channel/0029VbDrFjTDJ6H506hXDG2h",
+                icon: Send,
+              },
+              {
+                name: "Instagram",
+                note: "@project_polaris_",
+                url: "https://www.instagram.com/project_polaris_?igsi=MTM1cWxldXBlM2sybA==",
+                icon: Instagram,
+              },
+              {
+                name: "LinkedIn",
+                note: "Company & institutional page",
+                url: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",
+                icon: Linkedin,
+              },
+              {
+                name: "Direct Email",
+                note: "projectpolaris.8@gmail.com",
+                url: "mailto:projectpolaris.8@gmail.com",
+                icon: Mail,
+              },
+            ].map((soc) => (
+              <a
+                key={soc.name}
+                href={soc.url}
+                target="_blank"
+                rel="noreferrer"
+                className="p-4 rounded-xl border border-white/8 bg-card flex items-center gap-3.5 hover:border-primary/40 hover:bg-surface-2 transition-colors text-left"
+              >
+                <div className="size-9 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-primary shrink-0">
+                  <soc.icon className="size-4" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold font-display text-foreground">{soc.name}</div>
+                  <div className="text-[10px] text-muted-foreground truncate">{soc.note}</div>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </section>
     </>

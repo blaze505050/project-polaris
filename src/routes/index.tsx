@@ -1,558 +1,193 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  ArrowUpRight,
   Sparkles,
-  GraduationCap,
-  Flame,
-  FileText,
-  Hammer,
   Users,
-  Cpu,
   Compass,
-  CheckCircle2,
-  Calendar,
-  Clock,
-  BookOpen,
+  Hammer,
+  CheckCircle,
+  Eye,
+  TrendingUp,
   MessageCircle,
-  Zap,
-  Lightbulb,
-  ShieldCheck,
+  Calendar,
+  ExternalLink,
+  BookOpen,
+  HelpCircle,
+  Award,
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  Clock,
+  MapPin,
+  Mic,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { PolarisStarCenterpiece } from "@/components/site/PolarisStarCenterpiece";
-import { InteractiveAeroForgeDemo } from "@/components/site/InteractiveAeroForgeDemo";
-import {
-  LEARNING_CATALOG,
-  START_HERE_INTENTS,
-  TOPIC_LABELS,
-  type Topic,
-  type LearningItem,
-} from "@/lib/learning";
-import { SITE, STATS } from "@/lib/site";
-
-const POLARIS_METHODOLOGY = [
-  {
-    step: "01",
-    phase: "DISCOVER & INQUIRE",
-    title: "Real-World Problem Scoping",
-    summary:
-      "Students formulate authentic engineering questions across aerospace aerodynamics, astrophysics, and computational physics beyond textbook bounds.",
-    badge: "Scientific Inquiry",
-    to: "/about",
-  },
-  {
-    step: "02",
-    phase: "LEARN ON DEMAND",
-    title: "Theory & Mentor Masterclasses",
-    summary:
-      "Learn governing equations, numerical methods, and technical tools right when needed through live sessions with ISRO scientists and industry practitioners.",
-    badge: "Expert Cohorts",
-    to: "/courses?type=workshop",
-  },
-  {
-    step: "03",
-    phase: "BUILD IN SQUADS",
-    title: "Collaborative Sprint Execution",
-    summary:
-      "Tackle challenges in small multi-disciplinary teams of 3–5 builders with code reviews, version control, and pair programming sprints.",
-    badge: "Sprint Teams",
-    to: "/projects",
-  },
-  {
-    step: "04",
-    phase: "VERIFY & DEPLOY",
-    title: "Open Artifacts & Portfolios",
-    summary:
-      "Validate models with benchmark data, publish technical whitepapers, and deploy working open-source applications and simulators for the world.",
-    badge: "Verified Artifacts",
-    to: "/showcase",
-  },
-] as const;
+import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
+import { getPrograms, INITIAL_PAST_SESSIONS } from "@/lib/cms-store";
+import { SITE } from "@/lib/site";
+import polarisLogo from "@/assets/polaris-logo.png";
+import studentsBuildingImg from "@/assets/students-building.webp";
+import nightObservationImg from "@/assets/night-observation.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Project Polaris — Experiential Learning Platform for Science & Engineering" },
+      { title: "Project Polaris — Learn by Building" },
       {
         name: "description",
         content:
-          "Learn by building, rather than building after learning. Interactive workshops, practical courses, expert-led cohorts, and hands-on engineering projects for curious students.",
+          "Project Polaris is a student-led experiential learning ecosystem built by students, for students. Learn by building, rather than building after learning.",
       },
-      { property: "og:title", content: "Project Polaris — Experiential Learning Platform" },
+      { property: "og:title", content: "Project Polaris — Learn by Building" },
       {
         property: "og:description",
         content:
-          "Learn by building, rather than building after learning. Practical learning in science, engineering and technology through open tools and real projects.",
+          "A student-led experiential engineering ecosystem bridging traditional education and real-world space & engineering practice.",
       },
+      { property: "og:url", content: "https://projectpolaris.in/" },
+      { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://projectpolaris.in/" }],
   }),
   component: HomePage,
 });
 
+// The 6-Step Polaris Experiential Methodology
+const METHODOLOGY_STEPS = [
+  {
+    step: "01",
+    title: "DISCOVER",
+    desc: "Find questions worth exploring.",
+    detail: "Curiosity-driven inquiry into real astrophysical and physical phenomena.",
+  },
+  {
+    step: "02",
+    title: "INVESTIGATE",
+    desc: "Go beyond what you're given.",
+    detail: "Formulate hypotheses and model numerical constraints using mathematics.",
+  },
+  {
+    step: "03",
+    title: "BUILD",
+    desc: "Turn knowledge into something tangible.",
+    detail: "Construct numerical simulations, CAD models, and computational solvers.",
+  },
+  {
+    step: "04",
+    title: "VALIDATE",
+    desc: "Test, refine, and challenge your work.",
+    detail: "Peer review with engineers, ISRO scientists, and cohort teammates.",
+  },
+  {
+    step: "05",
+    title: "SHOWCASE",
+    desc: "Put your work into the real world.",
+    detail: "Publish verified artifacts, open notebooks, and technical papers.",
+  },
+  {
+    step: "06",
+    title: "PROGRESS",
+    desc: "Learn from outcome and build again.",
+    detail: "Iterate to higher complexity systems and lead new cohorts.",
+  },
+];
+
+// Student Testimonials
+const STUDENT_REVIEWS = [
+  {
+    name: "Arjun S.",
+    role: "Aerospace Student, Class 12",
+    quote:
+      "Learning orbital transfers from textbook diagrams was confusing. In Polaris, simulating Keplerian mechanics in AeroForge made the physics finally click.",
+  },
+  {
+    name: "Sneha P.",
+    role: "B.Tech Mechanical 2nd Year",
+    quote:
+      "Interacting directly with an ISRO scientist during the career masterclass gave me a clear, realistic roadmap for spacecraft engineering.",
+  },
+  {
+    name: "Rohan M.",
+    role: "High School Physics Enthusiast",
+    quote:
+      "Polaris isn't like typical coaching. You are actually encouraged to build your own numerical codes and debate hypotheses with peers.",
+  },
+  {
+    name: "Ananya K.",
+    role: "Astrophysics Explorer",
+    quote:
+      "The Galaxies & Nebulae session was phenomenal! Mapping interstellar spectroscopy gave me a taste of real research.",
+  },
+];
+
+// Voices Behind Polaris (Past Speakers & Mentors)
+const PAST_SPEAKERS = [
+  {
+    name: "Scientist Baldev Krishan Sharma",
+    designation: "Cosmo-scientist & Author",
+    topic: "Exploring the Star Universe: A Journey into Wonders of Astronomy",
+    date: "29 August 2026",
+  },
+  {
+    name: "Mr. Ankit Gupta",
+    designation: "Scientist/Engineer 'SC' at ISRO",
+    topic: "How to Pursue Your Career in ISRO & Spacecraft Systems",
+    date: "12 July 2026",
+  },
+  {
+    name: "Mr. Prakhar Vishwakarma",
+    designation: "Missile Man of MP",
+    topic: "Fundamentals of Rocket Development & Staging Dynamics",
+    date: "2 July 2026",
+  },
+  {
+    name: "Ms. Vranda Gupta",
+    designation: "Founder, Stellar Freaks",
+    topic: "Dive into the World of Galaxies & Nebulas",
+    date: "9 August 2026",
+  },
+];
+
 function HomePage() {
-  const [selectedTopic, setSelectedTopic] = useState<Topic | "all">("all");
-
-  const filteredItems = useMemo(() => {
-    if (selectedTopic === "all") return LEARNING_CATALOG.slice(0, 6);
-    return LEARNING_CATALOG.filter((item) => item.topics.includes(selectedTopic));
-  }, [selectedTopic]);
-
-  // "What's happening now" items
-  const featuredWorkshop = LEARNING_CATALOG.find((i) => i.id === "ws-rocket-propulsion");
-  const featuredCourse = LEARNING_CATALOG.find((i) => i.id === "course-orbital-mechanics");
-  const featuredBootcamp = LEARNING_CATALOG.find((i) => i.id === "bootcamp-aerospace-systems");
+  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [reviewIndex, setReviewIndex] = useState(0);
+  const allPrograms = getPrograms();
+  const featuredSession = allPrograms.find((p) => p.id === "star-universe-aug29") || allPrograms[0];
 
   return (
     <>
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-20 border-b border-white/8">
-        {/* Ambient Stars */}
+      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
+        {/* Subtle Constellation Ambient Canvas */}
         <div className="absolute inset-0 pointer-events-none opacity-30">
           <ConstellationCanvas />
         </div>
 
-        <div className="shell relative z-10">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 items-center">
-            {/* Left Column: Organization Positioning */}
-            <div>
-              {/* Bold Headline */}
-              <ScrollReveal direction="up" delay={40}>
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold tracking-tight text-foreground leading-[1.08]">
-                  Project Polaris
-                </h1>
-                <p className="mt-4 text-xl sm:text-2xl md:text-3xl font-display text-primary/95 font-medium leading-snug">
-                  Learn by building, rather than building after learning.
-                </p>
-              </ScrollReveal>
-
-              {/* Subhead */}
-              <ScrollReveal direction="up" delay={100}>
-                <p className="mt-4 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed font-body max-w-xl">
-                  A student engineering ecosystem where curious minds build numerical physics simulations, software platforms, and physical prototypes with mentors and peers.
-                </p>
-              </ScrollReveal>
-
-              {/* Primary CTAs */}
-              <ScrollReveal direction="up" delay={160}>
-                <div className="mt-8 flex flex-wrap items-center gap-3 font-mono text-xs">
-                  <Button
-                    asChild
-                    size="default"
-                    className="h-10 px-6 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors"
-                  >
-                    <Link to="/courses" className="flex items-center gap-2">
-                      <span>Explore Courses</span>
-                      <ArrowRight className="size-3.5" />
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="default"
-                    className="h-10 px-5 rounded-lg font-medium border-white/15 bg-surface hover:bg-surface-2 text-foreground transition-colors"
-                  >
-                    <Link to="/courses" search={{ type: "workshop" }}>
-                      Our Workshops
-                    </Link>
-                  </Button>
-                </div>
-
-                {/* Micro Credibility */}
-                <div className="mt-6 flex items-center gap-3 text-xs font-mono text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <span className="size-1.5 rounded-full bg-emerald-400" />
-                    <span>Student-Led Ecosystem</span>
-                  </span>
-                  <span className="text-white/20">•</span>
-                  <span>100% Free & Open Knowledge</span>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            {/* Right Column: Organization Showcase Centerpiece */}
-            <ScrollReveal direction="up" delay={120}>
-              <PolarisStarCenterpiece />
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 2. WHAT'S HAPPENING NOW (LIVE & UPCOMING CARDS) ── */}
-      <section className="border-b border-white/8 bg-surface-2/20 py-12">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="flex items-center justify-between gap-4 mb-6">
-              <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="size-1.5 rounded-full bg-emerald-400" />
-                <span className="font-bold text-foreground uppercase tracking-wider">What's Happening Now</span>
-                <span className="text-muted-foreground hidden sm:inline">• Weekly live sessions and modules</span>
-              </div>
-              <Button asChild variant="ghost" size="sm" className="h-7 text-xs font-mono text-primary hover:text-foreground">
-                <Link to="/courses">View full calendar →</Link>
-              </Button>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 font-mono">
-            {/* 1. Upcoming Workshop */}
-            {featuredWorkshop && (
-              <ScrollReveal direction="up" delay={0}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-3">
-                      <span className="px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold text-[10px] uppercase">
-                        LIVE WORKSHOP
-                      </span>
-                      <span className="text-[11px] text-muted-foreground font-medium">{featuredWorkshop.duration}</span>
-                    </div>
-                    <h3 className="text-base font-bold font-sans text-foreground">{featuredWorkshop.title}</h3>
-                    <p className="mt-1.5 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {featuredWorkshop.subtitle}
-                    </p>
-                    <div className="mt-3 text-[11px] text-primary">
-                      With {featuredWorkshop.instructor?.name} ({featuredWorkshop.instructor?.org})
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground text-[11px]">{featuredWorkshop.date}</span>
-                    <Button asChild size="sm" className="h-7 px-3 text-[11px] bg-foreground text-background font-medium rounded hover:bg-foreground/90">
-                      <a href={featuredWorkshop.link} target="_blank" rel="noreferrer">
-                        Reserve Seat →
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            )}
-
-            {/* 2. Mini-Course */}
-            {featuredCourse && (
-              <ScrollReveal direction="up" delay={60}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-3">
-                      <span className="px-2 py-0.5 rounded bg-surface-2 text-foreground border border-white/8 font-bold text-[10px] uppercase">
-                        MINI-COURSE
-                      </span>
-                      <span className="text-[11px] text-muted-foreground">{featuredCourse.duration}</span>
-                    </div>
-                    <h3 className="text-base font-bold font-sans text-foreground">{featuredCourse.title}</h3>
-                    <p className="mt-1.5 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {featuredCourse.subtitle}
-                    </p>
-                    <div className="mt-3 text-[11px] text-emerald-400">
-                      Final Project: {featuredCourse.finalProject?.title}
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground text-[11px] capitalize">{featuredCourse.level}</span>
-                    <Button asChild size="sm" variant="outline" className="h-7 px-3 text-[11px] border-white/10 hover:border-white/20 rounded">
-                      <Link to="/courses">Start Course →</Link>
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            )}
-
-            {/* 3. Intensive Bootcamp */}
-            {featuredBootcamp && (
-              <ScrollReveal direction="up" delay={120}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-3">
-                      <span className="px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold text-[10px] uppercase">
-                        BOOTCAMP
-                      </span>
-                      <span className="text-[11px] text-muted-foreground">{featuredBootcamp.duration}</span>
-                    </div>
-                    <h3 className="text-base font-bold font-sans text-foreground">{featuredBootcamp.title}</h3>
-                    <p className="mt-1.5 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {featuredBootcamp.subtitle}
-                    </p>
-                    <div className="mt-3 text-[11px] text-muted-foreground">
-                      {featuredBootcamp.seats}
-                    </div>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground text-[11px]">{featuredBootcamp.date}</span>
-                    <Button asChild size="sm" className="h-7 px-3 text-[11px] bg-foreground text-background font-medium rounded hover:bg-foreground/90">
-                      <a href={featuredBootcamp.link} target="_blank" rel="noreferrer">
-                        Apply →
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. THE POLARIS METHODOLOGY & FRAMEWORK ── */}
-      <section className="section border-b border-white/8" id="methodology">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="max-w-2xl mx-auto text-center mb-12">
-              <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
-                The Polaris Framework
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-sans text-foreground">
-                How We Learn by Building
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-sans">
-                Our structured methodology connecting inquiry, live guidance, sprint squads, and verified public artifacts.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-mono">
-            {POLARIS_METHODOLOGY.map((step, i) => (
-              <ScrollReveal key={step.title} direction="up" delay={i * 40}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-3">
-                      <span className="text-primary font-bold">{step.step}</span>
-                      <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">{step.phase}</span>
-                    </div>
-                    <h3 className="text-base font-bold font-sans text-foreground">{step.title}</h3>
-                    <span className="inline-block mt-1 text-[11px] text-primary">{step.badge}</span>
-                    <p className="mt-2 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {step.summary}
-                    </p>
-                  </div>
-
-                  <div className="mt-5 pt-3 border-t border-white/6">
-                    <Button asChild variant="ghost" size="sm" className="w-full justify-between h-7 text-xs font-mono text-primary hover:text-foreground px-0">
-                      <Link to={step.to}>
-                        <span>Explore Step</span>
-                        <ArrowRight className="size-3" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. LEARNING EXPLORER BY TOPIC ── */}
-      <section className="section border-b border-white/8 bg-surface-2/10" id="learning-explorer">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
-              <div>
-                <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
-                  Catalog Explorer
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold font-sans text-foreground">
-                  Explore by Topic
-                </h2>
-                <p className="mt-1 text-xs sm:text-sm text-muted-foreground font-sans">
-                  Science, aerospace, astrophysics, programming, and computational simulation.
-                </p>
-              </div>
-
-              <Button asChild variant="outline" size="sm" className="font-mono text-xs border-white/10 hover:border-white/20">
-                <Link to="/courses">Browse All ({LEARNING_CATALOG.length})</Link>
-              </Button>
-            </div>
-
-            {/* Topic Filter Pills */}
-            <div className="flex flex-wrap gap-2 mb-8 font-mono text-xs">
-              <button
-                type="button"
-                onClick={() => setSelectedTopic("all")}
-                className={`px-3 py-1 rounded-md transition-colors ${
-                  selectedTopic === "all"
-                    ? "bg-foreground text-background font-medium"
-                    : "bg-surface text-muted-foreground hover:text-foreground border border-white/8"
-                }`}
-              >
-                All Domains
-              </button>
-              {(Object.keys(TOPIC_LABELS) as Topic[]).map((key) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setSelectedTopic(key)}
-                  className={`px-3 py-1 rounded-md transition-colors ${
-                    selectedTopic === key
-                      ? "bg-foreground text-background font-medium"
-                      : "bg-surface text-muted-foreground hover:text-foreground border border-white/8"
-                  }`}
-                >
-                  {TOPIC_LABELS[key]}
-                </button>
-              ))}
-            </div>
-          </ScrollReveal>
-
-          {/* Filtered Learning Cards Grid */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 font-mono">
-            {filteredItems.map((item, idx) => (
-              <ScrollReveal key={item.id} direction="up" delay={idx * 30}>
-                <article className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-3">
-                      <span className="px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-bold text-[10px] uppercase">
-                        {item.type}
-                      </span>
-                      <span className="text-[11px] text-muted-foreground">{item.duration}</span>
-                    </div>
-
-                    <h3 className="text-base font-bold font-sans text-foreground">{item.title}</h3>
-                    <p className="mt-1.5 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {item.description}
-                    </p>
-
-                    <div className="mt-3 flex flex-wrap gap-1 text-[10px]">
-                      {item.topics.map((t) => (
-                        <span key={t} className="px-2 py-0.5 rounded bg-surface-2 border border-white/6 text-muted-foreground">
-                          {TOPIC_LABELS[t]}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="mt-5 pt-3 border-t border-white/6 flex items-center justify-between text-xs">
-                    <span className="text-emerald-400 text-[11px] font-medium uppercase">{item.status}</span>
-                    <Button asChild size="sm" className="h-7 px-3 text-xs font-medium bg-foreground text-background hover:bg-foreground/90 rounded">
-                      <Link to="/courses" className="flex items-center gap-1">
-                        <span>{item.ctaText || "View Details"}</span>
-                        <ArrowRight className="size-3 text-primary" />
-                      </Link>
-                    </Button>
-                  </div>
-                </article>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. START HERE (INTENT-BASED ROUTE PICKER) ── */}
-      <section className="section border-b border-white/8">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="max-w-2xl mx-auto text-center mb-10">
-              <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-1">
-                Personalized Pathways
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-sans text-foreground">
-                Not sure where to start?
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-sans">
-                Choose the statement that fits your current time and learning goal.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 font-mono">
-            {START_HERE_INTENTS.map((intent, i) => (
-              <ScrollReveal key={intent.intent} direction="up" delay={i * 30}>
-                <Link
-                  to={intent.to}
-                  className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between text-xs mb-2">
-                      <span className="text-primary font-bold text-[11px]">{intent.intent}</span>
-                      <span className="text-[10px] text-muted-foreground px-2 py-0.5 rounded bg-surface-2">
-                        {intent.badge}
-                      </span>
-                    </div>
-                    <h3 className="text-base font-bold font-sans text-foreground group-hover:text-primary transition-colors">
-                      {intent.heading}
-                    </h3>
-                    <p className="mt-1.5 text-xs text-muted-foreground font-sans leading-relaxed">
-                      {intent.desc}
-                    </p>
-                  </div>
-                  <div className="mt-4 pt-2 flex items-center text-xs text-primary font-bold gap-1">
-                    <span>Go to path</span>
-                    <ArrowRight className="size-3" />
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 6. FEATURED LAB: AEROFORGE ── */}
-      <section className="section border-b border-white/8 bg-surface-2/10" id="aeroforge-lab">
-        <div className="shell">
-          <ScrollReveal direction="up">
-            <div className="max-w-3xl mb-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
-                <span className="size-1.5 rounded-full bg-emerald-400" />
-                <span className="font-bold">POLARIS LEARNING LAB</span>
-                <span className="text-white/20">|</span>
-                <span className="text-muted-foreground">40+ Numerical Physics Solvers</span>
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-sans font-bold text-foreground">
-                Learn aerospace engineering by actually experimenting with it.
-              </h2>
-              <p className="mt-3 text-xs sm:text-base text-muted-foreground leading-relaxed font-sans">
-                AeroForge AI is Polaris's open-source computational physics lab. Practice fluid mechanics, transonic airfoil CFD, structural FEA, and orbital Keplerian dynamics directly in your browser.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          {/* Interactive AeroForge Demonstration */}
-          <ScrollReveal direction="up" delay={60}>
-            <InteractiveAeroForgeDemo />
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── 7. VERIFIED PROOF & COMMUNITY NUMBERS ── */}
-      <section className="border-b border-white/8 bg-surface-2/20 py-12">
-        <div className="shell">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center font-mono">
-            {STATS.map((s, idx) => (
-              <ScrollReveal key={s.label} direction="up" delay={idx * 20}>
-                <div className="p-4 rounded-xl border border-white/8 bg-card">
-                  <div className="text-2xl sm:text-3xl font-bold text-primary font-mono">{s.value}</div>
-                  <div className="text-xs font-medium text-foreground mt-1">{s.label}</div>
-                  <div className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block">{s.note}</div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 8. FINAL CALL TO ACTION ── */}
-      <section className="section bg-surface-2/10">
-        <div className="shell text-center max-w-2xl mx-auto space-y-4">
-          <ScrollReveal direction="up">
-            <span className="font-mono text-xs text-primary uppercase tracking-widest font-semibold block mb-2">
-              Start Learning
+        <div className="shell relative z-10 text-center max-w-4xl mx-auto space-y-6">
+          <ScrollReveal direction="up" delay={20}>
+            <span className="text-[11px] font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-3">
+              Experiential Learning Ecosystem
             </span>
-            <h2 className="text-3xl sm:text-5xl font-sans font-bold text-foreground">
-              Ready to learn something new?
-            </h2>
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
-              Join workshops with ISRO scientists, take practical mini-courses, or build real engineering projects with peers.
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight text-foreground leading-[1.08]">
+              PROJECT POLARIS
+            </h1>
+            <p className="mt-4 text-xl sm:text-2xl md:text-3xl font-display text-primary/95 font-medium leading-snug">
+              Learn by building, rather than building after learning.
             </p>
+          </ScrollReveal>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3 font-mono text-xs">
+          {/* Primary Action Buttons */}
+          <ScrollReveal direction="up" delay={80}>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 font-sans text-xs">
               <Button
                 asChild
                 size="default"
-                className="h-10 px-6 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors"
+                className="h-11 px-7 rounded-full font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
               >
-                <Link to="/courses" className="flex items-center gap-2">
-                  <span>Explore Learning Catalog</span>
+                <Link to="/about" className="flex items-center gap-2">
+                  <span>Explore Polaris</span>
                   <ArrowRight className="size-3.5" />
                 </Link>
               </Button>
@@ -560,18 +195,662 @@ function HomePage() {
                 asChild
                 variant="outline"
                 size="default"
-                className="h-10 px-5 rounded-lg font-medium border-white/15 bg-surface hover:bg-surface-2 text-foreground"
+                className="h-11 px-6 rounded-full font-medium border-white/15 bg-surface hover:bg-surface-2 text-foreground transition-colors"
               >
-                <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+                <Link to="/programs">View Programs</Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="default"
+                className="h-11 px-5 rounded-full font-medium text-muted-foreground hover:text-foreground hover:bg-white/5"
+              >
+                <a href="https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX" target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
                   <MessageCircle className="size-3.5 text-emerald-400" />
-                  <span>Join WhatsApp Community</span>
+                  <span>Join the Community</span>
                 </a>
               </Button>
             </div>
           </ScrollReveal>
+
+          {/* ── The 6-Step Visual Methodology Chain ── */}
+          <ScrollReveal direction="up" delay={120}>
+            <div className="mt-14 pt-8 border-t border-white/8">
+              <span className="text-[10px] uppercase font-semibold text-muted-foreground tracking-wider block mb-4">
+                The Polaris Learning Methodology
+              </span>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-left font-sans">
+                {METHODOLOGY_STEPS.map((m, idx) => {
+                  const isHovered = activeStep === idx;
+                  return (
+                    <div
+                      key={m.title}
+                      onMouseEnter={() => setActiveStep(idx)}
+                      onMouseLeave={() => setActiveStep(null)}
+                      className={`p-3.5 rounded-xl border transition-all cursor-default ${
+                        isHovered
+                          ? "border-primary bg-primary/10 shadow-[0_0_15px_rgba(165,180,252,0.15)]"
+                          : "border-white/8 bg-card hover:border-white/20"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1.5">
+                        <span className="font-mono text-primary font-bold">{m.step}</span>
+                        <span>→</span>
+                      </div>
+                      <h3 className="text-xs font-bold font-display text-foreground">{m.title}</h3>
+                      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{m.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── 2. THE PROBLEM SECTION ("THE GAP") ── */}
+      <section className="section border-b border-white/8 bg-surface-2/20" id="the-gap">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
+              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
+                The Gap
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-bold font-display text-foreground leading-tight">
+                The world doesn't have a knowledge problem.
+                <br />
+                <span className="text-primary">It has an action problem.</span>
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          {/* Three Key Realities */}
+          <div className="grid gap-4 md:grid-cols-3 font-sans max-w-5xl mx-auto">
+            <ScrollReveal direction="up" delay={40}>
+              <div className="p-6 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-white/16 transition-colors">
+                <div>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-2 font-mono">
+                    01. Application
+                  </span>
+                  <h3 className="text-lg font-bold font-display text-foreground">KNOWLEDGE ≠ ACTION</h3>
+                  <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
+                    Knowing a concept or memorizing textbook formulas doesn't mean knowing how to build, test, and deploy something real with it.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={80}>
+              <div className="p-6 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-white/16 transition-colors">
+                <div>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-2 font-mono">
+                    02. Ecosystem
+                  </span>
+                  <h3 className="text-lg font-bold font-display text-foreground">CURIOSITY ≠ ACCESS</h3>
+                  <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
+                    Being deeply curious doesn't guarantee access to the tools, mentorship, computational software, or environment to explore freely.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={120}>
+              <div className="p-6 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-white/16 transition-colors">
+                <div>
+                  <span className="text-xs font-semibold text-primary uppercase tracking-wider block mb-2 font-mono">
+                    03. Democratization
+                  </span>
+                  <h3 className="text-lg font-bold font-display text-foreground">OPPORTUNITY ≠ AFFORDABILITY</h3>
+                  <p className="mt-2.5 text-xs text-muted-foreground leading-relaxed">
+                    An opportunity isn't truly accessible if paywalls and heavy costs put it out of reach for curious students.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+
+          {/* Polaris Resolution Callout */}
+          <ScrollReveal direction="up" delay={160}>
+            <div className="mt-10 max-w-2xl mx-auto p-6 rounded-xl border border-primary/20 bg-primary/5 text-center space-y-3">
+              <h3 className="text-xl font-bold font-display text-foreground">
+                Polaris exists to close that gap.
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                By replacing passive rote learning with an authentic cycle:
+              </p>
+              <div className="text-xs font-semibold text-primary flex flex-wrap items-center justify-center gap-2 pt-1 font-mono">
+                <span>Discover</span>
+                <span>→</span>
+                <span>Investigate</span>
+                <span>→</span>
+                <span>Build</span>
+                <span>→</span>
+                <span>Validate</span>
+                <span>→</span>
+                <span>Showcase</span>
+                <span>→</span>
+                <span>Progress</span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── 3. WHAT'S HAPPENING NOW (FEATURED 29TH AUGUST SESSION) ── */}
+      <section className="section border-b border-white/8" id="whats-happening-now">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+                  Active Masterclass
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                  What's Happening Now?
+                </h2>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Upcoming live session and hands-on masterclass details.
+                </p>
+              </div>
+              <Button asChild variant="outline" size="sm" className="font-sans text-xs border-white/10 hover:border-white/20">
+                <Link to="/programs">View All Programs →</Link>
+              </Button>
+            </div>
+          </ScrollReveal>
+
+          {/* Featured 29 August Astronomy Masterclass Card */}
+          <ScrollReveal direction="up" delay={40}>
+            <div className="p-6 md:p-8 rounded-2xl border border-primary/25 bg-card relative overflow-hidden font-sans">
+              <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
+                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25 font-bold text-[10px] uppercase">
+                      LIVE ASTRONOMY WORKSHOP
+                    </span>
+                    <span className="flex items-center gap-1 text-muted-foreground text-xs">
+                      <Calendar className="size-3 text-primary" />
+                      <span>{featuredSession.date}</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-muted-foreground text-xs">
+                      <Clock className="size-3 text-primary" />
+                      <span>{featuredSession.time || "6:00 PM IST"}</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-emerald-400 text-xs">
+                      <MapPin className="size-3" />
+                      <span>{featuredSession.mode}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-bold font-display text-foreground leading-snug">
+                    {featuredSession.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                    {featuredSession.details}
+                  </p>
+
+                  {/* Speaker Box */}
+                  {featuredSession.speaker && (
+                    <div className="p-4 rounded-xl bg-surface-2/60 border border-white/6 flex items-center gap-3.5">
+                      <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base shrink-0">
+                        <Mic className="size-5" />
+                      </div>
+                      <div>
+                        <div className="text-sm font-bold font-display text-foreground">
+                          {featuredSession.speaker.name}
+                        </div>
+                        <div className="text-xs text-primary font-medium">
+                          {featuredSession.speaker.designation}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="pt-2">
+                    <Button
+                      asChild
+                      size="default"
+                      className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors"
+                    >
+                      <a href={featuredSession.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                        <span>Register Now (Free)</span>
+                        <ArrowRight className="size-3.5" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* What You Will Get */}
+                <div className="p-5 md:p-6 rounded-xl bg-surface-2/40 border border-white/6 space-y-4">
+                  <h4 className="text-xs font-semibold uppercase text-primary tracking-wider font-mono">
+                    What You Will Get
+                  </h4>
+                  <ul className="space-y-2.5 text-xs text-muted-foreground">
+                    {featuredSession.benefits.map((benefit) => (
+                      <li key={benefit} className="flex items-start gap-2.5">
+                        <CheckCircle className="size-3.5 text-primary shrink-0 mt-0.5" />
+                        <span className="text-foreground/90">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="pt-3 border-t border-white/6 text-[11px] text-muted-foreground">
+                    Whether you are an astronomy enthusiast or simply curious about the Universe, join us on this journey through the stars! 🌠
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ── 4. JOIN OUR COMMUNITY ── */}
+      <section className="section border-b border-white/8 bg-surface-2/10" id="community">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mx-auto text-center mb-10 space-y-2">
+              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
+                The Community
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                More than a community. An environment to explore.
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Connect with hundreds of students, participate in quizzes, and explore space together.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5 font-sans max-w-5xl mx-auto">
+            {[
+              {
+                title: "Aaj Ka Gyan",
+                desc: "Short, useful aerospace & physics knowledge drops daily.",
+                icon: Sparkles,
+              },
+              {
+                title: "Quizzes",
+                desc: "Test what you know and compete in friendly astrophysics challenges.",
+                icon: Award,
+              },
+              {
+                title: "Sessions & Workshops",
+                desc: "Learn directly from scientists and engineers doing the work.",
+                icon: Mic,
+              },
+              {
+                title: "People Like You",
+                desc: "Meet curious students, peer coders, and space enthusiasts.",
+                icon: Users,
+              },
+              {
+                title: "Updates & Opps",
+                desc: "Stay connected to competitions, internships, and build sprints.",
+                icon: Compass,
+              },
+            ].map((c, i) => (
+              <ScrollReveal key={c.title} direction="up" delay={i * 30}>
+                <div className="p-4 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-white/16 transition-colors">
+                  <div>
+                    <div className="size-8 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-primary mb-3">
+                      <c.icon className="size-4" />
+                    </div>
+                    <h3 className="text-sm font-bold font-display text-foreground">{c.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{c.desc}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Button
+              asChild
+              size="default"
+              className="h-10 px-6 rounded-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors"
+            >
+              <a href="https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX" target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                <MessageCircle className="size-4 text-emerald-950" />
+                <span>Join the Community →</span>
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. BUILD POLARIS WITH US (VOLUNTEER PROGRAM) ── */}
+      <section className="section border-b border-white/8" id="volunteer">
+        <div className="shell">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] items-center">
+            <ScrollReveal direction="up">
+              <div className="space-y-4">
+                <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
+                  Student Leadership
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                  Build Polaris With Us
+                </h2>
+                <p className="text-sm text-primary font-medium font-display">
+                  Polaris isn't built only for students. It's built with students.
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed font-sans">
+                  Join our active student volunteer corps across four specialized departments. Gain hands-on leadership, design simulations, moderate scientist sessions, and build open resources.
+                </p>
+
+                <div className="pt-2 flex flex-wrap gap-3">
+                  <Button
+                    asChild
+                    size="sm"
+                    className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors shadow-sm text-xs"
+                  >
+                    <a
+                      href="https://drive.google.com/file/d/1YxoWvwXBQvJQ9gewJyEYhez-C1NpLPph/view?usp=drive_link"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-1.5"
+                    >
+                      <FileText className="size-3.5" />
+                      <span>Volunteer Program Info Doc ↗</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Department Registration Cards */}
+            <ScrollReveal direction="up" delay={40}>
+              <div className="grid gap-3 sm:grid-cols-2 font-sans">
+                {[
+                  {
+                    dept: "Operations",
+                    desc: "Event logistics, session moderation & member onboarding.",
+                    link: "https://forms.gle/ZXaxJH9k2ZUXVdYz6",
+                  },
+                  {
+                    dept: "Outreach",
+                    desc: "School partnerships, college clubs & community growth.",
+                    link: "https://forms.gle/WoKGodwNCBp5wkcn8",
+                  },
+                  {
+                    dept: "Research",
+                    desc: "Physics simulation, paper writing & study datasets.",
+                    link: "https://forms.gle/SnMhq9gNDLWmNqCF7",
+                  },
+                  {
+                    dept: "Content & Design",
+                    desc: "Technical explainers, graphics & publication articles.",
+                    link: "https://forms.gle/qUtQhWUNhmWtuSQu8",
+                  },
+                ].map((d) => (
+                  <div key={d.dept} className="p-4 rounded-xl border border-white/8 bg-card flex flex-col justify-between hover:border-white/16 transition-colors">
+                    <div>
+                      <h3 className="text-sm font-bold font-display text-foreground">{d.dept}</h3>
+                      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{d.desc}</p>
+                    </div>
+                    <div className="mt-4 pt-2 border-t border-white/6">
+                      <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-semibold text-primary hover:text-foreground">
+                        <a href={d.link} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                          <span>Apply ({d.dept})</span>
+                          <ExternalLink className="size-3" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. UPCOMING INITIATIVES (DYNAMIC CARDS) ── */}
+      <section className="section border-b border-white/8 bg-surface-2/20" id="initiatives">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-8">
+              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+                Roadmap & Pipelines
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                Upcoming Initiatives
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                New programs launching across the Polaris ecosystem.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-3 font-sans">
+            {[
+              {
+                title: "Polaris Innovation Program",
+                status: "Coming Soon",
+                desc: "Long-term build cohorts developing verified aerospace simulations and physical hardware prototypes.",
+                cta: "Details to be disclosed soon",
+                to: "/programs",
+              },
+              {
+                title: "Chapter Lead Program",
+                status: "Coming Soon",
+                desc: "Lead and launch a Polaris chapter at your school or college in Tier-2/3 cities and remote regions.",
+                cta: "Explore Chapters →",
+                to: "/chapters",
+              },
+              {
+                title: "Mentor Panel",
+                status: "Coming Soon",
+                desc: "Technical code and flight mechanics reviews directly from aerospace scientists and researchers.",
+                cta: "Get Involved →",
+                to: "/get-involved",
+              },
+            ].map((item, idx) => (
+              <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
+                  <div>
+                    <span className="text-[10px] font-semibold text-primary uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 border border-primary/20 inline-block mb-3">
+                      {item.status}
+                    </span>
+                    <h3 className="text-base font-bold font-display text-foreground">{item.title}</h3>
+                    <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.desc}</p>
+                  </div>
+                  <div className="mt-5 pt-3 border-t border-white/6">
+                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground">
+                      <Link to={item.to}>{item.cta}</Link>
+                    </Button>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. WHAT IS PROJECT POLARIS? ── */}
+      <section className="section border-b border-white/8" id="what-is-polaris">
+        <div className="shell">
+          <div className="grid gap-10 lg:grid-cols-2 items-center">
+            <ScrollReveal direction="up">
+              <div className="space-y-4">
+                <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block">
+                  About the Ecosystem
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                  What is Project Polaris?
+                </h2>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
+                  Project Polaris is a student-led experiential learning ecosystem built by students, for students.
+                </p>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
+                  We bridge the gap between traditional education and real-world learning by creating opportunities to build, research, experiment, collaborate, and showcase.
+                </p>
+
+                <div className="pt-2">
+                  <Button
+                    asChild
+                    size="default"
+                    className="h-10 px-6 rounded-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs"
+                  >
+                    <Link to="/about" className="flex items-center gap-1.5">
+                      <span>Discover Polaris</span>
+                      <ArrowRight className="size-3.5" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="up" delay={40}>
+              <div className="relative rounded-2xl overflow-hidden border border-white/8 bg-card aspect-[4/3] flex items-center justify-center p-8">
+                <img
+                  src={studentsBuildingImg}
+                  alt="Students building and experimenting in Project Polaris"
+                  className="absolute inset-0 size-full object-cover opacity-60 hover:opacity-80 transition-opacity duration-500"
+                />
+                <div className="relative z-10 p-5 rounded-xl bg-background/80 backdrop-blur-md border border-white/10 text-center max-w-xs">
+                  <img src={polarisLogo} alt="Polaris Logo" className="size-8 mx-auto mb-2 object-contain" />
+                  <div className="text-xs font-bold font-display text-foreground">Built by Students, for Students</div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">Empowering curious minds to build real systems</div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 8. IMPACT / VERIFIED NUMBERS ── */}
+      <section className="section border-b border-white/8 bg-surface-2/20" id="impact">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mx-auto text-center mb-8">
+              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+                Verified Progress
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                Our Impact in Numbers
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center font-sans">
+            {[
+              { value: "1000+", label: "Students Reached", note: "Across interactive sessions" },
+              { value: "230+", label: "Community Members", note: "Active WhatsApp learners" },
+              { value: "28+", label: "Contributors", note: "Volunteers, associates & team" },
+              { value: "100+", label: "Cumulative Participants", note: "Deep session attendance" },
+              { value: "4", label: "Workshops Conducted", note: "1-day expert masterclasses" },
+            ].map((stat, idx) => (
+              <ScrollReveal key={stat.label} direction="up" delay={idx * 20}>
+                <div className="p-4 rounded-xl border border-white/8 bg-card">
+                  <div className="text-2xl sm:text-3xl font-bold font-display text-primary">{stat.value}</div>
+                  <div className="text-xs font-semibold text-foreground mt-1">{stat.label}</div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block">{stat.note}</div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 9. WHAT OUR STUDENTS SAY (SLIDING REVIEWS) ── */}
+      <section className="section border-b border-white/8" id="reviews">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="flex items-center justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+                  Community Voices
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                  What Our Students Say
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Previous Review"
+                  onClick={() => setReviewIndex((prev) => (prev > 0 ? prev - 1 : STUDENT_REVIEWS.length - 1))}
+                  className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next Review"
+                  onClick={() => setReviewIndex((prev) => (prev < STUDENT_REVIEWS.length - 1 ? prev + 1 : 0))}
+                  className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Review Slider */}
+          <div className="grid gap-4 md:grid-cols-2 font-sans">
+            {[
+              STUDENT_REVIEWS[reviewIndex],
+              STUDENT_REVIEWS[(reviewIndex + 1) % STUDENT_REVIEWS.length],
+            ].map((review) => (
+              <div key={review.name} className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-4">
+                <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
+                  "{review.quote}"
+                </p>
+                <div className="pt-3 border-t border-white/6 flex items-center gap-3">
+                  <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                    {review.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold text-foreground font-display">{review.name}</div>
+                    <div className="text-[10px] text-muted-foreground">{review.role}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 10. VOICES BEHIND POLARIS (PAST SPEAKERS & COLLABORATORS) ── */}
+      <section className="section bg-surface-2/10" id="speakers">
+        <div className="shell">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl mb-8">
+              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
+                Mentors & Collaborators
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
+                Voices Behind Polaris
+              </h2>
+              <p className="text-xs text-muted-foreground mt-1">
+                Distinguished scientists, founders, and engineers who have led sessions for Polaris explorers.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-sans">
+            {PAST_SPEAKERS.map((speaker, idx) => (
+              <ScrollReveal key={speaker.name} direction="up" delay={idx * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
+                  <div>
+                    <div className="size-10 rounded-full bg-surface-2 border border-white/8 flex items-center justify-center text-primary font-bold text-sm mb-3">
+                      {speaker.name.charAt(0)}
+                    </div>
+                    <h3 className="text-sm font-bold font-display text-foreground">{speaker.name}</h3>
+                    <p className="text-xs text-primary font-medium mt-0.5">{speaker.designation}</p>
+                    <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
+                      "{speaker.topic}"
+                    </p>
+                  </div>
+                  <div className="mt-4 pt-2 border-t border-white/6 text-[10px] text-muted-foreground font-mono">
+                    Session: {speaker.date}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
     </>
   );
 }
-

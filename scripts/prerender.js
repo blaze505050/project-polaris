@@ -7,225 +7,213 @@ const __dirname = path.dirname(__filename);
 const DIST_DIR = path.resolve(__dirname, "../dist");
 const SITE_URL = "https://projectpolaris.in";
 
-// Route configurations with rich metadata and semantic HTML pre-renders
+// The 9 core pages + legal routes
 const ROUTES = [
   {
     path: "/",
     title: "Project Polaris — Learn by Building",
     description:
-      "A student-led experiential engineering ecosystem where students build numerical physics simulations, software platforms, and physical prototypes with mentors and peers.",
-    heading: "Project Polaris",
+      "A student-led experiential engineering ecosystem built by students, for students. Learn by building, rather than building after learning.",
+    heading: "PROJECT POLARIS",
     subheading: "Learn by building, rather than building after learning.",
     canonical: `${SITE_URL}/`,
   },
   {
-    path: "/courses",
-    title: "Learning Catalog & Workshops — Project Polaris",
+    path: "/about",
+    title: "About Us — Mission, Vision & Team | Project Polaris",
     description:
-      "Explore interactive workshops with ISRO scientists, practical mini-courses, cohort bootcamps, and real engineering projects in aerospace, astrophysics, and computation.",
-    heading: "The Polaris Learning Catalog",
-    subheading: "Workshops, short courses, bootcamps and projects designed around demonstrable skills and real systems.",
-    canonical: `${SITE_URL}/courses`,
+      "Project Polaris is a student-led organisation providing an experiential learning ecosystem bridging traditional education and real-world space & engineering.",
+    heading: "About Project Polaris",
+    subheading: "Built by students for students.",
+    canonical: `${SITE_URL}/about`,
   },
   {
-    path: "/about",
-    title: "About Us — Mission, Leadership & Values | Project Polaris",
+    path: "/programs",
+    title: "Programs & Masterclasses — Project Polaris",
     description:
-      "Discover why Project Polaris was founded, our student engineering ecosystem, leadership team, working culture, and merit-based recognition framework.",
-    heading: "About Project Polaris",
-    subheading: "A student-led experiential learning organisation bridging traditional education and real-world space & engineering practice.",
-    canonical: `${SITE_URL}/about`,
+      "Active live astronomy workshops, ISRO scientist masterclasses, student volunteer cohorts, and past session archives.",
+    heading: "Programs & Opportunities",
+    subheading: "Learn directly from scientists and engineers doing the work.",
+    canonical: `${SITE_URL}/programs`,
   },
   {
     path: "/projects",
     title: "Projects & AeroForge Lab — Project Polaris",
     description:
-      "Explore active student engineering sprints and AeroForge AI — our open-source computational physics lab with 40+ numerical solvers.",
-    heading: "Engineering Projects & Computational Labs",
-    subheading: "Small sprint teams, real physical constraints, reproducible code and models.",
+      "Explore AeroForge AI and open-source aerospace computational engineering labs with 40+ numerical physics solvers.",
+    heading: "Projects & Computational Labs",
+    subheading: "AeroForge simulation laboratory and computational platforms.",
     canonical: `${SITE_URL}/projects`,
   },
   {
-    path: "/showcase",
-    title: "Student Showcase & Engineering Artifacts — Project Polaris",
+    path: "/chapters",
+    title: "Polaris Chapters — Regional Hubs",
     description:
-      "Verified engineering artifacts, research papers, aerodynamic simulations, and hardware prototypes built by students across the Polaris ecosystem.",
-    heading: "Student Project Showcase",
-    subheading: "Verified engineering artifacts, research papers, and open simulations built by students.",
-    canonical: `${SITE_URL}/showcase`,
+      "Launching Polaris Chapters soon to reach more students from Tier 2, 3 cities and remote areas.",
+    heading: "POLARIS CHAPTERS",
+    subheading: "COMING SOON — Regional and institutional chapters.",
+    canonical: `${SITE_URL}/chapters`,
   },
   {
-    path: "/research",
-    title: "Scientific Research & Student Cohorts — Project Polaris",
+    path: "/articles",
+    title: "Newsletter & Articles — Project Polaris",
     description:
-      "Peer-reviewed student research in aerodynamics, celestial orbital mechanics, computational fluid dynamics, and astrophysics.",
-    heading: "Student Research Programs",
-    subheading: "Formulate hypotheses, simulate physical constraints, verify numerical models, and publish findings.",
-    canonical: `${SITE_URL}/research`,
+      "Explore. Learn. Share. A space for ideas, insights, and stories from the Polaris community.",
+    heading: "Explore. Learn. Share.",
+    subheading: "A space for ideas, insights, and stories from the Polaris community.",
+    canonical: `${SITE_URL}/articles`,
   },
   {
-    path: "/resources",
-    title: "Free Engineering & Physics Resources — Project Polaris",
+    path: "/spotlight",
+    title: "Polaris Spotlight — Exceptional Builders & Projects",
     description:
-      "Open-access study guides, CFD aerodynamic simulation datasets, equations sheets, and flight mechanics notebooks.",
-    heading: "Open Learning Resources",
-    subheading: "Everything we investigate, simulate, and verify is documented for students to learn from freely.",
-    canonical: `${SITE_URL}/resources`,
-  },
-  {
-    path: "/programs",
-    title: "Experiential Learning Methodology & Pathways — Project Polaris",
-    description:
-      "The 4-stage Polaris experiential framework: Discover & Inquire, Learn on Demand, Build in Squads, and Verify & Deploy.",
-    heading: "The Polaris Learning Pathways",
-    subheading: "Move from discovering a concept to mastering equations, building simulation software, and defending technical research.",
-    canonical: `${SITE_URL}/programs`,
+      "Recognising the people and ideas moving Polaris forward. Editorial features of exceptional student projects, research, and community contributions.",
+    heading: "POLARIS SPOTLIGHT",
+    subheading: "Recognising the people and ideas moving Polaris forward.",
+    canonical: `${SITE_URL}/spotlight`,
   },
   {
     path: "/get-involved",
-    title: "Get Involved & Join the Ecosystem — Project Polaris",
+    title: "Get Involved & Partnerships — Project Polaris",
     description:
-      "Join Project Polaris as a student builder, volunteer engineer, mentor, or school partner. 100% free and open knowledge.",
-    heading: "Get Involved with Project Polaris",
-    subheading: "Build real simulations, lead cohorts, mentor curious minds, or partner your institution.",
+      "Partner with Polaris as a school, institution, or mentor. Join our core team, apply to the volunteer program, or get in touch.",
+    heading: "Get Involved with Polaris",
+    subheading: "Partner with us, join our team, and explore volunteer tracks.",
     canonical: `${SITE_URL}/get-involved`,
   },
   {
-    path: "/schools",
-    title: "Institutional Partnerships & School Outreach — Project Polaris",
+    path: "/dashboard",
+    title: "Student Dashboard & Admin Portal — Project Polaris",
     description:
-      "Bring hands-on aerospace workshops, rocketry demonstrations, and astronomy observation nights to your school or college.",
-    heading: "Schools & Institutional Outreach",
-    subheading: "Inspiring the next generation of space innovators through hands-on workshops and telescope observation sessions.",
-    canonical: `${SITE_URL}/schools`,
-  },
-  {
-    path: "/community",
-    title: "WhatsApp Engineering Community — Project Polaris",
-    description:
-      "Join hundreds of student builders, aerospace enthusiasts, and mentors discussing simulations, space missions, and project collabs.",
-    heading: "The Polaris Student Community",
-    subheading: "Connect directly with peers, ask questions, share project updates, and get notified about live masterclasses.",
-    canonical: `${SITE_URL}/community`,
-  },
-  {
-    path: "/contact",
-    title: "Contact Us & Inquiries — Project Polaris",
-    description:
-      "Get in touch with the Project Polaris core team for partnerships, student inquiries, speaking invitations, and mentorship.",
-    heading: "Contact the Polaris Team",
-    subheading: "We read every message and will reply as soon as possible.",
-    canonical: `${SITE_URL}/contact`,
+      "Student workspace and dynamic Admin CMS management for Project Polaris programs, articles, and spotlight features.",
+    heading: "Polaris Portal",
+    subheading: "Student workspace access and dynamic Admin CMS management.",
+    canonical: `${SITE_URL}/dashboard`,
   },
   {
     path: "/privacy",
     title: "Privacy Policy — Project Polaris",
     description: "Privacy policy and data protection commitments of Project Polaris.",
     heading: "Privacy Policy",
-    subheading: "How Project Polaris handles and protects student and community data.",
+    subheading: "How Project Polaris handles and protects student data.",
     canonical: `${SITE_URL}/privacy`,
   },
   {
     path: "/terms",
     title: "Terms of Service — Project Polaris",
-    description: "Terms of service and community guidelines for Project Polaris.",
+    description: "Terms and conditions for utilizing Project Polaris open learning platforms.",
     heading: "Terms of Service",
-    subheading: "Rules, open knowledge guidelines, and code of conduct.",
+    subheading: "Guidelines for open, collaborative, and verified learning.",
     canonical: `${SITE_URL}/terms`,
   },
 ];
 
-export function prerender() {
+async function prerender() {
   console.log("==================================================");
-  console.log("[PRERENDER ENGINE] Starting Static SSG Pre-rendering");
+  console.log("[PRERENDER] Starting Static Route Generation (SSG)");
   console.log("==================================================");
 
-  const indexHtmlPath = path.join(DIST_DIR, "index.html");
-  if (!fs.existsSync(indexHtmlPath)) {
-    console.error(`[PRERENDER ERROR] dist/index.html not found at: ${indexHtmlPath}`);
+  const templatePath = path.join(DIST_DIR, "index.html");
+  if (!fs.existsSync(templatePath)) {
+    console.error(`[PRERENDER ERROR] Base index.html not found in ${DIST_DIR}. Run 'vite build' first.`);
     process.exit(1);
   }
 
-  const templateHtml = fs.readFileSync(indexHtmlPath, "utf-8");
-
-  let renderedCount = 0;
+  const baseHtml = fs.readFileSync(templatePath, "utf-8");
 
   for (const route of ROUTES) {
-    let pageHtml = templateHtml;
+    const routeHtml = generateRouteHtml(baseHtml, route);
 
-    // 1. Replace Title Tag
-    pageHtml = pageHtml.replace(/<title>.*?<\/title>/i, `<title>${route.title}</title>`);
+    let targetDir = DIST_DIR;
+    let targetFile = path.join(DIST_DIR, "index.html");
 
-    // 2. Replace or Inject Description Meta Tag
-    if (pageHtml.includes('name="description"')) {
-      pageHtml = pageHtml.replace(
-        /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-        `<meta name="description" content="${route.description}" />`
-      );
-    } else {
-      pageHtml = pageHtml.replace(
-        "</head>",
-        `  <meta name="description" content="${route.description}" />\n</head>`
-      );
-    }
-
-    // 3. Inject OpenGraph & Twitter Meta Tags
-    const ogTags = `
-  <meta property="og:title" content="${route.title}" />
-  <meta property="og:description" content="${route.description}" />
-  <meta property="og:url" content="${route.canonical}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Project Polaris" />
-  <meta property="og:image" content="${SITE_URL}/polaris-logo.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${route.title}" />
-  <meta name="twitter:description" content="${route.description}" />
-  <meta name="twitter:image" content="${SITE_URL}/polaris-logo.png" />
-  <link rel="canonical" href="${route.canonical}" />
-`;
-
-    pageHtml = pageHtml.replace("</head>", `${ogTags}</head>`);
-
-    // 4. Inject Semantic Pre-rendered HTML inside <main> / <div id="root"> for Search Spiders
-    const semanticFallback = `
-      <noscript>
-        <div style="padding: 2rem; max-width: 800px; margin: 0 auto; font-family: system-ui, sans-serif; color: #f8fafc; background: #0a0b0e;">
-          <h1>${route.heading}</h1>
-          <p>${route.subheading}</p>
-          <p>${route.description}</p>
-          <nav aria-label="Fallback Navigation" style="margin-top: 2rem;">
-            <a href="/" style="color: #a5b4fc; margin-right: 1rem;">Home</a>
-            <a href="/courses" style="color: #a5b4fc; margin-right: 1rem;">Courses</a>
-            <a href="/projects" style="color: #a5b4fc; margin-right: 1rem;">Projects</a>
-            <a href="/about" style="color: #a5b4fc; margin-right: 1rem;">About</a>
-            <a href="/contact" style="color: #a5b4fc;">Contact</a>
-          </nav>
-        </div>
-      </noscript>
-    `;
-
-    pageHtml = pageHtml.replace('<div id="root"></div>', `<div id="root">${semanticFallback}</div>`);
-
-    // 5. Determine destination path
-    let targetPath;
-    if (route.path === "/") {
-      targetPath = path.join(DIST_DIR, "index.html");
-    } else {
-      const routeDir = path.join(DIST_DIR, route.path.replace(/^\//, ""));
-      if (!fs.existsSync(routeDir)) {
-        fs.mkdirSync(routeDir, { recursive: true });
+    if (route.path !== "/") {
+      const cleanPath = route.path.replace(/^\//, "");
+      targetDir = path.join(DIST_DIR, cleanPath);
+      if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
       }
-      targetPath = path.join(routeDir, "index.html");
+      targetFile = path.join(targetDir, "index.html");
     }
 
-    fs.writeFileSync(targetPath, pageHtml, "utf-8");
-    console.log(`✓ Prerendered [${route.path}] -> ${path.relative(DIST_DIR, targetPath)}`);
-    renderedCount++;
+    fs.writeFileSync(targetFile, routeHtml, "utf-8");
+    console.log(`✓ Generated Static Route: ${route.path.padEnd(20)} -> ${targetFile.replace(DIST_DIR, "dist")}`);
   }
 
   console.log("==================================================");
-  console.log(`[PRERENDER COMPLETE] Successfully generated ${renderedCount} static HTML routes with full metadata!`);
+  console.log(`[PRERENDER] Successfully generated ${ROUTES.length} static HTML routes.`);
   console.log("==================================================");
+}
+
+function generateRouteHtml(html, route) {
+  let output = html;
+
+  // Replace Title
+  output = output.replace(/<title>.*?<\/title>/i, `<title>${route.title}</title>`);
+
+  // Replace Meta Description
+  if (output.includes('name="description"')) {
+    output = output.replace(
+      /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
+      `<meta name="description" content="${escapeHtml(route.description)}" />`
+    );
+  } else {
+    output = output.replace(
+      "</head>",
+      `  <meta name="description" content="${escapeHtml(route.description)}" />\n  </head>`
+    );
+  }
+
+  // Canonical Tag
+  if (output.includes('rel="canonical"')) {
+    output = output.replace(
+      /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
+      `<link rel="canonical" href="${route.canonical}" />`
+    );
+  } else {
+    output = output.replace("</head>", `  <link rel="canonical" href="${route.canonical}" />\n  </head>`);
+  }
+
+  // OpenGraph & Twitter Cards
+  const ogTags = `
+    <meta property="og:title" content="${escapeHtml(route.title)}" />
+    <meta property="og:description" content="${escapeHtml(route.description)}" />
+    <meta property="og:url" content="${route.canonical}" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(route.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(route.description)}" />
+  `;
+
+  output = output.replace("</head>", `${ogTags}\n  </head>`);
+
+  // Inject semantic HTML snapshot into <div id="root"></div> for zero-JS crawlers
+  const semanticSnapshot = `
+    <div id="root">
+      <main id="main-content" style="padding-top: 5rem;">
+        <header style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; text-align: center;">
+          <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">${escapeHtml(route.heading)}</h1>
+          <p style="font-size: 1.25rem; color: #a5b4fc; max-width: 800px; margin: 0 auto;">${escapeHtml(route.subheading)}</p>
+        </header>
+        <section style="max-width: 1200px; margin: 0 auto; padding: 1rem;">
+          <p style="color: #9ca3af; text-align: center;">${escapeHtml(route.description)}</p>
+        </section>
+      </main>
+    </div>
+  `;
+
+  output = output.replace('<div id="root"></div>', semanticSnapshot);
+  return output;
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 prerender();
