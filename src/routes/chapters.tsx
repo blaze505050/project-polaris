@@ -44,12 +44,12 @@ function ChaptersPage() {
             POLARIS CHAPTERS
           </h1>
 
-          <div className="mt-4 inline-block text-2xl sm:text-4xl font-display font-bold text-primary tracking-widest uppercase py-2 px-6 rounded-2xl bg-surface-2 border border-primary/20">
-            COMING SOON
+          <div className="mt-4 inline-block text-xl sm:text-2xl font-display font-bold text-primary tracking-wider uppercase py-2 px-6 rounded-2xl bg-surface-2 border border-primary/25 shadow-[0_0_20px_rgba(165,180,252,0.15)]">
+            APPLICATIONS & EARLY ACCESS OPEN
           </div>
 
           <p className="mt-6 text-sm sm:text-base text-foreground/90 font-medium font-sans uppercase tracking-wide max-w-xl mx-auto leading-relaxed">
-            LAUNCHING POLARIS CHAPTERS SOON TO REACH MORE STUDENTS FROM TIER 2, 3 CITIES AND REMOTE AREAS.
+            EXPANDING POLARIS CHAPTERS TO REACH CURIOUS STUDENTS FROM TIER 2, 3 CITIES AND REMOTE REGIONS.
           </p>
 
           <p className="mt-3 text-xs text-muted-foreground max-w-md mx-auto leading-relaxed">

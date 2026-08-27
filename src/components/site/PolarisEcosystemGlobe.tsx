@@ -335,14 +335,19 @@ export function PolarisEcosystemGlobe() {
       ctx.arc(centerX, centerY, radius * 1.4, 0, Math.PI * 2);
       ctx.fill();
 
+      const isMobile = width < 768;
+
       // 2. Neural Sphere Lattice Rings
       ctx.strokeStyle = "rgba(165, 180, 252, 0.05)";
       ctx.lineWidth = 1;
 
-      [-50, -25, 0, 25, 50].forEach((lat) => {
+      const latRings = isMobile ? [-30, 0, 30] : [-50, -25, 0, 25, 50];
+      const lonStep = isMobile ? 24 : 12;
+
+      latRings.forEach((lat) => {
         ctx.beginPath();
         let first = true;
-        for (let lon = -180; lon <= 180; lon += 12) {
+        for (let lon = -180; lon <= 180; lon += lonStep) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible) {
             if (first) {
@@ -358,10 +363,13 @@ export function PolarisEcosystemGlobe() {
         ctx.stroke();
       });
 
-      [-120, -60, 0, 60, 120].forEach((lon) => {
+      const lonMeridians = isMobile ? [-90, 0, 90] : [-120, -60, 0, 60, 120];
+      const latStep = isMobile ? 18 : 10;
+
+      lonMeridians.forEach((lon) => {
         ctx.beginPath();
         let first = true;
-        for (let lat = -75; lat <= 75; lat += 10) {
+        for (let lat = -75; lat <= 75; lat += latStep) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible) {
             if (first) {
@@ -378,8 +386,10 @@ export function PolarisEcosystemGlobe() {
       });
 
       // 3. Synaptic Particle Cloud (Neural Dust)
-      for (let lat = -65; lat <= 65; lat += 25) {
-        for (let lon = -160; lon <= 160; lon += 30) {
+      const dustLatStep = isMobile ? 45 : 25;
+      const dustLonStep = isMobile ? 50 : 30;
+      for (let lat = -60; lat <= 60; lat += dustLatStep) {
+        for (let lon = -150; lon <= 150; lon += dustLonStep) {
           const pt = project3D(lat, lon, radius);
           if (pt.visible && pt.pz > 0) {
             const alpha = Math.max(0.04, (pt.pz / radius) * 0.25);
@@ -392,7 +402,7 @@ export function PolarisEcosystemGlobe() {
       }
 
       // 4. Draw Inter-Synaptic Connection Lines & Animated Electrical Pulses
-      POLARIS_BRAIN_SECTORS.forEach((hub, idx) => {
+      POLARIS_BRAIN_SECTORS.forEach((hub) => {
         const pt = project3D(hub.lat, hub.lon, radius);
         const isSelected = selectedSector.id === hub.id;
         const isHovered = hoveredSector?.id === hub.id;
@@ -454,8 +464,10 @@ export function PolarisEcosystemGlobe() {
           ctx.beginPath();
           ctx.arc(pulseX, pulseY, 2.5, 0, Math.PI * 2);
           ctx.fillStyle = "#ffffff";
-          ctx.shadowColor = "#a5b4fc";
-          ctx.shadowBlur = 8;
+          if (!isMobile) {
+            ctx.shadowColor = "#a5b4fc";
+            ctx.shadowBlur = 6;
+          }
           ctx.fill();
           ctx.shadowBlur = 0;
         }

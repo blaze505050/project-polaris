@@ -24,14 +24,15 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
     let width = (canvas.width = canvas.offsetWidth);
     let height = (canvas.height = canvas.offsetHeight);
 
+    const isMobile = width < 768;
     const colors = ["#c59dff", "#38bdf8", "#818cf8", "#e0e7ff"];
-    const starCount = Math.min(Math.floor((width * height) / 14000), 75);
+    const starCount = isMobile ? 25 : Math.min(Math.floor((width * height) / 14000), 75);
     const stars: Star[] = [];
 
     let mouse = { x: -1000, y: -1000, active: false };
 
     for (let i = 0; i < starCount; i++) {
-      const r = Math.random() * 1.8 + 0.8;
+      const r = isMobile ? Math.random() * 1.4 + 0.6 : Math.random() * 1.8 + 0.8;
       stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -91,7 +92,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
       ctx.clearRect(0, 0, width, height);
 
       // Draw connections
-      const maxDist = 130;
+      const maxDist = width < 768 ? 75 : 130;
       for (let i = 0; i < stars.length; i++) {
         const s1 = stars[i];
 

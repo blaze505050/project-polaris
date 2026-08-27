@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -21,11 +21,14 @@ import {
   Clock,
   MapPin,
   Mic,
+  Bell,
+  CalendarPlus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { PolarisEcosystemGlobe } from "@/components/site/PolarisEcosystemGlobe";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
+import { WaitlistModal } from "@/components/site/WaitlistModal";
 import { getPrograms, INITIAL_PAST_SESSIONS } from "@/lib/cms-store";
 import { SITE } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
@@ -154,8 +157,33 @@ const PAST_SPEAKERS = [
 function HomePage() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [reviewIndex, setReviewIndex] = useState(0);
+  const [waitlistProgram, setWaitlistProgram] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
   const allPrograms = getPrograms();
   const featuredSession = allPrograms.find((p) => p.id === "star-universe-aug29") || allPrograms[0];
+
+  useEffect(() => {
+    const target = new Date("2026-08-29T18:00:00+05:30").getTime();
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const diff = Math.max(0, target - now);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimeLeft({ days, hours, minutes, seconds });
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -417,15 +445,61 @@ function HomePage() {
                     </div>
                   )}
 
-                  <div className="pt-2">
+                  {/* Live Countdown HUD */}
+                  <div className="p-3.5 rounded-xl bg-surface-2 border border-primary/20 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
+                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Live Session Starts In:</span>
+                    </div>
+                    <div className="flex items-center gap-2 font-mono text-xs">
+                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.days).padStart(2, "0")}</span>
+                        <span className="text-[9px] text-muted-foreground uppercase">Days</span>
+                      </div>
+                      <span className="text-primary font-bold">:</span>
+                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.hours).padStart(2, "0")}</span>
+                        <span className="text-[9px] text-muted-foreground uppercase">Hours</span>
+                      </div>
+                      <span className="text-primary font-bold">:</span>
+                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.minutes).padStart(2, "0")}</span>
+                        <span className="text-[9px] text-muted-foreground uppercase">Mins</span>
+                      </div>
+                      <span className="text-primary font-bold">:</span>
+                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                        <span className="text-sm font-bold text-emerald-400 block leading-none">{String(timeLeft.seconds).padStart(2, "0")}</span>
+                        <span className="text-[9px] text-muted-foreground uppercase">Secs</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
                     <Button
                       asChild
                       size="default"
-                      className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors"
+                      className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs"
                     >
                       <a href={featuredSession.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
                         <span>Register Now (Free)</span>
                         <ArrowRight className="size-3.5" />
+                      </a>
+                    </Button>
+
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="default"
+                      className="h-11 px-5 rounded-lg font-medium border-white/10 hover:border-white/20 text-xs bg-surface-2/60 text-foreground"
+                    >
+                      <a
+                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Exploring+the+Star+Universe%3A+A+Journey+into+Astronomy+%7C+Project+Polaris&dates=20260829T123000Z%2F20260829T143000Z&details=Live+Astronomy+Workshop+with+Scientist+Baldev+Krishan+Sharma+(Cosmo-scientist).+Hosted+by+Project+Polaris.&location=Online+Google+Meet"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1.5"
+                      >
+                        <CalendarPlus className="size-3.5 text-primary" />
+                        <span>Add to Google Calendar</span>
                       </a>
                     </Button>
                   </div>
@@ -639,31 +713,33 @@ function HomePage() {
                 desc: "Collaborate in remote squads on industry-standard problems across Aero, Astro, CSE, and Systems with scientist reviews.",
                 cta: "Explore Sprints →",
                 to: "/programs",
+                isDirectLink: true,
               },
               {
                 title: "Polaris Innovation Program",
-                status: "Coming Soon",
+                status: "Priority Waitlist Open",
                 desc: "Long-term build cohorts developing verified aerospace simulations and physical hardware prototypes.",
-                cta: "Details to be disclosed soon",
-                to: "/programs",
+                cta: "Join Cohort Waitlist →",
+                isDirectLink: false,
               },
               {
                 title: "Chapter Lead Program",
-                status: "Coming Soon",
+                status: "Applications Open",
                 desc: "Lead and launch a Polaris chapter at your school or college in Tier-2/3 cities and remote regions.",
                 cta: "Explore Chapters →",
                 to: "/chapters",
+                isDirectLink: true,
               },
               {
-                title: "Mentor Panel",
-                status: "Coming Soon",
+                title: "Scientist Mentor Panel",
+                status: "Priority Waitlist Open",
                 desc: "Technical code and flight mechanics reviews directly from aerospace scientists and researchers.",
-                cta: "Get Involved →",
-                to: "/get-involved",
+                cta: "Join Mentor Waitlist →",
+                isDirectLink: false,
               },
             ].map((item, idx) => (
               <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
+                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-primary/25 transition-colors">
                   <div>
                     <span className="text-[10px] font-semibold text-primary uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 border border-primary/20 inline-block mb-3">
                       {item.status}
@@ -672,9 +748,22 @@ function HomePage() {
                     <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.desc}</p>
                   </div>
                   <div className="mt-5 pt-3 border-t border-white/6">
-                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground">
-                      <Link to={item.to}>{item.cta}</Link>
-                    </Button>
+                    {item.isDirectLink && item.to ? (
+                      <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground">
+                        <Link to={item.to}>{item.cta}</Link>
+                      </Button>
+                    ) : (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => setWaitlistProgram(item.title)}
+                        className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground flex items-center gap-1"
+                      >
+                        <Bell className="size-3" />
+                        <span>{item.cta}</span>
+                      </Button>
+                    )}
                   </div>
                 </div>
               </ScrollReveal>
@@ -868,6 +957,13 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Priority Waitlist Modal */}
+      <WaitlistModal
+        isOpen={!!waitlistProgram}
+        onClose={() => setWaitlistProgram(null)}
+        programTitle={waitlistProgram || "Polaris Initiative"}
+      />
     </>
   );
 }
