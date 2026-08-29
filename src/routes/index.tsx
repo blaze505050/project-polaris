@@ -206,7 +206,7 @@ function HomePage() {
             <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[5.75rem] font-display font-extrabold tracking-tight text-white leading-[1.02] drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               PROJECT POLARIS
             </h1>
-            <p className="mt-5 text-xl sm:text-2xl md:text-3xl font-display text-primary font-medium leading-snug max-w-3xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+            <p className="mt-5 text-xl sm:text-2xl md:text-3xl font-display text-primary font-medium leading-snug max-w-3xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] text-shimmer">
               Learn by building, rather than building after learning.
             </p>
           </ScrollReveal>
@@ -252,7 +252,7 @@ function HomePage() {
           </ScrollReveal>
 
           {/* ── The 6-Step Visual Methodology Chain (Allowed Eyebrow 1 of 3) ── */}
-          <ScrollReveal direction="up" delay={120}>
+          <ScrollReveal direction="blur" delay={120}>
             <div className="mt-14 pt-8 border-t border-white/10">
               <span className="text-[10px] uppercase font-mono font-semibold text-primary/80 tracking-widest block mb-4">
                 The Polaris Learning Methodology
@@ -266,11 +266,15 @@ function HomePage() {
                       key={m.title}
                       onMouseEnter={() => setActiveStep(idx)}
                       onMouseLeave={() => setActiveStep(null)}
-                      className={`p-3.5 rounded-xl border transition-all duration-200 cursor-default ${
+                      className={`p-3.5 rounded-xl border cursor-default ${
                         isHovered
-                          ? "border-primary bg-primary/10 shadow-[0_0_20px_rgba(124,196,232,0.18)]"
+                          ? "border-primary bg-primary/10 shadow-[0_0_20px_rgba(197,157,255,0.18)]"
                           : "border-white/8 bg-card/70 backdrop-blur-sm hover:border-white/20"
                       }`}
+                      style={{
+                        transition: 'all 250ms cubic-bezier(0.23, 1, 0.32, 1)',
+                        transitionDelay: `${idx * 40}ms`,
+                      }}
                     >
                       <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1.5 font-mono">
                         <span className="text-primary font-bold">{m.step}</span>
@@ -303,7 +307,7 @@ function HomePage() {
 
               <div className="grid gap-3 font-sans">
                 <ScrollReveal direction="up" delay={40}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80 hover:border-primary/30 transition-colors">
+                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
                     <div className="flex items-baseline gap-3 mb-1">
                       <span className="text-xs font-mono font-bold text-primary">01. Application</span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">
@@ -317,7 +321,7 @@ function HomePage() {
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delay={80}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80 hover:border-primary/30 transition-colors">
+                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
                     <div className="flex items-baseline gap-3 mb-1">
                       <span className="text-xs font-mono font-bold text-primary">02. Ecosystem</span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">
@@ -331,7 +335,7 @@ function HomePage() {
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delay={120}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80 hover:border-primary/30 transition-colors">
+                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
                     <div className="flex items-baseline gap-3 mb-1">
                       <span className="text-xs font-mono font-bold text-primary">03. Democratization</span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">

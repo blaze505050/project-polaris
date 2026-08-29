@@ -59,10 +59,19 @@
 :root {
   --radius: 0.5rem;
 
-  /* ── Kowalski Easing Curves ── */
+  /* ── Kowalski Easing Curves (Emil Kowalski / animations.dev) ── */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* ── Duration Scale (Taste Skill §3 / Kowalski) ── */
+  --dur-instant: 100ms;
+  --dur-fast: 150ms;
+  --dur-normal: 250ms;
+  --dur-slow: 400ms;
+  --dur-reveal: 600ms;
+  --dur-cinematic: 900ms;
 
   /* ── Fluid Display Type ── */
   --font-size-display: clamp(3rem, 6vw, 5.5rem);
@@ -214,12 +223,47 @@
   [role="button"],
   a[class*="bg-primary"],
   a[class*="bg-gold"] {
-    transition: transform 120ms var(--ease-out), opacity 120ms var(--ease-out);
+    transition: transform var(--dur-instant) var(--ease-out),
+                opacity var(--dur-instant) var(--ease-out),
+                box-shadow var(--dur-normal) var(--ease-out);
   }
 
   button:active,
   [role="button"]:active {
     transform: scale(0.97);
+  }
+
+  /* ── Link Hover Underline Animation (Taste Skill: slide from left) ── */
+  a[class*="text-primary"] {
+    position: relative;
+  }
+
+  /* ── Interactive Card Hover Lift (Taste Skill §4.4: tinted shadow) ── */
+  [class*="rounded-xl"][class*="border"][class*="bg-card"] {
+    transition: transform var(--dur-normal) var(--ease-out),
+                border-color var(--dur-normal) var(--ease-out),
+                box-shadow var(--dur-slow) var(--ease-out);
+  }
+
+  [class*="rounded-xl"][class*="border"][class*="bg-card"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px -12px rgba(197, 157, 255, 0.08);
+  }
+
+  /* ── Form Input Focus Animation (expand ring from center) ── */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    transition: border-color var(--dur-fast) var(--ease-out),
+                box-shadow var(--dur-normal) var(--ease-out);
+    box-shadow: 0 0 0 3px rgba(197, 157, 255, 0.15);
+  }
+
+  /* ── Image hover zoom (smooth, Kowalski ease-out) ── */
+  img[class*="hover:opacity"],
+  img[class*="hover:scale"] {
+    transition: transform var(--dur-slow) var(--ease-out),
+                opacity var(--dur-slow) var(--ease-out);
   }
 }
 
@@ -271,12 +315,17 @@
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  transition: border-color 200ms var(--ease-out), background-color 200ms var(--ease-out);
+  transition: border-color var(--dur-normal) var(--ease-out),
+              background-color var(--dur-normal) var(--ease-out),
+              transform var(--dur-normal) var(--ease-out),
+              box-shadow var(--dur-slow) var(--ease-out);
 }
 
 .card-elevated:hover,
 .card-premium:hover {
   border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px -12px rgba(197, 157, 255, 0.06);
 }
 
 @utility font-mono-data {
@@ -401,18 +450,24 @@
 }
 
 .parallax-wrap img {
-  transition: transform 100ms linear;
+  transition: transform 80ms linear;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-/* ── Gold accent glow for cards on hover ── */
+/* ── Gold accent glow for cards on hover (Taste Skill: tinted shadow) ── */
 .card-gold-hover {
-  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  transition: border-color var(--dur-normal) var(--ease-out),
+              box-shadow var(--dur-slow) var(--ease-out),
+              transform var(--dur-normal) var(--ease-out);
 }
 
 .card-gold-hover:hover {
-  border-color: rgba(240, 199, 70, 0.2);
-  box-shadow: 0 0 24px -8px rgba(240, 199, 70, 0.08);
+  border-color: rgba(212, 175, 55, 0.25);
+  box-shadow: 0 8px 32px -8px rgba(212, 175, 55, 0.1),
+              0 0 0 1px rgba(212, 175, 55, 0.06);
+  transform: translateY(-2px);
 }
 
 /* ── Cinematic section (full-bleed image with overlay) ── */
@@ -507,6 +562,28 @@
   100% { background-position: 200% 0; }
 }
 
+/* ── Text Shimmer (subtle gradient sweep on hero tagline) ── */
+@keyframes text-shimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--foreground) 0%,
+    rgba(197, 157, 255, 0.8) 25%,
+    var(--foreground) 50%,
+    rgba(212, 175, 55, 0.7) 75%,
+    var(--foreground) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 6s var(--ease-in-out) infinite;
+}
+
 /* Subtle float for hero visuals */
 @keyframes gentle-float {
   0%, 100% { transform: translateY(0); }
@@ -525,7 +602,7 @@
   }
 }
 
-/* ── Slow Ken Burns for hero images ── */
+/* ── Slow Ken Burns for hero images (smoother with ease-in-out) ── */
 @keyframes ken-burns {
   0% {
     transform: scale(1) translate(0, 0);
@@ -538,8 +615,111 @@
   }
 }
 
+/* ── Stagger Children Entrance (cascading reveal) ── */
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-children > * {
+  opacity: 0;
+  animation: stagger-in var(--dur-reveal) var(--ease-out) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 360ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 420ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 480ms; }
+
+/* ── Digit Flip Transition (countdown timer) ── */
+@keyframes digit-flip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.digit-flip {
+  display: inline-block;
+  animation: digit-flip-in var(--dur-normal) var(--ease-out);
+}
+
+/* ── Pulsing Glow (for live indicators, accented elements) ── */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(197, 157, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(197, 157, 255, 0.35);
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s var(--ease-in-out) infinite;
+}
+
+/* ── Nav Link Hover Glow Pill ── */
+.nav-link-glow {
+  position: relative;
+}
+
+.nav-link-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px -8px;
+  border-radius: 8px;
+  background: rgba(197, 157, 255, 0);
+  transition: background var(--dur-normal) var(--ease-out);
+  z-index: -1;
+}
+
+.nav-link-glow:hover::before {
+  background: rgba(197, 157, 255, 0.06);
+}
+
+/* ── Mobile Drawer Slide-in ── */
+@keyframes drawer-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.drawer-animated {
+  animation: drawer-slide-in var(--dur-slow) var(--ease-drawer) forwards;
+}
+
+/* ── Smooth Scroll Snap for horizontal carousels ── */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ──────────────────────────────────────────────────────────
-   REDUCED MOTION
+   REDUCED MOTION (mandatory, Emil Kowalski)
    ────────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -557,5 +737,24 @@
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
+  }
+
+  .text-shimmer {
+    animation: none !important;
+    background: none !important;
+    -webkit-text-fill-color: var(--foreground) !important;
+  }
+
+  .stagger-children > * {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  .drawer-animated {
+    animation: none !important;
+  }
+
+  .glow-pulse {
+    animation: none !important;
   }
 }

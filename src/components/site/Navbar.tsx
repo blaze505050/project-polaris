@@ -42,15 +42,16 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 transition-all duration-300 pointer-events-none py-3 px-3 sm:px-6">
+    <header className="fixed inset-x-0 top-0 z-50 pointer-events-none py-3 px-3 sm:px-6" style={{ transition: 'all 300ms cubic-bezier(0.23, 1, 0.32, 1)' }}>
       <nav
         aria-label="Main Navigation"
         className={cn(
-          "max-w-7xl mx-auto h-13 sm:h-14 px-3 sm:px-5 rounded-full flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 relative",
+          "max-w-7xl mx-auto h-13 sm:h-14 px-3 sm:px-5 rounded-full flex items-center justify-between gap-3 pointer-events-auto relative",
           scrolled || open
             ? "bg-background/90 backdrop-blur-2xl border border-white/12 shadow-[0_16px_36px_rgba(0,0,0,0.6)]"
             : "bg-surface/80 backdrop-blur-xl border border-white/8 shadow-[0_8px_24px_rgba(0,0,0,0.3)]",
         )}
+        style={{ transition: 'all 350ms cubic-bezier(0.23, 1, 0.32, 1)' }}
       >
         {/* Brand Logo */}
         <Link to="/" aria-label="Project Polaris Home" className="shrink-0 flex items-center gap-2">
@@ -66,11 +67,12 @@ export function Navbar() {
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "px-3 py-1.5 rounded-lg transition-colors font-sans",
+                  "nav-link-glow px-3 py-1.5 rounded-lg font-sans",
                   isActive
                     ? "text-foreground font-semibold bg-white/8"
                     : "text-muted-foreground hover:text-foreground hover:bg-white/4"
                 )}
+                style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
               >
                 {item.label}
               </Link>
@@ -109,8 +111,8 @@ export function Navbar() {
 
       {/* Mobile Drawer (Featuring all 9 pages clearly) */}
       {open && (
-        <div className="xl:hidden fixed inset-x-3 top-20 z-50 p-5 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-2xl shadow-2xl pointer-events-auto max-h-[82vh] overflow-y-auto font-sans">
-          <div className="space-y-1">
+        <div className="xl:hidden fixed inset-x-3 top-20 z-50 p-5 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-2xl shadow-2xl pointer-events-auto max-h-[82vh] overflow-y-auto font-sans drawer-animated">
+          <div className="space-y-1 stagger-children">
             <span className="text-[10px] uppercase font-semibold text-primary tracking-wider block px-3 mb-2">
               Navigation Menu
             </span>
@@ -123,11 +125,12 @@ export function Navbar() {
                   to={item.to}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "flex items-center justify-between p-3 rounded-xl transition-colors text-sm",
+                    "flex items-center justify-between p-3 rounded-xl text-sm",
                     isActive
                       ? "bg-white/10 text-foreground font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                   )}
+                  style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
                 >
                   <span className="flex items-center gap-2">
                     <span className="text-[11px] font-mono text-muted-foreground/60 w-4">0{idx + 1}</span>
@@ -143,7 +146,8 @@ export function Navbar() {
               <Link
                 to="/dashboard"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-between p-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm transition-opacity hover:opacity-90"
+                className="flex items-center justify-between p-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90"
+                style={{ transition: 'opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), transform 120ms cubic-bezier(0.23, 1, 0.32, 1)' }}
               >
                 <div className="flex items-center gap-2">
                   <User className="size-4" />
