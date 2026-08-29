@@ -351,25 +351,25 @@ function HomePage() {
 
               {/* Polaris Resolution Callout */}
               <ScrollReveal direction="up" delay={160}>
-                <div className="p-5 rounded-xl border border-primary/25 bg-primary/5 space-y-2">
-                  <h3 className="text-base font-bold font-display text-foreground">
+                <div className="p-5 sm:p-6 rounded-xl border border-primary/30 bg-surface-2/90 backdrop-blur-sm space-y-2.5 shadow-lg">
+                  <h3 className="text-base sm:text-lg font-bold font-display text-foreground">
                     Polaris exists to close that gap.
                   </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     By replacing passive rote learning with an authentic cycle:
                   </p>
                   <div className="text-xs font-semibold text-primary flex flex-wrap items-center gap-2 pt-1 font-mono">
-                    <span>Discover</span>
-                    <span>→</span>
-                    <span>Investigate</span>
-                    <span>→</span>
-                    <span>Build</span>
-                    <span>→</span>
-                    <span>Validate</span>
-                    <span>→</span>
-                    <span>Showcase</span>
-                    <span>→</span>
-                    <span>Progress</span>
+                    <span className="text-foreground">Discover</span>
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-foreground">Investigate</span>
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-foreground">Build</span>
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-foreground">Validate</span>
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-foreground">Showcase</span>
+                    <span className="text-primary font-bold">→</span>
+                    <span className="text-foreground">Progress</span>
                   </div>
                 </div>
               </ScrollReveal>
@@ -423,11 +423,8 @@ function HomePage() {
             <div className="p-6 md:p-8 rounded-2xl border border-primary/25 bg-card relative overflow-hidden font-sans shadow-lg">
               <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
                 <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-2.5 text-xs">
-                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25 font-bold text-[10px] uppercase font-mono">
-                      LIVE ASTRONOMY WORKSHOP
-                    </span>
-                    <span className="flex items-center gap-1 text-muted-foreground text-xs">
+                  <div className="flex flex-wrap items-center gap-3 text-xs">
+                    <span className="flex items-center gap-1 text-muted-foreground text-xs font-mono">
                       <Calendar className="size-3 text-primary" />
                       <span>{featuredSession.date}</span>
                     </span>
@@ -779,31 +776,27 @@ function HomePage() {
             {[
               {
                 title: "Remote Industry Sprints",
-                status: "Open for Squads",
-                desc: "Collaborate in remote squads on industry-standard problems across Aero, Astro, CSE, and Systems with scientist reviews.",
+                desc: "Collaborate in remote squads on hands-on science, computing, and aerospace projects with mentor reviews.",
                 cta: "Explore Sprints →",
                 to: "/programs",
                 isDirectLink: true,
               },
               {
                 title: "Polaris Innovation Program",
-                status: "Priority Waitlist Open",
-                desc: "Long-term build cohorts developing verified aerospace simulations and physical hardware prototypes.",
+                desc: "Long-term build cohorts developing real science simulations and physical hardware prototypes.",
                 cta: "Join Cohort Waitlist →",
                 isDirectLink: false,
               },
               {
                 title: "Chapter Lead Program",
-                status: "Applications Open",
-                desc: "Lead and launch a Polaris chapter at your school or college in Tier-2/3 cities and remote regions.",
+                desc: "Lead and launch a Polaris space chapter at your school or college in Tier-2/3 cities and remote regions.",
                 cta: "Explore Chapters →",
                 to: "/chapters",
                 isDirectLink: true,
               },
               {
                 title: "Scientist Mentor Panel",
-                status: "Priority Waitlist Open",
-                desc: "Technical code and flight mechanics reviews directly from aerospace scientists and researchers.",
+                desc: "Guidance and project reviews directly from experienced scientists and researchers.",
                 cta: "Join Mentor Waitlist →",
                 isDirectLink: false,
               },
@@ -811,9 +804,6 @@ function HomePage() {
               <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
                 <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full card-gold-hover">
                   <div>
-                    <span className="text-[10px] font-semibold text-primary uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 border border-primary/20 inline-block mb-3 font-mono">
-                      {item.status}
-                    </span>
                     <h3 className="text-base font-bold font-display text-foreground">{item.title}</h3>
                     <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.desc}</p>
                   </div>

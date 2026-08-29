@@ -204,7 +204,7 @@ function ProgramsPage() {
                   <article className="p-6 md:p-7 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors space-y-5">
                     <div className="space-y-4">
                       <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                        <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-semibold text-[10px] uppercase">
+                        <span className="text-[11px] font-mono text-primary font-medium">
                           {sprint.domain}
                         </span>
                         <div className="flex items-center gap-2 text-[11px] text-muted-foreground font-mono">
@@ -292,17 +292,9 @@ function ProgramsPage() {
                   <ScrollReveal key={prog.id} direction="up" delay={idx * 40}>
                     <div className="p-6 md:p-7 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
                       <div className="space-y-4">
-                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full font-semibold text-[10px] uppercase ${
-                              isComingSoon
-                                ? "bg-white/6 text-muted-foreground border border-white/10"
-                                : "bg-primary/10 text-primary border border-primary/20"
-                            }`}
-                          >
-                            {prog.category}
-                          </span>
-                          <span className="text-[11px] text-muted-foreground font-mono">{prog.date}</span>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
+                          <span>{prog.date}</span>
+                          {prog.mode && <span className="text-[11px] text-muted-foreground/80">{prog.mode}</span>}
                         </div>
 
                         <div>
@@ -344,7 +336,7 @@ function ProgramsPage() {
                       </div>
 
                       <div className="mt-6 pt-4 border-t border-white/6 flex items-center justify-between text-xs">
-                        <span className="text-primary font-semibold font-mono">{prog.price || "Free & Open"}</span>
+                        <span className="text-primary font-semibold font-mono">{prog.price || "TBD"}</span>
                         {isComingSoon ? (
                           <Button size="sm" variant="outline" disabled className="h-8 text-xs border-white/10 opacity-70">
                             Coming Soon
@@ -391,11 +383,11 @@ function ProgramsPage() {
                 <ScrollReveal key={session.id} direction="up" delay={idx * 30}>
                   <article className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
                     <div className="space-y-3">
-                      <div className="flex items-center justify-between text-xs font-mono">
-                        <span className="px-2.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-semibold text-[10px]">
+                      <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
+                        <span className="text-[11px] font-medium text-primary">
                           {session.date}
                         </span>
-                        <span className="text-[11px] text-muted-foreground">{session.participants}</span>
+                        <span className="text-[11px]">{session.participants}</span>
                       </div>
 
                       <h3 className="text-lg font-bold font-display text-foreground">

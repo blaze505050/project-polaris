@@ -80,12 +80,6 @@ function ProjectsPage() {
         <div className="shell space-y-8 font-sans">
           <ScrollReveal direction="up">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-primary/10 text-primary border border-primary/20 mb-3">
-                <span className="size-1.5 rounded-full bg-emerald-400" />
-                <span className="font-bold">FLAGSHIP PLATFORM</span>
-                <span className="text-white/20">|</span>
-                <span className="text-muted-foreground">40+ Numerical Physics Solvers</span>
-              </div>
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                 AeroForge AI Simulation Workstation
               </h2>
@@ -99,61 +93,6 @@ function ProjectsPage() {
           <ScrollReveal direction="up" delay={40}>
             <InteractiveAeroForgeDemo />
           </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ── 3. COMPUTATIONAL SOFTWARE LABS (Allowed Eyebrow 1 of 1) ── */}
-      <section className="section bg-surface/20" id="software-labs">
-        <div className="shell font-sans space-y-6">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
-              Active Repositories
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
-              Polaris Computational Labs
-            </h2>
-            <p className="text-xs text-muted-foreground mt-1">
-              Open-source software projects built and maintained by Polaris student squads.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: "Orbital Keplerian Engine",
-                desc: "Numerical integration of 2-body and restricted 3-body gravitational trajectories with delta-V burn calculations.",
-                tech: "TypeScript, WebGL, Runge-Kutta 4",
-                status: "Production Lab",
-              },
-              {
-                title: "Transonic CFD Airfoil Solver",
-                desc: "Grid generation, compressible Navier-Stokes approximations, and Mach shockwave pressure contour mapping.",
-                tech: "Wasm, C++, Canvas API",
-                status: "Production Lab",
-              },
-              {
-                title: "Structural FEA Stress Sandbox",
-                desc: "2D truss and beam finite element analysis with von Mises stress distribution and displacement visualization.",
-                tech: "Matrix Solvers, React, WebGL",
-                status: "Production Lab",
-              },
-            ].map((lab, i) => (
-              <ScrollReveal key={lab.title} direction="up" delay={i * 30}>
-                <div className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full card-gold-hover">
-                  <div className="space-y-3">
-                    <span className="text-[10px] font-semibold text-emerald-400 uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 inline-block font-mono">
-                      {lab.status}
-                    </span>
-                    <h3 className="text-base font-bold font-display text-foreground">{lab.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{lab.desc}</p>
-                  </div>
-                  <div className="mt-5 pt-3 border-t border-white/6 flex items-center justify-between text-[11px] text-muted-foreground">
-                    <span className="font-mono text-primary">{lab.tech}</span>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
         </div>
       </section>
     </>

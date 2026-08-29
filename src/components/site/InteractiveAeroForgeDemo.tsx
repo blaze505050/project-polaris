@@ -160,22 +160,11 @@ export function InteractiveAeroForgeDemo() {
     <section
       role="region"
       aria-label="Interactive AeroForge Space Physics Simulator"
-      className="rounded-3xl border border-primary/30 bg-card p-5 md:p-10 shadow-2xl backdrop-blur-2xl relative overflow-hidden font-sans text-foreground"
+      className="rounded-3xl border border-white/12 bg-card p-5 md:p-10 shadow-2xl relative overflow-hidden font-sans text-foreground"
     >
-      {/* Decorative Glow */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[100px] pointer-events-none rounded-full" />
-
-      {/* Header & Truthfulness Badge */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
         <div>
-          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary bg-primary/10 border border-primary/30 px-3 py-1 rounded-full">
-              INTERACTIVE DEMONSTRATION // 8-STAGE SIMULATOR
-            </span>
-            <span className="text-[10px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-semibold">
-              Reduced-Order Flow Model
-            </span>
-          </div>
           <h3 className="text-2xl md:text-3xl font-display font-extrabold text-foreground">
             See AeroForge in Action
           </h3>
@@ -211,7 +200,7 @@ export function InteractiveAeroForgeDemo() {
             <span className="size-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[10px]">
               {currentStageInfo.step}
             </span>
-            <span className="text-slate-200">Stage {currentStageInfo.step}/8: <strong className="text-white font-bold">{currentStageInfo.label}</strong></span>
+            <span className="text-muted-foreground">Stage {currentStageInfo.step}/8: <strong className="text-foreground font-bold">{currentStageInfo.label}</strong></span>
           </div>
           <div className="flex items-center gap-1 text-primary text-[11px] font-semibold">
             <span>{mobileStagesExpanded ? "Collapse" : "All Stages"}</span>
@@ -242,7 +231,7 @@ export function InteractiveAeroForgeDemo() {
                 ? "border-primary bg-primary/20 text-white font-bold shadow-md shadow-primary/10"
                 : activeStep > s.step || (hasRun && s.step <= 5)
                 ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-semibold"
-                : "border-border bg-surface text-slate-200 hover:border-primary/30 hover:text-white"
+                : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground"
             }`}
           >
             <span className="size-4 rounded-full flex items-center justify-center text-[9px] font-bold bg-white/10">
@@ -273,7 +262,7 @@ export function InteractiveAeroForgeDemo() {
                   className={`p-3.5 rounded-xl border text-left transition-all ${
                     selectedPreset.id === p.id
                       ? "border-primary bg-primary/15 text-foreground font-bold"
-                      : "border-border bg-surface text-slate-200 hover:border-primary/30 hover:text-white"
+                      : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground"
                   }`}
                 >
                   <span className="text-[9px] font-mono text-primary uppercase block font-semibold">{p.category}</span>
@@ -281,19 +270,19 @@ export function InteractiveAeroForgeDemo() {
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-slate-300 font-sans leading-relaxed">{selectedPreset.description}</p>
+            <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">{selectedPreset.description}</p>
           </div>
 
           {/* Interactive Sliders */}
           <div className="space-y-4 rounded-2xl border border-border bg-surface p-4 md:p-5 font-mono text-xs">
-            <span className="text-[10px] text-slate-300 font-bold uppercase tracking-wider block">
+            <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">
               2 & 3. Physical Parameters & Geometry
             </span>
 
             {/* Mach Number */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="mach-slider" className="text-slate-200 cursor-pointer">Mach Number (M):</label>
+                <label htmlFor="mach-slider" className="text-foreground cursor-pointer">Mach Number (M):</label>
                 <span className="text-primary font-bold">{mach.toFixed(2)} M</span>
               </div>
               <input
@@ -319,8 +308,8 @@ export function InteractiveAeroForgeDemo() {
             {/* Angle of Attack */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="alpha-slider" className="text-slate-200 cursor-pointer">Angle of Attack (α):</label>
-                <span className="text-emerald-300 font-bold">{alpha.toFixed(1)}°</span>
+                <label htmlFor="alpha-slider" className="text-foreground cursor-pointer">Angle of Attack (α):</label>
+                <span className="text-emerald-400 font-bold">{alpha.toFixed(1)}°</span>
               </div>
               <input
                 id="alpha-slider"
@@ -345,7 +334,7 @@ export function InteractiveAeroForgeDemo() {
             {/* Altitude */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="altitude-slider" className="text-slate-200 cursor-pointer">Altitude (h):</label>
+                <label htmlFor="altitude-slider" className="text-foreground cursor-pointer">Altitude (h):</label>
                 <span className="text-primary font-bold">{altitude} km</span>
               </div>
               <input
@@ -444,20 +433,20 @@ export function InteractiveAeroForgeDemo() {
             {/* Aerodynamic Telemetry Output Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-2 p-4 rounded-xl border border-border text-xs">
               <div>
-                <span className="text-[10px] text-slate-300 block">LIFT (CL)</span>
+                <span className="text-[10px] text-muted-foreground block">LIFT (CL)</span>
                 <span className="text-base font-bold text-primary">{calculations.cl}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-300 block">DRAG (CD)</span>
-                <span className="text-base font-bold text-emerald-300">{calculations.cd}</span>
+                <span className="text-[10px] text-muted-foreground block">DRAG (CD)</span>
+                <span className="text-base font-bold text-emerald-400">{calculations.cd}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-300 block">L/D EFFICIENCY</span>
+                <span className="text-[10px] text-muted-foreground block">L/D EFFICIENCY</span>
                 <span className="text-base font-bold text-primary">{calculations.ld}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-300 block">TRUE AIRSPEED</span>
-                <span className="text-base font-bold text-amber-300">{calculations.speedKmh} km/h</span>
+                <span className="text-[10px] text-muted-foreground block">TRUE AIRSPEED</span>
+                <span className="text-base font-bold text-amber-400">{calculations.speedKmh} km/h</span>
               </div>
             </div>
 

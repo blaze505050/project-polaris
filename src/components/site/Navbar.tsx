@@ -69,8 +69,8 @@ export function Navbar() {
                 className={cn(
                   "nav-link-glow px-3 py-1.5 rounded-lg font-sans",
                   isActive
-                    ? "text-foreground font-semibold bg-white/8"
-                    : "text-muted-foreground hover:text-foreground hover:bg-white/4"
+                    ? "text-primary font-semibold bg-primary/10 border border-primary/20"
+                    : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
                 )}
                 style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
               >

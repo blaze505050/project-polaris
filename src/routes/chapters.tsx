@@ -29,9 +29,6 @@ export const Route = createFileRoute("/chapters")({
 function ChaptersPage() {
   return (
     <div className="min-h-[85vh] flex flex-col justify-center items-center py-24 px-4 font-sans text-center relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-96 bg-primary/5 blur-[120px] pointer-events-none rounded-full" />
-
       <div className="max-w-3xl mx-auto space-y-6 relative z-10">
         <ScrollReveal direction="up">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-display text-foreground tracking-tight">
