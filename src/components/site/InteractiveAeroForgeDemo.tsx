@@ -346,7 +346,7 @@ export function InteractiveAeroForgeDemo() {
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
                 <label htmlFor="altitude-slider" className="text-slate-200 cursor-pointer">Altitude (h):</label>
-                <span className="text-sky-300 font-bold">{altitude} km</span>
+                <span className="text-primary font-bold">{altitude} km</span>
               </div>
               <input
                 id="altitude-slider"
@@ -364,7 +364,7 @@ export function InteractiveAeroForgeDemo() {
                   setAltitude(parseInt(e.target.value, 10));
                   setHasRun(false);
                 }}
-                className="w-full accent-sky-400 cursor-pointer"
+                className="w-full accent-primary cursor-pointer"
               />
             </div>
 
@@ -453,7 +453,7 @@ export function InteractiveAeroForgeDemo() {
               </div>
               <div>
                 <span className="text-[10px] text-slate-300 block">L/D EFFICIENCY</span>
-                <span className="text-base font-bold text-sky-300">{calculations.ld}</span>
+                <span className="text-base font-bold text-primary">{calculations.ld}</span>
               </div>
               <div>
                 <span className="text-[10px] text-slate-300 block">TRUE AIRSPEED</span>

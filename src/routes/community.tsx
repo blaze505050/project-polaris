@@ -28,19 +28,19 @@ export const Route = createFileRoute("/community")({
 const RITUALS = [
   {
     name: "Aaj Ka Gyan (Daily)",
-    note: "Curated space science research drops, equations, and telemetry logs released every weekday morning.",
+    note: "Curated space science concepts, research drops, and astronomy insights shared every weekday morning.",
   },
   {
-    name: "Technical Polls & Challenges",
-    note: "Weekly physics, orbital mechanics, and propulsion intuition challenges designed to test fundamentals.",
+    name: "Weekly Science Challenges",
+    note: "Astronomy, physics, and critical thinking problem statements designed to test fundamentals.",
   },
   {
     name: "Live Expert Masterclasses",
-    note: "Direct technical interactive lectures with scientists from ISRO, university professors, and industry leaders.",
+    note: "Live interactive lectures with scientists, researchers, university professors, and industry mentors.",
   },
   {
-    name: "R&D Sprint Cohorts",
-    note: "Small student project teams collaborating on numerical simulators, hardware CAD, and verified datasets.",
+    name: "Collaborative Projects",
+    note: "Student project teams exploring science, technology, astronomy, and hands-on learning challenges.",
   },
 ];
 
@@ -113,18 +113,31 @@ function Community() {
 
       {/* ── Sessions & Masterclasses Archive ── */}
       <section className="section bg-surface/20">
-        <div className="shell font-sans">
+        <div className="shell font-sans space-y-10">
           <ScrollReveal direction="up">
-            <div className="max-w-2xl mb-8">
-              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
-                Masterclasses & Workshops
-              </span>
+            <div className="max-w-2xl">
               <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
-                Conducted Masterclasses
+                Conducted Masterclasses & Sessions
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                Direct interactive technical lectures with scientists and propulsion researchers.
+                Past interactive lectures and masterclasses with guest scientists and researchers.
               </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Visual Community Snapshot */}
+          <ScrollReveal direction="scale" delay={40}>
+            <div className="rounded-2xl overflow-hidden border border-white/10 relative bg-card aspect-[21/9] flex items-end p-6">
+              <img
+                src="/media/polaris-student.jpg"
+                alt="Polaris curious student exploring astronomy and space science"
+                className="absolute inset-0 size-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+              <div className="relative z-10 max-w-lg">
+                <div className="text-sm font-bold font-display text-foreground">For the Curious. By the Curious.</div>
+                <div className="text-xs text-muted-foreground mt-1">A welcoming space where curiosity meets action through interactive exploration.</div>
+              </div>
             </div>
           </ScrollReveal>
 

@@ -407,9 +407,6 @@ function HomePage() {
                 <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                   What's Happening Now?
                 </h2>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Upcoming live session and hands-on masterclass details.
-                </p>
               </div>
               <Button asChild variant="outline" size="sm" className="font-sans text-xs border-white/10 hover:border-white/20 active:scale-[0.97]">
                 <Link to="/programs">View All Programs →</Link>
@@ -729,7 +726,7 @@ function HomePage() {
                     },
                     {
                       dept: "Research",
-                      desc: "Physics simulation, paper writing & study datasets.",
+                      desc: "Projects, market research, scientific studies, problem exploration & technical analysis.",
                       link: "https://forms.gle/SnMhq9gNDLWmNqCF7",
                     },
                     {
@@ -936,10 +933,6 @@ function HomePage() {
 
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center space-y-4">
           <ScrollReveal direction="scale">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-white/5 border border-white/10 text-primary backdrop-blur-md mb-2">
-              <Sparkles className="size-3 text-gold" />
-              <span>Experiential Astrophysics & Engineering</span>
-            </div>
             <blockquote className="text-2xl sm:text-3xl md:text-4xl font-display font-light text-foreground leading-snug tracking-tight">
               "Somewhere, something incredible is waiting to be known."
             </blockquote>

@@ -66,9 +66,6 @@ function SpotlightPage() {
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
         <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Editorial Recognition
-            </span>
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               POLARIS SPOTLIGHT
             </h1>

@@ -64,13 +64,13 @@ function ArticlesPage() {
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
         <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Publications & Ideas
-            </span>
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
-              Explore. Learn. Share.
+              Articles & Publications
             </h1>
-            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug">
+              For the Curious. By the Curious.
+            </p>
+            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               A space for ideas, insights, and stories from the Polaris student, researcher, and volunteer community.
             </p>
           </ScrollReveal>

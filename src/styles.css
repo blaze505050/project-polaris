@@ -71,7 +71,7 @@
   /* ── Impeccable Accent ── */
   --kinpaku-gold: #f0c746;
 
-  /* ── Dark Palette — Celestial Blue + Warm Gold ── */
+  /* ── Dark Palette — Brand Purple/Indigo (#a5b4fc) + Warm Gold ── */
   --background: #080a0f;
   --foreground: #e8eaed;
   --surface: #0d1017;
@@ -84,10 +84,10 @@
   --popover: #0f1219;
   --popover-foreground: #e8eaed;
 
-  /* Primary: Celestial blue — specific to space, not generic indigo */
-  --primary: #7cc4e8;
+  /* Primary: Polaris brand purple/indigo */
+  --primary: #a5b4fc;
   --primary-foreground: #080a0f;
-  --primary-soft: rgba(124, 196, 232, 0.08);
+  --primary-soft: rgba(165, 180, 252, 0.08);
 
   --secondary: #141820;
   --secondary-foreground: #e8eaed;
@@ -95,7 +95,7 @@
   --muted: #141820;
   --muted-foreground: #8a919c;
 
-  --accent: #7cc4e8;
+  --accent: #a5b4fc;
   --accent-foreground: #080a0f;
 
   /* Gold — Polaris star accent, Impeccable-inspired */
@@ -110,7 +110,7 @@
   --border: rgba(255, 255, 255, 0.07);
   --border-strong: rgba(255, 255, 255, 0.14);
   --input: rgba(255, 255, 255, 0.09);
-  --ring: #7cc4e8;
+  --ring: #a5b4fc;
 }
 
 .light,
@@ -127,9 +127,9 @@
   --popover: #ffffff;
   --popover-foreground: #090a0f;
 
-  --primary: #1d6e8e;
+  --primary: #6366f1;
   --primary-foreground: #ffffff;
-  --primary-soft: rgba(29, 110, 142, 0.07);
+  --primary-soft: rgba(99, 102, 241, 0.07);
 
   --secondary: #f0f2f6;
   --secondary-foreground: #090a0f;
@@ -137,7 +137,7 @@
   --muted: #f0f2f6;
   --muted-foreground: #5c6370;
 
-  --accent: #1d6e8e;
+  --accent: #6366f1;
   --accent-foreground: #ffffff;
 
   --gold: #b48a18;
@@ -150,7 +150,7 @@
   --border: rgba(0, 0, 0, 0.07);
   --border-strong: rgba(0, 0, 0, 0.14);
   --input: rgba(0, 0, 0, 0.09);
-  --ring: #1d6e8e;
+  --ring: #6366f1;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -318,13 +318,13 @@
   background: rgba(12, 14, 22, 0.6);
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(124, 196, 232, 0.08);
+  border: 1px solid rgba(165, 180, 252, 0.08);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   transition: transform 300ms var(--ease-out), border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(124, 196, 232, 0.2);
+    border-color: rgba(165, 180, 252, 0.25);
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
@@ -347,11 +347,11 @@
 
 @utility apple-button {
   transition: all 200ms var(--ease-out);
-  box-shadow: 0 4px 16px rgba(124, 196, 232, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 16px rgba(165, 180, 252, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
   &:hover {
     transform: translateY(-1px) scale(1.01);
-    box-shadow: 0 6px 22px rgba(124, 196, 232, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 22px rgba(165, 180, 252, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   }
 
   &:active {

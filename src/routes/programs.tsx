@@ -64,7 +64,7 @@ const DOMAIN_FILTERS = [
 function ProgramsPage() {
   const programs = getPrograms();
   const industrySprints = getIndustrySprints();
-  const [selectedTab, setSelectedTab] = useState<"sprints" | "active" | "past">("sprints");
+  const [selectedTab, setSelectedTab] = useState<"sprints" | "active" | "past">("active");
   const [selectedDomain, setSelectedDomain] = useState<string>("All Domains");
   const [activeSprintModal, setActiveSprintModal] = useState<IndustrySprintProject | null>(null);
 
@@ -79,14 +79,11 @@ function ProgramsPage() {
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
         <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Collaborative Engineering & Masterclasses
-            </span>
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
-              Programs & Industry Sprints
+              Programs & Workshops
             </h1>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Collaborate remotely on industry-standard engineering briefs across Aero, Astro, CSE, and Systems. Get reviewed by aerospace scientists, earn verified credentials, and build verifiable proof-of-work.
+              Explore live expert masterclasses with scientists, hands-on experiential workshops, student research projects, and past session archives.
             </p>
           </ScrollReveal>
 
@@ -94,20 +91,8 @@ function ProgramsPage() {
           <div className="pt-6 flex flex-wrap justify-center gap-2">
             <button
               type="button"
-              onClick={() => setSelectedTab("sprints")}
-              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
-                selectedTab === "sprints"
-                  ? "bg-primary text-primary-foreground font-semibold"
-                  : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"
-              }`}
-            >
-              <Cpu className="size-3.5" />
-              <span>Remote Industry Sprints ({industrySprints.length})</span>
-            </button>
-            <button
-              type="button"
               onClick={() => setSelectedTab("active")}
-              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 active:scale-[0.97] ${
                 selectedTab === "active"
                   ? "bg-primary text-primary-foreground font-semibold"
                   : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"
@@ -118,8 +103,20 @@ function ProgramsPage() {
             </button>
             <button
               type="button"
+              onClick={() => setSelectedTab("sprints")}
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 active:scale-[0.97] ${
+                selectedTab === "sprints"
+                  ? "bg-primary text-primary-foreground font-semibold"
+                  : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"
+              }`}
+            >
+              <Cpu className="size-3.5" />
+              <span>Project Cohorts & Sprints</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setSelectedTab("past")}
-              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 active:scale-[0.97] ${
                 selectedTab === "past"
                   ? "bg-primary text-primary-foreground font-semibold"
                   : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"

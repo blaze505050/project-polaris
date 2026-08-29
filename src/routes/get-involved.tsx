@@ -66,9 +66,6 @@ function GetInvolvedPage() {
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
         <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold px-3 py-1 rounded-full bg-primary/10 border border-primary/20 inline-block mb-2">
-              Collaborate & Build
-            </span>
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               Get Involved with Polaris
             </h1>
@@ -81,7 +78,7 @@ function GetInvolvedPage() {
 
       {/* ── 2. PARTNERSHIPS & JOIN TEAM TRACKS ── */}
       <section className="section border-b border-white/8 bg-surface-2/15" id="tracks">
-        <div className="shell font-sans">
+        <div className="shell font-sans space-y-10">
           <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
             {/* Track 1: Partner With Us */}
             <ScrollReveal direction="up" delay={0}>
@@ -97,7 +94,7 @@ function GetInvolvedPage() {
                     For Schools, Institutions, Universities, Organizations & Mentors
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Collaborate to bring experiential astronomy workshops, browser-based CFD/FEA simulation labs, and scientist masterclasses to your students without high infrastructure barriers.
+                    Collaborate to bring hands-on astronomy workshops, experiential science sessions, and practical project-based learning to your students.
                   </p>
                 </div>
 
@@ -105,7 +102,7 @@ function GetInvolvedPage() {
                   <Button
                     asChild
                     size="default"
-                    className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
+                    className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm active:scale-[0.97]"
                   >
                     <a href="https://tally.so/r/LZL56l" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
                       <span>Submit Partnership Inquiry ↗</span>
@@ -126,10 +123,10 @@ function GetInvolvedPage() {
                     Join Our Core Team
                   </h2>
                   <p className="text-xs text-primary font-medium">
-                    For Student Leaders, Engineers, Researchers & Designers
+                    For Student Leaders, Researchers, Designers & Organizers
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Work directly with founders and domain leads. Build simulation pipelines, coordinate ISRO speaker sessions, manage community programs, and direct national outreach.
+                    Work directly with founders and core team members to build student initiatives, manage community programs, organize workshops, and lead regional outreach.
                   </p>
                 </div>
 
@@ -138,7 +135,7 @@ function GetInvolvedPage() {
                     asChild
                     variant="outline"
                     size="default"
-                    className="w-full h-10 border-white/15 hover:border-white/25 text-foreground font-semibold rounded-lg text-xs"
+                    className="w-full h-10 border-white/15 hover:border-white/25 text-foreground font-semibold rounded-lg text-xs active:scale-[0.97]"
                   >
                     <a href="https://tally.so/r/RGy8ad" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
                       <span>Apply to Core Team ↗</span>
@@ -148,6 +145,22 @@ function GetInvolvedPage() {
               </div>
             </ScrollReveal>
           </div>
+
+          {/* Visual Showcase: Student Community in Action */}
+          <ScrollReveal direction="clip" delay={60}>
+            <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden border border-white/10 relative bg-card aspect-[21/9] flex items-end p-6">
+              <img
+                src="/media/students-building.jpg"
+                alt="Students collaborating and building models together"
+                className="absolute inset-0 size-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+              <div className="relative z-10 max-w-xl">
+                <div className="text-sm font-bold font-display text-foreground">Built by Students, for Students</div>
+                <div className="text-xs text-muted-foreground mt-1">Connecting passionate builders, curious researchers, and leaders across India to learn by doing.</div>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -155,9 +168,6 @@ function GetInvolvedPage() {
       <section className="section border-b border-white/8" id="volunteers">
         <div className="shell font-sans space-y-6">
           <div className="max-w-2xl">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
-              Student Volunteer Corps
-            </span>
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
               Volunteer Departments
             </h2>
@@ -180,7 +190,7 @@ function GetInvolvedPage() {
               },
               {
                 dept: "Research",
-                desc: "Aerospace physics numerical modeling, study datasets & explainer notebooks.",
+                desc: "Projects, market research, scientific studies, problem exploration & technical analysis.",
                 form: "https://forms.gle/SnMhq9gNDLWmNqCF7",
               },
               {
@@ -196,7 +206,7 @@ function GetInvolvedPage() {
                     <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{d.desc}</p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-white/6">
-                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground">
+                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground active:scale-[0.97]">
                       <a href={d.form} target="_blank" rel="noreferrer" className="flex items-center gap-1">
                         <span>Register for {d.dept} ↗</span>
                       </a>

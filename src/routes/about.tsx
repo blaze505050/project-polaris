@@ -47,23 +47,27 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   return (
     <>
-      {/* ── 1. ABOUT HERO / STATEMENT (Parallax Deep Space + Display Type) ── */}
-      <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border">
+      {/* ── 1. ABOUT HERO / STATEMENT (Subtle Ambient Glow + High Contrast Text) ── */}
+      <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border bg-background">
         <ParallaxImage
           src="/media/nebula-hero.jpg"
           alt="Cosmic nebula deep space"
-          intensity={0.2}
-          overlay={0.72}
+          intensity={0.12}
+          imgOpacity={0.08}
+          overlay={0.95}
           kenBurns={true}
           className="absolute inset-0 size-full pointer-events-none"
         />
 
+        {/* Solid Center Contrast Mask */}
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(8,10,15,0.7)_0%,rgba(8,10,15,0.98)_100%)]" />
+
         <div className="shell relative z-10 max-w-4xl mx-auto text-center space-y-5 font-sans">
           <ScrollReveal direction="up">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
               About Project Polaris
             </h1>
-            <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug">
+            <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
               Project Polaris is a student-led organisation which aims to provide an experiential learning ecosystem to students.
             </p>
           </ScrollReveal>
@@ -146,15 +150,15 @@ function AboutPage() {
             {[
               {
                 statement: "Project Polaris is not a coaching institute.",
-                note: "We do not sell rote test prep or exam formulas. We provide computational simulation and research tools.",
+                note: null,
               },
               {
                 statement: "Project Polaris is not a school project.",
-                note: "Our programs create verified public artifacts, CFD solvers, and open-access scientific datasets.",
+                note: null,
               },
               {
                 statement: "Project Polaris is not just another student community.",
-                note: "We are an active engineering ecosystem with structured cohorts, ISRO masterclasses, and sprint squads.",
+                note: null,
               },
               {
                 statement: "Project Polaris is an experiential learning ecosystem.",
@@ -166,7 +170,7 @@ function AboutPage() {
                 <div
                   className={`p-6 rounded-xl border h-full flex flex-col justify-between transition-all duration-200 ${
                     card.highlight
-                      ? "border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(124,196,232,0.15)]"
+                      ? "border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(165,180,252,0.15)]"
                       : "border-white/8 bg-card hover:border-white/20"
                   }`}
                 >
@@ -185,9 +189,11 @@ function AboutPage() {
                     <h3 className="text-sm font-bold font-display text-foreground leading-snug">
                       {card.statement}
                     </h3>
-                    <p className="text-xs text-muted-foreground mt-2 leading-relaxed font-sans">
-                      {card.note}
-                    </p>
+                    {card.note ? (
+                      <p className="text-xs text-muted-foreground mt-2 leading-relaxed font-sans">
+                        {card.note}
+                      </p>
+                    ) : null}
                   </div>
                 </div>
               </ScrollReveal>
@@ -248,11 +254,8 @@ function AboutPage() {
         <div className="shell space-y-6">
           <ScrollReveal direction="up">
             <div className="max-w-2xl mb-6 font-sans">
-              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block mb-1">
-                Core Constellation
-              </span>
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
-                People Behind Polaris
+                People Behind Project Polaris
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
                 Polaris is the central direction. The people are the constellation that makes the mission possible.

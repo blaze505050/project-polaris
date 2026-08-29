@@ -152,7 +152,7 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
 
           {/* Pillar 3: Mathematical Transparency */}
           <div className="rounded-xl border border-border bg-surface p-4 md:p-5 space-y-2">
-            <div className="flex items-center gap-2 text-sky-300 font-semibold text-sm font-ui">
+            <div className="flex items-center gap-2 text-primary font-semibold text-sm font-ui">
               <Cpu className="size-4" />
               <span>3. Open Mathematical Models</span>
             </div>
