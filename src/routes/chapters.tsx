@@ -34,16 +34,16 @@ function ChaptersPage() {
 
       <div className="max-w-3xl mx-auto space-y-6 relative z-10">
         <ScrollReveal direction="up">
-          <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
-            POLARIS CHAPTERS
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-display text-foreground tracking-tight">
+            COMING SOON
           </h1>
 
-          <div className="mt-4 inline-block text-lg sm:text-xl font-display font-bold text-primary tracking-wider uppercase py-2 px-6 rounded-2xl bg-surface-2 border border-primary/25 shadow-[0_0_20px_rgba(165,180,252,0.15)]">
-            Applications & Early Access Open
+          <div className="mt-4 inline-block text-lg sm:text-xl font-display font-bold text-primary tracking-wider uppercase py-2 px-6 rounded-2xl bg-surface-2 border border-primary/25 shadow-[0_0_20px_rgba(197,157,255,0.15)]">
+            POLARIS CHAPTERS
           </div>
 
           <p className="mt-6 text-sm sm:text-base text-foreground/90 font-medium font-sans uppercase tracking-wide max-w-xl mx-auto leading-relaxed">
-            Expanding Polaris Chapters to reach curious students from Tier 2, 3 cities and remote regions.
+            LAUNCHING POLARIS CHAPTERS SOON TO REACH MORE STUDENTS FROM TIER 2, 3 CITIES AND REMOTE AREAS.
           </p>
 
           <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">

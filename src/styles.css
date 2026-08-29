@@ -69,48 +69,48 @@
   --font-size-headline: clamp(1.75rem, 3.5vw, 3rem);
 
   /* ── Impeccable Accent ── */
-  --kinpaku-gold: #f0c746;
+  --kinpaku-gold: #D4AF37;
 
-  /* ── Dark Palette — Brand Purple/Indigo (#a5b4fc) + Warm Gold ── */
-  --background: #080a0f;
-  --foreground: #e8eaed;
-  --surface: #0d1017;
-  --surface-2: #141820;
-  --surface-3: #1a1f2b;
-  --surface-elevated: #121620;
+  /* ── Dark Palette — Brand Light Purple (#C59DFF) + Black (#050505) + Gold (#D4AF37) ── */
+  --background: #050505;
+  --foreground: #FFFFFF;
+  --surface: #0c0d12;
+  --surface-2: #13151c;
+  --surface-3: #1a1d26;
+  --surface-elevated: #11131a;
 
-  --card: #0f1219;
-  --card-foreground: #e8eaed;
-  --popover: #0f1219;
-  --popover-foreground: #e8eaed;
+  --card: #0d0f16;
+  --card-foreground: #FFFFFF;
+  --popover: #0d0f16;
+  --popover-foreground: #FFFFFF;
 
-  /* Primary: Polaris brand purple/indigo */
-  --primary: #a5b4fc;
-  --primary-foreground: #080a0f;
-  --primary-soft: rgba(165, 180, 252, 0.08);
+  /* Primary: Project Polaris Brand Light Purple (#C59DFF) */
+  --primary: #C59DFF;
+  --primary-foreground: #050505;
+  --primary-soft: rgba(197, 157, 255, 0.09);
 
-  --secondary: #141820;
-  --secondary-foreground: #e8eaed;
+  --secondary: #13151c;
+  --secondary-foreground: #FFFFFF;
 
-  --muted: #141820;
-  --muted-foreground: #8a919c;
+  --muted: #13151c;
+  --muted-foreground: #9ca3af;
 
-  --accent: #a5b4fc;
-  --accent-foreground: #080a0f;
+  --accent: #C59DFF;
+  --accent-foreground: #050505;
 
-  /* Gold — Polaris star accent, Impeccable-inspired */
-  --gold: #f0c746;
-  --gold-foreground: #080a0f;
+  /* Gold — Polaris star accent (#D4AF37) */
+  --gold: #D4AF37;
+  --gold-foreground: #050505;
 
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --success: #10b981;
 
   /* Hairline borders */
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.14);
-  --input: rgba(255, 255, 255, 0.09);
-  --ring: #a5b4fc;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #C59DFF;
 }
 
 .light,

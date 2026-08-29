@@ -65,13 +65,13 @@ function ArticlesPage() {
         <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
-              Articles & Publications
+              Explore. Learn. Share.
             </h1>
             <p className="mt-3 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug">
               For the Curious. By the Curious.
             </p>
             <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A space for ideas, insights, and stories from the Polaris student, researcher, and volunteer community.
+              A space for ideas, insights, and stories from the Polaris community.
             </p>
           </ScrollReveal>
 

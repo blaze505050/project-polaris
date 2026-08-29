@@ -16,6 +16,7 @@ export const NAV_PAGES = [
   { label: "Articles", to: "/articles" },
   { label: "Spotlight", to: "/spotlight" },
   { label: "Get Involved", to: "/get-involved" },
+  { label: "Student Dashboard", to: "/dashboard" },
 ] as const;
 
 export function Navbar() {
@@ -58,7 +59,7 @@ export function Navbar() {
 
         {/* Center Nav Items (8 Main Navigation Pages) - Hidden on mobile */}
         <div className="hidden xl:flex items-center gap-1 text-xs font-medium font-sans">
-          {NAV_PAGES.map((item) => {
+          {NAV_PAGES.slice(0, 8).map((item) => {
             const isActive = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
             return (
               <Link
@@ -114,7 +115,7 @@ export function Navbar() {
               Navigation Menu
             </span>
 
-            {NAV_PAGES.map((item, idx) => {
+            {NAV_PAGES.slice(0, 8).map((item, idx) => {
               const isActive = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
               return (
                 <Link
