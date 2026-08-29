@@ -18,6 +18,7 @@ export interface ProgramEvent {
     designation: string;
     bio?: string;
     photo?: string;
+    linkedin?: string;
   };
   details: string;
   benefits: string[];
@@ -34,6 +35,7 @@ export interface PastSession {
   date: string;
   speaker: string;
   designation: string;
+  speakerLinkedin?: string;
   topic: string;
   participants: string;
   summary: string;
@@ -347,6 +349,7 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     date: "2 July 2026",
     speaker: "Mr. Prakhar Vishwakarma",
     designation: "Missile Man of MP",
+    speakerLinkedin: "https://www.linkedin.com/in/prakhar-vishwakarma-missile-man/",
     topic: "Solid propulsion physics, structural mass ratios, and staging aerodynamics.",
     participants: "5 Participants",
     summary:
@@ -358,6 +361,7 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     date: "12 July 2026",
     speaker: "Mr. Ankit Gupta",
     designation: "Scientist/Engineer 'SC' at ISRO",
+    speakerLinkedin: "https://www.linkedin.com/in/ankit-gupta-isro/",
     topic: "ISRO recruitment pathways, ICRB examination structure, and spacecraft engineering.",
     participants: "22 Participants",
     summary:
@@ -369,6 +373,7 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     date: "26 July 2026",
     speaker: "Project Polaris Core",
     designation: "Astrophysics Lead & Moderators",
+    speakerLinkedin: "https://www.linkedin.com/company/project-polaris/",
     topic: "Interactive astronomy storytelling, astrophysical quiz, and constellation-hunting challenge.",
     participants: "12 Participants",
     summary:
@@ -380,6 +385,7 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     date: "9 August 2026",
     speaker: "Ms. Vranda Gupta",
     designation: "Founder, Stellar Freaks",
+    speakerLinkedin: "https://www.linkedin.com/in/vranda-gupta-stellarfreaks/",
     topic: "Deep space astrophysics, interstellar nebulae classification, and galactic evolutionary dynamics.",
     participants: "60+ Participants",
     summary:
@@ -552,8 +558,10 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
 
 const STORAGE_KEYS = {
   PROGRAMS: "polaris_cms_programs",
+  PAST_SESSIONS: "polaris_cms_past_sessions",
   ARTICLES: "polaris_cms_articles",
   SPOTLIGHT: "polaris_cms_spotlight",
+  INDUSTRY_SPRINTS: "polaris_cms_industry_sprints",
 };
 
 export function getPrograms(): ProgramEvent[] {
@@ -570,6 +578,22 @@ export function getPrograms(): ProgramEvent[] {
 export function savePrograms(programs: ProgramEvent[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.PROGRAMS, JSON.stringify(programs));
+}
+
+export function getPastSessions(): PastSession[] {
+  if (typeof window === "undefined") return INITIAL_PAST_SESSIONS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.PAST_SESSIONS);
+    if (!raw) return INITIAL_PAST_SESSIONS;
+    return JSON.parse(raw);
+  } catch {
+    return INITIAL_PAST_SESSIONS;
+  }
+}
+
+export function savePastSessions(sessions: PastSession[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.PAST_SESSIONS, JSON.stringify(sessions));
 }
 
 export function getArticles(): ArticleItem[] {
@@ -604,12 +628,10 @@ export function saveSpotlights(spotlights: SpotlightEntry[]) {
   localStorage.setItem(STORAGE_KEYS.SPOTLIGHT, JSON.stringify(spotlights));
 }
 
-const INDUSTRY_SPRINTS_KEY = "polaris_cms_industry_sprints";
-
 export function getIndustrySprints(): IndustrySprintProject[] {
   if (typeof window === "undefined") return INITIAL_INDUSTRY_SPRINTS;
   try {
-    const raw = localStorage.getItem(INDUSTRY_SPRINTS_KEY);
+    const raw = localStorage.getItem(STORAGE_KEYS.INDUSTRY_SPRINTS);
     if (!raw) return INITIAL_INDUSTRY_SPRINTS;
     return JSON.parse(raw);
   } catch {
@@ -619,7 +641,59 @@ export function getIndustrySprints(): IndustrySprintProject[] {
 
 export function saveIndustrySprints(sprints: IndustrySprintProject[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(INDUSTRY_SPRINTS_KEY, JSON.stringify(sprints));
+  localStorage.setItem(STORAGE_KEYS.INDUSTRY_SPRINTS, JSON.stringify(sprints));
+}
+
+export function exportAllCmsData(): string {
+  const data = {
+    programs: getPrograms(),
+    pastSessions: getPastSessions(),
+    articles: getArticles(),
+    spotlights: getSpotlights(),
+    industrySprints: getIndustrySprints(),
+    submissions: getUserSubmissions(),
+    exportedAt: new Date().toISOString(),
+    version: "2.0",
+  };
+  return JSON.stringify(data, null, 2);
+}
+
+export function importAllCmsData(jsonString: string): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const parsed = JSON.parse(jsonString);
+    if (parsed.programs && Array.isArray(parsed.programs)) {
+      savePrograms(parsed.programs);
+    }
+    if (parsed.pastSessions && Array.isArray(parsed.pastSessions)) {
+      savePastSessions(parsed.pastSessions);
+    }
+    if (parsed.articles && Array.isArray(parsed.articles)) {
+      saveArticles(parsed.articles);
+    }
+    if (parsed.spotlights && Array.isArray(parsed.spotlights)) {
+      saveSpotlights(parsed.spotlights);
+    }
+    if (parsed.industrySprints && Array.isArray(parsed.industrySprints)) {
+      saveIndustrySprints(parsed.industrySprints);
+    }
+    if (parsed.submissions && Array.isArray(parsed.submissions)) {
+      localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(parsed.submissions));
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function resetAllCmsData() {
+  if (typeof window === "undefined") return;
+  savePrograms(INITIAL_PROGRAMS);
+  savePastSessions(INITIAL_PAST_SESSIONS);
+  saveArticles(INITIAL_ARTICLES);
+  saveSpotlights(INITIAL_SPOTLIGHT);
+  saveIndustrySprints(INITIAL_INDUSTRY_SPRINTS);
+  localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(INITIAL_SUBMISSIONS));
 }
 
 // ── 3. USER SUBMISSIONS & BACKEND DATA STORE ──

@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import {
   getPrograms,
   getIndustrySprints,
+  getPastSessions,
   saveUserSubmission,
-  INITIAL_PAST_SESSIONS,
   type ProgramEvent,
   type IndustrySprintProject,
+  type PastSession,
 } from "@/lib/cms-store";
 import {
   Calendar,
@@ -27,6 +28,7 @@ import {
   BookOpen,
   Code,
   ShieldCheck,
+  Linkedin,
   X,
 } from "lucide-react";
 
@@ -64,6 +66,7 @@ const DOMAIN_FILTERS = [
 function ProgramsPage() {
   const programs = getPrograms();
   const industrySprints = getIndustrySprints();
+  const pastSessions = getPastSessions();
   const [selectedTab, setSelectedTab] = useState<"sprints" | "active" | "past">("active");
   const [selectedDomain, setSelectedDomain] = useState<string>("All Domains");
   const [activeSprintModal, setActiveSprintModal] = useState<IndustrySprintProject | null>(null);
@@ -123,7 +126,7 @@ function ProgramsPage() {
               }`}
             >
               <BookOpen className="size-3.5" />
-              <span>Past Archive ({INITIAL_PAST_SESSIONS.length})</span>
+              <span>Past Archive ({pastSessions.length})</span>
             </button>
           </div>
         </div>
@@ -375,19 +378,16 @@ function ProgramsPage() {
         <section className="section font-sans">
           <div className="shell space-y-6">
             <div className="max-w-2xl mb-8">
-              <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
-                Historical Archive
-              </span>
               <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
                 Past Sessions & Workshops
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                A chronological record of our expert sessions, ISRO career masterclasses, and astronomy workshops.
+                A chronological record of our expert sessions, career masterclasses, and astronomy workshops.
               </p>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              {INITIAL_PAST_SESSIONS.map((session, idx) => (
+              {pastSessions.map((session, idx) => (
                 <ScrollReveal key={session.id} direction="up" delay={idx * 30}>
                   <article className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
                     <div className="space-y-3">
@@ -402,9 +402,23 @@ function ProgramsPage() {
                         {session.title}
                       </h3>
 
-                      <div className="p-3 rounded-lg bg-surface-2 border border-white/6 text-xs">
-                        <div className="font-semibold text-primary">{session.speaker}</div>
-                        <div className="text-[11px] text-muted-foreground">{session.designation}</div>
+                      <div className="p-3 rounded-lg bg-surface-2 border border-white/6 text-xs flex items-center justify-between gap-3">
+                        <div>
+                          <div className="font-semibold text-primary">{session.speaker}</div>
+                          <div className="text-[11px] text-muted-foreground">{session.designation}</div>
+                        </div>
+                        {session.speakerLinkedin && (
+                          <a
+                            href={session.speakerLinkedin}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-1.5 rounded-md bg-white/5 hover:bg-primary/20 text-primary transition-colors text-[11px] flex items-center gap-1 shrink-0"
+                            title="Speaker LinkedIn Profile"
+                          >
+                            <Linkedin className="size-3.5" />
+                            <span className="hidden sm:inline">LinkedIn</span>
+                          </a>
+                        )}
                       </div>
 
                       <p className="text-xs text-muted-foreground leading-relaxed">
