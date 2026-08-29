@@ -44,7 +44,7 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/8 bg-surface-2/30 text-xs font-sans">
+    <footer className="border-t border-border bg-surface-2/50 text-xs font-sans">
       <div className="shell py-12 sm:py-14">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand Column */}
@@ -52,7 +52,7 @@ export function Footer() {
             <Link to="/" aria-label="Project Polaris Home" className="inline-block">
               <Wordmark />
             </Link>
-            <p className="font-display text-primary/95 text-sm font-medium">
+            <p className="font-display text-primary font-medium text-sm">
               Learn by building, rather than building after learning.
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed max-w-sm">
@@ -68,7 +68,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors"
+                  className="size-8 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
                 >
                   <Icon className="size-3.5" />
                 </a>
@@ -82,7 +82,7 @@ export function Footer() {
           {/* Navigation Columns */}
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.heading} className="space-y-3">
-              <h4 className="font-semibold text-foreground text-xs uppercase tracking-wider text-primary">
+              <h4 className="font-semibold text-xs uppercase tracking-wider text-primary">
                 {col.heading}
               </h4>
               <ul className="space-y-2 text-xs">
@@ -114,7 +114,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Baseline Bar */}
-        <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground">
+        <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground">
           <div className="flex items-center gap-2">
             <NorthStar className="size-3 text-primary" />
             <span>© {new Date().getFullYear()} Project Polaris. Built by students, for students.</span>

@@ -168,7 +168,7 @@ export function InteractiveAeroForgeDemo() {
           <h3 className="text-2xl md:text-3xl font-display font-extrabold text-foreground">
             See AeroForge in Action
           </h3>
-          <p className="text-xs text-slate-300 font-sans mt-1">
+          <p className="text-xs text-muted-foreground font-sans mt-1">
             Experience the full digital thread: configure parameters, run reduced-order physics solvers, and inspect live pressure contours.
           </p>
         </div>
@@ -388,7 +388,7 @@ export function InteractiveAeroForgeDemo() {
                 <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="text-xs font-bold text-foreground">NACA {naca} Flow Field Contours</span>
               </div>
-              <span className="text-[10px] text-slate-300">Streamline Grid: 120 x 80</span>
+              <span className="text-[10px] text-muted-foreground">Streamline Grid: 120 x 80</span>
             </div>
 
             {/* Simulated Vector Streamlines SVG */}
@@ -431,7 +431,11 @@ export function InteractiveAeroForgeDemo() {
             </div>
 
             {/* Aerodynamic Telemetry Output Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-2 p-4 rounded-xl border border-border text-xs">
+            <div
+              aria-live="polite"
+              aria-atomic="true"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-surface-2 p-4 rounded-xl border border-border text-xs"
+            >
               <div>
                 <span className="text-[10px] text-muted-foreground block">LIFT (CL)</span>
                 <span className="text-base font-bold text-primary">{calculations.cl}</span>

@@ -42,17 +42,17 @@ function ProjectsPage() {
           className="absolute inset-0 size-full pointer-events-none"
         />
 
-        <div className="shell relative z-10 max-w-4xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell relative z-10 max-w-4xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight">
               Projects & Labs
             </h1>
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
               Small sprint teams, real physical constraints, reproducible code and models. Explore our flagship AeroForge simulation laboratory and computational platforms.
             </p>
           </ScrollReveal>
 
-          <div className="pt-4 flex flex-wrap justify-center gap-3">
+          <div className="pt-4 flex flex-wrap justify-start gap-3">
             <Button
               asChild
               size="sm"

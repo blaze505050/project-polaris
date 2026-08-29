@@ -547,7 +547,7 @@ def verify_parameters(mach: float, altitude_km: float):
                         03 / Executable Verification Code
                       </h4>
                       <div className="rounded-md border border-border bg-background p-4 overflow-x-auto">
-                        <pre className="text-[11px] font-mono text-slate-200 leading-relaxed">
+                        <pre className="text-[11px] font-mono text-foreground leading-relaxed">
                           <code>{activeAiOutput.code}</code>
                         </pre>
                       </div>
@@ -561,7 +561,7 @@ def verify_parameters(mach: float, altitude_km: float):
                     </h4>
                     <ul className="space-y-1.5 text-xs font-mono">
                       {activeAiOutput.checklist.map((item, idx) => (
-                        <li key={idx} className="flex items-center gap-2 text-slate-300">
+                        <li key={idx} className="flex items-center gap-2 text-foreground/90">
                           <CheckCircle2 className="size-3.5 text-emerald-400 shrink-0" />
                           <span>{item}</span>
                         </li>

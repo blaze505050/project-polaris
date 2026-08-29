@@ -200,20 +200,20 @@ function HomePage() {
           <ConstellationCanvas />
         </div>
 
-        <div className="shell relative z-10 text-center max-w-5xl mx-auto space-y-7">
+        <div className="shell relative z-10 text-left max-w-5xl space-y-7">
           <ScrollReveal direction="up" delay={20}>
             {/* Direct display title with drop-shadow clarity */}
             <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[5.75rem] font-display font-extrabold tracking-tight text-white leading-[1.02] drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
               PROJECT POLARIS
             </h1>
-            <p className="mt-5 text-xl sm:text-2xl md:text-3xl font-display text-primary font-medium leading-snug max-w-3xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] text-shimmer">
+            <p className="mt-5 text-xl sm:text-2xl md:text-3xl font-display text-primary font-medium leading-snug max-w-3xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] text-shimmer">
               Learn by building, rather than building after learning.
             </p>
           </ScrollReveal>
 
           {/* Primary Action Buttons with Kowalski Active Tactile Press */}
           <ScrollReveal direction="up" delay={80}>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5 font-sans text-xs">
+            <div className="mt-8 flex flex-wrap items-center justify-start gap-3.5 font-sans text-xs">
               <Button
                 asChild
                 size="default"
@@ -464,28 +464,33 @@ function HomePage() {
                   )}
 
                   {/* Live Countdown HUD */}
-                  <div className="p-3.5 rounded-xl bg-surface-2 border border-primary/20 flex flex-wrap items-center justify-between gap-3">
+                  <div
+                    aria-live="polite"
+                    aria-atomic="true"
+                    aria-label={`Live countdown: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}
+                    className="p-3.5 rounded-xl bg-surface-2 border border-primary/20 flex flex-wrap items-center justify-between gap-3"
+                  >
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
                       <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
                       <span>Live Session Starts In:</span>
                     </div>
                     <div className="flex items-center gap-2 font-mono text-xs">
-                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
                         <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.days).padStart(2, "0")}</span>
                         <span className="text-[9px] text-muted-foreground uppercase">Days</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
                         <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.hours).padStart(2, "0")}</span>
                         <span className="text-[9px] text-muted-foreground uppercase">Hours</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
                         <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.minutes).padStart(2, "0")}</span>
                         <span className="text-[9px] text-muted-foreground uppercase">Mins</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-white/8 text-center min-w-[48px]">
+                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
                         <span className="text-sm font-bold text-emerald-400 block leading-none">{String(timeLeft.seconds).padStart(2, "0")}</span>
                         <span className="text-[9px] text-muted-foreground uppercase">Secs</span>
                       </div>
@@ -886,7 +891,7 @@ function HomePage() {
       <section className="section border-b border-border bg-surface/30" id="impact">
         <div className="shell">
           <ScrollReveal direction="up">
-            <div className="max-w-2xl mx-auto text-center mb-8">
+            <div className="max-w-2xl text-left mb-8">
               <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
                 Our Impact in Numbers
               </h2>
@@ -969,14 +974,14 @@ function HomePage() {
           </ScrollReveal>
 
           {/* Review Cards Grid with Cross-fade Transition */}
-          <div className="grid gap-4 md:grid-cols-2 font-sans">
+          <div aria-live="polite" aria-atomic="true" className="grid gap-4 md:grid-cols-2 font-sans">
             {[
               STUDENT_REVIEWS[reviewIndex],
               STUDENT_REVIEWS[(reviewIndex + 1) % STUDENT_REVIEWS.length],
             ].map((review) => (
               <div
                 key={review.name}
-                className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
+                className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
               >
                 <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
                   "{review.quote}"

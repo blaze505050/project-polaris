@@ -62,20 +62,20 @@ function ArticlesPage() {
     <>
       {/* ── 1. HERO SECTION ── */}
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell max-w-4xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               Explore. Learn. Share.
             </h1>
-            <p className="mt-3 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug">
+            <p className="mt-3 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl leading-snug">
               For the Curious. By the Curious.
             </p>
-            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
               A space for ideas, insights, and stories from the Polaris community.
             </p>
           </ScrollReveal>
 
-          <div className="pt-4 flex flex-wrap justify-center gap-3 font-sans text-xs">
+          <div className="pt-4 flex flex-wrap justify-start gap-3 font-sans text-xs">
             <Button
               asChild
               size="sm"
@@ -240,7 +240,7 @@ function ArticlesPage() {
 
       {/* ── 4. SUBMIT YOUR ARTICLE ── */}
       <section className="section bg-surface-2/10" id="submit">
-        <div className="shell max-w-2xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell max-w-2xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
               Open Submissions

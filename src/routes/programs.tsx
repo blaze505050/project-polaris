@@ -80,18 +80,18 @@ function ProgramsPage() {
     <>
       {/* ── 1. PROGRAMS HERO ── */}
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell max-w-4xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               Programs & Workshops
             </h1>
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
               Explore live expert masterclasses with scientists, hands-on experiential workshops, student research projects, and past session archives.
             </p>
           </ScrollReveal>
 
           {/* Primary View Switcher */}
-          <div className="pt-6 flex flex-wrap justify-center gap-2">
+          <div className="pt-6 flex flex-wrap justify-start gap-2">
             <button
               type="button"
               onClick={() => setSelectedTab("active")}

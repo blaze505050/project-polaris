@@ -1,0 +1,23 @@
+{
+  "name": "Project Polaris",
+  "short_name": "Polaris",
+  "description": "Student-led experiential engineering and research ecosystem. Learn by building.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "/polaris-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/polaris-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

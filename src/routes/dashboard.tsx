@@ -497,18 +497,18 @@ function DashboardPage() {
     <>
       {/* ── 1. DASHBOARD HERO ── */}
       <section className="relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-16 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell max-w-4xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               Polaris Portal
             </h1>
-            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-xl leading-relaxed">
               Student workspace access and dynamic Admin CMS management across all website pages.
             </p>
           </ScrollReveal>
 
           {/* Mode Switcher */}
-          <div className="pt-4 flex justify-center gap-2">
+          <div className="pt-4 flex justify-start gap-2">
             <button
               type="button"
               onClick={() => setActiveTab("student")}

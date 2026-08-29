@@ -64,12 +64,12 @@ function GetInvolvedPage() {
     <>
       {/* ── 1. HERO SECTION ── */}
       <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-20 border-b border-white/8">
-        <div className="shell max-w-4xl mx-auto text-center space-y-4 font-sans">
+        <div className="shell max-w-4xl space-y-4 font-sans text-left">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl font-bold font-display text-foreground tracking-tight">
               Get Involved with Polaris
             </h1>
-            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl leading-relaxed">
               Whether you are an institution looking to partner, an educator, or a student ready to join our engineering and volunteer cohorts.
             </p>
           </ScrollReveal>
@@ -234,7 +234,7 @@ function GetInvolvedPage() {
       {/* ── 4. INBUILT GENERAL INQUIRIES FORM ── */}
       <section className="section border-b border-white/8 bg-surface-2/15" id="contact-form">
         <div className="shell max-w-2xl mx-auto font-sans space-y-6">
-          <div className="text-center space-y-1">
+          <div className="text-left space-y-1">
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
               General Inquiries & Contact
             </h2>
@@ -321,7 +321,7 @@ function GetInvolvedPage() {
 
       {/* ── 5. OUR SOCIALS ── */}
       <section className="section" id="socials">
-        <div className="shell max-w-3xl mx-auto text-center font-sans space-y-6">
+        <div className="shell max-w-3xl mx-auto text-left font-sans space-y-6">
           <div className="space-y-1">
             <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground">
               Connect Across Official Channels

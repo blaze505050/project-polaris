@@ -62,18 +62,18 @@ function AboutPage() {
         {/* Solid Center Contrast Mask */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(8,10,15,0.7)_0%,rgba(8,10,15,0.98)_100%)]" />
 
-        <div className="shell relative z-10 max-w-4xl mx-auto text-center space-y-5 font-sans">
+        <div className="shell relative z-10 max-w-4xl space-y-5 font-sans">
           <ScrollReveal direction="up">
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold font-display text-white tracking-tight leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
               About Project Polaris
             </h1>
-            <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl mx-auto leading-snug drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+            <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl leading-snug drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
               Project Polaris is a student-led organisation which aims to provide an experiential learning ecosystem to students.
             </p>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={60}>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl mx-auto font-sans">
+            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl font-sans">
               We bridge the gap between traditional education and real-world learning. Rather than focusing solely on theoretical knowledge and short-term opportunities, we create opportunities where students gain practical experience by working on projects, conducting research, participating in workshops, collaborating with industry professionals, and contributing to initiatives that create measurable impact.
             </p>
             <p className="mt-3 text-xs sm:text-sm text-primary font-medium">
@@ -86,7 +86,7 @@ function AboutPage() {
       {/* ── 2. MISSION & VISION (Allowed Eyebrow 1 of 2) ── */}
       <section className="section border-b border-border bg-surface/30" id="mission-vision">
         <div className="shell">
-          <div className="grid gap-6 md:grid-cols-2 font-sans max-w-4xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2 font-sans max-w-4xl">
             {/* Mission Card */}
             <ScrollReveal direction="up" delay={0}>
               <div className="p-7 md:p-8 rounded-xl border border-primary/25 bg-card h-full flex flex-col justify-between space-y-4 shadow-lg card-gold-hover">
@@ -136,7 +136,7 @@ function AboutPage() {
       <section className="section border-b border-border" id="what-we-are-not">
         <div className="shell">
           <ScrollReveal direction="up">
-            <div className="max-w-2xl mx-auto text-center mb-10 space-y-2">
+            <div className="max-w-2xl mb-10 space-y-2">
               <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
                 What Project Polaris Is NOT
               </h2>

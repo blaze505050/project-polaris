@@ -28,8 +28,8 @@ export const Route = createFileRoute("/chapters")({
 
 function ChaptersPage() {
   return (
-    <div className="min-h-[85vh] flex flex-col justify-center items-center py-24 px-4 font-sans text-center relative overflow-hidden">
-      <div className="max-w-3xl mx-auto space-y-6 relative z-10">
+    <div className="min-h-[85vh] flex flex-col justify-center py-28 px-4 sm:px-6 md:px-8 font-sans text-left relative overflow-hidden">
+      <div className="max-w-3xl space-y-6 relative z-10 shell">
         <ScrollReveal direction="up">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-display text-foreground tracking-tight">
             COMING SOON
@@ -39,18 +39,18 @@ function ChaptersPage() {
             POLARIS CHAPTERS
           </div>
 
-          <p className="mt-6 text-sm sm:text-base text-foreground/90 font-medium font-sans uppercase tracking-wide max-w-xl mx-auto leading-relaxed">
+          <p className="mt-6 text-sm sm:text-base text-foreground/90 font-medium font-sans uppercase tracking-wide max-w-xl leading-relaxed">
             LAUNCHING POLARIS CHAPTERS SOON TO REACH MORE STUDENTS FROM TIER 2, 3 CITIES AND REMOTE AREAS.
           </p>
 
-          <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+          <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-lg leading-relaxed">
             We are creating an open network of institutional and community chapters where school and college students can host stargazing nights, collaborate on science projects, and organize experiential workshops locally.
           </p>
         </ScrollReveal>
 
         {/* Visual Media Showcase */}
         <ScrollReveal direction="scale" delay={60}>
-          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-w-2xl mx-auto mt-4 bg-card aspect-[16/9]">
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-w-2xl mt-4 bg-card aspect-[16/9]">
             <img
               src="/media/telescope-milkyway.jpg"
               alt="Night astronomy sky observation and stargazing"
@@ -66,7 +66,7 @@ function ChaptersPage() {
 
         {/* Action Button */}
         <ScrollReveal direction="up" delay={100}>
-          <div className="pt-6 flex flex-wrap justify-center gap-3 font-sans text-xs">
+          <div className="pt-6 flex flex-wrap justify-start gap-3 font-sans text-xs">
             <Button
               asChild
               size="default"

@@ -48,8 +48,8 @@ export function Navbar() {
         className={cn(
           "max-w-7xl mx-auto h-13 sm:h-14 px-3 sm:px-5 rounded-full flex items-center justify-between gap-3 pointer-events-auto relative",
           scrolled || open
-            ? "bg-background/90 backdrop-blur-2xl border border-white/12 shadow-[0_16px_36px_rgba(0,0,0,0.6)]"
-            : "bg-surface/80 backdrop-blur-xl border border-white/8 shadow-[0_8px_24px_rgba(0,0,0,0.3)]",
+            ? "bg-background/90 backdrop-blur-2xl border border-border-strong shadow-[0_16px_36px_rgba(0,0,0,0.25)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.6)]"
+            : "bg-surface/85 backdrop-blur-xl border border-border shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.3)]",
         )}
         style={{ transition: 'all 350ms cubic-bezier(0.23, 1, 0.32, 1)' }}
       >
@@ -69,7 +69,7 @@ export function Navbar() {
                 className={cn(
                   "nav-link-glow px-3 py-1.5 rounded-lg font-sans",
                   isActive
-                    ? "text-primary font-semibold bg-primary/10 border border-primary/20"
+                    ? "text-primary font-semibold bg-primary/10 border border-primary/25"
                     : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
                 )}
                 style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
@@ -90,7 +90,7 @@ export function Navbar() {
             size="sm"
             className="hidden sm:inline-flex h-8 px-3.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
           >
-            <Link to="/dashboard" className="flex items-center gap-1.5">
+            <Link to="/dashboard" aria-label="Student Dashboard" className="flex items-center gap-1.5">
               <User className="size-3.5" />
               <span>Dashboard</span>
             </Link>
@@ -102,7 +102,7 @@ export function Navbar() {
             onClick={() => setOpen((prev) => !prev)}
             aria-label={open ? "Close Navigation Menu" : "Open Navigation Menu"}
             aria-expanded={open}
-            className="xl:hidden p-2 rounded-full text-foreground/80 hover:text-foreground hover:bg-white/6 transition-colors"
+            className="xl:hidden p-2 rounded-full text-foreground/80 hover:text-foreground hover:bg-surface-2 transition-colors"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -111,7 +111,7 @@ export function Navbar() {
 
       {/* Mobile Drawer (Featuring all 9 pages clearly) */}
       {open && (
-        <div className="xl:hidden fixed inset-x-3 top-20 z-50 p-5 rounded-2xl border border-white/10 bg-background/95 backdrop-blur-2xl shadow-2xl pointer-events-auto max-h-[82vh] overflow-y-auto font-sans drawer-animated">
+        <div className="xl:hidden fixed inset-x-3 top-20 z-50 p-5 rounded-2xl border border-border-strong bg-card/98 dark:bg-background/95 backdrop-blur-2xl shadow-2xl pointer-events-auto max-h-[82vh] overflow-y-auto font-sans drawer-animated">
           <div className="space-y-1 stagger-children">
             <span className="text-[10px] uppercase font-semibold text-primary tracking-wider block px-3 mb-2">
               Navigation Menu
@@ -127,8 +127,8 @@ export function Navbar() {
                   className={cn(
                     "flex items-center justify-between p-3 rounded-xl text-sm",
                     isActive
-                      ? "bg-white/10 text-foreground font-semibold"
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
+                      ? "bg-primary/10 text-primary font-semibold border border-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
                   )}
                   style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
                 >
@@ -142,7 +142,7 @@ export function Navbar() {
             })}
 
             {/* Page 9: Student Dashboard */}
-            <div className="pt-3 border-t border-white/8 mt-3">
+            <div className="pt-3 border-t border-border mt-3">
               <Link
                 to="/dashboard"
                 onClick={() => setOpen(false)}
