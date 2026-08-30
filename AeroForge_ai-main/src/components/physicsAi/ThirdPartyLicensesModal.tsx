@@ -1,8 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { X, ShieldCheck, ExternalLink, BookOpen, FileText } from 'lucide-react';
-import { MODEL_REGISTRY } from '@/services/physicsAi/modelRegistryData';
-import { DATASET_REGISTRY } from '@/services/physicsAi/datasetRegistryData';
+import React from "react";
+import { motion } from "framer-motion";
+import { X, ShieldCheck, ExternalLink, BookOpen, FileText } from "lucide-react";
+import { MODEL_REGISTRY } from "@/services/physicsAi/modelRegistryData";
+import { DATASET_REGISTRY } from "@/services/physicsAi/datasetRegistryData";
 
 interface Props {
   isOpen: boolean;
@@ -38,9 +38,14 @@ export default function ThirdPartyLicensesModal({ isOpen, onClose }: Props) {
 
         {/* License Policy Banner */}
         <div className="p-4 bg-[#060B18] border border-white/10 rounded-xl space-y-2 text-xs">
-          <h4 className="font-mono font-bold text-cyan-400">License Compliance & Commercial Use Notice</h4>
+          <h4 className="font-mono font-bold text-cyan-400">
+            License Compliance & Commercial Use Notice
+          </h4>
           <p className="text-white/70 leading-relaxed font-sans">
-            AeroForge AI incorporates open-source scientific neural operator architectures and datasets developed by academic institutions, research centers, and open-source communities. All original copyrights, licenses, and academic citations are strictly preserved.
+            AeroForge AI incorporates open-source scientific neural operator architectures and
+            datasets developed by academic institutions, research centers, and open-source
+            communities. All original copyrights, licenses, and academic citations are strictly
+            preserved.
           </p>
         </div>
 
@@ -64,10 +69,14 @@ export default function ThirdPartyLicensesModal({ isOpen, onClose }: Props) {
                 {MODEL_REGISTRY.map((m) => (
                   <tr key={m.id} className="hover:bg-white/5">
                     <td className="p-2.5 font-bold text-cyan-300">{m.name}</td>
-                    <td className="p-2.5 text-white/70 text-[11px] max-w-[200px] truncate">{m.citation}</td>
+                    <td className="p-2.5 text-white/70 text-[11px] max-w-[200px] truncate">
+                      {m.citation}
+                    </td>
                     <td className="p-2.5 font-bold text-purple-300">{m.license}</td>
                     <td className="p-2.5 text-white/50 text-[11px]">
-                      {m.license.includes('NC') ? 'Non-Commercial Research Only' : 'Permissive / Commercial Allowed'}
+                      {m.license.includes("NC")
+                        ? "Non-Commercial Research Only"
+                        : "Permissive / Commercial Allowed"}
                     </td>
                   </tr>
                 ))}

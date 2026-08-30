@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface FeedbackItem {
   id: string;
-  category: 'bug' | 'ux' | 'feature' | 'accuracy' | 'general';
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  category: "bug" | "ux" | "feature" | "accuracy" | "general";
+  severity: "low" | "medium" | "high" | "critical";
   message: string;
   contactEmail?: string;
   route: string;
@@ -13,7 +13,7 @@ export interface FeedbackItem {
 
 interface FeedbackState {
   feedbackList: FeedbackItem[];
-  addFeedback: (item: Omit<FeedbackItem, 'id' | 'timestamp'>) => void;
+  addFeedback: (item: Omit<FeedbackItem, "id" | "timestamp">) => void;
   clearFeedback: () => void;
 }
 
@@ -35,7 +35,7 @@ export const useFeedbackStore = create<FeedbackState>()(
       clearFeedback: () => set({ feedbackList: [] }),
     }),
     {
-      name: 'aeroforge-feedback-v1',
-    }
-  )
+      name: "aeroforge-feedback-v1",
+    },
+  ),
 );

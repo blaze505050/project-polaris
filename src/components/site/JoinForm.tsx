@@ -33,6 +33,13 @@ export function JoinForm({ opportunitySlug }: { opportunitySlug?: string | undef
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
     const consent = fd.get("consent") === "on";
+    const botTrap = String(fd.get("polaris_application_trap") ?? "");
+
+    // Silent drop of bot submissions
+    if (botTrap) {
+      setDone(true);
+      return;
+    }
 
     if (name.length < 2 || name.length > 100) {
       toast.error("Please enter your name.");
@@ -64,10 +71,18 @@ export function JoinForm({ opportunitySlug }: { opportunitySlug?: string | undef
         consent: true,
       });
       if (error) {
-        console.warn("[Application] Direct DB insertion failed, recording locally:", error.message);
+        console.error("[Application] DB insertion failed:", error);
+        toast.error(
+          "Unable to submit application right now. Please try again or email projectpolaris.8@gmail.com.",
+        );
+        setSubmitting(false);
+        return;
       }
     } catch (e) {
-      console.warn("[Application] Supabase client offline:", e);
+      console.error("[Application] Supabase client offline:", e);
+      toast.error("Network error. Please verify your connection and try again.");
+      setSubmitting(false);
+      return;
     }
     setSubmitting(false);
 
@@ -83,11 +98,18 @@ export function JoinForm({ opportunitySlug }: { opportunitySlug?: string | undef
         <div className="mx-auto size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4 text-xl">
           ✓
         </div>
-        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">Thank you — application received.</h2>
+        <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+          Thank you — application received.
+        </h2>
         <p className="mx-auto mt-4 max-w-md text-muted-foreground leading-relaxed text-sm">
-          We read every application ourselves. Expect an email from our team soon with onboarding details and next steps.
+          We read every application ourselves. Expect an email from our team soon with onboarding
+          details and next steps.
         </p>
-        <Button variant="outline" className="mt-8 rounded-full hover:border-primary/50" onClick={() => setDone(false)}>
+        <Button
+          variant="outline"
+          className="mt-8 rounded-full hover:border-primary/50"
+          onClick={() => setDone(false)}
+        >
           Submit another application
         </Button>
       </div>
@@ -96,6 +118,15 @@ export function JoinForm({ opportunitySlug }: { opportunitySlug?: string | undef
 
   return (
     <form onSubmit={onSubmit} className="card-elevated space-y-7 p-7 md:p-10">
+      {/* Anti-spam Bot Honeypot */}
+      <input
+        type="text"
+        name="polaris_application_trap"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full name *</Label>

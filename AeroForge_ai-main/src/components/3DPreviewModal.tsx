@@ -1,7 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
-import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, RotateCcw, Maximize2, Minimize2, Lightbulb, Zap, Eye, Grid3x3, Layers, Upload, FileUp } from 'lucide-react';
+import { useState, useEffect, useRef } from "react";
+import * as THREE from "three";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  X,
+  Download,
+  RotateCcw,
+  Maximize2,
+  Minimize2,
+  Lightbulb,
+  Zap,
+  Eye,
+  Grid3x3,
+  Layers,
+  Upload,
+  FileUp,
+} from "lucide-react";
 
 interface Preview3DModalProps {
   isOpen: boolean;
@@ -10,7 +23,7 @@ interface Preview3DModalProps {
   description?: string;
   onDownloadSTL?: () => void;
   onDownloadSTEP?: () => void;
-  geometryType?: 'box' | 'sphere' | 'cylinder' | 'cone' | 'torus' | 'complex';
+  geometryType?: "box" | "sphere" | "cylinder" | "cone" | "torus" | "complex";
   simulationData?: {
     meshDensity?: number;
     reynoldsNumber?: number;
@@ -26,7 +39,7 @@ export default function Preview3DModal({
   description,
   onDownloadSTL,
   onDownloadSTEP,
-  geometryType = 'box',
+  geometryType = "box",
   simulationData,
 }: Preview3DModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +47,7 @@ export default function Preview3DModal({
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const meshRef = useRef<THREE.Mesh | null>(null);
-  const [lightingMode, setLightingMode] = useState<'studio' | 'dramatic' | 'soft'>('studio');
+  const [lightingMode, setLightingMode] = useState<"studio" | "dramatic" | "soft">("studio");
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [showGrid, setShowGrid] = useState(true);
   const [fps, setFps] = useState(60);
@@ -58,8 +71,8 @@ export default function Preview3DModal({
 
   const handleDownloadScreenshot = () => {
     if (rendererRef.current) {
-      const link = document.createElement('a');
-      link.href = rendererRef.current.domElement.toDataURL('image/png');
+      const link = document.createElement("a");
+      link.href = rendererRef.current.domElement.toDataURL("image/png");
       link.download = `3d-preview-${Date.now()}.png`;
       link.click();
     }
@@ -86,18 +99,18 @@ export default function Preview3DModal({
     // Renderer setup
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ 
-        antialias: true, 
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
         alpha: true,
-        precision: 'highp',
-        powerPreference: 'high-performance',
-        failIfMajorPerformanceCaveat: false
+        precision: "highp",
+        powerPreference: "high-performance",
+        failIfMajorPerformanceCaveat: false,
       });
     } catch (e) {
-      console.error('WebGL initialization failed:', e);
+      console.error("WebGL initialization failed:", e);
       return;
     }
-    
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -105,7 +118,7 @@ export default function Preview3DModal({
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
-    
+
     // Clear container before appending
     while (targetContainer.firstChild) {
       targetContainer.removeChild(targetContainer.firstChild);
@@ -114,14 +127,14 @@ export default function Preview3DModal({
     rendererRef.current = renderer;
 
     // Lighting setup
-    const setupLighting = (mode: 'studio' | 'dramatic' | 'soft') => {
+    const setupLighting = (mode: "studio" | "dramatic" | "soft") => {
       scene.children.forEach((child) => {
         if (child instanceof THREE.Light) {
           scene.remove(child);
         }
       });
 
-      if (mode === 'studio') {
+      if (mode === "studio") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -133,7 +146,7 @@ export default function Preview3DModal({
         const fillLight = new THREE.DirectionalLight(0x87ceeb, 0.4);
         fillLight.position.set(-200, 100, 200);
         scene.add(fillLight);
-      } else if (mode === 'dramatic') {
+      } else if (mode === "dramatic") {
         const ambientLight = new THREE.AmbientLight(0x1a1a2e, 0.3);
         scene.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -145,7 +158,7 @@ export default function Preview3DModal({
         const rimLight = new THREE.DirectionalLight(0xff00ff, 0.8);
         rimLight.position.set(-300, 100, -300);
         scene.add(rimLight);
-      } else if (mode === 'soft') {
+      } else if (mode === "soft") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -155,7 +168,7 @@ export default function Preview3DModal({
       }
     };
 
-    setupLighting('studio');
+    setupLighting("studio");
 
     // Grid
     const gridHelper = new THREE.GridHelper(400, 40, 0x444444, 0x222222);
@@ -172,19 +185,19 @@ export default function Preview3DModal({
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
     switch (geometryType) {
-      case 'sphere':
+      case "sphere":
         geometry = new THREE.SphereGeometry(50, 64, 64);
         break;
-      case 'cylinder':
+      case "cylinder":
         geometry = new THREE.CylinderGeometry(40, 40, 100, 64);
         break;
-      case 'cone':
+      case "cone":
         geometry = new THREE.ConeGeometry(50, 100, 64);
         break;
-      case 'torus':
+      case "torus":
         geometry = new THREE.TorusGeometry(50, 20, 64, 100);
         break;
-      case 'complex':
+      case "complex":
         // Create a more complex shape
         geometry = new THREE.BoxGeometry(80, 80, 80, 32, 32, 32);
         break;
@@ -211,13 +224,13 @@ export default function Preview3DModal({
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
 
-    renderer.domElement.addEventListener('mousedown', (e) => {
+    renderer.domElement.addEventListener("mousedown", (e) => {
       isDragging = true;
       autoRotateRef.current = false;
       previousMousePosition = { x: e.clientX, y: e.clientY };
     });
 
-    renderer.domElement.addEventListener('mousemove', (e) => {
+    renderer.domElement.addEventListener("mousemove", (e) => {
       if (isDragging && cameraRef.current) {
         const deltaX = e.clientX - previousMousePosition.x;
         const deltaY = e.clientY - previousMousePosition.y;
@@ -238,11 +251,11 @@ export default function Preview3DModal({
       }
     });
 
-    renderer.domElement.addEventListener('mouseup', () => {
+    renderer.domElement.addEventListener("mouseup", () => {
       isDragging = false;
     });
 
-    renderer.domElement.addEventListener('wheel', (e) => {
+    renderer.domElement.addEventListener("wheel", (e) => {
       e.preventDefault();
       if (cameraRef.current) {
         const direction = cameraRef.current.position.clone().normalize();
@@ -285,10 +298,10 @@ export default function Preview3DModal({
       renderer.setSize(newWidth, newHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       targetContainer?.removeChild(renderer.domElement);
     };
   }, [isOpen, geometryType, isFullscreen]);
@@ -305,7 +318,7 @@ export default function Preview3DModal({
     setIsAutoRotating(!isAutoRotating);
   };
 
-  const changeLightingMode = (mode: 'studio' | 'dramatic' | 'soft') => {
+  const changeLightingMode = (mode: "studio" | "dramatic" | "soft") => {
     setLightingMode(mode);
     if (sceneRef.current) {
       sceneRef.current.children.forEach((child) => {
@@ -314,7 +327,7 @@ export default function Preview3DModal({
         }
       });
 
-      if (mode === 'studio') {
+      if (mode === "studio") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -326,7 +339,7 @@ export default function Preview3DModal({
         const fillLight = new THREE.DirectionalLight(0x87ceeb, 0.4);
         fillLight.position.set(-200, 100, 200);
         sceneRef.current.add(fillLight);
-      } else if (mode === 'dramatic') {
+      } else if (mode === "dramatic") {
         const ambientLight = new THREE.AmbientLight(0x1a1a2e, 0.3);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -338,7 +351,7 @@ export default function Preview3DModal({
         const rimLight = new THREE.DirectionalLight(0xff00ff, 0.8);
         rimLight.position.set(-300, 100, -300);
         sceneRef.current.add(rimLight);
-      } else if (mode === 'soft') {
+      } else if (mode === "soft") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -396,11 +409,11 @@ export default function Preview3DModal({
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => changeLightingMode('studio')}
+                        onClick={() => changeLightingMode("studio")}
                         className={`p-2 rounded transition-all ${
-                          lightingMode === 'studio'
-                            ? 'bg-cyan-500 text-white'
-                            : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                          lightingMode === "studio"
+                            ? "bg-cyan-500 text-white"
+                            : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                         }`}
                         title="Studio lighting"
                       >
@@ -409,11 +422,11 @@ export default function Preview3DModal({
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => changeLightingMode('dramatic')}
+                        onClick={() => changeLightingMode("dramatic")}
                         className={`p-2 rounded transition-all ${
-                          lightingMode === 'dramatic'
-                            ? 'bg-pink-500 text-white'
-                            : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                          lightingMode === "dramatic"
+                            ? "bg-pink-500 text-white"
+                            : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                         }`}
                         title="Dramatic lighting"
                       >
@@ -422,11 +435,11 @@ export default function Preview3DModal({
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => changeLightingMode('soft')}
+                        onClick={() => changeLightingMode("soft")}
                         className={`p-2 rounded transition-all ${
-                          lightingMode === 'soft'
-                            ? 'bg-yellow-500 text-white'
-                            : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                          lightingMode === "soft"
+                            ? "bg-yellow-500 text-white"
+                            : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                         }`}
                         title="Soft lighting"
                       >
@@ -441,14 +454,18 @@ export default function Preview3DModal({
                       onClick={toggleAutoRotate}
                       className={`p-2 rounded-lg shadow transition-all ${
                         isAutoRotating
-                          ? 'bg-cyan-500 text-white'
-                          : 'bg-slate-800 text-cyan-300 hover:bg-slate-700'
+                          ? "bg-cyan-500 text-white"
+                          : "bg-slate-800 text-cyan-300 hover:bg-slate-700"
                       }`}
                       title="Toggle auto-rotate"
                     >
                       <motion.div
                         animate={{ rotate: isAutoRotating ? 360 : 0 }}
-                        transition={{ duration: 4, repeat: isAutoRotating ? Infinity : 0, ease: 'linear' }}
+                        transition={{
+                          duration: 4,
+                          repeat: isAutoRotating ? Infinity : 0,
+                          ease: "linear",
+                        }}
                         className="w-5 h-5"
                       >
                         <RotateCcw className="w-5 h-5" />
@@ -502,9 +519,7 @@ export default function Preview3DModal({
                         {simulationData.reynoldsNumber && (
                           <div>Re: {simulationData.reynoldsNumber}</div>
                         )}
-                        {simulationData.machNumber && (
-                          <div>M: {simulationData.machNumber}</div>
-                        )}
+                        {simulationData.machNumber && <div>M: {simulationData.machNumber}</div>}
                       </div>
                     )}
                   </motion.div>
@@ -570,11 +585,11 @@ export default function Preview3DModal({
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => changeLightingMode('studio')}
+                    onClick={() => changeLightingMode("studio")}
                     className={`p-2 rounded transition-all ${
-                      lightingMode === 'studio'
-                        ? 'bg-cyan-500 text-white'
-                        : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                      lightingMode === "studio"
+                        ? "bg-cyan-500 text-white"
+                        : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                     }`}
                   >
                     <Lightbulb className="w-4 h-4" />
@@ -582,11 +597,11 @@ export default function Preview3DModal({
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => changeLightingMode('dramatic')}
+                    onClick={() => changeLightingMode("dramatic")}
                     className={`p-2 rounded transition-all ${
-                      lightingMode === 'dramatic'
-                        ? 'bg-pink-500 text-white'
-                        : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                      lightingMode === "dramatic"
+                        ? "bg-pink-500 text-white"
+                        : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                     }`}
                   >
                     <Zap className="w-4 h-4" />
@@ -594,11 +609,11 @@ export default function Preview3DModal({
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => changeLightingMode('soft')}
+                    onClick={() => changeLightingMode("soft")}
                     className={`p-2 rounded transition-all ${
-                      lightingMode === 'soft'
-                        ? 'bg-yellow-500 text-white'
-                        : 'bg-slate-700 text-cyan-300 hover:bg-slate-600'
+                      lightingMode === "soft"
+                        ? "bg-yellow-500 text-white"
+                        : "bg-slate-700 text-cyan-300 hover:bg-slate-600"
                     }`}
                   >
                     <Eye className="w-4 h-4" />
@@ -610,13 +625,17 @@ export default function Preview3DModal({
                   onClick={toggleAutoRotate}
                   className={`p-2 rounded-lg shadow transition-all ${
                     isAutoRotating
-                      ? 'bg-cyan-500 text-white'
-                      : 'bg-slate-800 text-cyan-300 hover:bg-slate-700'
+                      ? "bg-cyan-500 text-white"
+                      : "bg-slate-800 text-cyan-300 hover:bg-slate-700"
                   }`}
                 >
                   <motion.div
                     animate={{ rotate: isAutoRotating ? 360 : 0 }}
-                    transition={{ duration: 4, repeat: isAutoRotating ? Infinity : 0, ease: 'linear' }}
+                    transition={{
+                      duration: 4,
+                      repeat: isAutoRotating ? Infinity : 0,
+                      ease: "linear",
+                    }}
                     className="w-5 h-5"
                   >
                     <RotateCcw className="w-5 h-5" />

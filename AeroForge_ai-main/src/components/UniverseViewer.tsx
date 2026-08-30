@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import * as THREE from 'three';
-import { motion } from 'framer-motion';
-import { ZoomIn, ZoomOut, RotateCcw, Info } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import * as THREE from "three";
+import { motion } from "framer-motion";
+import { ZoomIn, ZoomOut, RotateCcw, Info } from "lucide-react";
 
 interface CelestialObject {
   name: string;
-  type: 'star' | 'nebula' | 'galaxy' | 'cluster';
+  type: "star" | "nebula" | "galaxy" | "cluster";
   ra: number; // Right Ascension in degrees
   dec: number; // Declination in degrees
   magnitude: number;
@@ -18,162 +18,162 @@ interface CelestialObject {
 const CELESTIAL_OBJECTS: CelestialObject[] = [
   // Bright Stars
   {
-    name: 'Sirius',
-    type: 'star',
+    name: "Sirius",
+    type: "star",
     ra: 101.29,
     dec: -16.71,
     magnitude: -1.46,
     distance: 8.6,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     size: 2,
-    description: 'Brightest star in the night sky, Alpha Canis Majoris'
+    description: "Brightest star in the night sky, Alpha Canis Majoris",
   },
   {
-    name: 'Canopus',
-    type: 'star',
+    name: "Canopus",
+    type: "star",
     ra: 95.99,
     dec: -52.69,
     magnitude: -0.72,
     distance: 310,
-    color: '#FFE4B5',
+    color: "#FFE4B5",
     size: 1.8,
-    description: 'Second brightest star, supergiant in Carina constellation'
+    description: "Second brightest star, supergiant in Carina constellation",
   },
   {
-    name: 'Rigel',
-    type: 'star',
+    name: "Rigel",
+    type: "star",
     ra: 78.63,
-    dec: 8.20,
+    dec: 8.2,
     magnitude: 0.12,
     distance: 860,
-    color: '#87CEEB',
+    color: "#87CEEB",
     size: 1.6,
-    description: 'Blue supergiant in Orion constellation'
+    description: "Blue supergiant in Orion constellation",
   },
   {
-    name: 'Betelgeuse',
-    type: 'star',
+    name: "Betelgeuse",
+    type: "star",
     ra: 88.79,
     dec: 7.41,
     magnitude: 0.42,
     distance: 640,
-    color: '#FF6347',
+    color: "#FF6347",
     size: 2.2,
-    description: 'Red supergiant, variable star in Orion'
+    description: "Red supergiant, variable star in Orion",
   },
   {
-    name: 'Vega',
-    type: 'star',
+    name: "Vega",
+    type: "star",
     ra: 279.23,
     dec: 38.78,
     magnitude: 0.03,
     distance: 25.04,
-    color: '#E6F3FF',
+    color: "#E6F3FF",
     size: 1.5,
-    description: 'Bright star in Lyra constellation'
+    description: "Bright star in Lyra constellation",
   },
   // Nebulae
   {
-    name: 'Orion Nebula',
-    type: 'nebula',
+    name: "Orion Nebula",
+    type: "nebula",
     ra: 83.82,
     dec: -5.39,
     magnitude: 4.0,
     distance: 1344,
-    color: '#00FF88',
+    color: "#00FF88",
     size: 3.5,
-    description: 'Emission nebula, stellar nursery with active star formation'
+    description: "Emission nebula, stellar nursery with active star formation",
   },
   {
-    name: 'Crab Nebula',
-    type: 'nebula',
+    name: "Crab Nebula",
+    type: "nebula",
     ra: 83.63,
     dec: 22.01,
     magnitude: 8.4,
     distance: 6500,
-    color: '#FF6B9D',
+    color: "#FF6B9D",
     size: 2.8,
-    description: 'Supernova remnant, pulsar wind nebula'
+    description: "Supernova remnant, pulsar wind nebula",
   },
   {
-    name: 'Helix Nebula',
-    type: 'nebula',
+    name: "Helix Nebula",
+    type: "nebula",
     ra: 326.11,
-    dec: -2.80,
+    dec: -2.8,
     magnitude: 7.3,
     distance: 700,
-    color: '#00FFFF',
+    color: "#00FFFF",
     size: 3.2,
-    description: 'Planetary nebula, dying star with expanding shells'
+    description: "Planetary nebula, dying star with expanding shells",
   },
   // Galaxies
   {
-    name: 'Andromeda Galaxy',
-    type: 'galaxy',
+    name: "Andromeda Galaxy",
+    type: "galaxy",
     ra: 10.68,
     dec: 41.27,
     magnitude: 3.4,
     distance: 2537000,
-    color: '#FFD700',
+    color: "#FFD700",
     size: 4.5,
-    description: 'Nearest major galaxy, spiral structure similar to Milky Way'
+    description: "Nearest major galaxy, spiral structure similar to Milky Way",
   },
   {
-    name: 'Triangulum Galaxy',
-    type: 'galaxy',
+    name: "Triangulum Galaxy",
+    type: "galaxy",
     ra: 23.46,
     dec: 30.66,
     magnitude: 5.7,
     distance: 3000000,
-    color: '#FFA500',
+    color: "#FFA500",
     size: 3.8,
-    description: 'Third largest galaxy in Local Group'
+    description: "Third largest galaxy in Local Group",
   },
   {
-    name: 'Whirlpool Galaxy',
-    type: 'galaxy',
+    name: "Whirlpool Galaxy",
+    type: "galaxy",
     ra: 202.97,
-    dec: 47.20,
+    dec: 47.2,
     magnitude: 8.4,
     distance: 23000000,
-    color: '#FFB6C1',
+    color: "#FFB6C1",
     size: 3.2,
-    description: 'Classic spiral galaxy with prominent arms'
+    description: "Classic spiral galaxy with prominent arms",
   },
   // Star Clusters
   {
-    name: 'Pleiades',
-    type: 'cluster',
+    name: "Pleiades",
+    type: "cluster",
     ra: 56.87,
     dec: 24.11,
     magnitude: 1.6,
     distance: 444,
-    color: '#E0FFFF',
+    color: "#E0FFFF",
     size: 3.0,
-    description: 'Open star cluster, Seven Sisters'
+    description: "Open star cluster, Seven Sisters",
   },
   {
-    name: 'Hyades',
-    type: 'cluster',
+    name: "Hyades",
+    type: "cluster",
     ra: 66.74,
     dec: 15.87,
     magnitude: 0.5,
     distance: 153,
-    color: '#F0E68C',
+    color: "#F0E68C",
     size: 2.5,
-    description: 'Nearest open cluster to Earth'
+    description: "Nearest open cluster to Earth",
   },
   {
-    name: 'Omega Centauri',
-    type: 'cluster',
-    ra: 201.70,
+    name: "Omega Centauri",
+    type: "cluster",
+    ra: 201.7,
     dec: -47.48,
     magnitude: 3.7,
     distance: 15800,
-    color: '#FFE4E1',
+    color: "#FFE4E1",
     size: 3.5,
-    description: 'Largest globular cluster in Milky Way'
-  }
+    description: "Largest globular cluster in Milky Way",
+  },
 ];
 
 interface ZoomLevel {
@@ -183,12 +183,12 @@ interface ZoomLevel {
 }
 
 const ZOOM_LEVELS: ZoomLevel[] = [
-  { scale: 0.001, label: 'Galactic', distance: 1000000000 },
-  { scale: 0.01, label: 'Local Group', distance: 100000000 },
-  { scale: 0.1, label: 'Milky Way', distance: 10000000 },
-  { scale: 1, label: 'Stellar Neighborhood', distance: 1000000 },
-  { scale: 10, label: 'Local Stars', distance: 100000 },
-  { scale: 100, label: 'Nearby Stars', distance: 10000 }
+  { scale: 0.001, label: "Galactic", distance: 1000000000 },
+  { scale: 0.01, label: "Local Group", distance: 100000000 },
+  { scale: 0.1, label: "Milky Way", distance: 10000000 },
+  { scale: 1, label: "Stellar Neighborhood", distance: 1000000 },
+  { scale: 10, label: "Local Stars", distance: 100000 },
+  { scale: 100, label: "Nearby Stars", distance: 10000 },
 ];
 
 export default function UniverseViewer() {
@@ -219,7 +219,7 @@ export default function UniverseViewer() {
       75,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       1,
-      10000000
+      10000000,
     );
     camera.position.set(0, 0, 100000);
     cameraRef.current = camera;
@@ -247,7 +247,7 @@ export default function UniverseViewer() {
       size: 500,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.8,
     });
 
     const starsVertices = [];
@@ -258,7 +258,10 @@ export default function UniverseViewer() {
       starsVertices.push(x, y, z);
     }
 
-    starsGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(starsVertices), 3));
+    starsGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(new Float32Array(starsVertices), 3),
+    );
     const stars = new THREE.Points(starsGeometry, starsMaterial);
     scene.add(stars);
 
@@ -275,35 +278,35 @@ export default function UniverseViewer() {
       let geometry: THREE.BufferGeometry;
       let material: THREE.Material;
 
-      if (obj.type === 'star') {
+      if (obj.type === "star") {
         geometry = new THREE.SphereGeometry(obj.size * 100, 16, 16);
         material = new THREE.MeshStandardMaterial({
           color: obj.color,
           emissive: obj.color,
-          emissiveIntensity: 0.8
+          emissiveIntensity: 0.8,
         });
-      } else if (obj.type === 'nebula') {
+      } else if (obj.type === "nebula") {
         geometry = new THREE.SphereGeometry(obj.size * 500, 32, 32);
         material = new THREE.MeshStandardMaterial({
           color: obj.color,
           transparent: true,
           opacity: 0.6,
           emissive: obj.color,
-          emissiveIntensity: 0.5
+          emissiveIntensity: 0.5,
         });
-      } else if (obj.type === 'galaxy') {
+      } else if (obj.type === "galaxy") {
         geometry = new THREE.SphereGeometry(obj.size * 1000, 32, 32);
         material = new THREE.MeshStandardMaterial({
           color: obj.color,
           emissive: obj.color,
-          emissiveIntensity: 0.4
+          emissiveIntensity: 0.4,
         });
       } else {
         geometry = new THREE.SphereGeometry(obj.size * 300, 24, 24);
         material = new THREE.MeshStandardMaterial({
           color: obj.color,
           emissive: obj.color,
-          emissiveIntensity: 0.6
+          emissiveIntensity: 0.6,
         });
       }
 
@@ -324,7 +327,7 @@ export default function UniverseViewer() {
       renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Animation loop
     let frameCount = 0;
@@ -372,19 +375,20 @@ export default function UniverseViewer() {
       }
     };
 
-    containerRef.current.addEventListener('click', onMouseClick);
+    containerRef.current.addEventListener("click", onMouseClick);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      containerRef.current?.removeEventListener('click', onMouseClick);
+      window.removeEventListener("resize", handleResize);
+      containerRef.current?.removeEventListener("click", onMouseClick);
       containerRef.current?.removeChild(renderer.domElement);
     };
   }, []);
 
   // Handle zoom
-  const handleZoom = useCallback((direction: 'in' | 'out') => {
+  const handleZoom = useCallback((direction: "in" | "out") => {
     setZoomLevel((prev) => {
-      const newLevel = direction === 'in' ? Math.min(prev + 1, ZOOM_LEVELS.length - 1) : Math.max(prev - 1, 0);
+      const newLevel =
+        direction === "in" ? Math.min(prev + 1, ZOOM_LEVELS.length - 1) : Math.max(prev - 1, 0);
       if (cameraRef.current) {
         const targetDistance = ZOOM_LEVELS[newLevel].distance;
         cameraRef.current.position.z = targetDistance;
@@ -415,14 +419,14 @@ export default function UniverseViewer() {
         {/* Left Controls */}
         <div className="flex gap-3">
           <button
-            onClick={() => handleZoom('out')}
+            onClick={() => handleZoom("out")}
             className="p-3 bg-aerospace-blue/20 hover:bg-aerospace-blue/40 border border-aerospace-blue rounded-lg transition-all"
             title="Zoom Out"
           >
             <ZoomOut className="w-5 h-5 text-aerospace-blue" />
           </button>
           <button
-            onClick={() => handleZoom('in')}
+            onClick={() => handleZoom("in")}
             className="p-3 bg-aerospace-blue/20 hover:bg-aerospace-blue/40 border border-aerospace-blue rounded-lg transition-all"
             title="Zoom In"
           >
@@ -470,11 +474,15 @@ export default function UniverseViewer() {
             <div className="flex-1 min-w-0">
               <h3 className="text-aerospace-blue font-bold text-sm">{selectedObject.name}</h3>
               <p className="text-foreground/70 text-xs capitalize mb-2">{selectedObject.type}</p>
-              <p className="text-foreground/60 text-xs leading-relaxed">{selectedObject.description}</p>
+              <p className="text-foreground/60 text-xs leading-relaxed">
+                {selectedObject.description}
+              </p>
               <div className="mt-3 space-y-1 text-xs font-mono text-foreground/50">
                 <div>Magnitude: {selectedObject.magnitude.toFixed(2)}</div>
                 <div>Distance: {selectedObject.distance.toLocaleString()} ly</div>
-                <div>RA: {selectedObject.ra.toFixed(2)}° | Dec: {selectedObject.dec.toFixed(2)}°</div>
+                <div>
+                  RA: {selectedObject.ra.toFixed(2)}° | Dec: {selectedObject.dec.toFixed(2)}°
+                </div>
               </div>
             </div>
             <button

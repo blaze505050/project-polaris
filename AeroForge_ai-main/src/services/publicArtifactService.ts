@@ -6,7 +6,7 @@
 export interface PublicArtifactPayload {
   id: string;
   name: string;
-  pillar: 'aerolab' | 'mechlab' | 'astrolab';
+  pillar: "aerolab" | "mechlab" | "astrolab";
   module: string;
   parameters: Record<string, any>;
   results: Record<string, any>;
@@ -14,23 +14,24 @@ export interface PublicArtifactPayload {
   timestamp: number;
   author?: string;
   version?: string;
-  visibility?: 'PUBLIC' | 'PRIVATE' | 'LOCAL';
+  visibility?: "PUBLIC" | "PRIVATE" | "LOCAL";
 }
 
-const API_BASE = (import.meta as any).env?.VITE_PHYSICS_AI_API_URL || 'http://localhost:8000';
+const API_BASE = (import.meta as any).env?.VITE_PHYSICS_AI_API_URL || "http://localhost:8000";
 const SAFE_ID_REGEX = /^[a-zA-Z0-9_\-\.]{3,64}$/;
 
 /**
  * Sanitize object keys against prototype pollution
  */
 function sanitizeObject<T>(obj: any): T {
-  if (typeof obj !== 'object' || obj === null) return obj;
+  if (typeof obj !== "object" || obj === null) return obj;
   const clean: any = Array.isArray(obj) ? [] : {};
   for (const key of Object.keys(obj)) {
-    if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+    if (key === "__proto__" || key === "constructor" || key === "prototype") {
       continue;
     }
-    clean[key] = typeof obj[key] === 'object' && obj[key] !== null ? sanitizeObject(obj[key]) : obj[key];
+    clean[key] =
+      typeof obj[key] === "object" && obj[key] !== null ? sanitizeObject(obj[key]) : obj[key];
   }
   return clean;
 }
@@ -55,7 +56,7 @@ export class LocalPersistenceAdapter {
       localStorage.setItem(`aeroforge_pub_artifact_${artifact.id}`, JSON.stringify(safe));
       return true;
     } catch (err) {
-      console.warn('Local artifact save quota warning:', err);
+      console.warn("Local artifact save quota warning:", err);
       return false;
     }
   }
@@ -78,7 +79,7 @@ export class CloudPersistenceAdapter {
       const data = await res.json();
       return sanitizeObject<PublicArtifactPayload>(data);
     } catch (err) {
-      console.warn('Cloud artifact fetch fallback:', err);
+      console.warn("Cloud artifact fetch fallback:", err);
       return null;
     }
   }
@@ -88,14 +89,14 @@ export class CloudPersistenceAdapter {
     try {
       const safe = sanitizeObject<PublicArtifactPayload>(artifact);
       const res = await fetch(`${API_BASE}/api/public-artifacts`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(safe),
       });
 
       return res.ok;
     } catch (err) {
-      console.warn('Cloud artifact publish fallback:', err);
+      console.warn("Cloud artifact publish fallback:", err);
       return false;
     }
   }
@@ -129,7 +130,7 @@ class PublicArtifactService {
     if (!SAFE_ID_REGEX.test(artifact.id)) return false;
     const cleanPayload: PublicArtifactPayload = {
       ...artifact,
-      visibility: 'PUBLIC',
+      visibility: "PUBLIC",
     };
     await this.localAdapter.save(cleanPayload);
     const cloudSaved = await this.cloudAdapter.save(cleanPayload);
@@ -138,4 +139,3 @@ class PublicArtifactService {
 }
 
 export const publicArtifactService = new PublicArtifactService();
-

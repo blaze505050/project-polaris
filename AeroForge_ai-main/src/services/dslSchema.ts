@@ -1,7 +1,7 @@
 /**
  * AeroForge DSL v1.0 - Strict JSON Schema
  * Deterministic Feature Definition Language
- * 
+ *
  * PRINCIPLES:
  * - Explicit units on every dimension
  * - Coordinate systems defined upfront
@@ -20,7 +20,7 @@ export interface CoordinateSystem {
 
 export interface DimensionWithUnits {
   value: number;
-  unit: 'mm' | 'cm' | 'in' | 'ft';
+  unit: "mm" | "cm" | "in" | "ft";
 }
 
 export interface Point3D {
@@ -31,7 +31,7 @@ export interface Point3D {
 
 export interface Constraint {
   id: string;
-  type: 'TOLERANCE' | 'MATERIAL' | 'SURFACE_FINISH' | 'LOAD_CASE' | 'THERMAL' | 'CUSTOM';
+  type: "TOLERANCE" | "MATERIAL" | "SURFACE_FINISH" | "LOAD_CASE" | "THERMAL" | "CUSTOM";
   target: string; // feature name or dimension id
   value: string;
   unit?: string;
@@ -41,32 +41,42 @@ export interface Constraint {
 export interface Feature {
   id: string;
   name: string;
-  type: 'PAD' | 'POCKET' | 'HOLE' | 'FILLET' | 'CHAMFER' | 'PATTERN' | 'SHELL' | 'DRAFT' | 'RIB' | 'AIRFOIL';
-  
+  type:
+    | "PAD"
+    | "POCKET"
+    | "HOLE"
+    | "FILLET"
+    | "CHAMFER"
+    | "PATTERN"
+    | "SHELL"
+    | "DRAFT"
+    | "RIB"
+    | "AIRFOIL";
+
   // Common parameters
   referenceFeature?: string; // parent feature id
   coordinate?: Point3D;
-  
+
   // PAD parameters
   padWidth?: DimensionWithUnits;
   padLength?: DimensionWithUnits;
   padHeight?: DimensionWithUnits;
-  padProfile?: 'RECTANGULAR' | 'CIRCULAR' | 'CUSTOM';
-  
+  padProfile?: "RECTANGULAR" | "CIRCULAR" | "CUSTOM";
+
   // HOLE parameters
   holeDiameter?: DimensionWithUnits;
-  holeDepth?: DimensionWithUnits | 'THROUGH';
-  holeType?: 'STRAIGHT' | 'COUNTERSINK' | 'COUNTERBORE';
-  
+  holeDepth?: DimensionWithUnits | "THROUGH";
+  holeType?: "STRAIGHT" | "COUNTERSINK" | "COUNTERBORE";
+
   // FILLET/CHAMFER parameters
   radius?: DimensionWithUnits;
   chamferDistance?: DimensionWithUnits;
-  
+
   // PATTERN parameters
-  patternType?: 'LINEAR' | 'CIRCULAR';
+  patternType?: "LINEAR" | "CIRCULAR";
   patternCount?: number;
   patternSpacing?: DimensionWithUnits;
-  
+
   // Metadata
   description?: string;
   suppressionFlag?: boolean;
@@ -76,7 +86,7 @@ export interface ExecutionLog {
   featureId: string;
   featureName: string;
   timestamp: string;
-  status: 'SUCCESS' | 'FAILED' | 'SKIPPED';
+  status: "SUCCESS" | "FAILED" | "SKIPPED";
   operation: string;
   constraintResolution?: string;
   geometryHash?: string;
@@ -85,15 +95,15 @@ export interface ExecutionLog {
 
 export interface ValidationResult {
   id: string;
-  type: 'SCHEMA' | 'GEOMETRIC' | 'DEPENDENCY' | 'UNIT_MISMATCH' | 'DFM' | 'DETERMINISM';
-  severity: 'ERROR' | 'WARNING' | 'INFO';
+  type: "SCHEMA" | "GEOMETRIC" | "DEPENDENCY" | "UNIT_MISMATCH" | "DFM" | "DETERMINISM";
+  severity: "ERROR" | "WARNING" | "INFO";
   message: string;
   affectedFeatures?: string[];
   suggestion?: string;
 }
 
 export interface AeroForgeDSL {
-  version: '1.0';
+  version: "1.0";
   metadata: {
     title: string;
     description: string;
@@ -101,19 +111,19 @@ export interface AeroForgeDSL {
     createdAt: string;
     updatedAt: string;
   };
-  
+
   // Global settings
-  units: 'mm' | 'cm' | 'in' | 'ft';
+  units: "mm" | "cm" | "in" | "ft";
   coordinateSystem: CoordinateSystem;
-  
+
   // Design features
   features: Feature[];
-  
+
   // Constraints
   constraints: Constraint[];
-  
+
   // Validation & Execution
-  validationStatus: 'PASS' | 'FAIL' | 'WARNING';
+  validationStatus: "PASS" | "FAIL" | "WARNING";
   validationResults: ValidationResult[];
   executionLog?: ExecutionLog[];
 }
@@ -125,48 +135,48 @@ export function validateDSL(dsl: any): ValidationResult[] {
   const results: ValidationResult[] = [];
 
   // Schema validation
-  if (!dsl.version || dsl.version !== '1.0') {
+  if (!dsl.version || dsl.version !== "1.0") {
     results.push({
-      id: 'schema_version',
-      type: 'SCHEMA',
-      severity: 'ERROR',
+      id: "schema_version",
+      type: "SCHEMA",
+      severity: "ERROR",
       message: 'DSL version must be exactly "1.0"',
     });
   }
 
-  if (!dsl.metadata || typeof dsl.metadata !== 'object') {
+  if (!dsl.metadata || typeof dsl.metadata !== "object") {
     results.push({
-      id: 'schema_metadata',
-      type: 'SCHEMA',
-      severity: 'ERROR',
-      message: 'Metadata object is required',
+      id: "schema_metadata",
+      type: "SCHEMA",
+      severity: "ERROR",
+      message: "Metadata object is required",
     });
   }
 
-  if (!dsl.units || !['mm', 'cm', 'in', 'ft'].includes(dsl.units)) {
+  if (!dsl.units || !["mm", "cm", "in", "ft"].includes(dsl.units)) {
     results.push({
-      id: 'schema_units',
-      type: 'SCHEMA',
-      severity: 'ERROR',
-      message: 'Units must be one of: mm, cm, in, ft',
+      id: "schema_units",
+      type: "SCHEMA",
+      severity: "ERROR",
+      message: "Units must be one of: mm, cm, in, ft",
     });
   }
 
-  if (!dsl.coordinateSystem || typeof dsl.coordinateSystem !== 'object') {
+  if (!dsl.coordinateSystem || typeof dsl.coordinateSystem !== "object") {
     results.push({
-      id: 'schema_coordinate',
-      type: 'SCHEMA',
-      severity: 'ERROR',
-      message: 'Coordinate system definition is required',
+      id: "schema_coordinate",
+      type: "SCHEMA",
+      severity: "ERROR",
+      message: "Coordinate system definition is required",
     });
   }
 
   if (!Array.isArray(dsl.features)) {
     results.push({
-      id: 'schema_features',
-      type: 'SCHEMA',
-      severity: 'ERROR',
-      message: 'Features must be an array',
+      id: "schema_features",
+      type: "SCHEMA",
+      severity: "ERROR",
+      message: "Features must be an array",
     });
   } else {
     // Validate features
@@ -175,15 +185,15 @@ export function validateDSL(dsl: any): ValidationResult[] {
       if (!feature.id) {
         results.push({
           id: `feature_${index}_no_id`,
-          type: 'SCHEMA',
-          severity: 'ERROR',
+          type: "SCHEMA",
+          severity: "ERROR",
           message: `Feature at index ${index} missing required id`,
         });
       } else if (featureIds.has(feature.id)) {
         results.push({
           id: `feature_${feature.id}_duplicate`,
-          type: 'SCHEMA',
-          severity: 'ERROR',
+          type: "SCHEMA",
+          severity: "ERROR",
           message: `Duplicate feature id: ${feature.id}`,
         });
       } else {
@@ -193,17 +203,31 @@ export function validateDSL(dsl: any): ValidationResult[] {
       if (!feature.name) {
         results.push({
           id: `feature_${index}_no_name`,
-          type: 'SCHEMA',
-          severity: 'ERROR',
+          type: "SCHEMA",
+          severity: "ERROR",
           message: `Feature at index ${index} missing required name`,
         });
       }
 
-      if (!feature.type || !['PAD', 'POCKET', 'HOLE', 'FILLET', 'CHAMFER', 'PATTERN', 'SHELL', 'DRAFT', 'RIB', 'AIRFOIL'].includes(feature.type)) {
+      if (
+        !feature.type ||
+        ![
+          "PAD",
+          "POCKET",
+          "HOLE",
+          "FILLET",
+          "CHAMFER",
+          "PATTERN",
+          "SHELL",
+          "DRAFT",
+          "RIB",
+          "AIRFOIL",
+        ].includes(feature.type)
+      ) {
         results.push({
           id: `feature_${index}_invalid_type`,
-          type: 'SCHEMA',
-          severity: 'ERROR',
+          type: "SCHEMA",
+          severity: "ERROR",
           message: `Feature ${feature.name} has invalid type`,
         });
       }
@@ -214,8 +238,8 @@ export function validateDSL(dsl: any): ValidationResult[] {
       if (feature.referenceFeature && !featureIds.has(feature.referenceFeature)) {
         results.push({
           id: `dependency_${feature.id}`,
-          type: 'DEPENDENCY',
-          severity: 'ERROR',
+          type: "DEPENDENCY",
+          severity: "ERROR",
           message: `Feature ${feature.name} references non-existent feature ${feature.referenceFeature}`,
           affectedFeatures: [feature.id],
         });
@@ -225,10 +249,10 @@ export function validateDSL(dsl: any): ValidationResult[] {
 
   if (!Array.isArray(dsl.constraints)) {
     results.push({
-      id: 'schema_constraints',
-      type: 'SCHEMA',
-      severity: 'WARNING',
-      message: 'Constraints should be an array',
+      id: "schema_constraints",
+      type: "SCHEMA",
+      severity: "WARNING",
+      message: "Constraints should be an array",
     });
   }
 
@@ -236,12 +260,12 @@ export function validateDSL(dsl: any): ValidationResult[] {
   if (dsl.features && Array.isArray(dsl.features)) {
     dsl.features.forEach((feature: any) => {
       const checkDimension = (dim: any, name: string) => {
-        if (dim && typeof dim === 'object' && dim.unit) {
-          if (!['mm', 'cm', 'in', 'ft'].includes(dim.unit)) {
+        if (dim && typeof dim === "object" && dim.unit) {
+          if (!["mm", "cm", "in", "ft"].includes(dim.unit)) {
             results.push({
               id: `unit_${feature.id}_${name}`,
-              type: 'UNIT_MISMATCH',
-              severity: 'ERROR',
+              type: "UNIT_MISMATCH",
+              severity: "ERROR",
               message: `Invalid unit in ${feature.name}.${name}: ${dim.unit}`,
               affectedFeatures: [feature.id],
             });
@@ -249,12 +273,12 @@ export function validateDSL(dsl: any): ValidationResult[] {
         }
       };
 
-      checkDimension(feature.padWidth, 'padWidth');
-      checkDimension(feature.padLength, 'padLength');
-      checkDimension(feature.padHeight, 'padHeight');
-      checkDimension(feature.holeDiameter, 'holeDiameter');
-      checkDimension(feature.holeDepth, 'holeDepth');
-      checkDimension(feature.radius, 'radius');
+      checkDimension(feature.padWidth, "padWidth");
+      checkDimension(feature.padLength, "padLength");
+      checkDimension(feature.padHeight, "padHeight");
+      checkDimension(feature.holeDiameter, "holeDiameter");
+      checkDimension(feature.holeDepth, "holeDepth");
+      checkDimension(feature.radius, "radius");
     });
   }
 
@@ -265,11 +289,11 @@ export function validateDSL(dsl: any): ValidationResult[] {
       if (feature.holeDiameter && feature.holeDiameter.value < 0.5) {
         results.push({
           id: `dfm_${feature.id}_hole_size`,
-          type: 'DFM',
-          severity: 'WARNING',
+          type: "DFM",
+          severity: "WARNING",
           message: `Hole diameter ${feature.holeDiameter.value}${feature.holeDiameter.unit} may be too small for standard drilling`,
           affectedFeatures: [feature.id],
-          suggestion: 'Consider minimum hole diameter of 0.5mm for CNC drilling',
+          suggestion: "Consider minimum hole diameter of 0.5mm for CNC drilling",
         });
       }
 
@@ -277,11 +301,11 @@ export function validateDSL(dsl: any): ValidationResult[] {
       if (feature.padHeight && feature.padHeight.value < 0.5) {
         results.push({
           id: `dfm_${feature.id}_wall_thickness`,
-          type: 'DFM',
-          severity: 'WARNING',
+          type: "DFM",
+          severity: "WARNING",
           message: `Feature thickness ${feature.padHeight.value}${feature.padHeight.unit} may be too thin`,
           affectedFeatures: [feature.id],
-          suggestion: 'Minimum wall thickness typically 1mm for injection molding',
+          suggestion: "Minimum wall thickness typically 1mm for injection molding",
         });
       }
     });
@@ -293,11 +317,11 @@ export function validateDSL(dsl: any): ValidationResult[] {
     const hasCycles = checkForCycles(featureOrder, dsl.features);
     if (hasCycles) {
       results.push({
-        id: 'determinism_cycle',
-        type: 'DETERMINISM',
-        severity: 'ERROR',
-        message: 'Circular dependency detected in feature references',
-        suggestion: 'Ensure features reference only previously defined features',
+        id: "determinism_cycle",
+        type: "DETERMINISM",
+        severity: "ERROR",
+        message: "Circular dependency detected in feature references",
+        suggestion: "Ensure features reference only previously defined features",
       });
     }
   }
@@ -351,7 +375,7 @@ export function generateExecutionLog(dsl: AeroForgeDSL): ExecutionLog[] {
       featureId: feature.id,
       featureName: feature.name,
       timestamp: new Date(new Date(timestamp).getTime() + index * 100).toISOString(),
-      status: 'SUCCESS',
+      status: "SUCCESS",
       operation: `Execute ${feature.type} feature: ${feature.name}`,
       geometryHash: generateGeometryHash(feature),
       notes: `Feature ${index + 1}/${dsl.features.length} executed deterministically`,
@@ -369,7 +393,7 @@ function generateGeometryHash(feature: Feature): string {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32bit integer
   }
   return Math.abs(hash).toString(16);
@@ -380,14 +404,14 @@ function generateGeometryHash(feature: Feature): string {
  */
 export function createDefaultDSL(): AeroForgeDSL {
   return {
-    version: '1.0',
+    version: "1.0",
     metadata: {
-      title: 'Untitled Design',
-      description: 'New AeroForge design',
+      title: "Untitled Design",
+      description: "New AeroForge design",
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
-    units: 'mm',
+    units: "mm",
     coordinateSystem: {
       origin: [0, 0, 0],
       xAxis: [1, 0, 0],
@@ -396,7 +420,7 @@ export function createDefaultDSL(): AeroForgeDSL {
     },
     features: [],
     constraints: [],
-    validationStatus: 'PASS',
+    validationStatus: "PASS",
     validationResults: [],
   };
 }

@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { currentCart } from '@wix/ecom';
-import { redirects } from '@wix/redirects';
+import { create } from "zustand";
+import { currentCart } from "@wix/ecom";
+import { redirects } from "@wix/redirects";
 
 /** CMS App ID for catalog references */
-const CMS_APP_ID = 'e593b0bd-b783-45b8-97c2-873d42aacaf4';
+const CMS_APP_ID = "e593b0bd-b783-45b8-97c2-873d42aacaf4";
 
 /** Debounce delay for quantity updates (ms) */
 const QUANTITY_DEBOUNCE_MS = 500;
@@ -67,10 +67,14 @@ type CartStore = CartState & { actions: CartActions };
 
 /** Check if error is a Wix "not found" error */
 const isCartNotFoundError = (error: unknown): boolean => {
-  if (!error || typeof error !== 'object') return false;
+  if (!error || typeof error !== "object") return false;
   const err = error as { details?: { applicationError?: { code?: string } }; message?: string };
-  return err.details?.applicationError?.code === 'CART_NOT_FOUND' || err.details?.applicationError?.code === 'OWNED_CART_NOT_FOUND' ||
-         err.message?.includes('not found') || false;
+  return (
+    err.details?.applicationError?.code === "CART_NOT_FOUND" ||
+    err.details?.applicationError?.code === "OWNED_CART_NOT_FOUND" ||
+    err.message?.includes("not found") ||
+    false
+  );
 };
 
 /** Convert Wix cart line item to our CartItem format */
@@ -78,15 +82,16 @@ const mapLineItemToCartItem = (lineItem: currentCart.LineItem): CartItem | null 
   if (!lineItem._id || !lineItem.catalogReference) return null;
 
   const { catalogReference, quantity, productName, price, image } = lineItem;
-  const collectionId = (catalogReference.options as { collectionId?: string } | null)?.collectionId || '';
-  const itemId = catalogReference.catalogItemId || '';
+  const collectionId =
+    (catalogReference.options as { collectionId?: string } | null)?.collectionId || "";
+  const itemId = catalogReference.catalogItemId || "";
 
   return {
     id: lineItem._id,
     collectionId,
     itemId,
-    name: productName?.translated || productName?.original || 'Unknown Item',
-    price: parseFloat(price?.amount || '0') || 0,
+    name: productName?.translated || productName?.original || "Unknown Item",
+    price: parseFloat(price?.amount || "0") || 0,
     quantity: quantity || 1,
     image,
   };
@@ -134,10 +139,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
           // No cart yet - that's fine
           set({ items: [], isLoading: false, _initialized: true });
         } else {
-          console.warn('Failed to fetch cart:', error);
+          console.warn("Failed to fetch cart:", error);
           set({
             isLoading: false,
-            error: error instanceof Error ? error.message : 'Failed to fetch cart',
+            error: error instanceof Error ? error.message : "Failed to fetch cart",
             _initialized: true,
           });
         }
@@ -150,22 +155,24 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       try {
         const result = await currentCart.addToCurrentCart({
-          lineItems: [{
-            catalogReference: {
-              catalogItemId: input.itemId,
-              appId: CMS_APP_ID,
-              options: { collectionId: input.collectionId },
+          lineItems: [
+            {
+              catalogReference: {
+                catalogItemId: input.itemId,
+                appId: CMS_APP_ID,
+                options: { collectionId: input.collectionId },
+              },
+              quantity: input.quantity || 1,
             },
-            quantity: input.quantity || 1,
-          }],
+          ],
         });
 
         if (result?.cart) {
           set({ items: mapCartToItems(result.cart) });
         }
       } catch (error: unknown) {
-        console.error('Add to cart failed:', error);
-        set({ error: error instanceof Error ? error.message : 'Failed to add to cart' });
+        console.error("Add to cart failed:", error);
+        set({ error: error instanceof Error ? error.message : "Failed to add to cart" });
         // Try to refetch to stay in sync
         get().actions._fetchCart();
       } finally {
@@ -185,11 +192,11 @@ export const useCartStore = create<CartStore>((set, get) => ({
       }
 
       // Optimistic update
-      set({ items: items.filter(i => i.id !== item.id) });
+      set({ items: items.filter((i) => i.id !== item.id) });
 
       // Server call (fire and forget, rollback on error)
       currentCart.removeLineItemsFromCurrentCart([item.id]).catch((error) => {
-        console.error('Remove from cart failed:', error);
+        console.error("Remove from cart failed:", error);
         // Rollback - add item back
         set((state) => ({ items: [...state.items, item] }));
       });
@@ -204,7 +211,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
           await currentCart.updateCurrentCartLineItemQuantity([{ _id: lineItemId, quantity }]);
         }
       } catch (error) {
-        console.error('Update quantity failed:', error);
+        console.error("Update quantity failed:", error);
         // Refetch to sync with server
         set({ _initialized: false });
         get().actions._fetchCart();
@@ -217,10 +224,10 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       // Optimistic update
       if (quantity <= 0) {
-        set({ items: items.filter(i => i.id !== item.id) });
+        set({ items: items.filter((i) => i.id !== item.id) });
       } else {
         set({
-          items: items.map(i => i.id === item.id ? { ...i, quantity } : i),
+          items: items.map((i) => (i.id === item.id ? { ...i, quantity } : i)),
         });
       }
 
@@ -244,7 +251,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
       const previousItems = [...items];
 
       // Clear all pending quantity updates
-      _quantityTimers.forEach(timer => clearTimeout(timer));
+      _quantityTimers.forEach((timer) => clearTimeout(timer));
       _quantityTimers.clear();
 
       // Optimistic update
@@ -252,7 +259,7 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
       // Server call
       currentCart.deleteCurrentCart().catch((error) => {
-        console.error('Clear cart failed:', error);
+        console.error("Clear cart failed:", error);
         // Rollback
         set({ items: previousItems });
       });
@@ -268,28 +275,28 @@ export const useCartStore = create<CartStore>((set, get) => ({
         });
 
         if (!checkoutResult.checkoutId) {
-          throw new Error('Failed to create checkout');
+          throw new Error("Failed to create checkout");
         }
 
         const { redirectSession } = await redirects.createRedirectSession({
           ecomCheckout: { checkoutId: checkoutResult.checkoutId },
           callbacks: {
-            postFlowUrl: typeof window !== 'undefined' ? window.location.href : '',
+            postFlowUrl: typeof window !== "undefined" ? window.location.href : "",
           },
         });
 
         if (!redirectSession?.fullUrl) {
-          throw new Error('Failed to get checkout URL');
+          throw new Error("Failed to get checkout URL");
         }
 
         // Redirect
-        if (typeof window !== 'undefined') {
+        if (typeof window !== "undefined") {
           window.location.href = redirectSession.fullUrl;
         }
       } catch (error: unknown) {
-        console.error('Checkout failed:', error);
+        console.error("Checkout failed:", error);
         set({
-          error: error instanceof Error ? error.message : 'Checkout failed',
+          error: error instanceof Error ? error.message : "Checkout failed",
           isCheckingOut: false,
         });
       }

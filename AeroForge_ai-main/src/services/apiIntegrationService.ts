@@ -8,7 +8,7 @@ export interface APIEndpoint {
   name: string;
   baseUrl: string;
   apiKey?: string;
-  status: 'connected' | 'disconnected' | 'error';
+  status: "connected" | "disconnected" | "error";
   lastSync?: Date;
 }
 
@@ -32,7 +32,7 @@ class APIIntegrationService {
    */
   async initializeConnections(config: IntegrationConfig): Promise<void> {
     this.config = config;
-    
+
     for (const [key, endpoint] of Object.entries(config)) {
       if (endpoint) {
         await this.testConnection(endpoint);
@@ -48,16 +48,16 @@ class APIIntegrationService {
     try {
       const response = await fetch(`${endpoint.baseUrl}/health`, {
         headers: {
-          'Authorization': `Bearer ${endpoint.apiKey}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${endpoint.apiKey}`,
+          "Content-Type": "application/json",
         },
       });
-      
-      endpoint.status = response.ok ? 'connected' : 'error';
+
+      endpoint.status = response.ok ? "connected" : "error";
       endpoint.lastSync = new Date();
       return response.ok;
     } catch (error) {
-      endpoint.status = 'error';
+      endpoint.status = "error";
       return false;
     }
   }
@@ -65,19 +65,19 @@ class APIIntegrationService {
   /**
    * Export design to external CAD format
    */
-  async exportDesign(designId: string, format: 'step' | 'iges' | 'stl' | 'obj'): Promise<Blob> {
+  async exportDesign(designId: string, format: "step" | "iges" | "stl" | "obj"): Promise<Blob> {
     // Simulate export
     const data = JSON.stringify({
       designId,
       format,
       timestamp: new Date(),
       metadata: {
-        version: '1.0',
+        version: "1.0",
         exported: true,
       },
     });
 
-    return new Blob([data], { type: 'application/octet-stream' });
+    return new Blob([data], { type: "application/octet-stream" });
   }
 
   /**
@@ -111,7 +111,7 @@ class APIIntegrationService {
           simulationId: `sim-${Date.now()}`,
           designId,
           type: simulationType,
-          status: 'completed',
+          status: "completed",
           results: {
             maxStress: 245.3,
             maxDeflection: 2.1,
@@ -135,22 +135,22 @@ class APIIntegrationService {
         resolve({
           predictions: [
             {
-              type: 'material-optimization',
+              type: "material-optimization",
               confidence: 0.92,
-              suggestion: 'Use carbon fiber composite for 30% weight reduction',
+              suggestion: "Use carbon fiber composite for 30% weight reduction",
             },
             {
-              type: 'aerodynamic-enhancement',
+              type: "aerodynamic-enhancement",
               confidence: 0.85,
-              suggestion: 'Optimize leading edge for 12% drag reduction',
+              suggestion: "Optimize leading edge for 12% drag reduction",
             },
             {
-              type: 'cost-reduction',
+              type: "cost-reduction",
               confidence: 0.78,
-              suggestion: 'Simplify geometry for 20% manufacturing cost reduction',
+              suggestion: "Simplify geometry for 20% manufacturing cost reduction",
             },
           ],
-          modelVersion: '2.1',
+          modelVersion: "2.1",
           processingTime: 1.2,
         });
       }, 1500);
@@ -163,7 +163,7 @@ class APIIntegrationService {
   async syncToCloud(designId: string, data: any): Promise<boolean> {
     try {
       // Simulate cloud sync
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return true;
     } catch (error) {
       return false;
@@ -179,7 +179,7 @@ class APIIntegrationService {
       setTimeout(() => {
         resolve({
           id: designId,
-          name: 'Cloud Design',
+          name: "Cloud Design",
           data: {},
           lastModified: new Date(),
         });
@@ -194,7 +194,7 @@ class APIIntegrationService {
     return {
       designId,
       sharedWith: collaborators,
-      permissions: 'edit',
+      permissions: "edit",
       sharedAt: new Date(),
       shareLink: `https://cad.system/share/${designId}`,
     };
@@ -229,7 +229,7 @@ class APIIntegrationService {
       batchId: `batch-${Date.now()}`,
       designIds,
       operation,
-      status: 'processing',
+      status: "processing",
       progress: 0,
       estimatedTime: 300,
     };
@@ -244,16 +244,16 @@ class APIIntegrationService {
       reportType,
       generatedAt: new Date(),
       sections: [
-        'Executive Summary',
-        'Design Specifications',
-        'Performance Analysis',
-        'Manufacturing Feasibility',
-        'Cost Breakdown',
-        'Recommendations',
+        "Executive Summary",
+        "Design Specifications",
+        "Performance Analysis",
+        "Manufacturing Feasibility",
+        "Cost Breakdown",
+        "Recommendations",
       ],
     };
 
-    return new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
+    return new Blob([JSON.stringify(reportData, null, 2)], { type: "application/json" });
   }
 }
 

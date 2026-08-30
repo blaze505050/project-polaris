@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { Search, X, Filter, ChevronDown, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { debounce } from '@/services/performanceOptimization';
+import React, { useState, useCallback, useMemo } from "react";
+import { Search, X, Filter, ChevronDown, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { debounce } from "@/services/performanceOptimization";
 
 interface SearchAndFilterProps {
   onSearch: (query: string) => void;
@@ -18,7 +18,7 @@ export default function SearchAndFilter({
   difficulties,
   onAdvancedSearch,
 }: SearchAndFilterProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({
@@ -28,16 +28,20 @@ export default function SearchAndFilter({
 
   // Debounced search for performance
   const debouncedSearch = useMemo(
-    () => debounce((value: string) => {
-      onSearch(value);
-    }, 300),
-    [onSearch]
+    () =>
+      debounce((value: string) => {
+        onSearch(value);
+      }, 300),
+    [onSearch],
   );
 
-  const handleSearch = useCallback((value: string) => {
-    setSearchQuery(value);
-    debouncedSearch(value);
-  }, [debouncedSearch]);
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearchQuery(value);
+      debouncedSearch(value);
+    },
+    [debouncedSearch],
+  );
 
   const handleFilterToggle = (filterType: string, value: string) => {
     setActiveFilters((prev) => {
@@ -45,7 +49,7 @@ export default function SearchAndFilter({
       const updated = current.includes(value)
         ? current.filter((v) => v !== value)
         : [...current, value];
-      
+
       const newFilters = { ...prev, [filterType]: updated };
       onFilterChange(newFilters);
       return newFilters;
@@ -53,9 +57,9 @@ export default function SearchAndFilter({
   };
 
   const clearFilters = () => {
-    setSearchQuery('');
+    setSearchQuery("");
     setActiveFilters({ category: [], difficulty: [] });
-    onSearch('');
+    onSearch("");
     onFilterChange({ category: [], difficulty: [] });
   };
 
@@ -75,7 +79,7 @@ export default function SearchAndFilter({
         />
         {searchQuery && (
           <button
-            onClick={() => handleSearch('')}
+            onClick={() => handleSearch("")}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground/50 hover:text-foreground transition-colors"
           >
             <X className="w-5 h-5" />
@@ -96,7 +100,9 @@ export default function SearchAndFilter({
               {activeFilterCount}
             </span>
           )}
-          <ChevronDown className={`w-4 h-4 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`w-4 h-4 transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
+          />
         </button>
 
         {/* Advanced Search Toggle */}
@@ -133,14 +139,11 @@ export default function SearchAndFilter({
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {categories.map((cat) => (
-                <label
-                  key={cat}
-                  className="flex items-center gap-2 cursor-pointer group"
-                >
+                <label key={cat} className="flex items-center gap-2 cursor-pointer group">
                   <input
                     type="checkbox"
                     checked={activeFilters.category?.includes(cat) || false}
-                    onChange={() => handleFilterToggle('category', cat)}
+                    onChange={() => handleFilterToggle("category", cat)}
                     className="w-4 h-4 rounded border-secondary/40 bg-aerospace-dark accent-aerospace-blue cursor-pointer"
                   />
                   <span className="text-sm text-foreground/80 group-hover:text-aerospace-blue transition-colors font-paragraph">
@@ -158,14 +161,11 @@ export default function SearchAndFilter({
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {difficulties.map((diff) => (
-                <label
-                  key={diff}
-                  className="flex items-center gap-2 cursor-pointer group"
-                >
+                <label key={diff} className="flex items-center gap-2 cursor-pointer group">
                   <input
                     type="checkbox"
                     checked={activeFilters.difficulty?.includes(diff) || false}
-                    onChange={() => handleFilterToggle('difficulty', diff)}
+                    onChange={() => handleFilterToggle("difficulty", diff)}
                     className="w-4 h-4 rounded border-secondary/40 bg-aerospace-dark accent-aerospace-blue cursor-pointer"
                   />
                   <span className="text-sm text-foreground/80 group-hover:text-aerospace-blue transition-colors font-paragraph">
@@ -191,9 +191,7 @@ export default function SearchAndFilter({
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-mono text-foreground/70 mb-2">
-                Search Type
-              </label>
+              <label className="block text-xs font-mono text-foreground/70 mb-2">Search Type</label>
               <select className="w-full px-3 py-2 bg-aerospace-dark border border-secondary/30 rounded text-foreground text-sm">
                 <option>Contains</option>
                 <option>Exact Match</option>
@@ -202,9 +200,7 @@ export default function SearchAndFilter({
               </select>
             </div>
             <div>
-              <label className="block text-xs font-mono text-foreground/70 mb-2">
-                Sort By
-              </label>
+              <label className="block text-xs font-mono text-foreground/70 mb-2">Sort By</label>
               <select className="w-full px-3 py-2 bg-aerospace-dark border border-secondary/30 rounded text-foreground text-sm">
                 <option>Relevance</option>
                 <option>Name (A-Z)</option>

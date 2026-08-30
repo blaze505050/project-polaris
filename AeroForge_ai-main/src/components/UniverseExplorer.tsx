@@ -1,8 +1,20 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ZoomIn, ZoomOut, RotateCcw, Search, Filter, Info, Navigation, Compass } from 'lucide-react';
-import celestialDatabaseService, { CelestialObject, SearchFilters } from '@/services/celestialDatabaseService';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import * as THREE from "three";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Search,
+  Filter,
+  Info,
+  Navigation,
+  Compass,
+} from "lucide-react";
+import celestialDatabaseService, {
+  CelestialObject,
+  SearchFilters,
+} from "@/services/celestialDatabaseService";
 
 interface NavigationState {
   centerRA: number;
@@ -19,7 +31,7 @@ export default function UniverseExplorer() {
   const objectsRef = useRef<Map<string, THREE.Object3D>>(new Map());
 
   const [selectedObject, setSelectedObject] = useState<CelestialObject | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<SearchFilters>({});
   const [searchResults, setSearchResults] = useState<CelestialObject[]>([]);
@@ -27,7 +39,7 @@ export default function UniverseExplorer() {
     centerRA: 0,
     centerDec: 0,
     zoomLevel: 3,
-    viewRadius: 100
+    viewRadius: 100,
   });
   const [stats, setStats] = useState({ fps: 0, objects: 0, distance: 0 });
   const [isLoading, setIsLoading] = useState(true);
@@ -48,7 +60,7 @@ export default function UniverseExplorer() {
       75,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       1,
-      10000000
+      10000000,
     );
     camera.position.set(0, 0, 100000);
     cameraRef.current = camera;
@@ -76,7 +88,7 @@ export default function UniverseExplorer() {
       size: 500,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.8,
     });
 
     const starsVertices = [];
@@ -87,7 +99,10 @@ export default function UniverseExplorer() {
       starsVertices.push(x, y, z);
     }
 
-    starsGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(starsVertices), 3));
+    starsGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(new Float32Array(starsVertices), 3),
+    );
     const stars = new THREE.Points(starsGeometry, starsMaterial);
     scene.add(stars);
 
@@ -105,7 +120,7 @@ export default function UniverseExplorer() {
       renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Animation loop
     let frameCount = 0;
@@ -121,7 +136,7 @@ export default function UniverseExplorer() {
       frameCount++;
       const currentTime = Date.now();
       if (currentTime - lastTime >= 1000) {
-        setStats(prev => ({ ...prev, fps: frameCount, objects: objectsRef.current.size }));
+        setStats((prev) => ({ ...prev, fps: frameCount, objects: objectsRef.current.size }));
         frameCount = 0;
         lastTime = currentTime;
       }
@@ -152,15 +167,15 @@ export default function UniverseExplorer() {
       }
     };
 
-    containerRef.current.addEventListener('click', onMouseClick);
+    containerRef.current.addEventListener("click", onMouseClick);
 
     // Load constellations
     setConstellations(celestialDatabaseService.getConstellations());
     setIsLoading(false);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      containerRef.current?.removeEventListener('click', onMouseClick);
+      window.removeEventListener("resize", handleResize);
+      containerRef.current?.removeEventListener("click", onMouseClick);
       containerRef.current?.removeChild(renderer.domElement);
     };
   }, []);
@@ -195,7 +210,7 @@ export default function UniverseExplorer() {
         exoplanet: 150,
         blackhole: 400,
         pulsar: 250,
-        quasar: 600
+        quasar: 600,
       };
 
       const multiplier = sizeMultiplier[obj.type] || 300;
@@ -204,9 +219,9 @@ export default function UniverseExplorer() {
       material = new THREE.MeshStandardMaterial({
         color: obj.color,
         emissive: obj.color,
-        emissiveIntensity: obj.type === 'star' ? 0.8 : 0.5,
-        transparent: obj.type === 'nebula',
-        opacity: obj.type === 'nebula' ? 0.6 : 1
+        emissiveIntensity: obj.type === "star" ? 0.8 : 0.5,
+        transparent: obj.type === "nebula",
+        opacity: obj.type === "nebula" ? 0.6 : 1,
       });
 
       const mesh = new THREE.Mesh(geometry, material);
@@ -223,7 +238,7 @@ export default function UniverseExplorer() {
 
     const results = celestialDatabaseService.search({
       searchTerm,
-      ...filters
+      ...filters,
     });
 
     setSearchResults(results);
@@ -231,9 +246,10 @@ export default function UniverseExplorer() {
   }, [searchTerm, filters]);
 
   // Handle zoom
-  const handleZoom = useCallback((direction: 'in' | 'out') => {
-    setNavigation(prev => {
-      const newZoom = direction === 'in' ? Math.min(prev.zoomLevel + 1, 10) : Math.max(prev.zoomLevel - 1, 0);
+  const handleZoom = useCallback((direction: "in" | "out") => {
+    setNavigation((prev) => {
+      const newZoom =
+        direction === "in" ? Math.min(prev.zoomLevel + 1, 10) : Math.max(prev.zoomLevel - 1, 0);
       const newRadius = 100 / Math.pow(2, newZoom);
 
       if (cameraRef.current) {
@@ -246,10 +262,10 @@ export default function UniverseExplorer() {
 
   // Handle navigation
   const navigateToObject = useCallback((obj: CelestialObject) => {
-    setNavigation(prev => ({
+    setNavigation((prev) => ({
       ...prev,
       centerRA: obj.ra,
-      centerDec: obj.dec
+      centerDec: obj.dec,
     }));
     setSelectedObject(obj);
   }, []);
@@ -260,10 +276,10 @@ export default function UniverseExplorer() {
       centerRA: 0,
       centerDec: 0,
       zoomLevel: 3,
-      viewRadius: 100
+      viewRadius: 100,
     });
     setSelectedObject(null);
-    setSearchTerm('');
+    setSearchTerm("");
     setFilters({});
     if (cameraRef.current) {
       cameraRef.current.position.set(0, 0, 100000);
@@ -290,7 +306,7 @@ export default function UniverseExplorer() {
             placeholder="Search stars, galaxies, nebulae..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             className="flex-1 px-4 py-2 bg-aerospace-dark/80 border border-aerospace-blue/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:border-aerospace-blue"
           />
           <button
@@ -324,10 +340,12 @@ export default function UniverseExplorer() {
                 <select
                   multiple
                   value={filters.type || []}
-                  onChange={(e) => setFilters(prev => ({
-                    ...prev,
-                    type: Array.from(e.target.selectedOptions, option => option.value)
-                  }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      type: Array.from(e.target.selectedOptions, (option) => option.value),
+                    }))
+                  }
                   className="w-full px-2 py-1 bg-aerospace-dark border border-aerospace-blue/30 rounded text-foreground text-sm"
                 >
                   <option value="star">Star</option>
@@ -342,16 +360,20 @@ export default function UniverseExplorer() {
               <div>
                 <label className="text-foreground/70 text-sm">Constellation</label>
                 <select
-                  value={filters.constellation || ''}
-                  onChange={(e) => setFilters(prev => ({
-                    ...prev,
-                    constellation: e.target.value || undefined
-                  }))}
+                  value={filters.constellation || ""}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      constellation: e.target.value || undefined,
+                    }))
+                  }
                   className="w-full px-2 py-1 bg-aerospace-dark border border-aerospace-blue/30 rounded text-foreground text-sm"
                 >
                   <option value="">All</option>
-                  {constellations.map(c => (
-                    <option key={c} value={c}>{c}</option>
+                  {constellations.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -360,11 +382,13 @@ export default function UniverseExplorer() {
                 <label className="text-foreground/70 text-sm">Max Magnitude</label>
                 <input
                   type="number"
-                  value={filters.maxMagnitude || ''}
-                  onChange={(e) => setFilters(prev => ({
-                    ...prev,
-                    maxMagnitude: e.target.value ? parseFloat(e.target.value) : undefined
-                  }))}
+                  value={filters.maxMagnitude || ""}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      maxMagnitude: e.target.value ? parseFloat(e.target.value) : undefined,
+                    }))
+                  }
                   className="w-full px-2 py-1 bg-aerospace-dark border border-aerospace-blue/30 rounded text-foreground text-sm"
                 />
               </div>
@@ -389,14 +413,14 @@ export default function UniverseExplorer() {
         {/* Left Controls */}
         <div className="flex gap-3">
           <button
-            onClick={() => handleZoom('out')}
+            onClick={() => handleZoom("out")}
             className="p-3 bg-aerospace-blue/20 hover:bg-aerospace-blue/40 border border-aerospace-blue rounded-lg transition-all"
             title="Zoom Out"
           >
             <ZoomOut className="w-5 h-5 text-aerospace-blue" />
           </button>
           <button
-            onClick={() => handleZoom('in')}
+            onClick={() => handleZoom("in")}
             className="p-3 bg-aerospace-blue/20 hover:bg-aerospace-blue/40 border border-aerospace-blue rounded-lg transition-all"
             title="Zoom In"
           >
@@ -445,14 +469,24 @@ export default function UniverseExplorer() {
               <div className="flex-1 min-w-0">
                 <h3 className="text-aerospace-blue font-bold text-sm">{selectedObject.name}</h3>
                 <p className="text-foreground/70 text-xs capitalize mb-2">{selectedObject.type}</p>
-                <p className="text-foreground/60 text-xs leading-relaxed">{selectedObject.description}</p>
+                <p className="text-foreground/60 text-xs leading-relaxed">
+                  {selectedObject.description}
+                </p>
                 <div className="mt-3 space-y-1 text-xs font-mono text-foreground/50">
                   <div>Magnitude: {selectedObject.magnitude.toFixed(2)}</div>
                   <div>Distance: {selectedObject.distance.toLocaleString()} ly</div>
-                  <div>RA: {selectedObject.ra.toFixed(2)}° | Dec: {selectedObject.dec.toFixed(2)}°</div>
-                  {selectedObject.constellation && <div>Constellation: {selectedObject.constellation}</div>}
-                  {selectedObject.temperature && <div>Temperature: {selectedObject.temperature.toLocaleString()} K</div>}
-                  {selectedObject.luminosity && <div>Luminosity: {selectedObject.luminosity.toFixed(2)} L☉</div>}
+                  <div>
+                    RA: {selectedObject.ra.toFixed(2)}° | Dec: {selectedObject.dec.toFixed(2)}°
+                  </div>
+                  {selectedObject.constellation && (
+                    <div>Constellation: {selectedObject.constellation}</div>
+                  )}
+                  {selectedObject.temperature && (
+                    <div>Temperature: {selectedObject.temperature.toLocaleString()} K</div>
+                  )}
+                  {selectedObject.luminosity && (
+                    <div>Luminosity: {selectedObject.luminosity.toFixed(2)} L☉</div>
+                  )}
                 </div>
               </div>
               <button
@@ -475,9 +509,11 @@ export default function UniverseExplorer() {
             exit={{ opacity: 0, x: 20 }}
             className="absolute bottom-24 right-6 bg-aerospace-dark/95 border border-aerospace-blue/50 rounded-lg p-4 max-w-xs max-h-96 overflow-y-auto backdrop-blur-sm z-20"
           >
-            <h3 className="text-aerospace-blue font-bold mb-3 text-sm">Results ({searchResults.length})</h3>
+            <h3 className="text-aerospace-blue font-bold mb-3 text-sm">
+              Results ({searchResults.length})
+            </h3>
             <div className="space-y-2">
-              {searchResults.slice(0, 20).map(obj => (
+              {searchResults.slice(0, 20).map((obj) => (
                 <button
                   key={obj.id}
                   onClick={() => navigateToObject(obj)}
@@ -490,7 +526,9 @@ export default function UniverseExplorer() {
                     />
                     <div className="flex-1 min-w-0">
                       <div className="font-mono text-foreground truncate">{obj.name}</div>
-                      <div className="text-foreground/50 text-xs">{obj.type} • {obj.distance.toLocaleString()} ly</div>
+                      <div className="text-foreground/50 text-xs">
+                        {obj.type} • {obj.distance.toLocaleString()} ly
+                      </div>
                     </div>
                   </div>
                 </button>

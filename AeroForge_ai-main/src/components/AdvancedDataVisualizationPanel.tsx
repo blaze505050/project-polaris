@@ -3,11 +3,27 @@
  * Professional-grade multi-parameter visualization
  */
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart } from 'recharts';
-import { TrendingUp, TrendingDown, Activity, Zap } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ComposedChart,
+} from "recharts";
+import { TrendingUp, TrendingDown, Activity, Zap } from "lucide-react";
 
 interface DataPoint {
   time: number;
@@ -19,7 +35,7 @@ interface DataPoint {
 
 const AdvancedDataVisualizationPanel: React.FC = () => {
   const [data, setData] = useState<DataPoint[]>([]);
-  const [selectedMetric, setSelectedMetric] = useState<'all' | 'metric1' | 'metric2'>('all');
+  const [selectedMetric, setSelectedMetric] = useState<"all" | "metric1" | "metric2">("all");
 
   // Generate realistic data
   useEffect(() => {
@@ -40,10 +56,34 @@ const AdvancedDataVisualizationPanel: React.FC = () => {
   }, []);
 
   const stats = [
-    { label: 'Peak Value', value: '94.2', trend: '+2.1%', icon: TrendingUp, color: 'text-aerospace-success' },
-    { label: 'Average', value: '67.8', trend: '-0.5%', icon: Activity, color: 'text-aerospace-blue' },
-    { label: 'Min Value', value: '32.1', trend: '+1.3%', icon: TrendingDown, color: 'text-aerospace-warning' },
-    { label: 'Volatility', value: '12.4%', trend: 'Stable', icon: Zap, color: 'text-aerospace-accent' },
+    {
+      label: "Peak Value",
+      value: "94.2",
+      trend: "+2.1%",
+      icon: TrendingUp,
+      color: "text-aerospace-success",
+    },
+    {
+      label: "Average",
+      value: "67.8",
+      trend: "-0.5%",
+      icon: Activity,
+      color: "text-aerospace-blue",
+    },
+    {
+      label: "Min Value",
+      value: "32.1",
+      trend: "+1.3%",
+      icon: TrendingDown,
+      color: "text-aerospace-warning",
+    },
+    {
+      label: "Volatility",
+      value: "12.4%",
+      trend: "Stable",
+      icon: Zap,
+      color: "text-aerospace-accent",
+    },
   ];
 
   return (
@@ -89,15 +129,15 @@ const AdvancedDataVisualizationPanel: React.FC = () => {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
-            <XAxis dataKey="time" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
-            <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
+            <XAxis dataKey="time" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "12px" }} />
+            <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "12px" }} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#0F172A',
-                border: '1px solid rgba(14, 165, 233, 0.3)',
-                borderRadius: '8px',
+                backgroundColor: "#0F172A",
+                border: "1px solid rgba(14, 165, 233, 0.3)",
+                borderRadius: "8px",
               }}
-              labelStyle={{ color: '#0EA5E9' }}
+              labelStyle={{ color: "#0EA5E9" }}
             />
             <Legend />
             <Area
@@ -144,13 +184,17 @@ const AdvancedDataVisualizationPanel: React.FC = () => {
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={data.slice(-15)}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
-              <XAxis dataKey="time" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '11px' }} />
-              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '11px' }} />
+              <XAxis
+                dataKey="time"
+                stroke="rgba(203, 213, 225, 0.5)"
+                style={{ fontSize: "11px" }}
+              />
+              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "11px" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  border: '1px solid rgba(14, 165, 233, 0.3)',
-                  borderRadius: '8px',
+                  backgroundColor: "#0F172A",
+                  border: "1px solid rgba(14, 165, 233, 0.3)",
+                  borderRadius: "8px",
                 }}
               />
               <Bar dataKey="value1" fill="#0EA5E9" radius={[4, 4, 0, 0]} />
@@ -163,12 +207,15 @@ const AdvancedDataVisualizationPanel: React.FC = () => {
           <h3 className="text-sm font-semibold text-foreground mb-4">Parameter Correlation</h3>
           <div className="space-y-3">
             {[
-              { pair: 'Param 1 ↔ Param 2', correlation: 0.87, strength: 'Strong' },
-              { pair: 'Param 1 ↔ Param 3', correlation: 0.62, strength: 'Moderate' },
-              { pair: 'Param 2 ↔ Param 4', correlation: 0.45, strength: 'Weak' },
-              { pair: 'Param 3 ↔ Param 4', correlation: 0.91, strength: 'Very Strong' },
+              { pair: "Param 1 ↔ Param 2", correlation: 0.87, strength: "Strong" },
+              { pair: "Param 1 ↔ Param 3", correlation: 0.62, strength: "Moderate" },
+              { pair: "Param 2 ↔ Param 4", correlation: 0.45, strength: "Weak" },
+              { pair: "Param 3 ↔ Param 4", correlation: 0.91, strength: "Very Strong" },
             ].map((item, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 bg-aerospace-dark/50 rounded border border-aerospace-blue/20">
+              <div
+                key={idx}
+                className="flex items-center justify-between p-3 bg-aerospace-dark/50 rounded border border-aerospace-blue/20"
+              >
                 <span className="text-sm text-secondary-foreground">{item.pair}</span>
                 <div className="flex items-center gap-3">
                   <div className="w-24 h-1.5 bg-aerospace-dark/50 rounded-full overflow-hidden">

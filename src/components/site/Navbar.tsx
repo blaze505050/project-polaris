@@ -42,7 +42,10 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 pointer-events-none py-3 px-3 sm:px-6" style={{ transition: 'all 300ms cubic-bezier(0.23, 1, 0.32, 1)' }}>
+    <header
+      className="fixed inset-x-0 top-0 z-50 pointer-events-none py-3 px-3 sm:px-6"
+      style={{ transition: "all 300ms cubic-bezier(0.23, 1, 0.32, 1)" }}
+    >
       <nav
         aria-label="Main Navigation"
         className={cn(
@@ -51,7 +54,7 @@ export function Navbar() {
             ? "bg-background/90 backdrop-blur-2xl border border-border-strong shadow-[0_16px_36px_rgba(0,0,0,0.25)] dark:shadow-[0_16px_36px_rgba(0,0,0,0.6)]"
             : "bg-surface/85 backdrop-blur-xl border border-border shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.3)]",
         )}
-        style={{ transition: 'all 350ms cubic-bezier(0.23, 1, 0.32, 1)' }}
+        style={{ transition: "all 350ms cubic-bezier(0.23, 1, 0.32, 1)" }}
       >
         {/* Brand Logo */}
         <Link to="/" aria-label="Project Polaris Home" className="shrink-0 flex items-center gap-2">
@@ -61,7 +64,8 @@ export function Navbar() {
         {/* Center Nav Items (8 Main Navigation Pages) - Hidden on mobile */}
         <div className="hidden xl:flex items-center gap-1 text-xs font-medium font-sans">
           {NAV_PAGES.slice(0, 8).map((item) => {
-            const isActive = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
+            const isActive =
+              pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
             return (
               <Link
                 key={item.to}
@@ -70,9 +74,12 @@ export function Navbar() {
                   "nav-link-glow px-3 py-1.5 rounded-lg font-sans",
                   isActive
                     ? "text-primary font-semibold bg-primary/10 border border-primary/25"
-                    : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
+                    : "text-muted-foreground hover:text-foreground hover:bg-surface-2",
                 )}
-                style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
+                style={{
+                  transition:
+                    "color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)",
+                }}
               >
                 {item.label}
               </Link>
@@ -90,7 +97,11 @@ export function Navbar() {
             size="sm"
             className="hidden sm:inline-flex h-8 px-3.5 text-xs font-medium rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
           >
-            <Link to="/dashboard" aria-label="Student Dashboard" className="flex items-center gap-1.5">
+            <Link
+              to="/dashboard"
+              aria-label="Student Dashboard"
+              className="flex items-center gap-1.5"
+            >
               <User className="size-3.5" />
               <span>Dashboard</span>
             </Link>
@@ -118,7 +129,8 @@ export function Navbar() {
             </span>
 
             {NAV_PAGES.slice(0, 8).map((item, idx) => {
-              const isActive = pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
+              const isActive =
+                pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
               return (
                 <Link
                   key={item.to}
@@ -128,12 +140,17 @@ export function Navbar() {
                     "flex items-center justify-between p-3 rounded-xl text-sm",
                     isActive
                       ? "bg-primary/10 text-primary font-semibold border border-primary/20"
-                      : "text-muted-foreground hover:text-foreground hover:bg-surface-2"
+                      : "text-muted-foreground hover:text-foreground hover:bg-surface-2",
                   )}
-                  style={{ transition: 'color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)' }}
+                  style={{
+                    transition:
+                      "color 200ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms cubic-bezier(0.23, 1, 0.32, 1)",
+                  }}
                 >
                   <span className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-muted-foreground/60 w-4">0{idx + 1}</span>
+                    <span className="text-[11px] font-mono text-muted-foreground/60 w-4">
+                      0{idx + 1}
+                    </span>
                     <span>{item.label}</span>
                   </span>
                   <ArrowRight className="size-3.5 text-muted-foreground" />
@@ -147,7 +164,10 @@ export function Navbar() {
                 to="/dashboard"
                 onClick={() => setOpen(false)}
                 className="flex items-center justify-between p-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90"
-                style={{ transition: 'opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), transform 120ms cubic-bezier(0.23, 1, 0.32, 1)' }}
+                style={{
+                  transition:
+                    "opacity 200ms cubic-bezier(0.23, 1, 0.32, 1), transform 120ms cubic-bezier(0.23, 1, 0.32, 1)",
+                }}
               >
                 <div className="flex items-center gap-2">
                   <User className="size-4" />

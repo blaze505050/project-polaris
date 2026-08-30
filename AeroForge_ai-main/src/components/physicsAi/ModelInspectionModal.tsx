@@ -1,7 +1,17 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { X, Play, ExternalLink, ShieldCheck, Cpu, Database, FileText, CheckCircle2, Lock } from 'lucide-react';
-import { ModelCard } from '@/types/physicsAi';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  X,
+  Play,
+  ExternalLink,
+  ShieldCheck,
+  Cpu,
+  Database,
+  FileText,
+  CheckCircle2,
+  Lock,
+} from "lucide-react";
+import { ModelCard } from "@/types/physicsAi";
 
 interface Props {
   model: ModelCard | null;
@@ -28,12 +38,14 @@ export default function ModelInspectionModal({ model, isOpen, onClose, onRunInAe
               <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">
                 {model.category}
               </span>
-              <span className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-extrabold ${
-                model.status === 'LIVE'
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30'
-              }`}>
-                {model.status === 'LIVE' ? 'LIVE IN AEROFORGE' : model.status}
+              <span
+                className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-extrabold ${
+                  model.status === "LIVE"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                    : "bg-cyan-500/10 text-cyan-300 border border-cyan-500/30"
+                }`}
+              >
+                {model.status === "LIVE" ? "LIVE IN AEROFORGE" : model.status}
               </span>
             </div>
             <h2 className="text-2xl font-extrabold font-mono text-white flex items-center gap-2">
@@ -56,7 +68,8 @@ export default function ModelInspectionModal({ model, isOpen, onClose, onRunInAe
               EMBEDDED AEROFORGE ENGINE
             </span>
             <p className="text-white/60 font-sans text-xs">
-              This model runs directly inside AeroForge via local Python/PyTorch backend API. No external workflow redirection required.
+              This model runs directly inside AeroForge via local Python/PyTorch backend API. No
+              external workflow redirection required.
             </p>
           </div>
 
@@ -89,7 +102,8 @@ export default function ModelInspectionModal({ model, isOpen, onClose, onRunInAe
               <div>
                 <span className="text-[10px] text-white/40 block">FILE SIZE & PARAMS:</span>
                 <span className="text-purple-300 font-bold">
-                  {model.checkpointInfo.fileSizeKb} KB ({model.checkpointInfo.parameterCount?.toLocaleString()} parameters)
+                  {model.checkpointInfo.fileSizeKb} KB (
+                  {model.checkpointInfo.parameterCount?.toLocaleString()} parameters)
                 </span>
               </div>
 
@@ -134,8 +148,13 @@ export default function ModelInspectionModal({ model, isOpen, onClose, onRunInAe
           </h4>
 
           <div className="space-y-1 text-[11px] text-white/70">
-            <p><span className="text-white/40">Paper:</span> {model.citation}</p>
-            <p><span className="text-white/40">License:</span> <span className="text-purple-300 font-bold">{model.license}</span></p>
+            <p>
+              <span className="text-white/40">Paper:</span> {model.citation}
+            </p>
+            <p>
+              <span className="text-white/40">License:</span>{" "}
+              <span className="text-purple-300 font-bold">{model.license}</span>
+            </p>
           </div>
 
           <div className="flex items-center gap-3 pt-2">

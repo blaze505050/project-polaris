@@ -6,7 +6,7 @@
 
 export interface OptimizationObjective {
   name: string;
-  type: 'minimize' | 'maximize';
+  type: "minimize" | "maximize";
   weight: number;
 }
 
@@ -91,10 +91,10 @@ class MultiObjectiveOptimizationService {
     // Objective 4: Maximize Efficiency (L/D ratio)
     const efficiency = liftCoefficient / Math.max(dragCoefficient, 0.01);
 
-    objectives['Drag'] = dragCoefficient;
-    objectives['Lift'] = liftCoefficient;
-    objectives['Weight'] = weight;
-    objectives['Efficiency'] = efficiency;
+    objectives["Drag"] = dragCoefficient;
+    objectives["Lift"] = liftCoefficient;
+    objectives["Weight"] = weight;
+    objectives["Efficiency"] = efficiency;
 
     return objectives;
   }
@@ -196,7 +196,7 @@ class MultiObjectiveOptimizationService {
       const val1 = sol1.objectives[obj.name];
       const val2 = sol2.objectives[obj.name];
 
-      if (obj.type === 'minimize') {
+      if (obj.type === "minimize") {
         if (val1 < val2) sol1Better = true;
         if (val1 > val2) sol2Better = true;
       } else {
@@ -273,10 +273,7 @@ class MultiObjectiveOptimizationService {
       for (let i = 0; i < child1.variables.length; i++) {
         if (Math.random() < 0.5) {
           const u = Math.random();
-          const beta =
-            u <= 0.5
-              ? Math.pow(2 * u, 1 / 3)
-              : Math.pow(1 / (2 * (1 - u)), 1 / 3);
+          const beta = u <= 0.5 ? Math.pow(2 * u, 1 / 3) : Math.pow(1 / (2 * (1 - u)), 1 / 3);
 
           child1.variables[i].value =
             0.5 *
@@ -293,11 +290,11 @@ class MultiObjectiveOptimizationService {
           // Boundary handling
           child1.variables[i].value = Math.max(
             child1.variables[i].min,
-            Math.min(child1.variables[i].max, child1.variables[i].value)
+            Math.min(child1.variables[i].max, child1.variables[i].value),
           );
           child2.variables[i].value = Math.max(
             child2.variables[i].min,
-            Math.min(child2.variables[i].max, child2.variables[i].value)
+            Math.min(child2.variables[i].max, child2.variables[i].value),
           );
         }
       }
@@ -316,16 +313,14 @@ class MultiObjectiveOptimizationService {
       if (Math.random() < this.config.mutationRate) {
         const u = Math.random();
         const delta =
-          u < 0.5
-            ? Math.pow(2 * u, 1 / (eta + 1)) - 1
-            : 1 - Math.pow(2 * (1 - u), 1 / (eta + 1));
+          u < 0.5 ? Math.pow(2 * u, 1 / (eta + 1)) - 1 : 1 - Math.pow(2 * (1 - u), 1 / (eta + 1));
 
         solution.variables[i].value +=
           delta * (solution.variables[i].max - solution.variables[i].min);
 
         solution.variables[i].value = Math.max(
           solution.variables[i].min,
-          Math.min(solution.variables[i].max, solution.variables[i].value)
+          Math.min(solution.variables[i].max, solution.variables[i].value),
         );
       }
     }
@@ -347,7 +342,7 @@ class MultiObjectiveOptimizationService {
       let contribution = 1;
       for (const obj of this.config.objectives) {
         const value = solution.objectives[obj.name];
-        if (obj.type === 'minimize') {
+        if (obj.type === "minimize") {
           contribution *= Math.max(0, referencePoint - value);
         } else {
           contribution *= Math.max(0, value);
@@ -449,8 +444,7 @@ class MultiObjectiveOptimizationService {
         let distance = 0;
         for (const obj of this.config.objectives) {
           const diff =
-            this.paretoFront[i].objectives[obj.name] -
-            this.paretoFront[j].objectives[obj.name];
+            this.paretoFront[i].objectives[obj.name] - this.paretoFront[j].objectives[obj.name];
           distance += diff * diff;
         }
         diversity += Math.sqrt(distance);
@@ -465,14 +459,12 @@ class MultiObjectiveOptimizationService {
         let distance = 0;
         for (const obj of this.config.objectives) {
           const diff =
-            this.paretoFront[i + 1].objectives[obj.name] -
-            this.paretoFront[i].objectives[obj.name];
+            this.paretoFront[i + 1].objectives[obj.name] - this.paretoFront[i].objectives[obj.name];
           distance += diff * diff;
         }
         distances.push(Math.sqrt(distance));
       }
-      spreadMetric =
-        distances.reduce((a, b) => a + b, 0) / Math.max(distances.length, 1);
+      spreadMetric = distances.reduce((a, b) => a + b, 0) / Math.max(distances.length, 1);
     }
 
     return {

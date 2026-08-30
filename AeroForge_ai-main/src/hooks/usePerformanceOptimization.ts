@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from "react";
 
 interface PerformanceOptions {
   enableLogging?: boolean;
@@ -7,11 +7,7 @@ interface PerformanceOptions {
 }
 
 export function usePerformanceOptimization(options: PerformanceOptions = {}) {
-  const {
-    enableLogging = false,
-    warningThreshold = 45,
-    criticalThreshold = 30,
-  } = options;
+  const { enableLogging = false, warningThreshold = 45, criticalThreshold = 30 } = options;
 
   const metricsRef = useRef({
     fps: 60,
@@ -19,20 +15,23 @@ export function usePerformanceOptimization(options: PerformanceOptions = {}) {
     lastFrameTime: performance.now(),
   });
 
-  const measurePerformance = useCallback((callback: () => void) => {
-    const start = performance.now();
-    callback();
-    const end = performance.now();
-    const frameTime = end - start;
+  const measurePerformance = useCallback(
+    (callback: () => void) => {
+      const start = performance.now();
+      callback();
+      const end = performance.now();
+      const frameTime = end - start;
 
-    metricsRef.current.frameTime = frameTime;
+      metricsRef.current.frameTime = frameTime;
 
-    if (enableLogging && frameTime > 16.67) {
-      console.warn(`Slow frame detected: ${frameTime.toFixed(2)}ms`);
-    }
+      if (enableLogging && frameTime > 16.67) {
+        console.warn(`Slow frame detected: ${frameTime.toFixed(2)}ms`);
+      }
 
-    return frameTime;
-  }, [enableLogging]);
+      return frameTime;
+    },
+    [enableLogging],
+  );
 
   const getMetrics = useCallback(() => {
     const now = performance.now();
@@ -95,7 +94,7 @@ export function useMemoryOptimization() {
     const interval = setInterval(() => {
       const memory = checkMemory();
       if (memory && memory.percentage > 90) {
-        console.warn('High memory usage detected:', memory);
+        console.warn("High memory usage detected:", memory);
       }
     }, 5000);
 

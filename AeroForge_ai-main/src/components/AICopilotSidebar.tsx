@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Brain,
   Sparkles,
@@ -13,12 +13,12 @@ import {
   HelpCircle,
   Zap,
   BookOpen,
-} from 'lucide-react';
-import { useToastStore } from '@/stores/toastStore';
+} from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
 
 interface Message {
   id: string;
-  sender: 'user' | 'ai';
+  sender: "user" | "ai";
   text: string;
   timestamp: Date;
 }
@@ -29,30 +29,44 @@ interface AICopilotSidebarProps {
   onToggle: (open: boolean) => void;
 }
 
-export default function AICopilotSidebar({
-  projectId,
-  isOpen,
-  onToggle,
-}: AICopilotSidebarProps) {
+export default function AICopilotSidebar({ projectId, isOpen, onToggle }: AICopilotSidebarProps) {
   const { addToast } = useToastStore();
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
-      sender: 'ai',
-      text:
-        'AeroForge Engineering Copilot connected to active CFD Case 04. I am analyzing the boundary layer velocity contours and convergence logs.',
+      id: "1",
+      sender: "ai",
+      text: "AeroForge Engineering Copilot connected to active CFD Case 04. I am analyzing the boundary layer velocity contours and convergence logs.",
       timestamp: new Date(),
     },
   ]);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
 
   const quickActions = [
-    { label: 'Analyze this result', prompt: 'Analyze aerodynamic convergence and pressure coefficient Cp for active CFD Case 04.' },
-    { label: 'Explain convergence failure', prompt: 'Explain why Shockwave Intersection mesh test failed with Courant number > 1.0.' },
-    { label: 'Compare experiments', prompt: 'Compare CFD Case 04 wing lift-to-drag ratio L/D against structural FEA constraints.' },
-    { label: 'Optimize this wing', prompt: 'Suggest camber and thickness distribution optimization to delay shock-induced separation.' },
-    { label: 'Find papers', prompt: 'Find AIAA papers related to Mach 5.0 hypersonic boundary layer stability.' },
-    { label: 'Generate report', prompt: 'Compile a full AS9100-compliant engineering report for this simulation project.' },
+    {
+      label: "Analyze this result",
+      prompt: "Analyze aerodynamic convergence and pressure coefficient Cp for active CFD Case 04.",
+    },
+    {
+      label: "Explain convergence failure",
+      prompt: "Explain why Shockwave Intersection mesh test failed with Courant number > 1.0.",
+    },
+    {
+      label: "Compare experiments",
+      prompt: "Compare CFD Case 04 wing lift-to-drag ratio L/D against structural FEA constraints.",
+    },
+    {
+      label: "Optimize this wing",
+      prompt:
+        "Suggest camber and thickness distribution optimization to delay shock-induced separation.",
+    },
+    {
+      label: "Find papers",
+      prompt: "Find AIAA papers related to Mach 5.0 hypersonic boundary layer stability.",
+    },
+    {
+      label: "Generate report",
+      prompt: "Compile a full AS9100-compliant engineering report for this simulation project.",
+    },
   ];
 
   const handleSend = (textToSend?: string) => {
@@ -61,38 +75,38 @@ export default function AICopilotSidebar({
 
     const userMsg: Message = {
       id: Date.now().toString(),
-      sender: 'user',
+      sender: "user",
       text,
       timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, userMsg]);
-    if (!textToSend) setInputText('');
+    if (!textToSend) setInputText("");
 
     // Simulate AI Copilot Response with Provenance Badges
     setTimeout(() => {
       let response =
-        '[AI HEURISTIC INTERPRETATION] Based on subsonic thin airfoil theory calculations (C_L = 0.440, C_D = 0.008): Boundary layer velocity gradients indicate steady attached flow at AoA = 4.0°. [RECOMMENDATION] Verify boundary layer displacement thickness at higher angles of attack using XFOIL or RANS solvers.';
+        "[AI HEURISTIC INTERPRETATION] Based on subsonic thin airfoil theory calculations (C_L = 0.440, C_D = 0.008): Boundary layer velocity gradients indicate steady attached flow at AoA = 4.0°. [RECOMMENDATION] Verify boundary layer displacement thickness at higher angles of attack using XFOIL or RANS solvers.";
 
-      if (text.includes('failure') || text.includes('Courant')) {
+      if (text.includes("failure") || text.includes("Courant")) {
         response =
-          '[DIAGNOSTIC ANALYSIS] High Courant number (Co > 1.0) occurs when the time step exceeds local cell residence time. [RECOMMENDED FIX] Reduce global CFL number or refine inflation layer mesh growth rate to 1.15.';
-      } else if (text.includes('report') || text.includes('AS9100')) {
+          "[DIAGNOSTIC ANALYSIS] High Courant number (Co > 1.0) occurs when the time step exceeds local cell residence time. [RECOMMENDED FIX] Reduce global CFL number or refine inflation layer mesh growth rate to 1.15.";
+      } else if (text.includes("report") || text.includes("AS9100")) {
         response =
-          '[CALCULATED ARTIFACT] Technical summary report compiled. [PROVENANCE] Digital thread hash #EXP-2026-NACA2412 attached with Prandtl-Glauert compressibility parameters.';
+          "[CALCULATED ARTIFACT] Technical summary report compiled. [PROVENANCE] Digital thread hash #EXP-2026-NACA2412 attached with Prandtl-Glauert compressibility parameters.";
         addToast({
-          title: 'Engineering Report Generated',
-          description: 'Report PDF saved to project knowledge artifacts.',
-          type: 'success',
+          title: "Engineering Report Generated",
+          description: "Report PDF saved to project knowledge artifacts.",
+          type: "success",
         });
-      } else if (text.includes('paper') || text.includes('literature')) {
+      } else if (text.includes("paper") || text.includes("literature")) {
         response =
           '[LITERATURE CITATION] Abbott & Von Doenhoff (1959), "Theory of Wing Sections", Dover Publications, p. 462. Benchmark wind tunnel data confirms lift curve slope dC_L/dα ≈ 2π per radian for thin symmetric airfoils.';
       }
 
       const aiMsg: Message = {
         id: (Date.now() + 1).toString(),
-        sender: 'ai',
+        sender: "ai",
         text: response,
         timestamp: new Date(),
       };
@@ -128,10 +142,7 @@ export default function AICopilotSidebar({
                 <Brain className="w-4 h-4 text-cyan-400" />
                 <span className="font-bold text-white text-xs">Engineering AI Copilot</span>
               </div>
-              <button
-                onClick={() => onToggle(false)}
-                className="text-white/40 hover:text-white"
-              >
+              <button onClick={() => onToggle(false)} className="text-white/40 hover:text-white">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -159,23 +170,21 @@ export default function AICopilotSidebar({
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`flex flex-col ${
-                    msg.sender === 'user' ? 'items-end' : 'items-start'
-                  }`}
+                  className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
                 >
                   <div
                     className={`max-w-[85%] p-2.5 rounded-lg text-[11px] leading-relaxed ${
-                      msg.sender === 'user'
-                        ? 'bg-cyan-500/20 text-cyan-200 border border-cyan-500/30'
-                        : 'bg-[#0A1224] text-white/90 border border-white/10'
+                      msg.sender === "user"
+                        ? "bg-cyan-500/20 text-cyan-200 border border-cyan-500/30"
+                        : "bg-[#0A1224] text-white/90 border border-white/10"
                     }`}
                   >
                     {msg.text}
                   </div>
                   <span className="text-[9px] text-white/30 mt-0.5 px-1">
                     {msg.timestamp.toLocaleTimeString([], {
-                      hour: '2-digit',
-                      minute: '2-digit',
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })}
                   </span>
                 </div>

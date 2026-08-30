@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { GitBranch, ChevronRight } from 'lucide-react';
-import FeatureStatusBadge from '@/components/ui/FeatureStatusBadge';
+import React from "react";
+import { motion } from "framer-motion";
+import { GitBranch, ChevronRight } from "lucide-react";
+import FeatureStatusBadge from "@/components/ui/FeatureStatusBadge";
 
 interface VersionEntry {
   version: string;
@@ -18,28 +18,35 @@ interface VersionHistoryProps {
 
 const DEFAULT_ENTRIES: VersionEntry[] = [
   {
-    version: 'v0.1',
-    date: 'Initial',
-    summary: 'Project created with initial requirements',
-    changes: ['Project workspace initialized', 'Requirements matrix created'],
+    version: "v0.1",
+    date: "Initial",
+    summary: "Project created with initial requirements",
+    changes: ["Project workspace initialized", "Requirements matrix created"],
   },
   {
-    version: 'v0.2',
-    date: 'Design',
-    summary: 'Baseline geometry and mesh generated',
-    changes: ['NACA 2412 airfoil selected', 'Computational mesh generated (structured, 200K cells)'],
+    version: "v0.2",
+    date: "Design",
+    summary: "Baseline geometry and mesh generated",
+    changes: [
+      "NACA 2412 airfoil selected",
+      "Computational mesh generated (structured, 200K cells)",
+    ],
   },
   {
-    version: 'v0.3',
-    date: 'Analysis',
-    summary: 'First simulation run completed',
-    changes: ['CFD run at α=5°, Re=3×10⁶', 'L/D = 15.2 — exceeds REQ-AERO-01 target', 'Pressure distribution captured'],
+    version: "v0.3",
+    date: "Analysis",
+    summary: "First simulation run completed",
+    changes: [
+      "CFD run at α=5°, Re=3×10⁶",
+      "L/D = 15.2 — exceeds REQ-AERO-01 target",
+      "Pressure distribution captured",
+    ],
   },
 ];
 
 export default function VersionHistory({
   entries = DEFAULT_ENTRIES,
-  className = '',
+  className = "",
 }: VersionHistoryProps) {
   return (
     <div className={`bg-[#080E1C] border border-white/10 rounded-lg p-4 ${className}`}>
@@ -68,8 +75,8 @@ export default function VersionHistory({
               <div
                 className={`absolute left-0 top-1 w-3.5 h-3.5 rounded-full border-2 ${
                   idx === entries.length - 1
-                    ? 'bg-cyan-400 border-cyan-400'
-                    : 'bg-[#050914] border-white/20'
+                    ? "bg-cyan-400 border-cyan-400"
+                    : "bg-[#050914] border-white/20"
                 }`}
               />
 
@@ -78,13 +85,9 @@ export default function VersionHistory({
                   <span className="text-[10px] font-bold text-cyan-400 font-mono">
                     {entry.version}
                   </span>
-                  <span className="text-[9px] text-white/30 font-mono">
-                    {entry.date}
-                  </span>
+                  <span className="text-[9px] text-white/30 font-mono">{entry.date}</span>
                 </div>
-                <p className="text-[11px] text-white/70 font-sans mb-1.5">
-                  {entry.summary}
-                </p>
+                <p className="text-[11px] text-white/70 font-sans mb-1.5">{entry.summary}</p>
                 <div className="space-y-0.5">
                   {entry.changes.map((change, i) => (
                     <div

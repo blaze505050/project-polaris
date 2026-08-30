@@ -1,6 +1,7 @@
 # ASTROLAB P0 SPRINT - COMPLETE IMPLEMENTATION
 
 ## Overview
+
 This document outlines the complete P0 (Production 0) hardening sprint for ASTROLAB. All core functionality has been centralized, wired, and made production-ready with full persistence and input validation.
 
 ---
@@ -12,6 +13,7 @@ This document outlines the complete P0 (Production 0) hardening sprint for ASTRO
 A unified, mathematically-accurate physics engine with 4 core modules:
 
 #### 1.1 Orbital Mechanics
+
 - **Equations Implemented:**
   - Orbital velocity: `v = √(GM/r)`
   - Orbital period (Kepler's 3rd Law): `T = 2π√(a³/GM)`
@@ -27,17 +29,20 @@ A unified, mathematically-accurate physics engine with 4 core modules:
   - `computeOrbitalState(mass, radius, eccentricity)` → complete orbital state object
 
 #### 1.2 Gravity Simulator
+
 - **Equation:** `F = G·m₁·m₂/r²`
 - **Validation:** Inverse-square law verification (doubling distance reduces force by 4x)
 - **Function:** `calculateGravitationalForce(mass1, mass2, distance)` → {force, acceleration, validation}
 
 #### 1.3 Exoplanet Transit Light Curve
+
 - **Equation:** Transit Depth ≈ (R_p / R_s)²
 - **Functions:**
   - `calculateTransitDepth(planetRadius, starRadius)` → percentage
   - `generateTransitLightCurve(planetRadius, starRadius, orbitalPeriod)` → light curve array
 
 #### 1.4 Stellar Evolution & HR Diagram
+
 - **Equations:**
   - Main Sequence lifetime: `T ∝ M^-2.5`
   - Luminosity: `L ∝ M^3.5`
@@ -54,6 +59,7 @@ A unified, mathematically-accurate physics engine with 4 core modules:
   - `computeStellarProperties(mass)` → complete stellar state
 
 ### Input Validation & Sanitization
+
 - **Function:** `sanitizeNumericInput(value, min, max, name)` → ValidationResult
 - **Checks:**
   - NaN detection
@@ -71,6 +77,7 @@ A unified, mathematically-accurate physics engine with 4 core modules:
 Zustand store with localStorage persistence for saved experiments.
 
 #### Features:
+
 - **Save Experiment:** Bundle parameters, results, timestamp, and notes
 - **Load Experiment:** Retrieve saved experiment by ID
 - **Delete Experiment:** Remove experiment from store
@@ -79,11 +86,12 @@ Zustand store with localStorage persistence for saved experiments.
 - **Clear All:** Reset store
 
 #### Data Structure:
+
 ```typescript
 interface SavedExperiment {
   id: string;
   name: string;
-  type: 'orbital' | 'gravity' | 'transit' | 'stellar' | 'leo' | 'exoplanet' | 'star-classification';
+  type: "orbital" | "gravity" | "transit" | "stellar" | "leo" | "exoplanet" | "star-classification";
   parameters: Record<string, any>;
   results: Record<string, any>;
   timestamp: number;
@@ -93,8 +101,9 @@ interface SavedExperiment {
 ```
 
 #### Usage:
+
 ```typescript
-import { useExperimentStore } from '@/stores/experimentStore';
+import { useExperimentStore } from "@/stores/experimentStore";
 
 const saveExperiment = useExperimentStore((state) => state.saveExperiment);
 const experiments = useExperimentStore((state) => state.getAllExperiments());
@@ -107,16 +116,18 @@ const experiments = useExperimentStore((state) => state.getAllExperiments());
 ### Updated Routes in `/src/components/Router.tsx`
 
 #### Core ASTROLAB Routes:
-| Route | Component | Purpose |
-|-------|-----------|---------|
-| `/astrolab/explorer` | AstroLabExplorerPage | Hub for all simulation modes |
+
+| Route                   | Component               | Purpose                       |
+| ----------------------- | ----------------------- | ----------------------------- |
+| `/astrolab/explorer`    | AstroLabExplorerPage    | Hub for all simulation modes  |
 | `/astrolab/simulations` | AstroLabSimulationsPage | Interactive simulation engine |
-| `/my-lab` | MyLabPage | Saved experiments dashboard |
-| `/space-problems` | SpaceProblemsPage | Interactive challenges |
-| `/astrolab/reports` | AstroLabReportsPage | Report generator |
-| `*` | NotFoundPage | 404 error page |
+| `/my-lab`               | MyLabPage               | Saved experiments dashboard   |
+| `/space-problems`       | SpaceProblemsPage       | Interactive challenges        |
+| `/astrolab/reports`     | AstroLabReportsPage     | Report generator              |
+| `*`                     | NotFoundPage            | 404 error page                |
 
 #### Navigation Links Updated in Header:
+
 ```
 Home → Explorer → Simulations → My Lab → Problems → Reports
 ```
@@ -128,6 +139,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 ### Location: `/src/components/pages/AstroLabSimulationsPage.tsx`
 
 **Features:**
+
 - 4 interactive simulation tabs (Orbital, Gravity, Transit, Stellar)
 - Real-time parameter sliders with physics calculations
 - Live results display with proper units
@@ -136,6 +148,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 - Responsive design (desktop/mobile)
 
 **Workflow:**
+
 1. Select simulation type
 2. Adjust parameters with sliders
 3. View real-time calculated results
@@ -150,6 +163,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 ### Location: `/src/components/pages/MyLabPage.tsx` + `/src/components/MyLabExperimentsList.tsx`
 
 **Features:**
+
 - Grid view of all saved experiments
 - Color-coded by experiment type
 - Experiment metadata (date, type, tags)
@@ -162,6 +176,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 - **Import:** Restore from exported file
 
 **Display:**
+
 - Experiment name, date, type badge
 - Results preview (first 2 key values)
 - Action buttons for each experiment
@@ -174,23 +189,27 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 ### Location: `/src/components/pages/SpaceProblemsPage.tsx` + `/src/components/SpaceProblemsPanel.tsx`
 
 #### Problem 1: Design a Stable LEO
+
 - **Scenario:** Calculate orbital velocity for 400 km altitude
 - **Required Answer:** ~7.67 km/s
 - **Validation:** `validateLEOVelocity(userVelocity)` → {isCorrect, requiredVelocity, error%, feedback}
 - **Tolerance:** ±5% error accepted
 
 #### Problem 2: Detect an Exoplanet
+
 - **Scenario:** Measure transit depth for Earth-sized planet around Sun-sized star
 - **Expected Answer:** ~0.0084%
 - **Validation:** `validateTransitDetection(depth, planetRadius, starRadius)` → {isCorrect, expectedDepth, error%, feedback}
 - **Tolerance:** ±10% error accepted
 
 #### Problem 3: Classify a Star
+
 - **Scenario:** Classify star by temperature (5778 K = G-type)
 - **Expected Answer:** G (or O, B, A, F, K, M)
 - **Validation:** `validateStarClassification(userClass, temperature)` → {isCorrect, expectedClass, feedback}
 
 **UI Features:**
+
 - Tab-based problem selection
 - Input fields with validation
 - Real-time feedback (✓ correct / ✗ incorrect)
@@ -204,6 +223,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 ### Location: `/src/components/pages/AstroLabReportsPage.tsx`
 
 **Features:**
+
 - Select saved experiment from list
 - Preview experiment details
 - Generate HTML report with:
@@ -217,6 +237,7 @@ Home → Explorer → Simulations → My Lab → Problems → Reports
 - Print-friendly styling
 
 **Report Structure:**
+
 ```
 ASTROLAB Experiment Report
 ├── Experiment Information
@@ -233,6 +254,7 @@ ASTROLAB Experiment Report
 ### Location: `/src/components/pages/AstroLabExplorerPage.tsx`
 
 **Features:**
+
 - 4 simulation mode cards:
   - Orbital Mechanics
   - Gravity Simulator
@@ -251,6 +273,7 @@ ASTROLAB Experiment Report
 ### Location: `/src/components/pages/NotFoundPage.tsx`
 
 **Features:**
+
 - Animated 404 display
 - Quick navigation links to:
   - Home
@@ -269,6 +292,7 @@ ASTROLAB Experiment Report
 ### Implemented Across All Simulations
 
 **Validation Checks:**
+
 - ✅ NaN detection
 - ✅ Infinity prevention
 - ✅ Bounds checking with auto-clamping
@@ -277,14 +301,16 @@ ASTROLAB Experiment Report
 - ✅ Division-by-zero prevention
 
 **Error Display:**
+
 - Non-blocking toast alerts
 - Parameter out-of-bounds warnings
 - Helpful suggestions for correction
 - Auto-clamp to nearest valid value
 
 **Example:**
+
 ```typescript
-const validation = sanitizeNumericInput(userInput, 0, 1e35, 'Mass');
+const validation = sanitizeNumericInput(userInput, 0, 1e35, "Mass");
 if (!validation.isValid) {
   setError(validation.warning); // "Mass: Out of physical bounds"
   // Use clampedValue for recovery
@@ -337,6 +363,7 @@ if (!validation.isValid) {
 ## 12. PHYSICS ACCURACY VERIFICATION
 
 ### Constants Used (SI Units):
+
 - G = 6.67430 × 10⁻¹¹ m³ kg⁻¹ s⁻²
 - M☉ = 1.989 × 10³⁰ kg
 - R☉ = 6.96 × 10⁸ m
@@ -345,6 +372,7 @@ if (!validation.isValid) {
 - AU = 1.496 × 10¹¹ m
 
 ### Validation Examples:
+
 - **Orbital Velocity (LEO 400km):** 7.67 km/s ✓
 - **Escape Velocity (Earth):** 11.2 km/s ✓
 - **Earth Orbital Period:** 365.25 days ✓
@@ -356,11 +384,13 @@ if (!validation.isValid) {
 ## 13. RESPONSIVE DESIGN
 
 ### Breakpoints Implemented:
+
 - **Mobile:** < 640px (single column, stacked layout)
 - **Tablet:** 640px - 1024px (2-column grid)
 - **Desktop:** > 1024px (3-column grid, full features)
 
 ### Components Tested:
+
 - ✅ Header navigation (mobile menu)
 - ✅ Simulation panels (responsive sliders)
 - ✅ Experiment grid (adaptive columns)
@@ -372,6 +402,7 @@ if (!validation.isValid) {
 ## 14. BUILD & DEPLOYMENT CHECKLIST
 
 ### Pre-Deployment:
+
 - ✅ All routes wired and tested
 - ✅ Physics engine validated
 - ✅ localStorage persistence working
@@ -384,6 +415,7 @@ if (!validation.isValid) {
 - ✅ TypeScript compilation successful
 
 ### Production Ready:
+
 - ✅ Zero orphaned pages
 - ✅ Zero broken links
 - ✅ All CTAs functional
@@ -398,6 +430,7 @@ if (!validation.isValid) {
 ## 15. FUTURE ENHANCEMENTS (v1.0+)
 
 ### Not Implemented (Marked as "In Development"):
+
 - Real-time 3D visualization
 - Advanced data analytics
 - Collaborative experiments
@@ -407,6 +440,7 @@ if (!validation.isValid) {
 - Advanced plotting tools
 
 ### Roadmap:
+
 - Phase 1 (Current): Core physics + persistence ✅
 - Phase 2: 3D visualization + WebGL
 - Phase 3: Backend API + cloud storage
@@ -418,6 +452,7 @@ if (!validation.isValid) {
 ## 16. TECHNICAL STACK
 
 ### Frontend:
+
 - React 18 with TypeScript
 - React Router v6 (routing)
 - Zustand (state management + persistence)
@@ -427,11 +462,13 @@ if (!validation.isValid) {
 - date-fns (date formatting)
 
 ### Physics:
+
 - Pure JavaScript/TypeScript (no external physics libraries)
 - All equations implemented from first principles
 - Validated against standard astrophysics references
 
 ### Storage:
+
 - localStorage (client-side persistence)
 - JSON/CSV export/import
 
@@ -440,24 +477,26 @@ if (!validation.isValid) {
 ## 17. USAGE EXAMPLES
 
 ### Save an Experiment:
+
 ```typescript
 const { saveExperiment } = useExperimentStore();
 
 const saved = saveExperiment({
-  name: 'LEO Orbit Test',
-  type: 'orbital',
+  name: "LEO Orbit Test",
+  type: "orbital",
   parameters: { mass: 5.972e24, radius: 6.771e6 },
   results: { velocity: 7670, period: 5400 },
-  notes: 'Testing 400km altitude orbit',
-  tags: ['orbital', 'leo'],
+  notes: "Testing 400km altitude orbit",
+  tags: ["orbital", "leo"],
 });
 ```
 
 ### Validate User Input:
-```typescript
-import { sanitizeNumericInput } from '@/services/physicsEngine';
 
-const result = sanitizeNumericInput(userInput, 0, 1e35, 'Mass');
+```typescript
+import { sanitizeNumericInput } from "@/services/physicsEngine";
+
+const result = sanitizeNumericInput(userInput, 0, 1e35, "Mass");
 if (!result.isValid) {
   showError(result.warning);
   useClampedValue(result.clampedValue);
@@ -465,8 +504,9 @@ if (!result.isValid) {
 ```
 
 ### Solve a Space Problem:
+
 ```typescript
-import { validateLEOVelocity } from '@/services/physicsEngine';
+import { validateLEOVelocity } from "@/services/physicsEngine";
 
 const result = validateLEOVelocity(7.67); // km/s
 console.log(result.isCorrect); // true
@@ -478,6 +518,7 @@ console.log(result.feedback); // "✓ Excellent! Your velocity matches..."
 ## 18. SUPPORT & DOCUMENTATION
 
 ### Key Files:
+
 - Physics Engine: `/src/services/physicsEngine.ts`
 - Experiment Store: `/src/stores/experimentStore.ts`
 - Router: `/src/components/Router.tsx`
@@ -487,6 +528,7 @@ console.log(result.feedback); // "✓ Excellent! Your velocity matches..."
 - Reports: `/src/components/pages/AstroLabReportsPage.tsx`
 
 ### Testing:
+
 - All physics equations validated against standard references
 - Input validation tested with edge cases
 - localStorage persistence verified
@@ -498,6 +540,7 @@ console.log(result.feedback); // "✓ Excellent! Your velocity matches..."
 ## 19. CONCLUSION
 
 ASTROLAB P0 is now **production-ready** with:
+
 - ✅ Centralized physics engine (4 core modules)
 - ✅ Full route wiring (zero orphaned pages)
 - ✅ localStorage persistence (save/load/export/import)
@@ -512,6 +555,6 @@ ASTROLAB P0 is now **production-ready** with:
 
 ---
 
-*Last Updated: 2026-08-10*
-*Sprint Duration: 72 hours*
-*Status: COMPLETE ✅*
+_Last Updated: 2026-08-10_
+_Sprint Duration: 72 hours_
+_Status: COMPLETE ✅_

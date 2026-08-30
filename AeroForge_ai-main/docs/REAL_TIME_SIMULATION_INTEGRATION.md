@@ -9,9 +9,11 @@ The Real-Time Simulation Data Integration system enables engineers to visualize 
 ### Core Components
 
 #### 1. **RealTimeSimulationService** (`/src/services/realTimeSimulationService.ts`)
+
 The main service that manages simulation sessions and real-time data fetching.
 
 **Key Features:**
+
 - Initialize simulation sessions with real-time data streaming
 - Fetch data from multiple online sources (NASA API, OpenFOAM, custom APIs)
 - Subscribe to real-time updates with callback functions
@@ -19,15 +21,18 @@ The main service that manages simulation sessions and real-time data fetching.
 - Export simulation results
 
 **Data Sources Supported:**
+
 - **NASA API**: Fetches aerodynamic data from NASA's public databases
 - **OpenFOAM Server**: Connects to CFD simulation servers for live flow field data
 - **Custom API**: Generic REST API endpoint support
 - **WebSocket**: Real-time streaming (extensible)
 
 #### 2. **RealTimeSimulationViewer** (`/src/components/RealTimeSimulationViewer.tsx`)
+
 React component that displays real-time simulation data with interactive controls.
 
 **Features:**
+
 - Live progress tracking
 - Aerodynamic coefficients display (Cd, Cl, Cm, etc.)
 - Flow field visualization (velocity, pressure, vorticity)
@@ -38,9 +43,11 @@ React component that displays real-time simulation data with interactive control
 - Export simulation results as JSON
 
 #### 3. **CollaborativeWorkspacePage Integration**
+
 Enhanced collaborative workspace with simulation viewer integration.
 
 **New Features:**
+
 - Simulation button on project cards
 - Real-time simulation modal viewer
 - Linked simulations to CAD projects
@@ -65,13 +72,13 @@ User Interface Display
 ### 1. Initialize a Simulation Session
 
 ```typescript
-import { realTimeSimulationService } from '@/services/realTimeSimulationService';
+import { realTimeSimulationService } from "@/services/realTimeSimulationService";
 
 // Initialize a new simulation session
 const session = await realTimeSimulationService.initializeSession(
-  'sim-123',           // sessionId
-  'Wing Analysis',     // sessionName
-  'nasa-api'          // dataSourceId
+  "sim-123", // sessionId
+  "Wing Analysis", // sessionName
+  "nasa-api", // dataSourceId
 );
 ```
 
@@ -80,20 +87,20 @@ const session = await realTimeSimulationService.initializeSession(
 ```typescript
 // Register NASA API as data source
 realTimeSimulationService.registerDataSource({
-  id: 'nasa-api',
-  name: 'NASA Aerodynamic Database',
-  url: 'https://api.nasa.gov',
-  type: 'nasa-api',
-  updateInterval: 2000,  // Update every 2 seconds
+  id: "nasa-api",
+  name: "NASA Aerodynamic Database",
+  url: "https://api.nasa.gov",
+  type: "nasa-api",
+  updateInterval: 2000, // Update every 2 seconds
   isActive: true,
 });
 
 // Register OpenFOAM server
 realTimeSimulationService.registerDataSource({
-  id: 'openfoam-server',
-  name: 'OpenFOAM Simulation Server',
-  url: 'http://localhost:8080',
-  type: 'openfoam-server',
+  id: "openfoam-server",
+  name: "OpenFOAM Simulation Server",
+  url: "http://localhost:8080",
+  type: "openfoam-server",
   updateInterval: 1500,
   isActive: true,
 });
@@ -103,13 +110,10 @@ realTimeSimulationService.registerDataSource({
 
 ```typescript
 // Subscribe to simulation updates
-const unsubscribe = realTimeSimulationService.subscribe(
-  'sim-123',
-  (updatedSession) => {
-    console.log('Simulation updated:', updatedSession);
-    // Update UI with new data
-  }
-);
+const unsubscribe = realTimeSimulationService.subscribe("sim-123", (updatedSession) => {
+  console.log("Simulation updated:", updatedSession);
+  // Update UI with new data
+});
 
 // Unsubscribe when done
 unsubscribe();
@@ -119,90 +123,100 @@ unsubscribe();
 
 ```typescript
 // Pause simulation
-realTimeSimulationService.pauseSession('sim-123');
+realTimeSimulationService.pauseSession("sim-123");
 
 // Resume simulation
-realTimeSimulationService.resumeSession('sim-123', 'nasa-api');
+realTimeSimulationService.resumeSession("sim-123", "nasa-api");
 
 // Stop simulation
-realTimeSimulationService.stopSession('sim-123');
+realTimeSimulationService.stopSession("sim-123");
 
 // Export results
-const results = realTimeSimulationService.exportResults('sim-123');
+const results = realTimeSimulationService.exportResults("sim-123");
 ```
 
 ## Data Structures
 
 ### SimulationSession
+
 ```typescript
 interface SimulationSession {
   id: string;
   name: string;
-  status: 'running' | 'paused' | 'completed' | 'error';
-  progress: number;                    // 0-100
+  status: "running" | "paused" | "completed" | "error";
+  progress: number; // 0-100
   startTime: Date;
   estimatedEndTime: Date;
-  aerodynamics: AerodynamicData;       // Cd, Cl, Cm, etc.
-  flowVisualization: FlowVisualizationData;  // Velocity, pressure fields
-  turbulence: TurbulenceData;          // k, epsilon, Reynolds stress
-  convergenceHistory: number[];        // Convergence values over time
-  residuals: number[];                 // Residual values
+  aerodynamics: AerodynamicData; // Cd, Cl, Cm, etc.
+  flowVisualization: FlowVisualizationData; // Velocity, pressure fields
+  turbulence: TurbulenceData; // k, epsilon, Reynolds stress
+  convergenceHistory: number[]; // Convergence values over time
+  residuals: number[]; // Residual values
 }
 ```
 
 ### AerodynamicData
+
 ```typescript
 interface AerodynamicData {
-  dragCoefficient: SimulationDataPoint;      // Cd
-  liftCoefficient: SimulationDataPoint;      // Cl
-  pitchMoment: SimulationDataPoint;          // Cm
-  stallAngle: SimulationDataPoint;           // Stall angle in degrees
-  maxLiftCoefficient: SimulationDataPoint;   // Cl_max
+  dragCoefficient: SimulationDataPoint; // Cd
+  liftCoefficient: SimulationDataPoint; // Cl
+  pitchMoment: SimulationDataPoint; // Cm
+  stallAngle: SimulationDataPoint; // Stall angle in degrees
+  maxLiftCoefficient: SimulationDataPoint; // Cl_max
 }
 ```
 
 ### FlowVisualizationData
+
 ```typescript
 interface FlowVisualizationData {
-  velocityField: number[][];          // 2D velocity magnitude field
-  pressureField: number[][];          // 2D pressure field
-  vorticityField: number[][];         // 2D vorticity field
-  streamlines: Array<{ x: number; y: number }[]>;  // Streamline paths
-  meshQuality: number;                // 0-1 mesh quality metric
+  velocityField: number[][]; // 2D velocity magnitude field
+  pressureField: number[][]; // 2D pressure field
+  vorticityField: number[][]; // 2D vorticity field
+  streamlines: Array<{ x: number; y: number }[]>; // Streamline paths
+  meshQuality: number; // 0-1 mesh quality metric
 }
 ```
 
 ### TurbulenceData
+
 ```typescript
 interface TurbulenceData {
-  kineticEnergy: SimulationDataPoint;       // k (m²/s²)
-  dissipationRate: SimulationDataPoint;     // ε (m²/s³)
-  reynoldsStress: number[][];               // Reynolds stress tensor
-  eddyViscosity: number[];                  // Turbulent viscosity
+  kineticEnergy: SimulationDataPoint; // k (m²/s²)
+  dissipationRate: SimulationDataPoint; // ε (m²/s³)
+  reynoldsStress: number[][]; // Reynolds stress tensor
+  eddyViscosity: number[]; // Turbulent viscosity
 }
 ```
 
 ## Real Data Sources
 
 ### NASA API Integration
+
 The service fetches real aerodynamic data from NASA's public databases:
+
 - **Endpoint**: `https://api.nasa.gov/planetary/earth/imagery`
 - **Data**: Aerodynamic coefficients, airfoil profiles, wind tunnel data
 - **Update Interval**: 2000ms (configurable)
 
 **Example Data Retrieved:**
+
 - Drag Coefficient (Cd): 0.015 - 0.025
 - Lift Coefficient (Cl): 0.3 - 0.5
 - Pitch Moment (Cm): -0.05 to 0.05
 - Stall Angle: 15° - 20°
 
 ### OpenFOAM Server Integration
+
 Connects to live CFD simulation servers running OpenFOAM:
+
 - **Endpoint**: `http://localhost:8080/simulation/{sessionId}`
 - **Data**: Velocity fields, pressure fields, vorticity, streamlines
 - **Update Interval**: 1500ms (configurable)
 
 **Example Data Retrieved:**
+
 - Velocity Field: 10x10 grid of velocity magnitudes (0-50 m/s)
 - Pressure Field: 10x10 grid of pressures (101325 ± 5000 Pa)
 - Mesh Quality: 0.7 - 0.95 (0-1 scale)
@@ -211,24 +225,28 @@ Connects to live CFD simulation servers running OpenFOAM:
 ## Visualization Features
 
 ### Aerodynamics Tab
+
 - Real-time display of aerodynamic coefficients
 - Color-coded indicators for coefficient values
 - Timestamp of last update
 - Mesh quality indicator
 
 ### Flow Tab
+
 - Velocity field heatmap (color-coded by magnitude)
 - Pressure field heatmap (color-coded by pressure)
 - Streamline visualization
 - Mesh quality metric
 
 ### Turbulence Tab
+
 - Kinetic energy (k) display
 - Dissipation rate (ε) display
 - Reynolds stress tensor visualization
 - Eddy viscosity distribution
 
 ### Convergence Tab
+
 - Bar chart of convergence history
 - Current convergence percentage
 - Average convergence
@@ -237,16 +255,20 @@ Connects to live CFD simulation servers running OpenFOAM:
 ## Integration with Collaborative Workspace
 
 ### Project-Simulation Linking
+
 Each CAD project can be linked to a simulation:
+
 ```typescript
 interface CollaborativeProject {
   // ... other fields
-  simulationId?: string;  // Link to simulation
+  simulationId?: string; // Link to simulation
 }
 ```
 
 ### Simulation Button
+
 Projects with linked simulations show a "Simulation" button:
+
 ```typescript
 {project.simulationId && (
   <motion.button
@@ -263,22 +285,26 @@ Projects with linked simulations show a "Simulation" button:
 ```
 
 ### Modal Viewer
+
 Simulations open in a full-featured modal with all visualization tabs and controls.
 
 ## Performance Considerations
 
 ### Update Intervals
+
 - **NASA API**: 2000ms (2 seconds) - Balance between freshness and API rate limits
 - **OpenFOAM**: 1500ms (1.5 seconds) - Faster updates for local servers
 - **Custom API**: Configurable per source
 
 ### Data Optimization
+
 - Velocity/Pressure fields limited to 10x10 grids for performance
 - Streamlines limited to 5 paths with 20 points each
 - Convergence history limited to last 50 iterations
 - Automatic cleanup when sessions end
 
 ### Memory Management
+
 - Sessions automatically cleared when stopped
 - Subscribers automatically unsubscribed
 - Update intervals cleared on session end
@@ -287,6 +313,7 @@ Simulations open in a full-featured modal with all visualization tabs and contro
 ## Error Handling
 
 The service includes robust error handling:
+
 ```typescript
 try {
   const session = await realTimeSimulationService.initializeSession(...);
@@ -310,18 +337,21 @@ try {
 ## Troubleshooting
 
 ### Simulations Not Updating
+
 - Check data source is registered and active
 - Verify update interval is appropriate
 - Check browser console for errors
 - Ensure session is in 'running' status
 
 ### Slow Performance
+
 - Increase update interval for data sources
 - Reduce field grid size
 - Limit number of streamlines
 - Close other browser tabs
 
 ### Data Not Displaying
+
 - Verify data source URL is accessible
 - Check network tab in browser DevTools
 - Ensure data format matches expected structure
@@ -365,47 +395,44 @@ clearSession(sessionId: string): void
 ## Example: Complete Workflow
 
 ```typescript
-import { realTimeSimulationService } from '@/services/realTimeSimulationService';
+import { realTimeSimulationService } from "@/services/realTimeSimulationService";
 
 // 1. Register data sources
 realTimeSimulationService.registerDataSource({
-  id: 'nasa-api',
-  name: 'NASA Database',
-  url: 'https://api.nasa.gov',
-  type: 'nasa-api',
+  id: "nasa-api",
+  name: "NASA Database",
+  url: "https://api.nasa.gov",
+  type: "nasa-api",
   updateInterval: 2000,
   isActive: true,
 });
 
 // 2. Initialize simulation
 const session = await realTimeSimulationService.initializeSession(
-  'wing-analysis-001',
-  'Wing Aerodynamic Analysis',
-  'nasa-api'
+  "wing-analysis-001",
+  "Wing Aerodynamic Analysis",
+  "nasa-api",
 );
 
 // 3. Subscribe to updates
-const unsubscribe = realTimeSimulationService.subscribe(
-  'wing-analysis-001',
-  (updatedSession) => {
-    console.log('Progress:', updatedSession.progress);
-    console.log('Cd:', updatedSession.aerodynamics.dragCoefficient.value);
-    console.log('Cl:', updatedSession.aerodynamics.liftCoefficient.value);
-  }
-);
+const unsubscribe = realTimeSimulationService.subscribe("wing-analysis-001", (updatedSession) => {
+  console.log("Progress:", updatedSession.progress);
+  console.log("Cd:", updatedSession.aerodynamics.dragCoefficient.value);
+  console.log("Cl:", updatedSession.aerodynamics.liftCoefficient.value);
+});
 
 // 4. Control simulation
 setTimeout(() => {
-  realTimeSimulationService.pauseSession('wing-analysis-001');
+  realTimeSimulationService.pauseSession("wing-analysis-001");
 }, 10000);
 
 // 5. Export results
-const results = realTimeSimulationService.exportResults('wing-analysis-001');
-console.log('Results:', results);
+const results = realTimeSimulationService.exportResults("wing-analysis-001");
+console.log("Results:", results);
 
 // 6. Cleanup
 unsubscribe();
-realTimeSimulationService.clearSession('wing-analysis-001');
+realTimeSimulationService.clearSession("wing-analysis-001");
 ```
 
 ## Conclusion

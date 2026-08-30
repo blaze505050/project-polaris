@@ -3,6 +3,7 @@
 **CRITICAL: Only these packages are installed. Using others BREAKS the app.**
 
 ## Installed
+
 - React, TypeScript, Tailwind CSS
 - Zustand (state management)
 - Framer Motion (animations)
@@ -13,6 +14,7 @@
 - three.js, @hello-pangea/dnd
 
 ## Key Imports
+
 - `@/components/ui/*` - shadcn components
 - `@/integrations` - BaseCrudService, useCart, buyNow
 - `@wix/member-features` - useMembers

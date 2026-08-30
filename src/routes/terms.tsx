@@ -12,7 +12,10 @@ export const Route = createFileRoute("/terms")({
           "The terms for participating in Project Polaris programs, using this website, and sharing work within our community.",
       },
       { property: "og:title", content: "Terms & Conditions — Project Polaris" },
-      { property: "og:description", content: "How participation, content and conduct work at Project Polaris." },
+      {
+        property: "og:description",
+        content: "How participation, content and conduct work at Project Polaris.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Waves, Zap, Eye, Download, Play } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Waves, Zap, Eye, Download, Play } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function CosmologyExplorerPage() {
   const [isSimulating, setIsSimulating] = useState(false);
@@ -14,32 +14,32 @@ export default function CosmologyExplorerPage() {
 
   const epochs = [
     {
-      id: 'big-bang',
-      name: 'Big Bang',
-      age: '0 s',
-      temperature: '∞ K',
-      description: 'Initial singularity and inflation',
+      id: "big-bang",
+      name: "Big Bang",
+      age: "0 s",
+      temperature: "∞ K",
+      description: "Initial singularity and inflation",
     },
     {
-      id: 'recombination',
-      name: 'Recombination',
-      age: '380,000 years',
-      temperature: '3,000 K',
-      description: 'Electrons combine with nuclei, universe becomes transparent',
+      id: "recombination",
+      name: "Recombination",
+      age: "380,000 years",
+      temperature: "3,000 K",
+      description: "Electrons combine with nuclei, universe becomes transparent",
     },
     {
-      id: 'dark-ages',
-      name: 'Dark Ages',
-      age: '100 million years',
-      temperature: '50 K',
-      description: 'First stars and galaxies form',
+      id: "dark-ages",
+      name: "Dark Ages",
+      age: "100 million years",
+      temperature: "50 K",
+      description: "First stars and galaxies form",
     },
     {
-      id: 'present',
-      name: 'Present Day',
-      age: '13.8 billion years',
-      temperature: '2.7 K',
-      description: 'Current universe with galaxies and cosmic structure',
+      id: "present",
+      name: "Present Day",
+      age: "13.8 billion years",
+      temperature: "2.7 K",
+      description: "Current universe with galaxies and cosmic structure",
     },
   ];
 
@@ -60,8 +60,8 @@ export default function CosmologyExplorerPage() {
             <h1 className="text-5xl font-bold text-white">Cosmology Explorer</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Explore the universe at large scales. Study dark matter, dark energy, and cosmic structure
-            from the Big Bang to the present day.
+            Explore the universe at large scales. Study dark matter, dark energy, and cosmic
+            structure from the Big Bang to the present day.
           </p>
         </motion.div>
 
@@ -96,9 +96,7 @@ export default function CosmologyExplorerPage() {
                     const radius = 100 + Math.sin(i) * 30;
                     const x = 200 + Math.cos(angle) * radius;
                     const y = 200 + Math.sin(angle) * radius;
-                    return (
-                      <circle key={i} cx={x} cy={y} r="3" fill="#a78bfa" opacity="0.7" />
-                    );
+                    return <circle key={i} cx={x} cy={y} r="3" fill="#a78bfa" opacity="0.7" />;
                   })}
                 </svg>
               </div>
@@ -126,7 +124,7 @@ export default function CosmologyExplorerPage() {
                     onClick={() => setIsSimulating(!isSimulating)}
                     className="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-semibold flex items-center justify-center gap-2"
                   >
-                    {isSimulating ? '⏸ Stop' : '▶ Start'} Evolution
+                    {isSimulating ? "⏸ Stop" : "▶ Start"} Evolution
                   </Button>
                   <Button className="bg-slate-700 hover:bg-slate-600 text-white font-semibold">
                     <Download size={18} />
@@ -155,8 +153,8 @@ export default function CosmologyExplorerPage() {
                     onClick={() => setSelectedEpoch(epoch)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedEpoch?.id === epoch.id
-                        ? 'bg-violet-600/20 border border-violet-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-violet-600/20 border border-violet-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{epoch.name}</div>
@@ -238,20 +236,20 @@ export default function CosmologyExplorerPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Universe Expansion',
-                  description: 'Model cosmic expansion and calculate distances using redshift.',
+                  title: "Universe Expansion",
+                  description: "Model cosmic expansion and calculate distances using redshift.",
                 },
                 {
-                  title: 'Dark Matter Mapping',
-                  description: 'Visualize the cosmic web and dark matter distribution.',
+                  title: "Dark Matter Mapping",
+                  description: "Visualize the cosmic web and dark matter distribution.",
                 },
                 {
-                  title: 'Galaxy Clusters',
-                  description: 'Study large-scale structure and galaxy clustering.',
+                  title: "Galaxy Clusters",
+                  description: "Study large-scale structure and galaxy clustering.",
                 },
                 {
-                  title: 'Redshift Analysis',
-                  description: 'Determine distances and velocities from spectroscopic data.',
+                  title: "Redshift Analysis",
+                  description: "Determine distances and velocities from spectroscopic data.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

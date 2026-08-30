@@ -32,4 +32,3 @@ export function Wordmark({ className }: { className?: string }) {
     </span>
   );
 }
-

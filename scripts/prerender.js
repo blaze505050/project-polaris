@@ -125,7 +125,8 @@ const ROUTES = [
   {
     path: "/refund-policy",
     title: "Refund & Cancellation Policy — Project Polaris",
-    description: "Transparent refund guidelines and cancellation timelines for Project Polaris cohorts.",
+    description:
+      "Transparent refund guidelines and cancellation timelines for Project Polaris cohorts.",
     heading: "Refund & Cancellation Policy",
     subheading: "Fair and student-first terms for workshops, sprints, and certifications.",
     canonical: `${SITE_URL}/refund-policy`,
@@ -173,7 +174,8 @@ const ROUTES = [
   {
     path: "/support",
     title: "Help & Support Hub — Project Polaris",
-    description: "Frequently asked questions and direct helpdesk ticket submission for Project Polaris.",
+    description:
+      "Frequently asked questions and direct helpdesk ticket submission for Project Polaris.",
     heading: "Help & Support Hub",
     subheading: "Got questions? Explore FAQs or submit a support ticket.",
     canonical: `${SITE_URL}/support`,
@@ -187,7 +189,9 @@ async function prerender() {
 
   const templatePath = path.join(DIST_DIR, "index.html");
   if (!fs.existsSync(templatePath)) {
-    console.error(`[PRERENDER ERROR] Base index.html not found in ${DIST_DIR}. Run 'vite build' first.`);
+    console.error(
+      `[PRERENDER ERROR] Base index.html not found in ${DIST_DIR}. Run 'vite build' first.`,
+    );
     process.exit(1);
   }
 
@@ -209,7 +213,9 @@ async function prerender() {
     }
 
     fs.writeFileSync(targetFile, routeHtml, "utf-8");
-    console.log(`✓ Generated Static Route: ${route.path.padEnd(20)} -> ${targetFile.replace(DIST_DIR, "dist")}`);
+    console.log(
+      `✓ Generated Static Route: ${route.path.padEnd(20)} -> ${targetFile.replace(DIST_DIR, "dist")}`,
+    );
   }
 
   console.log("==================================================");
@@ -227,12 +233,12 @@ function generateRouteHtml(html, route) {
   if (output.includes('name="description"')) {
     output = output.replace(
       /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-      `<meta name="description" content="${escapeHtml(route.description)}" />`
+      `<meta name="description" content="${escapeHtml(route.description)}" />`,
     );
   } else {
     output = output.replace(
       "</head>",
-      `  <meta name="description" content="${escapeHtml(route.description)}" />\n  </head>`
+      `  <meta name="description" content="${escapeHtml(route.description)}" />\n  </head>`,
     );
   }
 
@@ -240,10 +246,13 @@ function generateRouteHtml(html, route) {
   if (output.includes('rel="canonical"')) {
     output = output.replace(
       /<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i,
-      `<link rel="canonical" href="${route.canonical}" />`
+      `<link rel="canonical" href="${route.canonical}" />`,
     );
   } else {
-    output = output.replace("</head>", `  <link rel="canonical" href="${route.canonical}" />\n  </head>`);
+    output = output.replace(
+      "</head>",
+      `  <link rel="canonical" href="${route.canonical}" />\n  </head>`,
+    );
   }
 
   // OpenGraph & Twitter Cards

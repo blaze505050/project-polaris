@@ -1,16 +1,20 @@
-import { CanonicalDatasetEntry, AirfoilSurrogateResult, AirfoilSurrogateInputs } from '@/types/physicsAi';
+import {
+  CanonicalDatasetEntry,
+  AirfoilSurrogateResult,
+  AirfoilSurrogateInputs,
+} from "@/types/physicsAi";
 
 /**
  * Converts an Airfoil Surrogate experiment result into a canonical AeroForge dataset entry.
  */
 export function createCanonicalDatasetEntry(
   inputs: AirfoilSurrogateInputs,
-  result: AirfoilSurrogateResult
+  result: AirfoilSurrogateResult,
 ): CanonicalDatasetEntry {
   return {
-    id: `af-ds-${Date.now()}-${inputs.airfoilName.toLowerCase().replace(/\s+/g, '')}`,
+    id: `af-ds-${Date.now()}-${inputs.airfoilName.toLowerCase().replace(/\s+/g, "")}`,
     geometry: {
-      type: 'Airfoil2D',
+      type: "Airfoil2D",
       params: {
         name: inputs.airfoilName,
         maxCamber: inputs.maxCamber,
@@ -19,21 +23,21 @@ export function createCanonicalDatasetEntry(
       },
     },
     mesh: {
-      type: 'C-Grid Surface Structured',
+      type: "C-Grid Surface Structured",
       elementCount: inputs.gridResolution * 4,
     },
-    solver: 'AeroForge Analytical & Neural Surrogate Hybrid',
+    solver: "AeroForge Analytical & Neural Surrogate Hybrid",
     solver_version: result.modelVersion,
-    turbulence_model: 'Spalart-Allmaras Neural Surrogate',
+    turbulence_model: "Spalart-Allmaras Neural Surrogate",
     mach: inputs.mach,
     reynolds: inputs.reynolds,
     aoa: inputs.aoa,
     temperature: 288.15, // Standard atmospheric K
-    pressure: 101325,    // Pa
+    pressure: 101325, // Pa
     boundary_conditions: {
-      inlet: 'Farfield Mach & Pressure',
+      inlet: "Farfield Mach & Pressure",
       airfoilSurface: inputs.bcType,
-      outlet: 'Zero Pressure Gradient',
+      outlet: "Zero Pressure Gradient",
     },
     fields: {
       xc: result.cpCurve.map((p) => p.xc),
@@ -65,7 +69,7 @@ export function createCanonicalDatasetEntry(
     },
     provenance: {
       timestamp: new Date().toISOString(),
-      author: 'AeroForge Physics AI Lab User',
+      author: "AeroForge Physics AI Lab User",
       hardware: result.executionStatus,
     },
   };
@@ -74,25 +78,25 @@ export function createCanonicalDatasetEntry(
 export function validateCanonicalSchema(entry: any): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
   const requiredKeys = [
-    'id',
-    'geometry',
-    'mesh',
-    'solver',
-    'solver_version',
-    'turbulence_model',
-    'mach',
-    'reynolds',
-    'aoa',
-    'temperature',
-    'pressure',
-    'boundary_conditions',
-    'fields',
-    'forces',
-    'moments',
-    'convergence',
-    'residuals',
-    'metadata',
-    'provenance',
+    "id",
+    "geometry",
+    "mesh",
+    "solver",
+    "solver_version",
+    "turbulence_model",
+    "mach",
+    "reynolds",
+    "aoa",
+    "temperature",
+    "pressure",
+    "boundary_conditions",
+    "fields",
+    "forces",
+    "moments",
+    "convergence",
+    "residuals",
+    "metadata",
+    "provenance",
   ];
 
   requiredKeys.forEach((key) => {

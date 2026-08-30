@@ -1,19 +1,19 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Home, Compass, FolderOpen, Wind, Wrench, Radio, Search } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { usePageMeta } from '@/hooks/usePageMeta';
+import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Home, Compass, FolderOpen, Wind, Wrench, Radio, Search } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function NotFoundPage() {
-  usePageMeta('404 — Signal Lost', 'Requested telemetry channel not found or out of range.');
+  usePageMeta("404 — Signal Lost", "Requested telemetry channel not found or out of range.");
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animId: number;
@@ -24,14 +24,14 @@ export default function NotFoundPage() {
       canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     };
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     const draw = () => {
-      ctx.fillStyle = '#060B18';
+      ctx.fillStyle = "#060B18";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Radar grid lines
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.08)';
+      ctx.strokeStyle = "rgba(14, 165, 233, 0.08)";
       ctx.lineWidth = 1;
 
       const step = 40;
@@ -53,7 +53,7 @@ export default function NotFoundPage() {
       const cy = canvas.height / 2;
       const radius = Math.min(cx, cy) * 0.8;
 
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.15)';
+      ctx.strokeStyle = "rgba(14, 165, 233, 0.15)";
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
       ctx.stroke();
@@ -64,7 +64,7 @@ export default function NotFoundPage() {
 
       // Sweeping line
       const angle = t * 0.02;
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.4)';
+      ctx.strokeStyle = "rgba(14, 165, 233, 0.4)";
       ctx.beginPath();
       ctx.moveTo(cx, cy);
       ctx.lineTo(cx + Math.cos(angle) * radius, cy + Math.sin(angle) * radius);
@@ -77,7 +77,7 @@ export default function NotFoundPage() {
     draw();
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
       cancelAnimationFrame(animId);
     };
   }, []);
@@ -105,11 +105,10 @@ export default function NotFoundPage() {
           <h1 className="text-7xl font-extrabold text-white mb-2 font-mono tracking-tighter">
             404
           </h1>
-          <h2 className="text-xl font-bold text-white/80 mb-3">
-            Vector Not Found
-          </h2>
+          <h2 className="text-xl font-bold text-white/80 mb-3">Vector Not Found</h2>
           <p className="text-sm text-white/50 mb-8 max-w-md mx-auto leading-relaxed">
-            The target coordinates or telemetry path do not exist in the active domain. Check parameters or return to mission control.
+            The target coordinates or telemetry path do not exist in the active domain. Check
+            parameters or return to mission control.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center mb-8">
@@ -131,22 +130,36 @@ export default function NotFoundPage() {
           <div className="p-5 bg-[#0A1020]/90 backdrop-blur border border-white/10 rounded-xl text-left">
             <div className="flex items-center gap-2 mb-3">
               <Search className="w-3.5 h-3.5 text-cyan-400" />
-              <span className="text-xs font-bold text-white/70 font-mono uppercase tracking-wider">Available Laboratories</span>
+              <span className="text-xs font-bold text-white/70 font-mono uppercase tracking-wider">
+                Available Laboratories
+              </span>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <Link to="/aerolab" className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-cyan-300 font-mono transition-all">
+              <Link
+                to="/aerolab"
+                className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-cyan-300 font-mono transition-all"
+              >
                 <Wind className="w-3.5 h-3.5 text-cyan-400" />
                 AeroLab (20 Tools)
               </Link>
-              <Link to="/mechlab" className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-amber-300 font-mono transition-all">
+              <Link
+                to="/mechlab"
+                className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-amber-300 font-mono transition-all"
+              >
                 <Wrench className="w-3.5 h-3.5 text-amber-400" />
                 MechLab (20 Tools)
               </Link>
-              <Link to="/astrolab" className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-purple-300 font-mono transition-all">
+              <Link
+                to="/astrolab"
+                className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-purple-300 font-mono transition-all"
+              >
                 <Compass className="w-3.5 h-3.5 text-purple-400" />
                 AstroLab (14 Tools)
               </Link>
-              <Link to="/projects" className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-green-300 font-mono transition-all">
+              <Link
+                to="/projects"
+                className="flex items-center gap-2 p-2 rounded bg-white/[0.03] hover:bg-white/[0.08] text-white/70 hover:text-green-300 font-mono transition-all"
+              >
                 <FolderOpen className="w-3.5 h-3.5 text-green-400" />
                 Projects System
               </Link>
@@ -159,4 +172,3 @@ export default function NotFoundPage() {
     </div>
   );
 }
-

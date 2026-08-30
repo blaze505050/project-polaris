@@ -30,7 +30,6 @@ A modern, full-featured Wix Astro template built with React, TypeScript, and Tai
 - **Build Tool**: Vite
 - **Deployment**: Cloudflare
 
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -42,11 +41,13 @@ A modern, full-featured Wix Astro template built with React, TypeScript, and Tai
 ### Installation
 
 1. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 2. **Set up environment variables**:
+
    ```bash
    npm run env
    ```
@@ -140,7 +141,6 @@ For support and questions:
 
 - Check the [Wix Developer Documentation](https://dev.wix.com/)
 - Review the [Astro Documentation](https://docs.astro.build/)
-
 
 ---
 

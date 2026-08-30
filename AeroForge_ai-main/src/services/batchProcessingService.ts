@@ -3,10 +3,18 @@
  * Advanced queuing, parametric studies, result aggregation, and comprehensive analytics
  */
 
-export type BatchJobStatus = 'queued' | 'processing' | 'completed' | 'failed' | 'cancelled' | 'paused';
-export type BatchOperationType = 'export' | 'simulation' | 'optimization' | 'analysis' | 'conversion' | 'validation' | 'parametric-study';
-export type ParameterType = 'range' | 'list' | 'logarithmic' | 'geometric';
-export type QueueStrategy = 'fifo' | 'priority' | 'adaptive';
+export type BatchJobStatus =
+  "queued" | "processing" | "completed" | "failed" | "cancelled" | "paused";
+export type BatchOperationType =
+  | "export"
+  | "simulation"
+  | "optimization"
+  | "analysis"
+  | "conversion"
+  | "validation"
+  | "parametric-study";
+export type ParameterType = "range" | "list" | "logarithmic" | "geometric";
+export type QueueStrategy = "fifo" | "priority" | "adaptive";
 
 export interface ParameterDefinition {
   name: string;
@@ -21,14 +29,14 @@ export interface ParameterDefinition {
 export interface ParametricStudyConfig {
   parameters: ParameterDefinition[];
   baselineParameters: Record<string, any>;
-  aggregationMethod: 'mean' | 'median' | 'min' | 'max' | 'all';
+  aggregationMethod: "mean" | "median" | "min" | "max" | "all";
 }
 
 export interface BatchJobItem {
   id: string;
   designId: string;
   name: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
+  status: "pending" | "processing" | "completed" | "failed";
   progress: number;
   error?: string;
   result?: any;
@@ -61,7 +69,7 @@ export interface BatchJob {
   createdAt: Date;
   startedAt?: Date;
   completedAt?: Date;
-  priority: 'low' | 'normal' | 'high';
+  priority: "low" | "normal" | "high";
   parameters: Record<string, any>;
   parametricStudyConfig?: ParametricStudyConfig;
   aggregatedResults?: AggregatedResult[];
@@ -103,7 +111,7 @@ class BatchProcessingService {
     timeoutPerItem: 300000,
     retryAttempts: 3,
     retryDelay: 5000,
-    queueStrategy: 'adaptive',
+    queueStrategy: "adaptive",
     enablePersistence: true,
     enableMetrics: true,
   };
@@ -127,37 +135,35 @@ class BatchProcessingService {
   createBatchJob(
     name: string,
     operationType: BatchOperationType,
-    items: Omit<BatchJobItem, 'status' | 'progress'>[],
+    items: Omit<BatchJobItem, "status" | "progress">[],
     parameters: Record<string, any> = {},
-    priority: 'low' | 'normal' | 'high' = 'normal',
+    priority: "low" | "normal" | "high" = "normal",
     parametricStudyConfig?: ParametricStudyConfig,
-    metadata?: BatchJob['metadata']
+    metadata?: BatchJob["metadata"],
   ): BatchJob {
     const jobId = `batch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    
+
     // Generate parametric variants if study config provided
     let finalItems = items;
     if (parametricStudyConfig) {
       finalItems = this.generateParametricVariants(items, parametricStudyConfig);
     }
-    
+
     const job: BatchJob = {
       id: jobId,
       name,
       operationType,
-      status: 'queued',
+      status: "queued",
       totalItems: finalItems.length,
       completedItems: 0,
       failedItems: 0,
-      items: finalItems.map((item, index) => (
-        {
-          ...item,
-          id: `${jobId}-item-${index}`,
-          status: 'pending',
-          progress: 0,
-          retryCount: 0,
-        }
-      )),
+      items: finalItems.map((item, index) => ({
+        ...item,
+        id: `${jobId}-item-${index}`,
+        status: "pending",
+        progress: 0,
+        retryCount: 0,
+      })),
       progress: 0,
       estimatedTimeRemaining: 0,
       createdAt: new Date(),
@@ -180,17 +186,19 @@ class BatchProcessingService {
    * Generate parametric study variants
    */
   private generateParametricVariants(
-    baseItems: Omit<BatchJobItem, 'status' | 'progress'>[],
-    config: ParametricStudyConfig
-  ): Omit<BatchJobItem, 'status' | 'progress'>[] {
-    const variants: Omit<BatchJobItem, 'status' | 'progress'>[] = [];
+    baseItems: Omit<BatchJobItem, "status" | "progress">[],
+    config: ParametricStudyConfig,
+  ): Omit<BatchJobItem, "status" | "progress">[] {
+    const variants: Omit<BatchJobItem, "status" | "progress">[] = [];
     const parameterCombinations = this.generateParameterCombinations(config.parameters);
 
     for (const baseItem of baseItems) {
       for (const paramSet of parameterCombinations) {
         variants.push({
           ...baseItem,
-          name: `${baseItem.name} - ${Object.entries(paramSet).map(([k, v]) => `${k}:${v}`).join(', ')}`,
+          name: `${baseItem.name} - ${Object.entries(paramSet)
+            .map(([k, v]) => `${k}:${v}`)
+            .join(", ")}`,
           parametricVariant: paramSet,
         });
       }
@@ -215,7 +223,7 @@ class BatchProcessingService {
       if (arrays.length === 0) return [[]];
       const [first, ...rest] = arrays;
       const restProduct = cartesianProduct(rest);
-      return first.flatMap(val => restProduct.map(combo => [val, ...combo]));
+      return first.flatMap((val) => restProduct.map((combo) => [val, ...combo]));
     };
 
     const product = cartesianProduct(parameterValues);
@@ -234,11 +242,16 @@ class BatchProcessingService {
    * Generate values for a parameter based on its type
    */
   private generateParameterValues(param: ParameterDefinition): any[] {
-    if (param.type === 'list' && param.values) {
+    if (param.type === "list" && param.values) {
       return param.values;
     }
 
-    if (param.type === 'range' && param.min !== undefined && param.max !== undefined && param.steps) {
+    if (
+      param.type === "range" &&
+      param.min !== undefined &&
+      param.max !== undefined &&
+      param.steps
+    ) {
       const values: number[] = [];
       const step = (param.max - param.min) / (param.steps - 1);
       for (let i = 0; i < param.steps; i++) {
@@ -247,7 +260,7 @@ class BatchProcessingService {
       return values;
     }
 
-    if (param.type === 'logarithmic' && param.min && param.max && param.steps && param.base) {
+    if (param.type === "logarithmic" && param.min && param.max && param.steps && param.base) {
       const values: number[] = [];
       const logMin = Math.log(param.min) / Math.log(param.base);
       const logMax = Math.log(param.max) / Math.log(param.base);
@@ -258,7 +271,7 @@ class BatchProcessingService {
       return values;
     }
 
-    if (param.type === 'geometric' && param.min && param.max && param.steps) {
+    if (param.type === "geometric" && param.min && param.max && param.steps) {
       const values: number[] = [];
       const ratio = Math.pow(param.max / param.min, 1 / (param.steps - 1));
       for (let i = 0; i < param.steps; i++) {
@@ -288,7 +301,7 @@ class BatchProcessingService {
    * Get jobs by status
    */
   getJobsByStatus(status: BatchJobStatus): BatchJob[] {
-    return Array.from(this.jobs.values()).filter(job => job.status === status);
+    return Array.from(this.jobs.values()).filter((job) => job.status === status);
   }
 
   /**
@@ -298,12 +311,12 @@ class BatchProcessingService {
     const job = this.jobs.get(jobId);
     if (!job) return false;
 
-    if (job.status === 'processing') {
-      job.status = 'cancelled';
+    if (job.status === "processing") {
+      job.status = "cancelled";
       this.activeJobs.delete(jobId);
-    } else if (job.status === 'queued') {
-      job.status = 'cancelled';
-      this.queue = this.queue.filter(id => id !== jobId);
+    } else if (job.status === "queued") {
+      job.status = "cancelled";
+      this.queue = this.queue.filter((id) => id !== jobId);
     }
 
     return true;
@@ -314,9 +327,9 @@ class BatchProcessingService {
    */
   pauseJob(jobId: string): boolean {
     const job = this.jobs.get(jobId);
-    if (!job || job.status !== 'processing') return false;
+    if (!job || job.status !== "processing") return false;
 
-    job.status = 'paused';
+    job.status = "paused";
     return true;
   }
 
@@ -325,9 +338,9 @@ class BatchProcessingService {
    */
   resumeJob(jobId: string): boolean {
     const job = this.jobs.get(jobId);
-    if (!job || job.status !== 'paused') return false;
+    if (!job || job.status !== "paused") return false;
 
-    job.status = 'processing';
+    job.status = "processing";
     this.processQueue();
     return true;
   }
@@ -352,12 +365,12 @@ class BatchProcessingService {
    * Sort queue based on strategy
    */
   private sortQueue(): void {
-    if (this.config.queueStrategy === 'priority') {
+    if (this.config.queueStrategy === "priority") {
       this.queue.sort((a, b) => {
         const jobA = this.jobs.get(a);
         const jobB = this.jobs.get(b);
         if (!jobA || !jobB) return 0;
-        
+
         const priorityOrder = { high: 0, normal: 1, low: 2 };
         return priorityOrder[jobA.priority] - priorityOrder[jobB.priority];
       });
@@ -376,12 +389,12 @@ class BatchProcessingService {
       if (!job) continue;
 
       this.activeJobs.add(jobId);
-      job.status = 'processing';
+      job.status = "processing";
       job.startedAt = new Date();
 
-      this.executeJob(job).catch(error => {
+      this.executeJob(job).catch((error) => {
         console.error(`Job ${jobId} failed:`, error);
-        job.status = 'failed';
+        job.status = "failed";
       });
     }
   }
@@ -396,13 +409,13 @@ class BatchProcessingService {
     const processingTimes: number[] = [];
 
     for (let i = 0; i < job.items.length; i++) {
-      if (job.status === 'cancelled') break;
-      if (job.status === 'paused') {
+      if (job.status === "cancelled") break;
+      if (job.status === "paused") {
         await this.waitForResume(job.id);
       }
 
       const item = job.items[i];
-      item.status = 'processing';
+      item.status = "processing";
       item.startTime = new Date();
 
       try {
@@ -410,7 +423,7 @@ class BatchProcessingService {
         const result = await this.processItem(item, job);
         const itemDuration = Date.now() - itemStartTime;
 
-        item.status = 'completed';
+        item.status = "completed";
         item.progress = 100;
         item.result = result;
         item.duration = itemDuration;
@@ -418,8 +431,8 @@ class BatchProcessingService {
         processingTimes.push(itemDuration);
         successCount++;
       } catch (error) {
-        item.status = 'failed';
-        item.error = error instanceof Error ? error.message : 'Unknown error';
+        item.status = "failed";
+        item.error = error instanceof Error ? error.message : "Unknown error";
         failureCount++;
       }
 
@@ -429,7 +442,7 @@ class BatchProcessingService {
       job.progress = Math.round((job.completedItems / job.totalItems) * 100);
       job.estimatedTimeRemaining = this.estimateRemainingTime(
         processingTimes,
-        job.totalItems - job.completedItems
+        job.totalItems - job.completedItems,
       );
 
       this.notifyItemProgress(item);
@@ -437,21 +450,22 @@ class BatchProcessingService {
     }
 
     // Finalize job
-    job.status = 'completed';
+    job.status = "completed";
     job.completedAt = new Date();
     job.progress = 100;
 
     const totalTime = Date.now() - startTime;
     const successRate = job.totalItems > 0 ? (successCount / job.totalItems) * 100 : 0;
-    
+
     job.results = {
       successful: successCount,
       failed: failureCount,
-      averageProcessingTime: processingTimes.length > 0 
-        ? processingTimes.reduce((a, b) => a + b, 0) / processingTimes.length 
-        : 0,
+      averageProcessingTime:
+        processingTimes.length > 0
+          ? processingTimes.reduce((a, b) => a + b, 0) / processingTimes.length
+          : 0,
       totalProcessingTime: totalTime,
-      throughput: totalTime > 0 ? (job.totalItems / (totalTime / 1000)) : 0,
+      throughput: totalTime > 0 ? job.totalItems / (totalTime / 1000) : 0,
       successRate,
     };
 
@@ -473,7 +487,7 @@ class BatchProcessingService {
     const aggregated = new Map<string, any>();
 
     for (const item of job.items) {
-      if (item.status !== 'completed' || !item.parametricVariant) continue;
+      if (item.status !== "completed" || !item.parametricVariant) continue;
 
       const key = JSON.stringify(item.parametricVariant);
       if (!aggregated.has(key)) {
@@ -488,7 +502,7 @@ class BatchProcessingService {
 
       const entry = aggregated.get(key);
       entry.count++;
-      if (item.status === 'completed') entry.successes++;
+      if (item.status === "completed") entry.successes++;
 
       if (item.result?.metrics) {
         for (const [metricName, metricValue] of Object.entries(item.result.metrics)) {
@@ -504,22 +518,26 @@ class BatchProcessingService {
       const variance: Record<string, number> = {};
 
       for (const [metricName, values] of Object.entries(entry.values)) {
-        const numValues = (values as number[]).map(v => typeof v === 'number' ? v : parseFloat(String(v)));
-        
-        if (job.parametricStudyConfig?.aggregationMethod === 'mean') {
+        const numValues = (values as number[]).map((v) =>
+          typeof v === "number" ? v : parseFloat(String(v)),
+        );
+
+        if (job.parametricStudyConfig?.aggregationMethod === "mean") {
           metrics[metricName] = numValues.reduce((a, b) => a + b, 0) / numValues.length;
-        } else if (job.parametricStudyConfig?.aggregationMethod === 'median') {
+        } else if (job.parametricStudyConfig?.aggregationMethod === "median") {
           const sorted = [...numValues].sort((a, b) => a - b);
           metrics[metricName] = sorted[Math.floor(sorted.length / 2)];
-        } else if (job.parametricStudyConfig?.aggregationMethod === 'min') {
+        } else if (job.parametricStudyConfig?.aggregationMethod === "min") {
           metrics[metricName] = Math.min(...numValues);
-        } else if (job.parametricStudyConfig?.aggregationMethod === 'max') {
+        } else if (job.parametricStudyConfig?.aggregationMethod === "max") {
           metrics[metricName] = Math.max(...numValues);
         }
 
         const mean = metrics[metricName];
-        const squaredDiffs = numValues.map(v => Math.pow(v - mean, 2));
-        variance[metricName] = Math.sqrt(squaredDiffs.reduce((a, b) => a + b, 0) / numValues.length);
+        const squaredDiffs = numValues.map((v) => Math.pow(v - mean, 2));
+        variance[metricName] = Math.sqrt(
+          squaredDiffs.reduce((a, b) => a + b, 0) / numValues.length,
+        );
       }
 
       results.push({
@@ -546,38 +564,34 @@ class BatchProcessingService {
         return await this.executeOperation(item, job, attempt);
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
-        
+
         if (attempt < this.config.retryAttempts - 1) {
-          await new Promise(resolve => 
-            setTimeout(resolve, this.config.retryDelay * Math.pow(2, attempt))
+          await new Promise((resolve) =>
+            setTimeout(resolve, this.config.retryDelay * Math.pow(2, attempt)),
           );
         }
       }
     }
 
-    throw lastError || new Error('Operation failed after all retry attempts');
+    throw lastError || new Error("Operation failed after all retry attempts");
   }
 
   /**
    * Execute the actual operation based on type
    */
-  private async executeOperation(
-    item: BatchJobItem,
-    job: BatchJob,
-    attempt: number
-  ): Promise<any> {
+  private async executeOperation(item: BatchJobItem, job: BatchJob, attempt: number): Promise<any> {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error(`Operation timeout after ${this.config.timeoutPerItem}ms`));
       }, this.config.timeoutPerItem);
 
       const processingTime = this.getProcessingTime(job.operationType);
-      
+
       setTimeout(() => {
         clearTimeout(timeout);
 
         if (Math.random() < 0.05 && attempt === 0) {
-          reject(new Error('Simulated transient failure'));
+          reject(new Error("Simulated transient failure"));
           return;
         }
 
@@ -605,7 +619,7 @@ class BatchProcessingService {
       analysis: 5000,
       conversion: 3000,
       validation: 1500,
-      'parametric-study': 10000,
+      "parametric-study": 10000,
     };
     return times[operationType] + Math.random() * 2000;
   }
@@ -617,7 +631,7 @@ class BatchProcessingService {
     const metrics: Record<BatchOperationType, Record<string, any>> = {
       export: {
         fileSize: Math.floor(Math.random() * 50) + 10,
-        format: 'STEP',
+        format: "STEP",
         validationPassed: true,
       },
       simulation: {
@@ -636,8 +650,8 @@ class BatchProcessingService {
         recommendations: Math.floor(Math.random() * 8) + 2,
       },
       conversion: {
-        sourceFormat: 'IGES',
-        targetFormat: 'STEP',
+        sourceFormat: "IGES",
+        targetFormat: "STEP",
         geometryPreserved: (Math.random() * 5 + 95).toFixed(1),
       },
       validation: {
@@ -645,7 +659,7 @@ class BatchProcessingService {
         checksPassed: Math.floor(Math.random() * 45) + 20,
         dfmCompliant: Math.random() > 0.1,
       },
-      'parametric-study': {
+      "parametric-study": {
         parameterVariance: (Math.random() * 20 + 5).toFixed(2),
         optimalValue: (Math.random() * 100).toFixed(2),
         convergenceRate: (Math.random() * 0.5 + 0.5).toFixed(3),
@@ -667,10 +681,10 @@ class BatchProcessingService {
    * Wait for job to resume
    */
   private waitForResume(jobId: string): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const checkInterval = setInterval(() => {
         const job = this.jobs.get(jobId);
-        if (job && job.status !== 'paused') {
+        if (job && job.status !== "paused") {
           clearInterval(checkInterval);
           resolve();
         }
@@ -714,38 +728,46 @@ class BatchProcessingService {
   private persistJob(job: BatchJob): void {
     if (!this.config.enablePersistence) return;
     try {
-      const stored = localStorage.getItem('batch_jobs') || '[]';
+      const stored = localStorage.getItem("batch_jobs") || "[]";
       const jobs = JSON.parse(stored);
       jobs.push(job);
-      localStorage.setItem('batch_jobs', JSON.stringify(jobs.slice(-100)));
+      localStorage.setItem("batch_jobs", JSON.stringify(jobs.slice(-100)));
     } catch (e) {
-      console.warn('Failed to persist job:', e);
+      console.warn("Failed to persist job:", e);
     }
   }
 
   /**
    * Export job results
    */
-  exportResults(jobId: string, format: 'json' | 'csv'): Blob {
+  exportResults(jobId: string, format: "json" | "csv"): Blob {
     const job = this.jobs.get(jobId);
-    if (!job) throw new Error('Job not found');
+    if (!job) throw new Error("Job not found");
 
-    if (format === 'json') {
-      return new Blob([JSON.stringify(job, null, 2)], { type: 'application/json' });
+    if (format === "json") {
+      return new Blob([JSON.stringify(job, null, 2)], { type: "application/json" });
     } else {
-      const headers = ['Item ID', 'Design ID', 'Status', 'Progress', 'Duration (ms)', 'Error', 'Retry Count'];
-      const rows = job.items.map(item => [
+      const headers = [
+        "Item ID",
+        "Design ID",
+        "Status",
+        "Progress",
+        "Duration (ms)",
+        "Error",
+        "Retry Count",
+      ];
+      const rows = job.items.map((item) => [
         item.id,
         item.designId,
         item.status,
         item.progress,
-        item.duration || '',
-        item.error || '',
+        item.duration || "",
+        item.error || "",
         item.retryCount || 0,
       ]);
 
-      const csv = [headers, ...rows].map(row => row.join(',')).join('\n');
-      return new Blob([csv], { type: 'text/csv' });
+      const csv = [headers, ...rows].map((row) => row.join(",")).join("\n");
+      return new Blob([csv], { type: "text/csv" });
     }
   }
 
@@ -755,7 +777,7 @@ class BatchProcessingService {
   clearCompletedJobs(): number {
     let cleared = 0;
     for (const [jobId, job] of this.jobs.entries()) {
-      if (job.status === 'completed' || job.status === 'failed' || job.status === 'cancelled') {
+      if (job.status === "completed" || job.status === "failed" || job.status === "cancelled") {
         this.jobs.delete(jobId);
         cleared++;
       }
@@ -777,8 +799,8 @@ class BatchProcessingService {
     totalThroughput: number;
   } {
     const allJobs = Array.from(this.jobs.values());
-    const completedJobs = allJobs.filter(j => j.status === 'completed' || j.status === 'failed');
-    
+    const completedJobs = allJobs.filter((j) => j.status === "completed" || j.status === "failed");
+
     const totalItemsProcessed = completedJobs.reduce((sum, job) => sum + job.completedItems, 0);
     const totalDuration = completedJobs.reduce((sum, job) => {
       if (job.startedAt && job.completedAt) {
@@ -787,14 +809,17 @@ class BatchProcessingService {
       return sum;
     }, 0);
 
-    const totalThroughput = completedJobs.reduce((sum, job) => sum + (job.results?.throughput || 0), 0);
+    const totalThroughput = completedJobs.reduce(
+      (sum, job) => sum + (job.results?.throughput || 0),
+      0,
+    );
 
     return {
       totalJobs: allJobs.length,
       activeJobs: this.activeJobs.size,
       queuedJobs: this.queue.length,
-      completedJobs: allJobs.filter(j => j.status === 'completed').length,
-      failedJobs: allJobs.filter(j => j.status === 'failed').length,
+      completedJobs: allJobs.filter((j) => j.status === "completed").length,
+      failedJobs: allJobs.filter((j) => j.status === "failed").length,
       totalItemsProcessed,
       averageJobDuration: completedJobs.length > 0 ? totalDuration / completedJobs.length : 0,
       totalThroughput: totalThroughput / Math.max(completedJobs.length, 1),

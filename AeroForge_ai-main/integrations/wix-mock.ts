@@ -20,7 +20,7 @@ export const items = {
     }),
   }),
   queryReferenced: async () => ({ items: [], totalCount: 0, hasNext: () => false }),
-  insert: async (_col: string, data: any) => ({ _id: 'mock-id-' + Date.now(), ...data }),
+  insert: async (_col: string, data: any) => ({ _id: "mock-id-" + Date.now(), ...data }),
   insertReference: async () => {},
   removeReference: async () => {},
   update: async (_col: string, data: any) => data,
@@ -36,18 +36,18 @@ export const currentCart = {
   addToCurrentCart: async () => ({}),
   updateCurrentCartLineItemQuantity: async () => ({}),
   removeLineItemsFromCurrentCart: async () => ({}),
-  createCheckoutFromCurrentCart: async () => ({ checkoutUrl: '#' }),
+  createCheckoutFromCurrentCart: async () => ({ checkoutUrl: "#" }),
   deleteCurrentCart: async () => ({}),
-  ChannelType: { WEB: 'WEB' },
+  ChannelType: { WEB: "WEB" },
 };
 
 export const checkout = {
-  createCheckout: async () => ({ checkoutUrl: '#' }),
-  ChannelType: { WEB: 'WEB' },
+  createCheckout: async () => ({ checkoutUrl: "#" }),
+  ChannelType: { WEB: "WEB" },
 };
 
 export const redirects = {
-  createRedirectSession: async () => ({ redirectUrl: '#' }),
+  createRedirectSession: async () => ({ redirectUrl: "#" }),
 };
 
 export const CurrentCartServiceDefinition = {};

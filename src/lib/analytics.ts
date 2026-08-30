@@ -57,7 +57,7 @@ export function initAnalytics() {
   window.addEventListener("unhandledrejection", (event) => {
     reportErrorToTelemetry(
       event.reason instanceof Error ? event.reason : new Error(String(event.reason)),
-      "unhandledrejection"
+      "unhandledrejection",
     );
   });
 }

@@ -1,14 +1,24 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Search, Filter, Download, Settings, Star, Eye, BarChart3, Info } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Search,
+  Filter,
+  Download,
+  Settings,
+  Star,
+  Eye,
+  BarChart3,
+  Info,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface CelestialObject {
   id: string;
   name: string;
-  type: 'Galaxy' | 'Nebula' | 'Star Cluster' | 'Supernova' | 'Quasar';
+  type: "Galaxy" | "Nebula" | "Star Cluster" | "Supernova" | "Quasar";
   ra: number;
   dec: number;
   magnitude: number;
@@ -21,136 +31,145 @@ interface CelestialObject {
 
 const CATALOG: CelestialObject[] = [
   {
-    id: 'andromeda',
-    name: 'Andromeda Galaxy',
-    type: 'Galaxy',
+    id: "andromeda",
+    name: "Andromeda Galaxy",
+    type: "Galaxy",
     ra: 0.7,
     dec: 41.3,
     magnitude: 3.4,
     distance: 2.5,
     redshift: -0.001,
     luminosity: 2.6e10,
-    color: '#00F0FF',
-    description: 'Nearest large galaxy to the Milky Way, approaching at 110 km/s',
+    color: "#00F0FF",
+    description: "Nearest large galaxy to the Milky Way, approaching at 110 km/s",
   },
   {
-    id: 'orion',
-    name: 'Orion Nebula',
-    type: 'Nebula',
+    id: "orion",
+    name: "Orion Nebula",
+    type: "Nebula",
     ra: 5.55,
     dec: -5.4,
     magnitude: 4.0,
     distance: 1.3,
     redshift: 0,
     luminosity: 1.2e5,
-    color: '#FF007A',
-    description: 'Stellar nursery with active star formation',
+    color: "#FF007A",
+    description: "Stellar nursery with active star formation",
   },
   {
-    id: 'pleiades',
-    name: 'Pleiades Star Cluster',
-    type: 'Star Cluster',
+    id: "pleiades",
+    name: "Pleiades Star Cluster",
+    type: "Star Cluster",
     ra: 3.79,
     dec: 24.1,
     magnitude: 1.6,
     distance: 0.136,
     redshift: 0,
     luminosity: 1.8e4,
-    color: '#F59E0B',
-    description: 'Young open cluster, approximately 100 million years old',
+    color: "#F59E0B",
+    description: "Young open cluster, approximately 100 million years old",
   },
   {
-    id: 'crab',
-    name: 'Crab Nebula',
-    type: 'Supernova',
+    id: "crab",
+    name: "Crab Nebula",
+    type: "Supernova",
     ra: 5.58,
     dec: 22.0,
     magnitude: 8.4,
     distance: 6.3,
     redshift: 0.0001,
     luminosity: 5e4,
-    color: '#A78BFA',
-    description: 'Remnant of supernova SN 1054, contains a pulsar',
+    color: "#A78BFA",
+    description: "Remnant of supernova SN 1054, contains a pulsar",
   },
   {
-    id: '3c273',
-    name: '3C 273 Quasar',
-    type: 'Quasar',
+    id: "3c273",
+    name: "3C 273 Quasar",
+    type: "Quasar",
     ra: 12.29,
     dec: 2.05,
     magnitude: 12.9,
     distance: 2.4e9,
     redshift: 0.158,
     luminosity: 4e40,
-    color: '#10B981',
-    description: 'Brightest quasar in the sky, powered by supermassive black hole',
+    color: "#10B981",
+    description: "Brightest quasar in the sky, powered by supermassive black hole",
   },
   {
-    id: 'sombrero',
-    name: 'Sombrero Galaxy',
-    type: 'Galaxy',
+    id: "sombrero",
+    name: "Sombrero Galaxy",
+    type: "Galaxy",
     ra: 12.4,
     dec: -11.6,
     magnitude: 8.0,
     distance: 29.3,
     redshift: 0.003,
     luminosity: 8e9,
-    color: '#00F0FF',
-    description: 'Lenticular galaxy with prominent dust lane',
+    color: "#00F0FF",
+    description: "Lenticular galaxy with prominent dust lane",
   },
   {
-    id: 'horsehead',
-    name: 'Horsehead Nebula',
-    type: 'Nebula',
+    id: "horsehead",
+    name: "Horsehead Nebula",
+    type: "Nebula",
     ra: 5.76,
     dec: -2.27,
     magnitude: 13.0,
     distance: 1.5,
     redshift: 0,
     luminosity: 1e3,
-    color: '#FF007A',
-    description: 'Dark nebula silhouetted against bright emission nebula',
+    color: "#FF007A",
+    description: "Dark nebula silhouetted against bright emission nebula",
   },
   {
-    id: 'ring',
-    name: 'Ring Nebula',
-    type: 'Nebula',
+    id: "ring",
+    name: "Ring Nebula",
+    type: "Nebula",
     ra: 18.89,
     dec: 33.02,
     magnitude: 8.8,
     distance: 2.3,
     redshift: 0,
     luminosity: 3e4,
-    color: '#F59E0B',
-    description: 'Planetary nebula, shell of gas ejected by dying star',
+    color: "#F59E0B",
+    description: "Planetary nebula, shell of gas ejected by dying star",
   },
 ];
 
 export default function AstroLabDeepSpaceObservationPage() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedType, setSelectedType] = useState<string>("");
   const [selectedObject, setSelectedObject] = useState<CelestialObject | null>(null);
-  const [sortBy, setSortBy] = useState<'magnitude' | 'distance' | 'luminosity'>('magnitude');
+  const [sortBy, setSortBy] = useState<"magnitude" | "distance" | "luminosity">("magnitude");
 
   const filteredObjects = useMemo(() => {
-    return CATALOG.filter(obj => {
+    return CATALOG.filter((obj) => {
       const matchesSearch = obj.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesType = !selectedType || obj.type === selectedType;
       return matchesSearch && matchesType;
     }).sort((a, b) => {
-      if (sortBy === 'magnitude') return a.magnitude - b.magnitude;
-      if (sortBy === 'distance') return a.distance - b.distance;
+      if (sortBy === "magnitude") return a.magnitude - b.magnitude;
+      if (sortBy === "distance") return a.distance - b.distance;
       return b.luminosity - a.luminosity;
     });
   }, [searchTerm, selectedType, sortBy]);
 
-  const types = Array.from(new Set(CATALOG.map(obj => obj.type)));
+  const types = Array.from(new Set(CATALOG.map((obj) => obj.type)));
 
   const handleExport = () => {
     const csv = [
-      ['Name', 'Type', 'RA (h)', 'Dec (°)', 'Magnitude', 'Distance (Mly)', 'Redshift', 'Luminosity (L☉)'],
-      ...filteredObjects.map(obj => [
+      [
+        "Name",
+        "Type",
+        "RA (h)",
+        "Dec (°)",
+        "Magnitude",
+        "Distance (Mly)",
+        "Redshift",
+        "Luminosity (L☉)",
+      ],
+      ...filteredObjects.map((obj) => [
         obj.name,
         obj.type,
         obj.ra.toFixed(2),
@@ -159,36 +178,53 @@ export default function AstroLabDeepSpaceObservationPage() {
         obj.distance.toFixed(2),
         obj.redshift.toFixed(4),
         obj.luminosity.toExponential(2),
-      ])
-    ].map(row => row.join(',')).join('\n');
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `deep-space-catalog-${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `deep-space-catalog-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
   };
 
   return (
     <div className="min-h-screen bg-[#0B0E14] text-foreground flex flex-col">
       <Header />
-      
+
       <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button onClick={() => navigate('/astrolab')} className="p-2 hover:bg-[#131924] rounded-lg transition">
+              <button
+                onClick={() => navigate("/astrolab")}
+                className="p-2 hover:bg-[#131924] rounded-lg transition"
+              >
                 <ArrowLeft size={20} className="text-[#00F0FF]" />
               </button>
               <div>
-                <h1 className="text-4xl font-bold text-[#00F0FF] font-mono">Deep Space Observation</h1>
-                <p className="text-secondary-foreground text-sm">Catalog of celestial objects & deep-sky mapping</p>
+                <h1 className="text-4xl font-bold text-[#00F0FF] font-mono">
+                  Deep Space Observation
+                </h1>
+                <p className="text-secondary-foreground text-sm">
+                  Catalog of celestial objects & deep-sky mapping
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={handleExport} className="p-2 hover:bg-[#131924] rounded-lg transition" title="Export catalog">
+              <button
+                onClick={handleExport}
+                className="p-2 hover:bg-[#131924] rounded-lg transition"
+                title="Export catalog"
+              >
                 <Download size={20} className="text-[#00F0FF]" />
               </button>
               <button className="p-2 hover:bg-[#131924] rounded-lg transition" title="Settings">
@@ -210,15 +246,17 @@ export default function AstroLabDeepSpaceObservationPage() {
                   className="w-full pl-10 pr-4 py-2 bg-[#0B0E14] border border-[#00F0FF33] rounded-lg text-foreground placeholder-secondary-foreground focus:outline-none focus:border-[#00F0FF]"
                 />
               </div>
-              
+
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
                 className="px-4 py-2 bg-[#0B0E14] border border-[#00F0FF33] rounded-lg text-foreground focus:outline-none focus:border-[#00F0FF]"
               >
                 <option value="">All Types</option>
-                {types.map(type => (
-                  <option key={type} value={type}>{type}</option>
+                {types.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
                 ))}
               </select>
 
@@ -249,19 +287,24 @@ export default function AstroLabDeepSpaceObservationPage() {
                       onClick={() => setSelectedObject(obj)}
                       className={`w-full text-left p-4 border-b border-[#00F0FF33] transition ${
                         selectedObject?.id === obj.id
-                          ? 'bg-[#00F0FF]/20 border-l-4 border-l-[#00F0FF]'
-                          : 'hover:bg-[#131924]/80'
+                          ? "bg-[#00F0FF]/20 border-l-4 border-l-[#00F0FF]"
+                          : "hover:bg-[#131924]/80"
                       }`}
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-3">
-                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: obj.color }} />
+                          <div
+                            className="w-3 h-3 rounded-full"
+                            style={{ backgroundColor: obj.color }}
+                          />
                           <div>
                             <h3 className="font-mono font-bold text-foreground">{obj.name}</h3>
                             <p className="text-xs text-secondary-foreground">{obj.type}</p>
                           </div>
                         </div>
-                        <span className="text-xs font-mono text-[#00F0FF]">m={obj.magnitude.toFixed(1)}</span>
+                        <span className="text-xs font-mono text-[#00F0FF]">
+                          m={obj.magnitude.toFixed(1)}
+                        </span>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-xs font-mono text-secondary-foreground">
                         <div>RA: {obj.ra.toFixed(2)}h</div>
@@ -284,10 +327,15 @@ export default function AstroLabDeepSpaceObservationPage() {
                 {/* Object Info */}
                 <div className="bg-[#131924]/60 backdrop-blur-md border border-[#00F0FF33] rounded-lg p-4">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-4 h-4 rounded-full" style={{ backgroundColor: selectedObject.color }} />
-                    <h2 className="text-xl font-mono font-bold text-foreground">{selectedObject.name}</h2>
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: selectedObject.color }}
+                    />
+                    <h2 className="text-xl font-mono font-bold text-foreground">
+                      {selectedObject.name}
+                    </h2>
                   </div>
-                  
+
                   <div className="space-y-3 text-xs font-mono">
                     <div className="bg-[#0B0E14] p-3 rounded border border-[#00F0FF33]">
                       <div className="text-secondary-foreground mb-1">Type</div>
@@ -297,33 +345,45 @@ export default function AstroLabDeepSpaceObservationPage() {
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-[#0B0E14] p-3 rounded border border-[#FF007A33]">
                         <div className="text-secondary-foreground mb-1">Magnitude</div>
-                        <div className="text-[#FF007A] font-bold">{selectedObject.magnitude.toFixed(2)}</div>
+                        <div className="text-[#FF007A] font-bold">
+                          {selectedObject.magnitude.toFixed(2)}
+                        </div>
                       </div>
                       <div className="bg-[#0B0E14] p-3 rounded border border-[#F59E0B33]">
                         <div className="text-secondary-foreground mb-1">Distance</div>
-                        <div className="text-[#F59E0B] font-bold">{selectedObject.distance.toFixed(2)} Mly</div>
+                        <div className="text-[#F59E0B] font-bold">
+                          {selectedObject.distance.toFixed(2)} Mly
+                        </div>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-[#0B0E14] p-3 rounded border border-[#A78BFA33]">
                         <div className="text-secondary-foreground mb-1">RA</div>
-                        <div className="text-[#A78BFA] font-bold">{selectedObject.ra.toFixed(2)}h</div>
+                        <div className="text-[#A78BFA] font-bold">
+                          {selectedObject.ra.toFixed(2)}h
+                        </div>
                       </div>
                       <div className="bg-[#0B0E14] p-3 rounded border border-[#10B98133]">
                         <div className="text-secondary-foreground mb-1">Dec</div>
-                        <div className="text-[#10B981] font-bold">{selectedObject.dec.toFixed(2)}°</div>
+                        <div className="text-[#10B981] font-bold">
+                          {selectedObject.dec.toFixed(2)}°
+                        </div>
                       </div>
                     </div>
 
                     <div className="bg-[#0B0E14] p-3 rounded border border-[#00F0FF33]">
                       <div className="text-secondary-foreground mb-1">Redshift</div>
-                      <div className="text-[#00F0FF] font-bold">{selectedObject.redshift.toFixed(4)}</div>
+                      <div className="text-[#00F0FF] font-bold">
+                        {selectedObject.redshift.toFixed(4)}
+                      </div>
                     </div>
 
                     <div className="bg-[#0B0E14] p-3 rounded border border-[#00F0FF33]">
                       <div className="text-secondary-foreground mb-1">Luminosity</div>
-                      <div className="text-[#00F0FF] font-bold">{selectedObject.luminosity.toExponential(2)} L☉</div>
+                      <div className="text-[#00F0FF] font-bold">
+                        {selectedObject.luminosity.toExponential(2)} L☉
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -381,11 +441,15 @@ export default function AstroLabDeepSpaceObservationPage() {
               </div>
               <div className="bg-[#0B0E14] p-3 rounded border border-[#F59E0B33]">
                 <div className="text-xs text-secondary-foreground mb-1">Avg Distance</div>
-                <div className="text-2xl font-bold text-[#F59E0B]">{(CATALOG.reduce((a, b) => a + b.distance, 0) / CATALOG.length).toFixed(0)} Mly</div>
+                <div className="text-2xl font-bold text-[#F59E0B]">
+                  {(CATALOG.reduce((a, b) => a + b.distance, 0) / CATALOG.length).toFixed(0)} Mly
+                </div>
               </div>
               <div className="bg-[#0B0E14] p-3 rounded border border-[#A78BFA33]">
                 <div className="text-xs text-secondary-foreground mb-1">Brightest</div>
-                <div className="text-2xl font-bold text-[#A78BFA]">{Math.min(...CATALOG.map(o => o.magnitude)).toFixed(1)}</div>
+                <div className="text-2xl font-bold text-[#A78BFA]">
+                  {Math.min(...CATALOG.map((o) => o.magnitude)).toFixed(1)}
+                </div>
               </div>
             </div>
           </div>

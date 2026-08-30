@@ -1,2 +1,2 @@
 // Re-export from main entities file for backward compatibility
-export type { CorePhilosophy } from './index';
+export type { CorePhilosophy } from "./index";

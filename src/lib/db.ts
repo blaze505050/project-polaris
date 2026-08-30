@@ -54,7 +54,10 @@ export const opportunitiesQuery = queryOptions({
         .order("featured", { ascending: false })
         .order("created_at", { ascending: true });
       if (error) {
-        console.warn("[Supabase] Failed to fetch opportunities, falling back to empty list:", error.message);
+        console.warn(
+          "[Supabase] Failed to fetch opportunities, falling back to empty list:",
+          error.message,
+        );
         return [];
       }
       return (data ?? []) as unknown as Opportunity[];
@@ -98,7 +101,10 @@ export const eventsQuery = queryOptions({
         .eq("published", true)
         .order("event_date", { ascending: false });
       if (error) {
-        console.warn("[Supabase] Failed to fetch events, falling back to empty list:", error.message);
+        console.warn(
+          "[Supabase] Failed to fetch events, falling back to empty list:",
+          error.message,
+        );
         return [];
       }
       return (data ?? []) as unknown as PolarisEvent[];
@@ -119,7 +125,10 @@ export const resourcesQuery = queryOptions({
         .eq("published", true)
         .order("created_at", { ascending: true });
       if (error) {
-        console.warn("[Supabase] Failed to fetch resources, falling back to empty list:", error.message);
+        console.warn(
+          "[Supabase] Failed to fetch resources, falling back to empty list:",
+          error.message,
+        );
         return [];
       }
       return (data ?? []) as unknown as Resource[];

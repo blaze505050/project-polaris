@@ -68,11 +68,7 @@ export function ParallaxImage({
   }, [intensity]);
 
   return (
-    <div
-      ref={wrapRef}
-      className={cn("overflow-hidden relative", className)}
-      style={style}
-    >
+    <div ref={wrapRef} className={cn("overflow-hidden relative", className)} style={style}>
       <img
         src={src}
         alt={alt}
@@ -81,7 +77,7 @@ export function ParallaxImage({
         className={cn(
           "absolute inset-0 w-full h-full object-cover",
           kenBurns && "animate-[ken-burns_25s_ease-in-out_infinite]",
-          imgClassName
+          imgClassName,
         )}
         style={{
           transform: `translateY(${offset}px) scale(1.12)`,

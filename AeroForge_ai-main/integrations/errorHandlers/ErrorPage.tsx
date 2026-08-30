@@ -17,9 +17,7 @@ export default function ErrorPage() {
           !
         </div>
         <h1 className="text-xl font-bold font-sans text-white mb-2">AeroForge Module Notice</h1>
-        <p className="text-xs text-slate-400 mb-6 leading-relaxed">
-          {errorMessage}
-        </p>
+        <p className="text-xs text-slate-400 mb-6 leading-relaxed">{errorMessage}</p>
         <div className="flex justify-center gap-3">
           <button
             onClick={() => (window.location.href = import.meta.env.BASE_URL || "/aeroforge/")}

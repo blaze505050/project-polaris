@@ -5,7 +5,10 @@ export type ThemePreference = "dark" | "light" | "system";
 
 export function getResolvedTheme(pref: ThemePreference): "dark" | "light" {
   if (pref === "system") {
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: light)").matches) {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: light)").matches
+    ) {
       return "light";
     }
     return "dark";
@@ -53,8 +56,8 @@ export function ThemeToggle({ className }: { className?: string }) {
     pref === "light"
       ? "Theme: Light (Click for System)"
       : pref === "system"
-      ? "Theme: System (Click for Dark)"
-      : "Theme: Dark (Click for Light)";
+        ? "Theme: System (Click for Dark)"
+        : "Theme: Dark (Click for Light)";
 
   return (
     <button
@@ -77,4 +80,3 @@ export function ThemeToggle({ className }: { className?: string }) {
     </button>
   );
 }
-

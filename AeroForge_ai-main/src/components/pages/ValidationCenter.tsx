@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { CheckCircle2, AlertCircle, Info, ExternalLink, ShieldCheck, ArrowRight, BarChart2, BookOpen, Database, RefreshCw } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import FeatureStatusBadge from '@/components/ui/FeatureStatusBadge';
-import { usePageMeta } from '@/hooks/usePageMeta';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  CheckCircle2,
+  AlertCircle,
+  Info,
+  ExternalLink,
+  ShieldCheck,
+  ArrowRight,
+  BarChart2,
+  BookOpen,
+  Database,
+  RefreshCw,
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import FeatureStatusBadge from "@/components/ui/FeatureStatusBadge";
+import { usePageMeta } from "@/hooks/usePageMeta";
 import {
   generateNACA4Digit,
   computeAirfoilCoefficients,
   computeISAAtmosphere,
   computeBeamStress,
-} from '@/services/physicsEngine';
+} from "@/services/physicsEngine";
 
 // ─── Benchmark Data Definitions ─────────────────────────────────────────────
 
@@ -19,7 +30,8 @@ interface BenchmarkCase {
   id: string;
   name: string;
   domain: string;
-  methodType: 'Analytical' | 'Reduced-order' | 'Experimental literature' | 'High-fidelity (Planned)';
+  methodType:
+    "Analytical" | "Reduced-order" | "Experimental literature" | "High-fidelity (Planned)";
   description: string;
   referenceSource: string;
   referenceUrl?: string;
@@ -34,79 +46,95 @@ interface BenchmarkCase {
 }
 
 export default function ValidationCenter() {
-  usePageMeta('Validation Center', 'Transparent physics benchmark comparisons against analytical solutions and published experimental data.');
+  usePageMeta(
+    "Validation Center",
+    "Transparent physics benchmark comparisons against analytical solutions and published experimental data.",
+  );
 
-  const [activeDomain, setActiveDomain] = useState<string>('all');
+  const [activeDomain, setActiveDomain] = useState<string>("all");
 
   // Benchmark suite
   const benchmarks: BenchmarkCase[] = [
     {
-      id: 'naca0012-lift',
-      name: 'NACA 0012 Lift Curve Slope',
-      domain: 'Aerodynamics',
-      methodType: 'Reduced-order',
-      description: 'Thin airfoil theory vs Abbott & Von Doenhoff NACA 0012 wind tunnel data (Re = 3×10⁶, subsonic).',
-      referenceSource: 'Abbott & Von Doenhoff, Theory of Wing Sections (1959), p. 462',
-      conditions: { Airfoil: 'NACA 0012', Reynolds: '3.0 × 10⁶', Mach: 0.15, AoA: '4.0°' },
-      metricName: 'Lift Coefficient (CL)',
-      unit: '—',
-      referenceValue: 0.440,
+      id: "naca0012-lift",
+      name: "NACA 0012 Lift Curve Slope",
+      domain: "Aerodynamics",
+      methodType: "Reduced-order",
+      description:
+        "Thin airfoil theory vs Abbott & Von Doenhoff NACA 0012 wind tunnel data (Re = 3×10⁶, subsonic).",
+      referenceSource: "Abbott & Von Doenhoff, Theory of Wing Sections (1959), p. 462",
+      conditions: { Airfoil: "NACA 0012", Reynolds: "3.0 × 10⁶", Mach: 0.15, AoA: "4.0°" },
+      metricName: "Lift Coefficient (CL)",
+      unit: "—",
+      referenceValue: 0.44,
       calculateValue: () => {
         const coef = computeAirfoilCoefficients(4, 0, 0.008, 8, 0.85, 0.15);
         return coef.cl;
       },
       tolerancePct: 5.0,
-      assumptions: ['2D thin airfoil theory with Prandtl-Glauert compressibility correction', 'Unseparated attached flow'],
-      limitations: ['Does not account for boundary layer displacement thickness at zero AoA'],
+      assumptions: [
+        "2D thin airfoil theory with Prandtl-Glauert compressibility correction",
+        "Unseparated attached flow",
+      ],
+      limitations: ["Does not account for boundary layer displacement thickness at zero AoA"],
     },
     {
-      id: 'isa-tropopause-temp',
-      name: 'ISA Standard Atmosphere (11,000m Tropopause)',
-      domain: 'Atmospheric Physics',
-      methodType: 'Analytical',
-      description: 'Comparison of 7-layer atmosphere model temperature against ISO 2533 standard tables at 11,000m.',
-      referenceSource: 'ISO 2533:1975 Standard Atmosphere, Table 1',
-      conditions: { Altitude: '11,000 m', Layer: 'Tropopause' },
-      metricName: 'Temperature',
-      unit: 'K',
+      id: "isa-tropopause-temp",
+      name: "ISA Standard Atmosphere (11,000m Tropopause)",
+      domain: "Atmospheric Physics",
+      methodType: "Analytical",
+      description:
+        "Comparison of 7-layer atmosphere model temperature against ISO 2533 standard tables at 11,000m.",
+      referenceSource: "ISO 2533:1975 Standard Atmosphere, Table 1",
+      conditions: { Altitude: "11,000 m", Layer: "Tropopause" },
+      metricName: "Temperature",
+      unit: "K",
       referenceValue: 216.65,
       calculateValue: () => {
         const isa = computeISAAtmosphere(11000);
         return isa.temperature;
       },
       tolerancePct: 0.1,
-      assumptions: ['Hydrostatic equilibrium', 'Standard temperature lapse rate L = -0.0065 K/m in troposphere'],
-      limitations: ['Standard day conditions only (no meteorological deviations)'],
+      assumptions: [
+        "Hydrostatic equilibrium",
+        "Standard temperature lapse rate L = -0.0065 K/m in troposphere",
+      ],
+      limitations: ["Standard day conditions only (no meteorological deviations)"],
     },
     {
-      id: 'beam-cantilever-bending',
-      name: 'Cantilever Beam Max Bending Stress',
-      domain: 'Structural Mechanics',
-      methodType: 'Analytical',
-      description: 'Euler-Bernoulli analytical beam stress calculation (σ = M·c/I) under tip load.',
-      referenceSource: 'Shigley\'s Mechanical Engineering Design, 11th Ed., Ch. 3',
-      conditions: { Load: '5,000 N', Length: '2.0 m', Width: '0.05 m', Height: '0.10 m' },
-      metricName: 'Max Stress (σ_max)',
-      unit: 'MPa',
+      id: "beam-cantilever-bending",
+      name: "Cantilever Beam Max Bending Stress",
+      domain: "Structural Mechanics",
+      methodType: "Analytical",
+      description: "Euler-Bernoulli analytical beam stress calculation (σ = M·c/I) under tip load.",
+      referenceSource: "Shigley's Mechanical Engineering Design, 11th Ed., Ch. 3",
+      conditions: { Load: "5,000 N", Length: "2.0 m", Width: "0.05 m", Height: "0.10 m" },
+      metricName: "Max Stress (σ_max)",
+      unit: "MPa",
       referenceValue: 120.0,
       calculateValue: () => {
-        const beam = computeBeamStress(5000, 2.0, 0.05, 0.10, 200e9, 250e6);
+        const beam = computeBeamStress(5000, 2.0, 0.05, 0.1, 200e9, 250e6);
         return beam ? beam.maxStress / 1e6 : 0;
       },
       tolerancePct: 0.1,
-      assumptions: ['Euler-Bernoulli beam theory (slender beam)', 'Rectangular cross-section', 'Linear elastic isotropic material'],
-      limitations: ['Ignores transverse shear stress deformation (Timoshenko correction)'],
+      assumptions: [
+        "Euler-Bernoulli beam theory (slender beam)",
+        "Rectangular cross-section",
+        "Linear elastic isotropic material",
+      ],
+      limitations: ["Ignores transverse shear stress deformation (Timoshenko correction)"],
     },
     {
-      id: 'kepler-energy-conservation',
-      name: 'Keplerian Orbit Specific Mechanical Energy',
-      domain: 'Orbital Mechanics',
-      methodType: 'Analytical',
-      description: 'Specific orbital energy conservation ε = -μ / (2a) for Low Earth Orbit (ISS altitude).',
-      referenceSource: 'Bate, Mueller & White, Fundamentals of Astrodynamics, Ch. 1',
-      conditions: { Altitude: '400 km', CentralBody: 'Earth (μ = 3.986004418 × 10¹⁴ m³/s²)' },
-      metricName: 'Specific Orbital Energy',
-      unit: 'MJ/kg',
+      id: "kepler-energy-conservation",
+      name: "Keplerian Orbit Specific Mechanical Energy",
+      domain: "Orbital Mechanics",
+      methodType: "Analytical",
+      description:
+        "Specific orbital energy conservation ε = -μ / (2a) for Low Earth Orbit (ISS altitude).",
+      referenceSource: "Bate, Mueller & White, Fundamentals of Astrodynamics, Ch. 1",
+      conditions: { Altitude: "400 km", CentralBody: "Earth (μ = 3.986004418 × 10¹⁴ m³/s²)" },
+      metricName: "Specific Orbital Energy",
+      unit: "MJ/kg",
       referenceValue: -29.43,
       calculateValue: () => {
         const r = 6371 + 400; // km
@@ -116,14 +144,15 @@ export default function ValidationCenter() {
         return eps;
       },
       tolerancePct: 0.1,
-      assumptions: ['Two-body Keplerian problem', 'Spherical Earth point mass'],
-      limitations: ['Ignores J2 oblateness, atmospheric drag, and solar radiation pressure'],
+      assumptions: ["Two-body Keplerian problem", "Spherical Earth point mass"],
+      limitations: ["Ignores J2 oblateness, atmospheric drag, and solar radiation pressure"],
     },
   ];
 
-  const filteredBenchmarks = activeDomain === 'all'
-    ? benchmarks
-    : benchmarks.filter((b) => b.domain.toLowerCase().includes(activeDomain.toLowerCase()));
+  const filteredBenchmarks =
+    activeDomain === "all"
+      ? benchmarks
+      : benchmarks.filter((b) => b.domain.toLowerCase().includes(activeDomain.toLowerCase()));
 
   return (
     <div className="min-h-screen bg-[#060B18] text-white flex flex-col font-sans">
@@ -141,7 +170,9 @@ export default function ValidationCenter() {
             </div>
             <h1 className="text-3xl font-extrabold text-white">Validation Center</h1>
             <p className="text-xs text-white/50 max-w-2xl mt-1 leading-relaxed">
-              Transparent, repeatable validation benchmarks comparing AeroForge physics solvers directly against published wind tunnel experiments, ISO standard atmosphere tables, and analytical solutions.
+              Transparent, repeatable validation benchmarks comparing AeroForge physics solvers
+              directly against published wind tunnel experiments, ISO standard atmosphere tables,
+              and analytical solutions.
             </p>
           </div>
 
@@ -160,17 +191,23 @@ export default function ValidationCenter() {
 
         {/* Filter Pills */}
         <div className="flex gap-2 mb-6 flex-wrap">
-          {['all', 'Aerodynamics', 'Atmospheric Physics', 'Structural Mechanics', 'Orbital Mechanics'].map((dom) => (
+          {[
+            "all",
+            "Aerodynamics",
+            "Atmospheric Physics",
+            "Structural Mechanics",
+            "Orbital Mechanics",
+          ].map((dom) => (
             <button
               key={dom}
               onClick={() => setActiveDomain(dom)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all border ${
                 activeDomain === dom
-                  ? 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30 font-bold'
-                  : 'bg-white/5 text-white/50 border-white/5 hover:bg-white/10 hover:text-white'
+                  ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/30 font-bold"
+                  : "bg-white/5 text-white/50 border-white/5 hover:bg-white/10 hover:text-white"
               }`}
             >
-              {dom === 'all' ? 'All Domains' : dom}
+              {dom === "all" ? "All Domains" : dom}
             </button>
           ))}
         </div>
@@ -193,7 +230,9 @@ export default function ValidationCenter() {
                 <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
                   <div>
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider">{bm.domain}</span>
+                      <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider">
+                        {bm.domain}
+                      </span>
                       <span className="text-white/20">•</span>
                       <span className="text-[10px] font-mono text-cyan-300 font-bold px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">
                         [{bm.methodType.toUpperCase()}]
@@ -207,36 +246,52 @@ export default function ValidationCenter() {
                     <p className="text-xs text-white/60 mt-1">{bm.description}</p>
                   </div>
 
-                  <div className={`px-3 py-1 rounded-full border text-xs font-mono font-bold flex items-center gap-1.5 ${
-                    passed ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                  }`}>
+                  <div
+                    className={`px-3 py-1 rounded-full border text-xs font-mono font-bold flex items-center gap-1.5 ${
+                      passed
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                    }`}
+                  >
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    {passed ? 'BENCHMARK PASSED' : 'TOLERANCE WARN'}
+                    {passed ? "BENCHMARK PASSED" : "TOLERANCE WARN"}
                   </div>
                 </div>
 
                 {/* Quantitative Comparison Matrix */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-3 bg-[#060B18] p-4 rounded-lg border border-white/5 mb-4">
                   <div>
-                    <span className="text-[10px] text-white/40 font-mono block">REFERENCE VALUE</span>
+                    <span className="text-[10px] text-white/40 font-mono block">
+                      REFERENCE VALUE
+                    </span>
                     <span className="text-sm font-mono font-bold text-white">
-                      {bm.referenceValue.toFixed(4)} <span className="text-[10px] text-white/30">{bm.unit}</span>
+                      {bm.referenceValue.toFixed(4)}{" "}
+                      <span className="text-[10px] text-white/30">{bm.unit}</span>
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-white/40 font-mono block">AEROFORGE SOLVER</span>
+                    <span className="text-[10px] text-white/40 font-mono block">
+                      AEROFORGE SOLVER
+                    </span>
                     <span className="text-sm font-mono font-bold text-cyan-400">
-                      {actualVal.toFixed(4)} <span className="text-[10px] text-white/30">{bm.unit}</span>
+                      {actualVal.toFixed(4)}{" "}
+                      <span className="text-[10px] text-white/30">{bm.unit}</span>
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-white/40 font-mono block">DIFFERENCE / ERROR</span>
-                    <span className={`text-sm font-mono font-bold ${errPct < 1 ? 'text-emerald-400' : 'text-amber-400'}`}>
+                    <span className="text-[10px] text-white/40 font-mono block">
+                      DIFFERENCE / ERROR
+                    </span>
+                    <span
+                      className={`text-sm font-mono font-bold ${errPct < 1 ? "text-emerald-400" : "text-amber-400"}`}
+                    >
                       {errPct.toFixed(2)}% ({absDiff.toFixed(4)})
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-white/40 font-mono block">TOLERANCE THRESHOLD</span>
+                    <span className="text-[10px] text-white/40 font-mono block">
+                      TOLERANCE THRESHOLD
+                    </span>
                     <span className="text-sm font-mono font-bold text-white/70">
                       ±{bm.tolerancePct.toFixed(1)}%
                     </span>
@@ -281,7 +336,10 @@ export default function ValidationCenter() {
               Engineering Credibility Policy & Transparency Notice
             </h4>
             <p className="text-xs text-white/70 mt-1 max-w-2xl font-sans leading-relaxed">
-              AeroForge analytical and reduced-order tools provide preliminary research and conceptual design estimates. AeroForge makes no claim of FAA/EASA flight certification or high-fidelity CFD/FEA solver execution unless explicitly connected to a verified external HPC cluster via SolverAdapter.
+              AeroForge analytical and reduced-order tools provide preliminary research and
+              conceptual design estimates. AeroForge makes no claim of FAA/EASA flight certification
+              or high-fidelity CFD/FEA solver execution unless explicitly connected to a verified
+              external HPC cluster via SolverAdapter.
             </p>
           </div>
           <Link to="/contact">

@@ -12,6 +12,7 @@
 AeroForge AI has undergone a codebase-wide adversarial launch readiness audit and additive product hardening pass. All 54 MVP tools, existing routes, Zustand stores, and FastAPI backend services have been preserved, connected, and hardened against failure modes.
 
 ### Key Milestones Achieved:
+
 - **Server-Backed Public Shareable Artifacts:** Implemented `/api/public-artifacts` REST endpoints on the FastAPI backend coupled with `publicArtifactService.ts` (`CloudPersistenceAdapter` & `LocalPersistenceAdapter`). `/share/:artifactId` now functions seamlessly in clean, unauthenticated incognito sessions across devices.
 - **Data Persistence & Isolation:** Hardened `projectStore.ts` with Zustand schema versioning (`'aeroforge-projects-v1'`). Multi-project requirement matrices, simulations, and workspace selections persist across page refreshes and browser restarts.
 - **Scientific Accuracy & Transparent Solver Taxonomy:** Replaced all unsubstantiated compliance claims with `SolverStatusBadge` components (`REDUCED-ORDER SOLVER`, `ANALYTICAL MODEL`, `NUMERICAL SIMULATOR`, `EXPERIMENTAL REF`). Re-labeled 2D boundary layer numerical solvers transparently.
@@ -22,18 +23,18 @@ AeroForge AI has undergone a codebase-wide adversarial launch readiness audit an
 
 ## 2. Beta Readiness Evaluation Matrix
 
-| Domain | Score | Status | Audit Findings & Verification |
-| :--- | :---: | :---: | :--- |
-| **Scientific Correctness** | **9.5 / 10** | PASS | Analytical formulas (Thin Airfoil, ISO 2533 ISA, Keplerian orbits, Euler-Bernoulli beam) match published NACA & NASA benchmarks. |
-| **Functional Completeness** | **9.5 / 10** | PASS | All 54 MVP tools operational across AeroLab, MechLab, and AstroLab without dead buttons or unhandled errors. |
-| **UX & Navigation** | **9.5 / 10** | PASS | Clean 6-question engineering workflow context across all tools. Command palette and sidebar navigation active. |
-| **UI & Visual Consistency** | **9.5 / 10** | PASS | Consistent dark-mode aesthetic with modern typography, HSL color tokens, and purposeful micro-interactions. |
-| **Accessibility Baseline** | **9.0 / 10** | PASS | Keyboard focus rings, responsive viewport scaling (390px to 1440px+), and semantic HTML headings. |
-| **Performance Engine** | **9.5 / 10** | PASS | Fast Vite bundling (`✓ built in 14.28s`), dynamic code splitting, and sub-10ms local solver latency. |
-| **Security & Data Privacy** | **9.5 / 10** | PASS | Environment-based CORS origin checks, zero hardcoded API keys, no sensitive localStorage leakage. |
-| **Persistence & Backup** | **9.5 / 10** | PASS | Zustand localStorage persistence with schema versioning and `.aeroforge` JSON export/restore. |
-| **Public Sharing** | **9.5 / 10** | PASS | Server-backed cloud artifact retrieval works in clean incognito contexts without pre-existing browser state. |
-| **Research Credibility** | **9.5 / 10** | PASS | arXiv and OpenAlex REST API query integration, zero fabricated certifications or misleading CFD claims. |
+| Domain                      |    Score     | Status | Audit Findings & Verification                                                                                                    |
+| :-------------------------- | :----------: | :----: | :------------------------------------------------------------------------------------------------------------------------------- |
+| **Scientific Correctness**  | **9.5 / 10** |  PASS  | Analytical formulas (Thin Airfoil, ISO 2533 ISA, Keplerian orbits, Euler-Bernoulli beam) match published NACA & NASA benchmarks. |
+| **Functional Completeness** | **9.5 / 10** |  PASS  | All 54 MVP tools operational across AeroLab, MechLab, and AstroLab without dead buttons or unhandled errors.                     |
+| **UX & Navigation**         | **9.5 / 10** |  PASS  | Clean 6-question engineering workflow context across all tools. Command palette and sidebar navigation active.                   |
+| **UI & Visual Consistency** | **9.5 / 10** |  PASS  | Consistent dark-mode aesthetic with modern typography, HSL color tokens, and purposeful micro-interactions.                      |
+| **Accessibility Baseline**  | **9.0 / 10** |  PASS  | Keyboard focus rings, responsive viewport scaling (390px to 1440px+), and semantic HTML headings.                                |
+| **Performance Engine**      | **9.5 / 10** |  PASS  | Fast Vite bundling (`✓ built in 14.28s`), dynamic code splitting, and sub-10ms local solver latency.                             |
+| **Security & Data Privacy** | **9.5 / 10** |  PASS  | Environment-based CORS origin checks, zero hardcoded API keys, no sensitive localStorage leakage.                                |
+| **Persistence & Backup**    | **9.5 / 10** |  PASS  | Zustand localStorage persistence with schema versioning and `.aeroforge` JSON export/restore.                                    |
+| **Public Sharing**          | **9.5 / 10** |  PASS  | Server-backed cloud artifact retrieval works in clean incognito contexts without pre-existing browser state.                     |
+| **Research Credibility**    | **9.5 / 10** |  PASS  | arXiv and OpenAlex REST API query integration, zero fabricated certifications or misleading CFD claims.                          |
 
 ---
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Wind, Cloud, Thermometer, Download, Play } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Wind, Cloud, Thermometer, Download, Play } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function AtmosphericSciencePage() {
   const [isSimulating, setIsSimulating] = useState(false);
@@ -14,36 +14,36 @@ export default function AtmosphericSciencePage() {
 
   const planets = [
     {
-      id: 'earth',
-      name: 'Earth',
-      composition: 'N₂ (78%), O₂ (21%), Ar (0.9%)',
-      pressure: '101.3 kPa',
-      temperature: '288 K',
-      description: 'Habitable atmosphere with oxygen',
+      id: "earth",
+      name: "Earth",
+      composition: "N₂ (78%), O₂ (21%), Ar (0.9%)",
+      pressure: "101.3 kPa",
+      temperature: "288 K",
+      description: "Habitable atmosphere with oxygen",
     },
     {
-      id: 'venus',
-      name: 'Venus',
-      composition: 'CO₂ (96%), N₂ (3%)',
-      pressure: '9.2 MPa',
-      temperature: '735 K',
-      description: 'Extreme greenhouse effect',
+      id: "venus",
+      name: "Venus",
+      composition: "CO₂ (96%), N₂ (3%)",
+      pressure: "9.2 MPa",
+      temperature: "735 K",
+      description: "Extreme greenhouse effect",
     },
     {
-      id: 'mars',
-      name: 'Mars',
-      composition: 'CO₂ (95%), N₂ (2.7%), Ar (2%)',
-      pressure: '600 Pa',
-      temperature: '210 K',
-      description: 'Thin, cold atmosphere',
+      id: "mars",
+      name: "Mars",
+      composition: "CO₂ (95%), N₂ (2.7%), Ar (2%)",
+      pressure: "600 Pa",
+      temperature: "210 K",
+      description: "Thin, cold atmosphere",
     },
     {
-      id: 'titan',
-      name: 'Titan',
-      composition: 'N₂ (98%), CH₄ (1.4%)',
-      pressure: '150 kPa',
-      temperature: '94 K',
-      description: 'Thick nitrogen atmosphere',
+      id: "titan",
+      name: "Titan",
+      composition: "N₂ (98%), CH₄ (1.4%)",
+      pressure: "150 kPa",
+      temperature: "94 K",
+      description: "Thick nitrogen atmosphere",
     },
   ];
 
@@ -64,8 +64,8 @@ export default function AtmosphericSciencePage() {
             <h1 className="text-5xl font-bold text-white">Atmospheric Science</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Study planetary atmospheres and climate systems. Model atmospheric dynamics,
-            radiation transfer, and weather patterns.
+            Study planetary atmospheres and climate systems. Model atmospheric dynamics, radiation
+            transfer, and weather patterns.
           </p>
         </motion.div>
 
@@ -89,9 +89,33 @@ export default function AtmosphericSciencePage() {
                   {/* Planet */}
                   <circle cx="200" cy="300" r="80" fill="#4b5563" />
                   {/* Atmosphere layers */}
-                  <circle cx="200" cy="300" r="100" fill="none" stroke="#06b6d4" strokeWidth="1" opacity="0.5" />
-                  <circle cx="200" cy="300" r="110" fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.3" />
-                  <circle cx="200" cy="300" r="120" fill="none" stroke="#0284c7" strokeWidth="1" opacity="0.2" />
+                  <circle
+                    cx="200"
+                    cy="300"
+                    r="100"
+                    fill="none"
+                    stroke="#06b6d4"
+                    strokeWidth="1"
+                    opacity="0.5"
+                  />
+                  <circle
+                    cx="200"
+                    cy="300"
+                    r="110"
+                    fill="none"
+                    stroke="#0ea5e9"
+                    strokeWidth="1"
+                    opacity="0.3"
+                  />
+                  <circle
+                    cx="200"
+                    cy="300"
+                    r="120"
+                    fill="none"
+                    stroke="#0284c7"
+                    strokeWidth="1"
+                    opacity="0.2"
+                  />
                   {/* Temperature gradient */}
                   <defs>
                     <linearGradient id="tempGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -99,7 +123,14 @@ export default function AtmosphericSciencePage() {
                       <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.3" />
                     </linearGradient>
                   </defs>
-                  <rect x="50" y="50" width="300" height="250" fill="url(#tempGrad)" opacity="0.5" />
+                  <rect
+                    x="50"
+                    y="50"
+                    width="300"
+                    height="250"
+                    fill="url(#tempGrad)"
+                    opacity="0.5"
+                  />
                 </svg>
               </div>
 
@@ -125,7 +156,7 @@ export default function AtmosphericSciencePage() {
                     onClick={() => setIsSimulating(!isSimulating)}
                     className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold flex items-center justify-center gap-2"
                   >
-                    {isSimulating ? '⏸ Stop' : '▶ Start'} Simulation
+                    {isSimulating ? "⏸ Stop" : "▶ Start"} Simulation
                   </Button>
                   <Button className="bg-slate-700 hover:bg-slate-600 text-white font-semibold">
                     <Download size={18} />
@@ -154,8 +185,8 @@ export default function AtmosphericSciencePage() {
                     onClick={() => setSelectedPlanet(planet)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedPlanet?.id === planet.id
-                        ? 'bg-teal-600/20 border border-teal-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-teal-600/20 border border-teal-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{planet.name}</div>
@@ -244,20 +275,20 @@ export default function AtmosphericSciencePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Atmospheric Composition',
-                  description: 'Analyze gas mixtures and their effects on climate.',
+                  title: "Atmospheric Composition",
+                  description: "Analyze gas mixtures and their effects on climate.",
                 },
                 {
-                  title: 'Climate Modeling',
-                  description: 'Simulate planetary climate systems and feedback mechanisms.',
+                  title: "Climate Modeling",
+                  description: "Simulate planetary climate systems and feedback mechanisms.",
                 },
                 {
-                  title: 'Weather Simulation',
-                  description: 'Model atmospheric dynamics and weather patterns.',
+                  title: "Weather Simulation",
+                  description: "Model atmospheric dynamics and weather patterns.",
                 },
                 {
-                  title: 'Radiation Transfer',
-                  description: 'Calculate energy balance and greenhouse effects.',
+                  title: "Radiation Transfer",
+                  description: "Calculate energy balance and greenhouse effects.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

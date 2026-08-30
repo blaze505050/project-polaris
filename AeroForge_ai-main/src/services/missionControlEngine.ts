@@ -73,13 +73,17 @@ export class MissionControlEngine {
     }
 
     // True anomaly
-    const trueAnomaly = 2 * Math.atan2(
-      Math.sqrt(1 + eccentricity) * Math.sin(E / 2),
-      Math.sqrt(1 - eccentricity) * Math.cos(E / 2)
-    );
+    const trueAnomaly =
+      2 *
+      Math.atan2(
+        Math.sqrt(1 + eccentricity) * Math.sin(E / 2),
+        Math.sqrt(1 - eccentricity) * Math.cos(E / 2),
+      );
 
     // Orbital radius
-    const r = (semiMajorAxis * (1 - eccentricity * eccentricity)) / (1 + eccentricity * Math.cos(trueAnomaly));
+    const r =
+      (semiMajorAxis * (1 - eccentricity * eccentricity)) /
+      (1 + eccentricity * Math.cos(trueAnomaly));
 
     // Orbital velocity
     const mu = 3.986e14; // Earth's standard gravitational parameter
@@ -124,7 +128,7 @@ export class MissionControlEngine {
     const resolution = nyquist / fft.length;
 
     return fft.map((magnitude, index) => ({
-      wavelength: 1 / ((index * resolution) || 1),
+      wavelength: 1 / (index * resolution || 1),
       intensity: magnitude,
       frequency: index * resolution,
       confidence: Math.min(1, magnitude / Math.max(...fft)),
@@ -164,7 +168,7 @@ export class MissionControlEngine {
       frequency: baseFrequency,
       snr,
       timestamp: Date.now(),
-      source: ['GW150914', 'GW170817', 'GW190814'][Math.floor(Math.random() * 3)],
+      source: ["GW150914", "GW170817", "GW190814"][Math.floor(Math.random() * 3)],
     };
   }
 
@@ -176,7 +180,7 @@ export class MissionControlEngine {
     const epochDay = parseFloat(line1.substring(20, 32));
     const meanMotion = parseFloat(line2.substring(52, 63));
     const inclination = parseFloat(line2.substring(8, 16));
-    const eccentricity = parseFloat('0.' + line2.substring(26, 33));
+    const eccentricity = parseFloat("0." + line2.substring(26, 33));
 
     return {
       name,
@@ -217,8 +221,8 @@ export class MissionControlEngine {
     avgVelocity: number;
     orbitalPeriod: number;
   } {
-    const altitudes = telemetry.map(t => t.altitude);
-    const velocities = telemetry.map(t => t.velocity);
+    const altitudes = telemetry.map((t) => t.altitude);
+    const velocities = telemetry.map((t) => t.velocity);
 
     return {
       avgAltitude: altitudes.reduce((a, b) => a + b, 0) / altitudes.length,

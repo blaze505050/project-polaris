@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Plus,
   Search,
@@ -19,13 +19,13 @@ import {
   Zap,
   FlaskConical,
   Download,
-} from 'lucide-react';
-import { useProjectStore, Project } from '@/stores/projectStore';
-import { useToastStore } from '@/stores/toastStore';
-import { projectArchiveService } from '@/services/projectArchiveService';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
+} from "lucide-react";
+import { useProjectStore, Project } from "@/stores/projectStore";
+import { useToastStore } from "@/stores/toastStore";
+import { projectArchiveService } from "@/services/projectArchiveService";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
 
 // ─── 5 Canonical Beta Project Templates ───────────────────────────────────────
 export interface BetaProjectTemplate {
@@ -41,54 +41,72 @@ export interface BetaProjectTemplate {
 
 export const CANONICAL_BETA_TEMPLATES: BetaProjectTemplate[] = [
   {
-    id: 'template-naca0012',
-    name: 'NACA 0012 Airfoil Investigation',
-    domain: 'Aerodynamics',
-    description: 'Thin airfoil theory, lift curve slope, pressure distribution, and subsonic compressible polars.',
-    objective: 'Evaluate NACA 0012 lift-to-drag ratio across angles of attack from -4° to +14° at Mach 0.20.',
-    recommendedTools: ['NACA Airfoil Generator', 'Subsonic Thin-Airfoil Solver', 'Prandtl-Glauert Compressibility'],
-    initialParameters: { naca: '0012', chord: 1.0, altitude: 0, velocity: 68 },
-    tags: ['aerodynamics', 'airfoil', 'subsonic', 'naca0012'],
+    id: "template-naca0012",
+    name: "NACA 0012 Airfoil Investigation",
+    domain: "Aerodynamics",
+    description:
+      "Thin airfoil theory, lift curve slope, pressure distribution, and subsonic compressible polars.",
+    objective:
+      "Evaluate NACA 0012 lift-to-drag ratio across angles of attack from -4° to +14° at Mach 0.20.",
+    recommendedTools: [
+      "NACA Airfoil Generator",
+      "Subsonic Thin-Airfoil Solver",
+      "Prandtl-Glauert Compressibility",
+    ],
+    initialParameters: { naca: "0012", chord: 1.0, altitude: 0, velocity: 68 },
+    tags: ["aerodynamics", "airfoil", "subsonic", "naca0012"],
   },
   {
-    id: 'template-uav-wing',
-    name: 'UAV Wing Performance & Morphing Study',
-    domain: 'Optimization',
-    description: 'Multi-objective Pareto optimization for morphing UAV wing camber & thickness distribution.',
-    objective: 'Maximize L/D ratio subject to structural weight constraints and Mach 0.82 cruise velocity.',
-    recommendedTools: ['Flagship Morphing UAV Workflow', 'Pareto Optimizer', 'AeroLab Suite'],
+    id: "template-uav-wing",
+    name: "UAV Wing Performance & Morphing Study",
+    domain: "Optimization",
+    description:
+      "Multi-objective Pareto optimization for morphing UAV wing camber & thickness distribution.",
+    objective:
+      "Maximize L/D ratio subject to structural weight constraints and Mach 0.82 cruise velocity.",
+    recommendedTools: ["Flagship Morphing UAV Workflow", "Pareto Optimizer", "AeroLab Suite"],
     initialParameters: { targetLd: 18.0, cruisingMach: 0.82, maxWeightKg: 450 },
-    tags: ['optimization', 'uav', 'wing', 'pareto'],
+    tags: ["optimization", "uav", "wing", "pareto"],
   },
   {
-    id: 'template-rocket-nozzle',
-    name: 'Preliminary Rocket Nozzle Sizing',
-    domain: 'Propulsion',
-    description: 'Combustion chamber thermochemistry, De Laval nozzle expansion ratios, and specific impulse (Isp).',
-    objective: 'Determine optimal nozzle expansion ratio (Ae/At) for LOX/RP-1 sea level to vacuum ascent.',
-    recommendedTools: ['Rocket Thrust Calculator', 'Nozzle Expansion Solver', 'Thermodynamic Suite'],
+    id: "template-rocket-nozzle",
+    name: "Preliminary Rocket Nozzle Sizing",
+    domain: "Propulsion",
+    description:
+      "Combustion chamber thermochemistry, De Laval nozzle expansion ratios, and specific impulse (Isp).",
+    objective:
+      "Determine optimal nozzle expansion ratio (Ae/At) for LOX/RP-1 sea level to vacuum ascent.",
+    recommendedTools: [
+      "Rocket Thrust Calculator",
+      "Nozzle Expansion Solver",
+      "Thermodynamic Suite",
+    ],
     initialParameters: { pc: 7.0, pe: 0.1, gamma: 1.22, chamberTemp: 3400 },
-    tags: ['propulsion', 'rocket', 'nozzle', 'isp'],
+    tags: ["propulsion", "rocket", "nozzle", "isp"],
   },
   {
-    id: 'template-cantilever-beam',
-    name: 'Cantilever Beam Structural Bending Study',
-    domain: 'Structures',
-    description: 'Euler-Bernoulli beam theory bending stress, shear force diagrams, and tip deflection.',
-    objective: 'Calculate maximum bending stress σ_max and tip deflection δ for 2.0m aluminum cantilever beam.',
-    recommendedTools: ['Beam Bending Solver', 'MechLab Structural Suite', 'Material Database'],
-    initialParameters: { loadN: 5000, lengthM: 2.0, widthM: 0.05, heightM: 0.10, modE: 70e9 },
-    tags: ['structures', 'beam', 'bending', 'mechlab'],
+    id: "template-cantilever-beam",
+    name: "Cantilever Beam Structural Bending Study",
+    domain: "Structures",
+    description:
+      "Euler-Bernoulli beam theory bending stress, shear force diagrams, and tip deflection.",
+    objective:
+      "Calculate maximum bending stress σ_max and tip deflection δ for 2.0m aluminum cantilever beam.",
+    recommendedTools: ["Beam Bending Solver", "MechLab Structural Suite", "Material Database"],
+    initialParameters: { loadN: 5000, lengthM: 2.0, widthM: 0.05, heightM: 0.1, modE: 70e9 },
+    tags: ["structures", "beam", "bending", "mechlab"],
   },
   {
-    id: 'template-keplerian-orbit',
-    name: 'Keplerian Orbit & Mission Analysis',
-    domain: 'Astrospace',
-    description: 'Two-body orbital mechanics, Kepler elements, specific orbital energy, and ground track.',
-    objective: 'Analyze ISS LEO orbit (400km altitude), determine orbital period, velocity, and delta-v budget.',
-    recommendedTools: ['Orbital Mechanics Simulator', 'Porkchop Plot Generator', 'AstroLab Suite'],
-    initialParameters: { altKm: 400, incDeg: 51.6, centralBody: 'Earth' },
-    tags: ['astrolab', 'orbital', 'kepler', 'space'],
+    id: "template-keplerian-orbit",
+    name: "Keplerian Orbit & Mission Analysis",
+    domain: "Astrospace",
+    description:
+      "Two-body orbital mechanics, Kepler elements, specific orbital energy, and ground track.",
+    objective:
+      "Analyze ISS LEO orbit (400km altitude), determine orbital period, velocity, and delta-v budget.",
+    recommendedTools: ["Orbital Mechanics Simulator", "Porkchop Plot Generator", "AstroLab Suite"],
+    initialParameters: { altKm: 400, incDeg: 51.6, centralBody: "Earth" },
+    tags: ["astrolab", "orbital", "kepler", "space"],
   },
 ];
 
@@ -96,54 +114,52 @@ const DEMO_PROJECTS: Project[] = CANONICAL_BETA_TEMPLATES.map((t) => ({
   _id: t.id,
   name: t.name,
   description: t.description,
-  status: 'active',
-  createdDate: new Date('2026-08-01'),
-  updatedDate: new Date('2026-08-12'),
-  owner: 'Beta Template',
+  status: "active",
+  createdDate: new Date("2026-08-01"),
+  updatedDate: new Date("2026-08-12"),
+  owner: "Beta Template",
   tags: t.tags,
 }));
 
 // ─── Project Types ────────────────────────────────────────────────────────────
 const PROJECT_TYPES = [
-  { value: 'aircraft', label: 'Aircraft', icon: Wind },
-  { value: 'uav', label: 'UAV', icon: Rocket },
-  { value: 'rocket', label: 'Rocket / Launch Vehicle', icon: Rocket },
-  { value: 'spacecraft', label: 'Spacecraft / Satellite', icon: Orbit },
-  { value: 'propulsion', label: 'Propulsion System', icon: Zap },
-  { value: 'mechanical', label: 'Mechanical System', icon: Wrench },
-  { value: 'thermal', label: 'Thermal / Heat Transfer', icon: Thermometer },
-  { value: 'research', label: 'Research / Analysis', icon: FlaskConical },
+  { value: "aircraft", label: "Aircraft", icon: Wind },
+  { value: "uav", label: "UAV", icon: Rocket },
+  { value: "rocket", label: "Rocket / Launch Vehicle", icon: Rocket },
+  { value: "spacecraft", label: "Spacecraft / Satellite", icon: Orbit },
+  { value: "propulsion", label: "Propulsion System", icon: Zap },
+  { value: "mechanical", label: "Mechanical System", icon: Wrench },
+  { value: "thermal", label: "Thermal / Heat Transfer", icon: Thermometer },
+  { value: "research", label: "Research / Analysis", icon: FlaskConical },
 ];
 
 const PHYSICS_DOMAINS = [
-  'Aerodynamics',
-  'Structures',
-  'Thermal',
-  'Propulsion',
-  'Materials',
-  'Controls',
-  'Orbital Mechanics',
-  'Flight Dynamics',
+  "Aerodynamics",
+  "Structures",
+  "Thermal",
+  "Propulsion",
+  "Materials",
+  "Controls",
+  "Orbital Mechanics",
+  "Flight Dynamics",
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function ProjectsPage() {
   const { setCurrentProject, projects, setProjects, addProject } = useProjectStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState<
-    'all' | 'active' | 'archived' | 'completed'
-  >('all');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "archived" | "completed">(
+    "all",
+  );
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
 
   // New project form state
-  const [newProjectName, setNewProjectName] = useState('');
-  const [newProjectType, setNewProjectType] = useState('aircraft');
-  const [newProjectObjective, setNewProjectObjective] = useState('');
-  const [newProjectDomains, setNewProjectDomains] = useState<string[]>([
-    'Aerodynamics',
-  ]);
-  const [newProjectDescription, setNewProjectDescription] = useState('');
+  const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectType, setNewProjectType] = useState("aircraft");
+  const [newProjectObjective, setNewProjectObjective] = useState("");
+  const [newProjectDomains, setNewProjectDomains] = useState<string[]>(["Aerodynamics"]);
+  const [newProjectDescription, setNewProjectDescription] = useState("");
 
   useEffect(() => {
     // Seed demo projects on first load if no projects exist
@@ -160,16 +176,13 @@ export default function ProjectsPage() {
     const matchesSearch =
       project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       project.description?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus =
-      filterStatus === 'all' || project.status === filterStatus;
+    const matchesStatus = filterStatus === "all" || project.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
 
   const toggleDomain = (domain: string) => {
     setNewProjectDomains((prev) =>
-      prev.includes(domain)
-        ? prev.filter((d) => d !== domain)
-        : [...prev, domain]
+      prev.includes(domain) ? prev.filter((d) => d !== domain) : [...prev, domain],
     );
   };
 
@@ -182,26 +195,23 @@ export default function ProjectsPage() {
       description:
         newProjectDescription ||
         `${
-          PROJECT_TYPES.find((t) => t.value === newProjectType)?.label || ''
-        } project — ${newProjectDomains.join(', ')}`,
-      status: 'active',
+          PROJECT_TYPES.find((t) => t.value === newProjectType)?.label || ""
+        } project — ${newProjectDomains.join(", ")}`,
+      status: "active",
       createdDate: new Date(),
       updatedDate: new Date(),
-      tags: [
-        newProjectType,
-        ...newProjectDomains.map((d) => d.toLowerCase()),
-      ],
+      tags: [newProjectType, ...newProjectDomains.map((d) => d.toLowerCase())],
     };
 
     setProjects([...projects, newProject]);
     setCurrentProject(newProject);
 
     // Reset form
-    setNewProjectName('');
-    setNewProjectType('aircraft');
-    setNewProjectObjective('');
-    setNewProjectDomains(['Aerodynamics']);
-    setNewProjectDescription('');
+    setNewProjectName("");
+    setNewProjectType("aircraft");
+    setNewProjectObjective("");
+    setNewProjectDomains(["Aerodynamics"]);
+    setNewProjectDescription("");
     setShowNewProjectModal(false);
   };
 
@@ -211,14 +221,14 @@ export default function ProjectsPage() {
 
   const statusBadge = (status: string) => {
     switch (status) {
-      case 'active':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
-      case 'completed':
-        return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30';
-      case 'archived':
-        return 'bg-white/5 text-white/40 border-white/10';
+      case "active":
+        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+      case "completed":
+        return "bg-cyan-500/10 text-cyan-400 border-cyan-500/30";
+      case "archived":
+        return "bg-white/5 text-white/40 border-white/10";
       default:
-        return 'bg-white/5 text-white/40 border-white/10';
+        return "bg-white/5 text-white/40 border-white/10";
     }
   };
 
@@ -233,9 +243,7 @@ export default function ProjectsPage() {
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h1 className="text-2xl font-bold text-white mb-1">
-                    Projects
-                  </h1>
+                  <h1 className="text-2xl font-bold text-white mb-1">Projects</h1>
                   <p className="text-xs text-white/50">
                     Manage engineering projects and workspaces
                   </p>
@@ -254,18 +262,20 @@ export default function ProjectsPage() {
                           const reader = new FileReader();
                           reader.onload = (evt) => {
                             try {
-                              const imported = projectArchiveService.parseArchive(evt.target?.result as string);
+                              const imported = projectArchiveService.parseArchive(
+                                evt.target?.result as string,
+                              );
                               addProject(imported);
                               useToastStore.getState().addToast({
-                                type: 'success',
-                                title: 'Project Imported Successfully',
+                                type: "success",
+                                title: "Project Imported Successfully",
                                 description: `Restored ${imported.name}`,
                               });
                             } catch (err) {
                               useToastStore.getState().addToast({
-                                type: 'error',
-                                title: 'Import Failed',
-                                description: 'Invalid .aeroforge archive format.',
+                                type: "error",
+                                title: "Import Failed",
+                                description: "Invalid .aeroforge archive format.",
                               });
                             }
                           };
@@ -297,21 +307,19 @@ export default function ProjectsPage() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  {(['all', 'active', 'completed', 'archived'] as const).map(
-                    (status) => (
-                      <button
-                        key={status}
-                        onClick={() => setFilterStatus(status)}
-                        className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${
-                          filterStatus === status
-                            ? 'bg-cyan-500 text-black'
-                            : 'bg-[#080E1C] border border-white/10 text-white/60 hover:border-cyan-500/30 hover:text-white'
-                        }`}
-                      >
-                        {status.charAt(0).toUpperCase() + status.slice(1)}
-                      </button>
-                    )
-                  )}
+                  {(["all", "active", "completed", "archived"] as const).map((status) => (
+                    <button
+                      key={status}
+                      onClick={() => setFilterStatus(status)}
+                      className={`px-3 py-2 rounded-lg text-xs font-bold transition-all ${
+                        filterStatus === status
+                          ? "bg-cyan-500 text-black"
+                          : "bg-[#080E1C] border border-white/10 text-white/60 hover:border-cyan-500/30 hover:text-white"
+                      }`}
+                    >
+                      {status.charAt(0).toUpperCase() + status.slice(1)}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -366,14 +374,14 @@ export default function ProjectsPage() {
                           </h3>
                           <span
                             className={`inline-block text-[9px] font-bold px-1.5 py-0.5 rounded border mt-1 ${statusBadge(
-                              project.status
+                              project.status,
                             )}`}
                           >
                             {project.status.toUpperCase()}
                           </span>
                         </div>
                       </div>
-                      {project.owner === 'Demo' && (
+                      {project.owner === "Demo" && (
                         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/30">
                           DEMO
                         </span>
@@ -436,9 +444,7 @@ export default function ProjectsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-5">
-              <h2 className="text-lg font-bold text-white">
-                Create Engineering Project
-              </h2>
+              <h2 className="text-lg font-bold text-white">Create Engineering Project</h2>
               <button
                 onClick={() => setShowNewProjectModal(false)}
                 className="text-white/40 hover:text-white transition-colors"
@@ -478,8 +484,8 @@ export default function ProjectsPage() {
                         onClick={() => setNewProjectType(type.value)}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${
                           selected
-                            ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                            : 'bg-[#050914] text-white/60 border border-white/10 hover:border-white/20'
+                            ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                            : "bg-[#050914] text-white/60 border border-white/10 hover:border-white/20"
                         }`}
                       >
                         <Icon className="w-3.5 h-3.5" />
@@ -504,8 +510,8 @@ export default function ProjectsPage() {
                         onClick={() => toggleDomain(domain)}
                         className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
                           selected
-                            ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                            : 'bg-[#050914] text-white/50 border border-white/10 hover:border-white/20'
+                            ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40"
+                            : "bg-[#050914] text-white/50 border border-white/10 hover:border-white/20"
                         }`}
                       >
                         {domain}

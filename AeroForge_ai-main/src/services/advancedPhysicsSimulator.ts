@@ -6,25 +6,25 @@
 // ===== FUNDAMENTAL CONSTANTS =====
 export const CONSTANTS = {
   // Gravitational
-  G: 6.67430e-11, // m³/(kg·s²)
+  G: 6.6743e-11, // m³/(kg·s²)
   SOLAR_MASS: 1.989e30, // kg
   EARTH_MASS: 5.972e24, // kg
   MOON_MASS: 7.342e22, // kg
-  
+
   // Relativistic
   SPEED_OF_LIGHT: 299792458, // m/s
   PLANCK_CONSTANT: 6.62607015e-34, // J·s
-  
+
   // Astronomical distances
   AU: 1.496e11, // meters (Astronomical Unit)
   LIGHT_YEAR: 9.461e15, // meters
   PARSEC: 3.086e16, // meters
-  
+
   // Stellar
   SOLAR_RADIUS: 6.96e8, // meters
   SOLAR_LUMINOSITY: 3.828e26, // watts
   STEFAN_BOLTZMANN: 5.670374419e-8, // W/(m²·K⁴)
-  
+
   // Quantum
   PLANCK_MASS: 2.176434e-8, // kg
   PLANCK_LENGTH: 1.616255e-35, // meters
@@ -76,7 +76,7 @@ export class Vector3 {
     return new Vector3(
       this.y * v.z - this.z * v.y,
       this.z * v.x - this.x * v.z,
-      this.x * v.y - this.y * v.x
+      this.x * v.y - this.y * v.x,
     );
   }
 
@@ -99,7 +99,7 @@ export interface CelestialBody {
   velocity: Vector3; // m/s
   acceleration: Vector3; // m/s²
   color: string;
-  type: 'star' | 'planet' | 'moon' | 'asteroid' | 'black_hole';
+  type: "star" | "planet" | "moon" | "asteroid" | "black_hole";
   temperature?: number; // Kelvin
   luminosity?: number; // watts
   spin?: Vector3; // angular velocity
@@ -135,17 +135,17 @@ export class NBodyGravitySolver {
 
       const r = other.position.subtract(body.position);
       const distance = r.magnitude();
-      
+
       // Softening prevents singularities at close distances
       const softDistance = Math.max(distance, this.softening);
-      
+
       // F = G * m1 * m2 / r²
       const forceMagnitude = (CONSTANTS.G * body.mass * other.mass) / (softDistance * softDistance);
-      
+
       // a = F / m = G * m2 / r²
       const direction = r.normalize();
       const accel = direction.multiply(forceMagnitude / body.mass);
-      
+
       acceleration = acceleration.add(accel);
     }
 
@@ -249,7 +249,10 @@ export class RelativisticCalculator {
    * θ ≈ 4GM/c²b (for weak lensing)
    */
   static lensingDeflectionAngle(mass: number, impactParameter: number): number {
-    return (4 * CONSTANTS.G * mass) / (CONSTANTS.SPEED_OF_LIGHT * CONSTANTS.SPEED_OF_LIGHT * impactParameter);
+    return (
+      (4 * CONSTANTS.G * mass) /
+      (CONSTANTS.SPEED_OF_LIGHT * CONSTANTS.SPEED_OF_LIGHT * impactParameter)
+    );
   }
 
   /**
@@ -265,7 +268,12 @@ export class RelativisticCalculator {
    * Δω = 6πGM/c²a(1-e²) per orbit
    */
   static perihelionPrecession(mass: number, semiMajorAxis: number, eccentricity: number): number {
-    const factor = (6 * Math.PI * CONSTANTS.G * mass) / (CONSTANTS.SPEED_OF_LIGHT * CONSTANTS.SPEED_OF_LIGHT * semiMajorAxis * (1 - eccentricity * eccentricity));
+    const factor =
+      (6 * Math.PI * CONSTANTS.G * mass) /
+      (CONSTANTS.SPEED_OF_LIGHT *
+        CONSTANTS.SPEED_OF_LIGHT *
+        semiMajorAxis *
+        (1 - eccentricity * eccentricity));
     return factor;
   }
 }
@@ -284,7 +292,10 @@ export class StellarPhysics {
    * Effective temperature from luminosity and radius
    */
   static effectiveTemperature(luminosity: number, radius: number): number {
-    return Math.pow(luminosity / (4 * Math.PI * radius * radius * CONSTANTS.STEFAN_BOLTZMANN), 0.25);
+    return Math.pow(
+      luminosity / (4 * Math.PI * radius * radius * CONSTANTS.STEFAN_BOLTZMANN),
+      0.25,
+    );
   }
 
   /**
@@ -319,11 +330,11 @@ export class HabitabilityCalculator {
    */
   static habitableZone(stellarLuminosity: number): { inner: number; outer: number } {
     const luminosityRatio = stellarLuminosity / CONSTANTS.SOLAR_LUMINOSITY;
-    
+
     // Conservative habitable zone
     const inner = Math.sqrt(luminosityRatio * 0.95) * CONSTANTS.AU;
     const outer = Math.sqrt(luminosityRatio * 1.37) * CONSTANTS.AU;
-    
+
     return { inner, outer };
   }
 
@@ -335,7 +346,7 @@ export class HabitabilityCalculator {
     radius: number,
     density: number,
     escapeVelocity: number,
-    surfaceTemperature: number
+    surfaceTemperature: number,
   ): number {
     const EARTH_RADIUS = 6.371e6;
     const EARTH_DENSITY = 5514;
@@ -344,8 +355,10 @@ export class HabitabilityCalculator {
 
     const radiusESI = 1 - Math.abs(radius - EARTH_RADIUS) / (radius + EARTH_RADIUS);
     const densityESI = 1 - Math.abs(density - EARTH_DENSITY) / (density + EARTH_DENSITY);
-    const escapeVelESI = 1 - Math.abs(escapeVelocity - EARTH_ESCAPE_VEL) / (escapeVelocity + EARTH_ESCAPE_VEL);
-    const tempESI = 1 - Math.abs(surfaceTemperature - EARTH_TEMP) / (surfaceTemperature + EARTH_TEMP);
+    const escapeVelESI =
+      1 - Math.abs(escapeVelocity - EARTH_ESCAPE_VEL) / (escapeVelocity + EARTH_ESCAPE_VEL);
+    const tempESI =
+      1 - Math.abs(surfaceTemperature - EARTH_TEMP) / (surfaceTemperature + EARTH_TEMP);
 
     return Math.pow(radiusESI * densityESI * escapeVelESI * tempESI, 0.25);
   }
@@ -365,7 +378,7 @@ export class CosmologicalCalculator {
    */
   static hubbleDistance(redshift: number, hubbleConstant: number = 70): number {
     // H0 = 70 km/s/Mpc
-    const H0_SI = (hubbleConstant * 1000) / (3.086e22); // Convert to SI
+    const H0_SI = (hubbleConstant * 1000) / 3.086e22; // Convert to SI
     return CONSTANTS.SPEED_OF_LIGHT / H0_SI;
   }
 
@@ -409,7 +422,7 @@ export class ParticleSystem {
     velocity: Vector3,
     life: number,
     color: string,
-    size: number = 1
+    size: number = 1,
   ): void {
     this.particles.push({
       position,

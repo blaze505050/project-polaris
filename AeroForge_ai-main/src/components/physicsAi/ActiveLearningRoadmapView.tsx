@@ -1,56 +1,65 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { RefreshCw, ArrowRight, ShieldCheck, Database, Cpu, AlertTriangle, Play, Sparkles } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  RefreshCw,
+  ArrowRight,
+  ShieldCheck,
+  Database,
+  Cpu,
+  AlertTriangle,
+  Play,
+  Sparkles,
+} from "lucide-react";
 
 export default function ActiveLearningRoadmapView() {
   const steps = [
     {
-      num: '01',
-      title: 'AI Prediction',
-      desc: 'Neural operator (AeroGraphNet/FNO) evaluates design candidate in milliseconds.',
-      status: 'AVAILABLE',
+      num: "01",
+      title: "AI Prediction",
+      desc: "Neural operator (AeroGraphNet/FNO) evaluates design candidate in milliseconds.",
+      status: "AVAILABLE",
       icon: Sparkles,
-      color: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10",
     },
     {
-      num: '02',
-      title: 'Uncertainty & Residual Check',
-      desc: 'Evaluates epistemic variance, physical residual constraints, and out-of-distribution bounds.',
-      status: 'AVAILABLE',
+      num: "02",
+      title: "Uncertainty & Residual Check",
+      desc: "Evaluates epistemic variance, physical residual constraints, and out-of-distribution bounds.",
+      status: "AVAILABLE",
       icon: ShieldCheck,
-      color: 'text-purple-400 border-purple-500/30 bg-purple-500/10',
+      color: "text-purple-400 border-purple-500/30 bg-purple-500/10",
     },
     {
-      num: '03',
-      title: 'Identify High-Error Edge Cases',
-      desc: 'Flags boundary layer separation or shock boundary interactions with high epistemic error.',
-      status: 'PLANNED',
+      num: "03",
+      title: "Identify High-Error Edge Cases",
+      desc: "Flags boundary layer separation or shock boundary interactions with high epistemic error.",
+      status: "PLANNED",
       icon: AlertTriangle,
-      color: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+      color: "text-amber-400 border-amber-500/30 bg-amber-500/10",
     },
     {
-      num: '04',
-      title: 'Trigger High-Fidelity CFD Solver',
-      desc: 'Launches targeted OpenFOAM / RANS high-fidelity numerical simulation on HPC worker.',
-      status: 'PLANNED',
+      num: "04",
+      title: "Trigger High-Fidelity CFD Solver",
+      desc: "Launches targeted OpenFOAM / RANS high-fidelity numerical simulation on HPC worker.",
+      status: "PLANNED",
       icon: Cpu,
-      color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+      color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
     },
     {
-      num: '05',
-      title: 'Append Ground Truth to Dataset',
-      desc: 'Stores validated CFD result into AeroForge Canonical Dataset Registry with full provenance.',
-      status: 'PLANNED',
+      num: "05",
+      title: "Append Ground Truth to Dataset",
+      desc: "Stores validated CFD result into AeroForge Canonical Dataset Registry with full provenance.",
+      status: "PLANNED",
       icon: Database,
-      color: 'text-blue-400 border-blue-500/30 bg-blue-500/10',
+      color: "text-blue-400 border-blue-500/30 bg-blue-500/10",
     },
     {
-      num: '06',
-      title: 'Continuous Surrogate Retraining',
-      desc: 'Fine-tunes neural operator weights to close accuracy gaps in difficult flight envelopes.',
-      status: 'PLANNED',
+      num: "06",
+      title: "Continuous Surrogate Retraining",
+      desc: "Fine-tunes neural operator weights to close accuracy gaps in difficult flight envelopes.",
+      status: "PLANNED",
       icon: RefreshCw,
-      color: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10",
     },
   ];
 
@@ -67,9 +76,13 @@ export default function ActiveLearningRoadmapView() {
               [PLANNED ROADMAP]
             </span>
           </div>
-          <h2 className="text-xl font-extrabold font-mono text-white">Active Learning Simulation Loop</h2>
+          <h2 className="text-xl font-extrabold font-mono text-white">
+            Active Learning Simulation Loop
+          </h2>
           <p className="text-xs text-white/60 mt-1 max-w-3xl leading-relaxed">
-            A self-correcting computational loop that uses uncertainty quantification to selectively trigger expensive classical CFD solvers only when neural surrogate predictions are uncertain.
+            A self-correcting computational loop that uses uncertainty quantification to selectively
+            trigger expensive classical CFD solvers only when neural surrogate predictions are
+            uncertain.
           </p>
         </div>
       </div>
@@ -89,11 +102,13 @@ export default function ActiveLearningRoadmapView() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-mono text-2xl font-black text-white/20">{step.num}</span>
-                  <span className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold ${
-                    step.status === 'AVAILABLE'
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                      : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                  }`}>
+                  <span
+                    className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold ${
+                      step.status === "AVAILABLE"
+                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+                        : "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                    }`}
+                  >
                     {step.status}
                   </span>
                 </div>
@@ -105,9 +120,7 @@ export default function ActiveLearningRoadmapView() {
                   <h3 className="text-base font-bold font-mono text-white">{step.title}</h3>
                 </div>
 
-                <p className="text-xs text-white/60 leading-relaxed font-sans mt-2">
-                  {step.desc}
-                </p>
+                <p className="text-xs text-white/60 leading-relaxed font-sans mt-2">{step.desc}</p>
               </div>
 
               {idx < steps.length - 1 && (

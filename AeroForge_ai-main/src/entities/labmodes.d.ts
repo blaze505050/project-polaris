@@ -1,2 +1,2 @@
 // Re-export from main entities file for backward compatibility
-export type { LabModes } from './index';
+export type { LabModes } from "./index";

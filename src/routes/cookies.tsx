@@ -121,13 +121,16 @@ export function CookiesPage() {
                 <div className="p-4 rounded-xl bg-surface-2 border border-white/6 flex items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-foreground text-sm font-display">Essential & Security Cookies</span>
+                      <span className="font-bold text-foreground text-sm font-display">
+                        Essential & Security Cookies
+                      </span>
                       <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-primary/10 text-primary border border-primary/20">
                         Always Active
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Required for basic route navigation, CSRF security verification, and theme preference persistence. Cannot be disabled.
+                      Required for basic route navigation, CSRF security verification, and theme
+                      preference persistence. Cannot be disabled.
                     </p>
                   </div>
                   <input
@@ -141,9 +144,12 @@ export function CookiesPage() {
                 {/* 2. Analytics */}
                 <div className="p-4 rounded-xl bg-surface-2 border border-white/6 flex items-start justify-between gap-4">
                   <div className="space-y-1">
-                    <span className="font-bold text-foreground text-sm font-display">Performance & Telemetry</span>
+                    <span className="font-bold text-foreground text-sm font-display">
+                      Performance & Telemetry
+                    </span>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Helps us understand simulator execution times, popular masterclass topics, and aggregated platform performance to improve educational tools.
+                      Helps us understand simulator execution times, popular masterclass topics, and
+                      aggregated platform performance to improve educational tools.
                     </p>
                   </div>
                   <input
@@ -157,9 +163,12 @@ export function CookiesPage() {
                 {/* 3. Functional */}
                 <div className="p-4 rounded-xl bg-surface-2 border border-white/6 flex items-start justify-between gap-4">
                   <div className="space-y-1">
-                    <span className="font-bold text-foreground text-sm font-display">Functional & Workspace State</span>
+                    <span className="font-bold text-foreground text-sm font-display">
+                      Functional & Workspace State
+                    </span>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Saves your active AeroForge workspace configurations, solver settings, and waitlist confirmation state locally in your browser.
+                      Saves your active AeroForge workspace configurations, solver settings, and
+                      waitlist confirmation state locally in your browser.
                     </p>
                   </div>
                   <input
@@ -206,23 +215,35 @@ export function CookiesPage() {
             {/* Policy Explanations */}
             <div className="mt-10 space-y-6 divide-y divide-white/8 text-xs sm:text-sm text-muted-foreground leading-relaxed">
               <div className="space-y-2 pt-4">
-                <h3 className="text-lg font-bold font-display text-foreground">What Are Cookies & Local Storage?</h3>
+                <h3 className="text-lg font-bold font-display text-foreground">
+                  What Are Cookies & Local Storage?
+                </h3>
                 <p>
-                  Cookies and Local Storage are small text data fragments placed on your device by websites you visit. They are widely used to make websites work efficiently, remember your session credentials, and provide essential telemetry.
+                  Cookies and Local Storage are small text data fragments placed on your device by
+                  websites you visit. They are widely used to make websites work efficiently,
+                  remember your session credentials, and provide essential telemetry.
                 </p>
               </div>
 
               <div className="space-y-2 pt-6">
-                <h3 className="text-lg font-bold font-display text-foreground">Our Anti-Tracking Guarantee</h3>
+                <h3 className="text-lg font-bold font-display text-foreground">
+                  Our Anti-Tracking Guarantee
+                </h3>
                 <p>
-                  Project Polaris does not use third-party cross-site advertising pixels (e.g. Meta Pixel, TikTok tracking, or ad retargeting cookies). All data stored is strictly limited to improving the educational and simulation experience for students.
+                  Project Polaris does not use third-party cross-site advertising pixels (e.g. Meta
+                  Pixel, TikTok tracking, or ad retargeting cookies). All data stored is strictly
+                  limited to improving the educational and simulation experience for students.
                 </p>
               </div>
 
               <div className="space-y-2 pt-6">
-                <h3 className="text-lg font-bold font-display text-foreground">How Can You Control Cookies in Your Browser?</h3>
+                <h3 className="text-lg font-bold font-display text-foreground">
+                  How Can You Control Cookies in Your Browser?
+                </h3>
                 <p>
-                  You can configure your browser (Chrome, Firefox, Safari, Edge) to block or alert you about cookies. Note that disabling essential cookies may impact interactive simulations in the AeroForge computational suite.
+                  You can configure your browser (Chrome, Firefox, Safari, Edge) to block or alert
+                  you about cookies. Note that disabling essential cookies may impact interactive
+                  simulations in the AeroForge computational suite.
                 </p>
               </div>
             </div>

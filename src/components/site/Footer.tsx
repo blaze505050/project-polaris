@@ -35,10 +35,26 @@ const FOOTER_COLUMNS = [
 ] as const;
 
 const SOCIAL_LINKS = [
-  { href: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX", label: "WhatsApp Community", Icon: MessageCircle },
-  { href: "https://whatsapp.com/channel/0029VbDrFjTDJ6H506hXDG2h", label: "WhatsApp Channel", Icon: Send },
-  { href: "https://www.instagram.com/project_polaris_?igsi=MTM1cWxldXBlM2sybA==", label: "Instagram", Icon: Instagram },
-  { href: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/", label: "LinkedIn", Icon: Linkedin },
+  {
+    href: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
+    label: "WhatsApp Community",
+    Icon: MessageCircle,
+  },
+  {
+    href: "https://whatsapp.com/channel/0029VbDrFjTDJ6H506hXDG2h",
+    label: "WhatsApp Channel",
+    Icon: Send,
+  },
+  {
+    href: "https://www.instagram.com/project_polaris_?igsi=MTM1cWxldXBlM2sybA==",
+    label: "Instagram",
+    Icon: Instagram,
+  },
+  {
+    href: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",
+    label: "LinkedIn",
+    Icon: Linkedin,
+  },
   { href: "mailto:projectpolaris.8@gmail.com", label: "Email Us", Icon: Mail },
 ] as const;
 
@@ -56,7 +72,8 @@ export function Footer() {
               Learn by building, rather than building after learning.
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed max-w-sm">
-              A student-led experiential engineering ecosystem built by students, for students. Bridging the gap between traditional education and real-world learning.
+              A student-led experiential engineering ecosystem built by students, for students.
+              Bridging the gap between traditional education and real-world learning.
             </p>
 
             {/* Social Links */}
@@ -75,7 +92,10 @@ export function Footer() {
               ))}
             </div>
             <div className="text-[11px] text-muted-foreground pt-1">
-              Contact: <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">projectpolaris.8@gmail.com</a>
+              Contact:{" "}
+              <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">
+                projectpolaris.8@gmail.com
+              </a>
             </div>
           </div>
 
@@ -117,18 +137,30 @@ export function Footer() {
         <div className="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-muted-foreground">
           <div className="flex items-center gap-2">
             <NorthStar className="size-3 text-primary" />
-            <span>© {new Date().getFullYear()} Project Polaris. Built by students, for students.</span>
+            <span>
+              © {new Date().getFullYear()} Project Polaris. Built by students, for students.
+            </span>
           </div>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/privacy" className="hover:text-foreground transition-colors">
+              Privacy Policy
+            </Link>
             <span>•</span>
-            <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
+            <Link to="/terms" className="hover:text-foreground transition-colors">
+              Terms of Service
+            </Link>
             <span>•</span>
-            <Link to="/cookies" className="hover:text-foreground transition-colors">Cookie Preferences</Link>
+            <Link to="/cookies" className="hover:text-foreground transition-colors">
+              Cookie Preferences
+            </Link>
             <span>•</span>
-            <Link to="/refund-policy" className="hover:text-foreground transition-colors">Refund & Cancellation</Link>
+            <Link to="/refund-policy" className="hover:text-foreground transition-colors">
+              Refund & Cancellation
+            </Link>
             <span>•</span>
-            <Link to="/support" className="hover:text-foreground transition-colors">Help & Support</Link>
+            <Link to="/support" className="hover:text-foreground transition-colors">
+              Help & Support
+            </Link>
           </div>
         </div>
       </div>

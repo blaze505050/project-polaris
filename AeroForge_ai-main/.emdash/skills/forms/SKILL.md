@@ -21,9 +21,9 @@ type FormData = {
 };
 
 const MyForm = () => {
-  const { 
-    register, 
-    handleSubmit, 
+  const {
+    register,
+    handleSubmit,
     formState: { errors, isSubmitting },
     reset,
     watch,
@@ -62,17 +62,17 @@ type ContactFormData = {
 };
 
 const ContactForm = () => {
-  const { 
-    register, 
-    handleSubmit, 
+  const {
+    register,
+    handleSubmit,
     formState: { errors, isSubmitting },
-    reset 
+    reset
   } = useForm<ContactFormData>();
 
   const onSubmit = async (data: ContactFormData) => {
     // Process form data
     console.log('Form submitted:', data);
-    
+
     // Reset form after successful submission
     reset();
   };
@@ -82,10 +82,10 @@ const ContactForm = () => {
       {/* Name field */}
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input 
+        <Input
           id="name"
           placeholder="Your name"
-          {...register('name', { 
+          {...register('name', {
             required: 'Name is required',
             minLength: { value: 2, message: 'Name must be at least 2 characters' }
           })}
@@ -99,11 +99,11 @@ const ContactForm = () => {
       {/* Email field */}
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
-        <Input 
+        <Input
           id="email"
           type="email"
           placeholder="you@example.com"
-          {...register('email', { 
+          {...register('email', {
             required: 'Email is required',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -120,7 +120,7 @@ const ContactForm = () => {
       {/* Phone field (optional) */}
       <div className="space-y-2">
         <Label htmlFor="phone">Phone (optional)</Label>
-        <Input 
+        <Input
           id="phone"
           type="tel"
           placeholder="+1 (555) 000-0000"
@@ -131,11 +131,11 @@ const ContactForm = () => {
       {/* Message field */}
       <div className="space-y-2">
         <Label htmlFor="message">Message</Label>
-        <Textarea 
+        <Textarea
           id="message"
           placeholder="Your message..."
           rows={5}
-          {...register('message', { 
+          {...register('message', {
             required: 'Message is required',
             minLength: { value: 10, message: 'Message must be at least 10 characters' }
           })}
@@ -165,14 +165,14 @@ For more complex forms with better accessibility, use the Form components:
 
 ```typescript
 import { useForm } from 'react-hook-form';
-import { 
-  Form, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormControl, 
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
   FormDescription,
-  FormMessage 
+  FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -201,7 +201,7 @@ const ProfileForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        
+
         <FormField
           control={form.control}
           name="firstName"
@@ -235,7 +235,7 @@ const ProfileForm = () => {
         <FormField
           control={form.control}
           name="email"
-          rules={{ 
+          rules={{
             required: 'Email is required',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -263,10 +263,10 @@ const ProfileForm = () => {
             <FormItem>
               <FormLabel>Bio</FormLabel>
               <FormControl>
-                <Textarea 
+                <Textarea
                   placeholder="Tell us about yourself..."
                   rows={4}
-                  {...field} 
+                  {...field}
                 />
               </FormControl>
               <FormDescription>
@@ -299,7 +299,7 @@ const ProfileForm = () => {
 ### Min/Max Length
 
 ```typescript
-{...register('field', { 
+{...register('field', {
   minLength: { value: 3, message: 'Minimum 3 characters' },
   maxLength: { value: 100, message: 'Maximum 100 characters' }
 })}
@@ -309,7 +309,7 @@ const ProfileForm = () => {
 
 ```typescript
 // Email
-{...register('email', { 
+{...register('email', {
   pattern: {
     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
     message: 'Invalid email address'
@@ -317,7 +317,7 @@ const ProfileForm = () => {
 })}
 
 // Phone
-{...register('phone', { 
+{...register('phone', {
   pattern: {
     value: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
     message: 'Invalid phone number'
@@ -325,7 +325,7 @@ const ProfileForm = () => {
 })}
 
 // URL
-{...register('website', { 
+{...register('website', {
   pattern: {
     value: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/,
     message: 'Invalid URL'
@@ -336,7 +336,7 @@ const ProfileForm = () => {
 ### Custom Validation
 
 ```typescript
-{...register('password', { 
+{...register('password', {
   validate: {
     hasUppercase: (value) => /[A-Z]/.test(value) || 'Must contain uppercase letter',
     hasLowercase: (value) => /[a-z]/.test(value) || 'Must contain lowercase letter',
@@ -351,7 +351,7 @@ const ProfileForm = () => {
 ```typescript
 const watchPaymentMethod = watch('paymentMethod');
 
-{...register('cardNumber', { 
+{...register('cardNumber', {
   required: watchPaymentMethod === 'card' ? 'Card number is required' : false
 })}
 ```
@@ -363,7 +363,7 @@ const watchPaymentMethod = watch('paymentMethod');
 ### Text Input
 
 ```typescript
-<Input 
+<Input
   type="text"
   placeholder="Enter text..."
   {...register('fieldName')}
@@ -373,10 +373,10 @@ const watchPaymentMethod = watch('paymentMethod');
 ### Email Input
 
 ```typescript
-<Input 
+<Input
   type="email"
   placeholder="you@example.com"
-  {...register('email', { 
+  {...register('email', {
     required: 'Email is required',
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -389,7 +389,7 @@ const watchPaymentMethod = watch('paymentMethod');
 ### Password Input
 
 ```typescript
-<Input 
+<Input
   type="password"
   placeholder="••••••••"
   {...register('password', { required: 'Password is required' })}
@@ -399,7 +399,7 @@ const watchPaymentMethod = watch('paymentMethod');
 ### Textarea
 
 ```typescript
-<Textarea 
+<Textarea
   placeholder="Your message..."
   rows={5}
   {...register('message')}
@@ -554,10 +554,10 @@ const ContactForm = () => {
       submittedAt: new Date().toISOString(),
       status: 'new'
     });
-    
+
     // Reset form
     form.reset();
-    
+
     // Show success message (you'd typically use toast)
     alert('Thank you! Your message has been sent.');
   };
@@ -583,7 +583,7 @@ The only exception is for optimistic updates where you need to revert:
 ```typescript
 const onSubmit = async (data: FormData) => {
   // Direct submission - no try-catch needed
-  await BaseCrudService.create('submissions', data);
+  await BaseCrudService.create("submissions", data);
   form.reset();
 };
 ```
@@ -601,9 +601,9 @@ const { reset } = useForm<FormData>();
 reset();
 
 // Reset to specific values
-reset({ 
-  name: 'John', 
-  email: 'john@example.com' 
+reset({
+  name: "John",
+  email: "john@example.com",
 });
 
 // Reset after submission
@@ -639,12 +639,12 @@ const allValues = watch();
 const { setValue } = useForm<FormData>();
 
 // Set single value
-setValue('name', 'John Doe');
+setValue("name", "John Doe");
 
 // Set with validation
-setValue('email', 'john@example.com', { 
+setValue("email", "john@example.com", {
   shouldValidate: true,
-  shouldDirty: true 
+  shouldDirty: true,
 });
 ```
 
@@ -654,17 +654,17 @@ setValue('email', 'john@example.com', {
 const { formState } = useForm<FormData>();
 
 // Check if form is submitting
-formState.isSubmitting
+formState.isSubmitting;
 
 // Check if form is valid
-formState.isValid
+formState.isValid;
 
 // Check if form has been modified
-formState.isDirty
+formState.isDirty;
 
 // Check specific field state
-formState.touchedFields.email
-formState.dirtyFields.email
+formState.touchedFields.email;
+formState.dirtyFields.email;
 ```
 
 ---
@@ -674,8 +674,8 @@ formState.dirtyFields.email
 ```typescript
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { 
-  Form, FormField, FormItem, FormLabel, FormControl, FormMessage 
+import {
+  Form, FormField, FormItem, FormLabel, FormControl, FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -791,7 +791,7 @@ const ContactPage = () => {
                 <FormField
                   control={form.control}
                   name="email"
-                  rules={{ 
+                  rules={{
                     required: 'Email is required',
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -844,7 +844,7 @@ const ContactPage = () => {
               <FormField
                 control={form.control}
                 name="message"
-                rules={{ 
+                rules={{
                   required: 'Message is required',
                   minLength: { value: 10, message: 'Message must be at least 10 characters' }
                 }}
@@ -852,10 +852,10 @@ const ContactPage = () => {
                   <FormItem>
                     <FormLabel>Message</FormLabel>
                     <FormControl>
-                      <Textarea 
+                      <Textarea
                         placeholder="Tell us more about your inquiry..."
                         rows={6}
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -863,8 +863,8 @@ const ContactPage = () => {
                 )}
               />
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 size="lg"
                 disabled={form.formState.isSubmitting}
                 className="w-full md:w-auto"

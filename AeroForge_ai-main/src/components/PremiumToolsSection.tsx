@@ -1,6 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Zap, Sparkles, Crown, TrendingUp, Cpu, Wind, Brain, Lock, ArrowRight, Play, Pause, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Zap,
+  Sparkles,
+  Crown,
+  TrendingUp,
+  Cpu,
+  Wind,
+  Brain,
+  Lock,
+  ArrowRight,
+  Play,
+  Pause,
+  RotateCcw,
+} from "lucide-react";
 
 interface PremiumTool {
   id: string;
@@ -24,9 +37,9 @@ const PerformanceMonitorTool = () => {
 
   useEffect(() => {
     if (!isRunning) return;
-    
+
     const interval = setInterval(() => {
-      setMetrics(prev => ({
+      setMetrics((prev) => ({
         cpu: Math.max(30, Math.min(95, prev.cpu + (Math.random() - 0.5) * 15)),
         memory: Math.max(40, Math.min(90, prev.memory + (Math.random() - 0.5) * 10)),
         latency: Math.max(8, Math.min(25, prev.latency + (Math.random() - 0.5) * 3)),
@@ -41,7 +54,10 @@ const PerformanceMonitorTool = () => {
     <div className="space-y-2">
       <div className="flex justify-between items-center">
         <span className="font-mono text-xs text-foreground/70">{label}</span>
-        <span className="font-mono text-sm font-bold text-aerospace-blue">{value.toFixed(1)}{unit}</span>
+        <span className="font-mono text-sm font-bold text-aerospace-blue">
+          {value.toFixed(1)}
+          {unit}
+        </span>
       </div>
       <div className="w-full h-2 bg-secondary/30 rounded-full overflow-hidden">
         <motion.div
@@ -61,14 +77,14 @@ const PerformanceMonitorTool = () => {
         <MetricBar label="Latency" value={metrics.latency} max={30} unit="ms" />
         <MetricBar label="Throughput" value={metrics.throughput} max={10000} unit=" ops/s" />
       </div>
-      
+
       <div className="flex gap-2 pt-4 border-t border-secondary/20">
         <button
           onClick={() => setIsRunning(!isRunning)}
           className="flex-1 px-3 py-2 bg-aerospace-blue/20 hover:bg-aerospace-blue/30 text-aerospace-blue rounded font-mono text-xs font-semibold transition-colors flex items-center justify-center gap-2"
         >
           {isRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-          {isRunning ? 'Pause' : 'Resume'}
+          {isRunning ? "Pause" : "Resume"}
         </button>
         <button
           onClick={() => setMetrics({ cpu: 45, memory: 62, latency: 12, throughput: 8500 })}
@@ -108,16 +124,16 @@ const OptimizationCalculator = () => {
   }, [inputs]);
 
   const handleInputChange = (key: string, value: number) => {
-    setInputs(prev => ({ ...prev, [key]: value }));
+    setInputs((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
     <div className="space-y-6">
       <div className="space-y-4">
         {[
-          { key: 'weight', label: 'Weight (kg)', min: 0.5, max: 5, step: 0.1 },
-          { key: 'drag', label: 'Drag Coefficient', min: 0.1, max: 1, step: 0.05 },
-          { key: 'thrust', label: 'Thrust (kN)', min: 10, max: 200, step: 5 },
+          { key: "weight", label: "Weight (kg)", min: 0.5, max: 5, step: 0.1 },
+          { key: "drag", label: "Drag Coefficient", min: 0.1, max: 1, step: 0.05 },
+          { key: "thrust", label: "Thrust (kN)", min: 10, max: 200, step: 5 },
         ].map(({ key, label, min, max, step }) => (
           <div key={key} className="space-y-2">
             <div className="flex justify-between items-center">
@@ -142,15 +158,21 @@ const OptimizationCalculator = () => {
       <div className="pt-4 border-t border-secondary/20 space-y-3">
         <div className="flex justify-between items-center p-3 bg-aerospace-blue/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Efficiency</span>
-          <span className="font-mono text-sm font-bold text-aerospace-success">{results.efficiency.toFixed(1)}%</span>
+          <span className="font-mono text-sm font-bold text-aerospace-success">
+            {results.efficiency.toFixed(1)}%
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-accent/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Range</span>
-          <span className="font-mono text-sm font-bold text-aerospace-accent">{results.range.toFixed(0)} km</span>
+          <span className="font-mono text-sm font-bold text-aerospace-accent">
+            {results.range.toFixed(0)} km
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-warning/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Max Speed</span>
-          <span className="font-mono text-sm font-bold text-aerospace-warning">{results.speed.toFixed(0)} m/s</span>
+          <span className="font-mono text-sm font-bold text-aerospace-warning">
+            {results.speed.toFixed(0)} m/s
+          </span>
         </div>
       </div>
     </div>
@@ -186,9 +208,9 @@ const MeshGeneratorTool = () => {
     <div className="space-y-6">
       <div className="space-y-4">
         {[
-          { key: 'resolution', label: 'Grid Resolution', min: 20, max: 100, step: 10 },
-          { key: 'refinement', label: 'Refinement Level', min: 1, max: 8, step: 1 },
-          { key: 'quality', label: 'Quality Target', min: 50, max: 99, step: 5 },
+          { key: "resolution", label: "Grid Resolution", min: 20, max: 100, step: 10 },
+          { key: "refinement", label: "Refinement Level", min: 1, max: 8, step: 1 },
+          { key: "quality", label: "Quality Target", min: 50, max: 99, step: 5 },
         ].map(({ key, label, min, max, step }) => (
           <div key={key} className="space-y-2">
             <div className="flex justify-between items-center">
@@ -203,7 +225,9 @@ const MeshGeneratorTool = () => {
               max={max}
               step={step}
               value={meshParams[key as keyof typeof meshParams]}
-              onChange={(e) => setMeshParams(prev => ({ ...prev, [key]: parseInt(e.target.value) }))}
+              onChange={(e) =>
+                setMeshParams((prev) => ({ ...prev, [key]: parseInt(e.target.value) }))
+              }
               className="w-full h-2 bg-secondary/30 rounded-full appearance-none cursor-pointer accent-aerospace-blue"
             />
           </div>
@@ -213,15 +237,21 @@ const MeshGeneratorTool = () => {
       <div className="pt-4 border-t border-secondary/20 space-y-3">
         <div className="flex justify-between items-center p-3 bg-aerospace-blue/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Elements</span>
-          <span className="font-mono text-sm font-bold text-aerospace-blue">{meshStats.elements.toLocaleString()}</span>
+          <span className="font-mono text-sm font-bold text-aerospace-blue">
+            {meshStats.elements.toLocaleString()}
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-accent/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Nodes</span>
-          <span className="font-mono text-sm font-bold text-aerospace-accent">{meshStats.nodes.toLocaleString()}</span>
+          <span className="font-mono text-sm font-bold text-aerospace-accent">
+            {meshStats.nodes.toLocaleString()}
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-success/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Quality Score</span>
-          <span className="font-mono text-sm font-bold text-aerospace-success">{meshStats.quality}%</span>
+          <span className="font-mono text-sm font-bold text-aerospace-success">
+            {meshStats.quality}%
+          </span>
         </div>
       </div>
     </div>
@@ -261,9 +291,9 @@ const AerodynamicAnalyzer = () => {
     <div className="space-y-6">
       <div className="space-y-4">
         {[
-          { key: 'altitude', label: 'Altitude (m)', min: 0, max: 35000, step: 1000 },
-          { key: 'speed', label: 'Airspeed (m/s)', min: 50, max: 500, step: 10 },
-          { key: 'angle', label: 'Angle of Attack (°)', min: -10, max: 25, step: 1 },
+          { key: "altitude", label: "Altitude (m)", min: 0, max: 35000, step: 1000 },
+          { key: "speed", label: "Airspeed (m/s)", min: 50, max: 500, step: 10 },
+          { key: "angle", label: "Angle of Attack (°)", min: -10, max: 25, step: 1 },
         ].map(({ key, label, min, max, step }) => (
           <div key={key} className="space-y-2">
             <div className="flex justify-between items-center">
@@ -278,7 +308,7 @@ const AerodynamicAnalyzer = () => {
               max={max}
               step={step}
               value={params[key as keyof typeof params]}
-              onChange={(e) => setParams(prev => ({ ...prev, [key]: parseInt(e.target.value) }))}
+              onChange={(e) => setParams((prev) => ({ ...prev, [key]: parseInt(e.target.value) }))}
               className="w-full h-2 bg-secondary/30 rounded-full appearance-none cursor-pointer accent-aerospace-blue"
             />
           </div>
@@ -288,15 +318,21 @@ const AerodynamicAnalyzer = () => {
       <div className="pt-4 border-t border-secondary/20 space-y-3">
         <div className="flex justify-between items-center p-3 bg-aerospace-success/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Lift Force</span>
-          <span className="font-mono text-sm font-bold text-aerospace-success">{results.lift.toFixed(1)} kN</span>
+          <span className="font-mono text-sm font-bold text-aerospace-success">
+            {results.lift.toFixed(1)} kN
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-danger/10 rounded">
           <span className="font-mono text-xs text-foreground/70">Drag Force</span>
-          <span className="font-mono text-sm font-bold text-aerospace-danger">{results.drag.toFixed(1)} kN</span>
+          <span className="font-mono text-sm font-bold text-aerospace-danger">
+            {results.drag.toFixed(1)} kN
+          </span>
         </div>
         <div className="flex justify-between items-center p-3 bg-aerospace-accent/10 rounded">
           <span className="font-mono text-xs text-foreground/70">L/D Ratio</span>
-          <span className="font-mono text-sm font-bold text-aerospace-accent">{results.liftDragRatio.toFixed(2)}</span>
+          <span className="font-mono text-sm font-bold text-aerospace-accent">
+            {results.liftDragRatio.toFixed(2)}
+          </span>
         </div>
       </div>
     </div>
@@ -305,39 +341,39 @@ const AerodynamicAnalyzer = () => {
 
 const PREMIUM_TOOLS: PremiumTool[] = [
   {
-    id: 'performance-monitor',
-    name: 'Real-Time Performance Monitor',
-    description: 'Live system metrics and performance tracking',
+    id: "performance-monitor",
+    name: "Real-Time Performance Monitor",
+    description: "Live system metrics and performance tracking",
     icon: Cpu,
-    badge: 'LEGENDARY',
-    color: 'from-aerospace-blue to-aerospace-accent',
+    badge: "LEGENDARY",
+    color: "from-aerospace-blue to-aerospace-accent",
     component: <PerformanceMonitorTool />,
   },
   {
-    id: 'optimization-calc',
-    name: 'Design Optimization Calculator',
-    description: 'Advanced aerodynamic and structural optimization',
+    id: "optimization-calc",
+    name: "Design Optimization Calculator",
+    description: "Advanced aerodynamic and structural optimization",
     icon: TrendingUp,
-    badge: 'EPIC',
-    color: 'from-aerospace-accent to-aerospace-success',
+    badge: "EPIC",
+    color: "from-aerospace-accent to-aerospace-success",
     component: <OptimizationCalculator />,
   },
   {
-    id: 'mesh-generator',
-    name: 'Intelligent Mesh Generator',
-    description: 'Adaptive mesh generation with quality control',
+    id: "mesh-generator",
+    name: "Intelligent Mesh Generator",
+    description: "Adaptive mesh generation with quality control",
     icon: Brain,
-    badge: 'LEGENDARY',
-    color: 'from-aerospace-success to-aerospace-warning',
+    badge: "LEGENDARY",
+    color: "from-aerospace-success to-aerospace-warning",
     component: <MeshGeneratorTool />,
   },
   {
-    id: 'aero-analyzer',
-    name: 'Aerodynamic Analyzer',
-    description: 'Real-time aerodynamic force calculations',
+    id: "aero-analyzer",
+    name: "Aerodynamic Analyzer",
+    description: "Real-time aerodynamic force calculations",
     icon: Wind,
-    badge: 'EPIC',
-    color: 'from-aerospace-warning to-aerospace-blue',
+    badge: "EPIC",
+    color: "from-aerospace-warning to-aerospace-blue",
     component: <AerodynamicAnalyzer />,
   },
 ];
@@ -364,13 +400,16 @@ export default function PremiumToolsSection() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Crown className="w-6 h-6 text-aerospace-blue" />
-            <span className="font-mono text-sm uppercase tracking-widest text-aerospace-blue">Premium Tools</span>
+            <span className="font-mono text-sm uppercase tracking-widest text-aerospace-blue">
+              Premium Tools
+            </span>
           </div>
           <h2 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-6">
             Legendary Engineering Tools
           </h2>
           <p className="font-paragraph text-xl text-secondary-foreground max-w-3xl mx-auto">
-            Unlock epic capabilities with our premium suite of real-time analysis and optimization tools. Fully functional and production-ready.
+            Unlock epic capabilities with our premium suite of real-time analysis and optimization
+            tools. Fully functional and production-ready.
           </p>
         </motion.div>
 
@@ -393,29 +432,37 @@ export default function PremiumToolsSection() {
                   className={`w-full text-left p-6 rounded-lg border-2 transition-all duration-300 group ${
                     isSelected
                       ? `border-aerospace-blue bg-gradient-to-br ${tool.color} bg-opacity-10`
-                      : 'border-secondary/20 bg-aerospace-dark/50 hover:border-aerospace-blue/50'
+                      : "border-secondary/20 bg-aerospace-dark/50 hover:border-aerospace-blue/50"
                   }`}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <div className={`p-3 rounded-lg ${isSelected ? 'bg-aerospace-blue/30' : 'bg-secondary/20'}`}>
-                      <Icon className={`w-5 h-5 ${isSelected ? 'text-aerospace-blue' : 'text-foreground/60'}`} />
+                    <div
+                      className={`p-3 rounded-lg ${isSelected ? "bg-aerospace-blue/30" : "bg-secondary/20"}`}
+                    >
+                      <Icon
+                        className={`w-5 h-5 ${isSelected ? "text-aerospace-blue" : "text-foreground/60"}`}
+                      />
                     </div>
-                    <span className={`font-mono text-xs px-2 py-1 rounded font-bold ${
-                      tool.badge === 'LEGENDARY'
-                        ? 'bg-aerospace-blue/30 text-aerospace-blue'
-                        : 'bg-aerospace-accent/30 text-aerospace-accent'
-                    }`}>
+                    <span
+                      className={`font-mono text-xs px-2 py-1 rounded font-bold ${
+                        tool.badge === "LEGENDARY"
+                          ? "bg-aerospace-blue/30 text-aerospace-blue"
+                          : "bg-aerospace-accent/30 text-aerospace-accent"
+                      }`}
+                    >
                       {tool.badge}
                     </span>
                   </div>
-                  <h3 className={`font-heading font-bold mb-2 transition-colors ${
-                    isSelected ? 'text-aerospace-blue' : 'text-foreground group-hover:text-aerospace-blue'
-                  }`}>
+                  <h3
+                    className={`font-heading font-bold mb-2 transition-colors ${
+                      isSelected
+                        ? "text-aerospace-blue"
+                        : "text-foreground group-hover:text-aerospace-blue"
+                    }`}
+                  >
                     {tool.name}
                   </h3>
-                  <p className="font-paragraph text-xs text-foreground/60">
-                    {tool.description}
-                  </p>
+                  <p className="font-paragraph text-xs text-foreground/60">{tool.description}</p>
                 </motion.button>
               );
             })}
@@ -439,9 +486,7 @@ export default function PremiumToolsSection() {
               <h3 className="font-heading text-2xl font-bold text-foreground mb-2">
                 {selectedTool.name}
               </h3>
-              <p className="font-paragraph text-foreground/70">
-                {selectedTool.description}
-              </p>
+              <p className="font-paragraph text-foreground/70">{selectedTool.description}</p>
             </div>
 
             <div className="bg-aerospace-dark/50 rounded-lg p-6 border border-secondary/20">
@@ -453,10 +498,10 @@ export default function PremiumToolsSection() {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { icon: Zap, label: 'Real-Time', desc: 'Live calculations' },
-            { icon: Lock, label: 'Production Ready', desc: 'Enterprise grade' },
-            { icon: TrendingUp, label: 'Optimized', desc: 'Peak performance' },
-            { icon: Sparkles, label: 'Advanced', desc: 'Cutting edge' },
+            { icon: Zap, label: "Real-Time", desc: "Live calculations" },
+            { icon: Lock, label: "Production Ready", desc: "Enterprise grade" },
+            { icon: TrendingUp, label: "Optimized", desc: "Peak performance" },
+            { icon: Sparkles, label: "Advanced", desc: "Cutting edge" },
           ].map((feature, idx) => {
             const Icon = feature.icon;
             return (

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Plus,
   Search,
@@ -14,18 +14,18 @@ import {
   Trash2,
   Edit,
   Eye,
-} from 'lucide-react';
-import { BaseCrudService } from '@/integrations';
-import { useProjectStore } from '@/stores/projectStore';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
+} from "lucide-react";
+import { BaseCrudService } from "@/integrations";
+import { useProjectStore } from "@/stores/projectStore";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
 
 interface ProjectItem {
   _id: string;
   name: string;
   description?: string;
-  status: 'active' | 'archived' | 'completed';
+  status: "active" | "archived" | "completed";
   createdDate: string | Date;
   updatedDate: string | Date;
   owner?: string;
@@ -36,10 +36,12 @@ export default function FixedProjectsPage() {
   const navigate = useNavigate();
   const { setCurrentProject, projects, setProjects } = useProjectStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'archived' | 'completed'>('all');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterStatus, setFilterStatus] = useState<"all" | "active" | "archived" | "completed">(
+    "all",
+  );
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
-  const [newProjectName, setNewProjectName] = useState('');
+  const [newProjectName, setNewProjectName] = useState("");
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -48,48 +50,48 @@ export default function FixedProjectsPage() {
         // Mock data - in production would fetch from CMS
         const mockProjects: ProjectItem[] = [
           {
-            _id: '1',
-            name: 'Orbital Mechanics Study',
-            description: 'Advanced N-body simulation research',
-            status: 'active',
-            createdDate: new Date('2024-01-15'),
-            updatedDate: new Date('2024-02-20'),
-            owner: 'Dr. Smith',
-            tags: ['astrodynamics', 'research'],
+            _id: "1",
+            name: "Orbital Mechanics Study",
+            description: "Advanced N-body simulation research",
+            status: "active",
+            createdDate: new Date("2024-01-15"),
+            updatedDate: new Date("2024-02-20"),
+            owner: "Dr. Smith",
+            tags: ["astrodynamics", "research"],
           },
           {
-            _id: '2',
-            name: 'CFD Analysis - Wing Design',
-            description: 'Aerodynamic optimization project',
-            status: 'active',
-            createdDate: new Date('2024-02-01'),
-            updatedDate: new Date('2024-02-25'),
-            owner: 'Dr. Johnson',
-            tags: ['aerodynamics', 'optimization'],
+            _id: "2",
+            name: "CFD Analysis - Wing Design",
+            description: "Aerodynamic optimization project",
+            status: "active",
+            createdDate: new Date("2024-02-01"),
+            updatedDate: new Date("2024-02-25"),
+            owner: "Dr. Johnson",
+            tags: ["aerodynamics", "optimization"],
           },
           {
-            _id: '3',
-            name: 'Black Hole Simulation',
-            description: 'General relativity visualization',
-            status: 'completed',
-            createdDate: new Date('2023-12-10'),
-            updatedDate: new Date('2024-01-30'),
-            owner: 'Dr. Williams',
-            tags: ['relativity', 'visualization'],
+            _id: "3",
+            name: "Black Hole Simulation",
+            description: "General relativity visualization",
+            status: "completed",
+            createdDate: new Date("2023-12-10"),
+            updatedDate: new Date("2024-01-30"),
+            owner: "Dr. Williams",
+            tags: ["relativity", "visualization"],
           },
         ];
         setProjects(mockProjects);
       } catch (error) {
-        console.error('Failed to load projects:', error);
+        console.error("Failed to load projects:", error);
       }
     };
 
     loadProjects();
   }, [setProjects]);
 
-  const filteredProjects = projects.filter(project => {
+  const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = filterStatus === 'all' || project.status === filterStatus;
+    const matchesStatus = filterStatus === "all" || project.status === filterStatus;
     return matchesSearch && matchesStatus;
   });
 
@@ -99,13 +101,13 @@ export default function FixedProjectsPage() {
     const newProject: ProjectItem = {
       _id: Date.now().toString(),
       name: newProjectName,
-      status: 'active',
+      status: "active",
       createdDate: new Date(),
       updatedDate: new Date(),
     };
 
     setProjects([...projects, newProject]);
-    setNewProjectName('');
+    setNewProjectName("");
     setShowNewProjectModal(false);
   };
 
@@ -122,12 +124,18 @@ export default function FixedProjectsPage() {
         <CommandCenterSidebar />
 
         <main className="flex-1 max-w-[100rem] mx-auto px-6 py-8 w-full">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="space-y-6"
+          >
             {/* Header */}
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-4xl font-bold text-aerospace-blue mb-2">Projects</h1>
-                <p className="text-secondary-foreground">Manage your research and simulation projects</p>
+                <p className="text-secondary-foreground">
+                  Manage your research and simulation projects
+                </p>
               </div>
               <button
                 onClick={() => setShowNewProjectModal(true)}
@@ -141,18 +149,21 @@ export default function FixedProjectsPage() {
             {/* Search and Filter */}
             <div className="flex gap-4 flex-wrap">
               <div className="flex-1 min-w-[200px] relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-foreground" size={18} />
+                <Search
+                  className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary-foreground"
+                  size={18}
+                />
                 <input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 bg-primary border border-secondary/30 rounded-lg text-foreground placeholder-secondary-foreground focus:outline-none focus:border-aerospace-blue"
                 />
               </div>
               <select
                 value={filterStatus}
-                onChange={e => setFilterStatus(e.target.value as any)}
+                onChange={(e) => setFilterStatus(e.target.value as any)}
                 className="px-4 py-2 bg-primary border border-secondary/30 rounded-lg text-foreground focus:outline-none focus:border-aerospace-blue"
               >
                 <option value="all">All Status</option>
@@ -193,11 +204,11 @@ export default function FixedProjectsPage() {
                       <Folder className="text-aerospace-blue" size={24} />
                       <span
                         className={`text-xs font-mono px-2 py-1 rounded ${
-                          project.status === 'active'
-                            ? 'bg-aerospace-success/20 text-aerospace-success'
-                            : project.status === 'completed'
-                            ? 'bg-aerospace-accent/20 text-aerospace-accent'
-                            : 'bg-secondary/20 text-secondary-foreground'
+                          project.status === "active"
+                            ? "bg-aerospace-success/20 text-aerospace-success"
+                            : project.status === "completed"
+                              ? "bg-aerospace-accent/20 text-aerospace-accent"
+                              : "bg-secondary/20 text-secondary-foreground"
                         }`}
                       >
                         {project.status.toUpperCase()}
@@ -207,7 +218,9 @@ export default function FixedProjectsPage() {
                     <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-aerospace-blue transition-colors">
                       {project.name}
                     </h3>
-                    <p className="text-sm text-secondary-foreground mb-4 line-clamp-2">{project.description}</p>
+                    <p className="text-sm text-secondary-foreground mb-4 line-clamp-2">
+                      {project.description}
+                    </p>
 
                     <div className="space-y-2 text-xs text-secondary-foreground">
                       {project.owner && (
@@ -224,8 +237,11 @@ export default function FixedProjectsPage() {
 
                     {project.tags && project.tags.length > 0 && (
                       <div className="mt-4 flex flex-wrap gap-2">
-                        {project.tags.map(tag => (
-                          <span key={tag} className="text-xs bg-secondary/20 text-secondary-foreground px-2 py-1 rounded">
+                        {project.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs bg-secondary/20 text-secondary-foreground px-2 py-1 rounded"
+                          >
                             {tag}
                           </span>
                         ))}
@@ -252,9 +268,9 @@ export default function FixedProjectsPage() {
               type="text"
               placeholder="Project name..."
               value={newProjectName}
-              onChange={e => setNewProjectName(e.target.value)}
+              onChange={(e) => setNewProjectName(e.target.value)}
               className="w-full px-4 py-2 bg-aerospace-dark border border-secondary/30 rounded-lg text-foreground placeholder-secondary-foreground focus:outline-none focus:border-aerospace-blue mb-4"
-              onKeyPress={e => e.key === 'Enter' && handleCreateProject()}
+              onKeyPress={(e) => e.key === "Enter" && handleCreateProject()}
             />
             <div className="flex gap-3">
               <button

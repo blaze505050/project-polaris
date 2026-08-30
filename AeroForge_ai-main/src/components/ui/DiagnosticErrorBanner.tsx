@@ -1,5 +1,5 @@
-import React from 'react';
-import { AlertOctagon, Wrench, RefreshCw, ChevronRight } from 'lucide-react';
+import React from "react";
+import { AlertOctagon, Wrench, RefreshCw, ChevronRight } from "lucide-react";
 
 interface DiagnosticErrorBannerProps {
   title: string;
@@ -14,7 +14,7 @@ export default function DiagnosticErrorBanner({
   title,
   reason,
   recommendedAction,
-  actionLabel = 'Repair Geometry',
+  actionLabel = "Repair Geometry",
   onAction,
   onDismiss,
 }: DiagnosticErrorBannerProps) {
@@ -25,9 +25,7 @@ export default function DiagnosticErrorBanner({
           <AlertOctagon className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-bold text-red-300 tracking-tight">
-            {title}
-          </h3>
+          <h3 className="text-sm font-bold text-red-300 tracking-tight">{title}</h3>
           <div className="mt-2 space-y-1.5 text-xs">
             <div>
               <span className="text-white/40 uppercase text-[10px] tracking-wider block">

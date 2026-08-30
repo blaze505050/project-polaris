@@ -16,7 +16,7 @@ export interface Participant {
   userId: string;
   name: string;
   email: string;
-  role: 'owner' | 'editor' | 'viewer';
+  role: "owner" | "editor" | "viewer";
   joinedAt: Date;
   lastSeen: Date;
   cursorPosition?: { x: number; y: number };
@@ -27,7 +27,7 @@ export interface ChangeEvent {
   id: string;
   userId: string;
   timestamp: Date;
-  type: 'create' | 'update' | 'delete' | 'move' | 'rotate' | 'scale';
+  type: "create" | "update" | "delete" | "move" | "rotate" | "scale";
   elementId: string;
   oldValue?: any;
   newValue?: any;
@@ -38,7 +38,7 @@ export interface ConflictResolution {
   conflictId: string;
   changeA: ChangeEvent;
   changeB: ChangeEvent;
-  resolution: 'keep-a' | 'keep-b' | 'merge' | 'manual';
+  resolution: "keep-a" | "keep-b" | "merge" | "manual";
   resolvedAt: Date;
 }
 
@@ -73,7 +73,7 @@ class CollaborationService {
     const session = this.sessions.get(sessionId);
     if (!session) return false;
 
-    const exists = session.participants.some(p => p.userId === participant.userId);
+    const exists = session.participants.some((p) => p.userId === participant.userId);
     if (!exists) {
       session.participants.push(participant);
       session.lastActivity = new Date();
@@ -89,7 +89,7 @@ class CollaborationService {
     const session = this.sessions.get(sessionId);
     if (!session) return false;
 
-    session.participants = session.participants.filter(p => p.userId !== userId);
+    session.participants = session.participants.filter((p) => p.userId !== userId);
     session.lastActivity = new Date();
 
     if (session.participants.length === 0) {
@@ -102,7 +102,7 @@ class CollaborationService {
   /**
    * Record a change event
    */
-  recordChange(sessionId: string, change: Omit<ChangeEvent, 'id'>): ChangeEvent {
+  recordChange(sessionId: string, change: Omit<ChangeEvent, "id">): ChangeEvent {
     const changeEvent: ChangeEvent = {
       ...change,
       id: `change-${Date.now()}`,
@@ -148,7 +148,7 @@ class CollaborationService {
             conflictId: `conflict-${Date.now()}`,
             changeA,
             changeB,
-            resolution: 'merge',
+            resolution: "merge",
             resolvedAt: new Date(),
           };
 
@@ -166,8 +166,8 @@ class CollaborationService {
    */
   resolveConflict(
     conflictId: string,
-    resolution: 'keep-a' | 'keep-b' | 'merge' | 'manual',
-    mergedValue?: any
+    resolution: "keep-a" | "keep-b" | "merge" | "manual",
+    mergedValue?: any,
   ): boolean {
     const conflict = this.conflicts.get(conflictId);
     if (!conflict) return false;
@@ -182,7 +182,7 @@ class CollaborationService {
    * Get all active sessions
    */
   getActiveSessions(): CollaborationSession[] {
-    return Array.from(this.sessions.values()).filter(s => s.isActive);
+    return Array.from(this.sessions.values()).filter((s) => s.isActive);
   }
 
   /**
@@ -198,12 +198,12 @@ class CollaborationService {
   updateParticipantCursor(
     sessionId: string,
     userId: string,
-    position: { x: number; y: number }
+    position: { x: number; y: number },
   ): boolean {
     const session = this.sessions.get(sessionId);
     if (!session) return false;
 
-    const participant = session.participants.find(p => p.userId === userId);
+    const participant = session.participants.find((p) => p.userId === userId);
     if (!participant) return false;
 
     participant.cursorPosition = position;
@@ -216,15 +216,11 @@ class CollaborationService {
   /**
    * Update participant selection
    */
-  updateParticipantSelection(
-    sessionId: string,
-    userId: string,
-    elementId: string
-  ): boolean {
+  updateParticipantSelection(sessionId: string, userId: string, elementId: string): boolean {
     const session = this.sessions.get(sessionId);
     if (!session) return false;
 
-    const participant = session.participants.find(p => p.userId === userId);
+    const participant = session.participants.find((p) => p.userId === userId);
     if (!participant) return false;
 
     participant.selectedElement = elementId;
@@ -246,7 +242,7 @@ class CollaborationService {
     const changesByUser = new Map<string, number>();
     const changesByType = new Map<string, number>();
 
-    history.forEach(change => {
+    history.forEach((change) => {
       changesByUser.set(change.userId, (changesByUser.get(change.userId) || 0) + 1);
       changesByType.set(change.type, (changesByType.get(change.type) || 0) + 1);
     });
@@ -259,7 +255,7 @@ class CollaborationService {
       totalChanges: history.length,
       changesByUser: Object.fromEntries(changesByUser),
       changesByType: Object.fromEntries(changesByType),
-      participants: session.participants.map(p => ({
+      participants: session.participants.map((p) => ({
         name: p.name,
         role: p.role,
         joinedAt: p.joinedAt,

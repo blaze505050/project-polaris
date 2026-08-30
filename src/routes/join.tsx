@@ -21,7 +21,10 @@ export const Route = createFileRoute("/join")({
           "Apply to join Project Polaris. Open to students of any background, with options to join as student, volunteer, or associate.",
       },
       { property: "og:title", content: "Join — Project Polaris" },
-      { property: "og:description", content: "Apply to join a student-led experiential learning community." },
+      {
+        property: "og:description",
+        content: "Apply to join a student-led experiential learning community.",
+      },
     ],
   }),
   component: Join,
@@ -43,19 +46,34 @@ function Join() {
       >
         <div className="flex flex-wrap items-center gap-3">
           <Button asChild size="sm" className="h-9 px-4 bg-foreground text-background font-medium">
-            <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+            <a
+              href={SITE.communityUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2"
+            >
               <MessageCircle className="size-3.5" />
               <span>WhatsApp Community</span>
             </a>
           </Button>
           <Button asChild variant="outline" size="sm" className="h-9 px-4">
-            <a href={SITE.volunteerUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+            <a
+              href={SITE.volunteerUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2"
+            >
               <HeartHandshake className="size-3.5" />
               <span>Volunteer Portal</span>
             </a>
           </Button>
           <Button asChild variant="outline" size="sm" className="h-9 px-4">
-            <a href={SITE.associateFormUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+            <a
+              href={SITE.associateFormUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2"
+            >
               <UserPlus className="size-3.5" />
               <span>Associate Form</span>
             </a>

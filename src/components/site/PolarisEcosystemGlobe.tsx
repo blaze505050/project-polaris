@@ -302,9 +302,9 @@ export function PolarisEcosystemGlobe() {
         const phi = (latDeg * Math.PI) / 180;
         const theta = (lonDeg * Math.PI) / 180;
 
-        let x = r * Math.cos(phi) * Math.sin(theta);
-        let y = -r * Math.sin(phi);
-        let z = r * Math.cos(phi) * Math.cos(theta);
+        const x = r * Math.cos(phi) * Math.sin(theta);
+        const y = -r * Math.sin(phi);
+        const z = r * Math.cos(phi) * Math.cos(theta);
 
         const cosY = Math.cos(rotY);
         const sinY = Math.sin(rotY);
@@ -326,7 +326,14 @@ export function PolarisEcosystemGlobe() {
       };
 
       // 1. Atmosphere Neural Glow
-      const glowGrad = ctx.createRadialGradient(centerX, centerY, radius * 0.7, centerX, centerY, radius * 1.4);
+      const glowGrad = ctx.createRadialGradient(
+        centerX,
+        centerY,
+        radius * 0.7,
+        centerX,
+        centerY,
+        radius * 1.4,
+      );
       glowGrad.addColorStop(0, "rgba(165, 180, 252, 0.08)");
       glowGrad.addColorStop(0.6, "rgba(165, 180, 252, 0.02)");
       glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
@@ -515,7 +522,10 @@ export function PolarisEcosystemGlobe() {
     lastMousePosRef.current = { x: e.clientX, y: e.clientY };
 
     rotationRef.current.rotY += deltaX * 0.008;
-    rotationRef.current.rotX = Math.max(-0.8, Math.min(0.8, rotationRef.current.rotX + deltaY * 0.008));
+    rotationRef.current.rotX = Math.max(
+      -0.8,
+      Math.min(0.8, rotationRef.current.rotX + deltaY * 0.008),
+    );
   };
 
   const handleMouseUp = () => {
@@ -537,7 +547,8 @@ export function PolarisEcosystemGlobe() {
             The Polaris Brain: Complete Ecosystem at a Glance
           </h2>
           <p className="text-xs text-muted-foreground max-w-2xl">
-            Polaris is not a fragmented collection of courses — it is an interconnected digital brain built to turn curiosity into verifiable, real-world engineering impact.
+            Polaris is not a fragmented collection of courses — it is an interconnected digital
+            brain built to turn curiosity into verifiable, real-world engineering impact.
           </p>
         </div>
 
@@ -545,7 +556,9 @@ export function PolarisEcosystemGlobe() {
         <div className="flex flex-wrap items-center gap-2 font-mono text-[11px]">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-2 border border-white/8 text-muted-foreground">
             <Activity className="size-3 text-primary" />
-            <span>Telemetry: <strong className="text-emerald-400">8 Sectors Firing</strong></span>
+            <span>
+              Telemetry: <strong className="text-emerald-400">8 Sectors Firing</strong>
+            </span>
           </div>
           <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-2 border border-white/8 text-muted-foreground">
             <Move className="size-3 text-primary" />
@@ -594,7 +607,11 @@ export function PolarisEcosystemGlobe() {
 
           {/* Central Polaris Star Core Logo Overlay */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center">
-            <img src={polarisLogo} alt="Polaris Neural Core" className="size-6 mx-auto object-contain" />
+            <img
+              src={polarisLogo}
+              alt="Polaris Neural Core"
+              className="size-6 mx-auto object-contain"
+            />
           </div>
 
           {/* Subtle Canvas Watermark */}
@@ -662,7 +679,12 @@ export function PolarisEcosystemGlobe() {
                 size="default"
                 className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
               >
-                <a href={selectedSector.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                <a
+                  href={selectedSector.ctaUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-1.5"
+                >
                   <span>{selectedSector.ctaLabel}</span>
                   <ExternalLink className="size-3.5" />
                 </a>
@@ -673,7 +695,10 @@ export function PolarisEcosystemGlobe() {
                 size="default"
                 className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
               >
-                <Link to={selectedSector.ctaUrl} className="flex items-center justify-center gap-1.5">
+                <Link
+                  to={selectedSector.ctaUrl}
+                  className="flex items-center justify-center gap-1.5"
+                >
                   <span>{selectedSector.ctaLabel}</span>
                   <ArrowRight className="size-3.5" />
                 </Link>

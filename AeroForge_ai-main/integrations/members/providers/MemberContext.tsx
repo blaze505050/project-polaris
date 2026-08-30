@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react';
-import { Member } from '..';
+import { createContext, useContext } from "react";
+import { Member } from "..";
 
 // Types for member state
 export interface MemberState {
@@ -29,7 +29,7 @@ export const MemberContext = createContext<MemberContextType | undefined>(undefi
 export const useMember = () => {
   const context = useContext(MemberContext);
   if (context === undefined) {
-    throw new Error('useMember must be used within a MemberProvider');
+    throw new Error("useMember must be used within a MemberProvider");
   }
   return context;
-}; 
+};

@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Code2, Play, Download, Copy, CheckCircle2, AlertCircle, Zap, Terminal, FileJson, Settings } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Code2,
+  Play,
+  Download,
+  Copy,
+  CheckCircle2,
+  AlertCircle,
+  Zap,
+  Terminal,
+  FileJson,
+  Settings,
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function CompilerPage() {
   const [code, setCode] = useState(`// AeroForge Design Compiler
@@ -34,25 +45,31 @@ component Wing {
   const handleCompile = async () => {
     setIsCompiling(true);
     // Simulate compilation
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setOutput(JSON.stringify({
-      status: "SUCCESS",
-      geometry: {
-        vertices: 2847,
-        faces: 5694,
-        edges: 8541
-      },
-      validation: {
-        passed: true,
-        checks: ["Topology", "Tolerance", "Manufacturing"],
-        timestamp: new Date().toISOString()
-      },
-      cad: {
-        format: "STEP",
-        size: "2.4MB",
-        ready: true
-      }
-    }, null, 2));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setOutput(
+      JSON.stringify(
+        {
+          status: "SUCCESS",
+          geometry: {
+            vertices: 2847,
+            faces: 5694,
+            edges: 8541,
+          },
+          validation: {
+            passed: true,
+            checks: ["Topology", "Tolerance", "Manufacturing"],
+            timestamp: new Date().toISOString(),
+          },
+          cad: {
+            format: "STEP",
+            size: "2.4MB",
+            ready: true,
+          },
+        },
+        null,
+        2,
+      ),
+    );
     setIsCompiling(false);
   };
 
@@ -65,7 +82,7 @@ component Wing {
   return (
     <div className="min-h-screen bg-aerospace-dark text-foreground font-paragraph flex flex-col">
       <Header />
-      
+
       <main className="flex-1 w-full">
         {/* Hero Section */}
         <section className="w-full py-20 bg-primary border-b border-secondary/20">
@@ -78,13 +95,16 @@ component Wing {
             >
               <div className="flex items-center justify-center gap-3 mb-4">
                 <Terminal className="w-6 h-6 text-aerospace-blue" />
-                <span className="font-mono text-sm uppercase tracking-widest text-aerospace-blue">Design Compiler</span>
+                <span className="font-mono text-sm uppercase tracking-widest text-aerospace-blue">
+                  Design Compiler
+                </span>
               </div>
               <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground mb-4">
                 Deterministic CAD <span className="text-aerospace-blue">Compilation</span>
               </h1>
               <p className="font-paragraph text-xl text-secondary-foreground max-w-2xl mx-auto">
-                Write your aerospace design once, compile to production-ready CAD with guaranteed consistency.
+                Write your aerospace design once, compile to production-ready CAD with guaranteed
+                consistency.
               </p>
             </motion.div>
           </div>
@@ -104,7 +124,9 @@ component Wing {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Code2 className="w-5 h-5 text-aerospace-blue" />
-                    <h2 className="font-heading text-lg font-bold text-foreground">Design Definition</h2>
+                    <h2 className="font-heading text-lg font-bold text-foreground">
+                      Design Definition
+                    </h2>
                   </div>
                   <button
                     type="button"
@@ -120,14 +142,14 @@ component Wing {
                     )}
                   </button>
                 </div>
-                
+
                 <textarea
                   value={code}
                   aria-label="Aerospace Component Design Definition Code Editor"
                   onChange={(e) => setCode(e.target.value)}
                   className="w-full h-96 bg-[#090f20] border border-secondary/40 rounded-lg p-4 md:p-5 font-mono text-sm text-slate-100 focus:outline-none focus:border-aerospace-blue/70 resize-none shadow-inner"
                 />
-                
+
                 <button
                   type="button"
                   onClick={handleCompile}
@@ -162,7 +184,7 @@ component Wing {
                   <FileJson className="w-5 h-5 text-aerospace-accent" />
                   <h2 className="font-heading text-lg font-bold text-foreground">CAD Output</h2>
                 </div>
-                
+
                 <div className="bg-[#090f20] border border-secondary/40 rounded-lg p-4 md:p-5 h-96 overflow-auto shadow-inner">
                   {output ? (
                     <pre className="font-mono text-xs text-emerald-300 whitespace-pre-wrap break-words">
@@ -217,10 +239,10 @@ component Wing {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { icon: CheckCircle2, title: 'Deterministic', desc: 'Same output every time' },
-                { icon: Zap, title: 'Real-Time', desc: 'Instant compilation' },
-                { icon: Settings, title: 'Validated', desc: 'Analytical Verification' },
-                { icon: Download, title: 'Export Ready', desc: 'STEP, IGES, STL formats' }
+                { icon: CheckCircle2, title: "Deterministic", desc: "Same output every time" },
+                { icon: Zap, title: "Real-Time", desc: "Instant compilation" },
+                { icon: Settings, title: "Validated", desc: "Analytical Verification" },
+                { icon: Download, title: "Export Ready", desc: "STEP, IGES, STL formats" },
               ].map((item, idx) => {
                 const Icon = item.icon;
                 return (

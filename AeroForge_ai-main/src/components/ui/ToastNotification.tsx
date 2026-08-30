@@ -1,18 +1,18 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from 'lucide-react';
-import { useToastStore } from '@/stores/toastStore';
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
 
 export default function ToastNotification() {
   const { toasts, removeToast } = useToastStore();
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'success':
+      case "success":
         return <CheckCircle2 className="w-4 h-4 text-emerald-400" />;
-      case 'warning':
+      case "warning":
         return <AlertTriangle className="w-4 h-4 text-amber-400" />;
-      case 'error':
+      case "error":
         return <AlertCircle className="w-4 h-4 text-red-400" />;
       default:
         return <Info className="w-4 h-4 text-cyan-400" />;
@@ -21,14 +21,14 @@ export default function ToastNotification() {
 
   const getBorderColor = (type: string) => {
     switch (type) {
-      case 'success':
-        return 'border-emerald-500/30 bg-[#061812]/90';
-      case 'warning':
-        return 'border-amber-500/30 bg-[#191306]/90';
-      case 'error':
-        return 'border-red-500/30 bg-[#1a0808]/90';
+      case "success":
+        return "border-emerald-500/30 bg-[#061812]/90";
+      case "warning":
+        return "border-amber-500/30 bg-[#191306]/90";
+      case "error":
+        return "border-red-500/30 bg-[#1a0808]/90";
       default:
-        return 'border-cyan-500/30 bg-[#081320]/90';
+        return "border-cyan-500/30 bg-[#081320]/90";
     }
   };
 
@@ -42,7 +42,7 @@ export default function ToastNotification() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             className={`pointer-events-auto flex items-start gap-3 p-3 rounded-lg border shadow-xl backdrop-blur-md ${getBorderColor(
-              toast.type
+              toast.type,
             )}`}
           >
             <div className="mt-0.5 shrink-0">{getIcon(toast.type)}</div>

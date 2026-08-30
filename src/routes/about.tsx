@@ -3,11 +3,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { TeamConstellation } from "@/components/site/TeamConstellation";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
-import {
-  Compass,
-  Target,
-  Sparkles,
-} from "lucide-react";
+import { Compass, Target, Sparkles } from "lucide-react";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 export const Route = createFileRoute("/about")({
@@ -36,7 +32,7 @@ export const Route = createFileRoute("/about")({
           getBreadcrumbSchema([
             { name: "Home", item: "/" },
             { name: "About Us", item: "/about" },
-          ])
+          ]),
         ),
       },
     ],
@@ -68,16 +64,22 @@ function AboutPage() {
               About Project Polaris
             </h1>
             <p className="mt-4 text-lg sm:text-2xl font-display text-primary font-medium max-w-2xl leading-snug drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-              Project Polaris is a student-led organisation which aims to provide an experiential learning ecosystem to students.
+              Project Polaris is a student-led organisation which aims to provide an experiential
+              learning ecosystem to students.
             </p>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={60}>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-2xl font-sans">
-              We bridge the gap between traditional education and real-world learning. Rather than focusing solely on theoretical knowledge and short-term opportunities, we create opportunities where students gain practical experience by working on projects, conducting research, participating in workshops, collaborating with industry professionals, and contributing to initiatives that create measurable impact.
+              We bridge the gap between traditional education and real-world learning. Rather than
+              focusing solely on theoretical knowledge and short-term opportunities, we create
+              opportunities where students gain practical experience by working on projects,
+              conducting research, participating in workshops, collaborating with industry
+              professionals, and contributing to initiatives that create measurable impact.
             </p>
             <p className="mt-3 text-xs sm:text-sm text-primary font-medium">
-              We believe every student deserves access to quality learning opportunities regardless of their background, geography, or financial condition.
+              We believe every student deserves access to quality learning opportunities regardless
+              of their background, geography, or financial condition.
             </p>
           </ScrollReveal>
         </div>
@@ -96,10 +98,12 @@ function AboutPage() {
                     <span>OUR MISSION</span>
                   </div>
                   <h3 className="text-xl font-bold font-display text-foreground leading-snug">
-                    To make long-term practical, hands-on, and industry-relevant learning accessible to every student.
+                    To make long-term practical, hands-on, and industry-relevant learning accessible
+                    to every student.
                   </h3>
                   <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-                    By creating continuous opportunities to build, experiment, collaborate, and innovate directly with mentors and peers.
+                    By creating continuous opportunities to build, experiment, collaborate, and
+                    innovate directly with mentors and peers.
                   </p>
                 </div>
                 <div className="pt-3 border-t border-white/6 text-[11px] text-primary font-medium font-mono">
@@ -120,7 +124,8 @@ function AboutPage() {
                     To become India's most trusted experiential learning ecosystem.
                   </h3>
                   <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
-                    Where students develop future-ready skills, critical thinking, and technical confidence through real-world experiences.
+                    Where students develop future-ready skills, critical thinking, and technical
+                    confidence through real-world experiences.
                   </p>
                 </div>
                 <div className="pt-3 border-t border-white/6 text-[11px] text-muted-foreground font-mono">
@@ -212,16 +217,21 @@ function AboutPage() {
                   Why We Started
                 </h2>
                 <p className="text-sm text-foreground/90 font-medium font-display leading-snug">
-                  Students are taught to ask, “What do you want to become?” — but rarely, “What problem do you want to solve?”
+                  Students are taught to ask, “What do you want to become?” — but rarely, “What
+                  problem do you want to solve?”
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  We saw a gap between learning and doing. Students prepare for exams, but often lack opportunities to build, research, collaborate, and work with mentors.
+                  We saw a gap between learning and doing. Students prepare for exams, but often
+                  lack opportunities to build, research, collaborate, and work with mentors.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Project Polaris began with a simple idea: students shouldn't have to wait until college to start creating, researching, innovating, and leading.
+                  Project Polaris began with a simple idea: students shouldn't have to wait until
+                  college to start creating, researching, innovating, and leading.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Inspired by the North Star, Polaris aims to guide students toward practical learning, meaningful opportunities, and purpose — regardless of their age, background, or location.
+                  Inspired by the North Star, Polaris aims to guide students toward practical
+                  learning, meaningful opportunities, and purpose — regardless of their age,
+                  background, or location.
                 </p>
                 <div className="p-4 rounded-xl bg-card border border-primary/20 text-xs font-medium text-primary flex items-center gap-2">
                   <Sparkles className="size-4 text-gold shrink-0" />
@@ -239,9 +249,17 @@ function AboutPage() {
                   className="absolute inset-0 size-full object-cover opacity-60 hover:opacity-80 transition-opacity duration-500"
                 />
                 <div className="relative z-10 p-5 rounded-xl bg-background/85 backdrop-blur-md border border-white/12 text-center max-w-xs font-sans shadow-2xl">
-                  <img src={polarisLogo} alt="Polaris North Star" className="size-8 mx-auto mb-2 object-contain" />
-                  <div className="text-xs font-bold font-display text-foreground">Guided by the North Star</div>
-                  <div className="text-[11px] text-muted-foreground mt-0.5">A clear direction for curious explorers</div>
+                  <img
+                    src={polarisLogo}
+                    alt="Polaris North Star"
+                    className="size-8 mx-auto mb-2 object-contain"
+                  />
+                  <div className="text-xs font-bold font-display text-foreground">
+                    Guided by the North Star
+                  </div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">
+                    A clear direction for curious explorers
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -258,7 +276,8 @@ function AboutPage() {
                 People Behind Project Polaris
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                Polaris is the central direction. The people are the constellation that makes the mission possible.
+                Polaris is the central direction. The people are the constellation that makes the
+                mission possible.
               </p>
             </div>
           </ScrollReveal>

@@ -1,18 +1,18 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-export type LabType = 
-  | 'aerodynamics' 
-  | 'structures' 
-  | 'propulsion' 
-  | 'thermal' 
-  | 'materials' 
-  | 'orbital' 
-  | 'mission' 
-  | 'manufacturing' 
-  | 'systems' 
-  | 'controls' 
-  | 'digital-twin' 
-  | 'research';
+export type LabType =
+  | "aerodynamics"
+  | "structures"
+  | "propulsion"
+  | "thermal"
+  | "materials"
+  | "orbital"
+  | "mission"
+  | "manufacturing"
+  | "systems"
+  | "controls"
+  | "digital-twin"
+  | "research";
 
 export interface Lab {
   id: LabType;
@@ -26,7 +26,7 @@ export interface Lab {
 interface LabStore {
   activeLab: LabType | null;
   labs: Lab[];
-  
+
   setActiveLab: (lab: LabType | null) => void;
   setLabs: (labs: Lab[]) => void;
 }
@@ -34,7 +34,7 @@ interface LabStore {
 export const useLabStore = create<LabStore>((set) => ({
   activeLab: null,
   labs: [],
-  
+
   setActiveLab: (lab) => set({ activeLab: lab }),
   setLabs: (labs) => set({ labs }),
 }));

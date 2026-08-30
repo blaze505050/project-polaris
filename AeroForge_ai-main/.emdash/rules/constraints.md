@@ -1,11 +1,13 @@
 # Constraints
 
 ## Communication
+
 - End tasks with 1-2 sentence summary of what you did
 - Be clear, not technical
 - Never suggest next steps
 
 ## Never Do (unless explicitly requested)
+
 - Use emojis
 - Use text-shadow or box-shadow
 - Draw inline SVGs
@@ -18,6 +20,7 @@
 - Use try-catch blocks
 
 ## Always Do
+
 - Preserve existing functionality unless asked to change
 - Generate responsive designs
 - Check color contrast meets WCAG AA

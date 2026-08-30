@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpen, FileCheck2, Sparkles, ArrowRight, Download, Layers, CheckCircle2 } from "lucide-react";
+import {
+  BookOpen,
+  FileCheck2,
+  Sparkles,
+  ArrowRight,
+  Download,
+  Layers,
+  CheckCircle2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
 import { SectionHeader } from "@/components/site/SectionHeader";
@@ -74,12 +82,21 @@ function ResearchPage() {
         lead="We believe young students should learn real research methodology: formulating hypotheses, simulating physical constraints, verifying code, and publishing findings."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
+          <Button
+            asChild
+            size="sm"
+            className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors"
+          >
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join Research Cohort
             </a>
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40"
+          >
             <Link to="/projects">Launch AeroForge Lab</Link>
           </Button>
         </div>
@@ -105,7 +122,9 @@ function ResearchPage() {
                       <span className="text-muted-foreground text-[11px]">{doc.date}</span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">{doc.title}</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                      {doc.title}
+                    </h3>
                     <p className="mt-1 font-mono text-xs text-primary/80">{doc.authors}</p>
                     <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
                       {doc.blurb}
@@ -113,7 +132,10 @@ function ResearchPage() {
 
                     <div className="mt-4 flex flex-wrap gap-1.5 font-mono text-[10px]">
                       {doc.tags.map((t) => (
-                        <span key={t} className="px-2 py-0.5 rounded bg-surface-2 border border-white/6 text-muted-foreground">
+                        <span
+                          key={t}
+                          className="px-2 py-0.5 rounded bg-surface-2 border border-white/6 text-muted-foreground"
+                        >
                           {t}
                         </span>
                       ))}
@@ -125,8 +147,18 @@ function ResearchPage() {
                       <CheckCircle2 className="size-3.5" />
                       <span>Peer Reviewed</span>
                     </span>
-                    <Button asChild size="sm" variant="outline" className="h-8 px-3 text-xs font-mono border-white/15 hover:border-primary/40">
-                      <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="h-8 px-3 text-xs font-mono border-white/15 hover:border-primary/40"
+                    >
+                      <a
+                        href={SITE.communityUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1"
+                      >
                         <span>Read in Community</span>
                         <ArrowRight className="size-3 text-primary" />
                       </a>

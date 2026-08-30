@@ -8,7 +8,7 @@ export interface SimulationDataPoint {
   timestamp: Date;
   value: number;
   unit: string;
-  status: 'active' | 'completed' | 'error';
+  status: "active" | "completed" | "error";
 }
 
 export interface AerodynamicData {
@@ -37,7 +37,7 @@ export interface TurbulenceData {
 export interface SimulationSession {
   id: string;
   name: string;
-  status: 'running' | 'paused' | 'completed' | 'error';
+  status: "running" | "paused" | "completed" | "error";
   progress: number;
   startTime: Date;
   estimatedEndTime: Date;
@@ -52,7 +52,7 @@ export interface OnlineDataSource {
   id: string;
   name: string;
   url: string;
-  type: 'nasa-api' | 'openfoam-server' | 'custom-api' | 'websocket';
+  type: "nasa-api" | "openfoam-server" | "custom-api" | "websocket";
   updateInterval: number; // milliseconds
   isActive: boolean;
 }
@@ -69,21 +69,21 @@ class RealTimeSimulationService {
   async initializeSession(
     sessionId: string,
     sessionName: string,
-    dataSourceId: string
+    dataSourceId: string,
   ): Promise<SimulationSession> {
     const session: SimulationSession = {
       id: sessionId,
       name: sessionName,
-      status: 'running',
+      status: "running",
       progress: 0,
       startTime: new Date(),
       estimatedEndTime: new Date(Date.now() + 3600000), // 1 hour estimate
       aerodynamics: {
-        dragCoefficient: { timestamp: new Date(), value: 0, unit: 'Cd', status: 'active' },
-        liftCoefficient: { timestamp: new Date(), value: 0, unit: 'Cl', status: 'active' },
-        pitchMoment: { timestamp: new Date(), value: 0, unit: 'Cm', status: 'active' },
-        stallAngle: { timestamp: new Date(), value: 0, unit: 'degrees', status: 'active' },
-        maxLiftCoefficient: { timestamp: new Date(), value: 0, unit: 'Cl_max', status: 'active' },
+        dragCoefficient: { timestamp: new Date(), value: 0, unit: "Cd", status: "active" },
+        liftCoefficient: { timestamp: new Date(), value: 0, unit: "Cl", status: "active" },
+        pitchMoment: { timestamp: new Date(), value: 0, unit: "Cm", status: "active" },
+        stallAngle: { timestamp: new Date(), value: 0, unit: "degrees", status: "active" },
+        maxLiftCoefficient: { timestamp: new Date(), value: 0, unit: "Cl_max", status: "active" },
       },
       flowVisualization: {
         velocityField: [],
@@ -93,8 +93,8 @@ class RealTimeSimulationService {
         meshQuality: 0,
       },
       turbulence: {
-        kineticEnergy: { timestamp: new Date(), value: 0, unit: 'm²/s²', status: 'active' },
-        dissipationRate: { timestamp: new Date(), value: 0, unit: 'm²/s³', status: 'active' },
+        kineticEnergy: { timestamp: new Date(), value: 0, unit: "m²/s²", status: "active" },
+        dissipationRate: { timestamp: new Date(), value: 0, unit: "m²/s³", status: "active" },
         reynoldsStress: [],
         eddyViscosity: [],
       },
@@ -124,7 +124,7 @@ class RealTimeSimulationService {
     const interval = setInterval(async () => {
       try {
         const session = this.activeSessions.get(sessionId);
-        if (!session || session.status !== 'running') {
+        if (!session || session.status !== "running") {
           clearInterval(interval);
           return;
         }
@@ -133,16 +133,16 @@ class RealTimeSimulationService {
         let newData: Partial<SimulationSession> = {};
 
         switch (dataSource.type) {
-          case 'nasa-api':
+          case "nasa-api":
             newData = await this.fetchFromNASA(sessionId);
             break;
-          case 'openfoam-server':
+          case "openfoam-server":
             newData = await this.fetchFromOpenFOAM(sessionId);
             break;
-          case 'custom-api':
+          case "custom-api":
             newData = await this.fetchFromCustomAPI(dataSource.url, sessionId);
             break;
-          case 'websocket':
+          case "websocket":
             // WebSocket handled separately
             break;
         }
@@ -168,8 +168,8 @@ class RealTimeSimulationService {
       // Simulating NASA API call - in production, use actual NASA OpenData API
       // Example: https://api.nasa.gov/planetary/earth/imagery
       const response = await fetch(
-        'https://api.github.com/repos/nasa/open-data/contents/aerodynamics',
-        { headers: { Accept: 'application/vnd.github.v3.raw' } }
+        "https://api.github.com/repos/nasa/open-data/contents/aerodynamics",
+        { headers: { Accept: "application/vnd.github.v3.raw" } },
       ).catch(() => null);
 
       // Generate realistic aerodynamic data based on typical aircraft profiles
@@ -182,38 +182,38 @@ class RealTimeSimulationService {
           dragCoefficient: {
             timestamp: new Date(),
             value: parseFloat(dragCoefficient.toFixed(4)),
-            unit: 'Cd',
-            status: 'active',
+            unit: "Cd",
+            status: "active",
           },
           liftCoefficient: {
             timestamp: new Date(),
             value: parseFloat(liftCoefficient.toFixed(4)),
-            unit: 'Cl',
-            status: 'active',
+            unit: "Cl",
+            status: "active",
           },
           pitchMoment: {
             timestamp: new Date(),
             value: parseFloat(pitchMoment.toFixed(4)),
-            unit: 'Cm',
-            status: 'active',
+            unit: "Cm",
+            status: "active",
           },
           stallAngle: {
             timestamp: new Date(),
             value: 15 + Math.random() * 5,
-            unit: 'degrees',
-            status: 'active',
+            unit: "degrees",
+            status: "active",
           },
           maxLiftCoefficient: {
             timestamp: new Date(),
             value: 1.2 + Math.random() * 0.3,
-            unit: 'Cl_max',
-            status: 'active',
+            unit: "Cl_max",
+            status: "active",
           },
         },
         progress: Math.min(100, (this.activeSessions.get(sessionId)?.progress || 0) + 5),
       };
     } catch (error) {
-      console.error('Error fetching from NASA API:', error);
+      console.error("Error fetching from NASA API:", error);
       return {};
     }
   }
@@ -232,10 +232,18 @@ class RealTimeSimulationService {
       // Generate realistic flow field data
       const velocityField = Array(10)
         .fill(0)
-        .map(() => Array(10).fill(0).map(() => Math.random() * 50));
+        .map(() =>
+          Array(10)
+            .fill(0)
+            .map(() => Math.random() * 50),
+        );
       const pressureField = Array(10)
         .fill(0)
-        .map(() => Array(10).fill(0).map(() => 101325 + Math.random() * 5000));
+        .map(() =>
+          Array(10)
+            .fill(0)
+            .map(() => 101325 + Math.random() * 5000),
+        );
 
       return {
         flowVisualization: {
@@ -243,7 +251,11 @@ class RealTimeSimulationService {
           pressureField,
           vorticityField: Array(10)
             .fill(0)
-            .map(() => Array(10).fill(0).map(() => Math.random() * 100)),
+            .map(() =>
+              Array(10)
+                .fill(0)
+                .map(() => Math.random() * 100),
+            ),
           streamlines: this.generateStreamlines(),
           meshQuality,
         },
@@ -254,7 +266,7 @@ class RealTimeSimulationService {
         progress: convergence,
       };
     } catch (error) {
-      console.error('Error fetching from OpenFOAM:', error);
+      console.error("Error fetching from OpenFOAM:", error);
       return {};
     }
   }
@@ -264,12 +276,12 @@ class RealTimeSimulationService {
    */
   private async fetchFromCustomAPI(
     apiUrl: string,
-    sessionId: string
+    sessionId: string,
   ): Promise<Partial<SimulationSession>> {
     try {
       const response = await fetch(`${apiUrl}/simulation/${sessionId}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (!response.ok) throw new Error(`API error: ${response.status}`);
@@ -277,7 +289,7 @@ class RealTimeSimulationService {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching from custom API:', error);
+      console.error("Error fetching from custom API:", error);
       return {};
     }
   }
@@ -308,10 +320,7 @@ class RealTimeSimulationService {
   /**
    * Update session data with new values
    */
-  private updateSessionData(
-    sessionId: string,
-    newData: Partial<SimulationSession>
-  ): void {
+  private updateSessionData(sessionId: string, newData: Partial<SimulationSession>): void {
     const session = this.activeSessions.get(sessionId);
     if (!session) return;
 
@@ -321,7 +330,7 @@ class RealTimeSimulationService {
     // Notify all subscribers
     const subscribers = this.subscribers.get(sessionId);
     if (subscribers) {
-      subscribers.forEach(callback => callback(updatedSession));
+      subscribers.forEach((callback) => callback(updatedSession));
     }
   }
 
@@ -366,7 +375,7 @@ class RealTimeSimulationService {
    * Get all active sessions
    */
   getActiveSessions(): SimulationSession[] {
-    return Array.from(this.activeSessions.values()).filter(s => s.status === 'running');
+    return Array.from(this.activeSessions.values()).filter((s) => s.status === "running");
   }
 
   /**
@@ -376,7 +385,7 @@ class RealTimeSimulationService {
     const session = this.activeSessions.get(sessionId);
     if (!session) return false;
 
-    session.status = 'paused';
+    session.status = "paused";
     const interval = this.updateIntervals.get(sessionId);
     if (interval) clearInterval(interval);
 
@@ -390,7 +399,7 @@ class RealTimeSimulationService {
     const session = this.activeSessions.get(sessionId);
     if (!session) return false;
 
-    session.status = 'running';
+    session.status = "running";
     this.startDataFetch(sessionId, dataSourceId);
 
     return true;
@@ -403,7 +412,7 @@ class RealTimeSimulationService {
     const session = this.activeSessions.get(sessionId);
     if (!session) return false;
 
-    session.status = 'completed';
+    session.status = "completed";
     const interval = this.updateIntervals.get(sessionId);
     if (interval) clearInterval(interval);
 

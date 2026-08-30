@@ -44,13 +44,13 @@ export class IntegrationHandler {
     method: string,
     path: string,
     data?: any,
-    useCache = true
+    useCache = true,
   ): Promise<IntegrationResponse<T>> {
     const startTime = performance.now();
     const cacheKey = `${method}:${path}`;
 
     // Check cache
-    if (useCache && method === 'GET') {
+    if (useCache && method === "GET") {
       const cached = this.requestCache.get(cacheKey);
       if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
         return {
@@ -70,7 +70,7 @@ export class IntegrationHandler {
         const duration = performance.now() - startTime;
 
         // Cache successful GET requests
-        if (useCache && method === 'GET') {
+        if (useCache && method === "GET") {
           this.requestCache.set(cacheKey, {
             data: response,
             timestamp: Date.now(),
@@ -95,7 +95,7 @@ export class IntegrationHandler {
     const duration = performance.now() - startTime;
     return {
       success: false,
-      error: lastError?.message || 'Unknown error',
+      error: lastError?.message || "Unknown error",
       timestamp: Date.now(),
       duration,
     };
@@ -104,18 +104,14 @@ export class IntegrationHandler {
   /**
    * Execute actual HTTP request
    */
-  protected async executeRequest<T>(
-    method: string,
-    path: string,
-    data?: any
-  ): Promise<T> {
+  protected async executeRequest<T>(method: string, path: string, data?: any): Promise<T> {
     const url = `${this.config.endpoint}${path}`;
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     };
 
     if (this.config.apiKey) {
-      headers['Authorization'] = `Bearer ${this.config.apiKey}`;
+      headers["Authorization"] = `Bearer ${this.config.apiKey}`;
     }
 
     const controller = new AbortController();
@@ -170,7 +166,7 @@ export class IntegrationHandler {
 export class DataSyncService {
   private syncQueue: Array<{
     id: string;
-    operation: 'create' | 'update' | 'delete';
+    operation: "create" | "update" | "delete";
     data: any;
     timestamp: number;
   }> = [];
@@ -180,11 +176,7 @@ export class DataSyncService {
   /**
    * Queue data for synchronization
    */
-  queueSync(
-    id: string,
-    operation: 'create' | 'update' | 'delete',
-    data: any
-  ): void {
+  queueSync(id: string, operation: "create" | "update" | "delete", data: any): void {
     // Remove duplicate operations for same ID
     this.syncQueue = this.syncQueue.filter((item) => item.id !== id);
 

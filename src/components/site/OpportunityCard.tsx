@@ -29,7 +29,9 @@ export function OpportunityCard({ opportunity }: { opportunity: Opportunity }) {
   return (
     <article className="card-elevated group relative flex flex-col p-6">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="eyebrow-muted">{CATEGORY_LABELS[opportunity.category] ?? opportunity.category}</span>
+        <span className="eyebrow-muted">
+          {CATEGORY_LABELS[opportunity.category] ?? opportunity.category}
+        </span>
         <StatusPill status={opportunity.status} />
       </div>
 

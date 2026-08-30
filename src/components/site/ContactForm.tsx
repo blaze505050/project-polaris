@@ -17,6 +17,13 @@ export function ContactForm() {
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
+    const botTrap = String(fd.get("polaris_company_trap") ?? "");
+
+    // Silent rejection for automated bot submissions
+    if (botTrap) {
+      setDone(true);
+      return;
+    }
 
     if (name.length < 2) {
       toast.error("Please enter your name.");
@@ -40,10 +47,18 @@ export function ContactForm() {
         message: [String(fd.get("organisation") ?? "").trim(), message].filter(Boolean).join(" — "),
       });
       if (error) {
-        console.warn("[Contact] Direct DB insertion failed, recording message locally:", error.message);
+        console.error("[Contact] DB insertion failed:", error);
+        toast.error(
+          "Unable to send message right now. Please try again or email projectpolaris.8@gmail.com directly.",
+        );
+        setSubmitting(false);
+        return;
       }
     } catch (e) {
-      console.warn("[Contact] Supabase client unavailable:", e);
+      console.error("[Contact] Supabase client error:", e);
+      toast.error("Network error. Please verify your connection and try again.");
+      setSubmitting(false);
+      return;
     }
     setSubmitting(false);
 
@@ -62,7 +77,11 @@ export function ContactForm() {
         <p className="mx-auto mt-3 max-w-sm text-muted-foreground leading-relaxed text-sm">
           We read every message and will reply by email as soon as possible.
         </p>
-        <Button variant="outline" className="mt-7 rounded-full hover:border-primary/50" onClick={() => setDone(false)}>
+        <Button
+          variant="outline"
+          className="mt-7 rounded-full hover:border-primary/50"
+          onClick={() => setDone(false)}
+        >
           Send another message
         </Button>
       </div>
@@ -71,6 +90,15 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="card-elevated space-y-6 p-7 md:p-9">
+      {/* Anti-spam Bot Honeypot */}
+      <input
+        type="text"
+        name="polaris_company_trap"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="c-name">Name *</Label>

@@ -29,42 +29,49 @@ The AeroForge AI Batch Processing System is an industry-grade solution for manag
 ## Key Features
 
 ### 1. Queue Management
+
 - Configurable concurrent job execution (default: 3 jobs)
 - Priority-based job ordering
 - Automatic queue processing
 - Job pause/resume capability
 
 ### 2. Error Handling & Retry Logic
+
 - Configurable retry attempts (default: 3)
 - Exponential backoff strategy
 - Detailed error tracking per item
 - Graceful failure handling
 
 ### 3. Progress Tracking
+
 - Real-time job progress updates
 - Per-item status monitoring
 - Estimated time remaining calculation
 - Progress callbacks for UI updates
 
 ### 4. Result Persistence
+
 - Complete job history
 - Per-item result storage
 - Metrics collection
 - Export capabilities (JSON/CSV)
 
 ### 5. Advanced Scheduling
+
 - One-time job execution
 - Recurring schedules (daily, weekly, monthly)
 - Schedule management (pause, resume, delete)
 - Next run time calculation
 
 ### 6. Resource Management
+
 - CPU allocation tracking
 - Memory usage monitoring
 - Concurrent item limits
 - Priority level assignment
 
 ### 7. Performance Metrics
+
 - Success/failure rates
 - Throughput calculation (items/sec)
 - Average processing time
@@ -76,22 +83,22 @@ The AeroForge AI Batch Processing System is an industry-grade solution for manag
 ### Basic Job Creation
 
 ```typescript
-import { batchProcessingService } from '@/services/batchProcessingService';
+import { batchProcessingService } from "@/services/batchProcessingService";
 
 // Create items to process
 const items = [
-  { designId: 'design-1', name: 'Design 1' },
-  { designId: 'design-2', name: 'Design 2' },
-  { designId: 'design-3', name: 'Design 3' },
+  { designId: "design-1", name: "Design 1" },
+  { designId: "design-2", name: "Design 2" },
+  { designId: "design-3", name: "Design 3" },
 ];
 
 // Create batch job
 const job = batchProcessingService.createBatchJob(
-  'Export Q1 Designs',           // Job name
-  'export',                       // Operation type
-  items,                          // Items to process
-  { format: 'STEP' },            // Parameters
-  'normal'                        // Priority
+  "Export Q1 Designs", // Job name
+  "export", // Operation type
+  items, // Items to process
+  { format: "STEP" }, // Parameters
+  "normal", // Priority
 );
 
 console.log(job.id); // batch-1234567890-abc123
@@ -128,14 +135,14 @@ batchProcessingService.cancelJob(job.id);
 
 ```typescript
 // Export as JSON
-const jsonBlob = batchProcessingService.exportResults(job.id, 'json');
+const jsonBlob = batchProcessingService.exportResults(job.id, "json");
 
 // Export as CSV
-const csvBlob = batchProcessingService.exportResults(job.id, 'csv');
+const csvBlob = batchProcessingService.exportResults(job.id, "csv");
 
 // Download results
 const url = URL.createObjectURL(jsonBlob);
-const a = document.createElement('a');
+const a = document.createElement("a");
 a.href = url;
 a.download = `results-${job.id}.json`;
 a.click();
@@ -144,15 +151,15 @@ a.click();
 ### Scheduled Jobs
 
 ```typescript
-import { advancedBatchService } from '@/services/advancedBatchService';
+import { advancedBatchService } from "@/services/advancedBatchService";
 
 // Create a daily scheduled job
 const schedule = advancedBatchService.createScheduledJob(
-  'Daily Export',                 // Job name
-  'export',                       // Operation type
-  50,                            // Items per run
-  'daily',                       // Schedule type
-  new Date('2024-01-15T09:00:00') // Start time
+  "Daily Export", // Job name
+  "export", // Operation type
+  50, // Items per run
+  "daily", // Schedule type
+  new Date("2024-01-15T09:00:00"), // Start time
 );
 
 // Pause schedule
@@ -170,10 +177,10 @@ advancedBatchService.deleteSchedule(schedule.id);
 ```typescript
 // Allocate resources to a job
 const allocation = advancedBatchService.allocateResources(job.id, {
-  cpuAllocation: 75,           // 75% CPU
-  memoryAllocation: 2048,      // 2GB RAM
-  maxConcurrentItems: 10,      // Process 10 items concurrently
-  priorityLevel: 'high'        // High priority
+  cpuAllocation: 75, // 75% CPU
+  memoryAllocation: 2048, // 2GB RAM
+  maxConcurrentItems: 10, // Process 10 items concurrently
+  priorityLevel: "high", // High priority
 });
 ```
 
@@ -202,14 +209,14 @@ const reportBlob = advancedBatchService.exportPerformanceReport();
 ### Service Initialization
 
 ```typescript
-import { batchProcessingService } from '@/services/batchProcessingService';
+import { batchProcessingService } from "@/services/batchProcessingService";
 
 batchProcessingService.initialize({
-  maxConcurrentJobs: 3,        // Max jobs running simultaneously
-  maxItemsPerBatch: 100,       // Max items per job
-  timeoutPerItem: 300000,      // 5 minutes per item
-  retryAttempts: 3,            // Retry failed items 3 times
-  retryDelay: 5000,            // 5 seconds initial retry delay
+  maxConcurrentJobs: 3, // Max jobs running simultaneously
+  maxItemsPerBatch: 100, // Max items per job
+  timeoutPerItem: 300000, // 5 minutes per item
+  retryAttempts: 3, // Retry failed items 3 times
+  retryDelay: 5000, // 5 seconds initial retry delay
 });
 ```
 
@@ -230,22 +237,23 @@ The system supports the following operation types:
 
 ```typescript
 interface BatchJob {
-  id: string;                          // Unique job ID
-  name: string;                        // Job name
-  operationType: BatchOperationType;   // Type of operation
-  status: BatchJobStatus;              // Current status
-  totalItems: number;                  // Total items to process
-  completedItems: number;              // Items completed
-  failedItems: number;                 // Items failed
-  items: BatchJobItem[];               // Array of items
-  progress: number;                    // Progress percentage (0-100)
-  estimatedTimeRemaining: number;      // Seconds
-  createdAt: Date;                     // Creation timestamp
-  startedAt?: Date;                    // Start timestamp
-  completedAt?: Date;                  // Completion timestamp
-  priority: 'low' | 'normal' | 'high'; // Job priority
-  parameters: Record<string, any>;     // Operation parameters
-  results?: {                          // Final results
+  id: string; // Unique job ID
+  name: string; // Job name
+  operationType: BatchOperationType; // Type of operation
+  status: BatchJobStatus; // Current status
+  totalItems: number; // Total items to process
+  completedItems: number; // Items completed
+  failedItems: number; // Items failed
+  items: BatchJobItem[]; // Array of items
+  progress: number; // Progress percentage (0-100)
+  estimatedTimeRemaining: number; // Seconds
+  createdAt: Date; // Creation timestamp
+  startedAt?: Date; // Start timestamp
+  completedAt?: Date; // Completion timestamp
+  priority: "low" | "normal" | "high"; // Job priority
+  parameters: Record<string, any>; // Operation parameters
+  results?: {
+    // Final results
     successful: number;
     failed: number;
     averageProcessingTime: number;
@@ -258,16 +266,16 @@ interface BatchJob {
 
 ```typescript
 interface BatchJobItem {
-  id: string;                    // Unique item ID
-  designId: string;              // Design identifier
-  name: string;                  // Item name
-  status: 'pending' | 'processing' | 'completed' | 'failed';
-  progress: number;              // Item progress (0-100)
-  error?: string;                // Error message if failed
-  result?: any;                  // Operation result
-  startTime?: Date;              // Processing start time
-  endTime?: Date;                // Processing end time
-  duration?: number;             // Processing duration in ms
+  id: string; // Unique item ID
+  designId: string; // Design identifier
+  name: string; // Item name
+  status: "pending" | "processing" | "completed" | "failed";
+  progress: number; // Item progress (0-100)
+  error?: string; // Error message if failed
+  result?: any; // Operation result
+  startTime?: Date; // Processing start time
+  endTime?: Date; // Processing end time
+  duration?: number; // Processing duration in ms
 }
 ```
 

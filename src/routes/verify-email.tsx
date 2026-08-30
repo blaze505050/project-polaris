@@ -59,11 +59,10 @@ export function VerifyEmailPage() {
             </div>
 
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold font-display text-foreground">
-                Verify Your Email
-              </h1>
+              <h1 className="text-2xl font-bold font-display text-foreground">Verify Your Email</h1>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                We've sent a 6-digit confirmation code to your email. Enter it below to activate your student workspace credentials.
+                We've sent a 6-digit confirmation code to your email. Enter it below to activate
+                your student workspace credentials.
               </p>
             </div>
 
@@ -94,14 +93,17 @@ export function VerifyEmailPage() {
 
             <div className="pt-2 text-center text-xs text-muted-foreground">
               {resendStatus ? (
-                <span className="text-emerald-400 font-medium">✓ New 6-digit verification code sent!</span>
+                <span className="text-emerald-400 font-medium">
+                  ✓ New 6-digit verification code sent!
+                </span>
               ) : (
                 <button
                   type="button"
                   onClick={handleResend}
                   className="hover:text-foreground transition-colors"
                 >
-                  Didn't receive the email? <span className="text-primary hover:underline font-semibold">Resend Code</span>
+                  Didn't receive the email?{" "}
+                  <span className="text-primary hover:underline font-semibold">Resend Code</span>
                 </button>
               )}
             </div>
@@ -117,12 +119,17 @@ export function VerifyEmailPage() {
                 Email Successfully Verified!
               </h2>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Your email is confirmed and your Polaris profile is active. You can now access AeroForge labs, session registrations, and certification records.
+                Your email is confirmed and your Polaris profile is active. You can now access
+                AeroForge labs, session registrations, and certification records.
               </p>
             </div>
 
             <div className="pt-2">
-              <Button asChild size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs">
+              <Button
+                asChild
+                size="default"
+                className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs"
+              >
                 <Link to="/dashboard" className="flex items-center justify-center gap-1.5">
                   <span>Enter Student Workspace</span>
                   <ArrowRight className="size-3.5" />

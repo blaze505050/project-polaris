@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import * as THREE from "three";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Play,
   Pause,
@@ -16,7 +16,7 @@ import {
   Filter,
   Volume2,
   VolumeX,
-} from 'lucide-react';
+} from "lucide-react";
 import {
   BarnesHutTree,
   GeneralRelativityEngine,
@@ -25,7 +25,7 @@ import {
   OrbitalMechanics,
   PhysicsBody,
   CONSTANTS,
-} from '@/services/physicsCore';
+} from "@/services/physicsCore";
 
 interface SimulationState {
   isRunning: boolean;
@@ -34,7 +34,7 @@ interface SimulationState {
   showTimeDilation: boolean;
   showVolumetric: boolean;
   selectedBody: PhysicsBody | null;
-  cameraMode: 'free' | 'follow' | 'orbit';
+  cameraMode: "free" | "follow" | "orbit";
 }
 
 interface PerformanceMetrics {
@@ -59,7 +59,7 @@ export default function UltimateUniverseEngine() {
     showTimeDilation: false,
     showVolumetric: true,
     selectedBody: null,
-    cameraMode: 'free',
+    cameraMode: "free",
   });
 
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
@@ -86,14 +86,14 @@ export default function UltimateUniverseEngine() {
       75,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       0.1,
-      1e20
+      1e20,
     );
     camera.position.set(0, 1e12, 1e12);
     camera.lookAt(0, 0, 0);
     cameraRef.current = camera;
 
     // Renderer setup
-    const renderer = new THREE.WebGLRenderer({ antialias: true, precision: 'highp' });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, precision: "highp" });
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
@@ -121,7 +121,7 @@ export default function UltimateUniverseEngine() {
       positions[i + 2] = (Math.random() - 0.5) * 2e13;
     }
 
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     const starMaterial = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 1e10,
@@ -143,7 +143,7 @@ export default function UltimateUniverseEngine() {
       renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Animation loop
     let frameCount = 0;
@@ -165,7 +165,7 @@ export default function UltimateUniverseEngine() {
 
       frameCount++;
       if (now - lastFpsUpdate >= 1000) {
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
           fps: frameCount,
           bodies: bodiesRef.current.length,
@@ -178,7 +178,7 @@ export default function UltimateUniverseEngine() {
     animate();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       renderer.dispose();
       containerRef.current?.removeChild(renderer.domElement);
     };
@@ -187,24 +187,28 @@ export default function UltimateUniverseEngine() {
   const initializeSolarSystem = (scene: THREE.Scene) => {
     const bodies: PhysicsBody[] = [
       {
-        id: 'sun',
-        name: 'Sun',
+        id: "sun",
+        name: "Sun",
         mass: CONSTANTS.SOLAR_MASS,
         position: new THREE.Vector3(0, 0, 0),
         velocity: new THREE.Vector3(0, 0, 0),
         radius: CONSTANTS.SOLAR_RADIUS,
-        type: 'star',
+        type: "star",
         temperature: 5778,
         luminosity: 1,
       },
       {
-        id: 'earth',
-        name: 'Earth',
+        id: "earth",
+        name: "Earth",
         mass: CONSTANTS.EARTH_MASS,
         position: new THREE.Vector3(CONSTANTS.AU, 0, 0),
-        velocity: new THREE.Vector3(0, OrbitalMechanics.orbitalVelocity(CONSTANTS.SOLAR_MASS, CONSTANTS.AU), 0),
+        velocity: new THREE.Vector3(
+          0,
+          OrbitalMechanics.orbitalVelocity(CONSTANTS.SOLAR_MASS, CONSTANTS.AU),
+          0,
+        ),
         radius: CONSTANTS.EARTH_RADIUS,
-        type: 'planet',
+        type: "planet",
         temperature: 288,
         atmosphere: {
           composition: { N2: 78, O2: 21, Ar: 0.93 },
@@ -214,45 +218,49 @@ export default function UltimateUniverseEngine() {
         },
       },
       {
-        id: 'jupiter',
-        name: 'Jupiter',
+        id: "jupiter",
+        name: "Jupiter",
         mass: 1.898e27,
         position: new THREE.Vector3(5.2 * CONSTANTS.AU, 0, 0),
-        velocity: new THREE.Vector3(0, OrbitalMechanics.orbitalVelocity(CONSTANTS.SOLAR_MASS, 5.2 * CONSTANTS.AU), 0),
+        velocity: new THREE.Vector3(
+          0,
+          OrbitalMechanics.orbitalVelocity(CONSTANTS.SOLAR_MASS, 5.2 * CONSTANTS.AU),
+          0,
+        ),
         radius: 6.9911e7,
-        type: 'planet',
+        type: "planet",
         temperature: 165,
       },
       {
-        id: 'black_hole',
-        name: 'Sagittarius A*',
+        id: "black_hole",
+        name: "Sagittarius A*",
         mass: 4.1e6 * CONSTANTS.SOLAR_MASS,
         position: new THREE.Vector3(2.6e20, 0, 0),
         velocity: new THREE.Vector3(0, 0, 0),
         radius: GeneralRelativityEngine.schwarzschildRadius(4.1e6 * CONSTANTS.SOLAR_MASS),
-        type: 'black_hole',
+        type: "black_hole",
       },
     ];
 
     bodiesRef.current = bodies;
 
     // Create meshes for each body
-    bodies.forEach(body => {
+    bodies.forEach((body) => {
       const geometry = new THREE.SphereGeometry(Math.max(body.radius, 1e10), 32, 32);
       let material: THREE.Material;
 
-      if (body.type === 'star') {
+      if (body.type === "star") {
         material = new THREE.MeshStandardMaterial({
           color: 0xfdb813,
           emissive: 0xfdb813,
         });
-      } else if (body.type === 'black_hole') {
+      } else if (body.type === "black_hole") {
         material = new THREE.MeshBasicMaterial({
           color: 0x000000,
         });
-      } else if (body.type === 'planet') {
+      } else if (body.type === "planet") {
         material = new THREE.MeshStandardMaterial({
-          color: body.id === 'earth' ? 0x4488ff : 0xffaa44,
+          color: body.id === "earth" ? 0x4488ff : 0xffaa44,
           roughness: 0.7,
           metalness: 0.2,
         });
@@ -277,13 +285,13 @@ export default function UltimateUniverseEngine() {
 
     // Build Barnes-Hut tree
     barnesHutRef.current.clear();
-    bodiesRef.current.forEach(body => {
+    bodiesRef.current.forEach((body) => {
       barnesHutRef.current.insert(body);
     });
 
     // Update velocities and positions
-    bodiesRef.current.forEach(body => {
-      if (body.type === 'star') return; // Sun doesn't move
+    bodiesRef.current.forEach((body) => {
+      if (body.type === "star") return; // Sun doesn't move
 
       const force = barnesHutRef.current.calculateForce(body);
       const acceleration = force.divideScalar(body.mass);
@@ -299,16 +307,16 @@ export default function UltimateUniverseEngine() {
     });
 
     const computeTime = performance.now() - startTime;
-    setMetrics(prev => ({ ...prev, computeTime: Math.round(computeTime) }));
+    setMetrics((prev) => ({ ...prev, computeTime: Math.round(computeTime) }));
   };
 
   const handlePlayPause = () => {
-    setState(prev => ({ ...prev, isRunning: !prev.isRunning }));
+    setState((prev) => ({ ...prev, isRunning: !prev.isRunning }));
   };
 
   const handleReset = () => {
     // Reset to initial state
-    bodiesRef.current.forEach(body => {
+    bodiesRef.current.forEach((body) => {
       const mesh = meshesRef.current.get(body.id);
       if (mesh) {
         mesh.position.copy(body.position);
@@ -317,7 +325,7 @@ export default function UltimateUniverseEngine() {
   };
 
   const handleTimeScaleChange = (scale: number) => {
-    setState(prev => ({ ...prev, timeScale: scale }));
+    setState((prev) => ({ ...prev, timeScale: scale }));
   };
 
   const handleFullscreen = () => {
@@ -349,9 +357,7 @@ export default function UltimateUniverseEngine() {
             className="absolute top-0 left-0 right-0 z-10 p-6 bg-gradient-to-b from-black/80 to-transparent"
           >
             <div className="max-w-7xl mx-auto">
-              <h1 className="text-4xl font-bold text-white mb-4">
-                Ultimate Universe Engine
-              </h1>
+              <h1 className="text-4xl font-bold text-white mb-4">Ultimate Universe Engine</h1>
               <p className="text-cyan-400 text-sm mb-6">
                 Physics-accurate N-body simulation with General Relativity effects
               </p>
@@ -363,7 +369,7 @@ export default function UltimateUniverseEngine() {
                   className="flex items-center gap-2 px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition"
                 >
                   {state.isRunning ? <Pause size={18} /> : <Play size={18} />}
-                  {state.isRunning ? 'Pause' : 'Play'}
+                  {state.isRunning ? "Pause" : "Play"}
                 </button>
 
                 <button
@@ -385,7 +391,7 @@ export default function UltimateUniverseEngine() {
                   <span className="text-white text-sm">Time Scale:</span>
                   <select
                     value={state.timeScale}
-                    onChange={e => handleTimeScaleChange(parseFloat(e.target.value))}
+                    onChange={(e) => handleTimeScaleChange(parseFloat(e.target.value))}
                     className="bg-slate-700 text-white rounded px-2 py-1 text-sm"
                   >
                     <option value={0.1}>0.1x</option>
@@ -399,8 +405,8 @@ export default function UltimateUniverseEngine() {
                   <input
                     type="checkbox"
                     checked={state.showGravitationalLensing}
-                    onChange={e =>
-                      setState(prev => ({
+                    onChange={(e) =>
+                      setState((prev) => ({
                         ...prev,
                         showGravitationalLensing: e.target.checked,
                       }))
@@ -414,8 +420,8 @@ export default function UltimateUniverseEngine() {
                   <input
                     type="checkbox"
                     checked={state.showVolumetric}
-                    onChange={e =>
-                      setState(prev => ({
+                    onChange={(e) =>
+                      setState((prev) => ({
                         ...prev,
                         showVolumetric: e.target.checked,
                       }))
@@ -456,24 +462,22 @@ export default function UltimateUniverseEngine() {
             exit={{ opacity: 0, y: 20 }}
             className="absolute bottom-6 left-6 z-10 bg-black/80 backdrop-blur border border-cyan-500/30 rounded-lg p-6 max-w-sm"
           >
-            <h3 className="text-cyan-400 text-lg font-bold mb-3">
-              {state.selectedBody.name}
-            </h3>
+            <h3 className="text-cyan-400 text-lg font-bold mb-3">{state.selectedBody.name}</h3>
             <div className="text-slate-300 text-sm space-y-2">
               <div>
                 <span className="text-cyan-400">Type:</span> {state.selectedBody.type}
               </div>
               <div>
-                <span className="text-cyan-400">Mass:</span>{' '}
+                <span className="text-cyan-400">Mass:</span>{" "}
                 {(state.selectedBody.mass / CONSTANTS.SOLAR_MASS).toFixed(2)} M☉
               </div>
               <div>
-                <span className="text-cyan-400">Radius:</span>{' '}
+                <span className="text-cyan-400">Radius:</span>{" "}
                 {(state.selectedBody.radius / 1e6).toFixed(0)} Mm
               </div>
               {state.selectedBody.temperature && (
                 <div>
-                  <span className="text-cyan-400">Temperature:</span>{' '}
+                  <span className="text-cyan-400">Temperature:</span>{" "}
                   {state.selectedBody.temperature.toFixed(0)} K
                 </div>
               )}

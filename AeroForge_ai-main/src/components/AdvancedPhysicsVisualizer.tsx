@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, Download, Settings, Zap } from 'lucide-react';
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Play, Pause, RotateCcw, Download, Settings, Zap } from "lucide-react";
 
 interface PhysicsVisualizerProps {
   title: string;
@@ -78,7 +78,7 @@ export default function AdvancedPhysicsVisualizer({
 
     // Draw streamlines if available
     if (data.streamlines) {
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
       ctx.lineWidth = 2;
       for (const streamline of data.streamlines) {
         ctx.beginPath();
@@ -129,11 +129,11 @@ export default function AdvancedPhysicsVisualizer({
     const graphHeight = canvas.height - 2 * padding;
 
     // Draw background
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+    ctx.fillStyle = "rgba(15, 23, 42, 0.8)";
     ctx.fillRect(padding, padding, graphWidth, graphHeight);
 
     // Draw grid
-    ctx.strokeStyle = 'rgba(14, 165, 233, 0.2)';
+    ctx.strokeStyle = "rgba(14, 165, 233, 0.2)";
     ctx.lineWidth = 1;
     for (let i = 0; i <= 10; i++) {
       const y = padding + (i / 10) * graphHeight;
@@ -149,7 +149,7 @@ export default function AdvancedPhysicsVisualizer({
     const range = maxVal - minVal || 1;
 
     // Draw convergence curve
-    ctx.strokeStyle = '#0EA5E9';
+    ctx.strokeStyle = "#0EA5E9";
     ctx.lineWidth = 3;
     ctx.beginPath();
 
@@ -164,13 +164,13 @@ export default function AdvancedPhysicsVisualizer({
     ctx.stroke();
 
     // Draw axes labels
-    ctx.fillStyle = '#E2E8F0';
-    ctx.font = '12px roboto';
-    ctx.fillText('Iterations', padding + graphWidth / 2 - 30, canvas.height - 10);
+    ctx.fillStyle = "#E2E8F0";
+    ctx.font = "12px roboto";
+    ctx.fillText("Iterations", padding + graphWidth / 2 - 30, canvas.height - 10);
     ctx.save();
     ctx.translate(10, padding + graphHeight / 2);
     ctx.rotate(-Math.PI / 2);
-    ctx.fillText('Residual', 0, 0);
+    ctx.fillText("Residual", 0, 0);
     ctx.restore();
   };
 
@@ -179,12 +179,12 @@ export default function AdvancedPhysicsVisualizer({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const animate = () => {
       // Clear canvas
-      ctx.fillStyle = '#0F172A';
+      ctx.fillStyle = "#0F172A";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw appropriate visualization
@@ -227,7 +227,9 @@ export default function AdvancedPhysicsVisualizer({
         {config && (
           <div className="mt-3 flex flex-wrap gap-4 text-xs">
             {config.reynoldsNumber && (
-              <span className="text-aerospace-blue">Re = {config.reynoldsNumber.toLocaleString()}</span>
+              <span className="text-aerospace-blue">
+                Re = {config.reynoldsNumber.toLocaleString()}
+              </span>
             )}
             {config.machNumber && (
               <span className="text-aerospace-accent">M = {config.machNumber.toFixed(2)}</span>
@@ -244,13 +246,8 @@ export default function AdvancedPhysicsVisualizer({
 
       {/* Canvas */}
       <div className="relative bg-aerospace-dark aspect-video">
-        <canvas
-          ref={canvasRef}
-          width={800}
-          height={450}
-          className="w-full h-full"
-        />
-        
+        <canvas ref={canvasRef} width={800} height={450} className="w-full h-full" />
+
         {/* Overlay gradient for depth */}
         <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-aerospace-dark/20 to-transparent" />
       </div>
@@ -261,7 +258,7 @@ export default function AdvancedPhysicsVisualizer({
           <button
             onClick={() => setIsPlaying(!isPlaying)}
             className="p-2 rounded-lg bg-aerospace-blue/20 hover:bg-aerospace-blue/30 text-aerospace-blue transition-colors"
-            title={isPlaying ? 'Pause' : 'Play'}
+            title={isPlaying ? "Pause" : "Play"}
           >
             {isPlaying ? <Pause size={18} /> : <Play size={18} />}
           </button>
@@ -298,7 +295,7 @@ export default function AdvancedPhysicsVisualizer({
       {showSettings && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           className="bg-primary/50 border-t border-aerospace-blue/20 p-4"
         >

@@ -1,6 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, RefreshCw, MessageCircle, Mail, ArrowLeft, ShieldAlert } from "lucide-react";
+import {
+  AlertTriangle,
+  RefreshCw,
+  MessageCircle,
+  Mail,
+  ArrowLeft,
+  ShieldAlert,
+} from "lucide-react";
 
 export const Route = createFileRoute("/payment-failed")({
   head: () => ({
@@ -31,7 +38,8 @@ export function PaymentFailedPage() {
             Payment Could Not Be Processed
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-            Your recent transaction for Project Polaris was interrupted or rejected by the issuing bank/gateway. No enrollment charges have been confirmed.
+            Your recent transaction for Project Polaris was interrupted or rejected by the issuing
+            bank/gateway. No enrollment charges have been confirmed.
           </p>
         </div>
 
@@ -51,13 +59,22 @@ export function PaymentFailedPage() {
 
         {/* Actions */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="default" className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90">
+          <Button
+            asChild
+            size="default"
+            className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90"
+          >
             <Link to="/programs" className="flex items-center gap-1.5">
               <RefreshCw className="size-3.5" />
               <span>Retry Registration / Payment</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" size="default" className="h-10 px-5 border-white/10 text-xs text-foreground hover:border-white/20">
+          <Button
+            asChild
+            variant="outline"
+            size="default"
+            className="h-10 px-5 border-white/10 text-xs text-foreground hover:border-white/20"
+          >
             <Link to="/support" className="flex items-center gap-1.5">
               <Mail className="size-3.5 text-primary" />
               <span>Contact Support Desk</span>
@@ -66,7 +83,8 @@ export function PaymentFailedPage() {
         </div>
 
         <div className="pt-4 border-t border-white/8 text-[11px] text-muted-foreground">
-          If your bank account was debited, your bank will automatically reverse the hold within 24–48 hours. If you need assistance, email{" "}
+          If your bank account was debited, your bank will automatically reverse the hold within
+          24–48 hours. If you need assistance, email{" "}
           <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">
             projectpolaris.8@gmail.com
           </a>

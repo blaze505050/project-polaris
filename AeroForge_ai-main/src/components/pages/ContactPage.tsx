@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { Mail, MessageSquare, Send, ShieldCheck, Cpu } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { usePageMeta } from '@/hooks/usePageMeta';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Mail, MessageSquare, Send, ShieldCheck, Cpu } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function ContactPage() {
-  usePageMeta('Contact Research Lab', 'Get in touch with the AeroForge engineering and research team.');
+  usePageMeta(
+    "Contact Research Lab",
+    "Get in touch with the AeroForge engineering and research team.",
+  );
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ name: '', email: '', subject: 'Research Inquiry', message: '' });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "Research Inquiry",
+    message: "",
+  });
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,7 +25,7 @@ export default function ContactPage() {
     setSubmitting(true);
     setTimeout(() => {
       setSubmitting(false);
-      navigate('/thank-you');
+      navigate("/thank-you");
     }, 400);
   };
 
@@ -32,7 +40,8 @@ export default function ContactPage() {
           </span>
           <h1 className="text-3xl font-extrabold text-white mb-2">Contact AeroForge Engineering</h1>
           <p className="text-xs text-white/50 max-w-lg mx-auto">
-            Questions regarding tool accuracy, mathematical models, feature requests, or institutional collaboration.
+            Questions regarding tool accuracy, mathematical models, feature requests, or
+            institutional collaboration.
           </p>
         </div>
 
@@ -42,7 +51,9 @@ export default function ContactPage() {
             <div className="bg-[#0A1020] border border-white/8 rounded-xl p-5 space-y-3">
               <div className="flex items-center gap-2.5 text-cyan-400">
                 <Mail className="w-4 h-4" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Direct Channel</h3>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  Direct Channel
+                </h3>
               </div>
               <p className="text-xs text-white/60 font-mono">contact@aeroforge.io</p>
               <p className="text-xs text-white/60 font-mono">security@aeroforge.io</p>
@@ -51,17 +62,22 @@ export default function ContactPage() {
             <div className="bg-[#0A1020] border border-white/8 rounded-xl p-5 space-y-3">
               <div className="flex items-center gap-2.5 text-amber-400">
                 <Cpu className="w-4 h-4" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Technical Audits</h3>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  Technical Audits
+                </h3>
               </div>
               <p className="text-xs text-white/50 leading-relaxed">
-                For peer review of physics engine solvers or custom tool integrations, include your technical specifications.
+                For peer review of physics engine solvers or custom tool integrations, include your
+                technical specifications.
               </p>
             </div>
 
             <div className="bg-[#0A1020] border border-white/8 rounded-xl p-5 space-y-3">
               <div className="flex items-center gap-2.5 text-green-400">
                 <ShieldCheck className="w-4 h-4" />
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Security</h3>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  Security
+                </h3>
               </div>
               <p className="text-xs text-white/50 leading-relaxed">
                 Vulnerability disclosures are acknowledged within 48 hours.
@@ -85,7 +101,9 @@ export default function ContactPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-white/70 block mb-1">Email Address</label>
+                  <label className="text-xs font-medium text-white/70 block mb-1">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     required
@@ -129,7 +147,7 @@ export default function ContactPage() {
                 className="w-full py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-mono font-bold text-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Send className="w-3.5 h-3.5" />
-                {submitting ? 'Transmitting...' : 'Send Dispatch'}
+                {submitting ? "Transmitting..." : "Send Dispatch"}
               </button>
             </form>
           </div>

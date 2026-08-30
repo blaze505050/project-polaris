@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   RadarChart,
   PolarGrid,
@@ -21,9 +21,9 @@ import {
   Area,
   ReferenceLine,
   Cell,
-} from 'recharts';
-import { Eye, EyeOff, Layers, Activity, Gauge, TrendingUp } from 'lucide-react';
-import { Solution } from '@/services/multiObjectiveOptimizationService';
+} from "recharts";
+import { Eye, EyeOff, Layers, Activity, Gauge, TrendingUp } from "lucide-react";
+import { Solution } from "@/services/multiObjectiveOptimizationService";
 
 interface AdvancedVisualizerProps {
   paretoFront: Solution[];
@@ -37,11 +37,11 @@ interface AdvancedVisualizerProps {
 }
 
 const colorPalettes = {
-  viridis: ['#440154', '#31688e', '#35b779', '#fde724'],
-  plasma: ['#0d0887', '#7e03a8', '#cc4778', '#f89540'],
-  inferno: ['#000004', '#420a68', '#932667', '#fca636'],
-  cool: ['#0d47a1', '#1976d2', '#42a5f5', '#90caf9'],
-  warm: ['#b71c1c', '#e64a19', '#ff6f00', '#ffa726'],
+  viridis: ["#440154", "#31688e", "#35b779", "#fde724"],
+  plasma: ["#0d0887", "#7e03a8", "#cc4778", "#f89540"],
+  inferno: ["#000004", "#420a68", "#932667", "#fca636"],
+  cool: ["#0d47a1", "#1976d2", "#42a5f5", "#90caf9"],
+  warm: ["#b71c1c", "#e64a19", "#ff6f00", "#ffa726"],
 };
 
 export default function AdvancedParetoVisualizer({
@@ -49,10 +49,12 @@ export default function AdvancedParetoVisualizer({
   statistics,
   convergenceHistory,
 }: AdvancedVisualizerProps) {
-  const [colorScheme, setColorScheme] = useState<keyof typeof colorPalettes>('viridis');
+  const [colorScheme, setColorScheme] = useState<keyof typeof colorPalettes>("viridis");
   const [showHeatmap, setShowHeatmap] = useState(true);
   const [showRadar, setShowRadar] = useState(true);
-  const [selectedMetric, setSelectedMetric] = useState<'drag' | 'lift' | 'weight' | 'efficiency'>('drag');
+  const [selectedMetric, setSelectedMetric] = useState<"drag" | "lift" | "weight" | "efficiency">(
+    "drag",
+  );
 
   // Prepare 3D-like scatter data with color gradient
   const paretoWithColor = useMemo(() => {
@@ -60,10 +62,10 @@ export default function AdvancedParetoVisualizer({
     return paretoFront.map((sol, idx) => ({
       ...sol,
       id: idx,
-      drag: sol.objectives['Drag'],
-      lift: sol.objectives['Lift'],
-      weight: sol.objectives['Weight'],
-      efficiency: sol.objectives['Efficiency'],
+      drag: sol.objectives["Drag"],
+      lift: sol.objectives["Lift"],
+      weight: sol.objectives["Weight"],
+      efficiency: sol.objectives["Efficiency"],
       color: palette[idx % palette.length],
       size: 100 + (sol.rank || 0) * 20,
     }));
@@ -75,10 +77,10 @@ export default function AdvancedParetoVisualizer({
     const topSolutions = paretoFront.slice(0, 3);
     return topSolutions.map((sol, idx) => ({
       name: `Solution ${idx + 1}`,
-      Drag: Math.max(0, 10 - sol.objectives['Drag']),
-      Lift: sol.objectives['Lift'],
-      Weight: Math.max(0, 100 - sol.objectives['Weight']),
-      Efficiency: sol.objectives['Efficiency'],
+      Drag: Math.max(0, 10 - sol.objectives["Drag"]),
+      Lift: sol.objectives["Lift"],
+      Weight: Math.max(0, 100 - sol.objectives["Weight"]),
+      Efficiency: sol.objectives["Efficiency"],
       fullMark: 10,
     }));
   }, [paretoFront]);
@@ -87,11 +89,13 @@ export default function AdvancedParetoVisualizer({
   const heatmapData = useMemo(() => {
     return paretoFront.slice(0, 20).map((sol, idx) => ({
       id: idx,
-      drag: sol.objectives['Drag'],
-      lift: sol.objectives['Lift'],
-      weight: sol.objectives['Weight'],
-      efficiency: sol.objectives['Efficiency'],
-      combined: (sol.objectives['Drag'] + sol.objectives['Weight']) / (sol.objectives['Lift'] + sol.objectives['Efficiency']),
+      drag: sol.objectives["Drag"],
+      lift: sol.objectives["Lift"],
+      weight: sol.objectives["Weight"],
+      efficiency: sol.objectives["Efficiency"],
+      combined:
+        (sol.objectives["Drag"] + sol.objectives["Weight"]) /
+        (sol.objectives["Lift"] + sol.objectives["Efficiency"]),
     }));
   }, [paretoFront]);
 
@@ -100,7 +104,8 @@ export default function AdvancedParetoVisualizer({
     return convergenceHistory.map((item, idx) => ({
       ...item,
       fitness: statistics.bestFitness * (1 - Math.exp(-item.generation / 10)),
-      diversity: statistics.diversity * Math.sin(item.generation / 5) * 0.5 + statistics.diversity * 0.5,
+      diversity:
+        statistics.diversity * Math.sin(item.generation / 5) * 0.5 + statistics.diversity * 0.5,
     }));
   }, [convergenceHistory, statistics]);
 
@@ -141,8 +146,8 @@ export default function AdvancedParetoVisualizer({
               onClick={() => setShowHeatmap(!showHeatmap)}
               className={`w-full py-2 px-3 rounded-lg font-paragraph font-semibold transition-colors flex items-center justify-center gap-2 ${
                 showHeatmap
-                  ? 'bg-blue-600 hover:bg-blue-500 text-white'
-                  : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                  ? "bg-blue-600 hover:bg-blue-500 text-white"
+                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
               }`}
             >
               {showHeatmap ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -156,8 +161,8 @@ export default function AdvancedParetoVisualizer({
               onClick={() => setShowRadar(!showRadar)}
               className={`w-full py-2 px-3 rounded-lg font-paragraph font-semibold transition-colors flex items-center justify-center gap-2 ${
                 showRadar
-                  ? 'bg-green-600 hover:bg-green-500 text-white'
-                  : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                  ? "bg-green-600 hover:bg-green-500 text-white"
+                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
               }`}
             >
               {showRadar ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -202,16 +207,16 @@ export default function AdvancedParetoVisualizer({
               dataKey="drag"
               type="number"
               stroke="#94a3b8"
-              label={{ value: 'Drag Coefficient', position: 'insideBottomRight', offset: -5 }}
+              label={{ value: "Drag Coefficient", position: "insideBottomRight", offset: -5 }}
             />
             <YAxis
               dataKey="lift"
               stroke="#94a3b8"
-              label={{ value: 'Lift Coefficient', angle: -90, position: 'insideLeft' }}
+              label={{ value: "Lift Coefficient", angle: -90, position: "insideLeft" }}
             />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-              cursor={{ strokeDasharray: '3 3' }}
+              contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
+              cursor={{ strokeDasharray: "3 3" }}
               content={({ active, payload }) => {
                 if (active && payload && payload[0]) {
                   const data = payload[0].payload;
@@ -254,7 +259,7 @@ export default function AdvancedParetoVisualizer({
               <XAxis dataKey="id" stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
+                contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
                 content={({ active, payload }) => {
                   if (active && payload && payload[0]) {
                     const data = payload[0].payload;
@@ -320,9 +325,7 @@ export default function AdvancedParetoVisualizer({
                 fillOpacity={0.25}
               />
               <Legend />
-              <Tooltip
-                contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-              />
+              <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }} />
             </RadarChart>
           </ResponsiveContainer>
         </motion.div>
@@ -340,7 +343,10 @@ export default function AdvancedParetoVisualizer({
           Convergence Analysis - Fitness & Diversity
         </h3>
         <ResponsiveContainer width="100%" height={400}>
-          <ComposedChart data={convergenceData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+          <ComposedChart
+            data={convergenceData}
+            margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+          >
             <defs>
               <linearGradient id="fitnessGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.8} />
@@ -355,12 +361,10 @@ export default function AdvancedParetoVisualizer({
             <XAxis
               dataKey="generation"
               stroke="#94a3b8"
-              label={{ value: 'Generation', position: 'insideBottomRight', offset: -5 }}
+              label={{ value: "Generation", position: "insideBottomRight", offset: -5 }}
             />
             <YAxis stroke="#94a3b8" />
-            <Tooltip
-              contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-            />
+            <Tooltip contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }} />
             <Legend />
             <Area
               type="monotone"
@@ -380,7 +384,7 @@ export default function AdvancedParetoVisualizer({
               y={statistics.bestFitness}
               stroke="#F59E0B"
               strokeDasharray="5 5"
-              label={{ value: 'Best Fitness', position: 'right', fill: '#F59E0B' }}
+              label={{ value: "Best Fitness", position: "right", fill: "#F59E0B" }}
             />
           </ComposedChart>
         </ResponsiveContainer>
@@ -394,19 +398,17 @@ export default function AdvancedParetoVisualizer({
         className="grid grid-cols-1 md:grid-cols-4 gap-4"
       >
         {[
-          { label: 'Best Fitness', value: statistics.bestFitness.toFixed(6), color: 'blue' },
-          { label: 'Avg Fitness', value: statistics.averageFitness.toFixed(6), color: 'green' },
-          { label: 'Diversity', value: statistics.diversity.toFixed(4), color: 'purple' },
-          { label: 'Spread', value: statistics.spreadMetric.toFixed(4), color: 'orange' },
+          { label: "Best Fitness", value: statistics.bestFitness.toFixed(6), color: "blue" },
+          { label: "Avg Fitness", value: statistics.averageFitness.toFixed(6), color: "green" },
+          { label: "Diversity", value: statistics.diversity.toFixed(4), color: "purple" },
+          { label: "Spread", value: statistics.spreadMetric.toFixed(4), color: "orange" },
         ].map((stat, idx) => (
           <div
             key={idx}
             className={`bg-slate-800 rounded-xl p-4 border border-slate-700 bg-gradient-to-br from-slate-800 to-slate-900`}
           >
             <p className="font-paragraph text-sm text-slate-400 mb-1">{stat.label}</p>
-            <p className={`font-heading text-2xl font-bold text-${stat.color}-400`}>
-              {stat.value}
-            </p>
+            <p className={`font-heading text-2xl font-bold text-${stat.color}-400`}>{stat.value}</p>
           </div>
         ))}
       </motion.div>

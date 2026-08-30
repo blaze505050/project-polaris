@@ -81,7 +81,12 @@ function ArticlesPage() {
               size="sm"
               className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 shadow-sm transition-colors"
             >
-              <a href="https://tally.so/r/ZjrPzA" target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+              <a
+                href="https://tally.so/r/ZjrPzA"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5"
+              >
                 <span>Submit an Article ↗</span>
               </a>
             </Button>
@@ -129,7 +134,10 @@ function ArticlesPage() {
                   "Discoveries, datasets & simulation tools",
                   "Student research explainers",
                 ].map((point) => (
-                  <div key={point} className="p-2.5 rounded-lg bg-surface border border-white/6 flex items-center gap-2">
+                  <div
+                    key={point}
+                    className="p-2.5 rounded-lg bg-surface border border-white/6 flex items-center gap-2"
+                  >
                     <CheckCircle className="size-3.5 text-primary shrink-0" />
                     <span>{point}</span>
                   </div>
@@ -249,7 +257,8 @@ function ArticlesPage() {
               Have something worth sharing?
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Students and community members can submit their original articles, research explainers, opinions, or educational content for editorial review.
+              Students and community members can submit their original articles, research
+              explainers, opinions, or educational content for editorial review.
             </p>
             <p className="text-[11px] text-primary/80 font-medium">
               Selected submissions may be edited and published on the Polaris platform.
@@ -261,7 +270,12 @@ function ArticlesPage() {
                 size="default"
                 className="h-10 px-6 rounded-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs"
               >
-                <a href="https://tally.so/r/ZjrPzA" target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                <a
+                  href="https://tally.so/r/ZjrPzA"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2"
+                >
                   <span>Submit an Article →</span>
                 </a>
               </Button>
@@ -286,7 +300,8 @@ function ArticlesPage() {
             </h2>
 
             <div className="text-xs text-primary font-medium">
-              By {activeModalArticle.author.name} ({activeModalArticle.author.role}) • {activeModalArticle.publishedAt}
+              By {activeModalArticle.author.name} ({activeModalArticle.author.role}) •{" "}
+              {activeModalArticle.publishedAt}
             </div>
 
             <div className="pt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed whitespace-pre-line border-t border-white/6">
@@ -297,7 +312,12 @@ function ArticlesPage() {
               <Button onClick={() => setActiveModalArticle(null)} variant="outline" size="sm">
                 Close
               </Button>
-              <a href="https://tally.so/r/ZjrPzA" target="_blank" rel="noreferrer" className="text-primary hover:underline">
+              <a
+                href="https://tally.so/r/ZjrPzA"
+                target="_blank"
+                rel="noreferrer"
+                className="text-primary hover:underline"
+              >
                 Submit your own article ↗
               </a>
             </div>

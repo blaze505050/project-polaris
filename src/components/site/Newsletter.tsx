@@ -36,7 +36,9 @@ export function Newsletter({ className = "" }: { className?: string }) {
   };
 
   return (
-    <div className={`rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-surface/60 to-surface-2/80 p-6 md:p-8 ${className}`}>
+    <div
+      className={`rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/10 via-surface/60 to-surface-2/80 p-6 md:p-8 ${className}`}
+    >
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="max-w-xl">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold text-primary font-ui mb-3">
@@ -47,7 +49,8 @@ export function Newsletter({ className = "" }: { className?: string }) {
             Stay in the loop with student engineering & research
           </h3>
           <p className="mt-2 text-sm text-muted-foreground font-sans leading-relaxed">
-            Get quarterly field notes on AeroForge updates, new rocketry workshops, upcoming space science challenges, and student build logs. Zero spam.
+            Get quarterly field notes on AeroForge updates, new rocketry workshops, upcoming space
+            science challenges, and student build logs. Zero spam.
           </p>
         </div>
 
@@ -57,7 +60,9 @@ export function Newsletter({ className = "" }: { className?: string }) {
               <CheckCircle2 className="size-5 shrink-0 text-emerald-400" />
               <div>
                 <p className="font-semibold font-ui">You're on the dispatch list!</p>
-                <p className="text-xs text-emerald-400/80 mt-0.5">Welcome to the Project Polaris community.</p>
+                <p className="text-xs text-emerald-400/80 mt-0.5">
+                  Welcome to the Project Polaris community.
+                </p>
               </div>
             </div>
           ) : (
@@ -85,11 +90,7 @@ export function Newsletter({ className = "" }: { className?: string }) {
                   disabled={status === "loading"}
                   className="rounded-xl bg-primary text-primary-foreground font-bold hover:bg-primary/90 px-5 shrink-0"
                 >
-                  {status === "loading" ? (
-                    <Loader2 className="size-4 animate-spin" />
-                  ) : (
-                    "Subscribe"
-                  )}
+                  {status === "loading" ? <Loader2 className="size-4 animate-spin" /> : "Subscribe"}
                 </Button>
               </div>
 

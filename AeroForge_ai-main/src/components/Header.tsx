@@ -1,5 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import {
   Menu,
   X,
@@ -18,37 +18,37 @@ import {
   BookOpen,
   MessageSquare,
   Zap,
-} from 'lucide-react';
-import { Image } from '@/components/ui/image';
-import { useAeroForgeStore } from '@/stores/aeroforgeStore';
-import { useProjectStore } from '@/stores/projectStore';
-import { useUnitStore, UnitSystem } from '@/stores/unitStore';
-import FeedbackModal from '@/components/FeedbackModal';
+} from "lucide-react";
+import { Image } from "@/components/ui/image";
+import { useAeroForgeStore } from "@/stores/aeroforgeStore";
+import { useProjectStore } from "@/stores/projectStore";
+import { useUnitStore, UnitSystem } from "@/stores/unitStore";
+import FeedbackModal from "@/components/FeedbackModal";
 
 // Dynamic breadcrumb based on current route
 function useBreadcrumbs() {
   const location = useLocation();
   const { currentProject } = useProjectStore();
-  const segments = location.pathname.split('/').filter(Boolean);
+  const segments = location.pathname.split("/").filter(Boolean);
 
   const crumbs: { label: string; path: string }[] = [];
 
   if (segments.length === 0) {
-    return [{ label: 'Home', path: '/' }];
+    return [{ label: "Home", path: "/" }];
   }
 
   for (let i = 0; i < segments.length; i++) {
     const seg = segments[i];
-    const path = '/' + segments.slice(0, i + 1).join('/');
+    const path = "/" + segments.slice(0, i + 1).join("/");
 
     switch (seg) {
-      case 'dashboard':
-        crumbs.push({ label: 'Dashboard', path });
+      case "dashboard":
+        crumbs.push({ label: "Dashboard", path });
         break;
-      case 'projects':
-        crumbs.push({ label: 'Projects', path: '/projects' });
+      case "projects":
+        crumbs.push({ label: "Projects", path: "/projects" });
         // If next segment is a project ID
-        if (segments[i + 1] && segments[i + 1] !== 'new') {
+        if (segments[i + 1] && segments[i + 1] !== "new") {
           crumbs.push({
             label: currentProject?.name || `Project ${segments[i + 1]}`,
             path: `/projects/${segments[i + 1]}`,
@@ -56,45 +56,45 @@ function useBreadcrumbs() {
           i++; // skip the ID segment
         }
         break;
-      case 'labs':
-        crumbs.push({ label: 'Labs', path });
+      case "labs":
+        crumbs.push({ label: "Labs", path });
         if (segments[i + 1]) {
           crumbs.push({
             label: segments[i + 1].charAt(0).toUpperCase() + segments[i + 1].slice(1),
-            path: path + '/' + segments[i + 1],
+            path: path + "/" + segments[i + 1],
           });
           i++;
         }
         break;
-      case 'aerolab':
-        crumbs.push({ label: 'AeroLab', path: '/aerolab' });
+      case "aerolab":
+        crumbs.push({ label: "AeroLab", path: "/aerolab" });
         break;
-      case 'astrolab':
-        crumbs.push({ label: 'AstroLab', path: '/astrolab' });
+      case "astrolab":
+        crumbs.push({ label: "AstroLab", path: "/astrolab" });
         if (segments[i + 1]) {
           const toolName = segments[i + 1]
-            .split('-')
+            .split("-")
             .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join(' ');
-          crumbs.push({ label: toolName, path: path + '/' + segments[i + 1] });
+            .join(" ");
+          crumbs.push({ label: toolName, path: path + "/" + segments[i + 1] });
           i++;
         }
         break;
-      case 'mechlab':
-        crumbs.push({ label: 'MechLab', path: '/mechlab' });
+      case "mechlab":
+        crumbs.push({ label: "MechLab", path: "/mechlab" });
         break;
-      case 'physics-ai':
-        crumbs.push({ label: 'Physics AI Lab', path: '/physics-ai' });
+      case "physics-ai":
+        crumbs.push({ label: "Physics AI Lab", path: "/physics-ai" });
         break;
-      case 'settings':
-        crumbs.push({ label: 'Settings', path });
+      case "settings":
+        crumbs.push({ label: "Settings", path });
         break;
-      case 'documentation':
-        crumbs.push({ label: 'Documentation', path });
+      case "documentation":
+        crumbs.push({ label: "Documentation", path });
         break;
       default:
         crumbs.push({
-          label: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' '),
+          label: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, " "),
           path,
         });
     }
@@ -119,8 +119,8 @@ export default function Header() {
 
   // Open Command Palette via custom event or keyboard shortcut
   const triggerCommandPalette = () => {
-    const event = new KeyboardEvent('keydown', {
-      key: 'k',
+    const event = new KeyboardEvent("keydown", {
+      key: "k",
       metaKey: true,
       bubbles: true,
     });
@@ -163,7 +163,10 @@ export default function Header() {
                 {idx === breadcrumbs.length - 1 ? (
                   <span className="text-[var(--af-accent)] font-semibold">{crumb.label}</span>
                 ) : (
-                  <Link to={crumb.path} className="hover:text-[var(--af-accent)] transition-colors duration-150">
+                  <Link
+                    to={crumb.path}
+                    className="hover:text-[var(--af-accent)] transition-colors duration-150"
+                  >
                     {crumb.label}
                   </Link>
                 )}
@@ -203,27 +206,25 @@ export default function Header() {
           >
             <Search className="w-3 h-3 text-cyan-400" />
             <span className="hidden sm:inline">Search</span>
-            <span className="px-1 bg-white/10 rounded text-[9px] text-white/40">
-              Ctrl+K
-            </span>
+            <span className="px-1 bg-white/10 rounded text-[9px] text-white/40">Ctrl+K</span>
           </button>
 
           {/* Mode Toggle */}
           <button
             onClick={toggleMode}
             className={`flex items-center gap-1 px-2.5 py-0.5 rounded border transition-all ${
-              userMode === 'student'
-                ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400'
-                : 'border-pink-500/30 bg-pink-500/10 text-pink-400'
+              userMode === "student"
+                ? "border-cyan-500/30 bg-cyan-500/10 text-cyan-400"
+                : "border-pink-500/30 bg-pink-500/10 text-pink-400"
             }`}
           >
-            {userMode === 'student' ? (
+            {userMode === "student" ? (
               <GraduationCap className="w-3 h-3" />
             ) : (
               <Briefcase className="w-3 h-3" />
             )}
             <span className="font-bold uppercase text-[9px]">
-              {userMode === 'student' ? 'Student' : 'Professional'}
+              {userMode === "student" ? "Student" : "Professional"}
             </span>
           </button>
         </div>
@@ -258,9 +259,10 @@ export default function Header() {
           <Link
             to="/projects"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname.startsWith('/projects') || location.pathname === '/flagship-workflow'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname.startsWith("/projects") ||
+              location.pathname === "/flagship-workflow"
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <FolderOpen className="w-3.5 h-3.5 text-cyan-400" />
@@ -269,9 +271,10 @@ export default function Header() {
           <Link
             to="/aerolab"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname.startsWith('/aerolab') || location.pathname.startsWith('/labs/aerodynamics')
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname.startsWith("/aerolab") ||
+              location.pathname.startsWith("/labs/aerodynamics")
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Wind className="w-3.5 h-3.5 text-cyan-400" />
@@ -280,9 +283,9 @@ export default function Header() {
           <Link
             to="/mechlab"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname.startsWith('/mechlab')
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname.startsWith("/mechlab")
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Wrench className="w-3.5 h-3.5 text-amber-400" />
@@ -291,9 +294,9 @@ export default function Header() {
           <Link
             to="/astrolab"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname.startsWith('/astrolab')
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname.startsWith("/astrolab")
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Rocket className="w-3.5 h-3.5 text-purple-400" />
@@ -302,9 +305,9 @@ export default function Header() {
           <Link
             to="/challenges"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname === '/challenges'
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname === "/challenges"
+                ? "bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-amber-400" />
@@ -313,9 +316,9 @@ export default function Header() {
           <Link
             to="/marketplace"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname === '/marketplace'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname === "/marketplace"
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <Globe className="w-3.5 h-3.5 text-emerald-400" />
@@ -324,9 +327,9 @@ export default function Header() {
           <Link
             to="/documentation"
             className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
-              location.pathname === '/documentation'
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold'
-                : 'text-white/70 hover:bg-white/5 hover:text-white'
+              location.pathname === "/documentation"
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-bold"
+                : "text-white/70 hover:bg-white/5 hover:text-white"
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-cyan-400" />

@@ -1,12 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Copy, Download, Eye, EyeOff } from 'lucide-react';
-import { DataFormatter } from '@/services/dataFormatting';
+import React from "react";
+import { motion } from "framer-motion";
+import { Copy, Download, Eye, EyeOff } from "lucide-react";
+import { DataFormatter } from "@/services/dataFormatting";
 
 interface DataPanelProps {
   title: string;
   data: Record<string, any>;
-  format?: 'scientific' | 'table' | 'json' | 'raw';
+  format?: "scientific" | "table" | "json" | "raw";
   precision?: number;
   copyable?: boolean;
   downloadable?: boolean;
@@ -16,7 +16,7 @@ interface DataPanelProps {
 export default function ProfessionalDataPanel({
   title,
   data,
-  format = 'table',
+  format = "table",
   precision = 3,
   copyable = true,
   downloadable = true,
@@ -34,11 +34,11 @@ export default function ProfessionalDataPanel({
 
   const handleDownload = () => {
     const text = JSON.stringify(data, null, 2);
-    const blob = new Blob([text], { type: 'application/json' });
+    const blob = new Blob([text], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `${title.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.json`;
+    a.download = `${title.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -46,19 +46,19 @@ export default function ProfessionalDataPanel({
   };
 
   const formatValue = (value: any): string => {
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       if (Number.isInteger(value)) return value.toString();
       return DataFormatter.scientific(value, precision);
     }
-    if (typeof value === 'boolean') return value ? 'TRUE' : 'FALSE';
-    if (value === null) return 'NULL';
-    if (value === undefined) return 'UNDEFINED';
+    if (typeof value === "boolean") return value ? "TRUE" : "FALSE";
+    if (value === null) return "NULL";
+    if (value === undefined) return "UNDEFINED";
     return String(value);
   };
 
   const renderContent = () => {
     switch (format) {
-      case 'scientific':
+      case "scientific":
         return (
           <div className="space-y-2">
             {Object.entries(data).map(([key, value]) => (
@@ -69,7 +69,7 @@ export default function ProfessionalDataPanel({
             ))}
           </div>
         );
-      case 'table':
+      case "table":
         return (
           <div className="overflow-x-auto">
             <table className="w-full text-xs font-mono">
@@ -81,7 +81,7 @@ export default function ProfessionalDataPanel({
               </thead>
               <tbody>
                 {Object.entries(data).map(([key, value], idx) => (
-                  <tr key={key} className={idx % 2 === 0 ? 'bg-[#0B0E14]/30' : ''}>
+                  <tr key={key} className={idx % 2 === 0 ? "bg-[#0B0E14]/30" : ""}>
                     <td className="py-2 px-3 text-secondary-foreground">{key}</td>
                     <td className="py-2 px-3 text-right text-[#00F0FF]">{formatValue(value)}</td>
                   </tr>
@@ -90,13 +90,13 @@ export default function ProfessionalDataPanel({
             </table>
           </div>
         );
-      case 'json':
+      case "json":
         return (
           <pre className="bg-[#0B0E14] p-4 rounded border border-[#00F0FF]/10 overflow-x-auto text-xs font-mono text-[#00F0FF]">
             {JSON.stringify(data, null, 2)}
           </pre>
         );
-      case 'raw':
+      case "raw":
       default:
         return (
           <div className="text-xs font-mono text-secondary-foreground whitespace-pre-wrap break-words">
@@ -160,7 +160,7 @@ export default function ProfessionalDataPanel({
       {isExpanded && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           className="p-4"
         >

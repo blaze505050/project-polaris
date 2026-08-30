@@ -4,9 +4,10 @@ import {
   JobStatusResponse,
   AirfoilSurrogateResult,
   ModelCard,
-} from '@/types/physicsAi';
+} from "@/types/physicsAi";
 
-const API_BASE = ((import.meta.env as any).VITE_PHYSICS_AI_API_URL as string) || 'http://localhost:8000';
+const API_BASE =
+  ((import.meta.env as any).VITE_PHYSICS_AI_API_URL as string) || "http://localhost:8000";
 
 export async function checkBackendComputeStatus(): Promise<BackendComputeStatus> {
   try {
@@ -22,12 +23,12 @@ export async function checkBackendComputeStatus(): Promise<BackendComputeStatus>
       const data = await res.json();
       return {
         online: true,
-        target: data.target || 'Python FastAPI Backend',
-        device: data.device || 'CPU / PyTorch',
+        target: data.target || "Python FastAPI Backend",
+        device: data.device || "CPU / PyTorch",
         gpuAvailable: data.gpu_available || false,
         torchVersion: data.torch_version,
         activeJobsCount: data.active_jobs_count || 0,
-        message: data.message || 'FastAPI PyTorch Execution Engine Online',
+        message: data.message || "FastAPI PyTorch Execution Engine Online",
       };
     }
   } catch (err) {
@@ -36,18 +37,19 @@ export async function checkBackendComputeStatus(): Promise<BackendComputeStatus>
 
   return {
     online: false,
-    target: 'Backend Disconnected',
-    device: 'Client Browser Preview',
+    target: "Backend Disconnected",
+    device: "Client Browser Preview",
     gpuAvailable: false,
     activeJobsCount: 0,
-    message: 'Physics AI backend is not configured. Run "python -m uvicorn backend.main:app" locally or deploy GPU worker.',
+    message:
+      'Physics AI backend is not configured. Run "python -m uvicorn backend.main:app" locally or deploy GPU worker.',
   };
 }
 
 export async function submitBackendJob(payload: JobSubmissionPayload): Promise<JobStatusResponse> {
   const res = await fetch(`${API_BASE}/api/physics-ai/jobs`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
@@ -77,7 +79,7 @@ export async function getBackendJobResults(jobId: string): Promise<AirfoilSurrog
 export async function cancelBackendJob(jobId: string): Promise<boolean> {
   try {
     const res = await fetch(`${API_BASE}/api/physics-ai/jobs/${jobId}/cancel`, {
-      method: 'POST',
+      method: "POST",
     });
     return res.ok;
   } catch (err) {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Wind,
   Zap,
@@ -16,23 +16,20 @@ import {
   Shield,
   BarChart3,
   Sliders,
-} from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
-import AICopilotSidebar from '@/components/AICopilotSidebar';
-import {
-  AerodynamicSolver,
-  AtmosphericModel,
-} from '@/services/enhancedPhysicsEngine';
-import EngineeringTable, { ColumnDef } from '@/components/ui/EngineeringTable';
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
+import AICopilotSidebar from "@/components/AICopilotSidebar";
+import { AerodynamicSolver, AtmosphericModel } from "@/services/enhancedPhysicsEngine";
+import EngineeringTable, { ColumnDef } from "@/components/ui/EngineeringTable";
 
 interface LabWorkflow {
   id: string;
   name: string;
   category: string;
   solverEngine: string;
-  status: 'ACTIVE' | 'BETA' | 'READY';
+  status: "ACTIVE" | "BETA" | "READY";
   description: string;
 }
 
@@ -45,8 +42,7 @@ export default function AerodynamicsLabPage() {
   // Atmospheric physics calculation
   const atmo = AtmosphericModel.getAtmosphericProperties(altitude);
   const wingChord = 2.5;
-  const reynoldsNumber =
-    (atmo.rho * mach * atmo.speedOfSound * wingChord) / atmo.viscosity;
+  const reynoldsNumber = (atmo.rho * mach * atmo.speedOfSound * wingChord) / atmo.viscosity;
   const cl = AerodynamicSolver.computeLiftCoefficient(aoa, mach, reynoldsNumber);
   const cd = AerodynamicSolver.computeDragCoefficient(aoa, mach, reynoldsNumber);
   const wingArea = 50;
@@ -57,44 +53,44 @@ export default function AerodynamicsLabPage() {
 
   const workflows: LabWorkflow[] = [
     {
-      id: 'wf_1',
-      name: 'CFD Compressible Wind Tunnel Simulation',
-      category: 'Computational Aerodynamics',
-      solverEngine: 'OpenFOAM (rhoSimpleFoam k-omega SST)',
-      status: 'ACTIVE',
-      description: 'Full 3D steady RANS flow solution over wings, nacelles, and fuselages.',
+      id: "wf_1",
+      name: "CFD Compressible Wind Tunnel Simulation",
+      category: "Computational Aerodynamics",
+      solverEngine: "OpenFOAM (rhoSimpleFoam k-omega SST)",
+      status: "ACTIVE",
+      description: "Full 3D steady RANS flow solution over wings, nacelles, and fuselages.",
     },
     {
-      id: 'wf_2',
-      name: 'Transonic Airfoil Polar & Cp Analysis',
-      category: 'Airfoil Analysis',
-      solverEngine: 'XFOIL / Panel Method + Boundary Layer',
-      status: 'READY',
-      description: 'Fast 2D pressure coefficient distribution and stall angle prediction.',
+      id: "wf_2",
+      name: "Transonic Airfoil Polar & Cp Analysis",
+      category: "Airfoil Analysis",
+      solverEngine: "XFOIL / Panel Method + Boundary Layer",
+      status: "READY",
+      description: "Fast 2D pressure coefficient distribution and stall angle prediction.",
     },
     {
-      id: 'wf_3',
-      name: 'Hypersonic Shockwave Corridor Solver',
-      category: 'High Mach Flow',
-      solverEngine: 'SU2 Compressible Euler Solver',
-      status: 'BETA',
-      description: 'Oblique shock angle, detachment boundaries, and aerothermal heat flux.',
+      id: "wf_3",
+      name: "Hypersonic Shockwave Corridor Solver",
+      category: "High Mach Flow",
+      solverEngine: "SU2 Compressible Euler Solver",
+      status: "BETA",
+      description: "Oblique shock angle, detachment boundaries, and aerothermal heat flux.",
     },
   ];
 
   const workflowCols: ColumnDef<LabWorkflow>[] = [
-    { key: 'name', header: 'Workflow Name', accessor: (w) => w.name },
-    { key: 'category', header: 'Category', accessor: (w) => w.category, width: '180px' },
-    { key: 'solverEngine', header: 'Solver Engine', accessor: (w) => w.solverEngine },
+    { key: "name", header: "Workflow Name", accessor: (w) => w.name },
+    { key: "category", header: "Category", accessor: (w) => w.category, width: "180px" },
+    { key: "solverEngine", header: "Solver Engine", accessor: (w) => w.solverEngine },
     {
-      key: 'status',
-      header: 'Status',
+      key: "status",
+      header: "Status",
       accessor: (w) => (
         <span className="px-2 py-0.5 rounded text-[10px] font-bold border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 font-mono">
           {w.status}
         </span>
       ),
-      width: '100px',
+      width: "100px",
     },
   ];
 
@@ -118,7 +114,8 @@ export default function AerodynamicsLabPage() {
                   </span>
                 </div>
                 <p className="text-xs text-white/60 font-sans max-w-3xl leading-relaxed">
-                  Computational fluid dynamics, supersonic wind tunnel simulations, and wing boundary layer shear stress analysis for aircraft and aerospace vehicles.
+                  Computational fluid dynamics, supersonic wind tunnel simulations, and wing
+                  boundary layer shear stress analysis for aircraft and aerospace vehicles.
                 </p>
               </div>
 
@@ -253,15 +250,11 @@ export default function AerodynamicsLabPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/60">Total Lift Force:</span>
-                  <span className="font-bold text-emerald-300">
-                    {(lift / 1000).toFixed(2)} kN
-                  </span>
+                  <span className="font-bold text-emerald-300">{(lift / 1000).toFixed(2)} kN</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/60">Total Drag Force:</span>
-                  <span className="font-bold text-pink-300">
-                    {(drag / 1000).toFixed(2)} kN
-                  </span>
+                  <span className="font-bold text-pink-300">{(drag / 1000).toFixed(2)} kN</span>
                 </div>
                 <div className="flex justify-between border-t border-white/10 pt-1.5 mt-1.5">
                   <span className="font-bold text-white">Lift-to-Drag Ratio L/D:</span>

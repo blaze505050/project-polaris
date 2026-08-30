@@ -1,5 +1,5 @@
-import React, { Component, ReactNode, ReactElement } from 'react';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import React, { Component, ReactNode, ReactElement } from "react";
+import { AlertCircle, RefreshCw } from "lucide-react";
 
 interface Props {
   children: ReactNode;
@@ -22,7 +22,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
+    console.error("Error caught by boundary:", error, errorInfo);
   }
 
   handleReset = () => {
@@ -38,7 +38,7 @@ export default class ErrorBoundary extends Component<Props, State> {
               <AlertCircle className="w-16 h-16 text-aerospace-danger mx-auto mb-4" />
               <h1 className="text-2xl font-bold text-foreground mb-2">Something went wrong</h1>
               <p className="text-foreground/70 mb-6 text-sm">
-                {this.state.error?.message || 'An unexpected error occurred'}
+                {this.state.error?.message || "An unexpected error occurred"}
               </p>
               <div className="flex gap-3 justify-center">
                 <button
@@ -49,7 +49,7 @@ export default class ErrorBoundary extends Component<Props, State> {
                   Try Again
                 </button>
                 <button
-                  onClick={() => window.location.href = '/'}
+                  onClick={() => (window.location.href = "/")}
                   className="px-4 py-2 bg-aerospace-accent/30 hover:bg-aerospace-accent/50 rounded text-foreground font-semibold transition-all"
                 >
                   Go Home

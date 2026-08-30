@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Check, ChevronRight } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { X, Check, ChevronRight } from "lucide-react";
 
 interface Tool {
   id: string;
@@ -21,10 +21,11 @@ export default function ToolComparison({ tools, featureKeys }: ToolComparisonPro
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleToolSelection = (toolId: string) => {
-    setSelectedTools((prev) =>
-      prev.includes(toolId)
-        ? prev.filter((id) => id !== toolId)
-        : [...prev.slice(-1), toolId].slice(-2) // Max 2 tools
+    setSelectedTools(
+      (prev) =>
+        prev.includes(toolId)
+          ? prev.filter((id) => id !== toolId)
+          : [...prev.slice(-1), toolId].slice(-2), // Max 2 tools
     );
   };
 
@@ -38,16 +39,16 @@ export default function ToolComparison({ tools, featureKeys }: ToolComparisonPro
         className="w-full flex items-center justify-between px-6 py-4 bg-gradient-to-r from-aerospace-blue/10 to-aerospace-accent/10 border border-aerospace-blue/30 rounded-lg hover:border-aerospace-blue/60 transition-all group"
       >
         <div className="text-left">
-          <p className="font-heading text-lg font-bold text-foreground">
-            Compare Tools
-          </p>
+          <p className="font-heading text-lg font-bold text-foreground">Compare Tools</p>
           <p className="font-paragraph text-sm text-foreground/70">
             {selectedTools.length === 0
-              ? 'Select up to 2 tools to compare features'
-              : `${selectedTools.length} tool${selectedTools.length !== 1 ? 's' : ''} selected`}
+              ? "Select up to 2 tools to compare features"
+              : `${selectedTools.length} tool${selectedTools.length !== 1 ? "s" : ""} selected`}
           </p>
         </div>
-        <ChevronRight className={`w-5 h-5 text-aerospace-blue transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+        <ChevronRight
+          className={`w-5 h-5 text-aerospace-blue transition-transform ${isOpen ? "rotate-90" : ""}`}
+        />
       </button>
 
       {/* Tool Selection */}
@@ -67,8 +68,8 @@ export default function ToolComparison({ tools, featureKeys }: ToolComparisonPro
                 onClick={() => toggleToolSelection(tool.id)}
                 className={`p-4 rounded-lg border-2 transition-all text-left ${
                   selectedTools.includes(tool.id)
-                    ? 'border-aerospace-blue bg-aerospace-blue/10'
-                    : 'border-secondary/30 bg-secondary/5 hover:border-secondary/50'
+                    ? "border-aerospace-blue bg-aerospace-blue/10"
+                    : "border-secondary/30 bg-secondary/5 hover:border-secondary/50"
                 }`}
               >
                 <p className="font-heading font-bold text-foreground">{tool.name}</p>
@@ -120,29 +121,22 @@ export default function ToolComparison({ tools, featureKeys }: ToolComparisonPro
                 <tr
                   key={feature}
                   className={`border-b border-secondary/20 ${
-                    idx % 2 === 0 ? 'bg-secondary/5' : ''
+                    idx % 2 === 0 ? "bg-secondary/5" : ""
                   }`}
                 >
-                  <td className="py-4 px-4 font-paragraph text-sm text-foreground/80">
-                    {feature}
-                  </td>
+                  <td className="py-4 px-4 font-paragraph text-sm text-foreground/80">{feature}</td>
                   {comparisonTools.map((tool) => {
                     const value = tool.features[feature];
                     return (
-                      <td
-                        key={`${tool.id}-${feature}`}
-                        className="text-center py-4 px-4"
-                      >
-                        {typeof value === 'boolean' ? (
+                      <td key={`${tool.id}-${feature}`} className="text-center py-4 px-4">
+                        {typeof value === "boolean" ? (
                           value ? (
                             <Check className="w-5 h-5 text-aerospace-success mx-auto" />
                           ) : (
                             <X className="w-5 h-5 text-aerospace-danger mx-auto opacity-30" />
                           )
                         ) : (
-                          <span className="font-mono text-sm text-foreground/80">
-                            {value}
-                          </span>
+                          <span className="font-mono text-sm text-foreground/80">{value}</span>
                         )}
                       </td>
                     );

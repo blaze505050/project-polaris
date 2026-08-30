@@ -1,13 +1,24 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquare, AlertTriangle, Lightbulb, ShieldAlert, CheckCircle2, Send, Trash2 } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useFeedbackStore } from '@/stores/feedbackStore';
-import { usePageMeta } from '@/hooks/usePageMeta';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  MessageSquare,
+  AlertTriangle,
+  Lightbulb,
+  ShieldAlert,
+  CheckCircle2,
+  Send,
+  Trash2,
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useFeedbackStore } from "@/stores/feedbackStore";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function BetaFeedbackPage() {
-  usePageMeta('Beta Feedback & Bug Report', 'Submit engineering research feedback, report issues, and view submitted beta items.');
+  usePageMeta(
+    "Beta Feedback & Bug Report",
+    "Submit engineering research feedback, report issues, and view submitted beta items.",
+  );
 
   const { feedbackList, clearFeedback } = useFeedbackStore();
 
@@ -67,15 +78,17 @@ export default function BetaFeedbackPage() {
                       </span>
                       <span
                         className={`px-2 py-0.5 rounded uppercase text-[9px] font-bold ${
-                          item.severity === 'critical' || item.severity === 'high'
-                            ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
-                            : 'bg-white/5 text-white/70 border border-white/10'
+                          item.severity === "critical" || item.severity === "high"
+                            ? "bg-rose-500/20 text-rose-300 border border-rose-500/40"
+                            : "bg-white/5 text-white/70 border border-white/10"
                         }`}
                       >
                         {item.severity}
                       </span>
                     </div>
-                    <span className="text-white/40 text-[10px]">{new Date(item.timestamp).toLocaleString()}</span>
+                    <span className="text-white/40 text-[10px]">
+                      {new Date(item.timestamp).toLocaleString()}
+                    </span>
                   </div>
 
                   <p className="text-white/80 font-sans text-xs leading-relaxed">{item.message}</p>

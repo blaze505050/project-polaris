@@ -142,12 +142,21 @@ function ResourcesPage() {
         lead="Everything we investigate, simulate, and verify is documented for students to learn from freely."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
+          <Button
+            asChild
+            size="sm"
+            className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors"
+          >
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join WhatsApp for Daily Drops
             </a>
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40"
+          >
             <Link to="/courses">Explore Learning Catalog</Link>
           </Button>
         </div>
@@ -232,8 +241,17 @@ function ResourcesPage() {
 
                   <div className="mt-6 pt-4 border-t border-white/8 flex items-center justify-between text-xs">
                     <span className="text-muted-foreground text-[11px]">By {r.author}</span>
-                    <Button asChild size="sm" className="h-8 px-3.5 text-xs font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg">
-                      <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="h-8 px-3.5 text-xs font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg"
+                    >
+                      <a
+                        href={SITE.communityUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1"
+                      >
                         <span>Read in Community</span>
                         <ArrowUpRight className="size-3 text-primary" />
                       </a>

@@ -1,11 +1,13 @@
-import React from 'react';
-import { AlertTriangle, Cpu, ShieldCheck, Zap } from 'lucide-react';
+import React from "react";
+import { AlertTriangle, Cpu, ShieldCheck, Zap } from "lucide-react";
 
 interface Props {
   computeTarget?: string;
 }
 
-export default function PhysicsAiHeaderBanner({ computeTarget = 'Browser Client (Surrogate Hybrid)' }: Props) {
+export default function PhysicsAiHeaderBanner({
+  computeTarget = "Browser Client (Surrogate Hybrid)",
+}: Props) {
   return (
     <div className="w-full bg-[#080E22] border-b border-cyan-500/20 px-4 md:px-8 py-3">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
@@ -22,7 +24,8 @@ export default function PhysicsAiHeaderBanner({ computeTarget = 'Browser Client 
           </span>
 
           <span className="text-white/60 font-sans text-[11px] hidden lg:inline max-w-xl">
-            Physics-informed surrogate research tool. Predictions must be validated against analytical or numerical solvers.
+            Physics-informed surrogate research tool. Predictions must be validated against
+            analytical or numerical solvers.
           </span>
         </div>
 

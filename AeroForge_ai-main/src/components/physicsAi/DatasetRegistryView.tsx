@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Search, Database, ShieldCheck, ExternalLink, FileCode, CheckCircle2, AlertCircle } from 'lucide-react';
-import { DATASET_REGISTRY } from '@/services/physicsAi/datasetRegistryData';
-import { DatasetCard } from '@/types/physicsAi';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Search,
+  Database,
+  ShieldCheck,
+  ExternalLink,
+  FileCode,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
+import { DATASET_REGISTRY } from "@/services/physicsAi/datasetRegistryData";
+import { DatasetCard } from "@/types/physicsAi";
 
 export default function DatasetRegistryView() {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedDataset, setSelectedDataset] = useState<DatasetCard | null>(null);
 
   const filteredDatasets = DATASET_REGISTRY.filter((d) => {
@@ -24,7 +32,10 @@ export default function DatasetRegistryView() {
         <div className="space-y-1">
           <h4 className="font-mono font-bold text-white">Dataset License & Attribution Policy</h4>
           <p className="text-white/60 leading-relaxed font-sans">
-            AeroForge does not own or claim copyright over third-party research datasets listed below. Every dataset retains its native license (CC-BY, MIT, Apache 2.0, Open Data). Users must verify licensing terms before redistributing or conducting commercial fine-tuning.
+            AeroForge does not own or claim copyright over third-party research datasets listed
+            below. Every dataset retains its native license (CC-BY, MIT, Apache 2.0, Open Data).
+            Users must verify licensing terms before redistributing or conducting commercial
+            fine-tuning.
           </p>
         </div>
       </div>
@@ -66,7 +77,9 @@ export default function DatasetRegistryView() {
                 </div>
               </div>
 
-              <p className="text-xs text-white/60 mb-3 leading-relaxed font-sans">{ds.description}</p>
+              <p className="text-xs text-white/60 mb-3 leading-relaxed font-sans">
+                {ds.description}
+              </p>
 
               <div className="space-y-2 bg-[#060B18] p-3 rounded-lg border border-white/5 font-mono text-[11px]">
                 <div className="flex justify-between">
@@ -85,7 +98,9 @@ export default function DatasetRegistryView() {
 
               {/* Variables */}
               <div className="mt-3">
-                <span className="text-[10px] font-mono text-white/40 block mb-1">KEY VARIABLES:</span>
+                <span className="text-[10px] font-mono text-white/40 block mb-1">
+                  KEY VARIABLES:
+                </span>
                 <div className="flex flex-wrap gap-1">
                   {ds.variables.map((v, idx) => (
                     <span
@@ -100,7 +115,10 @@ export default function DatasetRegistryView() {
             </div>
 
             <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between font-mono text-xs">
-              <span className="text-[10px] text-white/40 truncate max-w-[200px]" title={ds.useInAeroForge}>
+              <span
+                className="text-[10px] text-white/40 truncate max-w-[200px]"
+                title={ds.useInAeroForge}
+              >
                 Use: {ds.useInAeroForge}
               </span>
               {ds.url && (

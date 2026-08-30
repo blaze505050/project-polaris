@@ -30,7 +30,8 @@ export function MaintenancePage() {
             System Upgrades in Progress
           </h1>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-            We are deploying numerical solver updates and infrastructure enhancements to the Project Polaris ecosystem. All systems will be back online shortly.
+            We are deploying numerical solver updates and infrastructure enhancements to the Project
+            Polaris ecosystem. All systems will be back online shortly.
           </p>
         </div>
 
@@ -66,13 +67,23 @@ export function MaintenancePage() {
             <span>Need Urgent Access or Live Workshop Inquiries?</span>
           </div>
           <p className="text-muted-foreground leading-relaxed">
-            Live broadcasts and upcoming workshops remain unaffected. Check real-time announcements in our student community channel.
+            Live broadcasts and upcoming workshops remain unaffected. Check real-time announcements
+            in our student community channel.
           </p>
         </div>
 
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="default" className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90">
-            <a href="https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX" target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+          <Button
+            asChild
+            size="default"
+            className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90"
+          >
+            <a
+              href="https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-1.5"
+            >
               <MessageCircle className="size-3.5" />
               <span>Join WhatsApp Updates ↗</span>
             </a>

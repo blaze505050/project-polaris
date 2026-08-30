@@ -63,11 +63,10 @@ export function ResetPasswordPage() {
             </div>
 
             <div className="text-center space-y-1">
-              <h1 className="text-2xl font-bold font-display text-foreground">
-                Reset Password
-              </h1>
+              <h1 className="text-2xl font-bold font-display text-foreground">Reset Password</h1>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Enter the email address associated with your Polaris workspace or admin account to receive recovery instructions.
+                Enter the email address associated with your Polaris workspace or admin account to
+                receive recovery instructions.
               </p>
             </div>
 
@@ -89,13 +88,20 @@ export function ResetPasswordPage() {
 
               {error && <p className="text-rose-400 text-xs">{error}</p>}
 
-              <Button type="submit" size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90">
+              <Button
+                type="submit"
+                size="default"
+                className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90"
+              >
                 Send Recovery Code
               </Button>
             </form>
 
             <div className="pt-2 text-center text-xs text-muted-foreground">
-              <Link to="/dashboard" className="text-primary hover:underline flex items-center justify-center gap-1">
+              <Link
+                to="/dashboard"
+                className="text-primary hover:underline flex items-center justify-center gap-1"
+              >
                 <ArrowLeft className="size-3" />
                 <span>Return to Portal Login</span>
               </Link>
@@ -114,7 +120,8 @@ export function ResetPasswordPage() {
                 Enter Verification Code
               </h2>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                We sent a 6-digit verification code to <span className="font-semibold text-foreground">{email}</span>.
+                We sent a 6-digit verification code to{" "}
+                <span className="font-semibold text-foreground">{email}</span>.
               </p>
             </div>
 
@@ -157,7 +164,11 @@ export function ResetPasswordPage() {
 
               {error && <p className="text-rose-400 text-xs">{error}</p>}
 
-              <Button type="submit" size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90 mt-2">
+              <Button
+                type="submit"
+                size="default"
+                className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90 mt-2"
+              >
                 Update Password & Secure Account
               </Button>
             </form>
@@ -192,12 +203,17 @@ export function ResetPasswordPage() {
                 Password Successfully Reset
               </h2>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Your workspace credentials have been updated securely. You may now log in to the Student Dashboard or Admin CMS.
+                Your workspace credentials have been updated securely. You may now log in to the
+                Student Dashboard or Admin CMS.
               </p>
             </div>
 
             <div className="pt-2">
-              <Button asChild size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs">
+              <Button
+                asChild
+                size="default"
+                className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg text-xs"
+              >
                 <Link to="/dashboard">Go to Student Dashboard →</Link>
               </Button>
             </div>

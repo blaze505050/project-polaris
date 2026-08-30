@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, Download, Settings, Zap, TrendingUp, Clock, Gauge } from 'lucide-react';
-import { interactiveSimulationEngine, InteractiveSimulationState, SimulationParameters } from '@/services/interactiveSimulationEngine';
-import AdvancedPhysicsVisualizer from './AdvancedPhysicsVisualizer';
-import ValidationReportPanel from './ValidationReportPanel';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Download,
+  Settings,
+  Zap,
+  TrendingUp,
+  Clock,
+  Gauge,
+} from "lucide-react";
+import {
+  interactiveSimulationEngine,
+  InteractiveSimulationState,
+  SimulationParameters,
+} from "@/services/interactiveSimulationEngine";
+import AdvancedPhysicsVisualizer from "./AdvancedPhysicsVisualizer";
+import ValidationReportPanel from "./ValidationReportPanel";
 
 interface InteractiveSimulationPanelProps {
   title: string;
@@ -23,8 +37,8 @@ export default function InteractiveSimulationPanel({
     angleOfAttack: defaultParameters?.angleOfAttack || 5,
     altitude: defaultParameters?.altitude || 0,
     meshSize: defaultParameters?.meshSize || 10000,
-    turbulenceModel: defaultParameters?.turbulenceModel || 'k-epsilon',
-    solverType: defaultParameters?.solverType || 'RANS',
+    turbulenceModel: defaultParameters?.turbulenceModel || "k-epsilon",
+    solverType: defaultParameters?.solverType || "RANS",
     timeStep: defaultParameters?.timeStep || 0.001,
     maxIterations: defaultParameters?.maxIterations || 100,
   });
@@ -59,9 +73,9 @@ export default function InteractiveSimulationPanel({
   const handleExport = () => {
     const results = interactiveSimulationEngine.exportResults();
     const dataStr = JSON.stringify(results, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
     const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
     link.download = `simulation-results-${new Date().toISOString()}.json`;
     link.click();
@@ -135,7 +149,9 @@ export default function InteractiveSimulationPanel({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-primary/50 rounded-lg p-3">
               <div className="text-xs text-secondary-foreground mb-1">Progress</div>
-              <div className="text-2xl font-bold text-aerospace-blue">{state.progress.toFixed(1)}%</div>
+              <div className="text-2xl font-bold text-aerospace-blue">
+                {state.progress.toFixed(1)}%
+              </div>
             </div>
             <div className="bg-primary/50 rounded-lg p-3">
               <div className="text-xs text-secondary-foreground mb-1 flex items-center gap-1">
@@ -215,7 +231,7 @@ export default function InteractiveSimulationPanel({
                   className="px-4 py-2 bg-aerospace-accent hover:bg-aerospace-accent/80 text-white rounded-lg font-medium transition-colors inline-flex items-center gap-2"
                 >
                   {state.isPaused ? <Play size={18} /> : <Pause size={18} />}
-                  {state.isPaused ? 'Resume' : 'Pause'}
+                  {state.isPaused ? "Resume" : "Pause"}
                 </button>
                 <button
                   onClick={handleStop}
@@ -255,14 +271,20 @@ export default function InteractiveSimulationPanel({
           exit={{ opacity: 0, y: -20 }}
           className="w-full bg-gradient-to-br from-aerospace-dark to-primary rounded-lg border border-aerospace-blue/20 p-6"
         >
-          <h4 className="text-lg font-heading font-bold text-foreground mb-4">Simulation Parameters</h4>
+          <h4 className="text-lg font-heading font-bold text-foreground mb-4">
+            Simulation Parameters
+          </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-sm text-secondary-foreground mb-2 block">Reynolds Number</label>
+              <label className="text-sm text-secondary-foreground mb-2 block">
+                Reynolds Number
+              </label>
               <input
                 type="number"
                 value={parameters.reynoldsNumber}
-                onChange={(e) => handleParameterChange('reynoldsNumber', parseFloat(e.target.value))}
+                onChange={(e) =>
+                  handleParameterChange("reynoldsNumber", parseFloat(e.target.value))
+                }
                 className="w-full px-3 py-2 bg-primary/50 border border-aerospace-blue/20 rounded-lg text-foreground"
               />
             </div>
@@ -272,16 +294,18 @@ export default function InteractiveSimulationPanel({
                 type="number"
                 step="0.01"
                 value={parameters.machNumber}
-                onChange={(e) => handleParameterChange('machNumber', parseFloat(e.target.value))}
+                onChange={(e) => handleParameterChange("machNumber", parseFloat(e.target.value))}
                 className="w-full px-3 py-2 bg-primary/50 border border-aerospace-blue/20 rounded-lg text-foreground"
               />
             </div>
             <div>
-              <label className="text-sm text-secondary-foreground mb-2 block">Angle of Attack (°)</label>
+              <label className="text-sm text-secondary-foreground mb-2 block">
+                Angle of Attack (°)
+              </label>
               <input
                 type="number"
                 value={parameters.angleOfAttack}
-                onChange={(e) => handleParameterChange('angleOfAttack', parseFloat(e.target.value))}
+                onChange={(e) => handleParameterChange("angleOfAttack", parseFloat(e.target.value))}
                 className="w-full px-3 py-2 bg-primary/50 border border-aerospace-blue/20 rounded-lg text-foreground"
               />
             </div>
@@ -290,7 +314,7 @@ export default function InteractiveSimulationPanel({
               <input
                 type="number"
                 value={parameters.meshSize}
-                onChange={(e) => handleParameterChange('meshSize', parseInt(e.target.value))}
+                onChange={(e) => handleParameterChange("meshSize", parseInt(e.target.value))}
                 className="w-full px-3 py-2 bg-primary/50 border border-aerospace-blue/20 rounded-lg text-foreground"
               />
             </div>

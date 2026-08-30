@@ -21,11 +21,25 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
       const { error } = await supabase
         .from("newsletter_subscribers")
         .insert({ email: value.toLowerCase(), source: source.slice(0, 50) });
-      if (error && error.code !== "23505") {
-        console.warn("[Newsletter] DB insertion warning:", error.message);
+      if (error) {
+        if (error.code === "23505") {
+          // Already subscribed
+          toast.info("You're already subscribed to Project Polaris!");
+          setEmail("");
+          setSubmitting(false);
+          setDone(true);
+          return;
+        }
+        console.error("[Newsletter] DB insertion error:", error);
+        toast.error("Unable to subscribe right now. Please try again later.");
+        setSubmitting(false);
+        return;
       }
     } catch (e) {
-      console.warn("[Newsletter] Supabase client offline:", e);
+      console.error("[Newsletter] Supabase client error:", e);
+      toast.error("Network error. Please try again.");
+      setSubmitting(false);
+      return;
     }
     setSubmitting(false);
 
@@ -58,7 +72,11 @@ export function NewsletterForm({ source = "footer" }: { source?: string }) {
         onChange={(e) => setEmail(e.target.value)}
         className="font-ui h-11 bg-surface-2 border-border focus:border-primary/50"
       />
-      <Button type="submit" disabled={submitting} className="h-11 shrink-0 btn-shimmer shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none">
+      <Button
+        type="submit"
+        disabled={submitting}
+        className="h-11 shrink-0 btn-shimmer shadow-md bg-gradient-to-r from-primary to-accent text-primary-foreground border-none"
+      >
         {submitting ? "…" : "Subscribe"}
       </Button>
     </form>

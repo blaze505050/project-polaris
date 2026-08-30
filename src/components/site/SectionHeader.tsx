@@ -17,13 +17,7 @@ export function SectionHeader({
   children?: ReactNode;
 }) {
   return (
-    <div
-      className={cn(
-        "max-w-2xl",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
-    >
+    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
       <h2 className="text-3xl md:text-4xl lg:text-[2.75rem]">{title}</h2>
       {lead ? <p className="mt-5 text-base text-muted-foreground md:text-lg">{lead}</p> : null}

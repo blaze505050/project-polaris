@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Microscope, Droplets, Zap, Download, Play } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Microscope, Droplets, Zap, Download, Play } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function AstrobiologyLabPage() {
   const [selectedPlanet, setSelectedPlanet] = useState(null);
 
   const planets = [
     {
-      id: 'kepler-452b',
-      name: 'Kepler-452b',
-      type: 'Earth-like',
+      id: "kepler-452b",
+      name: "Kepler-452b",
+      type: "Earth-like",
       habitability: 0.87,
-      biosignatures: ['O₂', 'CH₄', 'N₂O'],
-      description: 'Super-Earth in habitable zone of Sun-like star',
+      biosignatures: ["O₂", "CH₄", "N₂O"],
+      description: "Super-Earth in habitable zone of Sun-like star",
     },
     {
-      id: 'trappist-1e',
-      name: 'TRAPPIST-1e',
-      type: 'Terrestrial',
+      id: "trappist-1e",
+      name: "TRAPPIST-1e",
+      type: "Terrestrial",
       habitability: 0.92,
-      biosignatures: ['H₂O', 'O₃', 'CH₄'],
-      description: 'Earth-sized planet in habitable zone',
+      biosignatures: ["H₂O", "O₃", "CH₄"],
+      description: "Earth-sized planet in habitable zone",
     },
     {
-      id: 'proxima-b',
-      name: 'Proxima Centauri b',
-      type: 'Terrestrial',
+      id: "proxima-b",
+      name: "Proxima Centauri b",
+      type: "Terrestrial",
       habitability: 0.65,
-      biosignatures: ['O₂', 'H₂O'],
-      description: 'Potentially habitable exoplanet',
+      biosignatures: ["O₂", "H₂O"],
+      description: "Potentially habitable exoplanet",
     },
   ];
 
@@ -53,8 +53,8 @@ export default function AstrobiologyLabPage() {
             <h1 className="text-5xl font-bold text-white">Astrobiology Lab</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Study conditions for life in the universe. Analyze biosignatures, assess habitability factors,
-            and explore the potential for extraterrestrial life.
+            Study conditions for life in the universe. Analyze biosignatures, assess habitability
+            factors, and explore the potential for extraterrestrial life.
           </p>
         </motion.div>
 
@@ -108,15 +108,17 @@ export default function AstrobiologyLabPage() {
                   {/* Analysis Factors */}
                   <div className="space-y-3">
                     {[
-                      { label: 'Atmospheric Composition', value: 85 },
-                      { label: 'Temperature Range', value: 92 },
-                      { label: 'Water Availability', value: 78 },
-                      { label: 'Radiation Levels', value: 65 },
+                      { label: "Atmospheric Composition", value: 85 },
+                      { label: "Temperature Range", value: 92 },
+                      { label: "Water Availability", value: 78 },
+                      { label: "Radiation Levels", value: 65 },
                     ].map((factor, idx) => (
                       <div key={idx}>
                         <div className="flex justify-between mb-1">
                           <span className="text-sm text-slate-300">{factor.label}</span>
-                          <span className="text-sm text-lime-400 font-semibold">{factor.value}%</span>
+                          <span className="text-sm text-lime-400 font-semibold">
+                            {factor.value}%
+                          </span>
                         </div>
                         <div className="w-full bg-slate-700 rounded-full h-2">
                           <div
@@ -160,8 +162,8 @@ export default function AstrobiologyLabPage() {
                     onClick={() => setSelectedPlanet(planet)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedPlanet?.id === planet.id
-                        ? 'bg-lime-600/20 border border-lime-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-lime-600/20 border border-lime-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{planet.name}</div>
@@ -187,20 +189,20 @@ export default function AstrobiologyLabPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Biosignature Detection',
-                  description: 'Identify chemical signatures indicative of biological processes.',
+                  title: "Biosignature Detection",
+                  description: "Identify chemical signatures indicative of biological processes.",
                 },
                 {
-                  title: 'Habitability Modeling',
-                  description: 'Assess planetary conditions suitable for life as we know it.',
+                  title: "Habitability Modeling",
+                  description: "Assess planetary conditions suitable for life as we know it.",
                 },
                 {
-                  title: 'Extremophile Analysis',
-                  description: 'Study organisms that thrive in extreme environments.',
+                  title: "Extremophile Analysis",
+                  description: "Study organisms that thrive in extreme environments.",
                 },
                 {
-                  title: 'SETI Parameters',
-                  description: 'Evaluate potential for intelligent life and communication.',
+                  title: "SETI Parameters",
+                  description: "Evaluate potential for intelligent life and communication.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

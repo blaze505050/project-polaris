@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import Advanced3DUniverse from '@/components/Advanced3DUniverse';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Advanced3DUniverse from "@/components/Advanced3DUniverse";
 import {
   NBodyGravitySolver,
   RelativisticCalculator,
@@ -16,58 +16,58 @@ import {
   Vector3,
   CelestialBody,
   CONSTANTS,
-} from '@/services/advancedPhysicsSimulator';
-import { Zap, Orbit, Star, Telescope, Gauge, TrendingUp } from 'lucide-react';
+} from "@/services/advancedPhysicsSimulator";
+import { Zap, Orbit, Star, Telescope, Gauge, TrendingUp } from "lucide-react";
 
 export default function PhysicsAccurateAstroLabPage() {
   const [timeScale, setTimeScale] = useState(1);
-  const [selectedTab, setSelectedTab] = useState('nbody');
+  const [selectedTab, setSelectedTab] = useState("nbody");
   const [simulationData, setSimulationData] = useState<any>(null);
   const [showOrbits, setShowOrbits] = useState(true);
 
   // N-Body simulation data
   const [nbodyBodies, setNbodyBodies] = useState<CelestialBody[]>([
     {
-      id: 'sun',
-      name: 'Sun',
+      id: "sun",
+      name: "Sun",
       mass: CONSTANTS.SOLAR_MASS,
       radius: CONSTANTS.SOLAR_RADIUS,
       position: new Vector3(0, 0, 0),
       velocity: new Vector3(0, 0, 0),
       acceleration: new Vector3(),
-      color: '#FDB813',
-      type: 'star',
+      color: "#FDB813",
+      type: "star",
       temperature: 5778,
       luminosity: CONSTANTS.SOLAR_LUMINOSITY,
     },
     {
-      id: 'earth',
-      name: 'Earth',
+      id: "earth",
+      name: "Earth",
       mass: CONSTANTS.EARTH_MASS,
       radius: 6.371e6,
       position: new Vector3(CONSTANTS.AU, 0, 0),
       velocity: new Vector3(0, 29780, 0),
       acceleration: new Vector3(),
-      color: '#4A90E2',
-      type: 'planet',
+      color: "#4A90E2",
+      type: "planet",
     },
     {
-      id: 'jupiter',
-      name: 'Jupiter',
+      id: "jupiter",
+      name: "Jupiter",
       mass: 1.898e27,
       radius: 6.9911e7,
       position: new Vector3(5.2 * CONSTANTS.AU, 0, 0),
       velocity: new Vector3(0, 13070, 0),
       acceleration: new Vector3(),
-      color: '#C88B3A',
-      type: 'planet',
+      color: "#C88B3A",
+      type: "planet",
     },
   ]);
 
   const handleSimulationUpdate = (time: number, bodies: CelestialBody[]) => {
     if (bodies.length > 0) {
       const sun = bodies[0];
-      const earth = bodies.find((b) => b.id === 'earth');
+      const earth = bodies.find((b) => b.id === "earth");
 
       if (earth) {
         const solver = new NBodyGravitySolver();
@@ -75,11 +75,14 @@ export default function PhysicsAccurateAstroLabPage() {
         const orbitalElements = solver.getOrbitalElements(earth, sun);
 
         // Relativistic effects
-        const timeDilation = RelativisticCalculator.timeDilationFactor(sun.mass, earth.position.distance(sun.position));
+        const timeDilation = RelativisticCalculator.timeDilationFactor(
+          sun.mass,
+          earth.position.distance(sun.position),
+        );
         const perihelionPrec = RelativisticCalculator.perihelionPrecession(
           sun.mass,
           orbitalElements.semiMajorAxis,
-          orbitalElements.eccentricity
+          orbitalElements.eccentricity,
         );
 
         setSimulationData({
@@ -104,12 +107,10 @@ export default function PhysicsAccurateAstroLabPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <h1 className="text-5xl font-bold mb-4 text-aerospace-blue">
-            Physics-Accurate AstroLab
-          </h1>
+          <h1 className="text-5xl font-bold mb-4 text-aerospace-blue">Physics-Accurate AstroLab</h1>
           <p className="text-xl text-secondary-foreground mb-6">
-            Advanced N-body gravity simulations with relativistic corrections and high-fidelity rendering.
-            Experience the universe with scientific precision.
+            Advanced N-body gravity simulations with relativistic corrections and high-fidelity
+            rendering. Experience the universe with scientific precision.
           </p>
         </motion.div>
 
@@ -159,10 +160,10 @@ export default function PhysicsAccurateAstroLabPage() {
               <div className="flex gap-2">
                 <Button
                   onClick={() => setShowOrbits(!showOrbits)}
-                  variant={showOrbits ? 'default' : 'outline'}
+                  variant={showOrbits ? "default" : "outline"}
                   className="flex-1"
                 >
-                  {showOrbits ? 'Hide' : 'Show'} Orbits
+                  {showOrbits ? "Hide" : "Show"} Orbits
                 </Button>
               </div>
             </div>
@@ -225,7 +226,8 @@ export default function PhysicsAccurateAstroLabPage() {
                   </span>
                 </div>
                 <div className="text-xs text-secondary-foreground mt-4">
-                  Relativistic corrections account for spacetime curvature and gravitational effects.
+                  Relativistic corrections account for spacetime curvature and gravitational
+                  effects.
                 </div>
               </div>
             </Card>
@@ -261,7 +263,9 @@ export default function PhysicsAccurateAstroLabPage() {
             {/* N-Body Tab */}
             <TabsContent value="nbody" className="space-y-4">
               <Card className="bg-primary border-aerospace-blue/30 p-6">
-                <h3 className="text-lg font-bold text-aerospace-blue mb-4">N-Body Gravity Solver</h3>
+                <h3 className="text-lg font-bold text-aerospace-blue mb-4">
+                  N-Body Gravity Solver
+                </h3>
                 <div className="space-y-4 text-sm">
                   <div>
                     <h4 className="font-bold text-aerospace-blue mb-2">Features:</h4>
@@ -276,8 +280,8 @@ export default function PhysicsAccurateAstroLabPage() {
                   <div>
                     <h4 className="font-bold text-aerospace-blue mb-2">Physics:</h4>
                     <p className="text-secondary-foreground">
-                      Uses Newton's law of universal gravitation: F = G·m₁·m₂/r²
-                      with numerical integration for accurate long-term orbital predictions.
+                      Uses Newton's law of universal gravitation: F = G·m₁·m₂/r² with numerical
+                      integration for accurate long-term orbital predictions.
                     </p>
                   </div>
                 </div>
@@ -324,7 +328,9 @@ export default function PhysicsAccurateAstroLabPage() {
             {/* Cosmology Tab */}
             <TabsContent value="cosmology" className="space-y-4">
               <Card className="bg-primary border-aerospace-blue/30 p-6">
-                <h3 className="text-lg font-bold text-aerospace-blue mb-4">Cosmological Calculations</h3>
+                <h3 className="text-lg font-bold text-aerospace-blue mb-4">
+                  Cosmological Calculations
+                </h3>
                 <div className="space-y-4 text-sm">
                   <div>
                     <h4 className="font-bold text-aerospace-blue mb-2">Tools:</h4>

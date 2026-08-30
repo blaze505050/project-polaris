@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Trash2, Download, Eye, Plus, Search } from 'lucide-react';
-import { useAstroLabStore, ExperimentData } from '@/stores/astrolabStore';
-import { BaseCrudService } from '@/integrations';
-import { Experiments } from '@/entities';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Trash2, Download, Eye, Plus, Search } from "lucide-react";
+import { useAstroLabStore, ExperimentData } from "@/stores/astrolabStore";
+import { BaseCrudService } from "@/integrations";
+import { Experiments } from "@/entities";
 
 export default function MyLabWorkspace() {
   const { experiments, addExperiment, deleteExperiment, selectExperiment } = useAstroLabStore();
   const [savedExperiments, setSavedExperiments] = useState<Experiments[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const loadExperiments = async () => {
       try {
-        const result = await BaseCrudService.getAll<Experiments>('experiments', [], { limit: 50 });
+        const result = await BaseCrudService.getAll<Experiments>("experiments", [], { limit: 50 });
         setSavedExperiments(result.items);
       } catch (error) {
-        console.error('Error loading experiments:', error);
+        console.error("Error loading experiments:", error);
       } finally {
         setIsLoading(false);
       }
@@ -26,12 +26,12 @@ export default function MyLabWorkspace() {
   }, []);
 
   const filteredExperiments = savedExperiments.filter((exp) =>
-    exp.experimentName?.toLowerCase().includes(searchTerm.toLowerCase())
+    exp.experimentName?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleSaveExperiment = async (experiment: ExperimentData) => {
     try {
-      await BaseCrudService.create('experiments', {
+      await BaseCrudService.create("experiments", {
         _id: experiment.id,
         experimentName: experiment.name,
         parameters: JSON.stringify(experiment.parameters),
@@ -42,17 +42,17 @@ export default function MyLabWorkspace() {
       });
       addExperiment(experiment);
     } catch (error) {
-      console.error('Error saving experiment:', error);
+      console.error("Error saving experiment:", error);
     }
   };
 
   const handleDeleteExperiment = async (id: string) => {
     try {
-      await BaseCrudService.delete('experiments', id);
+      await BaseCrudService.delete("experiments", id);
       deleteExperiment(id);
       setSavedExperiments(savedExperiments.filter((exp) => exp._id !== id));
     } catch (error) {
-      console.error('Error deleting experiment:', error);
+      console.error("Error deleting experiment:", error);
     }
   };
 
@@ -65,9 +65,9 @@ export default function MyLabWorkspace() {
       date: experiment.conductedAt,
     };
     const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
+    const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `${experiment.experimentName}-${Date.now()}.json`;
     a.click();
@@ -112,7 +112,9 @@ export default function MyLabWorkspace() {
         <div className="flex flex-col items-center justify-center py-12 bg-primary border border-secondary/20 rounded-lg">
           <Eye className="w-12 h-12 text-foreground/30 mb-4" />
           <p className="text-foreground/60 font-mono text-sm">No experiments yet</p>
-          <p className="text-foreground/40 text-xs mt-1">Create your first experiment to get started</p>
+          <p className="text-foreground/40 text-xs mt-1">
+            Create your first experiment to get started
+          </p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -135,7 +137,7 @@ export default function MyLabWorkspace() {
                   <p className="text-xs text-foreground/50 mt-1">
                     {experiment.conductedAt
                       ? new Date(experiment.conductedAt).toLocaleDateString()
-                      : 'No date'}
+                      : "No date"}
                   </p>
                   {experiment.userNotes && (
                     <p className="text-xs text-foreground/60 mt-2 line-clamp-2">
@@ -169,9 +171,15 @@ export default function MyLabWorkspace() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Total Experiments', value: filteredExperiments.length },
-          { label: 'Completed', value: filteredExperiments.filter((e) => e.status === 'completed').length },
-          { label: 'In Progress', value: filteredExperiments.filter((e) => e.status === 'running').length },
+          { label: "Total Experiments", value: filteredExperiments.length },
+          {
+            label: "Completed",
+            value: filteredExperiments.filter((e) => e.status === "completed").length,
+          },
+          {
+            label: "In Progress",
+            value: filteredExperiments.filter((e) => e.status === "running").length,
+          },
         ].map((stat, idx) => (
           <motion.div
             key={idx}

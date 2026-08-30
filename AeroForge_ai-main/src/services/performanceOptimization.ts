@@ -109,7 +109,7 @@ class PerformanceMetrics {
  */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
   return function executedFunction(...args: Parameters<T>) {
@@ -127,7 +127,7 @@ export function debounce<T extends (...args: any[]) => any>(
  */
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
-  limit: number
+  limit: number,
 ): (...args: Parameters<T>) => void {
   let inThrottle: boolean;
   return function executedFunction(...args: Parameters<T>) {
@@ -142,17 +142,14 @@ export function throttle<T extends (...args: any[]) => any>(
 /**
  * Lazy loading utility for images
  */
-export function lazyLoadImage(
-  img: HTMLImageElement,
-  callback?: () => void
-): void {
-  if ('IntersectionObserver' in window) {
+export function lazyLoadImage(img: HTMLImageElement, callback?: () => void): void {
+  if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const image = entry.target as HTMLImageElement;
-          image.src = image.dataset.src || '';
-          image.classList.remove('lazy');
+          image.src = image.dataset.src || "";
+          image.classList.remove("lazy");
           observer.unobserve(image);
           callback?.();
         }
@@ -160,7 +157,7 @@ export function lazyLoadImage(
     });
     observer.observe(img);
   } else {
-    img.src = img.dataset.src || '';
+    img.src = img.dataset.src || "";
     callback?.();
   }
 }
@@ -228,10 +225,7 @@ export const requestBatcher = new RequestBatcher();
 /**
  * Measure function execution time
  */
-export async function measurePerformance<T>(
-  label: string,
-  fn: () => Promise<T>
-): Promise<T> {
+export async function measurePerformance<T>(label: string, fn: () => Promise<T>): Promise<T> {
   const start = performance.now();
   try {
     const result = await fn();
@@ -261,7 +255,7 @@ export function getVisibleRange(config: VirtualScrollConfig) {
   const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
   const endIndex = Math.min(
     items.length,
-    Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan
+    Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan,
   );
 
   return {

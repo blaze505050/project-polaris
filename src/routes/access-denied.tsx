@@ -40,18 +40,28 @@ export function AccessDeniedPage() {
             <span>Sector Requirements</span>
           </div>
           <p className="text-muted-foreground leading-relaxed">
-            This module requires verified Admin CMS credentials or specific mentor privileges. If you are an authorized Polaris team member, please authenticate via the Admin Portal.
+            This module requires verified Admin CMS credentials or specific mentor privileges. If
+            you are an authorized Polaris team member, please authenticate via the Admin Portal.
           </p>
         </div>
 
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="default" className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90">
+          <Button
+            asChild
+            size="default"
+            className="h-10 px-6 bg-primary text-primary-foreground font-semibold text-xs rounded-lg hover:bg-primary/90"
+          >
             <Link to="/dashboard" className="flex items-center gap-1.5">
               <UserCheck className="size-3.5" />
               <span>Go to Admin Login</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" size="default" className="h-10 px-5 border-white/10 text-xs text-foreground hover:border-white/20">
+          <Button
+            asChild
+            variant="outline"
+            size="default"
+            className="h-10 px-5 border-white/10 text-xs text-foreground hover:border-white/20"
+          >
             <Link to="/" className="flex items-center gap-1.5">
               <Home className="size-3.5 text-primary" />
               <span>Return Home</span>

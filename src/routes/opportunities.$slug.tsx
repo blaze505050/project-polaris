@@ -76,7 +76,11 @@ function OpportunityDetail() {
 
   return (
     <>
-      <PageHeader eyebrow={CATEGORY_LABELS[data.category] ?? data.category} title={data.title} lead={data.summary}>
+      <PageHeader
+        eyebrow={CATEGORY_LABELS[data.category] ?? data.category}
+        title={data.title}
+        lead={data.summary}
+      >
         <div className="flex flex-wrap gap-3">
           <Button asChild>
             <Link to="/join" search={{ opportunity: data.slug }}>

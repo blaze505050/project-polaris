@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, TrendingUp, Zap, Award } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { useAstroLabStore } from '@/stores/astrolabStore';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Play, Pause, RotateCcw, TrendingUp, Zap, Award } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useAstroLabStore } from "@/stores/astrolabStore";
 
 export default function InvestorDemoPage() {
   const { setMode } = useAstroLabStore();
@@ -17,25 +17,25 @@ export default function InvestorDemoPage() {
   });
 
   useEffect(() => {
-    setMode('investor-demo');
+    setMode("investor-demo");
   }, [setMode]);
 
   const demoSteps = [
     {
-      title: 'Real-Time Physics Simulation',
-      description: 'Watch as AstroLab executes complex N-body orbital mechanics in real-time',
+      title: "Real-Time Physics Simulation",
+      description: "Watch as AstroLab executes complex N-body orbital mechanics in real-time",
       icon: Zap,
       metrics: { simulationsRun: 1000, dataPoints: 50000, accuracy: 99.8, processingTime: 2.3 },
     },
     {
-      title: 'Multi-Objective Optimization',
-      description: 'Pareto frontier analysis for spacecraft trajectory design',
+      title: "Multi-Objective Optimization",
+      description: "Pareto frontier analysis for spacecraft trajectory design",
       icon: TrendingUp,
       metrics: { simulationsRun: 5000, dataPoints: 250000, accuracy: 99.95, processingTime: 8.7 },
     },
     {
-      title: 'Enterprise Integration',
-      description: 'Seamless data export and API integration with existing systems',
+      title: "Enterprise Integration",
+      description: "Seamless data export and API integration with existing systems",
       icon: Award,
       metrics: { simulationsRun: 10000, dataPoints: 500000, accuracy: 99.99, processingTime: 15.2 },
     },
@@ -92,7 +92,8 @@ export default function InvestorDemoPage() {
                 AstroLab Enterprise Platform
               </h1>
               <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-                Production-grade scientific computing infrastructure for aerospace and research organizations
+                Production-grade scientific computing infrastructure for aerospace and research
+                organizations
               </p>
             </motion.div>
           </div>
@@ -115,7 +116,7 @@ export default function InvestorDemoPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <motion.div
                     animate={{ rotate: isPlaying ? 360 : 0 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   >
                     <Icon className="w-24 h-24 text-aerospace-blue/40" />
                   </motion.div>
@@ -133,13 +134,13 @@ export default function InvestorDemoPage() {
                     transition={{
                       duration: 4,
                       repeat: Infinity,
-                      ease: 'linear',
+                      ease: "linear",
                     }}
                     style={{
-                      left: '50%',
-                      top: '50%',
-                      marginLeft: '-4px',
-                      marginTop: '-4px',
+                      left: "50%",
+                      top: "50%",
+                      marginLeft: "-4px",
+                      marginTop: "-4px",
                     }}
                   />
                 ))}
@@ -163,28 +164,28 @@ export default function InvestorDemoPage() {
                 <div className="space-y-4">
                   {[
                     {
-                      label: 'Simulations Run',
+                      label: "Simulations Run",
                       value: metrics.simulationsRun,
-                      unit: '',
-                      color: 'text-aerospace-blue',
+                      unit: "",
+                      color: "text-aerospace-blue",
                     },
                     {
-                      label: 'Data Points Processed',
+                      label: "Data Points Processed",
                       value: (metrics.dataPoints / 1000).toFixed(0),
-                      unit: 'K',
-                      color: 'text-aerospace-accent',
+                      unit: "K",
+                      color: "text-aerospace-accent",
                     },
                     {
-                      label: 'Accuracy',
+                      label: "Accuracy",
                       value: metrics.accuracy.toFixed(2),
-                      unit: '%',
-                      color: 'text-aerospace-success',
+                      unit: "%",
+                      color: "text-aerospace-success",
                     },
                     {
-                      label: 'Processing Time',
+                      label: "Processing Time",
                       value: metrics.processingTime.toFixed(1),
-                      unit: 's',
-                      color: 'text-aerospace-warning',
+                      unit: "s",
+                      color: "text-aerospace-warning",
                     },
                   ].map((metric, idx) => (
                     <motion.div
@@ -226,7 +227,12 @@ export default function InvestorDemoPage() {
                   <button
                     onClick={() => {
                       setDemoStep(0);
-                      setMetrics({ simulationsRun: 0, dataPoints: 0, accuracy: 0, processingTime: 0 });
+                      setMetrics({
+                        simulationsRun: 0,
+                        dataPoints: 0,
+                        accuracy: 0,
+                        processingTime: 0,
+                      });
                     }}
                     className="px-4 py-3 border border-secondary/30 text-foreground font-mono font-bold rounded-lg hover:border-aerospace-blue/50 transition-colors flex items-center justify-center gap-2"
                   >
@@ -242,12 +248,17 @@ export default function InvestorDemoPage() {
                       key={idx}
                       onClick={() => {
                         setDemoStep(idx);
-                        setMetrics({ simulationsRun: 0, dataPoints: 0, accuracy: 0, processingTime: 0 });
+                        setMetrics({
+                          simulationsRun: 0,
+                          dataPoints: 0,
+                          accuracy: 0,
+                          processingTime: 0,
+                        });
                       }}
                       className={`flex-1 h-2 rounded-full transition-colors ${
                         idx === demoStep
-                          ? 'bg-aerospace-blue'
-                          : 'bg-secondary/30 hover:bg-secondary/50'
+                          ? "bg-aerospace-blue"
+                          : "bg-secondary/30 hover:bg-secondary/50"
                       }`}
                     />
                   ))}
@@ -279,57 +290,57 @@ export default function InvestorDemoPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                   {
-                    title: 'Physics-Accurate Simulations',
+                    title: "Physics-Accurate Simulations",
                     items: [
-                      'Navier-Stokes CFD solver',
-                      'N-body orbital mechanics',
-                      'Relativistic corrections',
-                      'Real-time visualization',
+                      "Navier-Stokes CFD solver",
+                      "N-body orbital mechanics",
+                      "Relativistic corrections",
+                      "Real-time visualization",
                     ],
                   },
                   {
-                    title: 'Data Management',
+                    title: "Data Management",
                     items: [
-                      'Multi-format export',
-                      'Version control',
-                      'Audit trails',
-                      'Secure storage',
+                      "Multi-format export",
+                      "Version control",
+                      "Audit trails",
+                      "Secure storage",
                     ],
                   },
                   {
-                    title: 'Integration & APIs',
+                    title: "Integration & APIs",
                     items: [
-                      'RESTful APIs',
-                      'Webhook support',
-                      'Custom integrations',
-                      'Enterprise SSO',
+                      "RESTful APIs",
+                      "Webhook support",
+                      "Custom integrations",
+                      "Enterprise SSO",
                     ],
                   },
                   {
-                    title: 'Scalability',
+                    title: "Scalability",
                     items: [
-                      'Parallel processing',
-                      'Cloud deployment',
-                      'Load balancing',
-                      'Auto-scaling',
+                      "Parallel processing",
+                      "Cloud deployment",
+                      "Load balancing",
+                      "Auto-scaling",
                     ],
                   },
                   {
-                    title: 'Security',
+                    title: "Security",
                     items: [
-                      'End-to-end encryption',
-                      'Role-based access',
-                      'Compliance ready',
-                      'Regular audits',
+                      "End-to-end encryption",
+                      "Role-based access",
+                      "Compliance ready",
+                      "Regular audits",
                     ],
                   },
                   {
-                    title: 'Support',
+                    title: "Support",
                     items: [
-                      '24/7 technical support',
-                      'Dedicated account manager',
-                      'Custom training',
-                      'SLA guaranteed',
+                      "24/7 technical support",
+                      "Dedicated account manager",
+                      "Custom training",
+                      "SLA guaranteed",
                     ],
                   },
                 ].map((feature, idx) => (
@@ -341,7 +352,9 @@ export default function InvestorDemoPage() {
                     viewport={{ once: true }}
                     className="p-6 bg-primary border border-secondary/20 rounded-lg hover:border-aerospace-blue/50 transition-colors"
                   >
-                    <h3 className="font-heading font-bold text-aerospace-blue mb-4">{feature.title}</h3>
+                    <h3 className="font-heading font-bold text-aerospace-blue mb-4">
+                      {feature.title}
+                    </h3>
                     <ul className="space-y-2">
                       {feature.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
@@ -371,7 +384,8 @@ export default function InvestorDemoPage() {
                 Ready to Transform Your Research?
               </h2>
               <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-                Join leading aerospace and research organizations using AstroLab for mission-critical simulations
+                Join leading aerospace and research organizations using AstroLab for
+                mission-critical simulations
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <button className="px-8 py-3 bg-aerospace-blue text-white font-mono font-bold rounded-lg hover:bg-aerospace-accent transition-colors">

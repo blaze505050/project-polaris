@@ -5,21 +5,21 @@
  */
 
 export type FunnelStep =
-  | 'landing_viewed'
-  | 'demo_started'
-  | 'demo_completed'
-  | 'onboarding_started'
-  | 'onboarding_completed'
-  | 'project_created'
-  | 'first_tool_run'
-  | 'first_result_generated'
-  | 'result_saved'
-  | 'completed_investigation'
-  | 'experiment_created'
-  | 'notebook_edited'
-  | 'report_exported'
-  | 'public_artifact_shared'
-  | 'public_artifact_duplicated';
+  | "landing_viewed"
+  | "demo_started"
+  | "demo_completed"
+  | "onboarding_started"
+  | "onboarding_completed"
+  | "project_created"
+  | "first_tool_run"
+  | "first_result_generated"
+  | "result_saved"
+  | "completed_investigation"
+  | "experiment_created"
+  | "notebook_edited"
+  | "report_exported"
+  | "public_artifact_shared"
+  | "public_artifact_duplicated";
 
 export interface AnalyticsEvent {
   event: FunnelStep;
@@ -41,18 +41,18 @@ class ProductAnalytics {
     };
 
     this.events.push(payload);
-    
+
     // Developer console trace in non-production
-    if (import.meta.env.MODE !== 'production') {
-      console.log(`[ANALYTICS FUNNEL]`, event, properties || '');
+    if (import.meta.env.MODE !== "production") {
+      console.log(`[ANALYTICS FUNNEL]`, event, properties || "");
     }
 
     // Persist session telemetry locally
     try {
-      const stored = localStorage.getItem('aeroforge_funnel_telemetry');
+      const stored = localStorage.getItem("aeroforge_funnel_telemetry");
       const past = stored ? JSON.parse(stored) : [];
       past.push(payload);
-      localStorage.setItem('aeroforge_funnel_telemetry', JSON.stringify(past.slice(-50)));
+      localStorage.setItem("aeroforge_funnel_telemetry", JSON.stringify(past.slice(-50)));
     } catch (e) {
       // Storage quota resilience
     }

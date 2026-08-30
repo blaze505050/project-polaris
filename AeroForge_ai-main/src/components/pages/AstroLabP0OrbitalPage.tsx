@@ -3,10 +3,10 @@
  * Production-ready orbital mechanics simulator
  */
 
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import OrbitalMechanicsSimulator from '@/components/OrbitalMechanicsSimulator';
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import OrbitalMechanicsSimulator from "@/components/OrbitalMechanicsSimulator";
 
 export default function AstroLabP0OrbitalPage() {
   return (

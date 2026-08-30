@@ -1,5 +1,5 @@
-import React from 'react';
-import { LucideIcon, Plus, FileText, ArrowRight } from 'lucide-react';
+import React from "react";
+import { LucideIcon, Plus, FileText, ArrowRight } from "lucide-react";
 
 interface EmptyStateProps {
   icon: LucideIcon;
@@ -29,12 +29,8 @@ export default function EmptyState({
       </div>
 
       <div className="max-w-md space-y-1.5">
-        <h3 className="text-base font-bold text-white font-mono tracking-tight">
-          {title}
-        </h3>
-        <p className="text-xs text-white/60 leading-relaxed font-sans">
-          {description}
-        </p>
+        <h3 className="text-base font-bold text-white font-mono tracking-tight">{title}</h3>
+        <p className="text-xs text-white/60 leading-relaxed font-sans">{description}</p>
       </div>
 
       {suggestedTemplate && (

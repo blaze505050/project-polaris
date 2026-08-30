@@ -3,10 +3,10 @@
  * Production-ready stellar evolution simulator
  */
 
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import StellarEvolutionSimulator from '@/components/StellarEvolutionSimulator';
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import StellarEvolutionSimulator from "@/components/StellarEvolutionSimulator";
 
 export default function AstroLabP0StellarPage() {
   return (

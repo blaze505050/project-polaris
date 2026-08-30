@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, ReactNode } from 'react';
-import { MemberActions, MemberContext, MemberState } from '.';
-import { getCurrentMember, Member } from '..';
+import React, { useState, useEffect, useCallback, ReactNode } from "react";
+import { MemberActions, MemberContext, MemberState } from ".";
+import { getCurrentMember, Member } from "..";
 
 // Local storage key
-const MEMBER_STORAGE_KEY = 'member-store';
+const MEMBER_STORAGE_KEY = "member-store";
 
 interface MemberProviderProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
   const [state, setState] = useState<MemberState>(() => {
     let storedMemberData: Member | null = null;
 
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
         const stored = localStorage.getItem(MEMBER_STORAGE_KEY);
         if (stored) {
@@ -23,7 +23,7 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
           storedMemberData = parsedData;
         }
       } catch (error) {
-        console.error('Error loading member state from localStorage:', error);
+        console.error("Error loading member state from localStorage:", error);
       }
     }
 
@@ -39,18 +39,18 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       try {
         localStorage.setItem(MEMBER_STORAGE_KEY, JSON.stringify(state));
       } catch (error) {
-        console.error('Error saving member state to localStorage:', error);
+        console.error("Error saving member state to localStorage:", error);
       }
     }
   }, [state]);
 
   // Update state helper
   const updateState = useCallback((updates: Partial<MemberState>) => {
-    setState(prev => ({ ...prev, ...updates }));
+    setState((prev) => ({ ...prev, ...updates }));
   }, []);
 
   // Member actions
@@ -79,7 +79,7 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
         }
       } catch (err) {
         updateState({
-          error: err instanceof Error ? err.message : 'Failed to load member',
+          error: err instanceof Error ? err.message : "Failed to load member",
           member: null,
           isAuthenticated: false,
           isLoading: false,
@@ -106,7 +106,7 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
       document
         .hasStorageAccess()
         .catch(() => false)
-        .then(hasAccess => {
+        .then((hasAccess) => {
           if (hasAccess) {
             return true;
           }
@@ -116,11 +116,14 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
           document.cookie = "wixSession=; max-age=0; Secure; SameSite=None; Partitioned";
           document.cookie = "XSRF-TOKEN=; max-age=0; Secure; SameSite=None; Partitioned";
 
-          return document.requestStorageAccess().then(() => true).catch(() => false);
+          return document
+            .requestStorageAccess()
+            .then(() => true)
+            .catch(() => false);
         })
-        .then(accessGranted => {
+        .then((accessGranted) => {
           if (accessGranted) {
-            const loginWindow = window.open(loginUrl, '_blank');
+            const loginWindow = window.open(loginUrl, "_blank");
             reloadOnceLoggedIn(loginWindow);
           }
         });
@@ -131,22 +134,22 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
      */
     logout: useCallback(() => {
       // Clear localStorage immediately
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         try {
           localStorage.removeItem(MEMBER_STORAGE_KEY);
         } catch (error) {
-          console.error('Error clearing member state from localStorage:', error);
+          console.error("Error clearing member state from localStorage:", error);
         }
       }
 
       // Create a form programmatically and submit it
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = '/api/auth/logout';
-      form.setAttribute('data-astro-reload', '');
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "/api/auth/logout";
+      form.setAttribute("data-astro-reload", "");
 
       // Hide the form
-      form.style.display = 'none';
+      form.style.display = "none";
 
       // Add the form to the document
       document.body.appendChild(form);
@@ -184,19 +187,15 @@ export const MemberProvider: React.FC<MemberProviderProps> = ({ children }) => {
     actions,
   };
 
-  return (
-    <MemberContext.Provider value={contextValue}>
-      {children}
-    </MemberContext.Provider>
-  );
+  return <MemberContext.Provider value={contextValue}>{children}</MemberContext.Provider>;
 };
 
 function reloadOnceLoggedIn(loginWindow: Window) {
-  const cookies = document.cookie.split('; ');
-  const cookie = cookies.find((row) => row.startsWith('wixSession='));
+  const cookies = document.cookie.split("; ");
+  const cookie = cookies.find((row) => row.startsWith("wixSession="));
 
   if (cookie) {
-    const jsonString = decodeURIComponent(cookie.split('=')[1] ?? '');
+    const jsonString = decodeURIComponent(cookie.split("=")[1] ?? "");
     const parsed = JSON.parse(jsonString);
 
     if (parsed?.tokens?.refreshToken?.role === "member") {

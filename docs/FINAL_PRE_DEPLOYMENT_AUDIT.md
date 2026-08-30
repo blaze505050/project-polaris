@@ -10,6 +10,7 @@
 ## 31-Point Pre-Deployment Scorecard
 
 ### Pillar I: Brand Architecture & User Experience (Points 1–8)
+
 - [x] **01. Brand Hierarchy**: Verified "Project Polaris (Startup/Platform) → AeroForge AI (Research Product)".
 - [x] **02. Navigation & Wayfinding**: All 23 Polaris routes and 48 AeroForge tools accessible with clear breadcrumbs.
 - [x] **03. Dual-Theme Parity**: Light and dark themes visually validated; zero unreadable text or low-contrast surfaces.
@@ -20,6 +21,7 @@
 - [x] **08. Error & 404 Handlers**: Polished custom 404 handler with return navigation and search hints.
 
 ### Pillar II: Scientific Integrity & Simulation Credibility (Points 9–14)
+
 - [x] **09. Model Categorization**: Simulations marked as Analytical, Reduced-Order, or Physics AI Surrogate.
 - [x] **10. Zero Fake Telemetry**: Unqualified CPU/RAM/latency claims replaced with honest illustrative markings.
 - [x] **11. Physics AI Honesty**: Neural operator latency claims clearly designated as surrogate model estimation.
@@ -28,6 +30,7 @@
 - [x] **14. Transparency Protocol**: Accessible modal documenting governance, data handling, and scientific limits.
 
 ### Pillar III: Security, Privacy & Sandboxing (Points 15–20)
+
 - [x] **15. Iframe Sandbox Hardening**: `allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals` configured.
 - [x] **16. Secure postMessage**: Origin-locked theme sync between parent container and child workstation.
 - [x] **17. Zero Data Harvesting**: 100% client-side CAD and mesh computation; zero telemetry exfiltration.
@@ -36,6 +39,7 @@
 - [x] **20. Prototype Pollution Defense**: Deep sanitization adapter on all deserialized experiment objects.
 
 ### Pillar IV: Performance, SEO & Production Readiness (Points 21–31)
+
 - [x] **21. Code Splitting & Chunking**: Vite dynamic imports configure vendor bundle splitting.
 - [x] **22. Font Optimization**: Unified preconnect and single optimized Google Fonts stylesheet link.
 - [x] **23. Static Asset Optimization**: Modern SVG illustrations, WebP hero visual, optimized Starfield canvas.

@@ -4,8 +4,8 @@
  * Integrates with BaseCrudService for data persistence
  */
 
-import { BaseCrudService } from '@/integrations';
-import { Experiments, ExperimentReports } from '@/entities';
+import { BaseCrudService } from "@/integrations";
+import { Experiments, ExperimentReports } from "@/entities";
 
 export interface ExperimentData {
   experimentName: string;
@@ -13,7 +13,7 @@ export interface ExperimentData {
   results: string; // JSON stringified
   conductedAt: Date | string;
   userNotes: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: "pending" | "running" | "completed" | "failed";
 }
 
 export interface ReportData {
@@ -43,7 +43,7 @@ export class ExperimentCMSService {
         status: data.status,
       };
 
-      await BaseCrudService.create('experiments', experiment);
+      await BaseCrudService.create("experiments", experiment);
       return experiment;
     } catch (error) {
       throw new Error(`Failed to create experiment: ${error}`);
@@ -55,7 +55,7 @@ export class ExperimentCMSService {
    */
   static async getAllExperiments(limit: number = 50, skip: number = 0) {
     try {
-      const result = await BaseCrudService.getAll<Experiments>('experiments', [], {
+      const result = await BaseCrudService.getAll<Experiments>("experiments", [], {
         limit,
         skip,
       });
@@ -70,7 +70,7 @@ export class ExperimentCMSService {
    */
   static async getExperimentById(id: string): Promise<Experiments | null> {
     try {
-      const experiment = await BaseCrudService.getById<Experiments>('experiments', id);
+      const experiment = await BaseCrudService.getById<Experiments>("experiments", id);
       return experiment || null;
     } catch (error) {
       throw new Error(`Failed to fetch experiment: ${error}`);
@@ -87,11 +87,11 @@ export class ExperimentCMSService {
         ...data,
       };
 
-      await BaseCrudService.update<Experiments>('experiments', updateData as Experiments);
+      await BaseCrudService.update<Experiments>("experiments", updateData as Experiments);
 
       // Fetch and return updated experiment
-      const updated = await BaseCrudService.getById<Experiments>('experiments', id);
-      if (!updated) throw new Error('Failed to retrieve updated experiment');
+      const updated = await BaseCrudService.getById<Experiments>("experiments", id);
+      if (!updated) throw new Error("Failed to retrieve updated experiment");
       return updated;
     } catch (error) {
       throw new Error(`Failed to update experiment: ${error}`);
@@ -103,7 +103,7 @@ export class ExperimentCMSService {
    */
   static async deleteExperiment(id: string): Promise<void> {
     try {
-      await BaseCrudService.delete('experiments', id);
+      await BaseCrudService.delete("experiments", id);
     } catch (error) {
       throw new Error(`Failed to delete experiment: ${error}`);
     }
@@ -126,7 +126,7 @@ export class ExperimentCMSService {
         reportVersion: data.reportVersion,
       };
 
-      await BaseCrudService.create('experimentreports', report);
+      await BaseCrudService.create("experimentreports", report);
       return report;
     } catch (error) {
       throw new Error(`Failed to create report: ${error}`);
@@ -138,7 +138,7 @@ export class ExperimentCMSService {
    */
   static async getAllReports(limit: number = 50, skip: number = 0) {
     try {
-      const result = await BaseCrudService.getAll<ExperimentReports>('experimentreports', [], {
+      const result = await BaseCrudService.getAll<ExperimentReports>("experimentreports", [], {
         limit,
         skip,
       });
@@ -153,7 +153,7 @@ export class ExperimentCMSService {
    */
   static async getReportById(id: string): Promise<ExperimentReports | null> {
     try {
-      const report = await BaseCrudService.getById<ExperimentReports>('experimentreports', id);
+      const report = await BaseCrudService.getById<ExperimentReports>("experimentreports", id);
       return report || null;
     } catch (error) {
       throw new Error(`Failed to fetch report: ${error}`);
@@ -170,11 +170,14 @@ export class ExperimentCMSService {
         ...data,
       };
 
-      await BaseCrudService.update<ExperimentReports>('experimentreports', updateData as ExperimentReports);
+      await BaseCrudService.update<ExperimentReports>(
+        "experimentreports",
+        updateData as ExperimentReports,
+      );
 
       // Fetch and return updated report
-      const updated = await BaseCrudService.getById<ExperimentReports>('experimentreports', id);
-      if (!updated) throw new Error('Failed to retrieve updated report');
+      const updated = await BaseCrudService.getById<ExperimentReports>("experimentreports", id);
+      if (!updated) throw new Error("Failed to retrieve updated report");
       return updated;
     } catch (error) {
       throw new Error(`Failed to update report: ${error}`);
@@ -186,7 +189,7 @@ export class ExperimentCMSService {
    */
   static async deleteReport(id: string): Promise<void> {
     try {
-      await BaseCrudService.delete('experimentreports', id);
+      await BaseCrudService.delete("experimentreports", id);
     } catch (error) {
       throw new Error(`Failed to delete report: ${error}`);
     }
@@ -197,7 +200,7 @@ export class ExperimentCMSService {
    */
   static async getExperimentsByStatus(status: string, limit: number = 50) {
     try {
-      const result = await BaseCrudService.getAll<Experiments>('experiments', [], {
+      const result = await BaseCrudService.getAll<Experiments>("experiments", [], {
         limit,
       });
 
@@ -219,31 +222,31 @@ export class ExperimentCMSService {
     const errors: string[] = [];
 
     if (!data.experimentName || data.experimentName.trim().length === 0) {
-      errors.push('Experiment name is required');
+      errors.push("Experiment name is required");
     }
 
     if (!data.parameters || data.parameters.trim().length === 0) {
-      errors.push('Parameters are required');
+      errors.push("Parameters are required");
     }
 
     if (!data.userNotes || data.userNotes.trim().length === 0) {
-      errors.push('User notes are required');
+      errors.push("User notes are required");
     }
 
-    if (!['pending', 'running', 'completed', 'failed'].includes(data.status)) {
-      errors.push('Invalid status value');
+    if (!["pending", "running", "completed", "failed"].includes(data.status)) {
+      errors.push("Invalid status value");
     }
 
     try {
       JSON.parse(data.parameters);
     } catch {
-      errors.push('Parameters must be valid JSON');
+      errors.push("Parameters must be valid JSON");
     }
 
     try {
       JSON.parse(data.results);
     } catch {
-      errors.push('Results must be valid JSON');
+      errors.push("Results must be valid JSON");
     }
 
     return {
@@ -259,23 +262,23 @@ export class ExperimentCMSService {
     const errors: string[] = [];
 
     if (!data.reportTitle || data.reportTitle.trim().length === 0) {
-      errors.push('Report title is required');
+      errors.push("Report title is required");
     }
 
     if (!data.analysisSummary || data.analysisSummary.trim().length === 0) {
-      errors.push('Analysis summary is required');
+      errors.push("Analysis summary is required");
     }
 
     if (!data.conclusionsFindings || data.conclusionsFindings.trim().length === 0) {
-      errors.push('Conclusions and findings are required');
+      errors.push("Conclusions and findings are required");
     }
 
     if (!data.authorName || data.authorName.trim().length === 0) {
-      errors.push('Author name is required');
+      errors.push("Author name is required");
     }
 
     if (data.reportVersion < 1) {
-      errors.push('Report version must be at least 1');
+      errors.push("Report version must be at least 1");
     }
 
     return {
@@ -290,7 +293,7 @@ export class ExperimentCMSService {
   static async exportExperimentAsJSON(id: string): Promise<string> {
     try {
       const experiment = await this.getExperimentById(id);
-      if (!experiment) throw new Error('Experiment not found');
+      if (!experiment) throw new Error("Experiment not found");
       return JSON.stringify(experiment, null, 2);
     } catch (error) {
       throw new Error(`Failed to export experiment: ${error}`);
@@ -303,7 +306,7 @@ export class ExperimentCMSService {
   static async exportReportAsJSON(id: string): Promise<string> {
     try {
       const report = await this.getReportById(id);
-      if (!report) throw new Error('Report not found');
+      if (!report) throw new Error("Report not found");
       return JSON.stringify(report, null, 2);
     } catch (error) {
       throw new Error(`Failed to export report: ${error}`);
@@ -315,16 +318,16 @@ export class ExperimentCMSService {
    */
   static async getExperimentStatistics() {
     try {
-      const result = await BaseCrudService.getAll<Experiments>('experiments', [], {
+      const result = await BaseCrudService.getAll<Experiments>("experiments", [], {
         limit: 1000,
       });
 
       const stats = {
         total: result.totalCount,
-        completed: result.items.filter((e) => e.status === 'completed').length,
-        running: result.items.filter((e) => e.status === 'running').length,
-        pending: result.items.filter((e) => e.status === 'pending').length,
-        failed: result.items.filter((e) => e.status === 'failed').length,
+        completed: result.items.filter((e) => e.status === "completed").length,
+        running: result.items.filter((e) => e.status === "running").length,
+        pending: result.items.filter((e) => e.status === "pending").length,
+        failed: result.items.filter((e) => e.status === "failed").length,
       };
 
       return stats;
@@ -338,22 +341,24 @@ export class ExperimentCMSService {
    */
   static async getReportStatistics() {
     try {
-      const result = await BaseCrudService.getAll<ExperimentReports>('experimentreports', [], {
+      const result = await BaseCrudService.getAll<ExperimentReports>("experimentreports", [], {
         limit: 1000,
       });
 
       const stats = {
         total: result.totalCount,
-        averageVersion: result.items.length > 0
-          ? result.items.reduce((sum, r) => sum + (r.reportVersion || 1), 0) / result.items.length
-          : 0,
-        latestReport: result.items.length > 0
-          ? result.items.reduce((latest, current) => {
-              const latestDate = new Date(latest.reportDate || 0).getTime();
-              const currentDate = new Date(current.reportDate || 0).getTime();
-              return currentDate > latestDate ? current : latest;
-            })
-          : null,
+        averageVersion:
+          result.items.length > 0
+            ? result.items.reduce((sum, r) => sum + (r.reportVersion || 1), 0) / result.items.length
+            : 0,
+        latestReport:
+          result.items.length > 0
+            ? result.items.reduce((latest, current) => {
+                const latestDate = new Date(latest.reportDate || 0).getTime();
+                const currentDate = new Date(current.reportDate || 0).getTime();
+                return currentDate > latestDate ? current : latest;
+              })
+            : null,
       };
 
       return stats;

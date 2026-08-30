@@ -5,7 +5,7 @@
  */
 
 export interface TurbulenceModelConfig {
-  modelType: 'k-epsilon' | 'k-omega' | 'spalart-allmaras' | 'les';
+  modelType: "k-epsilon" | "k-omega" | "spalart-allmaras" | "les";
   reynoldsNumber: number;
   machNumber: number;
   wallDistance: number;
@@ -49,13 +49,13 @@ class TurbulenceModelingService {
 
   private validateConfig(): void {
     if (this.config.reynoldsNumber <= 0) {
-      throw new Error('Reynolds number must be positive');
+      throw new Error("Reynolds number must be positive");
     }
     if (this.config.machNumber < 0 || this.config.machNumber > 5) {
-      throw new Error('Mach number must be between 0 and 5');
+      throw new Error("Mach number must be between 0 and 5");
     }
     if (this.config.wallDistance <= 0) {
-      throw new Error('Wall distance must be positive');
+      throw new Error("Wall distance must be positive");
     }
   }
 
@@ -77,7 +77,7 @@ class TurbulenceModelingService {
     const dissipationRate = (cMu * Math.pow(kineticEnergy, 1.5)) / (0.41 * wallDistance);
 
     // Turbulent viscosity
-    const turbulentViscosity = cMu * density * (kineticEnergy * kineticEnergy) / dissipationRate;
+    const turbulentViscosity = (cMu * density * (kineticEnergy * kineticEnergy)) / dissipationRate;
 
     // y+ (dimensionless wall distance)
     const uTau = Math.sqrt(0.0225 * density * flowVelocity * flowVelocity);
@@ -90,7 +90,7 @@ class TurbulenceModelingService {
     const wallShearStress = 0.0225 * density * flowVelocity * flowVelocity;
 
     // Model accuracy based on y+ value
-    const modelAccuracy = this.calculateModelAccuracy(yPlus, 'k-epsilon');
+    const modelAccuracy = this.calculateModelAccuracy(yPlus, "k-epsilon");
 
     // Convergence metric
     const convergenceMetric = Math.exp(-wallDistance / kolmogorovLength);
@@ -120,10 +120,11 @@ class TurbulenceModelingService {
 
     // Specific dissipation rate (omega)
     const beta = 0.09;
-    const specificDissipationRate = (beta * kineticEnergy) / (0.41 * wallDistance * 0.41 * wallDistance);
+    const specificDissipationRate =
+      (beta * kineticEnergy) / (0.41 * wallDistance * 0.41 * wallDistance);
 
     // Turbulent viscosity
-    const turbulentViscosity = density * kineticEnergy / specificDissipationRate;
+    const turbulentViscosity = (density * kineticEnergy) / specificDissipationRate;
 
     // y+ calculation
     const uTau = Math.sqrt(0.0225 * density * flowVelocity * flowVelocity);
@@ -136,7 +137,7 @@ class TurbulenceModelingService {
     const wallShearStress = 0.0225 * density * flowVelocity * flowVelocity;
 
     // Model accuracy
-    const modelAccuracy = this.calculateModelAccuracy(yPlus, 'k-omega');
+    const modelAccuracy = this.calculateModelAccuracy(yPlus, "k-omega");
 
     // Convergence metric
     const convergenceMetric = Math.exp(-specificDissipationRate * 0.01);
@@ -182,7 +183,7 @@ class TurbulenceModelingService {
     const wallShearStress = 0.0225 * density * flowVelocity * flowVelocity;
 
     // Model accuracy
-    const modelAccuracy = this.calculateModelAccuracy(yPlus, 'spalart-allmaras');
+    const modelAccuracy = this.calculateModelAccuracy(yPlus, "spalart-allmaras");
 
     // Convergence metric
     const convergenceMetric = Math.exp(-eddyViscosity / (density * flowVelocity * wallDistance));
@@ -206,7 +207,8 @@ class TurbulenceModelingService {
    * Resolves large-scale turbulence structures
    */
   private solveLES(): TurbulenceResults {
-    const { reynoldsNumber, wallDistance, flowVelocity, viscosity, density, meshResolution } = this.config;
+    const { reynoldsNumber, wallDistance, flowVelocity, viscosity, density, meshResolution } =
+      this.config;
 
     // Filter width (grid spacing)
     const filterWidth = 1 / Math.pow(meshResolution, 1 / 3);
@@ -216,8 +218,11 @@ class TurbulenceModelingService {
 
     // Smagorinsky constant
     const cs = 0.1;
-    const turbulentViscosity = density * (cs * filterWidth) * (cs * filterWidth) * 
-                               Math.sqrt(2 * this.calculateStrainRateTensor(flowVelocity));
+    const turbulentViscosity =
+      density *
+      (cs * filterWidth) *
+      (cs * filterWidth) *
+      Math.sqrt(2 * this.calculateStrainRateTensor(flowVelocity));
 
     // y+ calculation
     const uTau = Math.sqrt(0.0225 * density * flowVelocity * flowVelocity);
@@ -230,7 +235,7 @@ class TurbulenceModelingService {
     const wallShearStress = 0.0225 * density * flowVelocity * flowVelocity;
 
     // Model accuracy
-    const modelAccuracy = this.calculateModelAccuracy(yPlus, 'les');
+    const modelAccuracy = this.calculateModelAccuracy(yPlus, "les");
 
     // Convergence metric (LES requires finer resolution)
     const convergenceMetric = Math.exp(-filterWidth / wallDistance);
@@ -264,26 +269,26 @@ class TurbulenceModelingService {
     let accuracy = 0;
 
     switch (modelType) {
-      case 'k-epsilon':
+      case "k-epsilon":
         // k-epsilon best for y+ > 30 (wall functions)
         if (yPlus > 30) accuracy = Math.min(0.95, 1 - Math.abs(yPlus - 100) / 500);
         else accuracy = Math.max(0.5, 1 - yPlus / 30);
         break;
 
-      case 'k-omega':
+      case "k-omega":
         // k-omega best for y+ < 1 (wall-resolved)
         if (yPlus < 1) accuracy = 0.98;
         else if (yPlus < 5) accuracy = 0.95;
         else accuracy = Math.max(0.7, 1 - yPlus / 50);
         break;
 
-      case 'spalart-allmaras':
+      case "spalart-allmaras":
         // Spalart-Allmaras good for y+ < 5
         if (yPlus < 5) accuracy = 0.96;
         else accuracy = Math.max(0.6, 1 - yPlus / 100);
         break;
 
-      case 'les':
+      case "les":
         // LES requires very fine mesh
         accuracy = Math.max(0.5, 1 - yPlus / 10);
         break;
@@ -316,16 +321,18 @@ class TurbulenceModelingService {
       const velocity = this.config.flowVelocity * Math.log(1 + 10 * normalizedDistance);
 
       // Turbulent kinetic energy profile
-      const kineticEnergy = 0.005 * this.config.flowVelocity * this.config.flowVelocity * 
-                           (1 - Math.exp(-normalizedDistance * 5));
+      const kineticEnergy =
+        0.005 *
+        this.config.flowVelocity *
+        this.config.flowVelocity *
+        (1 - Math.exp(-normalizedDistance * 5));
 
       // Dissipation rate profile
-      const dissipationRate = (0.09 * Math.pow(kineticEnergy, 1.5)) / 
-                             (0.41 * (position + 0.001));
+      const dissipationRate = (0.09 * Math.pow(kineticEnergy, 1.5)) / (0.41 * (position + 0.001));
 
       // Turbulent viscosity profile
-      const turbulentViscosity = 0.09 * this.config.density * 
-                                (kineticEnergy * kineticEnergy) / (dissipationRate + 1e-10);
+      const turbulentViscosity =
+        (0.09 * this.config.density * (kineticEnergy * kineticEnergy)) / (dissipationRate + 1e-10);
 
       positions.push(position);
       kineticEnergies.push(kineticEnergy);
@@ -350,16 +357,16 @@ class TurbulenceModelingService {
     let results: TurbulenceResults;
 
     switch (this.config.modelType) {
-      case 'k-epsilon':
+      case "k-epsilon":
         results = this.solveKEpsilon();
         break;
-      case 'k-omega':
+      case "k-omega":
         results = this.solveKOmega();
         break;
-      case 'spalart-allmaras':
+      case "spalart-allmaras":
         results = this.solveSpalartAllmaras();
         break;
-      case 'les':
+      case "les":
         results = this.solveLES();
         break;
       default:
@@ -407,36 +414,37 @@ class TurbulenceModelingService {
     computationalCost: string;
   } {
     const { reynoldsNumber, wallDistance, flowVelocity } = this.config;
-    const yPlus = (wallDistance * Math.sqrt(0.0225 * this.config.density * flowVelocity * flowVelocity)) / 
-                  this.config.viscosity;
+    const yPlus =
+      (wallDistance * Math.sqrt(0.0225 * this.config.density * flowVelocity * flowVelocity)) /
+      this.config.viscosity;
 
     if (yPlus < 1) {
       return {
-        recommendedModel: 'k-omega',
-        reason: 'Wall-resolved simulation with y+ < 1 requires k-omega for accuracy',
-        meshRequirements: 'Very fine mesh near walls (y+ < 1)',
-        computationalCost: 'Very High',
+        recommendedModel: "k-omega",
+        reason: "Wall-resolved simulation with y+ < 1 requires k-omega for accuracy",
+        meshRequirements: "Very fine mesh near walls (y+ < 1)",
+        computationalCost: "Very High",
       };
     } else if (yPlus < 5) {
       return {
-        recommendedModel: 'Spalart-Allmaras',
-        reason: 'One-equation model efficient for wall-bounded flows',
-        meshRequirements: 'Fine mesh near walls (y+ < 5)',
-        computationalCost: 'High',
+        recommendedModel: "Spalart-Allmaras",
+        reason: "One-equation model efficient for wall-bounded flows",
+        meshRequirements: "Fine mesh near walls (y+ < 5)",
+        computationalCost: "High",
       };
     } else if (yPlus < 30) {
       return {
-        recommendedModel: 'k-epsilon',
-        reason: 'Two-equation model suitable for intermediate y+ values',
-        meshRequirements: 'Moderate mesh refinement',
-        computationalCost: 'Moderate',
+        recommendedModel: "k-epsilon",
+        reason: "Two-equation model suitable for intermediate y+ values",
+        meshRequirements: "Moderate mesh refinement",
+        computationalCost: "Moderate",
       };
     } else {
       return {
-        recommendedModel: 'k-epsilon with wall functions',
-        reason: 'Wall functions appropriate for y+ > 30',
-        meshRequirements: 'Coarse mesh with wall functions',
-        computationalCost: 'Low',
+        recommendedModel: "k-epsilon with wall functions",
+        reason: "Wall functions appropriate for y+ > 30",
+        meshRequirements: "Coarse mesh with wall functions",
+        computationalCost: "Low",
       };
     }
   }

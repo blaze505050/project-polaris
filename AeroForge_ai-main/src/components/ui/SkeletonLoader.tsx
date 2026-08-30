@@ -1,15 +1,12 @@
-import React from 'react';
+import React from "react";
 
 interface SkeletonLoaderProps {
-  variant?: 'table' | 'card' | 'chart' | 'text';
+  variant?: "table" | "card" | "chart" | "text";
   rows?: number;
 }
 
-export default function SkeletonLoader({
-  variant = 'card',
-  rows = 4,
-}: SkeletonLoaderProps) {
-  if (variant === 'table') {
+export default function SkeletonLoader({ variant = "card", rows = 4 }: SkeletonLoaderProps) {
+  if (variant === "table") {
     return (
       <div className="w-full bg-[#080E1C] border border-white/10 rounded-lg p-4 space-y-3 animate-pulse">
         <div className="h-6 bg-white/10 rounded w-1/3" />
@@ -26,7 +23,7 @@ export default function SkeletonLoader({
     );
   }
 
-  if (variant === 'chart') {
+  if (variant === "chart") {
     return (
       <div className="w-full h-64 bg-[#080E1C] border border-white/10 rounded-lg p-4 flex flex-col justify-between animate-pulse">
         <div className="flex justify-between items-center">

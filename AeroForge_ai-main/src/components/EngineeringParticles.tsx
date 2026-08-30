@@ -1,21 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react";
 
 interface EngineeringParticlesProps {
   className?: string;
   density?: number;
 }
 
-export default function EngineeringParticles({ className = '', density = 60 }: EngineeringParticlesProps) {
+export default function EngineeringParticles({
+  className = "",
+  density = 60,
+}: EngineeringParticlesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Check prefers-reduced-motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
@@ -28,7 +31,7 @@ export default function EngineeringParticles({ className = '', density = 60 }: E
       width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
       height = canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Particle state
     interface Particle {
@@ -63,7 +66,7 @@ export default function EngineeringParticles({ className = '', density = 60 }: E
       mouseX = e.clientX - rect.left;
       mouseY = e.clientY - rect.top;
     };
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
@@ -125,8 +128,8 @@ export default function EngineeringParticles({ className = '', density = 60 }: E
     draw();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(animId);
     };
   }, [density]);

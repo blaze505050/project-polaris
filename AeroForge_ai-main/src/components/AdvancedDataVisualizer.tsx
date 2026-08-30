@@ -3,8 +3,8 @@
  * High-performance WebGL-based visualizations with glassmorphism UI
  */
 
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 interface VisualizerConfig {
   width: number;
@@ -16,7 +16,7 @@ interface VisualizerConfig {
 export const AdvancedDataVisualizer: React.FC<{
   config: VisualizerConfig;
   title: string;
-  type: 'waveform' | 'spectrum' | 'orbital' | 'heatmap';
+  type: "waveform" | "spectrum" | "orbital" | "heatmap";
 }> = ({ config, title, type }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isAnimating, setIsAnimating] = useState(true);
@@ -25,7 +25,7 @@ export const AdvancedDataVisualizer: React.FC<{
     if (!canvasRef.current || !isAnimating) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationId: number;
@@ -36,23 +36,23 @@ export const AdvancedDataVisualizer: React.FC<{
 
       // Clear with gradient
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#0B0E14');
-      gradient.addColorStop(1, '#131924');
+      gradient.addColorStop(0, "#0B0E14");
+      gradient.addColorStop(1, "#131924");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw based on type
       switch (type) {
-        case 'waveform':
+        case "waveform":
           drawWaveform(ctx, canvas, time);
           break;
-        case 'spectrum':
+        case "spectrum":
           drawSpectrum(ctx, canvas, time);
           break;
-        case 'orbital':
+        case "orbital":
           drawOrbital(ctx, canvas, time);
           break;
-        case 'heatmap':
+        case "heatmap":
           drawHeatmap(ctx, canvas, time);
           break;
       }
@@ -77,7 +77,7 @@ export const AdvancedDataVisualizer: React.FC<{
           onClick={() => setIsAnimating(!isAnimating)}
           className="px-3 py-1 text-xs font-mono bg-[#00F0FF]/10 text-[#00F0FF] border border-[#00F0FF]/30 rounded hover:bg-[#00F0FF]/20 transition-all"
         >
-          {isAnimating ? 'Pause' : 'Play'}
+          {isAnimating ? "Pause" : "Play"}
         </button>
       </div>
       <canvas
@@ -96,7 +96,7 @@ function drawWaveform(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, 
   const amplitude = canvas.height * 0.3;
   const frequency = 2;
 
-  ctx.strokeStyle = '#00F0FF';
+  ctx.strokeStyle = "#00F0FF";
   ctx.lineWidth = 2;
   ctx.beginPath();
 
@@ -117,13 +117,13 @@ function drawWaveform(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, 
   ctx.stroke();
 
   // Draw glow
-  ctx.shadowColor = '#00F0FF';
+  ctx.shadowColor = "#00F0FF";
   ctx.shadowBlur = 20;
   ctx.stroke();
   ctx.shadowBlur = 0;
 
   // Draw grid
-  ctx.strokeStyle = '#00F0FF33';
+  ctx.strokeStyle = "#00F0FF33";
   ctx.lineWidth = 1;
   for (let i = 0; i < 5; i++) {
     const y = (canvas.height / 5) * i;
@@ -164,7 +164,7 @@ function drawOrbital(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, t
   const centerY = canvas.height / 2;
 
   // Draw orbital rings
-  ctx.strokeStyle = '#00F0FF33';
+  ctx.strokeStyle = "#00F0FF33";
   ctx.lineWidth = 1;
   for (let r = 1; r <= 5; r++) {
     ctx.beginPath();
@@ -173,7 +173,7 @@ function drawOrbital(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, t
   }
 
   // Draw central body
-  ctx.fillStyle = '#1a3a52';
+  ctx.fillStyle = "#1a3a52";
   ctx.beginPath();
   ctx.arc(centerX, centerY, 20, 0, Math.PI * 2);
   ctx.fill();
@@ -234,7 +234,7 @@ function drawHeatmap(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, t
   }
 
   // Draw grid overlay
-  ctx.strokeStyle = '#00F0FF33';
+  ctx.strokeStyle = "#00F0FF33";
   ctx.lineWidth = 0.5;
   for (let i = 0; i <= cols; i++) {
     ctx.beginPath();
@@ -260,11 +260,11 @@ export const RealTimeDataStream: React.FC<{
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setDisplayData(prev =>
-        prev.map(item => ({
+      setDisplayData((prev) =>
+        prev.map((item) => ({
           ...item,
           value: item.value + (Math.random() - 0.5) * item.value * 0.1,
-        }))
+        })),
       );
     }, updateInterval);
 
@@ -289,7 +289,9 @@ export const RealTimeDataStream: React.FC<{
           >
             <span className="text-sm text-secondary-foreground font-mono">{item.label}</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-[#00F0FF] font-mono">{item.value.toFixed(2)}</span>
+              <span className="text-lg font-bold text-[#00F0FF] font-mono">
+                {item.value.toFixed(2)}
+              </span>
               <span className="text-xs text-secondary-foreground">{item.unit}</span>
             </div>
           </motion.div>
@@ -313,8 +315,7 @@ export const PerformanceMetrics: React.FC<{
       <div className="space-y-4">
         {metrics.map((metric, idx) => {
           const percentage = (metric.value / metric.max) * 100;
-          const color =
-            percentage < 50 ? '#10B981' : percentage < 80 ? '#F59E0B' : '#EF4444';
+          const color = percentage < 50 ? "#10B981" : percentage < 80 ? "#F59E0B" : "#EF4444";
 
           return (
             <motion.div

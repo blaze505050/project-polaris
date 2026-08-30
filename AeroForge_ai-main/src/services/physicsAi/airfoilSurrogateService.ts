@@ -3,18 +3,22 @@ import {
   AirfoilSurrogateResult,
   AirfoilCpPoint,
   AirfoilFlowPoint,
-} from '@/types/physicsAi';
+} from "@/types/physicsAi";
 
 /**
  * Parses NACA 4-digit string e.g. "NACA 2412" or uses numeric params.
  */
-export function parseNACA4Digit(nacaStr: string): { maxCamber: number; camberPos: number; thickness: number } {
-  const clean = nacaStr.replace(/\s+/g, '').toUpperCase();
+export function parseNACA4Digit(nacaStr: string): {
+  maxCamber: number;
+  camberPos: number;
+  thickness: number;
+} {
+  const clean = nacaStr.replace(/\s+/g, "").toUpperCase();
   const match = clean.match(/NACA(\d)(\d)(\d{2})/);
   if (match) {
-    const m = parseInt(match[1], 10) / 100;  // 1st digit: max camber % chord
-    const p = parseInt(match[2], 10) / 10;   // 2nd digit: position of max camber in 10ths
-    const t = parseInt(match[3], 10) / 100;  // 3rd & 4th digits: max thickness % chord
+    const m = parseInt(match[1], 10) / 100; // 1st digit: max camber % chord
+    const p = parseInt(match[2], 10) / 10; // 2nd digit: position of max camber in 10ths
+    const t = parseInt(match[3], 10) / 100; // 3rd & 4th digits: max thickness % chord
     return { maxCamber: m, camberPos: p, thickness: t };
   }
   return { maxCamber: 0.02, camberPos: 0.4, thickness: 0.12 };
@@ -27,7 +31,7 @@ export function generateNacaProfile(
   maxCamber: number,
   camberPos: number,
   thickness: number,
-  nPoints: number = 60
+  nPoints: number = 60,
 ): { xu: number[]; yu: number[]; xl: number[]; yl: number[]; xc: number[] } {
   const xu: number[] = [];
   const yu: number[] = [];
@@ -63,7 +67,7 @@ export function generateNacaProfile(
         yc = (m / (p * p)) * (2 * p * x - x * x);
         dyc_dx = ((2 * m) / (p * p)) * (p - x);
       } else {
-        yc = (m / Math.pow(1 - p, 2)) * ((1 - 2 * p) + 2 * p * x - x * x);
+        yc = (m / Math.pow(1 - p, 2)) * (1 - 2 * p + 2 * p * x - x * x);
         dyc_dx = ((2 * m) / Math.pow(1 - p, 2)) * (p - x);
       }
     }
@@ -81,9 +85,7 @@ export function generateNacaProfile(
 /**
  * Core Physics AI Airfoil Surrogate Model Execution
  */
-export function runAirfoilSurrogateModel(
-  inputs: AirfoilSurrogateInputs
-): AirfoilSurrogateResult {
+export function runAirfoilSurrogateModel(inputs: AirfoilSurrogateInputs): AirfoilSurrogateResult {
   const startTime = performance.now();
 
   const { maxCamber, camberPos, thickness, reynolds, mach, aoa, gridResolution } = inputs;
@@ -110,12 +112,12 @@ export function runAirfoilSurrogateModel(
   const aiCd = (aiCdForm + aiCdInduced) * (1.0 + 0.05 * Math.abs(machClamped));
 
   // Pitching moment about quarter-chord
-  const aiCm = -0.25 * (Math.PI * maxCamber) / betaPG - 0.05 * Math.sin(alphaRad);
+  const aiCm = (-0.25 * (Math.PI * maxCamber)) / betaPG - 0.05 * Math.sin(alphaRad);
 
   // 4. Analytical Model Baseline (Thin Airfoil + Potential Flow Panel Theory)
   const analyticalCl = (2 * Math.PI * (alphaRad - alpha0)) / betaPG;
   const analyticalCd = aiCdForm + (analyticalCl * analyticalCl) / (Math.PI * 8.0);
-  const analyticalCm = -0.25 * (Math.PI * maxCamber) / betaPG;
+  const analyticalCm = (-0.25 * (Math.PI * maxCamber)) / betaPG;
 
   // 5. Generate Chordwise Pressure Coefficient (Cp) Curves
   const cpPoints: AirfoilCpPoint[] = [];
@@ -218,23 +220,28 @@ export function runAirfoilSurrogateModel(
   // Continuity mass residual over flow field div(u)
   const massResidualVal = 1.2e-4 * (1 + 0.5 * Math.abs(machClamped - 0.3));
   const momentumResidualVal = 8.7e-4 * (1 + Math.abs(aoa) / 10);
-  const energyResidualVal = machClamped > 0.3 ? (3.4e-3 * machClamped).toExponential(2) : 'Not evaluated (Subsonic incompressible)';
+  const energyResidualVal =
+    machClamped > 0.3
+      ? (3.4e-3 * machClamped).toExponential(2)
+      : "Not evaluated (Subsonic incompressible)";
 
   // 9. Training Distribution Bounds Check
-  let distCheck: 'Within training distribution' | 'Near training boundary' | 'Outside known training range' = 'Within training distribution';
+  let distCheck:
+    "Within training distribution" | "Near training boundary" | "Outside known training range" =
+    "Within training distribution";
   let uncertaintyPct: number | null = 2.4;
 
   if (reynolds < 5e4 || reynolds > 2e7 || mach > 0.85 || Math.abs(aoa) > 16 || thickness > 0.25) {
-    distCheck = 'Outside known training range';
+    distCheck = "Outside known training range";
     uncertaintyPct = 14.8;
   } else if (reynolds < 2e5 || mach > 0.75 || Math.abs(aoa) > 12) {
-    distCheck = 'Near training boundary';
+    distCheck = "Near training boundary";
     uncertaintyPct = 6.2;
   }
 
   // 10. Reference Data check (e.g., NACA 0012 wind tunnel data reference)
   let refAvailable = false;
-  let refSource = 'Abbott & Von Doenhoff (1959)';
+  let refSource = "Abbott & Von Doenhoff (1959)";
   let refCl: number | null = null;
   let refCd: number | null = null;
 
@@ -249,9 +256,9 @@ export function runAirfoilSurrogateModel(
   const inferenceTimeMs = parseFloat((endTime - startTime).toFixed(2));
 
   return {
-    modelName: 'AeroGraphNet Airfoil Neural Surrogate',
-    modelVersion: '1.2.0-surrogate',
-    executionStatus: 'Browser Client (Surrogate Hybrid)',
+    modelName: "AeroGraphNet Airfoil Neural Surrogate",
+    modelVersion: "1.2.0-surrogate",
+    executionStatus: "Browser Client (Surrogate Hybrid)",
     inferenceTimeMs: Math.max(inferenceTimeMs, 1.42),
     distributionCheck: distCheck,
     uncertaintyAvailable: true,

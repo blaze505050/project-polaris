@@ -3,76 +3,76 @@
  * Production-ready demonstration of core P0 functionality
  */
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Play, Zap, Rocket, Brain, CheckCircle2, ArrowRight } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Play, Zap, Rocket, Brain, CheckCircle2, ArrowRight } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const DEMO_FEATURES = [
   {
-    title: 'Orbital Mechanics Engine',
-    description: 'Production-grade Kepler orbit calculator with real physics constants',
+    title: "Orbital Mechanics Engine",
+    description: "Production-grade Kepler orbit calculator with real physics constants",
     icon: Rocket,
-    path: '/astrolab/p0/orbital',
-    status: '✓ Production Ready',
+    path: "/astrolab/p0/orbital",
+    status: "✓ Production Ready",
   },
   {
-    title: 'N-Body Gravity Simulator',
-    description: 'Multi-body gravitational dynamics with numerical integration',
+    title: "N-Body Gravity Simulator",
+    description: "Multi-body gravitational dynamics with numerical integration",
     icon: Zap,
-    path: '/astrolab/p0/gravity',
-    status: '✓ Production Ready',
+    path: "/astrolab/p0/gravity",
+    status: "✓ Production Ready",
   },
   {
-    title: 'Exoplanet Transit Detection',
-    description: 'Synthetic light curve generation and transit photometry',
+    title: "Exoplanet Transit Detection",
+    description: "Synthetic light curve generation and transit photometry",
     icon: Brain,
-    path: '/astrolab/p0/transit',
-    status: '✓ Production Ready',
+    path: "/astrolab/p0/transit",
+    status: "✓ Production Ready",
   },
   {
-    title: 'Stellar Evolution',
-    description: 'HR Diagram visualization and stellar property calculations',
+    title: "Stellar Evolution",
+    description: "HR Diagram visualization and stellar property calculations",
     icon: Rocket,
-    path: '/astrolab/p0/stellar',
-    status: '✓ Production Ready',
+    path: "/astrolab/p0/stellar",
+    status: "✓ Production Ready",
   },
 ];
 
 const CAPABILITIES = [
   {
-    title: 'Centralized Physics Engine',
-    description: 'Single source of truth for all calculations - ensures consistency and accuracy',
-    icon: '⚙️',
+    title: "Centralized Physics Engine",
+    description: "Single source of truth for all calculations - ensures consistency and accuracy",
+    icon: "⚙️",
   },
   {
-    title: 'Persistent Experiment Storage',
+    title: "Persistent Experiment Storage",
     description: 'Save and manage experiments in "My Lab" with full data export',
-    icon: '💾',
+    icon: "💾",
   },
   {
-    title: 'Interactive Challenges',
-    description: '8 guided Space Problems to engage users and demonstrate capabilities',
-    icon: '🎯',
+    title: "Interactive Challenges",
+    description: "8 guided Space Problems to engage users and demonstrate capabilities",
+    icon: "🎯",
   },
   {
-    title: 'Real Physics Constants',
-    description: 'All simulations use scientifically accurate values and equations',
-    icon: '🔬',
+    title: "Real Physics Constants",
+    description: "All simulations use scientifically accurate values and equations",
+    icon: "🔬",
   },
   {
-    title: 'Responsive Design',
-    description: 'Works seamlessly on desktop, tablet, and mobile devices',
-    icon: '📱',
+    title: "Responsive Design",
+    description: "Works seamlessly on desktop, tablet, and mobile devices",
+    icon: "📱",
   },
   {
-    title: 'Production Grade',
-    description: 'Robust error handling, input validation, and performance optimization',
-    icon: '✨',
+    title: "Production Grade",
+    description: "Robust error handling, input validation, and performance optimization",
+    icon: "✨",
   },
 ];
 
@@ -125,9 +125,7 @@ export default function AstroLabInvestorDemoPage() {
           <div className="space-y-12">
             <div className="text-center space-y-2">
               <h2 className="text-3xl font-bold font-heading">Core Simulations</h2>
-              <p className="text-secondary-foreground">
-                Four production-ready physics engines
-              </p>
+              <p className="text-secondary-foreground">Four production-ready physics engines</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,9 +145,7 @@ export default function AstroLabInvestorDemoPage() {
                             <Icon className="w-6 h-6 text-accent" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="font-heading font-semibold text-lg">
-                              {feature.title}
-                            </h3>
+                            <h3 className="font-heading font-semibold text-lg">{feature.title}</h3>
                             <p className="text-xs text-green-400 font-semibold mt-1">
                               {feature.status}
                             </p>
@@ -191,9 +187,7 @@ export default function AstroLabInvestorDemoPage() {
                   <Card className="p-6 space-y-3 border-secondary hover:border-accent transition-colors">
                     <div className="text-3xl">{cap.icon}</div>
                     <h3 className="font-heading font-semibold">{cap.title}</h3>
-                    <p className="text-sm text-secondary-foreground">
-                      {cap.description}
-                    </p>
+                    <p className="text-sm text-secondary-foreground">{cap.description}</p>
                   </Card>
                 </motion.div>
               ))}

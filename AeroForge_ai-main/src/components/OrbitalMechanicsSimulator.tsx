@@ -3,14 +3,14 @@
  * P0 Functional Simulation - Kepler Orbit Calculator
  */
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, Save, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Play, Pause, RotateCcw, Save, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   OrbitalElements,
   CartesianPosition,
@@ -19,8 +19,8 @@ import {
   validateOrbitalElements,
   formatDistance,
   PHYSICS_CONSTANTS,
-} from '@/services/physicsEngine';
-import { useMyLabStore } from '@/stores/myLabStore';
+} from "@/services/physicsEngine";
+import { useMyLabStore } from "@/stores/myLabStore";
 
 interface SimulationState {
   elements: OrbitalElements;
@@ -46,7 +46,7 @@ export default function OrbitalMechanicsSimulator() {
     error: null,
   });
 
-  const [experimentName, setExperimentName] = useState('Orbital Mechanics Experiment');
+  const [experimentName, setExperimentName] = useState("Orbital Mechanics Experiment");
   const addExperiment = useMyLabStore((s) => s.addExperiment);
 
   // Calculate orbital period
@@ -66,7 +66,7 @@ export default function OrbitalMechanicsSimulator() {
     } catch (err) {
       setState((s) => ({
         ...s,
-        error: err instanceof Error ? err.message : 'Calculation error',
+        error: err instanceof Error ? err.message : "Calculation error",
       }));
     }
   }, [state.elements]);
@@ -107,7 +107,7 @@ export default function OrbitalMechanicsSimulator() {
   const handleSaveExperiment = () => {
     const id = addExperiment({
       name: experimentName,
-      type: 'orbital',
+      type: "orbital",
       data: {
         elements: state.elements,
         period,
@@ -165,37 +165,33 @@ export default function OrbitalMechanicsSimulator() {
                 max="5"
                 step="0.1"
                 value={state.elements.a}
-                onChange={(e) => handleElementChange('a', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("a", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
 
             <div>
-              <Label className="text-sm">
-                Eccentricity (e): {state.elements.e.toFixed(3)}
-              </Label>
+              <Label className="text-sm">Eccentricity (e): {state.elements.e.toFixed(3)}</Label>
               <Input
                 type="range"
                 min="0"
                 max="0.99"
                 step="0.01"
                 value={state.elements.e}
-                onChange={(e) => handleElementChange('e', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("e", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
 
             <div>
-              <Label className="text-sm">
-                Inclination (i): {state.elements.i.toFixed(1)}°
-              </Label>
+              <Label className="text-sm">Inclination (i): {state.elements.i.toFixed(1)}°</Label>
               <Input
                 type="range"
                 min="0"
                 max="180"
                 step="1"
                 value={state.elements.i}
-                onChange={(e) => handleElementChange('i', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("i", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
@@ -210,7 +206,7 @@ export default function OrbitalMechanicsSimulator() {
                 max="360"
                 step="1"
                 value={state.elements.Omega}
-                onChange={(e) => handleElementChange('Omega', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("Omega", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
@@ -225,31 +221,27 @@ export default function OrbitalMechanicsSimulator() {
                 max="360"
                 step="1"
                 value={state.elements.omega}
-                onChange={(e) => handleElementChange('omega', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("omega", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
 
             <div>
-              <Label className="text-sm">
-                Mean Anomaly (M): {state.elements.M.toFixed(1)}°
-              </Label>
+              <Label className="text-sm">Mean Anomaly (M): {state.elements.M.toFixed(1)}°</Label>
               <Input
                 type="range"
                 min="0"
                 max="360"
                 step="1"
                 value={state.elements.M}
-                onChange={(e) => handleElementChange('M', parseFloat(e.target.value))}
+                onChange={(e) => handleElementChange("M", parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
           </div>
 
           <div className="pt-4 border-t border-secondary space-y-2">
-            <p className="text-sm font-semibold">
-              Orbital Period: {period.toFixed(2)} days
-            </p>
+            <p className="text-sm font-semibold">Orbital Period: {period.toFixed(2)} days</p>
             <p className="text-xs text-secondary-foreground">
               Calculated using Kepler's 3rd Law: P² = a³
             </p>
@@ -284,9 +276,7 @@ export default function OrbitalMechanicsSimulator() {
 
             <div className="p-3 bg-primary rounded">
               <p className="text-secondary-foreground text-xs mb-1">Simulation Time</p>
-              <p className="text-accent-foreground font-semibold">
-                {state.time.toFixed(2)} days
-              </p>
+              <p className="text-accent-foreground font-semibold">{state.time.toFixed(2)} days</p>
             </div>
           </div>
 

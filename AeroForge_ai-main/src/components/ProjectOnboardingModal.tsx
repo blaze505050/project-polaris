@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Sparkles,
   Wind,
@@ -11,9 +11,9 @@ import {
   ArrowRight,
   X,
   Play,
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useToastStore } from '@/stores/toastStore';
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useToastStore } from "@/stores/toastStore";
 
 interface ProjectOnboardingModalProps {
   isOpen: boolean;
@@ -31,22 +31,22 @@ export default function ProjectOnboardingModal({
 
   const templates = [
     {
-      title: 'Morphing Airfoil Aerodynamic Study',
-      category: 'Aerodynamics & CFD',
+      title: "Morphing Airfoil Aerodynamic Study",
+      category: "Aerodynamics & CFD",
       icon: Wind,
-      desc: 'Compressible pressure coefficient, drag polar & shape optimization.',
+      desc: "Compressible pressure coefficient, drag polar & shape optimization.",
     },
     {
-      title: 'Hypersonic Re-entry Aerothermal Corridor',
-      category: 'Thermal & Space',
+      title: "Hypersonic Re-entry Aerothermal Corridor",
+      category: "Thermal & Space",
       icon: Rocket,
-      desc: 'Sutton-Graves heat flux prediction & non-equilibrium shock boundaries.',
+      desc: "Sutton-Graves heat flux prediction & non-equilibrium shock boundaries.",
     },
     {
-      title: 'Wing Root Structural FEA Stress Analysis',
-      category: 'Structures & FEA',
+      title: "Wing Root Structural FEA Stress Analysis",
+      category: "Structures & FEA",
       icon: Layers,
-      desc: 'CalculiX non-linear yield margin, buckling & mass optimization.',
+      desc: "CalculiX non-linear yield margin, buckling & mass optimization.",
     },
   ];
 
@@ -99,11 +99,11 @@ export default function ProjectOnboardingModal({
           <button
             onClick={() => {
               onClose();
-              navigate('/projects');
+              navigate("/projects");
               addToast({
-                title: 'New Project Creator Ready',
-                description: 'Specify project title and target engineering requirements.',
-                type: 'info',
+                title: "New Project Creator Ready",
+                description: "Specify project title and target engineering requirements.",
+                type: "info",
               });
             }}
             className="p-4 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-left space-y-2 transition-all group"
@@ -124,11 +124,11 @@ export default function ProjectOnboardingModal({
           <button
             onClick={() => {
               onClose();
-              navigate('/projects/1?tab=datasets');
+              navigate("/projects/1?tab=datasets");
               addToast({
-                title: 'Data Importer Active',
-                description: 'Drag and drop STL, STEP, CSV, or OpenFOAM datasets.',
-                type: 'info',
+                title: "Data Importer Active",
+                description: "Drag and drop STL, STEP, CSV, or OpenFOAM datasets.",
+                type: "info",
               });
             }}
             className="p-4 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-left space-y-2 transition-all group"
@@ -159,11 +159,11 @@ export default function ProjectOnboardingModal({
                   key={i}
                   onClick={() => {
                     onClose();
-                    navigate('/projects/1');
+                    navigate("/projects/1");
                     addToast({
                       title: `Template Loaded: ${tpl.title}`,
-                      description: 'Pre-configured geometry and solver pipeline instantiated.',
-                      type: 'success',
+                      description: "Pre-configured geometry and solver pipeline instantiated.",
+                      type: "success",
                     });
                   }}
                   className="p-3 rounded-lg border border-white/10 bg-[#050914] hover:border-cyan-500/30 text-left space-y-1 transition-all"

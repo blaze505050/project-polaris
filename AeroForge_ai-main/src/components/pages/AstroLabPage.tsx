@@ -1,15 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Clock, Zap, Globe, Link as LinkIcon, Database, Cpu, Gauge, Microscope } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { DataFormatter } from '@/services/dataFormatting';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Clock,
+  Zap,
+  Globe,
+  Link as LinkIcon,
+  Database,
+  Cpu,
+  Gauge,
+  Microscope,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { DataFormatter } from "@/services/dataFormatting";
 
 const AstroLabPage: React.FC = () => {
   const navigate = useNavigate();
   const [utcTime, setUtcTime] = useState(new Date());
-  const [orbitStatus, setOrbitStatus] = useState('OPERATIONAL');
+  const [orbitStatus, setOrbitStatus] = useState("OPERATIONAL");
   const [systemLoad, setSystemLoad] = useState(34);
 
   useEffect(() => {
@@ -19,7 +28,7 @@ const AstroLabPage: React.FC = () => {
 
   useEffect(() => {
     const loadTimer = setInterval(() => {
-      setSystemLoad(prev => {
+      setSystemLoad((prev) => {
         const change = (Math.random() - 0.5) * 10;
         const newLoad = Math.max(20, Math.min(85, prev + change));
         return Math.round(newLoad);
@@ -30,85 +39,86 @@ const AstroLabPage: React.FC = () => {
 
   const modules = [
     {
-      id: 'premium-suite',
-      label: 'Premium Mission Control',
+      id: "premium-suite",
+      label: "Premium Mission Control",
       icon: Zap,
-      description: 'Ultra-high-quality Mission Control with advanced analytics & real-time telemetry',
-      path: '/premium-astrolab',
-      color: '#FF007A',
-      category: 'Premium',
+      description:
+        "Ultra-high-quality Mission Control with advanced analytics & real-time telemetry",
+      path: "/premium-astrolab",
+      color: "#FF007A",
+      category: "Premium",
     },
     {
-      id: 'spatial-globe',
-      label: 'Spatial Globe',
+      id: "spatial-globe",
+      label: "Spatial Globe",
       icon: Globe,
-      description: 'Real-time satellite tracking & orbital visualization',
-      path: '/astrolab/spatial-globe',
-      color: '#00F0FF',
-      category: 'Tracking',
+      description: "Real-time satellite tracking & orbital visualization",
+      path: "/astrolab/spatial-globe",
+      color: "#00F0FF",
+      category: "Tracking",
     },
     {
-      id: 'deep-space',
-      label: 'Deep Space Observation',
+      id: "deep-space",
+      label: "Deep Space Observation",
       icon: Microscope,
-      description: 'Catalog of celestial objects & deep-sky mapping',
-      path: '/astrolab/deep-space-observation',
-      color: '#FF007A',
-      category: 'Analysis',
+      description: "Catalog of celestial objects & deep-sky mapping",
+      path: "/astrolab/deep-space-observation",
+      color: "#FF007A",
+      category: "Analysis",
     },
     {
-      id: 'photometry',
-      label: 'Photometry Suite',
+      id: "photometry",
+      label: "Photometry Suite",
       icon: Database,
-      description: 'Professional stellar photometry & aperture analysis',
-      path: '/astrolab/photometry-suite',
-      color: '#F59E0B',
-      category: 'Measurement',
+      description: "Professional stellar photometry & aperture analysis",
+      path: "/astrolab/photometry-suite",
+      color: "#F59E0B",
+      category: "Measurement",
     },
     {
-      id: 'astrodynamics',
-      label: 'Astrodynamics Sandbox',
+      id: "astrodynamics",
+      label: "Astrodynamics Sandbox",
       icon: Cpu,
-      description: 'N-body gravitational simulation engine',
-      path: '/astrolab/astrodynamics-sandbox',
-      color: '#A78BFA',
-      category: 'Simulation',
+      description: "N-body gravitational simulation engine",
+      path: "/astrolab/astrodynamics-sandbox",
+      color: "#A78BFA",
+      category: "Simulation",
     },
     {
-      id: 'dual-mode',
-      label: 'Dual-Mode Experience',
+      id: "dual-mode",
+      label: "Dual-Mode Experience",
       icon: Gauge,
-      description: 'Switch between Student and Professional modes',
-      path: '/astrolab/dual-mode',
-      color: '#10B981',
-      category: 'Interface',
+      description: "Switch between Student and Professional modes",
+      path: "/astrolab/dual-mode",
+      color: "#10B981",
+      category: "Interface",
     },
     {
-      id: 'constellation',
-      label: 'Satellite Constellation',
+      id: "constellation",
+      label: "Satellite Constellation",
       icon: Zap,
-      description: 'Real-time orbital shell visualization',
-      path: '/astrolab/satellite-constellation',
-      color: '#06B6D4',
-      category: 'Tracking',
+      description: "Real-time orbital shell visualization",
+      path: "/astrolab/satellite-constellation",
+      color: "#06B6D4",
+      category: "Tracking",
     },
     {
-      id: 'celestial',
-      label: 'Celestial Coordinates',
+      id: "celestial",
+      label: "Celestial Coordinates",
       icon: Gauge,
-      description: 'Ephemeris calculations & coordinate transformations',
-      path: '/astrolab/celestial-coordinate',
-      color: '#EC4899',
-      category: 'Calculation',
+      description: "Ephemeris calculations & coordinate transformations",
+      path: "/astrolab/celestial-coordinate",
+      color: "#EC4899",
+      category: "Calculation",
     },
     {
-      id: 'orbital',
-      label: 'Orbital Mechanics',
+      id: "orbital",
+      label: "Orbital Mechanics",
       icon: Database,
-      description: 'Keplerian elements & orbital dynamics',
-      path: '/astrolab/orbital-mechanics',
-      color: '#8B5CF6',
-      category: 'Analysis',
+      description: "Keplerian elements & orbital dynamics",
+      path: "/astrolab/orbital-mechanics",
+      color: "#8B5CF6",
+      category: "Analysis",
     },
   ];
 
@@ -117,7 +127,11 @@ const AstroLabPage: React.FC = () => {
       <Header />
 
       <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-8"
+        >
           {/* Hero Section - Professional Grade */}
           <div className="relative overflow-hidden rounded-lg border border-[#00F0FF]/30 bg-gradient-to-br from-[#131924]/80 to-[#0B0E14]/80 backdrop-blur-md p-8">
             <div className="absolute inset-0 opacity-5">
@@ -126,8 +140,12 @@ const AstroLabPage: React.FC = () => {
             <div className="relative z-10">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h1 className="text-6xl font-bold text-[#00F0FF] font-mono mb-2 tracking-tight">AstroLab Suite</h1>
-                  <p className="text-base text-secondary-foreground font-mono">ISO 9001:2015 Certified | Industry-Grade Astronomical Research Platform</p>
+                  <h1 className="text-6xl font-bold text-[#00F0FF] font-mono mb-2 tracking-tight">
+                    AstroLab Suite
+                  </h1>
+                  <p className="text-base text-secondary-foreground font-mono">
+                    ISO 9001:2015 Certified | Industry-Grade Astronomical Research Platform
+                  </p>
                 </div>
               </div>
 
@@ -137,7 +155,9 @@ const AstroLabPage: React.FC = () => {
                   <Clock size={16} className="text-[#00F0FF]" />
                   <div>
                     <div className="text-xs text-secondary-foreground font-mono">UTC TIME</div>
-                    <div className="text-sm font-mono text-[#00F0FF]">{utcTime.toISOString().split('T')[1].substring(0, 8)}</div>
+                    <div className="text-sm font-mono text-[#00F0FF]">
+                      {utcTime.toISOString().split("T")[1].substring(0, 8)}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-[#0B0E14]/40 p-3 rounded border border-[#10B981]/10">
@@ -169,7 +189,9 @@ const AstroLabPage: React.FC = () => {
           <div>
             <div className="flex items-baseline justify-between mb-6">
               <h2 className="text-2xl font-bold text-[#00F0FF] font-mono">RESEARCH MODULES</h2>
-              <span className="text-xs text-secondary-foreground font-mono">{modules.length} Available</span>
+              <span className="text-xs text-secondary-foreground font-mono">
+                {modules.length} Available
+              </span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {modules.map((module, idx) => {
@@ -186,10 +208,16 @@ const AstroLabPage: React.FC = () => {
                   >
                     <div className="flex items-start justify-between mb-3">
                       <IconComponent size={20} className="text-[#00F0FF]" />
-                      <span className="text-xs font-mono text-secondary-foreground bg-[#0B0E14] px-2 py-1 rounded">{module.category}</span>
+                      <span className="text-xs font-mono text-secondary-foreground bg-[#0B0E14] px-2 py-1 rounded">
+                        {module.category}
+                      </span>
                     </div>
-                    <h3 className="text-sm font-bold text-foreground font-mono mb-2 group-hover:text-[#00F0FF] transition">{module.label}</h3>
-                    <p className="text-xs text-secondary-foreground mb-4 leading-relaxed">{module.description}</p>
+                    <h3 className="text-sm font-bold text-foreground font-mono mb-2 group-hover:text-[#00F0FF] transition">
+                      {module.label}
+                    </h3>
+                    <p className="text-xs text-secondary-foreground mb-4 leading-relaxed">
+                      {module.description}
+                    </p>
                     <div className="flex items-center gap-2 text-xs font-mono text-[#00F0FF] opacity-0 group-hover:opacity-100 transition">
                       <LinkIcon size={12} />
                       Launch
@@ -208,7 +236,8 @@ const AstroLabPage: React.FC = () => {
                 <h3 className="text-sm font-bold text-foreground font-mono">PRECISION COMPUTING</h3>
               </div>
               <p className="text-xs text-secondary-foreground leading-relaxed">
-                IEEE 754 double-precision floating-point arithmetic with validated algorithms for orbital propagation and celestial mechanics calculations.
+                IEEE 754 double-precision floating-point arithmetic with validated algorithms for
+                orbital propagation and celestial mechanics calculations.
               </p>
             </div>
             <div className="bg-[#131924]/60 backdrop-blur-md border border-[#FF007A]/20 rounded p-6">
@@ -217,7 +246,8 @@ const AstroLabPage: React.FC = () => {
                 <h3 className="text-sm font-bold text-foreground font-mono">DATA INTEGRITY</h3>
               </div>
               <p className="text-xs text-secondary-foreground leading-relaxed">
-                Real-time data validation, error checking, and comprehensive logging for audit trails and reproducible research.
+                Real-time data validation, error checking, and comprehensive logging for audit
+                trails and reproducible research.
               </p>
             </div>
             <div className="bg-[#131924]/60 backdrop-blur-md border border-[#F59E0B]/20 rounded p-6">
@@ -226,21 +256,26 @@ const AstroLabPage: React.FC = () => {
                 <h3 className="text-sm font-bold text-foreground font-mono">PERFORMANCE METRICS</h3>
               </div>
               <p className="text-xs text-secondary-foreground leading-relaxed">
-                Real-time performance monitoring, latency tracking, and resource utilization analysis for optimization.
+                Real-time performance monitoring, latency tracking, and resource utilization
+                analysis for optimization.
               </p>
             </div>
           </div>
 
           {/* Technical Specifications */}
           <div className="bg-[#131924]/60 backdrop-blur-md border border-[#00F0FF]/20 rounded p-6">
-            <h3 className="text-sm font-bold text-[#00F0FF] font-mono mb-4">TECHNICAL SPECIFICATIONS</h3>
+            <h3 className="text-sm font-bold text-[#00F0FF] font-mono mb-4">
+              TECHNICAL SPECIFICATIONS
+            </h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-[#0B0E14] p-4 rounded border border-[#00F0FF]/10">
                 <div className="text-xs text-secondary-foreground font-mono mb-1">PRECISION</div>
                 <div className="text-sm font-bold text-[#00F0FF] font-mono">64-bit IEEE 754</div>
               </div>
               <div className="bg-[#0B0E14] p-4 rounded border border-[#FF007A]/10">
-                <div className="text-xs text-secondary-foreground font-mono mb-1">SATELLITES TRACKED</div>
+                <div className="text-xs text-secondary-foreground font-mono mb-1">
+                  SATELLITES TRACKED
+                </div>
                 <div className="text-sm font-bold text-[#FF007A] font-mono">9000+</div>
               </div>
               <div className="bg-[#0B0E14] p-4 rounded border border-[#F59E0B]/10">
@@ -256,7 +291,9 @@ const AstroLabPage: React.FC = () => {
 
           {/* Standards Compliance */}
           <div className="bg-[#131924]/60 backdrop-blur-md border border-[#10B981]/20 rounded p-6">
-            <h3 className="text-sm font-bold text-[#10B981] font-mono mb-4">STANDARDS & COMPLIANCE</h3>
+            <h3 className="text-sm font-bold text-[#10B981] font-mono mb-4">
+              STANDARDS & COMPLIANCE
+            </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               <div className="flex items-center gap-2 text-xs font-mono">
                 <div className="w-2 h-2 rounded-full bg-[#10B981]" />
@@ -287,7 +324,9 @@ const AstroLabPage: React.FC = () => {
 
           {/* CTA - Professional */}
           <div className="text-center py-6 border-t border-[#00F0FF]/10">
-            <p className="text-secondary-foreground font-mono text-xs mb-4">Select a module to begin your research session</p>
+            <p className="text-secondary-foreground font-mono text-xs mb-4">
+              Select a module to begin your research session
+            </p>
             <div className="flex justify-center gap-4">
               <button className="px-6 py-2 bg-[#00F0FF]/10 text-[#00F0FF] border border-[#00F0FF]/50 rounded font-mono text-xs hover:bg-[#00F0FF]/20 transition-all">
                 Documentation

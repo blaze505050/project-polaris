@@ -75,11 +75,13 @@ Default max-width is `max-w-[100rem]` (~1600px) or more. **NEVER use max-width l
 **CRITICAL**: Consecutive sections MUST use distinctly different structural layouts.
 
 ### Avoid
+
 - Repeating the same column structure (e.g., 3-column, 3-column, 3-column)
 - Using the same alignment for adjacent sections
 - Monotonous, predictable patterns
 
 ### Vary With
+
 - Different column counts (2-col, 3-col, 4-col, full-width)
 - Different content types (lists, galleries, split-screens, cards)
 - Different alignments (left, right, centered, asymmetrical)
@@ -164,6 +166,7 @@ Default max-width is `max-w-[100rem]` (~1600px) or more. **NEVER use max-width l
 ### Inspiration Images
 
 If an inspiration image is provided for the Hero Section:
+
 1. Study it thoroughly
 2. Analyze its composition, layout structure, and element placement
 3. Use it as a **foundation** to create an amazing, innovative layout
@@ -278,11 +281,19 @@ If an inspiration image is provided for the Hero Section:
 // Header pattern
 <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
   <div className="max-w-[100rem] mx-auto px-4 h-16 flex items-center justify-between">
-    <Link to="/" className="font-heading text-xl">Logo</Link>
+    <Link to="/" className="font-heading text-xl">
+      Logo
+    </Link>
     <nav className="hidden md:flex items-center gap-6">
-      <Link to="/about" className="font-paragraph hover:text-primary">About</Link>
-      <Link to="/services" className="font-paragraph hover:text-primary">Services</Link>
-      <Link to="/contact" className="font-paragraph hover:text-primary">Contact</Link>
+      <Link to="/about" className="font-paragraph hover:text-primary">
+        About
+      </Link>
+      <Link to="/services" className="font-paragraph hover:text-primary">
+        Services
+      </Link>
+      <Link to="/contact" className="font-paragraph hover:text-primary">
+        Contact
+      </Link>
     </nav>
     {/* Mobile menu button */}
   </div>
@@ -348,7 +359,7 @@ Use **Framer Motion** for all animations.
 ### Basic Fade-In
 
 ```jsx
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 <motion.div
   initial={{ opacity: 0, y: 20 }}
@@ -356,7 +367,7 @@ import { motion } from 'framer-motion';
   transition={{ duration: 0.5 }}
 >
   Content
-</motion.div>
+</motion.div>;
 ```
 
 ### Staggered Children
@@ -366,22 +377,22 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
 <motion.div variants={containerVariants} initial="hidden" animate="visible">
-  {items.map(item => (
+  {items.map((item) => (
     <motion.div key={item.id} variants={itemVariants}>
       {item.content}
     </motion.div>
   ))}
-</motion.div>
+</motion.div>;
 ```
 
 ### Scroll-Triggered Animation
@@ -424,23 +435,23 @@ const itemVariants = {
 
 ```jsx
 // Background colors
-className="bg-background"
-className="bg-foreground"
-className="bg-primary"
-className="bg-secondary"
-className="bg-muted"
-className="bg-accent"
-className="bg-card"
+className = "bg-background";
+className = "bg-foreground";
+className = "bg-primary";
+className = "bg-secondary";
+className = "bg-muted";
+className = "bg-accent";
+className = "bg-card";
 
 // Text colors
-className="text-foreground"
-className="text-primary"
-className="text-muted-foreground"
-className="text-primary-foreground"
+className = "text-foreground";
+className = "text-primary";
+className = "text-muted-foreground";
+className = "text-primary-foreground";
 
 // Border colors
-className="border-border"
-className="border-primary"
+className = "border-border";
+className = "border-primary";
 ```
 
 ---
@@ -449,14 +460,14 @@ className="border-primary"
 
 ### Breakpoints
 
-| Prefix | Min-width | Typical Use |
-|--------|-----------|-------------|
-| (none) | 0px | Mobile-first default |
-| `sm:` | 640px | Large phones |
-| `md:` | 768px | Tablets |
-| `lg:` | 1024px | Laptops |
-| `xl:` | 1280px | Desktops |
-| `2xl:` | 1536px | Large screens |
+| Prefix | Min-width | Typical Use          |
+| ------ | --------- | -------------------- |
+| (none) | 0px       | Mobile-first default |
+| `sm:`  | 640px     | Large phones         |
+| `md:`  | 768px     | Tablets              |
+| `lg:`  | 1024px    | Laptops              |
+| `xl:`  | 1280px    | Desktops             |
+| `2xl:` | 1536px    | Large screens        |
 
 ### Common Responsive Patterns
 

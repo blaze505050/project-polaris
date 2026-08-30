@@ -82,7 +82,12 @@ function OpportunitiesIndex() {
       <section className="section">
         <div className="shell">
           <div className="flex flex-col gap-4 border-b border-border pb-8">
-            <FilterRow label="Type" options={CATEGORY_FILTERS} value={category} onChange={setCategory} />
+            <FilterRow
+              label="Type"
+              options={CATEGORY_FILTERS}
+              value={category}
+              onChange={setCategory}
+            />
             <FilterRow label="Level" options={LEVEL_FILTERS} value={level} onChange={setLevel} />
           </div>
 

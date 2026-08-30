@@ -4,12 +4,12 @@
  * All equations validated against standard astrophysics references
  */
 
-import type { CelestialBody } from './advancedPhysicsSimulator';
+import type { CelestialBody } from "./advancedPhysicsSimulator";
 export type { CelestialBody };
 
 // Physical Constants (SI units)
 export const PHYSICS_CONSTANTS = {
-  G: 6.67430e-11, // Gravitational constant (m^3 kg^-1 s^-2)
+  G: 6.6743e-11, // Gravitational constant (m^3 kg^-1 s^-2)
   M_SUN: 1.989e30, // Solar mass (kg)
   R_SUN: 6.96e8, // Solar radius (m)
   M_EARTH: 5.972e24, // Earth mass (kg)
@@ -24,16 +24,15 @@ export const PHYSICS_CONSTANTS = {
 };
 
 export function validateCelestialBody(body: any): { isValid: boolean; warning?: string } {
-  if (!body) return { isValid: false, warning: 'Body is undefined' };
-  if (!body.mass || body.mass <= 0) return { isValid: false, warning: 'Invalid mass' };
-  if (!body.radius || body.radius <= 0) return { isValid: false, warning: 'Invalid radius' };
+  if (!body) return { isValid: false, warning: "Body is undefined" };
+  if (!body.mass || body.mass <= 0) return { isValid: false, warning: "Invalid mass" };
+  if (!body.radius || body.radius <= 0) return { isValid: false, warning: "Invalid radius" };
   return { isValid: true };
 }
 
 export function updateBodies(bodies: any[], dt: number): any[] {
   return bodies;
 }
-
 
 // Input Validation & Sanitization
 export interface ValidationResult {
@@ -47,7 +46,7 @@ export function sanitizeNumericInput(
   value: any,
   min: number = 0,
   max: number = Infinity,
-  name: string = 'Parameter'
+  name: string = "Parameter",
 ): ValidationResult {
   // Parse input
   let parsed = parseFloat(value);
@@ -107,10 +106,7 @@ export interface OrbitalState {
  * Calculate orbital velocity at a given radius
  * v = sqrt(GM/r)
  */
-export function calculateOrbitalVelocity(
-  centralMass: number,
-  radius: number
-): number {
+export function calculateOrbitalVelocity(centralMass: number, radius: number): number {
   if (radius <= 0) return 0;
   return Math.sqrt((PHYSICS_CONSTANTS.G * centralMass) / radius);
 }
@@ -121,7 +117,7 @@ export function calculateOrbitalVelocity(
  */
 export function calculateOrbitalPeriodSI(
   centralMassKg: number,
-  semiMajorAxisMeters: number
+  semiMajorAxisMeters: number,
 ): number {
   if (semiMajorAxisMeters <= 0 || centralMassKg <= 0) return 0;
   const numerator = 4 * Math.PI * Math.PI * Math.pow(semiMajorAxisMeters, 3);
@@ -134,7 +130,7 @@ export function calculateOrbitalPeriodSI(
  */
 export function calculateOrbitalPeriodAU(
   semiMajorAxisAU: number,
-  centralMassSolar: number = 1.0
+  centralMassSolar: number = 1.0,
 ): number {
   const m = centralMassSolar * PHYSICS_CONSTANTS.M_SUN;
   const a = semiMajorAxisAU * PHYSICS_CONSTANTS.AU;
@@ -144,10 +140,7 @@ export function calculateOrbitalPeriodAU(
 /**
  * Calculate orbital period using Kepler's Third Law (Backward compatible overloaded wrapper)
  */
-export function calculateOrbitalPeriod(
-  centralMassOrA: number,
-  semiMajorAxis?: number
-): number {
+export function calculateOrbitalPeriod(centralMassOrA: number, semiMajorAxis?: number): number {
   if (semiMajorAxis !== undefined) {
     return calculateOrbitalPeriodSI(centralMassOrA, semiMajorAxis);
   }
@@ -158,10 +151,7 @@ export function calculateOrbitalPeriod(
  * Calculate escape velocity
  * v_esc = sqrt(2GM/r)
  */
-export function calculateEscapeVelocity(
-  centralMass: number,
-  radius: number
-): number {
+export function calculateEscapeVelocity(centralMass: number, radius: number): number {
   if (radius <= 0) return 0;
   return Math.sqrt((2 * PHYSICS_CONSTANTS.G * centralMass) / radius);
 }
@@ -173,7 +163,7 @@ export function calculateEscapeVelocity(
 export function calculateSpecificOrbitalEnergy(
   velocity: number,
   radius: number,
-  centralMass: number
+  centralMass: number,
 ): number {
   const mu = PHYSICS_CONSTANTS.G * centralMass;
   return (velocity * velocity) / 2 - mu / radius;
@@ -184,7 +174,7 @@ export function calculateSpecificOrbitalEnergy(
  */
 export function generateOrbitalTrajectory(
   radius: number,
-  points: number = 360
+  points: number = 360,
 ): Array<{ x: number; y: number }> {
   const trajectory: Array<{ x: number; y: number }> = [];
   for (let i = 0; i < points; i++) {
@@ -203,7 +193,7 @@ export function generateOrbitalTrajectory(
 export function computeOrbitalState(
   centralMass: number,
   orbitalRadius: number,
-  eccentricity: number = 0
+  eccentricity: number = 0,
 ): OrbitalState {
   const velocity = calculateOrbitalVelocity(centralMass, orbitalRadius);
   const period = calculateOrbitalPeriod(centralMass, orbitalRadius);
@@ -241,14 +231,14 @@ export interface GravityForceResult {
 export function calculateGravitationalForce(
   mass1: number,
   mass2: number,
-  distance: number
+  distance: number,
 ): GravityForceResult {
   // CRITICAL: Validate all inputs to prevent Infinity/NaN
   if (distance <= 0) {
     return {
       force: 0,
       acceleration: 0,
-      distanceValidation: 'ERROR: Distance must be > 0 (minimum surface contact)',
+      distanceValidation: "ERROR: Distance must be > 0 (minimum surface contact)",
     };
   }
 
@@ -256,7 +246,7 @@ export function calculateGravitationalForce(
     return {
       force: 0,
       acceleration: 0,
-      distanceValidation: 'ERROR: Mass must be positive (minimum 1e-10 kg)',
+      distanceValidation: "ERROR: Mass must be positive (minimum 1e-10 kg)",
     };
   }
 
@@ -268,15 +258,15 @@ export function calculateGravitationalForce(
   const forcedDoubled = (PHYSICS_CONSTANTS.G * mass1 * mass2) / (doubledDistance * doubledDistance);
   const ratio = force / forcedDoubled;
 
-  let validation = '';
+  let validation = "";
   if (Math.abs(ratio - 4) > 0.01) {
-    validation = 'Inverse-square law validation failed';
+    validation = "Inverse-square law validation failed";
   }
 
   return {
     force,
     acceleration,
-    distanceValidation: validation || 'Inverse-square law verified (4x ratio)',
+    distanceValidation: validation || "Inverse-square law verified (4x ratio)",
   };
 }
 
@@ -298,27 +288,24 @@ export interface TransitLightCurve {
  * Transit Depth ≈ (R_p / R_s)^2
  * EDGE-CASE HARDENED: Validates Rp <= Rs, clamps invalid ratios
  */
-export function calculateTransitDepth(
-  planetRadius: number,
-  starRadius: number
-): number {
+export function calculateTransitDepth(planetRadius: number, starRadius: number): number {
   // CRITICAL: Validate inputs
   if (starRadius <= 0) {
-    console.warn('ERROR: Star radius must be positive');
+    console.warn("ERROR: Star radius must be positive");
     return 0;
   }
 
   if (planetRadius <= 0) {
-    console.warn('ERROR: Planet radius must be positive');
+    console.warn("ERROR: Planet radius must be positive");
     return 0;
   }
 
   // CRITICAL: Clamp planet radius to star radius (physical constraint)
   const clampedPlanetRadius = Math.min(planetRadius, starRadius);
-  
+
   if (planetRadius > starRadius) {
     console.warn(
-      `PHYSICS ERROR: Planet radius (${(planetRadius / 1e6).toFixed(1)} Mm) exceeds star radius (${(starRadius / 1e6).toFixed(1)} Mm). Clamping to stellar radius.`
+      `PHYSICS ERROR: Planet radius (${(planetRadius / 1e6).toFixed(1)} Mm) exceeds star radius (${(starRadius / 1e6).toFixed(1)} Mm). Clamping to stellar radius.`,
     );
   }
 
@@ -333,7 +320,7 @@ export function generateTransitLightCurve(
   planetRadius: number,
   starRadius: number,
   orbitalPeriod: number,
-  transitDuration: number = 2.5 // hours
+  transitDuration: number = 2.5, // hours
 ): TransitLightCurve {
   const transitDepth = calculateTransitDepth(planetRadius, starRadius);
   const points: Array<{ time: number; flux: number }> = [];
@@ -348,7 +335,7 @@ export function generateTransitLightCurve(
 
     // Ingress/egress (linear approximation)
     if (Math.abs(time) < transitHalfDuration) {
-      flux = 1.0 - (transitDepth / 100) * Math.pow(Math.cos(Math.PI * time / transitDuration), 2);
+      flux = 1.0 - (transitDepth / 100) * Math.pow(Math.cos((Math.PI * time) / transitDuration), 2);
     }
 
     points.push({ time, flux });
@@ -420,13 +407,13 @@ export function calculateSurfaceTemperature(massInSolarMasses: number): number {
  * Classify star by spectral type based on temperature
  */
 export function classifySpectralType(temperatureK: number): string {
-  if (temperatureK >= 30000) return 'O';
-  if (temperatureK >= 10000) return 'B';
-  if (temperatureK >= 7500) return 'A';
-  if (temperatureK >= 6000) return 'F';
-  if (temperatureK >= 5200) return 'G';
-  if (temperatureK >= 3700) return 'K';
-  return 'M';
+  if (temperatureK >= 30000) return "O";
+  if (temperatureK >= 10000) return "B";
+  if (temperatureK >= 7500) return "A";
+  if (temperatureK >= 6000) return "F";
+  if (temperatureK >= 5200) return "G";
+  if (temperatureK >= 3700) return "K";
+  return "M";
 }
 
 /**
@@ -439,7 +426,7 @@ export function computeStellarProperties(massInSolarMasses: number): StellarProp
   const MAX_MAIN_SEQUENCE_MASS = 150; // M_sun (upper limit for stable MS)
 
   let validatedMass = massInSolarMasses;
-  let warning = '';
+  let warning = "";
 
   if (massInSolarMasses < MIN_MAIN_SEQUENCE_MASS) {
     validatedMass = MIN_MAIN_SEQUENCE_MASS;
@@ -496,7 +483,7 @@ export function validateLEOVelocity(userVelocity: number): {
   const TOLERANCE = 5; // ±5% tolerance
   const isCorrect = errorPercent <= TOLERANCE;
 
-  let feedback = '';
+  let feedback = "";
   if (isCorrect) {
     feedback = `✓ Excellent! Your velocity (${userVelocity.toFixed(3)} km/s) matches the required circular orbit within ±${TOLERANCE}% tolerance.`;
   } else if (userVelocity < requiredVelocityKmS) {
@@ -524,7 +511,7 @@ export function validateLEOVelocity(userVelocity: number): {
 export function validateTransitDetection(
   measuredDepthPercent: number,
   planetRadiusKm: number,
-  starRadiusKm: number
+  starRadiusKm: number,
 ): {
   isCorrect: boolean;
   expectedDepth: number;
@@ -546,7 +533,7 @@ export function validateTransitDetection(
   const TOLERANCE = 10; // ±10% tolerance for observational error
   const isCorrect = errorPercent <= TOLERANCE;
 
-  let feedback = '';
+  let feedback = "";
   if (isCorrect) {
     feedback = `✓ Correct! Transit depth ${measuredDepthPercent.toFixed(4)}% matches expected ${expectedDepth.toFixed(4)}% within ±${TOLERANCE}% tolerance.`;
   } else if (measuredDepthPercent < expectedDepth) {
@@ -569,7 +556,7 @@ export function validateTransitDetection(
  */
 export function validateStarClassification(
   userSpectralClass: string,
-  temperatureK: number
+  temperatureK: number,
 ): {
   isCorrect: boolean;
   expectedClass: string;
@@ -578,7 +565,7 @@ export function validateStarClassification(
   const expectedClass = classifySpectralType(temperatureK);
   const isCorrect = userSpectralClass.toUpperCase() === expectedClass;
 
-  let feedback = '';
+  let feedback = "";
   if (isCorrect) {
     feedback = `✓ Correct! This is a ${expectedClass}-type star at ${temperatureK.toLocaleString()} K.`;
   } else {
@@ -601,8 +588,8 @@ export function validateStarClassification(
  * Automatically selects appropriate units (m, km, AU, ly)
  */
 export function formatDistance(meters: number): string {
-  if (meters < 0) return '0 m';
-  
+  if (meters < 0) return "0 m";
+
   if (meters < 1000) {
     return `${meters.toFixed(2)} m`;
   } else if (meters < 1e9) {
@@ -631,10 +618,13 @@ export interface CartesianPosition {
   z: number;
 }
 
-export function validateOrbitalElements(elements: OrbitalElements): { valid: boolean; errors: string[] } {
+export function validateOrbitalElements(elements: OrbitalElements): {
+  valid: boolean;
+  errors: string[];
+} {
   const errors: string[] = [];
-  if (!elements || elements.a <= 0) errors.push('Semi-major axis must be positive');
-  if (elements.e < 0 || elements.e >= 1) errors.push('Eccentricity must be between 0 and 1');
+  if (!elements || elements.a <= 0) errors.push("Semi-major axis must be positive");
+  if (elements.e < 0 || elements.e >= 1) errors.push("Eccentricity must be between 0 and 1");
   return { valid: errors.length === 0, errors };
 }
 
@@ -662,7 +652,7 @@ export function calculateTransitDuration(
   period: number,
   starRadius: number,
   orbit: number = 1,
-  inclination: number = 90
+  inclination: number = 90,
 ): number {
   return (2.5 * (starRadius || 1)) / (orbit || 1);
 }
@@ -670,7 +660,7 @@ export function calculateTransitDuration(
 export function simulateTransitLightCurve(
   depth: number,
   duration: number,
-  timePoints: number[]
+  timePoints: number[],
 ): number[] {
   const halfDuration = (duration || 2.5) / 2;
   return timePoints.map((t) => {
@@ -681,14 +671,13 @@ export function simulateTransitLightCurve(
   });
 }
 
-
 /**
  * Format velocity for display
  * Automatically selects appropriate units (m/s, km/s)
  */
 export function formatVelocity(metersPerSecond: number): string {
-  if (metersPerSecond < 0) return '0 m/s';
-  
+  if (metersPerSecond < 0) return "0 m/s";
+
   if (metersPerSecond < 1000) {
     return `${metersPerSecond.toFixed(2)} m/s`;
   } else {
@@ -722,7 +711,7 @@ interface Derivative {
  */
 function computeNBodyAccelerations(
   bodies: NBodyState[],
-  softening: number = 1e8
+  softening: number = 1e8,
 ): Array<{ ax: number; ay: number }> {
   const n = bodies.length;
   const accs = new Array(n).fill(null).map(() => ({ ax: 0, ay: 0 }));
@@ -751,7 +740,7 @@ function computeNBodyAccelerations(
 /**
  * 4th-order Runge-Kutta integration step for N-body gravitational system.
  * Preserves energy to O(dt^5) per step.
- * 
+ *
  * @param bodies Array of body states (x, y, vx, vy, mass)
  * @param dt Time step in seconds
  * @returns New body states after one RK4 step
@@ -759,7 +748,7 @@ function computeNBodyAccelerations(
 export function rk4NBodyStep(
   bodies: NBodyState[],
   dt: number,
-  softening: number = 1e8
+  softening: number = 1e8,
 ): NBodyState[] {
   if (dt <= 0 || !isFinite(dt)) return bodies;
   const n = bodies.length;
@@ -775,33 +764,42 @@ export function rk4NBodyStep(
   // k1
   const a1 = computeNBodyAccelerations(bodies, softening);
   const k1: Derivative[] = bodies.map((b, i) => ({
-    dx: b.vx, dy: b.vy, dvx: a1[i].ax, dvy: a1[i].ay,
+    dx: b.vx,
+    dy: b.vy,
+    dvx: a1[i].ax,
+    dvy: a1[i].ay,
   }));
 
   // k2: state at t + dt/2 using k1
   const s2: NBodyState[] = bodies.map((b, i) => ({
-    x: b.x + k1[i].dx * dt / 2,
-    y: b.y + k1[i].dy * dt / 2,
-    vx: b.vx + k1[i].dvx * dt / 2,
-    vy: b.vy + k1[i].dvy * dt / 2,
+    x: b.x + (k1[i].dx * dt) / 2,
+    y: b.y + (k1[i].dy * dt) / 2,
+    vx: b.vx + (k1[i].dvx * dt) / 2,
+    vy: b.vy + (k1[i].dvy * dt) / 2,
     mass: b.mass,
   }));
   const a2 = computeNBodyAccelerations(s2, softening);
   const k2: Derivative[] = s2.map((b, i) => ({
-    dx: b.vx, dy: b.vy, dvx: a2[i].ax, dvy: a2[i].ay,
+    dx: b.vx,
+    dy: b.vy,
+    dvx: a2[i].ax,
+    dvy: a2[i].ay,
   }));
 
   // k3: state at t + dt/2 using k2
   const s3: NBodyState[] = bodies.map((b, i) => ({
-    x: b.x + k2[i].dx * dt / 2,
-    y: b.y + k2[i].dy * dt / 2,
-    vx: b.vx + k2[i].dvx * dt / 2,
-    vy: b.vy + k2[i].dvy * dt / 2,
+    x: b.x + (k2[i].dx * dt) / 2,
+    y: b.y + (k2[i].dy * dt) / 2,
+    vx: b.vx + (k2[i].dvx * dt) / 2,
+    vy: b.vy + (k2[i].dvy * dt) / 2,
     mass: b.mass,
   }));
   const a3 = computeNBodyAccelerations(s3, softening);
   const k3: Derivative[] = s3.map((b, i) => ({
-    dx: b.vx, dy: b.vy, dvx: a3[i].ax, dvy: a3[i].ay,
+    dx: b.vx,
+    dy: b.vy,
+    dvx: a3[i].ax,
+    dvy: a3[i].ay,
   }));
 
   // k4: state at t + dt using k3
@@ -814,7 +812,10 @@ export function rk4NBodyStep(
   }));
   const a4 = computeNBodyAccelerations(s4, softening);
   const k4: Derivative[] = s4.map((b, i) => ({
-    dx: b.vx, dy: b.vy, dvx: a4[i].ax, dvy: a4[i].ay,
+    dx: b.vx,
+    dy: b.vy,
+    dvx: a4[i].ax,
+    dvy: a4[i].ay,
   }));
 
   // Combine: y_{n+1} = y_n + (dt/6)(k1 + 2k2 + 2k3 + k4)
@@ -842,7 +843,7 @@ export function computeNBodyEnergy(bodies: NBodyState[], softening: number = 1e8
       const dx = bodies[j].x - bodies[i].x;
       const dy = bodies[j].y - bodies[i].y;
       const dist = Math.sqrt(dx * dx + dy * dy + eps2);
-      potential -= PHYSICS_CONSTANTS.G * bodies[i].mass * bodies[j].mass / dist;
+      potential -= (PHYSICS_CONSTANTS.G * bodies[i].mass * bodies[j].mass) / dist;
     }
   }
   return kinetic + potential;
@@ -853,19 +854,19 @@ export function computeNBodyEnergy(bodies: NBodyState[], softening: number = 1e8
 // ============================================================================
 
 export interface PhotometryResult {
-  sourceFlux: number;         // Total ADU in source aperture
-  skyFluxPerPixel: number;    // Mean sky per pixel in annulus
-  netFlux: number;            // Sky-subtracted net source flux
-  snr: number;                // Signal-to-noise ratio
-  instrumentalMag: number;    // -2.5 * log10(netFlux)
-  sourcePixels: number;       // Number of pixels in aperture
-  skyPixels: number;          // Number of pixels in annulus
-  readNoiseContrib: number;   // Read noise contribution
+  sourceFlux: number; // Total ADU in source aperture
+  skyFluxPerPixel: number; // Mean sky per pixel in annulus
+  netFlux: number; // Sky-subtracted net source flux
+  snr: number; // Signal-to-noise ratio
+  instrumentalMag: number; // -2.5 * log10(netFlux)
+  sourcePixels: number; // Number of pixels in aperture
+  skyPixels: number; // Number of pixels in annulus
+  readNoiseContrib: number; // Read noise contribution
 }
 
 /**
  * Calculate aperture photometry from a 2D pixel array.
- * 
+ *
  * SNR = S_net / √(S_source + n_src·B_sky + n_src·D·t + n_src·R²)
  * Where:
  *   S_source = total source counts in aperture
@@ -896,17 +897,35 @@ export function computeAperturePhotometry(
   readNoise: number = 5,
   darkCurrent: number = 0.01,
   exposureTime: number = 300,
-  gain: number = 1.5
+  gain: number = 1.5,
 ): PhotometryResult {
   // Validate
   if (apertureRadius <= 0 || innerAnnulus <= 0 || outerAnnulus <= innerAnnulus) {
-    return { sourceFlux: 0, skyFluxPerPixel: 0, netFlux: 0, snr: 0, instrumentalMag: 99, sourcePixels: 0, skyPixels: 0, readNoiseContrib: 0 };
+    return {
+      sourceFlux: 0,
+      skyFluxPerPixel: 0,
+      netFlux: 0,
+      snr: 0,
+      instrumentalMag: 99,
+      sourcePixels: 0,
+      skyPixels: 0,
+      readNoiseContrib: 0,
+    };
   }
 
   const height = pixels.length;
   const width = height > 0 ? pixels[0].length : 0;
   if (width === 0 || height === 0) {
-    return { sourceFlux: 0, skyFluxPerPixel: 0, netFlux: 0, snr: 0, instrumentalMag: 99, sourcePixels: 0, skyPixels: 0, readNoiseContrib: 0 };
+    return {
+      sourceFlux: 0,
+      skyFluxPerPixel: 0,
+      netFlux: 0,
+      snr: 0,
+      instrumentalMag: 99,
+      sourcePixels: 0,
+      skyPixels: 0,
+      readNoiseContrib: 0,
+    };
   }
 
   let sourceFlux = 0;
@@ -941,9 +960,7 @@ export function computeAperturePhotometry(
 
   // Compute sky: use median for robustness against cosmic rays
   skyValues.sort((a, b) => a - b);
-  const skyMedian = skyValues.length > 0
-    ? skyValues[Math.floor(skyValues.length / 2)]
-    : 0;
+  const skyMedian = skyValues.length > 0 ? skyValues[Math.floor(skyValues.length / 2)] : 0;
 
   const skyFluxPerPixel = skyMedian;
   const skyPixels = skyValues.length;
@@ -957,9 +974,7 @@ export function computeAperturePhotometry(
   const readNoiseContrib = readNoise * readNoise * sourcePixels;
 
   // SNR
-  const noise = Math.sqrt(
-    sourceElectrons + skyElectronsInAp + darkElectrons + readNoiseContrib
-  );
+  const noise = Math.sqrt(sourceElectrons + skyElectronsInAp + darkElectrons + readNoiseContrib);
   const snr = noise > 0 ? (netFlux * gain) / noise : 0;
 
   // Instrumental magnitude
@@ -986,10 +1001,10 @@ export function generateSyntheticStarField(
   height: number,
   stars: Array<{ x: number; y: number; flux: number; fwhm: number }>,
   skyBackground: number = 200,
-  readNoise: number = 5
+  readNoise: number = 5,
 ): number[][] {
   const image: number[][] = [];
-  
+
   for (let y = 0; y < height; y++) {
     const row: number[] = [];
     for (let x = 0; x < width; x++) {
@@ -997,28 +1012,30 @@ export function generateSyntheticStarField(
       let value = skyBackground + (Math.random() - 0.5) * 2 * Math.sqrt(skyBackground);
       // Add read noise
       value += randomGaussian() * readNoise;
-      
+
       // Add star contributions
       for (const star of stars) {
         const dx = x - star.x;
         const dy = y - star.y;
         const sigma = star.fwhm / 2.355; // FWHM to sigma
         const exponent = -(dx * dx + dy * dy) / (2 * sigma * sigma);
-        if (exponent > -20) { // Skip negligible contributions
-          value += star.flux * Math.exp(exponent) / (2 * Math.PI * sigma * sigma);
+        if (exponent > -20) {
+          // Skip negligible contributions
+          value += (star.flux * Math.exp(exponent)) / (2 * Math.PI * sigma * sigma);
         }
       }
-      
+
       row.push(Math.max(0, Math.round(value)));
     }
     image.push(row);
   }
-  
+
   return image;
 }
 
 function randomGaussian(): number {
-  let u = 0, v = 0;
+  let u = 0,
+    v = 0;
   while (u === 0) u = Math.random();
   while (v === 0) v = Math.random();
   return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
@@ -1029,12 +1046,12 @@ function randomGaussian(): number {
 // ============================================================================
 
 export interface CelestialCoordinateResult {
-  altitude: number;     // degrees
-  azimuth: number;      // degrees
+  altitude: number; // degrees
+  azimuth: number; // degrees
   julianDate: number;
-  gmst: number;         // hours
-  lst: number;          // hours (Local Sidereal Time)
-  hourAngle: number;    // hours
+  gmst: number; // hours
+  lst: number; // hours (Local Sidereal Time)
+  hourAngle: number; // hours
   isAboveHorizon: boolean;
 }
 
@@ -1053,8 +1070,14 @@ export function dateToJulianDate(date: Date): number {
   const y2 = y + 4800 - a;
   const m2 = m + 12 * a - 3;
 
-  const jdn = d + Math.floor((153 * m2 + 2) / 5) + 365 * y2
-    + Math.floor(y2 / 4) - Math.floor(y2 / 100) + Math.floor(y2 / 400) - 32045;
+  const jdn =
+    d +
+    Math.floor((153 * m2 + 2) / 5) +
+    365 * y2 +
+    Math.floor(y2 / 4) -
+    Math.floor(y2 / 100) +
+    Math.floor(y2 / 400) -
+    32045;
 
   return jdn + (ut - 12) / 24;
 }
@@ -1065,22 +1088,23 @@ export function dateToJulianDate(date: Date): number {
  */
 export function computeGMST(jd: number): number {
   const T = (jd - 2451545.0) / 36525.0; // Julian centuries from J2000.0
-  
+
   // GMST in degrees
-  let gmstDeg = 280.46061837
-    + 360.98564736629 * (jd - 2451545.0)
-    + 0.000387933 * T * T
-    - (T * T * T) / 38710000.0;
-  
+  let gmstDeg =
+    280.46061837 +
+    360.98564736629 * (jd - 2451545.0) +
+    0.000387933 * T * T -
+    (T * T * T) / 38710000.0;
+
   // Normalize to 0-360
   gmstDeg = ((gmstDeg % 360) + 360) % 360;
-  
+
   return gmstDeg / 15.0; // Convert to hours
 }
 
 /**
  * Convert RA/Dec (equatorial) to Alt/Az (horizontal) coordinates.
- * 
+ *
  * @param raHours Right Ascension in hours (0-24)
  * @param decDeg Declination in degrees (-90 to +90)
  * @param latDeg Observer latitude in degrees
@@ -1092,40 +1116,49 @@ export function equatorialToHorizontal(
   decDeg: number,
   latDeg: number,
   lonDeg: number,
-  utcDate: Date
+  utcDate: Date,
 ): CelestialCoordinateResult {
   // Input validation
   if (!isFinite(raHours) || !isFinite(decDeg) || !isFinite(latDeg) || !isFinite(lonDeg)) {
-    return { altitude: 0, azimuth: 0, julianDate: 0, gmst: 0, lst: 0, hourAngle: 0, isAboveHorizon: false };
+    return {
+      altitude: 0,
+      azimuth: 0,
+      julianDate: 0,
+      gmst: 0,
+      lst: 0,
+      hourAngle: 0,
+      isAboveHorizon: false,
+    };
   }
 
   const jd = dateToJulianDate(utcDate);
   const gmst = computeGMST(jd);
-  
+
   // Local Sidereal Time
   let lst = gmst + lonDeg / 15.0;
   lst = ((lst % 24) + 24) % 24;
-  
+
   // Hour Angle
   let ha = lst - raHours;
-  ha = ((ha + 12) % 24 + 24) % 24 - 12; // Normalize to -12..+12
+  ha = ((((ha + 12) % 24) + 24) % 24) - 12; // Normalize to -12..+12
 
   // Convert to radians
-  const haRad = ha * Math.PI / 12;
-  const decRad = decDeg * Math.PI / 180;
-  const latRad = latDeg * Math.PI / 180;
+  const haRad = (ha * Math.PI) / 12;
+  const decRad = (decDeg * Math.PI) / 180;
+  const latRad = (latDeg * Math.PI) / 180;
 
   // Altitude
-  const sinAlt = Math.sin(decRad) * Math.sin(latRad)
-    + Math.cos(decRad) * Math.cos(latRad) * Math.cos(haRad);
+  const sinAlt =
+    Math.sin(decRad) * Math.sin(latRad) + Math.cos(decRad) * Math.cos(latRad) * Math.cos(haRad);
   const altRad = Math.asin(Math.max(-1, Math.min(1, sinAlt)));
-  const altitude = altRad * 180 / Math.PI;
+  const altitude = (altRad * 180) / Math.PI;
 
   // Azimuth
-  const cosA = (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad))
-    / (Math.cos(altRad) * Math.cos(latRad));
-  let azimuth = Math.acos(Math.max(-1, Math.min(1, cosA))) * 180 / Math.PI;
-  
+  const cosA =
+    (Math.sin(decRad) - Math.sin(altRad) * Math.sin(latRad)) /
+    (Math.cos(altRad) * Math.cos(latRad));
+  let azimuth = (Math.acos(Math.max(-1, Math.min(1, cosA))) * 180) / Math.PI;
+
   if (Math.sin(haRad) > 0) {
     azimuth = 360 - azimuth;
   }
@@ -1146,18 +1179,18 @@ export function equatorialToHorizontal(
 // ============================================================================
 
 export interface KeplerianSolution {
-  semiMajorAxis: number;      // meters
+  semiMajorAxis: number; // meters
   eccentricity: number;
-  periapsis: number;           // meters (distance from center)
-  apoapsis: number;            // meters (distance from center)
-  periapsisAltitude: number;   // meters (above surface)
-  apoapsisAltitude: number;    // meters (above surface)
-  orbitalPeriod: number;       // seconds
-  periapsisVelocity: number;   // m/s
-  apoapsisVelocity: number;    // m/s
-  specificEnergy: number;      // J/kg
-  angularMomentum: number;     // m²/s
-  meanMotion: number;          // rad/s
+  periapsis: number; // meters (distance from center)
+  apoapsis: number; // meters (distance from center)
+  periapsisAltitude: number; // meters (above surface)
+  apoapsisAltitude: number; // meters (above surface)
+  orbitalPeriod: number; // seconds
+  periapsisVelocity: number; // m/s
+  apoapsisVelocity: number; // m/s
+  specificEnergy: number; // J/kg
+  angularMomentum: number; // m²/s
+  meanMotion: number; // rad/s
   ellipsePoints: Array<{ x: number; y: number }>; // for visualization
 }
 
@@ -1165,17 +1198,17 @@ export interface KeplerianSolution {
  * Central body gravitational parameters
  */
 export const CENTRAL_BODIES = {
-  Earth: { mass: 5.972e24, radius: 6.371e6, mu: 3.986004418e14, name: 'Earth' },
-  Mars: { mass: 6.417e23, radius: 3.3895e6, mu: 4.282837e13, name: 'Mars' },
-  Sun: { mass: 1.989e30, radius: 6.96e8, mu: 1.32712440018e20, name: 'Sun' },
-  Jupiter: { mass: 1.898e27, radius: 6.9911e7, mu: 1.26686534e17, name: 'Jupiter' },
-  Moon: { mass: 7.342e22, radius: 1.7374e6, mu: 4.9048695e12, name: 'Moon' },
+  Earth: { mass: 5.972e24, radius: 6.371e6, mu: 3.986004418e14, name: "Earth" },
+  Mars: { mass: 6.417e23, radius: 3.3895e6, mu: 4.282837e13, name: "Mars" },
+  Sun: { mass: 1.989e30, radius: 6.96e8, mu: 1.32712440018e20, name: "Sun" },
+  Jupiter: { mass: 1.898e27, radius: 6.9911e7, mu: 1.26686534e17, name: "Jupiter" },
+  Moon: { mass: 7.342e22, radius: 1.7374e6, mu: 4.9048695e12, name: "Moon" },
 } as const;
 
 /**
  * Solve complete Keplerian orbit from semi-major axis, eccentricity, and central body.
  * Uses vis-viva equation: v² = μ(2/r - 1/a)
- * 
+ *
  * @param a Semi-major axis in meters
  * @param e Eccentricity (0 ≤ e < 1 for elliptical)
  * @param centralBody Central body key
@@ -1185,7 +1218,7 @@ export function solveKeplerianOrbit(
   a: number,
   e: number,
   centralBody: keyof typeof CENTRAL_BODIES,
-  inclinationDeg: number = 0
+  inclinationDeg: number = 0,
 ): KeplerianSolution | null {
   // Input validation
   if (a <= 0 || !isFinite(a)) return null;
@@ -1196,19 +1229,21 @@ export function solveKeplerianOrbit(
   const R = body.radius;
 
   // Core orbital parameters
-  const periapsis = a * (1 - e);        // rp
-  const apoapsis = a * (1 + e);         // ra
+  const periapsis = a * (1 - e); // rp
+  const apoapsis = a * (1 + e); // ra
   const periapsisAltitude = periapsis - R;
   const apoapsisAltitude = apoapsis - R;
 
   // Validate: periapsis must be above surface
   if (periapsis < R * 0.9) {
     // Allow slightly sub-surface for educational purposes but warn
-    console.warn(`Periapsis (${(periapsis/1000).toFixed(0)} km) is below surface (${(R/1000).toFixed(0)} km)`);
+    console.warn(
+      `Periapsis (${(periapsis / 1000).toFixed(0)} km) is below surface (${(R / 1000).toFixed(0)} km)`,
+    );
   }
 
   // Orbital period: T = 2π√(a³/μ)
-  const orbitalPeriod = 2 * Math.PI * Math.sqrt(a * a * a / mu);
+  const orbitalPeriod = 2 * Math.PI * Math.sqrt((a * a * a) / mu);
 
   // Velocities via vis-viva: v = √(μ(2/r - 1/a))
   const periapsisVelocity = Math.sqrt(mu * (2 / periapsis - 1 / a));
@@ -1221,7 +1256,7 @@ export function solveKeplerianOrbit(
   const angularMomentum = Math.sqrt(mu * a * (1 - e * e));
 
   // Mean motion: n = 2π/T
-  const meanMotion = 2 * Math.PI / orbitalPeriod;
+  const meanMotion = (2 * Math.PI) / orbitalPeriod;
 
   // Generate ellipse points for visualization
   const ellipsePoints: Array<{ x: number; y: number }> = [];
@@ -1270,27 +1305,24 @@ export interface AirfoilData {
   maxCamber: number;
   maxCamberPos: number;
   maxThickness: number;
-  clAlpha: number;      // Thin airfoil theory lift slope ≈ 2π
+  clAlpha: number; // Thin airfoil theory lift slope ≈ 2π
   alphaZeroLift: number; // degrees
 }
 
 /**
  * Generate NACA 4-digit airfoil geometry.
  * NACA MPXX: M=max camber, P=position, XX=max thickness
- * 
+ *
  * @param m Max camber (first digit / 100)
  * @param p Max camber position (second digit / 10)
  * @param t Max thickness (last two digits / 100)
  * @param nPoints Number of points per surface
  */
-export function generateNACA4Digit(
-  naca: string,
-  nPoints: number = 100
-): AirfoilData | null {
+export function generateNACA4Digit(naca: string, nPoints: number = 100): AirfoilData | null {
   if (naca.length !== 4 || !/^\d{4}$/.test(naca)) return null;
 
-  const m = parseInt(naca[0]) / 100;     // max camber
-  const p = parseInt(naca[1]) / 10;      // max camber position
+  const m = parseInt(naca[0]) / 100; // max camber
+  const p = parseInt(naca[1]) / 10; // max camber position
   const t = parseInt(naca.substring(2)) / 100; // max thickness
 
   const upper: AirfoilPoint[] = [];
@@ -1303,13 +1335,13 @@ export function generateNACA4Digit(
     const x = (1 - Math.cos(beta)) / 2;
 
     // Thickness distribution (NACA formula)
-    const yt = (t / 0.2) * (
-      0.2969 * Math.sqrt(x)
-      - 0.1260 * x
-      - 0.3516 * x * x
-      + 0.2843 * x * x * x
-      - 0.1015 * x * x * x * x
-    );
+    const yt =
+      (t / 0.2) *
+      (0.2969 * Math.sqrt(x) -
+        0.126 * x -
+        0.3516 * x * x +
+        0.2843 * x * x * x -
+        0.1015 * x * x * x * x);
 
     // Camber line
     let yc = 0;
@@ -1317,10 +1349,10 @@ export function generateNACA4Digit(
     if (m > 0 && p > 0) {
       if (x < p) {
         yc = (m / (p * p)) * (2 * p * x - x * x);
-        dyc = (2 * m / (p * p)) * (p - x);
+        dyc = ((2 * m) / (p * p)) * (p - x);
       } else {
         yc = (m / ((1 - p) * (1 - p))) * (1 - 2 * p + 2 * p * x - x * x);
-        dyc = (2 * m / ((1 - p) * (1 - p))) * (p - x);
+        dyc = ((2 * m) / ((1 - p) * (1 - p))) * (p - x);
       }
     }
 
@@ -1338,7 +1370,7 @@ export function generateNACA4Digit(
   }
 
   // Thin airfoil theory: Cl = 2π(α - α₀)
-  const alphaZeroLift = m > 0 ? -Math.atan(2 * m) * 180 / Math.PI : 0;
+  const alphaZeroLift = m > 0 ? (-Math.atan(2 * m) * 180) / Math.PI : 0;
 
   return {
     upper,
@@ -1347,7 +1379,7 @@ export function generateNACA4Digit(
     maxCamber: m,
     maxCamberPos: p,
     maxThickness: t,
-    clAlpha: 2 * Math.PI,     // per radian
+    clAlpha: 2 * Math.PI, // per radian
     alphaZeroLift,
   };
 }
@@ -1369,7 +1401,7 @@ export function computeAirfoilCoefficients(
   cd0: number = 0.008,
   aspectRatio: number = 8,
   oswald: number = 0.85,
-  machNumber: number = 0.1
+  machNumber: number = 0.1,
 ): { cl: number; cd: number; ldRatio: number; isStalled: boolean } {
   // Prandtl-Glauert compressibility correction factor β = √(1 - M²)
   const M = Math.min(0.85, Math.max(0, machNumber));
@@ -1389,7 +1421,10 @@ export function computeAirfoilCoefficients(
     const stallAngleRad = alphaStallDeg * (Math.PI / 180);
     const clStall = (2 * Math.PI * stallAngleRad) / beta;
     const postStallAlpha = Math.abs(alphaRad);
-    cl = sign * (clStall * Math.cos(postStallAlpha - stallAngleRad) * 0.7 + 2 * Math.sin(alphaRad) * Math.cos(alphaRad) * 0.3);
+    cl =
+      sign *
+      (clStall * Math.cos(postStallAlpha - stallAngleRad) * 0.7 +
+        2 * Math.sin(alphaRad) * Math.cos(alphaRad) * 0.3);
   }
 
   // Induced drag Cdi = Cl² / (π · AR · e)
@@ -1413,10 +1448,10 @@ export function computeAirfoilCoefficients(
 // ============================================================================
 
 export interface AtmosphereState {
-  temperature: number;    // Kelvin
-  pressure: number;       // Pascals
-  density: number;        // kg/m³
-  speedOfSound: number;   // m/s
+  temperature: number; // Kelvin
+  pressure: number; // Pascals
+  density: number; // kg/m³
+  speedOfSound: number; // m/s
   dynamicViscosity: number; // Pa·s (Sutherland's law)
   layer: string;
 }
@@ -1427,24 +1462,24 @@ export interface AtmosphereState {
  */
 export function computeISAAtmosphere(altitudeM: number): AtmosphereState {
   const alt = Math.max(0, Math.min(84852, altitudeM));
-  
+
   // Standard Constants
-  const G0 = 9.80665;        // m/s²
-  const R = 287.05287;       // J/(kg·K)
-  const GAMMA = 1.4;         // ratio of specific heats
+  const G0 = 9.80665; // m/s²
+  const R = 287.05287; // J/(kg·K)
+  const GAMMA = 1.4; // ratio of specific heats
   const SUTHERLAND_C = 110.4; // K
-  const T0_REF = 273.15;     // K
-  const MU0_REF = 1.716e-5;  // Pa·s
+  const T0_REF = 273.15; // K
+  const MU0_REF = 1.716e-5; // Pa·s
 
   // Standard Layer Definitions [h_base (m), T_base (K), L (K/m), P_base (Pa)]
   const layers = [
-    { name: 'Troposphere', h: 0, T: 288.15, L: -0.0065, P: 101325 },
-    { name: 'Tropopause', h: 11000, T: 216.65, L: 0.0, P: 22632.1 },
-    { name: 'Stratosphere 1', h: 20000, T: 216.65, L: 0.0010, P: 5474.89 },
-    { name: 'Stratosphere 2', h: 32000, T: 228.65, L: 0.0028, P: 868.019 },
-    { name: 'Stratopause', h: 47000, T: 270.65, L: 0.0, P: 110.906 },
-    { name: 'Mesosphere 1', h: 51000, T: 270.65, L: -0.0028, P: 66.9388 },
-    { name: 'Mesosphere 2', h: 71000, T: 214.65, L: -0.0020, P: 3.95642 },
+    { name: "Troposphere", h: 0, T: 288.15, L: -0.0065, P: 101325 },
+    { name: "Tropopause", h: 11000, T: 216.65, L: 0.0, P: 22632.1 },
+    { name: "Stratosphere 1", h: 20000, T: 216.65, L: 0.001, P: 5474.89 },
+    { name: "Stratosphere 2", h: 32000, T: 228.65, L: 0.0028, P: 868.019 },
+    { name: "Stratopause", h: 47000, T: 270.65, L: 0.0, P: 110.906 },
+    { name: "Mesosphere 1", h: 51000, T: 270.65, L: -0.0028, P: 66.9388 },
+    { name: "Mesosphere 2", h: 71000, T: 214.65, L: -0.002, P: 3.95642 },
   ];
 
   // Find corresponding layer
@@ -1476,7 +1511,8 @@ export function computeISAAtmosphere(altitudeM: number): AtmosphereState {
   const speedOfSound = Math.sqrt(GAMMA * R * T);
 
   // Sutherland's Law for Dynamic Viscosity: μ = μ₀ * (T/T₀)^1.5 * (T₀ + S) / (T + S)
-  const dynamicViscosity = MU0_REF * Math.pow(T / T0_REF, 1.5) * ((T0_REF + SUTHERLAND_C) / (T + SUTHERLAND_C));
+  const dynamicViscosity =
+    MU0_REF * Math.pow(T / T0_REF, 1.5) * ((T0_REF + SUTHERLAND_C) / (T + SUTHERLAND_C));
 
   return {
     temperature: T,
@@ -1493,10 +1529,10 @@ export function computeISAAtmosphere(altitudeM: number): AtmosphereState {
 // ============================================================================
 
 export interface BeamStressResult {
-  maxStress: number;       // Pa (σ = M·y/I)
-  maxDeflection: number;   // m
+  maxStress: number; // Pa (σ = M·y/I)
+  maxDeflection: number; // m
   momentOfInertia: number; // m⁴
-  sectionModulus: number;  // m³
+  sectionModulus: number; // m³
   safetyFactor: number;
 }
 
@@ -1506,20 +1542,20 @@ export interface BeamStressResult {
  * δ_max = F·L³ / (3·E·I) (cantilever tip deflection)
  */
 export function computeBeamStress(
-  force: number,         // N (tip load)
-  length: number,        // m
-  width: number,         // m (rectangular cross-section)
-  height: number,        // m
-  youngsModulus: number,  // Pa
-  yieldStrength: number   // Pa
+  force: number, // N (tip load)
+  length: number, // m
+  width: number, // m (rectangular cross-section)
+  height: number, // m
+  youngsModulus: number, // Pa
+  yieldStrength: number, // Pa
 ): BeamStressResult | null {
   if (force <= 0 || length <= 0 || width <= 0 || height <= 0 || youngsModulus <= 0) return null;
 
   const I = (width * height * height * height) / 12; // Rectangular I
-  const c = height / 2;                               // Distance to neutral axis
-  const S = I / c;                                     // Section modulus
-  const M = force * length;                           // Max moment at root
-  const maxStress = M * c / I;                        // σ_max
+  const c = height / 2; // Distance to neutral axis
+  const S = I / c; // Section modulus
+  const M = force * length; // Max moment at root
+  const maxStress = (M * c) / I; // σ_max
   const maxDeflection = (force * length * length * length) / (3 * youngsModulus * I);
   const safetyFactor = yieldStrength / maxStress;
 
@@ -1537,38 +1573,32 @@ export function computeBeamStress(
 // ============================================================================
 
 export interface MohrCircleResult {
-  center: number;           // (σx + σy) / 2
-  radius: number;           // √((σx-σy)/2)² + τxy²)
-  sigma1: number;           // Maximum principal stress
-  sigma2: number;           // Minimum principal stress
-  tauMax: number;           // Maximum shear stress
-  principalAngle: number;   // degrees
+  center: number; // (σx + σy) / 2
+  radius: number; // √((σx-σy)/2)² + τxy²)
+  sigma1: number; // Maximum principal stress
+  sigma2: number; // Minimum principal stress
+  tauMax: number; // Maximum shear stress
+  principalAngle: number; // degrees
   circlePoints: Array<{ sigma: number; tau: number }>;
 }
 
 /**
  * Compute Mohr's Circle for 2D stress state.
- * 
+ *
  * @param sigmaX Normal stress in X direction (Pa)
  * @param sigmaY Normal stress in Y direction (Pa)
  * @param tauXY Shear stress (Pa)
  */
-export function computeMohrCircle(
-  sigmaX: number,
-  sigmaY: number,
-  tauXY: number
-): MohrCircleResult {
+export function computeMohrCircle(sigmaX: number, sigmaY: number, tauXY: number): MohrCircleResult {
   const center = (sigmaX + sigmaY) / 2;
-  const radius = Math.sqrt(
-    Math.pow((sigmaX - sigmaY) / 2, 2) + tauXY * tauXY
-  );
+  const radius = Math.sqrt(Math.pow((sigmaX - sigmaY) / 2, 2) + tauXY * tauXY);
 
   const sigma1 = center + radius;
   const sigma2 = center - radius;
   const tauMax = radius;
 
   // Principal angle
-  const principalAngle = (0.5 * Math.atan2(2 * tauXY, sigmaX - sigmaY)) * 180 / Math.PI;
+  const principalAngle = (0.5 * Math.atan2(2 * tauXY, sigmaX - sigmaY) * 180) / Math.PI;
 
   // Generate circle points
   const circlePoints: Array<{ sigma: number; tau: number }> = [];
@@ -1589,9 +1619,9 @@ export function computeMohrCircle(
 
 export interface MaterialProperties {
   name: string;
-  density: number;          // kg/m³
-  youngsModulus: number;    // GPa
-  yieldStrength: number;   // MPa
+  density: number; // kg/m³
+  youngsModulus: number; // GPa
+  yieldStrength: number; // MPa
   ultimateStrength: number; // MPa
   poissonRatio: number;
   thermalExpansion: number; // 10⁻⁶/°C
@@ -1599,14 +1629,86 @@ export interface MaterialProperties {
 }
 
 export const MATERIAL_DATABASE: MaterialProperties[] = [
-  { name: 'Aluminum 7075-T6', density: 2810, youngsModulus: 71.7, yieldStrength: 503, ultimateStrength: 572, poissonRatio: 0.33, thermalExpansion: 23.6, category: 'Aluminum' },
-  { name: 'Aluminum 2024-T3', density: 2780, youngsModulus: 73.1, yieldStrength: 345, ultimateStrength: 483, poissonRatio: 0.33, thermalExpansion: 23.2, category: 'Aluminum' },
-  { name: 'Ti-6Al-4V', density: 4430, youngsModulus: 113.8, yieldStrength: 880, ultimateStrength: 950, poissonRatio: 0.342, thermalExpansion: 8.6, category: 'Titanium' },
-  { name: 'Inconel 718', density: 8190, youngsModulus: 200, yieldStrength: 1034, ultimateStrength: 1241, poissonRatio: 0.284, thermalExpansion: 13.0, category: 'Superalloy' },
-  { name: 'Carbon Fiber (T300)', density: 1760, youngsModulus: 230, yieldStrength: 3530, ultimateStrength: 3530, poissonRatio: 0.28, thermalExpansion: -0.41, category: 'Composite' },
-  { name: 'AISI 4340 Steel', density: 7850, youngsModulus: 205, yieldStrength: 710, ultimateStrength: 1080, poissonRatio: 0.29, thermalExpansion: 12.3, category: 'Steel' },
-  { name: 'Magnesium AZ31B', density: 1770, youngsModulus: 45, yieldStrength: 200, ultimateStrength: 260, poissonRatio: 0.35, thermalExpansion: 26.0, category: 'Magnesium' },
-  { name: 'Kevlar 49', density: 1440, youngsModulus: 112, yieldStrength: 3000, ultimateStrength: 3000, poissonRatio: 0.36, thermalExpansion: -2.0, category: 'Composite' },
+  {
+    name: "Aluminum 7075-T6",
+    density: 2810,
+    youngsModulus: 71.7,
+    yieldStrength: 503,
+    ultimateStrength: 572,
+    poissonRatio: 0.33,
+    thermalExpansion: 23.6,
+    category: "Aluminum",
+  },
+  {
+    name: "Aluminum 2024-T3",
+    density: 2780,
+    youngsModulus: 73.1,
+    yieldStrength: 345,
+    ultimateStrength: 483,
+    poissonRatio: 0.33,
+    thermalExpansion: 23.2,
+    category: "Aluminum",
+  },
+  {
+    name: "Ti-6Al-4V",
+    density: 4430,
+    youngsModulus: 113.8,
+    yieldStrength: 880,
+    ultimateStrength: 950,
+    poissonRatio: 0.342,
+    thermalExpansion: 8.6,
+    category: "Titanium",
+  },
+  {
+    name: "Inconel 718",
+    density: 8190,
+    youngsModulus: 200,
+    yieldStrength: 1034,
+    ultimateStrength: 1241,
+    poissonRatio: 0.284,
+    thermalExpansion: 13.0,
+    category: "Superalloy",
+  },
+  {
+    name: "Carbon Fiber (T300)",
+    density: 1760,
+    youngsModulus: 230,
+    yieldStrength: 3530,
+    ultimateStrength: 3530,
+    poissonRatio: 0.28,
+    thermalExpansion: -0.41,
+    category: "Composite",
+  },
+  {
+    name: "AISI 4340 Steel",
+    density: 7850,
+    youngsModulus: 205,
+    yieldStrength: 710,
+    ultimateStrength: 1080,
+    poissonRatio: 0.29,
+    thermalExpansion: 12.3,
+    category: "Steel",
+  },
+  {
+    name: "Magnesium AZ31B",
+    density: 1770,
+    youngsModulus: 45,
+    yieldStrength: 200,
+    ultimateStrength: 260,
+    poissonRatio: 0.35,
+    thermalExpansion: 26.0,
+    category: "Magnesium",
+  },
+  {
+    name: "Kevlar 49",
+    density: 1440,
+    youngsModulus: 112,
+    yieldStrength: 3000,
+    ultimateStrength: 3000,
+    poissonRatio: 0.36,
+    thermalExpansion: -2.0,
+    category: "Composite",
+  },
 ];
 
 // ============================================================================
@@ -1614,9 +1716,9 @@ export const MATERIAL_DATABASE: MaterialProperties[] = [
 // ============================================================================
 
 export interface PropulsionResult {
-  thrust: number;          // N
+  thrust: number; // N
   specificImpulse: number; // s
-  massFlowRate: number;    // kg/s
+  massFlowRate: number; // kg/s
   exhaustVelocity: number; // m/s
   thrustCoeff: number;
 }
@@ -1627,11 +1729,11 @@ export interface PropulsionResult {
  * Isp = Ve / g₀
  */
 export function computeRocketThrust(
-  massFlowRate: number,     // kg/s
-  exhaustVelocity: number,  // m/s
-  exitPressure: number,     // Pa
-  ambientPressure: number,  // Pa
-  exitArea: number          // m²
+  massFlowRate: number, // kg/s
+  exhaustVelocity: number, // m/s
+  exitPressure: number, // Pa
+  ambientPressure: number, // Pa
+  exitArea: number, // m²
 ): PropulsionResult | null {
   if (massFlowRate <= 0 || exhaustVelocity <= 0 || exitArea <= 0) return null;
 
@@ -1654,13 +1756,13 @@ export function computeRocketThrust(
 // ============================================================================
 
 export interface PorkchopPoint {
-  launchDate: number;      // Unix timestamp (ms)
-  arrivalDate: number;     // Unix timestamp (ms)
-  tofDays: number;         // Time of flight (days)
-  c3: number;              // Characteristic energy (km²/s²)
-  vInfDep: number;         // Departure excess velocity (km/s)
-  vInfArr: number;         // Arrival excess velocity (km/s)
-  totalDeltaV: number;     // Total ΔV (km/s)
+  launchDate: number; // Unix timestamp (ms)
+  arrivalDate: number; // Unix timestamp (ms)
+  tofDays: number; // Time of flight (days)
+  c3: number; // Characteristic energy (km²/s²)
+  vInfDep: number; // Departure excess velocity (km/s)
+  vInfArr: number; // Arrival excess velocity (km/s)
+  totalDeltaV: number; // Total ΔV (km/s)
 }
 
 export interface PorkchopGridResult {
@@ -1674,19 +1776,22 @@ export interface PorkchopGridResult {
 /**
  * Approximate heliocentric 2D position and velocity of major solar system bodies
  */
-export function getHeliocentricPlanetPosition(planet: 'Earth' | 'Mars' | 'Venus' | 'Jupiter', tDays: number): { x: number; y: number; vx: number; vy: number } {
+export function getHeliocentricPlanetPosition(
+  planet: "Earth" | "Mars" | "Venus" | "Jupiter",
+  tDays: number,
+): { x: number; y: number; vx: number; vy: number } {
   const muSun = CENTRAL_BODIES.Sun.mu;
   const AU = PHYSICS_CONSTANTS.AU;
 
   const data = {
-    Earth: { a: 1.000 * AU, e: 0.0167, pDays: 365.25, phase: 0 },
+    Earth: { a: 1.0 * AU, e: 0.0167, pDays: 365.25, phase: 0 },
     Mars: { a: 1.524 * AU, e: 0.0934, pDays: 686.98, phase: 1.2 },
-    Venus: { a: 0.723 * AU, e: 0.0067, pDays: 224.70, phase: 2.1 },
+    Venus: { a: 0.723 * AU, e: 0.0067, pDays: 224.7, phase: 2.1 },
     Jupiter: { a: 5.204 * AU, e: 0.0489, pDays: 4332.59, phase: 0.5 },
   }[planet];
 
-  const omega = (2 * Math.PI / data.pDays) * tDays + data.phase;
-  const r = data.a * (1 - data.e * data.e) / (1 + data.e * Math.cos(omega));
+  const omega = ((2 * Math.PI) / data.pDays) * tDays + data.phase;
+  const r = (data.a * (1 - data.e * data.e)) / (1 + data.e * Math.cos(omega));
   const v = Math.sqrt(muSun * (2 / r - 1 / data.a));
 
   return {
@@ -1704,12 +1809,15 @@ export function solveLambertTransfer(
   r1: { x: number; y: number },
   r2: { x: number; y: number },
   tofSeconds: number,
-  mu: number = CENTRAL_BODIES.Sun.mu
+  mu: number = CENTRAL_BODIES.Sun.mu,
 ): { v1: { vx: number; vy: number }; v2: { vx: number; vy: number } } {
   const r1Mag = Math.sqrt(r1.x * r1.x + r1.y * r1.y);
   const r2Mag = Math.sqrt(r2.x * r2.x + r2.y * r2.y);
   const cosDnu = Math.max(-1, Math.min(1, (r1.x * r2.x + r1.y * r2.y) / (r1Mag * r2Mag)));
-  const sinDnu = (r1.x * r2.y - r1.y * r2.x) >= 0 ? Math.sqrt(1 - cosDnu * cosDnu) : -Math.sqrt(1 - cosDnu * cosDnu);
+  const sinDnu =
+    r1.x * r2.y - r1.y * r2.x >= 0
+      ? Math.sqrt(1 - cosDnu * cosDnu)
+      : -Math.sqrt(1 - cosDnu * cosDnu);
 
   const chord = Math.sqrt(r1Mag * r1Mag + r2Mag * r2Mag - 2 * r1Mag * r2Mag * cosDnu);
   const s = (r1Mag + r2Mag + chord) / 2;
@@ -1732,13 +1840,13 @@ export function solveLambertTransfer(
  * Generate Porkchop Plot Grid
  */
 export function generatePorkchopGrid(
-  departPlanet: 'Earth' | 'Venus',
-  arrivePlanet: 'Mars' | 'Jupiter' | 'Venus',
+  departPlanet: "Earth" | "Venus",
+  arrivePlanet: "Mars" | "Jupiter" | "Venus",
   launchStartMs: number,
   launchDaysSpan: number,
   arrivalStartMs: number,
   arrivalDaysSpan: number,
-  steps: number = 30
+  steps: number = 30,
 ): PorkchopGridResult {
   const grid: PorkchopPoint[][] = [];
   let minDeltaVPoint: PorkchopPoint | null = null;
@@ -1764,7 +1872,15 @@ export function generatePorkchopGrid(
 
       const tofDays = (arrTimeMs - launchTimeMs) / msPerDay;
       if (tofDays <= 10) {
-        row.push({ launchDate: launchTimeMs, arrivalDate: arrTimeMs, tofDays, c3: 999, vInfDep: 99, vInfArr: 99, totalDeltaV: 99 });
+        row.push({
+          launchDate: launchTimeMs,
+          arrivalDate: arrTimeMs,
+          tofDays,
+          c3: 999,
+          vInfDep: 99,
+          vInfArr: 99,
+          totalDeltaV: 99,
+        });
         continue;
       }
 
@@ -1816,21 +1932,21 @@ export function generatePorkchopGrid(
 // ============================================================================
 
 export interface ReentryTrajectoryPoint {
-  time: number;           // seconds
-  altitude: number;       // meters
-  velocity: number;       // m/s
-  flightPathAngle: number;// degrees
+  time: number; // seconds
+  altitude: number; // meters
+  velocity: number; // m/s
+  flightPathAngle: number; // degrees
   machNumber: number;
-  dynamicPressure: number;// Pa
-  heatFlux: number;       // W/cm² (Sutton-Graves)
-  gLoad: number;          // Gs
-  downrange: number;      // km
+  dynamicPressure: number; // Pa
+  heatFlux: number; // W/cm² (Sutton-Graves)
+  gLoad: number; // Gs
+  downrange: number; // km
 }
 
 export interface ReentryCorridorResult {
   trajectory: ReentryTrajectoryPoint[];
-  peakHeatFlux: number;    // W/cm²
-  peakGLoad: number;       // Gs
+  peakHeatFlux: number; // W/cm²
+  peakGLoad: number; // Gs
   maxDynamicPressure: number; // Pa
   skippedOut: boolean;
   thermalFailure: boolean;
@@ -1842,12 +1958,12 @@ export interface ReentryCorridorResult {
  * Stagnation Point Heat Flux (Sutton-Graves): q = C * sqrt(rho / Rn) * v^3
  */
 export function computeReentryTrajectory(
-  entryVelocity: number,      // m/s (e.g. 7800 for LEO, 11000 for Lunar)
-  entryAngleDeg: number,      // degrees (negative, e.g. -6.5°)
-  ballisticCoeff: number,     // kg/m² (m / (Cd * A))
-  liftToDrag: number,         // L/D ratio (0 for capsule, 1.5 for spaceplane)
-  vehicleRadius: number = 1.5,// meters (nose radius for Sutton-Graves)
-  initialAlt: number = 120000 // meters (120km entry interface)
+  entryVelocity: number, // m/s (e.g. 7800 for LEO, 11000 for Lunar)
+  entryAngleDeg: number, // degrees (negative, e.g. -6.5°)
+  ballisticCoeff: number, // kg/m² (m / (Cd * A))
+  liftToDrag: number, // L/D ratio (0 for capsule, 1.5 for spaceplane)
+  vehicleRadius: number = 1.5, // meters (nose radius for Sutton-Graves)
+  initialAlt: number = 120000, // meters (120km entry interface)
 ): ReentryCorridorResult {
   const g0 = 9.80665;
   const R_earth = PHYSICS_CONSTANTS.R_EARTH;
@@ -1881,7 +1997,8 @@ export function computeReentryTrajectory(
     maxQ = Math.max(maxQ, qDyn);
 
     // Sutton-Graves Stagnation Heat Flux: q_dot = C_sg * sqrt(rho / Rn) * v^3
-    const qHeat = rho > 0 ? C_sg * Math.sqrt(rho / Math.max(0.1, vehicleRadius)) * Math.pow(v, 3) : 0; // W/cm²
+    const qHeat =
+      rho > 0 ? C_sg * Math.sqrt(rho / Math.max(0.1, vehicleRadius)) * Math.pow(v, 3) : 0; // W/cm²
     peakHeat = Math.max(peakHeat, qHeat);
 
     // Accelerations
@@ -1908,7 +2025,7 @@ export function computeReentryTrajectory(
     // Trajectory derivatives: dh/dt, dv/dt, dgamma/dt
     const dh = v * Math.sin(gamma);
     const dv = -dragAcc + gAcc * Math.sin(gamma);
-    const dgamma = (liftAcc + (v * v / (R_earth + h) - gAcc) * Math.cos(gamma)) / v;
+    const dgamma = (liftAcc + ((v * v) / (R_earth + h) - gAcc) * Math.cos(gamma)) / v;
 
     // Integration step
     h += dh * dt;
@@ -1925,7 +2042,7 @@ export function computeReentryTrajectory(
   }
 
   if (peakHeat > 400) thermalFailure = true; // TPS threshold
-  if (peakG > 12) structuralFailure = true;   // Structural G-limit
+  if (peakG > 12) structuralFailure = true; // Structural G-limit
 
   return {
     trajectory,
@@ -1945,28 +2062,38 @@ export function computeReentryTrajectory(
 export interface SpectralLine {
   name: string;
   restWavelength: number; // nm
-  type: 'absorption' | 'emission';
+  type: "absorption" | "emission";
   element: string;
 }
 
 export const KNOWN_SPECTRAL_LINES: SpectralLine[] = [
-  { name: 'H-alpha (Balmer)', restWavelength: 656.28, type: 'absorption', element: 'Hydrogen' },
-  { name: 'H-beta (Balmer)', restWavelength: 486.13, type: 'absorption', element: 'Hydrogen' },
-  { name: 'H-gamma (Balmer)', restWavelength: 434.05, type: 'absorption', element: 'Hydrogen' },
-  { name: 'H-delta (Balmer)', restWavelength: 410.17, type: 'absorption', element: 'Hydrogen' },
-  { name: 'Sodium D1 (Fraunhofer)', restWavelength: 589.59, type: 'absorption', element: 'Sodium' },
-  { name: 'Sodium D2 (Fraunhofer)', restWavelength: 588.99, type: 'absorption', element: 'Sodium' },
-  { name: 'Calcium K (Fraunhofer)', restWavelength: 393.37, type: 'absorption', element: 'Calcium' },
-  { name: 'Calcium H (Fraunhofer)', restWavelength: 396.85, type: 'absorption', element: 'Calcium' },
-  { name: 'Oxygen A-band', restWavelength: 760.00, type: 'absorption', element: 'Oxygen' },
-  { name: 'Methane (CH4)', restWavelength: 889.00, type: 'absorption', element: 'Methane' },
-  { name: 'Water Vapor (H2O)', restWavelength: 940.00, type: 'absorption', element: 'Water' },
-  { name: 'Carbon Dioxide (CO2)', restWavelength: 1400.00, type: 'absorption', element: 'CO2' },
+  { name: "H-alpha (Balmer)", restWavelength: 656.28, type: "absorption", element: "Hydrogen" },
+  { name: "H-beta (Balmer)", restWavelength: 486.13, type: "absorption", element: "Hydrogen" },
+  { name: "H-gamma (Balmer)", restWavelength: 434.05, type: "absorption", element: "Hydrogen" },
+  { name: "H-delta (Balmer)", restWavelength: 410.17, type: "absorption", element: "Hydrogen" },
+  { name: "Sodium D1 (Fraunhofer)", restWavelength: 589.59, type: "absorption", element: "Sodium" },
+  { name: "Sodium D2 (Fraunhofer)", restWavelength: 588.99, type: "absorption", element: "Sodium" },
+  {
+    name: "Calcium K (Fraunhofer)",
+    restWavelength: 393.37,
+    type: "absorption",
+    element: "Calcium",
+  },
+  {
+    name: "Calcium H (Fraunhofer)",
+    restWavelength: 396.85,
+    type: "absorption",
+    element: "Calcium",
+  },
+  { name: "Oxygen A-band", restWavelength: 760.0, type: "absorption", element: "Oxygen" },
+  { name: "Methane (CH4)", restWavelength: 889.0, type: "absorption", element: "Methane" },
+  { name: "Water Vapor (H2O)", restWavelength: 940.0, type: "absorption", element: "Water" },
+  { name: "Carbon Dioxide (CO2)", restWavelength: 1400.0, type: "absorption", element: "CO2" },
 ];
 
 export interface SpectrumDataPoint {
   wavelength: number; // nm
-  flux: number;       // normalized flux (0 - 1.5)
+  flux: number; // normalized flux (0 - 1.5)
 }
 
 /**
@@ -1976,7 +2103,7 @@ export interface SpectrumDataPoint {
  */
 export function computeDopplerShift(
   observedWavelength: number,
-  restWavelength: number
+  restWavelength: number,
 ): { redshift: number; radialVelocityKmS: number } {
   if (restWavelength <= 0) return { redshift: 0, radialVelocityKmS: 0 };
   const z = (observedWavelength - restWavelength) / restWavelength;
@@ -1993,9 +2120,9 @@ export function computeDopplerShift(
  * Generate 1D Synthetic Spectrum (Planck blackbody continuum + Gaussian spectral lines)
  */
 export function generateSyntheticSpectrum(
-  targetType: 'O-star' | 'G-star (Sun)' | 'M-dwarf' | 'Quasar' | 'Exoplanet Atmosphere',
+  targetType: "O-star" | "G-star (Sun)" | "M-dwarf" | "Quasar" | "Exoplanet Atmosphere",
   redshift: number = 0,
-  snr: number = 50
+  snr: number = 50,
 ): SpectrumDataPoint[] {
   const points: SpectrumDataPoint[] = [];
   const minW: number = 380;
@@ -2003,11 +2130,11 @@ export function generateSyntheticSpectrum(
   const step: number = 0.5;
 
   const temp = {
-    'O-star': 30000,
-    'G-star (Sun)': 5778,
-    'M-dwarf': 3200,
-    'Quasar': 15000,
-    'Exoplanet Atmosphere': 1200,
+    "O-star": 30000,
+    "G-star (Sun)": 5778,
+    "M-dwarf": 3200,
+    Quasar: 15000,
+    "Exoplanet Atmosphere": 1200,
   }[targetType];
 
   const h = 6.62607015e-34;
@@ -2017,7 +2144,8 @@ export function generateSyntheticSpectrum(
   for (let w = minW; w <= maxW; w += step) {
     const lamM = w * 1e-9;
     // Planck's Law for blackbody continuum
-    const planck = (2 * h * c * c) / (Math.pow(lamM, 5) * (Math.exp((h * c) / (lamM * kB * temp)) - 1));
+    const planck =
+      (2 * h * c * c) / (Math.pow(lamM, 5) * (Math.exp((h * c) / (lamM * kB * temp)) - 1));
     const normPlanck = planck / 1e13;
 
     // Apply spectral line absorptions
@@ -2026,7 +2154,7 @@ export function generateSyntheticSpectrum(
       const shiftedLineW = line.restWavelength * (1 + redshift);
       const dw = w - shiftedLineW;
       const sigma = 0.8; // line width nm
-      const dipDepth = line.element === 'Hydrogen' ? 0.4 : 0.25;
+      const dipDepth = line.element === "Hydrogen" ? 0.4 : 0.25;
 
       if (Math.abs(dw) < 4 * sigma) {
         lineMod -= dipDepth * Math.exp(-(dw * dw) / (2 * sigma * sigma));
@@ -2049,31 +2177,31 @@ export function generateSyntheticSpectrum(
 
 export interface RocketStageConfig {
   name: string;
-  dryMass: number;        // kg
+  dryMass: number; // kg
   propellantMass: number; // kg
-  isp: number;            // seconds
-  thrust: number;         // N
-  burnTime: number;       // seconds
+  isp: number; // seconds
+  thrust: number; // N
+  burnTime: number; // seconds
 }
 
 export interface LaunchAscentResult {
   trajectory: Array<{
     time: number;
-    altitude: number;     // km
-    velocity: number;     // m/s
-    downrange: number;    // km
+    altitude: number; // km
+    velocity: number; // m/s
+    downrange: number; // km
     dynamicPressure: number; // kPa
-    gForce: number;       // Gs
-    pitchAngle: number;   // degrees
-    mass: number;         // kg
+    gForce: number; // Gs
+    pitchAngle: number; // degrees
+    mass: number; // kg
     stage: string;
   }>;
-  totalDeltaV: number;     // m/s
-  maxQ: number;            // kPa
-  maxQTime: number;        // s
+  totalDeltaV: number; // m/s
+  maxQ: number; // kPa
+  maxQTime: number; // s
   orbitReached: boolean;
-  finalAltitude: number;   // km
-  finalVelocity: number;   // m/s
+  finalAltitude: number; // km
+  finalVelocity: number; // m/s
 }
 
 /**
@@ -2082,11 +2210,11 @@ export interface LaunchAscentResult {
 export function computeRocketAscent(
   stages: RocketStageConfig[],
   payloadMass: number,
-  targetAltitudeKm: number = 400
+  targetAltitudeKm: number = 400,
 ): LaunchAscentResult {
   const g0 = 9.80665;
   const R_earth = PHYSICS_CONSTANTS.R_EARTH;
-  const trajectory: LaunchAscentResult['trajectory'] = [];
+  const trajectory: LaunchAscentResult["trajectory"] = [];
 
   let t = 0;
   let h = 0; // meters
@@ -2099,19 +2227,21 @@ export function computeRocketAscent(
   let maxQTime = 0;
 
   // Calculate total Tsiolkovsky Delta-V
-  let currentTotalMass = payloadMass + stages.reduce((acc, st) => acc + st.dryMass + st.propellantMass, 0);
+  let currentTotalMass =
+    payloadMass + stages.reduce((acc, st) => acc + st.dryMass + st.propellantMass, 0);
 
   stages.forEach((stage) => {
     const m0 = currentTotalMass;
     const mf = currentTotalMass - stage.propellantMass;
     totalDeltaV += stage.isp * g0 * Math.log(m0 / mf);
-    currentTotalMass -= (stage.dryMass + stage.propellantMass);
+    currentTotalMass -= stage.dryMass + stage.propellantMass;
   });
 
   // Numerical trajectory step
   const dt = 1.0;
   let activeStageIdx = 0;
-  let currentMass = payloadMass + stages.reduce((acc, st) => acc + st.dryMass + st.propellantMass, 0);
+  let currentMass =
+    payloadMass + stages.reduce((acc, st) => acc + st.dryMass + st.propellantMass, 0);
   let stageFuelRemaining = stages[0]?.propellantMass || 0;
 
   while (t < 600 && h >= 0 && activeStageIdx < stages.length) {
@@ -2140,7 +2270,7 @@ export function computeRocketAscent(
     const gAcc = g0 * Math.pow(R_earth / (R_earth + h), 2);
 
     const netAcc = (thrust - drag) / currentMass - gAcc * Math.sin(pitchRad);
-    const gForce = (thrust / currentMass) / g0;
+    const gForce = thrust / currentMass / g0;
 
     trajectory.push({
       time: t,
@@ -2194,11 +2324,11 @@ export function computeRocketAscent(
 // ============================================================================
 
 export interface SpaceWeatherStatus {
-  kpIndex: number;            // 0 - 9 geomagnetic disturbance
-  solarWindSpeed: number;     // km/s (e.g. 400 - 800)
-  xrayFluxClass: 'A' | 'B' | 'C' | 'M' | 'X';
-  saaIntersection: boolean;   // South Atlantic Anomaly crossing
-  seuRatePerDay: number;      // Predicted memory bit flips per day
+  kpIndex: number; // 0 - 9 geomagnetic disturbance
+  solarWindSpeed: number; // km/s (e.g. 400 - 800)
+  xrayFluxClass: "A" | "B" | "C" | "M" | "X";
+  saaIntersection: boolean; // South Atlantic Anomaly crossing
+  seuRatePerDay: number; // Predicted memory bit flips per day
   radiationDoseMrad: number; // mrad/day
   safeModeTriggered: boolean;
 }
@@ -2207,11 +2337,11 @@ export interface SpaceWeatherStatus {
  * Predict Spacecraft Radiation Risk & SAA Crossing
  */
 export function computeSpaceWeatherRisk(
-  satLat: number,             // degrees (-90 to +90)
-  satLon: number,             // degrees (-180 to +180)
-  satAltKm: number,           // altitude km
-  kpIndex: number = 4,        // 0-9
-  cmeActive: boolean = false
+  satLat: number, // degrees (-90 to +90)
+  satLon: number, // degrees (-180 to +180)
+  satAltKm: number, // altitude km
+  kpIndex: number = 4, // 0-9
+  cmeActive: boolean = false,
 ): SpaceWeatherStatus {
   // SAA Bounding Box: 15°S to 45°S, 90°W to 30°E
   const inSaaLat = satLat >= -45 && satLat <= -15;
@@ -2223,13 +2353,13 @@ export function computeSpaceWeatherRisk(
   // Base SEU rate per day
   let seuRate = 0.05 * Math.pow(satAltKm / 400, 1.5);
   if (saaIntersection) seuRate *= 45; // 45x radiation spike in SAA
-  if (kpIndex > 6) seuRate *= (kpIndex - 4);
+  if (kpIndex > 6) seuRate *= kpIndex - 4;
   if (cmeActive) seuRate *= 10;
 
-  const radiationDoseMrad = (seuRate * 12.5);
+  const radiationDoseMrad = seuRate * 12.5;
 
-  const xrayClasses: Array<'A' | 'B' | 'C' | 'M' | 'X'> = ['A', 'B', 'C', 'M', 'X'];
-  const xrayClass = cmeActive ? 'X' : kpIndex > 6 ? 'M' : kpIndex > 3 ? 'C' : 'B';
+  const xrayClasses: Array<"A" | "B" | "C" | "M" | "X"> = ["A", "B", "C", "M", "X"];
+  const xrayClass = cmeActive ? "X" : kpIndex > 6 ? "M" : kpIndex > 3 ? "C" : "B";
 
   const safeModeTriggered = saaIntersection || cmeActive || kpIndex >= 7;
 
@@ -2259,20 +2389,20 @@ export interface TransitLightCurveResult {
 export interface RadialVelocityCurveResult {
   timeDays: number[];
   stellarVelocityMS: number[]; // m/s Doppler wobble
-  semiAmplitudeMS: number;    // K (m/s)
+  semiAmplitudeMS: number; // K (m/s)
 }
 
 /**
  * Mandel-Agol Exoplanet Transit Light Curve Model (with Quadratic Limb Darkening)
  */
 export function computeExoplanetTransitLightCurve(
-  planetRadiusEarth: number,   // Earth radii
-  starRadiusSun: number,       // Solar radii
-  semiMajorAxisAU: number,     // AU
+  planetRadiusEarth: number, // Earth radii
+  starRadiusSun: number, // Solar radii
+  semiMajorAxisAU: number, // AU
   inclinationDeg: number = 90, // degrees
   orbitalPeriodDays: number = 3.5,
-  u1: number = 0.3,            // limb darkening u1
-  u2: number = 0.2             // limb darkening u2
+  u1: number = 0.3, // limb darkening u1
+  u2: number = 0.2, // limb darkening u2
 ): TransitLightCurveResult {
   const Rp = planetRadiusEarth * PHYSICS_CONSTANTS.R_EARTH;
   const Rs = starRadiusSun * PHYSICS_CONSTANTS.R_SUN;
@@ -2288,12 +2418,12 @@ export function computeExoplanetTransitLightCurve(
 
   // Transit duration: T_dur = (P / pi) * arcsin(sqrt((Rs+Rp)² - (b*Rs)²) / a)
   const arg = Math.sqrt(Math.max(0, Math.pow(Rs + Rp, 2) - Math.pow(b * Rs, 2))) / a;
-  const durationHours = (orbitalPeriodDays * 24 / Math.PI) * Math.asin(Math.min(1, arg));
+  const durationHours = ((orbitalPeriodDays * 24) / Math.PI) * Math.asin(Math.min(1, arg));
 
   const timeDays: number[] = [];
   const normalizedFlux: number[] = [];
 
-  const timeSpan = Math.max(1, durationHours / 24 * 3);
+  const timeSpan = Math.max(1, (durationHours / 24) * 3);
   const numPoints = 200;
 
   for (let i = 0; i <= numPoints; i++) {
@@ -2340,11 +2470,11 @@ export function computeExoplanetTransitLightCurve(
  * Semi-amplitude: K = (2*pi*G / P)^(1/3) * (Mp * sin(i) / (Ms + Mp)^(2/3)) / sqrt(1 - e²)
  */
 export function computeRadialVelocityCurve(
-  planetMassEarth: number,     // Earth masses
-  starMassSun: number,         // Solar masses
-  orbitalPeriodDays: number,   // Days
-  eccentricity: number = 0,    // 0 - 0.9
-  inclinationDeg: number = 90  // degrees
+  planetMassEarth: number, // Earth masses
+  starMassSun: number, // Solar masses
+  orbitalPeriodDays: number, // Days
+  eccentricity: number = 0, // 0 - 0.9
+  inclinationDeg: number = 90, // degrees
 ): RadialVelocityCurveResult {
   const Mp = planetMassEarth * PHYSICS_CONSTANTS.M_EARTH;
   const Ms = starMassSun * PHYSICS_CONSTANTS.M_SUN;
@@ -2353,7 +2483,10 @@ export function computeRadialVelocityCurve(
   const G = PHYSICS_CONSTANTS.G;
 
   // Semi-amplitude K in m/s
-  const K = Math.pow((2 * Math.PI * G) / P, 1/3) * (Mp * Math.sin(incRad) / Math.pow(Ms + Mp, 2/3)) / Math.sqrt(Math.max(0.01, 1 - eccentricity * eccentricity));
+  const K =
+    (Math.pow((2 * Math.PI * G) / P, 1 / 3) *
+      ((Mp * Math.sin(incRad)) / Math.pow(Ms + Mp, 2 / 3))) /
+    Math.sqrt(Math.max(0.01, 1 - eccentricity * eccentricity));
 
   const timeDays: number[] = [];
   const stellarVelocityMS: number[] = [];
@@ -2408,10 +2541,10 @@ export function runPhysicsEngineValidationSuite(): {
   const expected_v_leo = 7672.6; // m/s
   const err_leo = (Math.abs(v_leo - expected_v_leo) / expected_v_leo) * 100;
   results.push({
-    solverName: 'Vis-Viva LEO Velocity',
+    solverName: "Vis-Viva LEO Velocity",
     passed: err_leo < 0.1,
-    metric: 'Circular Orbital Speed',
-    expected: '7672.6 m/s',
+    metric: "Circular Orbital Speed",
+    expected: "7672.6 m/s",
     actual: `${v_leo.toFixed(1)} m/s`,
     errorMarginPct: err_leo,
   });
@@ -2420,15 +2553,15 @@ export function runPhysicsEngineValidationSuite(): {
   const g0 = 9.80665;
   const isp = 311;
   const m0 = 440900; // kg
-  const mf = 22200;  // kg
+  const mf = 22200; // kg
   const deltaV = isp * g0 * Math.log(m0 / mf);
   const expected_dv = 9120.5; // m/s
   const err_dv = (Math.abs(deltaV - expected_dv) / expected_dv) * 100;
   results.push({
-    solverName: 'Tsiolkovsky Rocket Solver',
+    solverName: "Tsiolkovsky Rocket Solver",
     passed: err_dv < 0.5,
-    metric: 'Stage 1 Ideal ΔV',
-    expected: '9120.5 m/s',
+    metric: "Stage 1 Ideal ΔV",
+    expected: "9120.5 m/s",
     actual: `${deltaV.toFixed(1)} m/s`,
     errorMarginPct: err_dv,
   });
@@ -2436,10 +2569,10 @@ export function runPhysicsEngineValidationSuite(): {
   // Test 3: Sutton-Graves Hypersonic Heat Flux (Stagnation point at 7.8km/s)
   const q_reentry = computeReentryTrajectory(7800, -6.0, 350, 0.3, 2.0);
   results.push({
-    solverName: 'Sutton-Graves Aerothermodynamics',
+    solverName: "Sutton-Graves Aerothermodynamics",
     passed: q_reentry.peakHeatFlux > 50 && q_reentry.peakHeatFlux < 500,
-    metric: 'Peak Heat Flux Range',
-    expected: '50 - 500 W/cm²',
+    metric: "Peak Heat Flux Range",
+    expected: "50 - 500 W/cm²",
     actual: `${q_reentry.peakHeatFlux.toFixed(1)} W/cm²`,
   });
 
@@ -2447,21 +2580,22 @@ export function runPhysicsEngineValidationSuite(): {
   const dop = computeDopplerShift(670.0, 656.28);
   const expected_z = (670.0 - 656.28) / 656.28;
   results.push({
-    solverName: 'Doppler Redshift Solver',
+    solverName: "Doppler Redshift Solver",
     passed: Math.abs(dop.redshift - expected_z) < 1e-4,
-    metric: 'Cosmological Redshift z',
+    metric: "Cosmological Redshift z",
     expected: expected_z.toFixed(4),
     actual: dop.redshift.toFixed(4),
   });
 
   // Test 5: Mandel-Agol Exoplanet Transit Depth ((Jupiter/Sun)^2 = ~1%)
   const transit = computeExoplanetTransitLightCurve(11.2, 1.0, 0.05, 90, 3.5);
-  const expected_ppm = Math.pow((11.2 * PHYSICS_CONSTANTS.R_EARTH) / PHYSICS_CONSTANTS.R_SUN, 2) * 1e6;
+  const expected_ppm =
+    Math.pow((11.2 * PHYSICS_CONSTANTS.R_EARTH) / PHYSICS_CONSTANTS.R_SUN, 2) * 1e6;
   const err_ppm = (Math.abs(transit.transitDepthPpm - expected_ppm) / expected_ppm) * 100;
   results.push({
-    solverName: 'Mandel-Agol Transit Depth',
+    solverName: "Mandel-Agol Transit Depth",
     passed: err_ppm < 1.0,
-    metric: 'Transit Depth PPM',
+    metric: "Transit Depth PPM",
     expected: `${expected_ppm.toFixed(0)} ppm`,
     actual: `${transit.transitDepthPpm.toFixed(0)} ppm`,
     errorMarginPct: err_ppm,
@@ -2482,29 +2616,31 @@ export function runPhysicsEngineValidationSuite(): {
  */
 export interface ReynoldsNumberResult {
   reynoldsNumber: number;
-  regime: 'Laminar' | 'Transitional' | 'Turbulent';
+  regime: "Laminar" | "Transitional" | "Turbulent";
   description: string;
 }
 
 export function computeReynoldsNumber(
-  velocity: number,      // m/s
+  velocity: number, // m/s
   characteristicLength: number, // m (chord, diameter, etc.)
-  density: number,       // kg/m³
-  dynamicViscosity: number // Pa·s
+  density: number, // kg/m³
+  dynamicViscosity: number, // Pa·s
 ): ReynoldsNumberResult | null {
-  if (velocity <= 0 || characteristicLength <= 0 || density <= 0 || dynamicViscosity <= 0) return null;
+  if (velocity <= 0 || characteristicLength <= 0 || density <= 0 || dynamicViscosity <= 0)
+    return null;
   const re = (density * velocity * characteristicLength) / dynamicViscosity;
-  let regime: 'Laminar' | 'Transitional' | 'Turbulent';
+  let regime: "Laminar" | "Transitional" | "Turbulent";
   let description: string;
   if (re < 5e5) {
-    regime = 'Laminar';
-    description = 'Flow is predominantly laminar. Viscous forces dominate over inertial forces.';
+    regime = "Laminar";
+    description = "Flow is predominantly laminar. Viscous forces dominate over inertial forces.";
   } else if (re < 1e6) {
-    regime = 'Transitional';
-    description = 'Flow is in the transitional regime. Boundary layer transition may occur.';
+    regime = "Transitional";
+    description = "Flow is in the transitional regime. Boundary layer transition may occur.";
   } else {
-    regime = 'Turbulent';
-    description = 'Flow is turbulent. Inertial forces dominate. Expect higher skin friction and mixing.';
+    regime = "Turbulent";
+    description =
+      "Flow is turbulent. Inertial forces dominate. Expect higher skin friction and mixing.";
   }
   return { reynoldsNumber: re, regime, description };
 }
@@ -2516,30 +2652,33 @@ export function computeReynoldsNumber(
  */
 export interface MachNumberResult {
   machNumber: number;
-  regime: 'Subsonic' | 'Transonic' | 'Supersonic' | 'Hypersonic';
+  regime: "Subsonic" | "Transonic" | "Supersonic" | "Hypersonic";
   description: string;
 }
 
 export function computeMachNumberCalc(
-  velocity: number,     // m/s
-  speedOfSound: number  // m/s
+  velocity: number, // m/s
+  speedOfSound: number, // m/s
 ): MachNumberResult | null {
   if (velocity < 0 || speedOfSound <= 0) return null;
   const mach = velocity / speedOfSound;
-  let regime: 'Subsonic' | 'Transonic' | 'Supersonic' | 'Hypersonic';
+  let regime: "Subsonic" | "Transonic" | "Supersonic" | "Hypersonic";
   let description: string;
   if (mach < 0.8) {
-    regime = 'Subsonic';
-    description = 'Incompressible or weakly compressible flow. No shock waves present.';
+    regime = "Subsonic";
+    description = "Incompressible or weakly compressible flow. No shock waves present.";
   } else if (mach < 1.2) {
-    regime = 'Transonic';
-    description = 'Mixed subsonic/supersonic regions. Shock waves may form on surfaces. Drag divergence likely.';
+    regime = "Transonic";
+    description =
+      "Mixed subsonic/supersonic regions. Shock waves may form on surfaces. Drag divergence likely.";
   } else if (mach < 5.0) {
-    regime = 'Supersonic';
-    description = 'Entirely supersonic flow. Oblique and bow shocks present. Wave drag significant.';
+    regime = "Supersonic";
+    description =
+      "Entirely supersonic flow. Oblique and bow shocks present. Wave drag significant.";
   } else {
-    regime = 'Hypersonic';
-    description = 'Thin shock layer, viscous interaction, real-gas effects, and aerodynamic heating dominate.';
+    regime = "Hypersonic";
+    description =
+      "Thin shock layer, viscous interaction, real-gas effects, and aerodynamic heating dominate.";
   }
   return { machNumber: mach, regime, description };
 }
@@ -2549,15 +2688,15 @@ export function computeMachNumberCalc(
  * L = ½ρV²SCL
  */
 export interface LiftResult {
-  lift: number;           // N
+  lift: number; // N
   dynamicPressure: number; // Pa
 }
 
 export function computeLift(
-  density: number,    // kg/m³
-  velocity: number,   // m/s
-  wingArea: number,   // m²
-  cl: number          // dimensionless
+  density: number, // kg/m³
+  velocity: number, // m/s
+  wingArea: number, // m²
+  cl: number, // dimensionless
 ): LiftResult | null {
   if (density <= 0 || velocity < 0 || wingArea <= 0) return null;
   const q = 0.5 * density * velocity * velocity;
@@ -2569,15 +2708,15 @@ export function computeLift(
  * D = ½ρV²SCD
  */
 export interface DragResult {
-  drag: number;           // N
+  drag: number; // N
   dynamicPressure: number; // Pa
 }
 
 export function computeDrag(
-  density: number,    // kg/m³
-  velocity: number,   // m/s
-  area: number,       // m²
-  cd: number          // dimensionless
+  density: number, // kg/m³
+  velocity: number, // m/s
+  area: number, // m²
+  cd: number, // dimensionless
 ): DragResult | null {
   if (density <= 0 || velocity < 0 || area <= 0) return null;
   const q = 0.5 * density * velocity * velocity;
@@ -2595,8 +2734,8 @@ export interface DynamicPressureResult {
 }
 
 export function computeDynamicPressureCalc(
-  density: number,   // kg/m³
-  velocity: number   // m/s
+  density: number, // kg/m³
+  velocity: number, // m/s
 ): DynamicPressureResult | null {
   if (density <= 0 || velocity < 0) return null;
   const q = 0.5 * density * velocity * velocity;
@@ -2613,33 +2752,31 @@ export function computeDynamicPressureCalc(
 export interface LiftToDragResult {
   ldRatio: number;
   clCd: string;
-  performance: 'Poor' | 'Fair' | 'Good' | 'Excellent' | 'Outstanding';
+  performance: "Poor" | "Fair" | "Good" | "Excellent" | "Outstanding";
   description: string;
 }
 
-export function computeLiftToDragRatio(
-  cl: number,
-  cd: number
-): LiftToDragResult | null {
+export function computeLiftToDragRatio(cl: number, cd: number): LiftToDragResult | null {
   if (cd <= 0) return null;
   const ld = cl / cd;
-  let performance: 'Poor' | 'Fair' | 'Good' | 'Excellent' | 'Outstanding';
+  let performance: "Poor" | "Fair" | "Good" | "Excellent" | "Outstanding";
   let description: string;
   if (Math.abs(ld) < 5) {
-    performance = 'Poor';
-    description = 'Low aerodynamic efficiency. Typical of bluff bodies or high-drag configurations.';
+    performance = "Poor";
+    description =
+      "Low aerodynamic efficiency. Typical of bluff bodies or high-drag configurations.";
   } else if (Math.abs(ld) < 10) {
-    performance = 'Fair';
-    description = 'Moderate efficiency. Typical of general aviation or early aircraft designs.';
+    performance = "Fair";
+    description = "Moderate efficiency. Typical of general aviation or early aircraft designs.";
   } else if (Math.abs(ld) < 20) {
-    performance = 'Good';
-    description = 'Good aerodynamic efficiency. Typical of modern transport aircraft.';
+    performance = "Good";
+    description = "Good aerodynamic efficiency. Typical of modern transport aircraft.";
   } else if (Math.abs(ld) < 40) {
-    performance = 'Excellent';
-    description = 'High efficiency. Typical of sailplanes and optimized UAV designs.';
+    performance = "Excellent";
+    description = "High efficiency. Typical of sailplanes and optimized UAV designs.";
   } else {
-    performance = 'Outstanding';
-    description = 'Exceptional efficiency. Typical of high-performance sailplanes (e.g., ASW 27).';
+    performance = "Outstanding";
+    description = "Exceptional efficiency. Typical of high-performance sailplanes (e.g., ASW 27).";
   }
   return { ldRatio: ld, clCd: `${cl.toFixed(4)} / ${cd.toFixed(4)}`, performance, description };
 }
@@ -2649,16 +2786,16 @@ export function computeLiftToDragRatio(
  * Vs = √(2W / (ρ · S · CLmax))
  */
 export interface StallSpeedResult {
-  stallSpeed: number;       // m/s
+  stallSpeed: number; // m/s
   stallSpeedKnots: number;
   stallSpeedKmh: number;
 }
 
 export function computeStallSpeed(
-  mass: number,       // kg
-  wingArea: number,   // m²
-  clMax: number,      // dimensionless
-  density: number     // kg/m³
+  mass: number, // kg
+  wingArea: number, // m²
+  clMax: number, // dimensionless
+  density: number, // kg/m³
 ): StallSpeedResult | null {
   if (mass <= 0 || wingArea <= 0 || clMax <= 0 || density <= 0) return null;
   const weight = mass * 9.80665;
@@ -2676,7 +2813,7 @@ export function computeStallSpeed(
  * Prop: R = (η / SFC) · (L/D) · ln(W0/W1)
  */
 export interface AircraftRangeResult {
-  range: number;        // m
+  range: number; // m
   rangeKm: number;
   rangeNm: number;
   model: string;
@@ -2684,34 +2821,35 @@ export interface AircraftRangeResult {
 }
 
 export function computeAircraftRange(
-  propulsionType: 'jet' | 'prop',
+  propulsionType: "jet" | "prop",
   liftToDrag: number,
-  initialWeight: number,    // N
-  finalWeight: number,      // N
-  velocity?: number,        // m/s (for jet)
-  sfc?: number,             // kg/(N·s) for jet, kg/(W·s) for prop
-  propEfficiency?: number   // for prop (0-1)
+  initialWeight: number, // N
+  finalWeight: number, // N
+  velocity?: number, // m/s (for jet)
+  sfc?: number, // kg/(N·s) for jet, kg/(W·s) for prop
+  propEfficiency?: number, // for prop (0-1)
 ): AircraftRangeResult | null {
-  if (liftToDrag <= 0 || initialWeight <= 0 || finalWeight <= 0 || finalWeight >= initialWeight) return null;
+  if (liftToDrag <= 0 || initialWeight <= 0 || finalWeight <= 0 || finalWeight >= initialWeight)
+    return null;
   const lnRatio = Math.log(initialWeight / finalWeight);
   let range: number;
   let model: string;
   const assumptions: string[] = [
-    'Steady, level flight assumed throughout cruise',
-    'Constant L/D and SFC assumed',
-    'No wind effects',
+    "Steady, level flight assumed throughout cruise",
+    "Constant L/D and SFC assumed",
+    "No wind effects",
   ];
 
-  if (propulsionType === 'jet') {
+  if (propulsionType === "jet") {
     if (!velocity || !sfc || velocity <= 0 || sfc <= 0) return null;
     range = (velocity / sfc) * liftToDrag * lnRatio;
-    model = 'Breguet Range Equation (Jet): R = (V/SFC) · (L/D) · ln(W₀/W₁)';
-    assumptions.push('Constant velocity cruise');
+    model = "Breguet Range Equation (Jet): R = (V/SFC) · (L/D) · ln(W₀/W₁)";
+    assumptions.push("Constant velocity cruise");
   } else {
     if (!propEfficiency || !sfc || propEfficiency <= 0 || sfc <= 0) return null;
     range = (propEfficiency / sfc) * liftToDrag * lnRatio;
-    model = 'Breguet Range Equation (Prop): R = (η/SFC) · (L/D) · ln(W₀/W₁)';
-    assumptions.push('Constant propeller efficiency');
+    model = "Breguet Range Equation (Prop): R = (η/SFC) · (L/D) · ln(W₀/W₁)";
+    assumptions.push("Constant propeller efficiency");
   }
 
   return {
@@ -2729,7 +2867,7 @@ export function computeAircraftRange(
  * Prop: E = (η / (SFC·V)) · (L/D) · ln(W0/W1)
  */
 export interface AircraftEnduranceResult {
-  endurance: number;       // seconds
+  endurance: number; // seconds
   enduranceHours: number;
   enduranceMinutes: number;
   model: string;
@@ -2737,30 +2875,34 @@ export interface AircraftEnduranceResult {
 }
 
 export function computeAircraftEndurance(
-  propulsionType: 'jet' | 'prop',
+  propulsionType: "jet" | "prop",
   liftToDrag: number,
-  initialWeight: number,    // N
-  finalWeight: number,      // N
-  sfc: number,              // kg/(N·s) for jet
-  velocity?: number,        // m/s (for prop)
-  propEfficiency?: number   // for prop (0-1)
+  initialWeight: number, // N
+  finalWeight: number, // N
+  sfc: number, // kg/(N·s) for jet
+  velocity?: number, // m/s (for prop)
+  propEfficiency?: number, // for prop (0-1)
 ): AircraftEnduranceResult | null {
-  if (liftToDrag <= 0 || initialWeight <= 0 || finalWeight <= 0 || finalWeight >= initialWeight || sfc <= 0) return null;
+  if (
+    liftToDrag <= 0 ||
+    initialWeight <= 0 ||
+    finalWeight <= 0 ||
+    finalWeight >= initialWeight ||
+    sfc <= 0
+  )
+    return null;
   const lnRatio = Math.log(initialWeight / finalWeight);
   let endurance: number;
   let model: string;
-  const assumptions: string[] = [
-    'Steady, level flight assumed',
-    'Constant L/D and SFC assumed',
-  ];
+  const assumptions: string[] = ["Steady, level flight assumed", "Constant L/D and SFC assumed"];
 
-  if (propulsionType === 'jet') {
+  if (propulsionType === "jet") {
     endurance = (1 / sfc) * liftToDrag * lnRatio;
-    model = 'Breguet Endurance (Jet): E = (1/SFC) · (L/D) · ln(W₀/W₁)';
+    model = "Breguet Endurance (Jet): E = (1/SFC) · (L/D) · ln(W₀/W₁)";
   } else {
     if (!velocity || !propEfficiency || velocity <= 0 || propEfficiency <= 0) return null;
     endurance = (propEfficiency / (sfc * velocity)) * liftToDrag * lnRatio;
-    model = 'Breguet Endurance (Prop): E = (η/(SFC·V)) · (L/D) · ln(W₀/W₁)';
+    model = "Breguet Endurance (Prop): E = (η/(SFC·V)) · (L/D) · ln(W₀/W₁)";
   }
 
   return {
@@ -2777,15 +2919,15 @@ export function computeAircraftEndurance(
  * W/S = Weight / Wing Area
  */
 export interface WingLoadingResult {
-  wingLoading: number;       // N/m² (Pa)
+  wingLoading: number; // N/m² (Pa)
   wingLoadingImperial: number; // lb/ft²
   category: string;
   description: string;
 }
 
 export function computeWingLoading(
-  weight: number,    // N
-  wingArea: number   // m²
+  weight: number, // N
+  wingArea: number, // m²
 ): WingLoadingResult | null {
   if (weight <= 0 || wingArea <= 0) return null;
   const ws = weight / wingArea;
@@ -2793,17 +2935,19 @@ export function computeWingLoading(
   let category: string;
   let description: string;
   if (ws < 500) {
-    category = 'Very Low (Ultralight/Sailplane)';
-    description = 'Low stall speed, tight turns, but vulnerable to gusts. Typical of sailplanes and ultralights.';
+    category = "Very Low (Ultralight/Sailplane)";
+    description =
+      "Low stall speed, tight turns, but vulnerable to gusts. Typical of sailplanes and ultralights.";
   } else if (ws < 2000) {
-    category = 'Low (Light Aircraft/GA)';
-    description = 'Good low-speed handling, moderate gust response. Typical of general aviation.';
+    category = "Low (Light Aircraft/GA)";
+    description = "Good low-speed handling, moderate gust response. Typical of general aviation.";
   } else if (ws < 5000) {
-    category = 'Medium (Transport/Fighter)';
-    description = 'Balance of cruise performance and takeoff/landing requirements.';
+    category = "Medium (Transport/Fighter)";
+    description = "Balance of cruise performance and takeoff/landing requirements.";
   } else {
-    category = 'High (High-Performance/Supersonic)';
-    description = 'High cruise speed but requires long runways and high-lift devices. Typical of supersonic aircraft.';
+    category = "High (High-Performance/Supersonic)";
+    description =
+      "High cruise speed but requires long runways and high-lift devices. Typical of supersonic aircraft.";
   }
   return { wingLoading: ws, wingLoadingImperial: wsImperial, category, description };
 }
@@ -2819,25 +2963,29 @@ export interface AspectRatioResult {
 }
 
 export function computeAspectRatio(
-  span: number,    // m
-  wingArea: number // m²
+  span: number, // m
+  wingArea: number, // m²
 ): AspectRatioResult | null {
   if (span <= 0 || wingArea <= 0) return null;
   const ar = (span * span) / wingArea;
   let classification: string;
   let description: string;
   if (ar < 4) {
-    classification = 'Low (Delta/Flying Wing)';
-    description = 'Low aspect ratio produces more induced drag but is structurally efficient. Good for high-speed flight.';
+    classification = "Low (Delta/Flying Wing)";
+    description =
+      "Low aspect ratio produces more induced drag but is structurally efficient. Good for high-speed flight.";
   } else if (ar < 8) {
-    classification = 'Medium (General Aviation)';
-    description = 'Balanced induced drag and structural weight. Typical of fighters and GA aircraft.';
+    classification = "Medium (General Aviation)";
+    description =
+      "Balanced induced drag and structural weight. Typical of fighters and GA aircraft.";
   } else if (ar < 15) {
-    classification = 'High (Transport)';
-    description = 'Low induced drag, good cruise efficiency. Typical of commercial transports and UAVs.';
+    classification = "High (Transport)";
+    description =
+      "Low induced drag, good cruise efficiency. Typical of commercial transports and UAVs.";
   } else {
-    classification = 'Very High (Sailplane)';
-    description = 'Minimal induced drag, maximum L/D. Requires careful structural design. Typical of sailplanes.';
+    classification = "Very High (Sailplane)";
+    description =
+      "Minimal induced drag, maximum L/D. Requires careful structural design. Typical of sailplanes.";
   }
   return { aspectRatio: ar, classification, description };
 }
@@ -2850,23 +2998,23 @@ export function computeAspectRatio(
  * J = V / (n · D)
  */
 export interface PropellerPerformanceResult {
-  thrust: number;         // N
-  power: number;          // W
-  efficiency: number;     // dimensionless
-  advanceRatio: number;   // J
-  tipSpeed: number;       // m/s
+  thrust: number; // N
+  power: number; // W
+  efficiency: number; // dimensionless
+  advanceRatio: number; // J
+  tipSpeed: number; // m/s
   tipMach: number;
   assumptions: string[];
 }
 
 export function computePropellerPerformance(
-  diameter: number,       // m
-  rpm: number,            // rev/min
-  airspeed: number,       // m/s
-  density: number,        // kg/m³
-  ct: number = 0.05,      // thrust coefficient
-  cp: number = 0.04,      // power coefficient
-  speedOfSound: number = 340 // m/s
+  diameter: number, // m
+  rpm: number, // rev/min
+  airspeed: number, // m/s
+  density: number, // kg/m³
+  ct: number = 0.05, // thrust coefficient
+  cp: number = 0.04, // power coefficient
+  speedOfSound: number = 340, // m/s
 ): PropellerPerformanceResult | null {
   if (diameter <= 0 || rpm <= 0 || density <= 0 || cp <= 0) return null;
   const n = rpm / 60; // rev/s
@@ -2885,10 +3033,10 @@ export function computePropellerPerformance(
     tipSpeed,
     tipMach,
     assumptions: [
-      'Simplified momentum/blade-element model using CT and CP coefficients',
-      'CT and CP assumed constant (in reality they vary with advance ratio J)',
-      'No compressibility correction applied',
-      `Tip Mach ${tipMach.toFixed(2)} — ${tipMach > 0.85 ? '⚠️ compressibility effects likely' : 'subsonic tip'}`,
+      "Simplified momentum/blade-element model using CT and CP coefficients",
+      "CT and CP assumed constant (in reality they vary with advance ratio J)",
+      "No compressibility correction applied",
+      `Tip Mach ${tipMach.toFixed(2)} — ${tipMach > 0.85 ? "⚠️ compressibility effects likely" : "subsonic tip"}`,
     ],
   };
 }
@@ -2898,19 +3046,19 @@ export function computePropellerPerformance(
  * F = ṁ(Ve - V0) + (Pe - Pa)Ae
  */
 export interface JetEngineThrustResult {
-  thrust: number;            // N
-  specificThrust: number;    // N·s/kg
-  tsfc: number;              // kg/(N·s)
+  thrust: number; // N
+  specificThrust: number; // N·s/kg
+  tsfc: number; // kg/(N·s)
   assumptions: string[];
 }
 
 export function computeJetEngineThrust(
-  massFlowRate: number,      // kg/s
-  exitVelocity: number,      // m/s
-  flightVelocity: number,    // m/s
+  massFlowRate: number, // kg/s
+  exitVelocity: number, // m/s
+  flightVelocity: number, // m/s
   exitPressure: number = 101325, // Pa
   ambientPressure: number = 101325, // Pa
-  exitArea: number = 0.5     // m²
+  exitArea: number = 0.5, // m²
 ): JetEngineThrustResult | null {
   if (massFlowRate <= 0 || exitVelocity <= 0) return null;
   const momentumThrust = massFlowRate * (exitVelocity - flightVelocity);
@@ -2924,10 +3072,10 @@ export function computeJetEngineThrust(
     specificThrust,
     tsfc,
     assumptions: [
-      'Steady-state, one-dimensional flow assumed',
-      'No installation losses (inlet, nacelle drag)',
-      'Uniform exit conditions assumed',
-      'No bleed or power extraction accounted for',
+      "Steady-state, one-dimensional flow assumed",
+      "No installation losses (inlet, nacelle drag)",
+      "Uniform exit conditions assumed",
+      "No bleed or power extraction accounted for",
     ],
   };
 }
@@ -2937,19 +3085,20 @@ export function computeJetEngineThrust(
  * ΔV = Isp · g₀ · ln(m₀/mf)
  */
 export interface RocketDeltaVResult {
-  deltaV: number;           // m/s
-  deltaVKmS: number;        // km/s
+  deltaV: number; // m/s
+  deltaVKmS: number; // km/s
   massRatio: number;
-  exhaustVelocity: number;  // m/s
+  exhaustVelocity: number; // m/s
   propellantFraction: number;
 }
 
 export function computeRocketDeltaVCalc(
-  initialMass: number,    // kg
-  finalMass: number,      // kg
-  specificImpulse: number // seconds
+  initialMass: number, // kg
+  finalMass: number, // kg
+  specificImpulse: number, // seconds
 ): RocketDeltaVResult | null {
-  if (initialMass <= 0 || finalMass <= 0 || finalMass >= initialMass || specificImpulse <= 0) return null;
+  if (initialMass <= 0 || finalMass <= 0 || finalMass >= initialMass || specificImpulse <= 0)
+    return null;
   const g0 = 9.80665;
   const ve = specificImpulse * g0;
   const massRatio = initialMass / finalMass;
@@ -2959,7 +3108,7 @@ export function computeRocketDeltaVCalc(
     deltaVKmS: deltaV / 1000,
     massRatio,
     exhaustVelocity: ve,
-    propellantFraction: 1 - (finalMass / initialMass),
+    propellantFraction: 1 - finalMass / initialMass,
   };
 }
 
@@ -2970,20 +3119,20 @@ export function computeRocketDeltaVCalc(
  * (No air resistance — clearly stated)
  */
 export interface ProjectileTrajectoryResult {
-  range: number;           // m
-  maxAltitude: number;     // m
-  timeOfFlight: number;    // s
-  impactVelocity: number;  // m/s
-  impactAngle: number;     // degrees
+  range: number; // m
+  maxAltitude: number; // m
+  timeOfFlight: number; // s
+  impactVelocity: number; // m/s
+  impactAngle: number; // degrees
   trajectory: Array<{ x: number; y: number; t: number; vx: number; vy: number }>;
   assumptions: string[];
 }
 
 export function computeProjectileTrajectory(
-  velocity: number,        // m/s
-  angleDeg: number,        // degrees from horizontal
+  velocity: number, // m/s
+  angleDeg: number, // degrees from horizontal
   initialHeight: number = 0, // m
-  g: number = 9.80665      // m/s²
+  g: number = 9.80665, // m/s²
 ): ProjectileTrajectoryResult | null {
   if (velocity <= 0 || g <= 0) return null;
   const theta = (angleDeg * Math.PI) / 180;
@@ -3000,12 +3149,12 @@ export function computeProjectileTrajectory(
   const maxAlt = initialHeight + vy0 * tApex - 0.5 * g * tApex * tApex;
 
   // Impact velocity
-  const vyImpact = -(Math.sqrt(discriminant));
+  const vyImpact = -Math.sqrt(discriminant);
   const impactVelocity = Math.sqrt(vx * vx + vyImpact * vyImpact);
-  const impactAngle = Math.atan2(Math.abs(vyImpact), vx) * 180 / Math.PI;
+  const impactAngle = (Math.atan2(Math.abs(vyImpact), vx) * 180) / Math.PI;
 
   // Generate trajectory points
-  const trajectory: ProjectileTrajectoryResult['trajectory'] = [];
+  const trajectory: ProjectileTrajectoryResult["trajectory"] = [];
   const numPoints = 200;
   for (let i = 0; i <= numPoints; i++) {
     const t = (i / numPoints) * tFlight;
@@ -3022,10 +3171,10 @@ export function computeProjectileTrajectory(
     impactAngle,
     trajectory,
     assumptions: [
-      'No air resistance (vacuum trajectory)',
-      'Flat Earth approximation (valid for short ranges)',
-      'Constant gravitational acceleration',
-      'Point mass projectile',
+      "No air resistance (vacuum trajectory)",
+      "Flat Earth approximation (valid for short ranges)",
+      "Constant gravitational acceleration",
+      "Point mass projectile",
     ],
   };
 }
@@ -3039,14 +3188,14 @@ export function computeProjectileTrajectory(
  * σ = F / A
  */
 export interface StressResult {
-  stress: number;       // Pa
+  stress: number; // Pa
   stressMPa: number;
   stressKsi: number;
 }
 
 export function computeNormalStress(
-  force: number,   // N
-  area: number     // m²
+  force: number, // N
+  area: number, // m²
 ): StressResult | null {
   if (area <= 0) return null;
   const s = force / area;
@@ -3058,8 +3207,8 @@ export function computeNormalStress(
  * τ = V / A
  */
 export function computeShearStress(
-  shearForce: number,  // N
-  area: number         // m²
+  shearForce: number, // N
+  area: number, // m²
 ): StressResult | null {
   if (area <= 0) return null;
   const s = shearForce / area;
@@ -3071,14 +3220,14 @@ export function computeShearStress(
  * ε = ΔL / L₀
  */
 export interface StrainResult {
-  strain: number;           // dimensionless
-  strainPercent: number;    // %
+  strain: number; // dimensionless
+  strainPercent: number; // %
   strainMicroStrain: number; // με
 }
 
 export function computeStrain(
-  deformation: number,     // m (ΔL)
-  originalLength: number   // m (L₀)
+  deformation: number, // m (ΔL)
+  originalLength: number, // m (L₀)
 ): StrainResult | null {
   if (originalLength <= 0) return null;
   const e = deformation / originalLength;
@@ -3090,14 +3239,14 @@ export function computeStrain(
  * E = σ / ε
  */
 export interface YoungsModulusResult {
-  youngsModulus: number;      // Pa
+  youngsModulus: number; // Pa
   youngsModulusGPa: number;
-  youngsModulusMsi: number;   // Msi (million psi)
+  youngsModulusMsi: number; // Msi (million psi)
 }
 
 export function computeYoungsModulus(
-  stress: number,  // Pa
-  strain: number   // dimensionless
+  stress: number, // Pa
+  strain: number, // dimensionless
 ): YoungsModulusResult | null {
   if (strain === 0) return null;
   const E = stress / strain;
@@ -3110,33 +3259,35 @@ export function computeYoungsModulus(
  */
 export interface FactorOfSafetyResult {
   factorOfSafety: number;
-  assessment: 'Unsafe' | 'Marginal' | 'Adequate' | 'Conservative' | 'Over-designed';
+  assessment: "Unsafe" | "Marginal" | "Adequate" | "Conservative" | "Over-designed";
   description: string;
 }
 
 export function computeFactorOfSafety(
-  failureStrength: number,  // Pa
-  workingStress: number     // Pa
+  failureStrength: number, // Pa
+  workingStress: number, // Pa
 ): FactorOfSafetyResult | null {
   if (workingStress <= 0 || failureStrength <= 0) return null;
   const fos = failureStrength / workingStress;
-  let assessment: FactorOfSafetyResult['assessment'];
+  let assessment: FactorOfSafetyResult["assessment"];
   let description: string;
   if (fos < 1.0) {
-    assessment = 'Unsafe';
-    description = 'Working stress exceeds material failure strength. Failure is expected.';
+    assessment = "Unsafe";
+    description = "Working stress exceeds material failure strength. Failure is expected.";
   } else if (fos < 1.5) {
-    assessment = 'Marginal';
-    description = 'Low safety margin. Acceptable only for well-understood, non-critical applications with tight tolerances.';
+    assessment = "Marginal";
+    description =
+      "Low safety margin. Acceptable only for well-understood, non-critical applications with tight tolerances.";
   } else if (fos < 3.0) {
-    assessment = 'Adequate';
-    description = 'Standard engineering safety factor. Suitable for most structural applications.';
+    assessment = "Adequate";
+    description = "Standard engineering safety factor. Suitable for most structural applications.";
   } else if (fos < 6.0) {
-    assessment = 'Conservative';
-    description = 'High safety margin. Common for critical or uncertain loading conditions.';
+    assessment = "Conservative";
+    description = "High safety margin. Common for critical or uncertain loading conditions.";
   } else {
-    assessment = 'Over-designed';
-    description = 'Very high safety factor. Consider weight/cost optimization unless safety-critical.';
+    assessment = "Over-designed";
+    description =
+      "Very high safety factor. Consider weight/cost optimization unless safety-critical.";
   }
   return { factorOfSafety: fos, assessment, description };
 }
@@ -3147,18 +3298,18 @@ export function computeFactorOfSafety(
  * φ = TL / (GJ) — angle of twist
  */
 export interface ShaftTorsionResult {
-  maxShearStress: number;    // Pa
+  maxShearStress: number; // Pa
   maxShearStressMPa: number;
-  angleOfTwist: number;      // radians
+  angleOfTwist: number; // radians
   angleOfTwistDeg: number;
   polarMomentOfInertia: number; // m⁴
 }
 
 export function computeShaftTorsion(
-  torque: number,         // N·m
-  diameter: number,       // m
-  length: number,         // m
-  shearModulus: number    // Pa (G)
+  torque: number, // N·m
+  diameter: number, // m
+  length: number, // m
+  shearModulus: number, // Pa (G)
 ): ShaftTorsionResult | null {
   if (diameter <= 0 || length <= 0 || shearModulus <= 0) return null;
   const r = diameter / 2;
@@ -3169,7 +3320,7 @@ export function computeShaftTorsion(
     maxShearStress: tauMax,
     maxShearStressMPa: tauMax / 1e6,
     angleOfTwist: phi,
-    angleOfTwistDeg: phi * 180 / Math.PI,
+    angleOfTwistDeg: (phi * 180) / Math.PI,
     polarMomentOfInertia: J,
   };
 }
@@ -3180,17 +3331,17 @@ export function computeShaftTorsion(
  * Provide two of three to calculate the third
  */
 export interface PowerTorqueRPMResult {
-  power: number;    // W
+  power: number; // W
   powerKW: number;
   powerHP: number;
-  torque: number;   // N·m
+  torque: number; // N·m
   rpm: number;
 }
 
 export function computePowerTorqueRPM(
-  power?: number,   // W (optional)
-  torque?: number,  // N·m (optional)
-  rpm?: number      // rev/min (optional)
+  power?: number, // W (optional)
+  torque?: number, // N·m (optional)
+  rpm?: number, // rev/min (optional)
 ): PowerTorqueRPMResult | null {
   const defined = [power, torque, rpm].filter((v) => v !== undefined && v !== null);
   if (defined.length < 2) return null;
@@ -3198,20 +3349,25 @@ export function computePowerTorqueRPM(
   let P: number, T: number, N: number;
 
   if (power !== undefined && power !== null && torque !== undefined && torque !== null) {
-    P = power; T = torque;
+    P = power;
+    T = torque;
     N = T > 0 ? (P * 60) / (2 * Math.PI * T) : 0;
   } else if (power !== undefined && power !== null && rpm !== undefined && rpm !== null) {
-    P = power; N = rpm;
+    P = power;
+    N = rpm;
     T = N > 0 ? (P * 60) / (2 * Math.PI * N) : 0;
   } else if (torque !== undefined && torque !== null && rpm !== undefined && rpm !== null) {
-    T = torque; N = rpm;
+    T = torque;
+    N = rpm;
     P = (2 * Math.PI * N * T) / 60;
   } else {
     return null;
   }
 
   return {
-    power: P!, torque: T!, rpm: N!,
+    power: P!,
+    torque: T!,
+    rpm: N!,
     powerKW: P! / 1000,
     powerHP: P! / 745.7,
   };
@@ -3223,19 +3379,19 @@ export function computePowerTorqueRPM(
  * Q = 2πkL·ΔT / ln(r2/r1) (cylindrical)
  */
 export interface ThermalConductionResult {
-  heatFlux: number;       // W
+  heatFlux: number; // W
   heatFluxDensity: number; // W/m²
   thermalResistance: number; // K/W
 }
 
 export function computeThermalConduction(
-  conductivity: number,    // W/(m·K)
-  area: number,            // m²
-  deltaT: number,          // K or °C
-  thickness: number        // m
+  conductivity: number, // W/(m·K)
+  area: number, // m²
+  deltaT: number, // K or °C
+  thickness: number, // m
 ): ThermalConductionResult | null {
   if (conductivity <= 0 || area <= 0 || thickness <= 0) return null;
-  const Q = conductivity * area * deltaT / thickness;
+  const Q = (conductivity * area * deltaT) / thickness;
   return {
     heatFlux: Q,
     heatFluxDensity: Q / area,
@@ -3248,15 +3404,15 @@ export function computeThermalConduction(
  * Q = h · A · ΔT
  */
 export interface ConvectiveHeatTransferResult {
-  heatFlux: number;       // W
+  heatFlux: number; // W
   heatFluxDensity: number; // W/m²
   thermalResistance: number; // K/W
 }
 
 export function computeConvectiveHeatTransfer(
-  hCoeff: number,    // W/(m²·K)
-  area: number,      // m²
-  deltaT: number     // K
+  hCoeff: number, // W/(m²·K)
+  area: number, // m²
+  deltaT: number, // K
 ): ConvectiveHeatTransferResult | null {
   if (hCoeff <= 0 || area <= 0) return null;
   const Q = hCoeff * area * deltaT;
@@ -3273,21 +3429,22 @@ export function computeConvectiveHeatTransfer(
  * Net: Q_net = ε · σ · A · (T_hot⁴ - T_cold⁴)
  */
 export interface ThermalRadiationResult {
-  emittedPower: number;     // W
-  netHeatFlux: number;      // W
-  emissivePower: number;    // W/m²
+  emittedPower: number; // W
+  netHeatFlux: number; // W
+  emissivePower: number; // W/m²
 }
 
 export function computeThermalRadiation(
-  emissivity: number,       // 0-1
-  area: number,             // m²
-  tempHot: number,          // K
-  tempCold: number = 0      // K (surroundings)
+  emissivity: number, // 0-1
+  area: number, // m²
+  tempHot: number, // K
+  tempCold: number = 0, // K (surroundings)
 ): ThermalRadiationResult | null {
   if (emissivity < 0 || emissivity > 1 || area <= 0 || tempHot < 0) return null;
   const sigma = 5.670374419e-8; // W/(m²·K⁴)
   const emitted = emissivity * sigma * area * Math.pow(tempHot, 4);
-  const net = emissivity * sigma * area * (Math.pow(tempHot, 4) - Math.pow(Math.max(0, tempCold), 4));
+  const net =
+    emissivity * sigma * area * (Math.pow(tempHot, 4) - Math.pow(Math.max(0, tempCold), 4));
   return {
     emittedPower: emitted,
     netHeatFlux: net,
@@ -3300,23 +3457,23 @@ export function computeThermalRadiation(
  * LMTD = (ΔT₁ - ΔT₂) / ln(ΔT₁/ΔT₂)
  */
 export interface LMTDResult {
-  lmtd: number;             // K
-  deltaT1: number;          // K
-  deltaT2: number;          // K
-  heatDuty: number;         // W (if UA provided)
+  lmtd: number; // K
+  deltaT1: number; // K
+  deltaT2: number; // K
+  heatDuty: number; // W (if UA provided)
   configuration: string;
 }
 
 export function computeHeatExchangerLMTD(
-  hotIn: number,    // K or °C
-  hotOut: number,   // K or °C
-  coldIn: number,   // K or °C
-  coldOut: number,  // K or °C
-  configuration: 'counterflow' | 'parallelflow' = 'counterflow',
-  UA?: number       // W/K (overall heat transfer coefficient × area)
+  hotIn: number, // K or °C
+  hotOut: number, // K or °C
+  coldIn: number, // K or °C
+  coldOut: number, // K or °C
+  configuration: "counterflow" | "parallelflow" = "counterflow",
+  UA?: number, // W/K (overall heat transfer coefficient × area)
 ): LMTDResult | null {
   let dT1: number, dT2: number;
-  if (configuration === 'counterflow') {
+  if (configuration === "counterflow") {
     dT1 = hotIn - coldOut;
     dT2 = hotOut - coldIn;
   } else {
@@ -3347,35 +3504,35 @@ export function computeHeatExchangerLMTD(
  */
 export interface PipeReynoldsResult {
   reynoldsNumber: number;
-  regime: 'Laminar' | 'Transitional' | 'Turbulent';
+  regime: "Laminar" | "Transitional" | "Turbulent";
   frictionFactor: number; // Darcy friction factor
   description: string;
 }
 
 export function computeReynoldsNumberPipe(
-  velocity: number,         // m/s
-  diameter: number,         // m
-  density: number,          // kg/m³
-  dynamicViscosity: number  // Pa·s
+  velocity: number, // m/s
+  diameter: number, // m
+  density: number, // kg/m³
+  dynamicViscosity: number, // Pa·s
 ): PipeReynoldsResult | null {
   if (velocity <= 0 || diameter <= 0 || density <= 0 || dynamicViscosity <= 0) return null;
   const re = (density * velocity * diameter) / dynamicViscosity;
-  let regime: 'Laminar' | 'Transitional' | 'Turbulent';
+  let regime: "Laminar" | "Transitional" | "Turbulent";
   let f: number;
   let description: string;
 
   if (re < 2300) {
-    regime = 'Laminar';
+    regime = "Laminar";
     f = 64 / re; // Hagen-Poiseuille
-    description = 'Laminar pipe flow. Friction factor f = 64/Re (Hagen-Poiseuille).';
+    description = "Laminar pipe flow. Friction factor f = 64/Re (Hagen-Poiseuille).";
   } else if (re < 4000) {
-    regime = 'Transitional';
+    regime = "Transitional";
     f = 0.316 * Math.pow(re, -0.25); // Blasius approximation
-    description = 'Transitional flow. Friction factor uncertain — using Blasius approximation.';
+    description = "Transitional flow. Friction factor uncertain — using Blasius approximation.";
   } else {
-    regime = 'Turbulent';
+    regime = "Turbulent";
     f = 0.316 * Math.pow(re, -0.25); // Blasius (smooth pipe, Re < 10⁵)
-    description = 'Turbulent flow. Using Blasius correlation for smooth pipes (f = 0.316·Re⁻⁰·²⁵).';
+    description = "Turbulent flow. Using Blasius correlation for smooth pipes (f = 0.316·Re⁻⁰·²⁵).";
   }
 
   return { reynoldsNumber: re, regime, frictionFactor: f, description };
@@ -3387,24 +3544,24 @@ export function computeReynoldsNumberPipe(
  * Solve for any one unknown given the others
  */
 export interface BernoulliResult {
-  pressure1: number;    // Pa
-  velocity1: number;    // m/s
-  elevation1: number;   // m
-  pressure2: number;    // Pa
-  velocity2: number;    // m/s
-  elevation2: number;   // m
-  totalHead: number;    // m
+  pressure1: number; // Pa
+  velocity1: number; // m/s
+  elevation1: number; // m
+  pressure2: number; // Pa
+  velocity2: number; // m/s
+  elevation2: number; // m
+  totalHead: number; // m
   assumptions: string[];
 }
 
 export function computeBernoulliEquation(
-  density: number,      // kg/m³
-  pressure1: number,    // Pa
-  velocity1: number,    // m/s
-  elevation1: number,   // m
-  pressure2?: number,   // Pa (provide to solve for v2)
-  velocity2?: number,   // m/s (provide to solve for P2)
-  elevation2: number = 0 // m
+  density: number, // kg/m³
+  pressure1: number, // Pa
+  velocity1: number, // m/s
+  elevation1: number, // m
+  pressure2?: number, // Pa (provide to solve for v2)
+  velocity2?: number, // m/s (provide to solve for P2)
+  elevation2: number = 0, // m
 ): BernoulliResult | null {
   if (density <= 0) return null;
   const g = 9.80665;
@@ -3426,14 +3583,18 @@ export function computeBernoulliEquation(
   }
 
   return {
-    pressure1, velocity1, elevation1,
-    pressure2: P2, velocity2: V2, elevation2,
+    pressure1,
+    velocity1,
+    elevation1,
+    pressure2: P2,
+    velocity2: V2,
+    elevation2,
     totalHead,
     assumptions: [
-      'Steady, incompressible, inviscid flow (ideal fluid)',
-      'Flow along a single streamline',
-      'No energy addition or removal (no pumps, turbines)',
-      'No friction losses',
+      "Steady, incompressible, inviscid flow (ideal fluid)",
+      "Flow along a single streamline",
+      "No energy addition or removal (no pumps, turbines)",
+      "No friction losses",
     ],
   };
 }
@@ -3443,39 +3604,40 @@ export function computeBernoulliEquation(
  * ΔP = f · (L/D) · (ρV²/2)
  */
 export interface PipePressureDropResult {
-  pressureDrop: number;       // Pa
+  pressureDrop: number; // Pa
   pressureDropKPa: number;
   pressureDropPsi: number;
   reynoldsNumber: number;
   frictionFactor: number;
-  headLoss: number;           // m
+  headLoss: number; // m
   flowRegime: string;
 }
 
 export function computePipePressureDrop(
-  velocity: number,         // m/s
-  diameter: number,         // m
-  length: number,           // m
-  density: number,          // kg/m³
+  velocity: number, // m/s
+  diameter: number, // m
+  length: number, // m
+  density: number, // kg/m³
   dynamicViscosity: number, // Pa·s
-  roughness: number = 0.00015 // m (pipe roughness, default = commercial steel)
+  roughness: number = 0.00015, // m (pipe roughness, default = commercial steel)
 ): PipePressureDropResult | null {
-  if (velocity <= 0 || diameter <= 0 || length <= 0 || density <= 0 || dynamicViscosity <= 0) return null;
+  if (velocity <= 0 || diameter <= 0 || length <= 0 || density <= 0 || dynamicViscosity <= 0)
+    return null;
   const re = (density * velocity * diameter) / dynamicViscosity;
   let f: number;
   let flowRegime: string;
 
   if (re < 2300) {
     f = 64 / re;
-    flowRegime = 'Laminar';
+    flowRegime = "Laminar";
   } else {
     // Colebrook-White approximation (Swamee-Jain explicit)
     const relRoughness = roughness / diameter;
     f = 0.25 / Math.pow(Math.log10(relRoughness / 3.7 + 5.74 / Math.pow(re, 0.9)), 2);
-    flowRegime = 'Turbulent';
+    flowRegime = "Turbulent";
   }
 
-  const dP = f * (length / diameter) * (density * velocity * velocity / 2);
+  const dP = f * (length / diameter) * ((density * velocity * velocity) / 2);
   const headLoss = dP / (density * 9.80665);
 
   return {
@@ -3494,19 +3656,19 @@ export function computePipePressureDrop(
  * P = ρ · g · Q · H / η
  */
 export interface PumpPowerResult {
-  power: number;       // W
+  power: number; // W
   powerKW: number;
   powerHP: number;
-  flowRate: number;    // m³/s
-  head: number;        // m
+  flowRate: number; // m³/s
+  head: number; // m
   efficiency: number;
 }
 
 export function computePumpPower(
-  flowRate: number,     // m³/s
-  head: number,         // m
-  density: number,      // kg/m³
-  efficiency: number    // 0-1
+  flowRate: number, // m³/s
+  head: number, // m
+  density: number, // kg/m³
+  efficiency: number, // 0-1
 ): PumpPowerResult | null {
   if (flowRate <= 0 || head <= 0 || density <= 0 || efficiency <= 0 || efficiency > 1) return null;
   const g = 9.80665;
@@ -3526,23 +3688,23 @@ export function computePumpPower(
  * Simplified affinity laws and system curve intersection
  */
 export interface CentrifugalPumpResult {
-  operatingFlowRate: number;  // m³/s
-  operatingHead: number;      // m
+  operatingFlowRate: number; // m³/s
+  operatingHead: number; // m
   operatingEfficiency: number;
-  operatingPower: number;     // W
-  shutoffHead: number;        // m
-  maxFlow: number;            // m³/s
+  operatingPower: number; // W
+  shutoffHead: number; // m
+  maxFlow: number; // m³/s
   pumpCurve: Array<{ flow: number; head: number }>;
   systemCurve: Array<{ flow: number; head: number }>;
 }
 
 export function computeCentrifugalPumpPerformance(
-  shutoffHead: number,       // m (at zero flow)
-  maxFlow: number,           // m³/s (at zero head)
-  staticHead: number,        // m (system static head)
-  systemFrictionK: number,   // friction coefficient K where H_friction = K·Q²
-  density: number = 998,     // kg/m³
-  pumpEfficiency: number = 0.75
+  shutoffHead: number, // m (at zero flow)
+  maxFlow: number, // m³/s (at zero head)
+  staticHead: number, // m (system static head)
+  systemFrictionK: number, // friction coefficient K where H_friction = K·Q²
+  density: number = 998, // kg/m³
+  pumpEfficiency: number = 0.75,
 ): CentrifugalPumpResult | null {
   if (shutoffHead <= 0 || maxFlow <= 0 || density <= 0 || pumpEfficiency <= 0) return null;
 
@@ -3552,7 +3714,8 @@ export function computeCentrifugalPumpPerformance(
   // Quadratic pump curve: H = H_shutoff - (H_shutoff/Q_max²)·Q²
   const a = shutoffHead / (maxFlow * maxFlow);
 
-  let opFlow = 0, opHead = 0;
+  let opFlow = 0,
+    opHead = 0;
   let minDiff = Infinity;
 
   const steps = 100;
@@ -3592,14 +3755,14 @@ export function computeCentrifugalPumpPerformance(
  * f_n = ω_n / (2π)
  */
 export interface NaturalFrequencyResult {
-  naturalFrequencyRad: number;  // rad/s
-  naturalFrequencyHz: number;   // Hz
-  period: number;               // seconds
+  naturalFrequencyRad: number; // rad/s
+  naturalFrequencyHz: number; // Hz
+  period: number; // seconds
 }
 
 export function computeNaturalFrequency(
-  stiffness: number,   // N/m
-  mass: number          // kg
+  stiffness: number, // N/m
+  mass: number, // kg
 ): NaturalFrequencyResult | null {
   if (stiffness <= 0 || mass <= 0) return null;
   const omegaN = Math.sqrt(stiffness / mass);
@@ -3617,18 +3780,18 @@ export function computeNaturalFrequency(
  * k = Gd⁴ / (8nD³) (helical coil spring)
  */
 export interface SpringDesignResult {
-  springConstant: number;     // N/m
-  force: number;              // N
-  deflection: number;         // m
-  potentialEnergy: number;    // J
-  naturalFreqHz: number;      // Hz (if mass provided)
+  springConstant: number; // N/m
+  force: number; // N
+  deflection: number; // m
+  potentialEnergy: number; // J
+  naturalFreqHz: number; // Hz (if mass provided)
 }
 
 export function computeSpringDesign(
-  springConstant: number,  // N/m
-  load?: number,           // N
-  deflection?: number,     // m
-  mass?: number            // kg (for natural frequency)
+  springConstant: number, // N/m
+  load?: number, // N
+  deflection?: number, // m
+  mass?: number, // kg (for natural frequency)
 ): SpringDesignResult | null {
   if (springConstant <= 0) return null;
   let F: number, x: number;
@@ -3662,9 +3825,9 @@ export function computeSpringDesign(
 export interface GearRatioResult {
   gearRatio: number;
   outputRPM: number;
-  outputTorque: number;       // N·m
-  inputPower: number;         // W
-  outputPower: number;        // W (accounts for efficiency)
+  outputTorque: number; // N·m
+  inputPower: number; // W
+  outputPower: number; // W (accounts for efficiency)
   speedReduction: boolean;
 }
 
@@ -3672,8 +3835,8 @@ export function computeGearRatio(
   inputTeeth: number,
   outputTeeth: number,
   inputRPM: number,
-  inputTorque: number = 0,   // N·m
-  efficiency: number = 1.0   // 0-1
+  inputTorque: number = 0, // N·m
+  efficiency: number = 1.0, // 0-1
 ): GearRatioResult | null {
   if (inputTeeth <= 0 || outputTeeth <= 0 || inputRPM < 0) return null;
   const gr = outputTeeth / inputTeeth;
@@ -3691,5 +3854,3 @@ export function computeGearRatio(
     speedReduction: gr > 1,
   };
 }
-
-

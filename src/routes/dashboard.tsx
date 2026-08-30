@@ -61,6 +61,7 @@ export const Route = createFileRoute("/dashboard")({
         content:
           "Student workspace and full dynamic Admin CMS management for Project Polaris programs, past sessions, articles, spotlight features, and user data.",
       },
+      { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Student Dashboard & Admin Portal — Project Polaris" },
       { property: "og:url", content: "https://projectpolaris.in/dashboard" },
       { property: "og:type", content: "website" },
@@ -82,7 +83,9 @@ function DashboardPage() {
   const [articles, setArticlesState] = useState<ArticleItem[]>(getArticles());
   const [spotlights, setSpotlightsState] = useState<SpotlightEntry[]>(getSpotlights());
   const [submissions, setSubmissionsState] = useState<UserSubmission[]>(getUserSubmissions());
-  const [activeCmsSection, setActiveCmsSection] = useState<"programs" | "pastSessions" | "articles" | "spotlight" | "submissions" | "database">("programs");
+  const [activeCmsSection, setActiveCmsSection] = useState<
+    "programs" | "pastSessions" | "articles" | "spotlight" | "submissions" | "database"
+  >("programs");
   const [submissionFilter, setSubmissionFilter] = useState<string>("all");
   const [submissionSearch, setSubmissionSearch] = useState<string>("");
   const [statusFeedback, setStatusFeedback] = useState<string | null>(null);
@@ -154,7 +157,11 @@ function DashboardPage() {
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (adminPasscode === "polaris2026" || adminPasscode === "admin" || adminPasscode === "polaris") {
+    if (
+      adminPasscode === "polaris2026" ||
+      adminPasscode === "admin" ||
+      adminPasscode === "polaris"
+    ) {
       setAdminAuthenticated(true);
       setAdminError("");
     } else {
@@ -176,7 +183,11 @@ function DashboardPage() {
       time: newProgram.time,
       mode: (newProgram.mode as any) || "Online",
       details: newProgram.details || "",
-      benefits: ["Interactive Session with Scientist", "Certificate of Participation", "Community Access"],
+      benefits: [
+        "Interactive Session with Scientist",
+        "Certificate of Participation",
+        "Community Access",
+      ],
       ctaText: newProgram.ctaText || "Register Now →",
       ctaUrl: newProgram.ctaUrl || "#",
       price: newProgram.price || "Free",
@@ -270,7 +281,9 @@ function DashboardPage() {
   const handleUpdatePastSession = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingPastSession) return;
-    const updated = pastSessions.map((s) => (s.id === editingPastSession.id ? editingPastSession : s));
+    const updated = pastSessions.map((s) =>
+      s.id === editingPastSession.id ? editingPastSession : s,
+    );
     setPastSessionsState(updated);
     savePastSessions(updated);
     setEditingPastSession(null);
@@ -297,7 +310,11 @@ function DashboardPage() {
       slug: (newArticle.title || "article").toLowerCase().replace(/\s+/g, "-"),
       author: newArticle.author || { name: "Polaris Student", role: "Contributor" },
       category: (newArticle.category as any) || "Science & Astronomy",
-      publishedAt: new Date().toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" }),
+      publishedAt: new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
       readTime: newArticle.readTime || "4 min read",
       excerpt: newArticle.excerpt || "",
       content: newArticle.content || "",
@@ -401,7 +418,9 @@ function DashboardPage() {
   };
 
   const handleClearAllSubmissions = () => {
-    if (window.confirm("Are you sure you want to clear all user submissions? This cannot be undone.")) {
+    if (
+      window.confirm("Are you sure you want to clear all user submissions? This cannot be undone.")
+    ) {
       clearAllUserSubmissions();
       setSubmissionsState([]);
       setStatusFeedback("✓ All user submissions cleared.");
@@ -410,7 +429,18 @@ function DashboardPage() {
   };
 
   const handleExportCSV = () => {
-    const headers = ["ID", "Type", "Name", "Email", "Phone", "Program_or_Topic", "Domain", "Squad_Members", "Message_or_Details", "Submitted_At"];
+    const headers = [
+      "ID",
+      "Type",
+      "Name",
+      "Email",
+      "Phone",
+      "Program_or_Topic",
+      "Domain",
+      "Squad_Members",
+      "Message_or_Details",
+      "Submitted_At",
+    ];
     const rows = submissions.map((s) => [
       `"${s.id}"`,
       `"${s.type}"`,
@@ -424,11 +454,16 @@ function DashboardPage() {
       `"${s.timestamp}"`,
     ]);
 
-    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `polaris_user_submissions_${new Date().toISOString().split("T")[0]}.csv`);
+    link.setAttribute(
+      "download",
+      `polaris_user_submissions_${new Date().toISOString().split("T")[0]}.csv`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -442,7 +477,10 @@ function DashboardPage() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(jsonString);
     const link = document.createElement("a");
     link.setAttribute("href", dataStr);
-    link.setAttribute("download", `polaris_full_backup_${new Date().toISOString().split("T")[0]}.json`);
+    link.setAttribute(
+      "download",
+      `polaris_full_backup_${new Date().toISOString().split("T")[0]}.json`,
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -467,7 +505,11 @@ function DashboardPage() {
   };
 
   const handleResetDefaults = () => {
-    if (window.confirm("WARNING: This will reset all Programs, Past Sessions, Articles, Spotlights, and Submissions to factory defaults. Continue?")) {
+    if (
+      window.confirm(
+        "WARNING: This will reset all Programs, Past Sessions, Articles, Spotlights, and Submissions to factory defaults. Continue?",
+      )
+    ) {
       resetAllCmsData();
       setProgramsState(getPrograms());
       setPastSessionsState(getPastSessions());
@@ -548,11 +590,17 @@ function DashboardPage() {
                   P
                 </div>
                 <div>
-                  <h3 className="text-base font-bold font-display text-foreground">Welcome, Polaris Explorer</h3>
+                  <h3 className="text-base font-bold font-display text-foreground">
+                    Welcome, Polaris Explorer
+                  </h3>
                   <p className="text-xs text-muted-foreground">Active Member • Cohort 2026</p>
                 </div>
               </div>
-              <Button asChild size="sm" className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.97]">
+              <Button
+                asChild
+                size="sm"
+                className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.97]"
+              >
                 <Link to="/projects">Launch AeroForge Lab ↗</Link>
               </Button>
             </div>
@@ -569,7 +617,9 @@ function DashboardPage() {
                     <span className="px-2.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-semibold text-[10px]">
                       29 AUGUST 2026
                     </span>
-                    <span className="text-emerald-400 font-mono text-[11px]">Active Registration</span>
+                    <span className="text-emerald-400 font-mono text-[11px]">
+                      Active Registration
+                    </span>
                   </div>
                   <h4 className="text-base font-bold font-display text-foreground">
                     Exploring the Star Universe: A Journey into Wonders of Astronomy
@@ -578,8 +628,17 @@ function DashboardPage() {
                     Speaker: Scientist Baldev Krishan Sharma (Cosmo-scientist & Author).
                   </p>
                   <div className="pt-2">
-                    <Button asChild size="sm" variant="outline" className="w-full h-8 text-xs border-white/10 hover:border-white/20 active:scale-[0.97]">
-                      <a href="https://forms.gle/EaZUGjUd7spcQfoF7" target="_blank" rel="noreferrer">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="w-full h-8 text-xs border-white/10 hover:border-white/20 active:scale-[0.97]"
+                    >
+                      <a
+                        href="https://forms.gle/EaZUGjUd7spcQfoF7"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
                         Access Registration Link ↗
                       </a>
                     </Button>
@@ -600,7 +659,12 @@ function DashboardPage() {
                     Engineering, Operations, Outreach & Research tracks.
                   </p>
                   <div className="pt-2">
-                    <Button asChild size="sm" variant="outline" className="w-full h-8 text-xs border-white/10 hover:border-white/20 active:scale-[0.97]">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="outline"
+                      className="w-full h-8 text-xs border-white/10 hover:border-white/20 active:scale-[0.97]"
+                    >
                       <Link to="/get-involved">View Department Forms →</Link>
                     </Button>
                   </div>
@@ -621,9 +685,12 @@ function DashboardPage() {
                 <div className="size-10 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center justify-center mx-auto">
                   <Lock className="size-5" />
                 </div>
-                <h3 className="text-xl font-bold font-display text-foreground">Admin CMS Authentication</h3>
+                <h3 className="text-xl font-bold font-display text-foreground">
+                  Admin CMS Authentication
+                </h3>
                 <p className="text-xs text-muted-foreground">
-                  Enter your team passcode to dynamically create, edit, remove, and manage all website data in real time.
+                  Enter your team passcode to dynamically create, edit, remove, and manage all
+                  website data in real time.
                 </p>
 
                 <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-2">
@@ -635,7 +702,11 @@ function DashboardPage() {
                     className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 text-center font-mono"
                   />
                   {adminError && <p className="text-rose-400 text-[11px]">{adminError}</p>}
-                  <Button type="submit" size="sm" className="w-full h-9 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]">
+                  <Button
+                    type="submit"
+                    size="sm"
+                    className="w-full h-9 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                  >
                     Authenticate as Admin
                   </Button>
                 </form>
@@ -654,11 +725,27 @@ function DashboardPage() {
                 <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-card border border-white/8">
                   <div className="flex flex-wrap gap-1.5 text-xs">
                     {[
-                      { id: "programs", label: `Live Programs (${programs.length})`, icon: Calendar },
-                      { id: "pastSessions", label: `Past Sessions (${pastSessions.length})`, icon: History },
+                      {
+                        id: "programs",
+                        label: `Live Programs (${programs.length})`,
+                        icon: Calendar,
+                      },
+                      {
+                        id: "pastSessions",
+                        label: `Past Sessions (${pastSessions.length})`,
+                        icon: History,
+                      },
                       { id: "articles", label: `Articles (${articles.length})`, icon: BookOpen },
-                      { id: "spotlight", label: `Spotlight (${spotlights.length})`, icon: Sparkles },
-                      { id: "submissions", label: `Submissions (${submissions.length})`, icon: Database },
+                      {
+                        id: "spotlight",
+                        label: `Spotlight (${spotlights.length})`,
+                        icon: Sparkles,
+                      },
+                      {
+                        id: "submissions",
+                        label: `Submissions (${submissions.length})`,
+                        icon: Database,
+                      },
                       { id: "database", label: "Full Database / Backup", icon: Download },
                     ].map((sec) => {
                       const Icon = sec.icon;
@@ -695,7 +782,10 @@ function DashboardPage() {
                         <span>Create Live Masterclass / Workshop</span>
                       </div>
 
-                      <form onSubmit={handleAddProgram} className="grid gap-3 sm:grid-cols-2 text-xs">
+                      <form
+                        onSubmit={handleAddProgram}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
                         <div className="space-y-1 sm:col-span-2">
                           <label className="text-muted-foreground">Program Title *</label>
                           <input
@@ -703,17 +793,23 @@ function DashboardPage() {
                             required
                             placeholder="e.g. Exploring the Star Universe"
                             value={newProgram.title}
-                            onChange={(e) => setNewProgram({ ...newProgram, title: e.target.value })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, title: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
                         <div className="space-y-1 sm:col-span-2">
-                          <label className="text-muted-foreground">Subtitle / Short One-Liner</label>
+                          <label className="text-muted-foreground">
+                            Subtitle / Short One-Liner
+                          </label>
                           <input
                             type="text"
                             placeholder="e.g. Join us for an engaging astronomy masterclass"
                             value={newProgram.subtitle}
-                            onChange={(e) => setNewProgram({ ...newProgram, subtitle: e.target.value })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, subtitle: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -721,7 +817,9 @@ function DashboardPage() {
                           <label className="text-muted-foreground">Category</label>
                           <select
                             value={newProgram.category}
-                            onChange={(e) => setNewProgram({ ...newProgram, category: e.target.value as any })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, category: e.target.value as any })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           >
                             <option value="workshop">Workshop</option>
@@ -749,7 +847,11 @@ function DashboardPage() {
                             onChange={(e) =>
                               setNewProgram({
                                 ...newProgram,
-                                speaker: { ...newProgram.speaker, name: e.target.value, designation: newProgram.speaker?.designation || "" },
+                                speaker: {
+                                  ...newProgram.speaker,
+                                  name: e.target.value,
+                                  designation: newProgram.speaker?.designation || "",
+                                },
                               })
                             }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
@@ -764,7 +866,11 @@ function DashboardPage() {
                             onChange={(e) =>
                               setNewProgram({
                                 ...newProgram,
-                                speaker: { ...newProgram.speaker, designation: e.target.value, name: newProgram.speaker?.name || "" },
+                                speaker: {
+                                  ...newProgram.speaker,
+                                  designation: e.target.value,
+                                  name: newProgram.speaker?.name || "",
+                                },
                               })
                             }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
@@ -782,7 +888,11 @@ function DashboardPage() {
                             onChange={(e) =>
                               setNewProgram({
                                 ...newProgram,
-                                speaker: { ...newProgram.speaker, linkedin: e.target.value, name: newProgram.speaker?.name || "" },
+                                speaker: {
+                                  ...newProgram.speaker,
+                                  linkedin: e.target.value,
+                                  name: newProgram.speaker?.name || "",
+                                },
                               })
                             }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
@@ -794,17 +904,23 @@ function DashboardPage() {
                             type="text"
                             placeholder="Register Now →"
                             value={newProgram.ctaText}
-                            onChange={(e) => setNewProgram({ ...newProgram, ctaText: e.target.value })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, ctaText: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-muted-foreground">CTA Registration URL (Google Form)</label>
+                          <label className="text-muted-foreground">
+                            CTA Registration URL (Google Form)
+                          </label>
                           <input
                             type="text"
                             placeholder="https://forms.gle/..."
                             value={newProgram.ctaUrl}
-                            onChange={(e) => setNewProgram({ ...newProgram, ctaUrl: e.target.value })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, ctaUrl: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -814,13 +930,19 @@ function DashboardPage() {
                             rows={3}
                             placeholder="Description of the masterclass and what students will learn..."
                             value={newProgram.details}
-                            onChange={(e) => setNewProgram({ ...newProgram, details: e.target.value })}
+                            onChange={(e) =>
+                              setNewProgram({ ...newProgram, details: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                           />
                         </div>
 
                         <div className="sm:col-span-2 pt-2">
-                          <Button type="submit" size="sm" className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
                             Publish Program to Website
                           </Button>
                         </div>
@@ -833,9 +955,14 @@ function DashboardPage() {
                         Active Programs ({programs.length})
                       </h4>
                       {programs.map((p) => (
-                        <div key={p.id} className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs">
+                        <div
+                          key={p.id}
+                          className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs"
+                        >
                           <div className="space-y-1">
-                            <div className="font-bold text-foreground font-display text-sm">{p.title}</div>
+                            <div className="font-bold text-foreground font-display text-sm">
+                              {p.title}
+                            </div>
                             <div className="text-[11px] text-muted-foreground flex flex-wrap items-center gap-2 font-mono">
                               <span>{p.category}</span>
                               <span>•</span>
@@ -847,7 +974,12 @@ function DashboardPage() {
                                   <span>•</span>
                                   <span className="text-primary font-sans">{p.speaker.name}</span>
                                   {p.speaker.linkedin && (
-                                    <a href={p.speaker.linkedin} target="_blank" rel="noreferrer" className="text-primary hover:underline">
+                                    <a
+                                      href={p.speaker.linkedin}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="text-primary hover:underline"
+                                    >
                                       [LinkedIn]
                                     </a>
                                   )}
@@ -888,7 +1020,10 @@ function DashboardPage() {
                         <span>Add Past Conducted Session Archive</span>
                       </div>
 
-                      <form onSubmit={handleAddPastSession} className="grid gap-3 sm:grid-cols-2 text-xs">
+                      <form
+                        onSubmit={handleAddPastSession}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
                         <div className="space-y-1 sm:col-span-2">
                           <label className="text-muted-foreground">Session Title *</label>
                           <input
@@ -896,7 +1031,9 @@ function DashboardPage() {
                             required
                             placeholder="e.g. Fundamentals of Rocket Development"
                             value={newPastSession.title}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, title: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, title: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -906,7 +1043,9 @@ function DashboardPage() {
                             type="text"
                             placeholder="e.g. 9 August 2026"
                             value={newPastSession.date}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, date: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, date: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -916,7 +1055,9 @@ function DashboardPage() {
                             type="text"
                             placeholder="e.g. 60+ Participants"
                             value={newPastSession.participants}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, participants: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, participants: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -927,17 +1068,23 @@ function DashboardPage() {
                             required
                             placeholder="e.g. Ms. Vranda Gupta"
                             value={newPastSession.speaker}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, speaker: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, speaker: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-muted-foreground">Speaker Designation / Role</label>
+                          <label className="text-muted-foreground">
+                            Speaker Designation / Role
+                          </label>
                           <input
                             type="text"
                             placeholder="e.g. Founder, Stellar Freaks"
                             value={newPastSession.designation}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, designation: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, designation: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -950,7 +1097,12 @@ function DashboardPage() {
                             type="url"
                             placeholder="https://www.linkedin.com/in/speaker-profile"
                             value={newPastSession.speakerLinkedin}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, speakerLinkedin: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({
+                                ...newPastSession,
+                                speakerLinkedin: e.target.value,
+                              })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
                           />
                         </div>
@@ -960,23 +1112,33 @@ function DashboardPage() {
                             type="text"
                             placeholder="e.g. Deep space astrophysics, interstellar nebulae classification, and galactic dynamics."
                             value={newPastSession.topic}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, topic: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, topic: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
                         <div className="space-y-1 sm:col-span-2">
-                          <label className="text-muted-foreground">Summary / Milestone Description</label>
+                          <label className="text-muted-foreground">
+                            Summary / Milestone Description
+                          </label>
                           <textarea
                             rows={3}
                             placeholder="Brief summary of how the session went and key topics discussed..."
                             value={newPastSession.summary}
-                            onChange={(e) => setNewPastSession({ ...newPastSession, summary: e.target.value })}
+                            onChange={(e) =>
+                              setNewPastSession({ ...newPastSession, summary: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                           />
                         </div>
 
                         <div className="sm:col-span-2 pt-2">
-                          <Button type="submit" size="sm" className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
                             Add Past Session Archive
                           </Button>
                         </div>
@@ -989,16 +1151,28 @@ function DashboardPage() {
                         Archived Past Sessions ({pastSessions.length})
                       </h4>
                       {pastSessions.map((s) => (
-                        <div key={s.id} className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs">
+                        <div
+                          key={s.id}
+                          className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs"
+                        >
                           <div className="space-y-1">
-                            <div className="font-bold text-foreground font-display text-sm">{s.title}</div>
+                            <div className="font-bold text-foreground font-display text-sm">
+                              {s.title}
+                            </div>
                             <div className="text-[11px] text-muted-foreground flex flex-wrap items-center gap-2">
                               <span className="font-mono">{s.date}</span>
                               <span>•</span>
                               <span className="text-primary font-medium">{s.speaker}</span>
-                              <span className="text-muted-foreground font-mono">({s.designation})</span>
+                              <span className="text-muted-foreground font-mono">
+                                ({s.designation})
+                              </span>
                               {s.speakerLinkedin && (
-                                <a href={s.speakerLinkedin} target="_blank" rel="noreferrer" className="text-primary hover:underline font-mono">
+                                <a
+                                  href={s.speakerLinkedin}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-primary hover:underline font-mono"
+                                >
                                   [LinkedIn]
                                 </a>
                               )}
@@ -1045,7 +1219,9 @@ function DashboardPage() {
                             required
                             placeholder="e.g. Understanding Transonic Compressibility: Why Airfoils Shock"
                             value={newArticle.title}
-                            onChange={(e) => setNewArticle({ ...newArticle, title: e.target.value })}
+                            onChange={(e) =>
+                              setNewArticle({ ...newArticle, title: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -1054,11 +1230,15 @@ function DashboardPage() {
                             <label className="text-muted-foreground">Category</label>
                             <select
                               value={newArticle.category}
-                              onChange={(e) => setNewArticle({ ...newArticle, category: e.target.value as any })}
+                              onChange={(e) =>
+                                setNewArticle({ ...newArticle, category: e.target.value as any })
+                              }
                               className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                             >
                               <option value="Science & Astronomy">Science & Astronomy</option>
-                              <option value="Technology & Innovation">Technology & Innovation</option>
+                              <option value="Technology & Innovation">
+                                Technology & Innovation
+                              </option>
                               <option value="Research">Research</option>
                               <option value="Education">Education</option>
                               <option value="Entrepreneurship">Entrepreneurship</option>
@@ -1088,7 +1268,9 @@ function DashboardPage() {
                             rows={2}
                             placeholder="Brief summary of the article..."
                             value={newArticle.excerpt}
-                            onChange={(e) => setNewArticle({ ...newArticle, excerpt: e.target.value })}
+                            onChange={(e) =>
+                              setNewArticle({ ...newArticle, excerpt: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                           />
                         </div>
@@ -1099,12 +1281,18 @@ function DashboardPage() {
                             rows={5}
                             placeholder="Complete text of the article..."
                             value={newArticle.content}
-                            onChange={(e) => setNewArticle({ ...newArticle, content: e.target.value })}
+                            onChange={(e) =>
+                              setNewArticle({ ...newArticle, content: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                           />
                         </div>
 
-                        <Button type="submit" size="sm" className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]">
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                        >
                           Publish Article
                         </Button>
                       </form>
@@ -1115,9 +1303,14 @@ function DashboardPage() {
                         Published Articles ({articles.length})
                       </h4>
                       {articles.map((a) => (
-                        <div key={a.id} className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs">
+                        <div
+                          key={a.id}
+                          className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs"
+                        >
                           <div>
-                            <div className="font-bold text-foreground font-display text-sm">{a.title}</div>
+                            <div className="font-bold text-foreground font-display text-sm">
+                              {a.title}
+                            </div>
                             <div className="text-[11px] text-muted-foreground">
                               {a.category} • By {a.author.name} • {a.publishedAt}
                             </div>
@@ -1158,13 +1351,17 @@ function DashboardPage() {
                       <form onSubmit={handleAddSpotlight} className="space-y-3 text-xs">
                         <div className="grid gap-3 sm:grid-cols-2">
                           <div className="space-y-1">
-                            <label className="text-muted-foreground">Name of Person / Project *</label>
+                            <label className="text-muted-foreground">
+                              Name of Person / Project *
+                            </label>
                             <input
                               type="text"
                               required
                               placeholder="e.g. AeroForge Simulation Lab"
                               value={newSpotlight.name}
-                              onChange={(e) => setNewSpotlight({ ...newSpotlight, name: e.target.value })}
+                              onChange={(e) =>
+                                setNewSpotlight({ ...newSpotlight, name: e.target.value })
+                              }
                               className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                             />
                           </div>
@@ -1172,7 +1369,12 @@ function DashboardPage() {
                             <label className="text-muted-foreground">Category</label>
                             <select
                               value={newSpotlight.category}
-                              onChange={(e) => setNewSpotlight({ ...newSpotlight, category: e.target.value as any })}
+                              onChange={(e) =>
+                                setNewSpotlight({
+                                  ...newSpotlight,
+                                  category: e.target.value as any,
+                                })
+                              }
                               className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                             >
                               <option value="Student Spotlight">Student Spotlight</option>
@@ -1190,18 +1392,24 @@ function DashboardPage() {
                             type="text"
                             placeholder="e.g. Building 40+ Browser-Based Numerical Physics Solvers"
                             value={newSpotlight.headline}
-                            onChange={(e) => setNewSpotlight({ ...newSpotlight, headline: e.target.value })}
+                            onChange={(e) =>
+                              setNewSpotlight({ ...newSpotlight, headline: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
 
                         <div className="space-y-1">
-                          <label className="text-muted-foreground">Accomplishment / What Was Built</label>
+                          <label className="text-muted-foreground">
+                            Accomplishment / What Was Built
+                          </label>
                           <input
                             type="text"
                             placeholder="e.g. Created Navier-Stokes, FEA, and orbital transfer simulations"
                             value={newSpotlight.accomplishment}
-                            onChange={(e) => setNewSpotlight({ ...newSpotlight, accomplishment: e.target.value })}
+                            onChange={(e) =>
+                              setNewSpotlight({ ...newSpotlight, accomplishment: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           />
                         </div>
@@ -1212,12 +1420,18 @@ function DashboardPage() {
                             rows={3}
                             placeholder="Detailed story of the project or builder..."
                             value={newSpotlight.story}
-                            onChange={(e) => setNewSpotlight({ ...newSpotlight, story: e.target.value })}
+                            onChange={(e) =>
+                              setNewSpotlight({ ...newSpotlight, story: e.target.value })
+                            }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                           />
                         </div>
 
-                        <Button type="submit" size="sm" className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]">
+                        <Button
+                          type="submit"
+                          size="sm"
+                          className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                        >
                           Publish Spotlight Feature
                         </Button>
                       </form>
@@ -1228,9 +1442,14 @@ function DashboardPage() {
                         Featured Recognitions ({spotlights.length})
                       </h4>
                       {spotlights.map((s) => (
-                        <div key={s.id} className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs">
+                        <div
+                          key={s.id}
+                          className="p-4 rounded-xl border border-white/8 bg-card flex items-center justify-between gap-4 text-xs"
+                        >
                           <div>
-                            <div className="font-bold text-foreground font-display text-sm">{s.name}</div>
+                            <div className="font-bold text-foreground font-display text-sm">
+                              {s.name}
+                            </div>
                             <div className="text-[11px] text-muted-foreground">
                               {s.category} • {s.headline}
                             </div>
@@ -1273,7 +1492,8 @@ function DashboardPage() {
                             Submissions & Lead Center
                           </h3>
                           <p className="text-xs text-muted-foreground mt-0.5">
-                            Real-time records from Waitlists, Sprint Squad applications, Contact inquiries, and Chapter Leads.
+                            Real-time records from Waitlists, Sprint Squad applications, Contact
+                            inquiries, and Chapter Leads.
                           </p>
                         </div>
 
@@ -1314,25 +1534,39 @@ function DashboardPage() {
                       {/* Summary Metrics */}
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 font-mono text-xs">
                         <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
-                          <div className="text-[10px] text-muted-foreground uppercase">Total Records</div>
-                          <div className="text-xl font-bold text-foreground mt-1">{submissions.length}</div>
+                          <div className="text-[10px] text-muted-foreground uppercase">
+                            Total Records
+                          </div>
+                          <div className="text-xl font-bold text-foreground mt-1">
+                            {submissions.length}
+                          </div>
                         </div>
                         <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
-                          <div className="text-[10px] text-muted-foreground uppercase">Waitlist Signups</div>
+                          <div className="text-[10px] text-muted-foreground uppercase">
+                            Waitlist Signups
+                          </div>
                           <div className="text-xl font-bold text-primary mt-1">
                             {submissions.filter((s) => s.type === "waitlist").length}
                           </div>
                         </div>
                         <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
-                          <div className="text-[10px] text-muted-foreground uppercase">Sprint Applications</div>
+                          <div className="text-[10px] text-muted-foreground uppercase">
+                            Sprint Applications
+                          </div>
                           <div className="text-xl font-bold text-emerald-400 mt-1">
                             {submissions.filter((s) => s.type === "sprint_application").length}
                           </div>
                         </div>
                         <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
-                          <div className="text-[10px] text-muted-foreground uppercase">Direct Inquiries</div>
+                          <div className="text-[10px] text-muted-foreground uppercase">
+                            Direct Inquiries
+                          </div>
                           <div className="text-xl font-bold text-primary mt-1">
-                            {submissions.filter((s) => s.type === "contact_inquiry" || s.type === "chapter_lead").length}
+                            {
+                              submissions.filter(
+                                (s) => s.type === "contact_inquiry" || s.type === "chapter_lead",
+                              ).length
+                            }
                           </div>
                         </div>
                       </div>
@@ -1392,7 +1626,10 @@ function DashboardPage() {
                       {filteredSubmissions.length === 0 ? (
                         <div className="p-8 rounded-xl border border-white/8 bg-card text-center text-xs text-muted-foreground space-y-1">
                           <p className="font-semibold text-foreground">No submissions found</p>
-                          <p>When users submit waitlist forms, sprint applications, or contact inquiries, they will appear here live.</p>
+                          <p>
+                            When users submit waitlist forms, sprint applications, or contact
+                            inquiries, they will appear here live.
+                          </p>
                         </div>
                       ) : (
                         <div className="grid gap-3">
@@ -1408,10 +1645,10 @@ function DashboardPage() {
                                       s.type === "waitlist"
                                         ? "bg-primary/10 text-primary border-primary/20"
                                         : s.type === "sprint_application"
-                                        ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                                        : s.type === "chapter_lead"
-                                        ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
-                                        : "bg-primary/10 text-primary border-primary/20"
+                                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                          : s.type === "chapter_lead"
+                                            ? "bg-purple-500/10 text-purple-400 border-purple-500/20"
+                                            : "bg-primary/10 text-primary border-primary/20"
                                     }`}
                                   >
                                     {s.type.replace("_", " ")}
@@ -1430,7 +1667,10 @@ function DashboardPage() {
                                     {s.name}
                                   </div>
                                   <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mt-0.5 font-mono">
-                                    <a href={`mailto:${s.email}`} className="text-primary hover:underline flex items-center gap-1">
+                                    <a
+                                      href={`mailto:${s.email}`}
+                                      className="text-primary hover:underline flex items-center gap-1"
+                                    >
                                       <Mail className="size-3" />
                                       <span>{s.email}</span>
                                     </a>
@@ -1444,13 +1684,15 @@ function DashboardPage() {
 
                                 {s.programTitle && (
                                   <div className="text-xs text-foreground/90 font-medium pt-1">
-                                    <span className="text-muted-foreground">Target Program:</span> {s.programTitle}
+                                    <span className="text-muted-foreground">Target Program:</span>{" "}
+                                    {s.programTitle}
                                   </div>
                                 )}
 
                                 {s.squadMembers && (
                                   <div className="text-xs text-foreground/90 font-medium">
-                                    <span className="text-muted-foreground">Squad Members:</span> {s.squadMembers}
+                                    <span className="text-muted-foreground">Squad Members:</span>{" "}
+                                    {s.squadMembers}
                                   </div>
                                 )}
 
@@ -1499,15 +1741,22 @@ function DashboardPage() {
                           Full CMS Data Access & Portability
                         </h3>
                         <p className="text-xs text-muted-foreground mt-0.5">
-                          Download a complete JSON snapshot of all Programs, Past Sessions (with Speaker LinkedIn accounts), Articles, Spotlights, and User Submissions. You can also restore or reset everything at any time.
+                          Download a complete JSON snapshot of all Programs, Past Sessions (with
+                          Speaker LinkedIn accounts), Articles, Spotlights, and User Submissions.
+                          You can also restore or reset everything at any time.
                         </p>
                       </div>
 
                       {/* Action 1: Export Complete JSON */}
                       <div className="p-4 rounded-xl bg-surface-2 border border-white/8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
-                          <div className="text-sm font-bold font-display text-foreground">1. Download Complete Backup (JSON)</div>
-                          <div className="text-xs text-muted-foreground">Exports all website records, speaker links, and user entries into a single backup file.</div>
+                          <div className="text-sm font-bold font-display text-foreground">
+                            1. Download Complete Backup (JSON)
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Exports all website records, speaker links, and user entries into a
+                            single backup file.
+                          </div>
                         </div>
                         <Button
                           type="button"
@@ -1523,8 +1772,12 @@ function DashboardPage() {
                       {/* Action 2: Restore JSON Backup */}
                       <div className="p-4 rounded-xl bg-surface-2 border border-white/8 space-y-3">
                         <div>
-                          <div className="text-sm font-bold font-display text-foreground">2. Restore Database from JSON Backup</div>
-                          <div className="text-xs text-muted-foreground">Paste a backup JSON payload to restore all website content instantly.</div>
+                          <div className="text-sm font-bold font-display text-foreground">
+                            2. Restore Database from JSON Backup
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Paste a backup JSON payload to restore all website content instantly.
+                          </div>
                         </div>
                         <textarea
                           rows={4}
@@ -1548,8 +1801,13 @@ function DashboardPage() {
                       {/* Action 3: Reset to Factory Defaults */}
                       <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div>
-                          <div className="text-sm font-bold font-display text-rose-400">3. Factory Reset Database</div>
-                          <div className="text-xs text-muted-foreground">Resets all website programs, past sessions, articles, and spotlight features to default system seeds.</div>
+                          <div className="text-sm font-bold font-display text-rose-400">
+                            3. Factory Reset Database
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            Resets all website programs, past sessions, articles, and spotlight
+                            features to default system seeds.
+                          </div>
                         </div>
                         <Button
                           type="button"
@@ -1602,7 +1860,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingProgram.subtitle}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, subtitle: e.target.value })}
+                  onChange={(e) =>
+                    setEditingProgram({ ...editingProgram, subtitle: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1610,7 +1870,9 @@ function DashboardPage() {
                 <label className="text-muted-foreground">Category</label>
                 <select
                   value={editingProgram.category}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, category: e.target.value as any })}
+                  onChange={(e) =>
+                    setEditingProgram({ ...editingProgram, category: e.target.value as any })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 >
                   <option value="workshop">Workshop</option>
@@ -1623,7 +1885,9 @@ function DashboardPage() {
                 <label className="text-muted-foreground">Status</label>
                 <select
                   value={editingProgram.status}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, status: e.target.value as any })}
+                  onChange={(e) =>
+                    setEditingProgram({ ...editingProgram, status: e.target.value as any })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 >
                   <option value="upcoming">Upcoming</option>
@@ -1649,7 +1913,11 @@ function DashboardPage() {
                   onChange={(e) =>
                     setEditingProgram({
                       ...editingProgram,
-                      speaker: { ...editingProgram.speaker, name: e.target.value, designation: editingProgram.speaker?.designation || "" },
+                      speaker: {
+                        ...editingProgram.speaker,
+                        name: e.target.value,
+                        designation: editingProgram.speaker?.designation || "",
+                      },
                     })
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
@@ -1663,7 +1931,11 @@ function DashboardPage() {
                   onChange={(e) =>
                     setEditingProgram({
                       ...editingProgram,
-                      speaker: { ...editingProgram.speaker, designation: e.target.value, name: editingProgram.speaker?.name || "" },
+                      speaker: {
+                        ...editingProgram.speaker,
+                        designation: e.target.value,
+                        name: editingProgram.speaker?.name || "",
+                      },
                     })
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
@@ -1681,7 +1953,11 @@ function DashboardPage() {
                   onChange={(e) =>
                     setEditingProgram({
                       ...editingProgram,
-                      speaker: { ...editingProgram.speaker, linkedin: e.target.value, name: editingProgram.speaker?.name || "" },
+                      speaker: {
+                        ...editingProgram.speaker,
+                        linkedin: e.target.value,
+                        name: editingProgram.speaker?.name || "",
+                      },
                     })
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
@@ -1692,7 +1968,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingProgram.ctaText}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, ctaText: e.target.value })}
+                  onChange={(e) =>
+                    setEditingProgram({ ...editingProgram, ctaText: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1710,16 +1988,27 @@ function DashboardPage() {
                 <textarea
                   rows={3}
                   value={editingProgram.details}
-                  onChange={(e) => setEditingProgram({ ...editingProgram, details: e.target.value })}
+                  onChange={(e) =>
+                    setEditingProgram({ ...editingProgram, details: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                 />
               </div>
 
               <div className="sm:col-span-2 flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setEditingProgram(null)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingProgram(null)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="sm" className="bg-primary text-primary-foreground font-semibold">
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
                   Save Changes
                 </Button>
               </div>
@@ -1750,7 +2039,9 @@ function DashboardPage() {
                   type="text"
                   required
                   value={editingPastSession.title}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, title: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, title: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1759,7 +2050,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingPastSession.date}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, date: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, date: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1768,7 +2061,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingPastSession.participants}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, participants: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, participants: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1777,7 +2072,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingPastSession.speaker}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, speaker: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, speaker: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1786,7 +2083,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingPastSession.designation}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, designation: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, designation: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1799,7 +2098,12 @@ function DashboardPage() {
                   type="url"
                   placeholder="https://www.linkedin.com/in/speaker-profile"
                   value={editingPastSession.speakerLinkedin || ""}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, speakerLinkedin: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({
+                      ...editingPastSession,
+                      speakerLinkedin: e.target.value,
+                    })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
                 />
               </div>
@@ -1808,7 +2112,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingPastSession.topic}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, topic: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, topic: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1817,16 +2123,27 @@ function DashboardPage() {
                 <textarea
                   rows={3}
                   value={editingPastSession.summary}
-                  onChange={(e) => setEditingPastSession({ ...editingPastSession, summary: e.target.value })}
+                  onChange={(e) =>
+                    setEditingPastSession({ ...editingPastSession, summary: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                 />
               </div>
 
               <div className="sm:col-span-2 flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setEditingPastSession(null)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingPastSession(null)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="sm" className="bg-primary text-primary-foreground font-semibold">
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
                   Save Changes
                 </Button>
               </div>
@@ -1866,7 +2183,9 @@ function DashboardPage() {
                   <label className="text-muted-foreground">Category</label>
                   <select
                     value={editingArticle.category}
-                    onChange={(e) => setEditingArticle({ ...editingArticle, category: e.target.value as any })}
+                    onChange={(e) =>
+                      setEditingArticle({ ...editingArticle, category: e.target.value as any })
+                    }
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                   >
                     <option value="Science & Astronomy">Science & Astronomy</option>
@@ -1898,7 +2217,9 @@ function DashboardPage() {
                 <textarea
                   rows={2}
                   value={editingArticle.excerpt}
-                  onChange={(e) => setEditingArticle({ ...editingArticle, excerpt: e.target.value })}
+                  onChange={(e) =>
+                    setEditingArticle({ ...editingArticle, excerpt: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                 />
               </div>
@@ -1908,16 +2229,27 @@ function DashboardPage() {
                 <textarea
                   rows={6}
                   value={editingArticle.content}
-                  onChange={(e) => setEditingArticle({ ...editingArticle, content: e.target.value })}
+                  onChange={(e) =>
+                    setEditingArticle({ ...editingArticle, content: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                 />
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setEditingArticle(null)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingArticle(null)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="sm" className="bg-primary text-primary-foreground font-semibold">
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
                   Save Changes
                 </Button>
               </div>
@@ -1931,7 +2263,9 @@ function DashboardPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md font-sans">
           <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-card max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold font-display text-foreground">Edit Spotlight Recognition</h3>
+              <h3 className="text-lg font-bold font-display text-foreground">
+                Edit Spotlight Recognition
+              </h3>
               <button
                 type="button"
                 onClick={() => setEditingSpotlight(null)}
@@ -1949,7 +2283,9 @@ function DashboardPage() {
                     type="text"
                     required
                     value={editingSpotlight.name}
-                    onChange={(e) => setEditingSpotlight({ ...editingSpotlight, name: e.target.value })}
+                    onChange={(e) =>
+                      setEditingSpotlight({ ...editingSpotlight, name: e.target.value })
+                    }
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                   />
                 </div>
@@ -1957,7 +2293,9 @@ function DashboardPage() {
                   <label className="text-muted-foreground">Category</label>
                   <select
                     value={editingSpotlight.category}
-                    onChange={(e) => setEditingSpotlight({ ...editingSpotlight, category: e.target.value as any })}
+                    onChange={(e) =>
+                      setEditingSpotlight({ ...editingSpotlight, category: e.target.value as any })
+                    }
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                   >
                     <option value="Student Spotlight">Student Spotlight</option>
@@ -1974,7 +2312,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingSpotlight.headline}
-                  onChange={(e) => setEditingSpotlight({ ...editingSpotlight, headline: e.target.value })}
+                  onChange={(e) =>
+                    setEditingSpotlight({ ...editingSpotlight, headline: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1984,7 +2324,9 @@ function DashboardPage() {
                 <input
                   type="text"
                   value={editingSpotlight.accomplishment}
-                  onChange={(e) => setEditingSpotlight({ ...editingSpotlight, accomplishment: e.target.value })}
+                  onChange={(e) =>
+                    setEditingSpotlight({ ...editingSpotlight, accomplishment: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
               </div>
@@ -1994,16 +2336,27 @@ function DashboardPage() {
                 <textarea
                   rows={3}
                   value={editingSpotlight.story}
-                  onChange={(e) => setEditingSpotlight({ ...editingSpotlight, story: e.target.value })}
+                  onChange={(e) =>
+                    setEditingSpotlight({ ...editingSpotlight, story: e.target.value })
+                  }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
                 />
               </div>
 
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" size="sm" onClick={() => setEditingSpotlight(null)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingSpotlight(null)}
+                >
                   Cancel
                 </Button>
-                <Button type="submit" size="sm" className="bg-primary text-primary-foreground font-semibold">
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
                   Save Changes
                 </Button>
               </div>

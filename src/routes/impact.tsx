@@ -16,17 +16,32 @@ export const Route = createFileRoute("/impact")({
           "An honest account of what Project Polaris has built so far, what we're measuring, and what comes next.",
       },
       { property: "og:title", content: "Impact — Project Polaris" },
-      { property: "og:description", content: "Our progress so far, told without inflated numbers." },
+      {
+        property: "og:description",
+        content: "Our progress so far, told without inflated numbers.",
+      },
     ],
   }),
   component: Impact,
 });
 
 const MEASURES = [
-  { label: "Verified Project Artifacts", note: "Working CFD models, orbital solvers, and research digests — not just meeting attendance." },
-  { label: "Delivered Masterclasses", note: "Technical workshops run end-to-end with scientists from ISRO and industry mentors." },
-  { label: "Direct Mentor Reviews", note: "One-on-one and sprint cohort technical reviews with experienced practitioners." },
-  { label: "Open-Access Architecture", note: "Open-source computational tools and free community inquiry access for all students." },
+  {
+    label: "Verified Project Artifacts",
+    note: "Working CFD models, orbital solvers, and research digests — not just meeting attendance.",
+  },
+  {
+    label: "Delivered Masterclasses",
+    note: "Technical workshops run end-to-end with scientists from ISRO and industry mentors.",
+  },
+  {
+    label: "Direct Mentor Reviews",
+    note: "One-on-one and sprint cohort technical reviews with experienced practitioners.",
+  },
+  {
+    label: "Open-Access Architecture",
+    note: "Open-source computational tools and free community inquiry access for all students.",
+  },
 ];
 
 const NEXT = [
@@ -44,7 +59,7 @@ const NEXT = [
   },
 ];
 
-function ImpactStatCell({ stat, index }: { stat: typeof STATS[number]; index: number }) {
+function ImpactStatCell({ stat, index }: { stat: (typeof STATS)[number]; index: number }) {
   const numericPart = parseInt(stat.value.replace(/[^0-9]/g, ""), 10);
   const suffix = stat.value.replace(/[0-9]/g, "");
   const [ref, count] = useCountUp(isNaN(numericPart) ? 0 : numericPart, 1200);
@@ -53,10 +68,15 @@ function ImpactStatCell({ stat, index }: { stat: typeof STATS[number]; index: nu
     <div className="bg-card p-6 text-center border border-border">
       <dt className="sr-only">{stat.label}</dt>
       <dd>
-        <span ref={ref} className="font-mono block text-3xl md:text-4xl font-extrabold text-foreground tracking-tight">
+        <span
+          ref={ref}
+          className="font-mono block text-3xl md:text-4xl font-extrabold text-foreground tracking-tight"
+        >
           {isNaN(numericPart) ? stat.value : `${count}${suffix}`}
         </span>
-        <span className="font-mono text-xs font-semibold text-primary mt-2 block uppercase tracking-wider">{stat.label}</span>
+        <span className="font-mono text-xs font-semibold text-primary mt-2 block uppercase tracking-wider">
+          {stat.label}
+        </span>
         <span className="mt-1 block text-[11px] text-muted-foreground">{stat.note}</span>
       </dd>
     </div>
@@ -86,9 +106,12 @@ function Impact() {
         <div className="shell grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
           <ScrollReveal direction="left">
             <p className="eyebrow mb-2">The Record</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Chronological Milestones</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+              Chronological Milestones
+            </h2>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              No vanity metrics or inflated stats. Every milestone represents authentic student output, workshops run, or software deployed.
+              No vanity metrics or inflated stats. Every milestone represents authentic student
+              output, workshops run, or software deployed.
             </p>
           </ScrollReveal>
           <ScrollReveal direction="right">
@@ -101,7 +124,9 @@ function Impact() {
         <div className="shell">
           <ScrollReveal direction="up">
             <p className="eyebrow mb-2">Metrics</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">The metrics we prioritize</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+              The metrics we prioritize
+            </h2>
           </ScrollReveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {MEASURES.map((m, i) => (
@@ -140,12 +165,19 @@ function Impact() {
       <section className="section border-t border-border bg-surface/20">
         <div className="shell max-w-2xl mx-auto text-center">
           <ScrollReveal direction="up">
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Help make the next milestone bigger.</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+              Help make the next milestone bigger.
+            </h2>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Every build, simulation, and mentor review comes from students choosing to learn by doing.
+              Every build, simulation, and mentor review comes from students choosing to learn by
+              doing.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Button asChild size="sm" className="h-9 px-5 bg-foreground text-background font-medium">
+              <Button
+                asChild
+                size="sm"
+                className="h-9 px-5 bg-foreground text-background font-medium"
+              >
                 <Link to="/join">Join Polaris</Link>
               </Button>
               <Button asChild variant="outline" size="sm" className="h-9 px-5">

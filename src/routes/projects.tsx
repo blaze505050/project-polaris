@@ -48,7 +48,8 @@ function ProjectsPage() {
               Projects & Labs
             </h1>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
-              Small sprint teams, real physical constraints, reproducible code and models. Explore our flagship AeroForge simulation laboratory and computational platforms.
+              Small sprint teams, real physical constraints, reproducible code and models. Explore
+              our flagship AeroForge simulation laboratory and computational platforms.
             </p>
           </ScrollReveal>
 
@@ -84,7 +85,9 @@ function ProjectsPage() {
                 AeroForge AI Simulation Workstation
               </h2>
               <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                AeroForge AI is Polaris's open-source computational physics laboratory. Practice fluid dynamics, transonic airfoil CFD, structural FEA, and orbital Keplerian transfers directly in your browser.
+                AeroForge AI is Polaris's open-source computational physics laboratory. Practice
+                fluid dynamics, transonic airfoil CFD, structural FEA, and orbital Keplerian
+                transfers directly in your browser.
               </p>
             </div>
           </ScrollReveal>

@@ -1,28 +1,12 @@
-export type Topic =
-  | "aerospace"
-  | "astronomy"
-  | "physics"
-  | "engineering"
-  | "computing"
-  | "ai";
+export type Topic = "aerospace" | "astronomy" | "physics" | "engineering" | "computing" | "ai";
 
-export type LearningType =
-  | "workshop"
-  | "course"
-  | "bootcamp"
-  | "resource"
-  | "project";
+export type LearningType = "workshop" | "course" | "bootcamp" | "resource" | "project";
 
 export type LearningLevel = "beginner" | "intermediate" | "advanced" | "all";
 
 export type LearningFormat = "live" | "self-paced" | "cohort" | "team-sprint";
 
-export type LearningStatus =
-  | "upcoming"
-  | "open"
-  | "ongoing"
-  | "self-paced"
-  | "archived";
+export type LearningStatus = "upcoming" | "open" | "ongoing" | "self-paced" | "archived";
 
 export interface LearningItem {
   id: string;
@@ -179,15 +163,34 @@ export const LEARNING_CATALOG: LearningItem[] = [
       "Pitch & Win challenge with live mentor feedback",
     ],
     agenda: [
-      { title: "00:00 — Welcome & Aerospace Roadmaps", desc: "Setting the context and career pathways." },
-      { title: "00:15 — Governing Rocket Equations", desc: "Tsiolkovsky equation, mass ratio, and exhaust velocity." },
-      { title: "00:40 — Combustion & Nozzle Dynamics", desc: "Chamber pressure, De Laval convergent-divergent nozzles." },
-      { title: "01:05 — Real Case Studies & Projects", desc: "Sounding rockets and missile system propulsion." },
-      { title: "01:20 — Student Pitch & Win Challenge", desc: "Live rapid-fire problem solving and Q&A." },
+      {
+        title: "00:00 — Welcome & Aerospace Roadmaps",
+        desc: "Setting the context and career pathways.",
+      },
+      {
+        title: "00:15 — Governing Rocket Equations",
+        desc: "Tsiolkovsky equation, mass ratio, and exhaust velocity.",
+      },
+      {
+        title: "00:40 — Combustion & Nozzle Dynamics",
+        desc: "Chamber pressure, De Laval convergent-divergent nozzles.",
+      },
+      {
+        title: "01:05 — Real Case Studies & Projects",
+        desc: "Sounding rockets and missile system propulsion.",
+      },
+      {
+        title: "01:20 — Student Pitch & Win Challenge",
+        desc: "Live rapid-fire problem solving and Q&A.",
+      },
     ],
     related: [
       { label: "Specific Impulse & Nozzle Calculations", to: "/resources", type: "Resource Guide" },
-      { label: "Orbital Mechanics from First Principles", to: "/courses?id=orbital-mechanics", type: "Mini-Course" },
+      {
+        label: "Orbital Mechanics from First Principles",
+        to: "/courses?id=orbital-mechanics",
+        type: "Mini-Course",
+      },
       { label: "AeroForge AI Propulsion Solvers", to: "/projects", type: "Interactive Lab" },
     ],
     ctaText: "Reserve Seat (Free)",
@@ -223,7 +226,11 @@ export const LEARNING_CATALOG: LearningItem[] = [
       "Understand multi-disciplinary ISRO recruitment pathways",
     ],
     related: [
-      { label: "Orbital Mechanics Mini Course", to: "/courses?id=orbital-mechanics", type: "Mini-Course" },
+      {
+        label: "Orbital Mechanics Mini Course",
+        to: "/courses?id=orbital-mechanics",
+        type: "Mini-Course",
+      },
       { label: "Astrodynamics Bootcamp", to: "/courses?type=bootcamp", type: "Bootcamp" },
     ],
     ctaText: "Reserve Seat",
@@ -287,12 +294,30 @@ export const LEARNING_CATALOG: LearningItem[] = [
       "Build a working orbital trajectory calculator",
     ],
     syllabus: [
-      { title: "01 — Coordinate Systems & Two-Body Problem", desc: "Inertial reference frames and the central force problem." },
-      { title: "02 — Kepler's Laws & Conic Sections", desc: "Circular, elliptical, parabolic, and hyperbolic orbits." },
-      { title: "03 — Vis-Viva & Specific Orbital Energy", desc: "Energy conservation, semi-major axis, and orbital velocity." },
-      { title: "04 — Hohmann Transfer Orbits", desc: "Coplanar transfers, semi-major transfer ellipse, and burn times." },
-      { title: "05 — Inclination Changes & Bi-elliptic Transfers", desc: "Plane change delta-v costs and three-burn efficiency trade-offs." },
-      { title: "06 — Capstone Project: Orbital Simulator", desc: "Code a numerical orbital transfer model in Python or JavaScript." },
+      {
+        title: "01 — Coordinate Systems & Two-Body Problem",
+        desc: "Inertial reference frames and the central force problem.",
+      },
+      {
+        title: "02 — Kepler's Laws & Conic Sections",
+        desc: "Circular, elliptical, parabolic, and hyperbolic orbits.",
+      },
+      {
+        title: "03 — Vis-Viva & Specific Orbital Energy",
+        desc: "Energy conservation, semi-major axis, and orbital velocity.",
+      },
+      {
+        title: "04 — Hohmann Transfer Orbits",
+        desc: "Coplanar transfers, semi-major transfer ellipse, and burn times.",
+      },
+      {
+        title: "05 — Inclination Changes & Bi-elliptic Transfers",
+        desc: "Plane change delta-v costs and three-burn efficiency trade-offs.",
+      },
+      {
+        title: "06 — Capstone Project: Orbital Simulator",
+        desc: "Code a numerical orbital transfer model in Python or JavaScript.",
+      },
     ],
     finalProject: {
       title: "Hohmann Transfer Delta-V Calculator",
@@ -389,7 +414,9 @@ export const LEARNING_CATALOG: LearningItem[] = [
     status: "upcoming",
     date: "Cohort Starts September 2026",
     seats: "25 Seats · Application Required",
-    prerequisites: ["Basic physics, programming fundamentals (Python or C++), willingness to collaborate"],
+    prerequisites: [
+      "Basic physics, programming fundamentals (Python or C++), willingness to collaborate",
+    ],
     outcomes: [
       "Build a 6-DOF aircraft performance and stability model",
       "Implement aerodynamic coefficient lookup matrices",
@@ -397,12 +424,30 @@ export const LEARNING_CATALOG: LearningItem[] = [
       "Publish a comprehensive technical whitepaper and GitHub repository",
     ],
     syllabus: [
-      { title: "Week 1: Vehicle Geometry & Mass Properties", desc: "CAD coordinate frames, center of gravity, and inertia tensor." },
-      { title: "Week 2: Subsonic & Transonic Aerodynamics", desc: "Lift slopes, induced drag, and control surface effectiveness." },
-      { title: "Week 3: Propulsion & Thrust Integration", desc: "Engine performance decks, fuel burn rates, and flight envelopes." },
-      { title: "Week 4: 6-DOF Equations of Motion", desc: "Translational and rotational equations, Euler angles, and quaternions." },
-      { title: "Week 5: Flight Control & Autopilot", desc: "PID pitch/roll stabilization and trajectory waypoint guidance." },
-      { title: "Week 6: Defence & Final Showcase", desc: "Live presentation to mentor panel and public demo release." },
+      {
+        title: "Week 1: Vehicle Geometry & Mass Properties",
+        desc: "CAD coordinate frames, center of gravity, and inertia tensor.",
+      },
+      {
+        title: "Week 2: Subsonic & Transonic Aerodynamics",
+        desc: "Lift slopes, induced drag, and control surface effectiveness.",
+      },
+      {
+        title: "Week 3: Propulsion & Thrust Integration",
+        desc: "Engine performance decks, fuel burn rates, and flight envelopes.",
+      },
+      {
+        title: "Week 4: 6-DOF Equations of Motion",
+        desc: "Translational and rotational equations, Euler angles, and quaternions.",
+      },
+      {
+        title: "Week 5: Flight Control & Autopilot",
+        desc: "PID pitch/roll stabilization and trajectory waypoint guidance.",
+      },
+      {
+        title: "Week 6: Defence & Final Showcase",
+        desc: "Live presentation to mentor panel and public demo release.",
+      },
     ],
     finalProject: {
       title: "Full 6-DOF Flight Dynamics Simulator",

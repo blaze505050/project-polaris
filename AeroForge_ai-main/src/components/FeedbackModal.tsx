@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   MessageSquare,
   X,
@@ -11,10 +11,10 @@ import {
   Sparkles,
   Info,
   ShieldCheck,
-} from 'lucide-react';
-import { useFeedbackStore, FeedbackCategory } from '@/services/feedbackStore';
-import { useToastStore } from '@/stores/toastStore';
-import { analytics } from '@/services/productAnalytics';
+} from "lucide-react";
+import { useFeedbackStore, FeedbackCategory } from "@/services/feedbackStore";
+import { useToastStore } from "@/stores/toastStore";
+import { analytics } from "@/services/productAnalytics";
 
 interface FeedbackModalProps {
   isOpen: boolean;
@@ -32,18 +32,18 @@ export default function FeedbackModal({
   const { submitFeedback } = useFeedbackStore();
   const { addToast } = useToastStore();
 
-  const [category, setCategory] = useState<FeedbackCategory>('bug');
-  const [message, setMessage] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
+  const [category, setCategory] = useState<FeedbackCategory>("bug");
+  const [message, setMessage] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const categories: { id: FeedbackCategory; label: string; icon: any }[] = [
-    { id: 'bug', label: 'Bug Report', icon: Bug },
-    { id: 'wrong_result', label: 'Wrong Physics Result', icon: AlertTriangle },
-    { id: 'confusing_ux', label: 'Confusing UX', icon: HelpCircle },
-    { id: 'missing_feature', label: 'Missing Capability', icon: Info },
-    { id: 'scientific_concern', label: 'Scientific Concern', icon: ShieldCheck },
-    { id: 'general', label: 'General Feedback', icon: MessageSquare },
+    { id: "bug", label: "Bug Report", icon: Bug },
+    { id: "wrong_result", label: "Wrong Physics Result", icon: AlertTriangle },
+    { id: "confusing_ux", label: "Confusing UX", icon: HelpCircle },
+    { id: "missing_feature", label: "Missing Capability", icon: Info },
+    { id: "scientific_concern", label: "Scientific Concern", icon: ShieldCheck },
+    { id: "general", label: "General Feedback", icon: MessageSquare },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,24 +59,24 @@ export default function FeedbackModal({
         contactEmail: contactEmail.trim() || undefined,
         diagnostics: {
           pageUrl: window.location.pathname,
-          toolId: initialToolId || 'general-app',
-          solverClassification: initialSolverClassification || 'N/A',
-          appVersion: 'v1.0.0-beta',
+          toolId: initialToolId || "general-app",
+          solverClassification: initialSolverClassification || "N/A",
+          appVersion: "v1.0.0-beta",
           userAgent: navigator.userAgent,
           viewport: `${window.innerWidth}x${window.innerHeight}`,
         },
       });
 
-      analytics.track('report_exported', { type: 'beta_feedback', category });
+      analytics.track("report_exported", { type: "beta_feedback", category });
 
       addToast({
-        type: 'success',
-        title: 'Feedback Received',
-        description: 'Thank you for helping improve AeroForge AI!',
+        type: "success",
+        title: "Feedback Received",
+        description: "Thank you for helping improve AeroForge AI!",
       });
 
       setIsSubmitting(false);
-      setMessage('');
+      setMessage("");
       onClose();
     }, 400);
   };
@@ -125,8 +125,8 @@ export default function FeedbackModal({
                       onClick={() => setCategory(cat.id)}
                       className={`flex items-center gap-1.5 p-2 rounded-lg text-left text-xs transition-all border ${
                         isSelected
-                          ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-bold'
-                          : 'bg-white/5 text-white/60 border-white/10 hover:text-white'
+                          ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-bold"
+                          : "bg-white/5 text-white/60 border-white/10 hover:text-white"
                       }`}
                     >
                       <Icon className="w-3.5 h-3.5 shrink-0" />
@@ -168,8 +168,13 @@ export default function FeedbackModal({
 
             {/* Auto Diagnostics Disclosure */}
             <div className="bg-[#050914] p-3 rounded-lg border border-white/5 text-[10px] text-white/40 space-y-1">
-              <span className="font-bold uppercase text-white/60 block">Non-Sensitive Technical Diagnostics Attached:</span>
-              <p>Page: {window.location.pathname} • Tool ID: {initialToolId || 'general'} • App Version: v1.0.0-beta</p>
+              <span className="font-bold uppercase text-white/60 block">
+                Non-Sensitive Technical Diagnostics Attached:
+              </span>
+              <p>
+                Page: {window.location.pathname} • Tool ID: {initialToolId || "general"} • App
+                Version: v1.0.0-beta
+              </p>
             </div>
 
             {/* Submit Action */}

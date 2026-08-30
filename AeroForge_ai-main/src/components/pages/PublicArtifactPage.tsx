@@ -1,17 +1,31 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight, Share2, Copy, Download, ShieldCheck, Compass, GitBranch, Terminal, CopyCheck, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import FeatureStatusBadge from '@/components/ui/FeatureStatusBadge';
-import SolverStatusBadge from '@/components/ui/SolverStatusBadge';
-import { usePageMeta } from '@/hooks/usePageMeta';
-import { useToastStore } from '@/stores/toastStore';
-import { useAeroForgeStore, SavedExperiment } from '@/stores/aeroforgeStore';
-import { useExperimentStore } from '@/stores/experimentStore';
-import { publicArtifactService, PublicArtifactPayload } from '@/services/publicArtifactService';
-import { analytics } from '@/services/productAnalytics';
+import React, { useMemo, useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  CheckCircle2,
+  ArrowRight,
+  Share2,
+  Copy,
+  Download,
+  ShieldCheck,
+  Compass,
+  GitBranch,
+  Terminal,
+  CopyCheck,
+  Sparkles,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import FeatureStatusBadge from "@/components/ui/FeatureStatusBadge";
+import SolverStatusBadge from "@/components/ui/SolverStatusBadge";
+import { usePageMeta } from "@/hooks/usePageMeta";
+import { useToastStore } from "@/stores/toastStore";
+import { useAeroForgeStore, SavedExperiment } from "@/stores/aeroforgeStore";
+import { useExperimentStore } from "@/stores/experimentStore";
+import { publicArtifactService, PublicArtifactPayload } from "@/services/publicArtifactService";
+import { analytics } from "@/services/productAnalytics";
 
 export default function PublicArtifactPage() {
   const { artifactId } = useParams<{ artifactId: string }>();
@@ -35,16 +49,20 @@ export default function PublicArtifactPage() {
     } else {
       setIsFetching(false);
     }
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [artifactId]);
 
   // Resolution: Search cloud artifact, aeroforgeStore, experimentStore, or check demo IDs
   const artifact = useMemo(() => {
     if (!artifactId) return null;
     if (cloudArtifact) return cloudArtifact;
-    
+
     // 1. Search aeroforgeStore
-    const foundAero = savedExperiments.find((e) => e.id === artifactId || e.id.includes(artifactId));
+    const foundAero = savedExperiments.find(
+      (e) => e.id === artifactId || e.id.includes(artifactId),
+    );
     if (foundAero) {
       return {
         id: foundAero.id,
@@ -64,7 +82,7 @@ export default function PublicArtifactPage() {
       return {
         id: foundExp.id,
         name: foundExp.name,
-        pillar: 'aerolab' as const,
+        pillar: "aerolab" as const,
         module: foundExp.type,
         parameters: foundExp.parameters,
         results: foundExp.results,
@@ -74,28 +92,41 @@ export default function PublicArtifactPage() {
     }
 
     // 3. Known Demo Fallbacks (only if ID specifically matches demo pattern)
-    if (artifactId === 'EXP-2026-NACA2412' || artifactId === 'PUB-014' || artifactId === 'EXP-2026-09') {
+    if (
+      artifactId === "EXP-2026-NACA2412" ||
+      artifactId === "PUB-014" ||
+      artifactId === "EXP-2026-09"
+    ) {
       return {
-        id: 'EXP-2026-NACA2412',
-        name: 'NACA 2412 Transonic Aerodynamic Evaluation',
-        pillar: 'aerolab' as const,
-        module: 'Airfoil Compressibility Solver',
-        parameters: { naca: '2412', altitude: '3,000m', velocity: '75 m/s', chord: '1.2m', aoa: '4.0°' },
-        results: { 'Lift Coeff (CL)': 0.5420, 'Drag Coeff (CD)': 0.0312, 'L/D Ratio': 17.37 },
-        notes: 'Thin airfoil theory with Prandtl-Glauert compressibility correction.',
-        timestamp: new Date('2026-08-12T14:30:00Z').getTime(),
+        id: "EXP-2026-NACA2412",
+        name: "NACA 2412 Transonic Aerodynamic Evaluation",
+        pillar: "aerolab" as const,
+        module: "Airfoil Compressibility Solver",
+        parameters: {
+          naca: "2412",
+          altitude: "3,000m",
+          velocity: "75 m/s",
+          chord: "1.2m",
+          aoa: "4.0°",
+        },
+        results: { "Lift Coeff (CL)": 0.542, "Drag Coeff (CD)": 0.0312, "L/D Ratio": 17.37 },
+        notes: "Thin airfoil theory with Prandtl-Glauert compressibility correction.",
+        timestamp: new Date("2026-08-12T14:30:00Z").getTime(),
       };
     }
 
     return null;
   }, [artifactId, cloudArtifact, savedExperiments, experiments]);
 
-  usePageMeta(`Artifact #${artifactId || 'EXP-2026-09'}`, 'Public shareable AeroForge engineering result with full digital thread provenance.');
+  usePageMeta(
+    `Artifact #${artifactId || "EXP-2026-09"}`,
+    "Public shareable AeroForge engineering result with full digital thread provenance.",
+  );
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
-    analytics.track('public_artifact_shared', { artifactId: artifactId || 'EXP-2026-NACA2412' });
-    addToast({ type: 'success', title: 'Artifact link copied to clipboard' });
+    analytics.track("public_artifact_shared", { artifactId: artifactId || "EXP-2026-NACA2412" });
+    addToast({ type: "success", title: "Artifact link copied to clipboard" });
   };
 
   const handleDuplicateExperiment = () => {
@@ -107,13 +138,13 @@ export default function PublicArtifactPage() {
       module: artifact.module,
       parameters: artifact.parameters,
       results: artifact.results,
-      userMode: 'professional',
+      userMode: "professional",
       notes: `Duplicated from public shareable artifact #${artifact.id}.`,
     });
 
-    analytics.track('public_artifact_duplicated', { artifactId: artifact.id });
-    addToast({ type: 'success', title: 'Experiment cloned into your workspace!' });
-    navigate('/flagship-workflow');
+    analytics.track("public_artifact_duplicated", { artifactId: artifact.id });
+    addToast({ type: "success", title: "Experiment cloned into your workspace!" });
+    navigate("/flagship-workflow");
   };
 
   if (!artifact) {
@@ -126,7 +157,9 @@ export default function PublicArtifactPage() {
           </div>
           <h1 className="text-2xl font-bold text-white font-mono">Public Artifact Not Found</h1>
           <p className="text-xs text-white/60 font-sans max-w-md mx-auto leading-relaxed">
-            The requested engineering artifact <code className="text-cyan-300 font-mono">#{artifactId}</code> could not be found or has not been published to the public registry.
+            The requested engineering artifact{" "}
+            <code className="text-cyan-300 font-mono">#{artifactId}</code> could not be found or has
+            not been published to the public registry.
           </p>
           <div className="flex items-center justify-center gap-3 pt-2">
             <Link to="/projects">
@@ -174,7 +207,9 @@ export default function PublicArtifactPage() {
         <div className="bg-[#0A1020] border border-white/12 rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block">{artifact.pillar} • {artifact.module}</span>
+              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block">
+                {artifact.pillar} • {artifact.module}
+              </span>
               <SolverStatusBadge type="reduced-order" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-1">{artifact.name}</h1>
@@ -195,7 +230,9 @@ export default function PublicArtifactPage() {
 
           {/* Parameters & Input Box */}
           <div className="bg-[#060B18] p-4 rounded-xl border border-white/5 space-y-2 text-xs font-mono">
-            <span className="text-[10px] text-white/40 uppercase font-bold block mb-1">INPUT PARAMETERS</span>
+            <span className="text-[10px] text-white/40 uppercase font-bold block mb-1">
+              INPUT PARAMETERS
+            </span>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {Object.entries(artifact.parameters || {}).map(([key, val]) => (
                 <div key={key} className="bg-white/5 p-2 rounded">
@@ -210,25 +247,33 @@ export default function PublicArtifactPage() {
           <div className="bg-[#060B18] p-4 rounded-xl border border-white/5 space-y-3">
             <div className="flex items-center gap-2">
               <GitBranch className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider">Digital Thread Notes & Provenance</h3>
+              <h3 className="text-xs font-bold font-mono text-white uppercase tracking-wider">
+                Digital Thread Notes & Provenance
+              </h3>
             </div>
-            <p className="text-xs text-white/70 leading-relaxed font-sans">{artifact.notes || 'Executed via AeroForge Connected Digital Engineering Suite.'}</p>
+            <p className="text-xs text-white/70 leading-relaxed font-sans">
+              {artifact.notes || "Executed via AeroForge Connected Digital Engineering Suite."}
+            </p>
           </div>
 
           {/* Disclaimers & Assumptions */}
           <div className="text-xs space-y-1.5 border-t border-white/5 pt-4 font-sans text-white/50">
             <p className="font-mono text-amber-400/80 flex items-center gap-1.5 text-[11px]">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Analytical/Reduced-order engineering research model. Subject to secondary CFD/experimental validation.
+              Analytical/Reduced-order engineering research model. Subject to secondary
+              CFD/experimental validation.
             </p>
           </div>
 
           {/* Growth Flywheel Dual CTAs */}
           <div className="p-6 bg-gradient-to-r from-cyan-950/40 to-purple-950/40 border border-cyan-500/30 rounded-xl flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h4 className="text-sm font-bold text-white font-mono">Modify, Clone or Extend This Calculation</h4>
+              <h4 className="text-sm font-bold text-white font-mono">
+                Modify, Clone or Extend This Calculation
+              </h4>
               <p className="text-xs text-white/60 mt-0.5 font-sans">
-                Open or duplicate this exact experiment inside AeroForge to run parameter sweeps, optimize geometry, or publish your own report.
+                Open or duplicate this exact experiment inside AeroForge to run parameter sweeps,
+                optimize geometry, or publish your own report.
               </p>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
@@ -254,4 +299,3 @@ export default function PublicArtifactPage() {
     </div>
   );
 }
-

@@ -19,7 +19,8 @@ export const Route = createFileRoute("/auth")({
       { property: "og:title", content: "Student Portal Sign Up — Project Polaris" },
       {
         property: "og:description",
-        content: "Your Polaris Learning Dashboard: progress, mentor feedback, portfolio and certificates.",
+        content:
+          "Your Polaris Learning Dashboard: progress, mentor feedback, portfolio and certificates.",
       },
     ],
   }),
@@ -128,16 +129,37 @@ function AuthPage() {
             <form onSubmit={onSubmit} className="space-y-4 font-mono text-xs">
               {mode === "signup" && (
                 <div className="space-y-1.5">
-                  <Label htmlFor="full_name" className="text-foreground text-xs">Full Name</Label>
-                  <Input id="full_name" name="full_name" maxLength={100} required autoComplete="name" className="bg-background border-border h-9" />
+                  <Label htmlFor="full_name" className="text-foreground text-xs">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="full_name"
+                    name="full_name"
+                    maxLength={100}
+                    required
+                    autoComplete="name"
+                    className="bg-background border-border h-9"
+                  />
                 </div>
               )}
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-foreground text-xs">Email Address</Label>
-                <Input id="email" name="email" type="email" maxLength={255} required autoComplete="email" className="bg-background border-border h-9" />
+                <Label htmlFor="email" className="text-foreground text-xs">
+                  Email Address
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  maxLength={255}
+                  required
+                  autoComplete="email"
+                  className="bg-background border-border h-9"
+                />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-foreground text-xs">Password</Label>
+                <Label htmlFor="password" className="text-foreground text-xs">
+                  Password
+                </Label>
                 <Input
                   id="password"
                   name="password"
@@ -149,8 +171,16 @@ function AuthPage() {
                   className="bg-background border-border h-9"
                 />
               </div>
-              <Button type="submit" disabled={busy} className="w-full h-9 bg-foreground text-background font-medium text-xs mt-2">
-                {busy ? "Processing…" : mode === "signup" ? "Initialize Workspace Account" : "Sign In to Workspace"}
+              <Button
+                type="submit"
+                disabled={busy}
+                className="w-full h-9 bg-foreground text-background font-medium text-xs mt-2"
+              >
+                {busy
+                  ? "Processing…"
+                  : mode === "signup"
+                    ? "Initialize Workspace Account"
+                    : "Sign In to Workspace"}
               </Button>
             </form>
 
@@ -160,12 +190,18 @@ function AuthPage() {
               <span className="h-px flex-1 bg-border" />
             </div>
 
-            <Button type="button" variant="outline" className="w-full h-9 text-xs font-mono" onClick={google}>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full h-9 text-xs font-mono"
+              onClick={google}
+            >
               Continue with Google
             </Button>
 
             <p className="mt-5 text-[11px] font-mono text-muted-foreground leading-relaxed">
-              Open to all learners. Workspace accounts include access to community discussion channels and baseline simulation tools.
+              Open to all learners. Workspace accounts include access to community discussion
+              channels and baseline simulation tools.
             </p>
           </div>
 
@@ -179,10 +215,22 @@ function AuthPage() {
 
             <ul className="space-y-3 font-mono text-xs">
               {[
-                { title: "Sprint Backlog & Deliverables", desc: "Live tracking of numerical verification scripts and sprint tasks." },
-                { title: "Polaris AI Engineering Co-Pilot", desc: "Structured reviews of aerodynamic relations, code, and literature." },
-                { title: "Domain Practitioner Endorsements", desc: "Verified written feedback from ISRO & propulsion mentors." },
-                { title: "Open-Source Verification", desc: "Linked GitHub repositories and reproducible technical documentation." },
+                {
+                  title: "Sprint Backlog & Deliverables",
+                  desc: "Live tracking of numerical verification scripts and sprint tasks.",
+                },
+                {
+                  title: "Polaris AI Engineering Co-Pilot",
+                  desc: "Structured reviews of aerodynamic relations, code, and literature.",
+                },
+                {
+                  title: "Domain Practitioner Endorsements",
+                  desc: "Verified written feedback from ISRO & propulsion mentors.",
+                },
+                {
+                  title: "Open-Source Verification",
+                  desc: "Linked GitHub repositories and reproducible technical documentation.",
+                },
               ].map((item, i) => (
                 <li key={i} className="p-3.5 rounded-lg border border-border bg-surface-2/40">
                   <div className="text-foreground font-semibold mb-0.5">{item.title}</div>

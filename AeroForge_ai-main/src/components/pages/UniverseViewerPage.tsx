@@ -1,5 +1,5 @@
-import React from 'react';
-import UltimateUniverseEngine from '@/components/UltimateUniverseEngine';
+import React from "react";
+import UltimateUniverseEngine from "@/components/UltimateUniverseEngine";
 
 export default function UniverseViewerPage() {
   return (

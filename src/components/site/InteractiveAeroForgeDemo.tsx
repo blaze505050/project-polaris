@@ -39,17 +39,19 @@ const PRESETS: ProblemPreset[] = [
     defaultMach: 0.35,
     defaultAlpha: 4.0,
     defaultAltitude: 5,
-    description: "Evaluates boundary layer flow separation and pressure distribution across classic 4-digit airfoil.",
+    description:
+      "Evaluates boundary layer flow separation and pressure distribution across classic 4-digit airfoil.",
   },
   {
     id: "naca0012",
     name: "Symmetric Rocket Stabilizer Fin",
     category: "Aerospace",
     defaultNaca: "0012",
-    defaultMach: 0.20,
+    defaultMach: 0.2,
     defaultAlpha: 2.5,
     defaultAltitude: 2,
-    description: "Evaluates aerodynamic stabilization moment and zero-lift drag for atmospheric vehicle ascent.",
+    description:
+      "Evaluates aerodynamic stabilization moment and zero-lift drag for atmospheric vehicle ascent.",
   },
   {
     id: "sc20714",
@@ -59,7 +61,8 @@ const PRESETS: ProblemPreset[] = [
     defaultMach: 0.72,
     defaultAlpha: 3.2,
     defaultAltitude: 11,
-    description: "Prandtl-Glauert compressibility correction modeling transonic shock delay on high-altitude cruise.",
+    description:
+      "Prandtl-Glauert compressibility correction modeling transonic shock delay on high-altitude cruise.",
   },
   {
     id: "rocket",
@@ -69,7 +72,8 @@ const PRESETS: ProblemPreset[] = [
     defaultMach: 1.45,
     defaultAlpha: 0.0,
     defaultAltitude: 18,
-    description: "Supersonic wave drag calculation and conical shock angle estimation at stratospheric altitudes.",
+    description:
+      "Supersonic wave drag calculation and conical shock angle estimation at stratospheric altitudes.",
   },
 ];
 
@@ -112,23 +116,23 @@ export function InteractiveAeroForgeDemo() {
   const calculations = useMemo(() => {
     const alphaRad = (alpha * Math.PI) / 180;
     // Base lift slope from thin airfoil theory (2*pi per radian)
-    let cl_incompressible = 2 * Math.PI * alphaRad + (parseInt(naca[0] || "2", 10) * 0.05);
-    
+    const cl_incompressible = 2 * Math.PI * alphaRad + parseInt(naca[0] || "2", 10) * 0.05;
+
     // Compressibility factor: beta = sqrt(1 - M^2) for M < 1
-    let beta = mach < 0.95 ? Math.sqrt(Math.max(0.05, 1 - mach * mach)) : 0.4;
-    let cl = cl_incompressible / beta;
+    const beta = mach < 0.95 ? Math.sqrt(Math.max(0.05, 1 - mach * mach)) : 0.4;
+    const cl = cl_incompressible / beta;
 
     // Induced & profile drag approximation
-    let cd0 = 0.008 + (parseInt(naca.slice(2) || "12", 10) / 100) * 0.04;
+    const cd0 = 0.008 + (parseInt(naca.slice(2) || "12", 10) / 100) * 0.04;
     let cd = cd0 + (cl * cl) / (Math.PI * 8.5 * 0.85);
     if (mach > 0.8) {
       cd += Math.pow(mach - 0.75, 3) * 1.5; // Wave drag penalty
     }
 
-    let ld = cd > 0 ? cl / cd : 0;
-    let tempK = Math.max(216.65, 288.15 - 6.5 * altitude);
-    let soundSpeed = Math.sqrt(1.4 * 287.05 * tempK);
-    let trueAirspeed = mach * soundSpeed;
+    const ld = cd > 0 ? cl / cd : 0;
+    const tempK = Math.max(216.65, 288.15 - 6.5 * altitude);
+    const soundSpeed = Math.sqrt(1.4 * 287.05 * tempK);
+    const trueAirspeed = mach * soundSpeed;
 
     return {
       cl: cl.toFixed(4),
@@ -169,7 +173,8 @@ export function InteractiveAeroForgeDemo() {
             See AeroForge in Action
           </h3>
           <p className="text-xs text-muted-foreground font-sans mt-1">
-            Experience the full digital thread: configure parameters, run reduced-order physics solvers, and inspect live pressure contours.
+            Experience the full digital thread: configure parameters, run reduced-order physics
+            solvers, and inspect live pressure contours.
           </p>
         </div>
 
@@ -179,7 +184,11 @@ export function InteractiveAeroForgeDemo() {
             size="sm"
             className="rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold font-ui px-5 shadow-lg shadow-primary/20"
           >
-            <Link to="/aeroforge" aria-label="Launch Full AeroForge Lab" className="flex items-center gap-1.5">
+            <Link
+              to="/aeroforge"
+              aria-label="Launch Full AeroForge Lab"
+              className="flex items-center gap-1.5"
+            >
               <span>Launch Full Lab</span>
               <ArrowRight className="size-3.5" />
             </Link>
@@ -193,18 +202,25 @@ export function InteractiveAeroForgeDemo() {
           type="button"
           onClick={() => setMobileStagesExpanded(!mobileStagesExpanded)}
           aria-expanded={mobileStagesExpanded}
-          aria-label={`Simulation stage tracker. Currently on stage ${currentStageInfo.step} of 8: ${currentStageInfo.label}. Click to ${mobileStagesExpanded ? 'collapse' : 'expand'} stages list.`}
+          aria-label={`Simulation stage tracker. Currently on stage ${currentStageInfo.step} of 8: ${currentStageInfo.label}. Click to ${mobileStagesExpanded ? "collapse" : "expand"} stages list.`}
           className="w-full flex items-center justify-between p-3.5 rounded-xl border border-primary/40 bg-surface text-left font-mono text-xs text-foreground"
         >
           <div className="flex items-center gap-2">
             <span className="size-5 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-[10px]">
               {currentStageInfo.step}
             </span>
-            <span className="text-muted-foreground">Stage {currentStageInfo.step}/8: <strong className="text-foreground font-bold">{currentStageInfo.label}</strong></span>
+            <span className="text-muted-foreground">
+              Stage {currentStageInfo.step}/8:{" "}
+              <strong className="text-foreground font-bold">{currentStageInfo.label}</strong>
+            </span>
           </div>
           <div className="flex items-center gap-1 text-primary text-[11px] font-semibold">
             <span>{mobileStagesExpanded ? "Collapse" : "All Stages"}</span>
-            {mobileStagesExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+            {mobileStagesExpanded ? (
+              <ChevronUp className="size-4" />
+            ) : (
+              <ChevronDown className="size-4" />
+            )}
           </div>
         </button>
       </div>
@@ -230,8 +246,8 @@ export function InteractiveAeroForgeDemo() {
               activeStep === s.step
                 ? "border-primary bg-primary/20 text-white font-bold shadow-md shadow-primary/10"
                 : activeStep > s.step || (hasRun && s.step <= 5)
-                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-semibold"
-                : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground"
+                  ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-semibold"
+                  : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground"
             }`}
           >
             <span className="size-4 rounded-full flex items-center justify-center text-[9px] font-bold bg-white/10">
@@ -265,12 +281,16 @@ export function InteractiveAeroForgeDemo() {
                       : "border-border bg-surface text-muted-foreground hover:border-primary/30 hover:text-foreground"
                   }`}
                 >
-                  <span className="text-[9px] font-mono text-primary uppercase block font-semibold">{p.category}</span>
+                  <span className="text-[9px] font-mono text-primary uppercase block font-semibold">
+                    {p.category}
+                  </span>
                   <span className="text-xs font-bold font-ui block mt-0.5">{p.name}</span>
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">{selectedPreset.description}</p>
+            <p className="text-[11px] text-muted-foreground font-sans leading-relaxed">
+              {selectedPreset.description}
+            </p>
           </div>
 
           {/* Interactive Sliders */}
@@ -282,14 +302,16 @@ export function InteractiveAeroForgeDemo() {
             {/* Mach Number */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="mach-slider" className="text-foreground cursor-pointer">Mach Number (M):</label>
+                <label htmlFor="mach-slider" className="text-foreground cursor-pointer">
+                  Mach Number (M):
+                </label>
                 <span className="text-primary font-bold">{mach.toFixed(2)} M</span>
               </div>
               <input
                 id="mach-slider"
                 aria-label="Mach Number"
-                aria-valuemin={0.10}
-                aria-valuemax={1.80}
+                aria-valuemin={0.1}
+                aria-valuemax={1.8}
                 aria-valuenow={mach}
                 aria-valuetext={`${mach.toFixed(2)} Mach`}
                 type="range"
@@ -308,7 +330,9 @@ export function InteractiveAeroForgeDemo() {
             {/* Angle of Attack */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="alpha-slider" className="text-foreground cursor-pointer">Angle of Attack (α):</label>
+                <label htmlFor="alpha-slider" className="text-foreground cursor-pointer">
+                  Angle of Attack (α):
+                </label>
                 <span className="text-emerald-400 font-bold">{alpha.toFixed(1)}°</span>
               </div>
               <input
@@ -334,7 +358,9 @@ export function InteractiveAeroForgeDemo() {
             {/* Altitude */}
             <div className="space-y-1.5">
               <div className="flex justify-between items-center text-xs">
-                <label htmlFor="altitude-slider" className="text-foreground cursor-pointer">Altitude (h):</label>
+                <label htmlFor="altitude-slider" className="text-foreground cursor-pointer">
+                  Altitude (h):
+                </label>
                 <span className="text-primary font-bold">{altitude} km</span>
               </div>
               <input
@@ -386,14 +412,20 @@ export function InteractiveAeroForgeDemo() {
             <div className="flex items-center justify-between border-b border-border pb-3 flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-bold text-foreground">NACA {naca} Flow Field Contours</span>
+                <span className="text-xs font-bold text-foreground">
+                  NACA {naca} Flow Field Contours
+                </span>
               </div>
               <span className="text-[10px] text-muted-foreground">Streamline Grid: 120 x 80</span>
             </div>
 
             {/* Simulated Vector Streamlines SVG */}
             <div className="relative h-48 w-full bg-surface-2 rounded-xl border border-border flex items-center justify-center overflow-hidden">
-              <svg viewBox="0 0 500 200" aria-label={`NACA ${naca} flow streamlines at angle ${alpha} degrees`} className="w-full h-full">
+              <svg
+                viewBox="0 0 500 200"
+                aria-label={`NACA ${naca} flow streamlines at angle ${alpha} degrees`}
+                className="w-full h-full"
+              >
                 <defs>
                   <linearGradient id="streamlineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
@@ -426,7 +458,9 @@ export function InteractiveAeroForgeDemo() {
 
                 {/* Pressure Stagnation Marker */}
                 <circle cx="120" cy="100" r="4" fill="#f59e0b" />
-                <text x="135" y="95" fill="#f59e0b" fontSize="9" fontFamily="monospace">Stagnation Point</text>
+                <text x="135" y="95" fill="#f59e0b" fontSize="9" fontFamily="monospace">
+                  Stagnation Point
+                </text>
               </svg>
             </div>
 
@@ -450,7 +484,9 @@ export function InteractiveAeroForgeDemo() {
               </div>
               <div>
                 <span className="text-[10px] text-muted-foreground block">TRUE AIRSPEED</span>
-                <span className="text-base font-bold text-amber-400">{calculations.speedKmh} km/h</span>
+                <span className="text-base font-bold text-amber-400">
+                  {calculations.speedKmh} km/h
+                </span>
               </div>
             </div>
 
@@ -458,7 +494,9 @@ export function InteractiveAeroForgeDemo() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 bg-primary/10 border border-primary/20 rounded-xl text-xs">
               <div className="flex items-center gap-2 text-primary font-semibold">
                 <FileCheck2 className="size-4 shrink-0" />
-                <span>NASA Abbott Empirical Benchmark Delta: {calculations.nasaBenchmarkDelta}</span>
+                <span>
+                  NASA Abbott Empirical Benchmark Delta: {calculations.nasaBenchmarkDelta}
+                </span>
               </div>
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <Button

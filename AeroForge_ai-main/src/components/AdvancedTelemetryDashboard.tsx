@@ -3,11 +3,39 @@
  * Professional mission-control style data visualization
  */
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
-import { AlertCircle, TrendingUp, TrendingDown, Radio, Zap, Gauge, Thermometer, Wind, Droplets } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import {
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+} from "recharts";
+import {
+  AlertCircle,
+  TrendingUp,
+  TrendingDown,
+  Radio,
+  Zap,
+  Gauge,
+  Thermometer,
+  Wind,
+  Droplets,
+} from "lucide-react";
 
 interface TelemetryPoint {
   timestamp: number;
@@ -21,7 +49,7 @@ interface TelemetryPoint {
 
 interface SystemStatus {
   name: string;
-  status: 'nominal' | 'warning' | 'critical';
+  status: "nominal" | "warning" | "critical";
   value: number;
   unit: string;
   icon: React.ReactNode;
@@ -30,7 +58,9 @@ interface SystemStatus {
 const AdvancedTelemetryDashboard: React.FC = () => {
   const [telemetryHistory, setTelemetryHistory] = useState<TelemetryPoint[]>([]);
   const [systemStatus, setSystemStatus] = useState<SystemStatus[]>([]);
-  const [selectedMetric, setSelectedMetric] = useState<'altitude' | 'velocity' | 'temperature'>('altitude');
+  const [selectedMetric, setSelectedMetric] = useState<"altitude" | "velocity" | "temperature">(
+    "altitude",
+  );
 
   // Generate realistic telemetry data
   useEffect(() => {
@@ -55,45 +85,45 @@ const AdvancedTelemetryDashboard: React.FC = () => {
       // Update system status
       setSystemStatus([
         {
-          name: 'Altitude',
-          status: newPoint.altitude > 350 && newPoint.altitude < 450 ? 'nominal' : 'warning',
+          name: "Altitude",
+          status: newPoint.altitude > 350 && newPoint.altitude < 450 ? "nominal" : "warning",
           value: newPoint.altitude,
-          unit: 'km',
+          unit: "km",
           icon: <Gauge className="w-5 h-5" />,
         },
         {
-          name: 'Velocity',
-          status: 'nominal',
+          name: "Velocity",
+          status: "nominal",
           value: newPoint.velocity,
-          unit: 'km/s',
+          unit: "km/s",
           icon: <TrendingUp className="w-5 h-5" />,
         },
         {
-          name: 'Temperature',
-          status: newPoint.temperature > 250 && newPoint.temperature < 320 ? 'nominal' : 'warning',
+          name: "Temperature",
+          status: newPoint.temperature > 250 && newPoint.temperature < 320 ? "nominal" : "warning",
           value: newPoint.temperature,
-          unit: 'K',
+          unit: "K",
           icon: <Thermometer className="w-5 h-5" />,
         },
         {
-          name: 'Pressure',
-          status: 'nominal',
+          name: "Pressure",
+          status: "nominal",
           value: newPoint.pressure,
-          unit: 'kPa',
+          unit: "kPa",
           icon: <Wind className="w-5 h-5" />,
         },
         {
-          name: 'Radiation',
-          status: newPoint.radiation > 100 ? 'critical' : 'nominal',
+          name: "Radiation",
+          status: newPoint.radiation > 100 ? "critical" : "nominal",
           value: newPoint.radiation,
-          unit: 'mSv/h',
+          unit: "mSv/h",
           icon: <Zap className="w-5 h-5" />,
         },
         {
-          name: 'Signal',
-          status: newPoint.signalStrength > 80 ? 'nominal' : 'warning',
+          name: "Signal",
+          status: newPoint.signalStrength > 80 ? "nominal" : "warning",
           value: newPoint.signalStrength,
-          unit: '%',
+          unit: "%",
           icon: <Radio className="w-5 h-5" />,
         },
       ]);
@@ -107,27 +137,27 @@ const AdvancedTelemetryDashboard: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'nominal':
-        return 'text-aerospace-success';
-      case 'warning':
-        return 'text-aerospace-warning';
-      case 'critical':
-        return 'text-aerospace-danger';
+      case "nominal":
+        return "text-aerospace-success";
+      case "warning":
+        return "text-aerospace-warning";
+      case "critical":
+        return "text-aerospace-danger";
       default:
-        return 'text-secondary-foreground';
+        return "text-secondary-foreground";
     }
   };
 
   const getStatusBg = (status: string) => {
     switch (status) {
-      case 'nominal':
-        return 'bg-aerospace-success/10 border-aerospace-success/30';
-      case 'warning':
-        return 'bg-aerospace-warning/10 border-aerospace-warning/30';
-      case 'critical':
-        return 'bg-aerospace-danger/10 border-aerospace-danger/30';
+      case "nominal":
+        return "bg-aerospace-success/10 border-aerospace-success/30";
+      case "warning":
+        return "bg-aerospace-warning/10 border-aerospace-warning/30";
+      case "critical":
+        return "bg-aerospace-danger/10 border-aerospace-danger/30";
       default:
-        return 'bg-primary/50 border-secondary/30';
+        return "bg-primary/50 border-secondary/30";
     }
   };
 
@@ -150,11 +180,14 @@ const AdvancedTelemetryDashboard: React.FC = () => {
             <Card className={`p-4 border ${getStatusBg(status.status)} backdrop-blur`}>
               <div className="flex items-start justify-between mb-2">
                 <div className={`${getStatusColor(status.status)}`}>{status.icon}</div>
-                <div className={`w-2 h-2 rounded-full ${status.status === 'nominal' ? 'bg-aerospace-success' : status.status === 'warning' ? 'bg-aerospace-warning' : 'bg-aerospace-danger'}`} />
+                <div
+                  className={`w-2 h-2 rounded-full ${status.status === "nominal" ? "bg-aerospace-success" : status.status === "warning" ? "bg-aerospace-warning" : "bg-aerospace-danger"}`}
+                />
               </div>
               <div className="text-xs text-secondary-foreground mb-1">{status.name}</div>
               <div className="text-lg font-mono font-bold text-foreground">
-                {status.value.toFixed(1)}<span className="text-xs ml-1">{status.unit}</span>
+                {status.value.toFixed(1)}
+                <span className="text-xs ml-1">{status.unit}</span>
               </div>
             </Card>
           </motion.div>
@@ -178,15 +211,19 @@ const AdvancedTelemetryDashboard: React.FC = () => {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
-              <XAxis dataKey="timestamp" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
-              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
+              <XAxis
+                dataKey="timestamp"
+                stroke="rgba(203, 213, 225, 0.5)"
+                style={{ fontSize: "12px" }}
+              />
+              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "12px" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  border: '1px solid rgba(14, 165, 233, 0.3)',
-                  borderRadius: '8px',
+                  backgroundColor: "#0F172A",
+                  border: "1px solid rgba(14, 165, 233, 0.3)",
+                  borderRadius: "8px",
                 }}
-                labelStyle={{ color: '#0EA5E9' }}
+                labelStyle={{ color: "#0EA5E9" }}
               />
               <Area
                 type="monotone"
@@ -208,8 +245,12 @@ const AdvancedTelemetryDashboard: React.FC = () => {
           <ResponsiveContainer width="100%" height={300}>
             <RadarChart data={radarData}>
               <PolarGrid stroke="rgba(14, 165, 233, 0.2)" />
-              <PolarAngleAxis dataKey="name" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '11px' }} />
-              <PolarRadiusAxis stroke="rgba(203, 213, 225, 0.3)" style={{ fontSize: '11px' }} />
+              <PolarAngleAxis
+                dataKey="name"
+                stroke="rgba(203, 213, 225, 0.5)"
+                style={{ fontSize: "11px" }}
+              />
+              <PolarRadiusAxis stroke="rgba(203, 213, 225, 0.3)" style={{ fontSize: "11px" }} />
               <Radar
                 name="System Status"
                 dataKey="value"
@@ -230,15 +271,19 @@ const AdvancedTelemetryDashboard: React.FC = () => {
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={telemetryHistory}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
-              <XAxis dataKey="timestamp" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
-              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
+              <XAxis
+                dataKey="timestamp"
+                stroke="rgba(203, 213, 225, 0.5)"
+                style={{ fontSize: "12px" }}
+              />
+              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "12px" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  border: '1px solid rgba(14, 165, 233, 0.3)',
-                  borderRadius: '8px',
+                  backgroundColor: "#0F172A",
+                  border: "1px solid rgba(14, 165, 233, 0.3)",
+                  borderRadius: "8px",
                 }}
-                labelStyle={{ color: '#0EA5E9' }}
+                labelStyle={{ color: "#0EA5E9" }}
               />
               <Legend />
               <Line
@@ -261,15 +306,19 @@ const AdvancedTelemetryDashboard: React.FC = () => {
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={telemetryHistory.slice(-20)}>
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
-              <XAxis dataKey="timestamp" stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
-              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: '12px' }} />
+              <XAxis
+                dataKey="timestamp"
+                stroke="rgba(203, 213, 225, 0.5)"
+                style={{ fontSize: "12px" }}
+              />
+              <YAxis stroke="rgba(203, 213, 225, 0.5)" style={{ fontSize: "12px" }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0F172A',
-                  border: '1px solid rgba(14, 165, 233, 0.3)',
-                  borderRadius: '8px',
+                  backgroundColor: "#0F172A",
+                  border: "1px solid rgba(14, 165, 233, 0.3)",
+                  borderRadius: "8px",
                 }}
-                labelStyle={{ color: '#0EA5E9' }}
+                labelStyle={{ color: "#0EA5E9" }}
               />
               <Bar dataKey="temperature" fill="#F59E0B" radius={[4, 4, 0, 0]} />
             </BarChart>
@@ -278,7 +327,7 @@ const AdvancedTelemetryDashboard: React.FC = () => {
       </div>
 
       {/* Alert Panel */}
-      {systemStatus.some((s) => s.status !== 'nominal') && (
+      {systemStatus.some((s) => s.status !== "nominal") && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -288,7 +337,11 @@ const AdvancedTelemetryDashboard: React.FC = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-1">System Alerts</h4>
             <p className="text-sm text-secondary-foreground">
-              {systemStatus.filter((s) => s.status !== 'nominal').map((s) => s.name).join(', ')} require attention
+              {systemStatus
+                .filter((s) => s.status !== "nominal")
+                .map((s) => s.name)
+                .join(", ")}{" "}
+              require attention
             </p>
           </div>
         </motion.div>

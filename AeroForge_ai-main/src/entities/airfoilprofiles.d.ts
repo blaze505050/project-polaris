@@ -1,2 +1,2 @@
 // Re-export from main entities file for backward compatibility
-export type { AirfoilProfiles } from './index';
+export type { AirfoilProfiles } from "./index";

@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Zap, BookOpen, Microscope, Crown } from 'lucide-react';
-import { useAstroLabStore, LabMode } from '@/stores/astrolabStore';
+import React from "react";
+import { motion } from "framer-motion";
+import { Zap, BookOpen, Microscope, Crown } from "lucide-react";
+import { useAstroLabStore, LabMode } from "@/stores/astrolabStore";
 
 interface ModeOption {
   id: LabMode;
@@ -14,33 +14,33 @@ interface ModeOption {
 
 const MODES: ModeOption[] = [
   {
-    id: 'explorer',
-    label: 'Explorer Mode',
-    description: 'Interactive visualization and real-time exploration of celestial phenomena',
+    id: "explorer",
+    label: "Explorer Mode",
+    description: "Interactive visualization and real-time exploration of celestial phenomena",
     icon: Zap,
-    color: 'from-blue-600 to-cyan-600',
+    color: "from-blue-600 to-cyan-600",
   },
   {
-    id: 'learning',
-    label: 'Learning Mode',
-    description: 'Guided educational experience with challenges and step-by-step tutorials',
+    id: "learning",
+    label: "Learning Mode",
+    description: "Guided educational experience with challenges and step-by-step tutorials",
     icon: BookOpen,
-    color: 'from-green-600 to-emerald-600',
+    color: "from-green-600 to-emerald-600",
   },
   {
-    id: 'research',
-    label: 'Research Mode',
-    description: 'Advanced tools for scientific research with full data export and analysis',
+    id: "research",
+    label: "Research Mode",
+    description: "Advanced tools for scientific research with full data export and analysis",
     icon: Microscope,
-    color: 'from-purple-600 to-pink-600',
+    color: "from-purple-600 to-pink-600",
   },
   {
-    id: 'investor-demo',
-    label: 'Investor Demo',
-    description: 'Professional presentation mode showcasing platform capabilities',
+    id: "investor-demo",
+    label: "Investor Demo",
+    description: "Professional presentation mode showcasing platform capabilities",
     icon: Crown,
-    color: 'from-amber-600 to-orange-600',
-    badge: 'Premium',
+    color: "from-amber-600 to-orange-600",
+    badge: "Premium",
   },
 ];
 
@@ -69,8 +69,8 @@ export default function AstroLabModeSelector() {
               whileTap={{ scale: 0.98 }}
               className={`relative p-6 rounded-xl border-2 transition-all text-left group ${
                 isActive
-                  ? 'border-aerospace-blue bg-aerospace-blue/10'
-                  : 'border-secondary/30 bg-primary hover:border-aerospace-blue/50'
+                  ? "border-aerospace-blue bg-aerospace-blue/10"
+                  : "border-secondary/30 bg-primary hover:border-aerospace-blue/50"
               }`}
             >
               {/* Badge */}
@@ -81,9 +81,13 @@ export default function AstroLabModeSelector() {
               )}
 
               {/* Icon */}
-              <Icon className={`w-8 h-8 mb-3 transition-colors ${
-                isActive ? 'text-aerospace-blue' : 'text-foreground/60 group-hover:text-aerospace-blue'
-              }`} />
+              <Icon
+                className={`w-8 h-8 mb-3 transition-colors ${
+                  isActive
+                    ? "text-aerospace-blue"
+                    : "text-foreground/60 group-hover:text-aerospace-blue"
+                }`}
+              />
 
               {/* Label */}
               <h3 className="font-heading font-bold text-foreground mb-2">{mode.label}</h3>
@@ -111,7 +115,7 @@ export default function AstroLabModeSelector() {
         className="p-4 bg-primary border border-aerospace-blue/20 rounded-lg"
       >
         <p className="text-sm text-foreground/80">
-          <span className="font-mono text-aerospace-blue">Current Mode:</span>{' '}
+          <span className="font-mono text-aerospace-blue">Current Mode:</span>{" "}
           {MODES.find((m) => m.id === currentMode)?.label}
         </p>
       </motion.div>

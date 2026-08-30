@@ -24,10 +24,10 @@ import { useMembers } from '@wix/member-features';
 
 const MyComponent = () => {
   const { loggedInMember, member } = useMembers();
-  
+
   // loggedInMember - the currently authenticated member object
   // member - alias for loggedInMember
-  
+
   return (
     // ...
   );
@@ -60,7 +60,7 @@ const { member } = useMembers();
 // Check if user is logged in
 if (member) {
   // User is authenticated
-  console.log('Logged in as:', member.loginEmail);
+  console.log("Logged in as:", member.loginEmail);
 } else {
   // User is not authenticated
 }
@@ -164,7 +164,7 @@ const ProtectedPage = () => {
       }
       setIsChecking(false);
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, [loggedInMember, navigate]);
 
@@ -224,7 +224,7 @@ const LoginPage = () => {
   const { loggedInMember } = useMembers();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Get the page user was trying to access
   const from = (location.state as any)?.from?.pathname || '/';
 
@@ -244,7 +244,7 @@ const LoginPage = () => {
             Sign in to your account to continue
           </p>
         </div>
-        
+
         <SignIn />
       </div>
     </div>
@@ -261,7 +261,7 @@ export default LoginPage;
 When redirecting to login, preserve the original destination:
 
 ```typescript
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ProtectedPage = () => {
   const { loggedInMember } = useMembers();
@@ -271,9 +271,9 @@ const ProtectedPage = () => {
   useEffect(() => {
     if (!loggedInMember?.id) {
       // Save current location to return after login
-      navigate('/login', { 
+      navigate("/login", {
         replace: true,
-        state: { from: location }
+        state: { from: location },
       });
     }
   }, [loggedInMember, navigate, location]);
@@ -291,13 +291,13 @@ const ProtectedPage = () => {
 ```typescript
 const Header = () => {
   const { member } = useMembers();
-  
+
   return (
     <header className="...">
       <nav>
         {/* Always visible */}
         <Link to="/">Home</Link>
-        
+
         {/* Only for logged-in users */}
         {member && (
           <>
@@ -305,7 +305,7 @@ const Header = () => {
             <Link to="/profile">Profile</Link>
           </>
         )}
-        
+
         {/* Only for logged-out users */}
         {!member && (
           <Link to="/login">Sign In</Link>
@@ -320,11 +320,11 @@ const Header = () => {
 
 ```typescript
 import { useMembers } from '@wix/member-features';
-import { 
-  DropdownMenu, 
-  DropdownMenuTrigger, 
-  DropdownMenuContent, 
-  DropdownMenuItem 
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { User } from 'lucide-react';
@@ -332,7 +332,7 @@ import { User } from 'lucide-react';
 const UserMenu = () => {
   const { member } = useMembers();
   const navigate = useNavigate();
-  
+
   if (!member) {
     return (
       <Button variant="outline" onClick={() => navigate('/login')}>
@@ -340,9 +340,9 @@ const UserMenu = () => {
       </Button>
     );
   }
-  
+
   const initials = member.profile?.firstName?.[0] || member.loginEmail[0];
-  
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -381,10 +381,10 @@ When using data saved on the user, handle cases where the user just registered a
 ```typescript
 const ProfilePage = () => {
   const { member } = useMembers();
-  
+
   // Handle new users who haven't completed their profile
   const hasCompletedProfile = member?.profile?.firstName && member?.profile?.lastName;
-  
+
   if (member && !hasCompletedProfile) {
     return (
       <div className="max-w-[100rem] mx-auto px-4 py-16">
@@ -396,7 +396,7 @@ const ProfilePage = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="max-w-[100rem] mx-auto px-4 py-16">
       <h1 className="font-heading text-3xl mb-4">

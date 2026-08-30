@@ -24,6 +24,13 @@ export function ProjectSubmissionForm() {
     const email = get("contact_email");
     const link = get("link");
     const consent = fd.get("consent") === "on";
+    const botTrap = get("polaris_project_trap");
+
+    // Silent drop for automated spam bots
+    if (botTrap) {
+      setDone(true);
+      return;
+    }
 
     if (title.length < 3 || title.length > 200) {
       toast.error("Please give your project a title.");
@@ -88,6 +95,15 @@ export function ProjectSubmissionForm() {
 
   return (
     <form onSubmit={onSubmit} className="card-elevated space-y-7 p-7 md:p-10">
+      {/* Anti-spam Bot Honeypot */}
+      <input
+        type="text"
+        name="polaris_project_trap"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="title">Project title *</Label>

@@ -1,14 +1,14 @@
-import type { Rule } from 'eslint';
-import type { JSXElement, JSXAttribute, Literal } from 'estree-jsx';
+import type { Rule } from "eslint";
+import type { JSXElement, JSXAttribute, Literal } from "estree-jsx";
 
 export default {
   meta: {
-    type: 'problem',
+    type: "problem",
     docs: {
-      description: 'Fix empty string values in SelectItem components',
-      category: 'Possible Errors',
+      description: "Fix empty string values in SelectItem components",
+      category: "Possible Errors",
     },
-    fixable: 'code',
+    fixable: "code",
     schema: [],
     messages: {
       emptyValue: 'SelectItem value cannot be empty. Auto-fixing to "all".',
@@ -20,28 +20,29 @@ export default {
       JSXElement(node: JSXElement) {
         const { openingElement } = node;
 
-        if (openingElement.name?.type !== 'JSXIdentifier' ||
-            openingElement.name.name !== 'SelectItem') {
+        if (
+          openingElement.name?.type !== "JSXIdentifier" ||
+          openingElement.name.name !== "SelectItem"
+        ) {
           return;
         }
 
         const valueAttr = openingElement.attributes.find(
           (attr): attr is JSXAttribute =>
-            attr.type === 'JSXAttribute' &&
-            attr.name?.type === 'JSXIdentifier' &&
-            attr.name.name === 'value'
+            attr.type === "JSXAttribute" &&
+            attr.name?.type === "JSXIdentifier" &&
+            attr.name.name === "value",
         );
 
         if (!valueAttr?.value) return;
 
         const isEmptyString =
-          valueAttr.value.type === 'Literal' &&
-          (valueAttr.value as Literal).value === '';
+          valueAttr.value.type === "Literal" && (valueAttr.value as Literal).value === "";
 
         if (isEmptyString) {
           context.report({
             node: valueAttr.value,
-            messageId: 'emptyValue',
+            messageId: "emptyValue",
             fix: (fixer) => fixer.replaceText(valueAttr.value!, '"all"'),
           });
         }

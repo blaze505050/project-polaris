@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import {
   Trophy,
   Zap,
@@ -16,17 +16,17 @@ import {
   Users,
   CheckCircle2,
   Sliders,
-} from 'lucide-react';
-import { useToastStore } from '@/stores/toastStore';
+} from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
 
 interface Challenge {
   id: string;
   title: string;
-  category: 'Aerodynamics' | 'Astrodynamics' | 'Structures';
+  category: "Aerodynamics" | "Astrodynamics" | "Structures";
   description: string;
   metric: string;
   targetValue: string;
-  difficulty: 'Beginner' | 'Advanced' | 'Grandmaster';
+  difficulty: "Beginner" | "Advanced" | "Grandmaster";
   participantsCount: number;
   daysRemaining: number;
   topScore: string;
@@ -38,58 +38,61 @@ interface Challenge {
 export default function EngineeringChallengesPage() {
   const navigate = useNavigate();
   const { addToast } = useToastStore();
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const challenges: Challenge[] = [
     {
-      id: 'ch-transonic-01',
-      title: 'Transonic Airfoil L/D Maximizer',
-      category: 'Aerodynamics',
-      description: 'Design a 2D section profile optimizing lift-to-drag ratio (L/D) at Mach 0.82 and 4.0° AoA without triggering shock stall.',
-      metric: 'L/D Ratio',
-      targetValue: '> 18.5',
-      difficulty: 'Advanced',
+      id: "ch-transonic-01",
+      title: "Transonic Airfoil L/D Maximizer",
+      category: "Aerodynamics",
+      description:
+        "Design a 2D section profile optimizing lift-to-drag ratio (L/D) at Mach 0.82 and 4.0° AoA without triggering shock stall.",
+      metric: "L/D Ratio",
+      targetValue: "> 18.5",
+      difficulty: "Advanced",
       participantsCount: 342,
       daysRemaining: 4,
-      topScore: 'L/D = 19.42',
-      topLeader: 'Dr. Elena Rostova (MIT)',
-      seedParams: { naca: '2412', mach: 0.82, aoa: 4.0 },
-      pillarRoute: '/aerolab',
+      topScore: "L/D = 19.42",
+      topLeader: "Dr. Elena Rostova (MIT)",
+      seedParams: { naca: "2412", mach: 0.82, aoa: 4.0 },
+      pillarRoute: "/aerolab",
     },
     {
-      id: 'ch-lunar-02',
-      title: 'Minimum Delta-V Lunar Transfer Orbit',
-      category: 'Astrodynamics',
-      description: 'Compute a two-impulse Hohmann/Bi-elliptic transfer trajectory from 300km LEO to 100km LLO minimizing total Delta-V.',
-      metric: 'Total Δv (m/s)',
-      targetValue: '< 3,920 m/s',
-      difficulty: 'Grandmaster',
+      id: "ch-lunar-02",
+      title: "Minimum Delta-V Lunar Transfer Orbit",
+      category: "Astrodynamics",
+      description:
+        "Compute a two-impulse Hohmann/Bi-elliptic transfer trajectory from 300km LEO to 100km LLO minimizing total Delta-V.",
+      metric: "Total Δv (m/s)",
+      targetValue: "< 3,920 m/s",
+      difficulty: "Grandmaster",
       participantsCount: 189,
       daysRemaining: 9,
-      topScore: '3,908 m/s',
-      topLeader: 'K. Tsiolkovsky Lab',
-      seedParams: { leoAlt: 300, lloAlt: 100, target: 'Moon' },
-      pillarRoute: '/astrolab',
+      topScore: "3,908 m/s",
+      topLeader: "K. Tsiolkovsky Lab",
+      seedParams: { leoAlt: 300, lloAlt: 100, target: "Moon" },
+      pillarRoute: "/astrolab",
     },
     {
-      id: 'ch-beam-03',
-      title: 'Lightweight Wing Spar Shear Beam',
-      category: 'Structures',
-      description: 'Optimize I-beam flange thickness to withstand 45 kN end load under maximum von Mises stress < 220 MPa.',
-      metric: 'Mass Efficiency (kN/kg)',
-      targetValue: '> 14.2',
-      difficulty: 'Beginner',
+      id: "ch-beam-03",
+      title: "Lightweight Wing Spar Shear Beam",
+      category: "Structures",
+      description:
+        "Optimize I-beam flange thickness to withstand 45 kN end load under maximum von Mises stress < 220 MPa.",
+      metric: "Mass Efficiency (kN/kg)",
+      targetValue: "> 14.2",
+      difficulty: "Beginner",
       participantsCount: 512,
       daysRemaining: 2,
-      topScore: '16.8 kN/kg',
-      topLeader: 'AeroMech Guild',
+      topScore: "16.8 kN/kg",
+      topLeader: "AeroMech Guild",
       seedParams: { load: 45000, length: 2.5, yield: 220 },
-      pillarRoute: '/mechlab',
+      pillarRoute: "/mechlab",
     },
   ];
 
   const filteredChallenges =
-    selectedCategory === 'All'
+    selectedCategory === "All"
       ? challenges
       : challenges.filter((c) => c.category === selectedCategory);
 
@@ -97,9 +100,9 @@ export default function EngineeringChallengesPage() {
     const url = `${window.location.origin}/challenges?ch=${ch.id}`;
     navigator.clipboard.writeText(url);
     addToast({
-      title: 'Challenge Link Copied!',
+      title: "Challenge Link Copied!",
       description: `Share ${ch.title} with your team or community.`,
-      type: 'success',
+      type: "success",
     });
   };
 
@@ -107,7 +110,7 @@ export default function EngineeringChallengesPage() {
     addToast({
       title: `Forking Challenge Parameters`,
       description: `Loading ${ch.title} seed parameters into workspace...`,
-      type: 'info',
+      type: "info",
     });
     navigate(ch.pillarRoute, { state: { challengeParams: ch.seedParams } });
   };
@@ -128,19 +131,20 @@ export default function EngineeringChallengesPage() {
             Compete, Optimize & Win Aerospace Recognition
           </h1>
           <p className="text-white/70 text-base font-sans leading-relaxed">
-            Test your physics solvers, design high-efficiency airfoils or orbital trajectories, compete on live leaderboards, and share your verified public artifacts globally.
+            Test your physics solvers, design high-efficiency airfoils or orbital trajectories,
+            compete on live leaderboards, and share your verified public artifacts globally.
           </p>
 
           {/* Category Filter */}
           <div className="flex justify-center gap-2 pt-4 flex-wrap">
-            {['All', 'Aerodynamics', 'Astrodynamics', 'Structures'].map((cat) => (
+            {["All", "Aerodynamics", "Astrodynamics", "Structures"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
                   selectedCategory === cat
-                    ? 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/20'
-                    : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                    ? "bg-cyan-500 text-black shadow-lg shadow-cyan-500/20"
+                    : "bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10"
                 }`}
               >
                 {cat}
@@ -164,11 +168,11 @@ export default function EngineeringChallengesPage() {
                   </span>
                   <span
                     className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${
-                      ch.difficulty === 'Grandmaster'
-                        ? 'bg-purple-500/10 text-purple-400 border-purple-500/30'
-                        : ch.difficulty === 'Advanced'
-                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+                      ch.difficulty === "Grandmaster"
+                        ? "bg-purple-500/10 text-purple-400 border-purple-500/30"
+                        : ch.difficulty === "Advanced"
+                          ? "bg-amber-500/10 text-amber-400 border-amber-500/30"
+                          : "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
                     }`}
                   >
                     {ch.difficulty}
@@ -185,7 +189,9 @@ export default function EngineeringChallengesPage() {
                   </div>
                   <div className="bg-[#050A16] p-3 rounded-lg border border-white/5">
                     <span className="text-[10px] text-white/40 block">TOP LEADER</span>
-                    <span className="text-emerald-400 font-bold truncate block">{ch.topLeader}</span>
+                    <span className="text-emerald-400 font-bold truncate block">
+                      {ch.topLeader}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -252,10 +258,38 @@ export default function EngineeringChallengesPage() {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {[
-                  { rank: 1, name: 'Dr. Elena Rostova', inst: 'MIT AeroAstro', challenge: 'Transonic Airfoil L/D', score: 'L/D = 19.42', hash: 'VERIFIED-0981' },
-                  { rank: 2, name: 'K. Tsiolkovsky Lab', inst: 'TUM Space', challenge: 'Minimum Delta-V Lunar', score: '3,908 m/s', hash: 'VERIFIED-0742' },
-                  { rank: 3, name: 'AeroMech Guild', inst: 'Imperial College', challenge: 'Lightweight Wing Spar', score: '16.8 kN/kg', hash: 'VERIFIED-0511' },
-                  { rank: 4, name: 'Marcus Vance', inst: 'Stanford Aero', challenge: 'Transonic Airfoil L/D', score: 'L/D = 18.91', hash: 'VERIFIED-0412' },
+                  {
+                    rank: 1,
+                    name: "Dr. Elena Rostova",
+                    inst: "MIT AeroAstro",
+                    challenge: "Transonic Airfoil L/D",
+                    score: "L/D = 19.42",
+                    hash: "VERIFIED-0981",
+                  },
+                  {
+                    rank: 2,
+                    name: "K. Tsiolkovsky Lab",
+                    inst: "TUM Space",
+                    challenge: "Minimum Delta-V Lunar",
+                    score: "3,908 m/s",
+                    hash: "VERIFIED-0742",
+                  },
+                  {
+                    rank: 3,
+                    name: "AeroMech Guild",
+                    inst: "Imperial College",
+                    challenge: "Lightweight Wing Spar",
+                    score: "16.8 kN/kg",
+                    hash: "VERIFIED-0511",
+                  },
+                  {
+                    rank: 4,
+                    name: "Marcus Vance",
+                    inst: "Stanford Aero",
+                    challenge: "Transonic Airfoil L/D",
+                    score: "L/D = 18.91",
+                    hash: "VERIFIED-0412",
+                  },
                 ].map((row) => (
                   <tr key={row.rank} className="hover:bg-white/5 transition-colors">
                     <td className="py-3 px-4 font-bold text-amber-400">#{row.rank}</td>

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import AstroLabModeSelector from '@/components/AstroLabModeSelector';
-import MyLabWorkspace from '@/components/MyLabWorkspace';
-import SpaceChallengesBoard from '@/components/SpaceChallengesBoard';
-import ExperimentReportGenerator from '@/components/ExperimentReportGenerator';
-import QualityAssuranceDashboard from '@/components/QualityAssuranceDashboard';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import AstroLabModeSelector from "@/components/AstroLabModeSelector";
+import MyLabWorkspace from "@/components/MyLabWorkspace";
+import SpaceChallengesBoard from "@/components/SpaceChallengesBoard";
+import ExperimentReportGenerator from "@/components/ExperimentReportGenerator";
+import QualityAssuranceDashboard from "@/components/QualityAssuranceDashboard";
 
 export default function AstroLabProfessionalPage() {
-  const [activeTab, setActiveTab] = useState('modes');
+  const [activeTab, setActiveTab] = useState("modes");
 
   return (
     <div className="min-h-screen bg-aerospace-dark text-foreground font-paragraph flex flex-col">
@@ -29,8 +29,8 @@ export default function AstroLabProfessionalPage() {
                 AstroLab Professional Suite
               </h1>
               <p className="text-lg text-foreground/80 max-w-2xl">
-                Enterprise-grade astronomical research platform with multi-depth modes, real-time simulations,
-                and professional reporting capabilities.
+                Enterprise-grade astronomical research platform with multi-depth modes, real-time
+                simulations, and professional reporting capabilities.
               </p>
             </motion.div>
           </div>
@@ -77,24 +77,24 @@ export default function AstroLabProfessionalPage() {
                 >
                   {[
                     {
-                      title: 'Real-Time Physics Engine',
-                      desc: 'Accurate N-body simulations with relativistic corrections',
-                      icon: '⚛️',
+                      title: "Real-Time Physics Engine",
+                      desc: "Accurate N-body simulations with relativistic corrections",
+                      icon: "⚛️",
                     },
                     {
-                      title: 'Data Export & Analysis',
-                      desc: 'Export results in multiple formats for further analysis',
-                      icon: '📊',
+                      title: "Data Export & Analysis",
+                      desc: "Export results in multiple formats for further analysis",
+                      icon: "📊",
                     },
                     {
-                      title: 'Collaborative Tools',
-                      desc: 'Share experiments and collaborate with team members',
-                      icon: '👥',
+                      title: "Collaborative Tools",
+                      desc: "Share experiments and collaborate with team members",
+                      icon: "👥",
                     },
                     {
-                      title: 'Uncertainty Quantification',
-                      desc: 'Full error propagation and confidence intervals',
-                      icon: '📈',
+                      title: "Uncertainty Quantification",
+                      desc: "Full error propagation and confidence intervals",
+                      icon: "📈",
                     },
                   ].map((feature, idx) => (
                     <motion.div
@@ -105,7 +105,9 @@ export default function AstroLabProfessionalPage() {
                       className="p-4 bg-primary border border-secondary/20 rounded-lg hover:border-aerospace-blue/50 transition-colors"
                     >
                       <div className="text-2xl mb-2">{feature.icon}</div>
-                      <h3 className="font-heading font-bold text-foreground mb-1">{feature.title}</h3>
+                      <h3 className="font-heading font-bold text-foreground mb-1">
+                        {feature.title}
+                      </h3>
                       <p className="text-sm text-foreground/70">{feature.desc}</p>
                     </motion.div>
                   ))}
@@ -174,38 +176,38 @@ export default function AstroLabProfessionalPage() {
                   Production-Grade Quality Assurance
                 </h2>
                 <p className="text-foreground/70 max-w-2xl">
-                  Every tool in AstroLab meets rigorous scientific standards with full uncertainty quantification,
-                  equation validation, and unit consistency checks.
+                  Every tool in AstroLab meets rigorous scientific standards with full uncertainty
+                  quantification, equation validation, and unit consistency checks.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
                   {
-                    title: 'Physics Accuracy',
+                    title: "Physics Accuracy",
                     items: [
-                      'Validated against peer-reviewed data',
-                      'Full relativistic corrections',
-                      'Uncertainty propagation',
-                      'Unit consistency checks',
+                      "Validated against peer-reviewed data",
+                      "Full relativistic corrections",
+                      "Uncertainty propagation",
+                      "Unit consistency checks",
                     ],
                   },
                   {
-                    title: 'Data Integrity',
+                    title: "Data Integrity",
                     items: [
-                      'Real-time validation',
-                      'Automatic error detection',
-                      'Data versioning',
-                      'Audit trails',
+                      "Real-time validation",
+                      "Automatic error detection",
+                      "Data versioning",
+                      "Audit trails",
                     ],
                   },
                   {
-                    title: 'User Experience',
+                    title: "User Experience",
                     items: [
-                      'Intuitive interfaces',
-                      'Real-time feedback',
-                      'Comprehensive help',
-                      'Professional UI/UX',
+                      "Intuitive interfaces",
+                      "Real-time feedback",
+                      "Comprehensive help",
+                      "Professional UI/UX",
                     ],
                   },
                 ].map((section, idx) => (
@@ -217,7 +219,9 @@ export default function AstroLabProfessionalPage() {
                     viewport={{ once: true }}
                     className="p-6 bg-aerospace-dark border border-aerospace-blue/20 rounded-lg"
                   >
-                    <h3 className="font-heading font-bold text-aerospace-blue mb-4">{section.title}</h3>
+                    <h3 className="font-heading font-bold text-aerospace-blue mb-4">
+                      {section.title}
+                    </h3>
                     <ul className="space-y-2">
                       {section.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">

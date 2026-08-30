@@ -61,7 +61,10 @@ export function RefundPolicyPage() {
             <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 flex items-start gap-3 text-xs">
               <ShieldCheck className="size-4 text-primary shrink-0 mt-0.5" />
               <div className="text-muted-foreground leading-relaxed">
-                <span className="font-semibold text-foreground">Student Protection Standard:</span> We are committed to an equitable educational experience. If you face genuine academic schedule conflicts or financial distress, reach out directly to our operations panel.
+                <span className="font-semibold text-foreground">Student Protection Standard:</span>{" "}
+                We are committed to an equitable educational experience. If you face genuine
+                academic schedule conflicts or financial distress, reach out directly to our
+                operations panel.
               </div>
             </div>
 
@@ -83,16 +86,30 @@ export function RefundPolicyPage() {
                 <span>Need Assistance with a Transaction?</span>
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                If your payment was debited but registration was interrupted, or if you need to submit a cancellation request, send your transaction ID and registered email to our support team:
+                If your payment was debited but registration was interrupted, or if you need to
+                submit a cancellation request, send your transaction ID and registered email to our
+                support team:
               </p>
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg text-xs">
-                  <a href="mailto:projectpolaris.8@gmail.com?subject=Refund%20/%20Payment%20Inquiry" className="flex items-center gap-1.5">
+                <Button
+                  asChild
+                  size="sm"
+                  className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg text-xs"
+                >
+                  <a
+                    href="mailto:projectpolaris.8@gmail.com?subject=Refund%20/%20Payment%20Inquiry"
+                    className="flex items-center gap-1.5"
+                  >
                     <Mail className="size-3.5" />
                     <span>Email Support Desk</span>
                   </a>
                 </Button>
-                <Button asChild variant="outline" size="sm" className="h-9 px-4 border-white/10 text-xs text-foreground hover:border-white/20">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="h-9 px-4 border-white/10 text-xs text-foreground hover:border-white/20"
+                >
                   <Link to="/support">Visit Support Hub</Link>
                 </Button>
               </div>

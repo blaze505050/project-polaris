@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   FolderOpen,
@@ -17,13 +17,13 @@ import {
   ArrowRight,
   X,
   Compass,
-} from 'lucide-react';
-import { useUnitStore, UnitSystem } from '@/stores/unitStore';
-import { useToastStore } from '@/stores/toastStore';
+} from "lucide-react";
+import { useUnitStore, UnitSystem } from "@/stores/unitStore";
+import { useToastStore } from "@/stores/toastStore";
 
 interface CommandItem {
   id: string;
-  category: 'Navigation' | 'Actions' | 'Tools' | 'Settings';
+  category: "Navigation" | "Actions" | "Tools" | "Settings";
   title: string;
   description: string;
   icon: React.ElementType;
@@ -33,197 +33,197 @@ interface CommandItem {
 
 export default function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const { unitSystem, setUnitSystem } = useUnitStore();
   const { addToast } = useToastStore();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setIsOpen((prev) => !prev);
       }
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         setIsOpen(false);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen]);
 
   const commands: CommandItem[] = [
     {
-      id: 'nav-dashboard',
-      category: 'Navigation',
-      title: 'Go to Command Center Dashboard',
-      description: 'Overview of active projects, compute, and status',
+      id: "nav-dashboard",
+      category: "Navigation",
+      title: "Go to Command Center Dashboard",
+      description: "Overview of active projects, compute, and status",
       icon: FolderOpen,
       action: () => {
-        navigate('/dashboard');
+        navigate("/dashboard");
         setIsOpen(false);
       },
-      keywords: ['dashboard', 'home', 'main', 'overview'],
+      keywords: ["dashboard", "home", "main", "overview"],
     },
     {
-      id: 'nav-projects',
-      category: 'Navigation',
-      title: 'Open Projects Hub',
-      description: 'Manage active engineering projects and workspaces',
+      id: "nav-projects",
+      category: "Navigation",
+      title: "Open Projects Hub",
+      description: "Manage active engineering projects and workspaces",
       icon: FolderOpen,
       action: () => {
-        navigate('/projects');
+        navigate("/projects");
         setIsOpen(false);
       },
-      keywords: ['projects', 'workspace', 'uav', 'wing'],
+      keywords: ["projects", "workspace", "uav", "wing"],
     },
     {
-      id: 'nav-simulations',
-      category: 'Navigation',
-      title: 'Open Simulation Manager',
-      description: 'Compute center, active jobs, and convergence logs',
+      id: "nav-simulations",
+      category: "Navigation",
+      title: "Open Simulation Manager",
+      description: "Compute center, active jobs, and convergence logs",
       icon: Cpu,
       action: () => {
-        navigate('/projects/1?tab=simulations');
+        navigate("/projects/1?tab=simulations");
         setIsOpen(false);
       },
-      keywords: ['simulations', 'cfd', 'fea', 'openfoam', 'solver', 'jobs'],
+      keywords: ["simulations", "cfd", "fea", "openfoam", "solver", "jobs"],
     },
     {
-      id: 'nav-aerolab',
-      category: 'Navigation',
-      title: 'Open Aerodynamics Laboratory',
-      description: 'CFD wind tunnel, compressible flow & airfoil analysis',
+      id: "nav-aerolab",
+      category: "Navigation",
+      title: "Open Aerodynamics Laboratory",
+      description: "CFD wind tunnel, compressible flow & airfoil analysis",
       icon: Wind,
       action: () => {
-        navigate('/labs/aerodynamics');
+        navigate("/labs/aerodynamics");
         setIsOpen(false);
       },
-      keywords: ['aerodynamics', 'cfd', 'wind tunnel', 'mach', 'drag', 'lift'],
+      keywords: ["aerodynamics", "cfd", "wind tunnel", "mach", "drag", "lift"],
     },
     {
-      id: 'nav-astrolab',
-      category: 'Navigation',
-      title: 'Open AstroLab Suite',
-      description: 'Orbital mechanics, photometry, exoplanet discovery',
+      id: "nav-astrolab",
+      category: "Navigation",
+      title: "Open AstroLab Suite",
+      description: "Orbital mechanics, photometry, exoplanet discovery",
       icon: Globe,
       action: () => {
-        navigate('/astrolab');
+        navigate("/astrolab");
         setIsOpen(false);
       },
-      keywords: ['astrolab', 'space', 'orbit', 'astronomy', 'satellites'],
+      keywords: ["astrolab", "space", "orbit", "astronomy", "satellites"],
     },
     {
-      id: 'nav-flagship-workflow',
-      category: 'Navigation',
-      title: 'Open Aerodynamic Research Workflow',
-      description: 'Guided 8-step aerodynamic design, analysis & optimization workflow',
+      id: "nav-flagship-workflow",
+      category: "Navigation",
+      title: "Open Aerodynamic Research Workflow",
+      description: "Guided 8-step aerodynamic design, analysis & optimization workflow",
       icon: Cpu,
       action: () => {
-        navigate('/flagship-workflow');
+        navigate("/flagship-workflow");
         setIsOpen(false);
       },
-      keywords: ['workflow', 'flagship', 'airfoil', 'aerodynamics', 'optimization', 'guided'],
+      keywords: ["workflow", "flagship", "airfoil", "aerodynamics", "optimization", "guided"],
     },
     {
-      id: 'nav-validation',
-      category: 'Navigation',
-      title: 'Open Validation Center',
-      description: 'Physics benchmark comparisons against published experimental data',
+      id: "nav-validation",
+      category: "Navigation",
+      title: "Open Validation Center",
+      description: "Physics benchmark comparisons against published experimental data",
       icon: Microscope,
       action: () => {
-        navigate('/validation');
+        navigate("/validation");
         setIsOpen(false);
       },
-      keywords: ['validation', 'benchmark', 'accuracy', 'credibility', 'naca 0012', 'isa'],
+      keywords: ["validation", "benchmark", "accuracy", "credibility", "naca 0012", "isa"],
     },
     {
-      id: 'nav-trust',
-      category: 'Navigation',
-      title: 'Open Trust & Security Center',
-      description: 'Data privacy practices, AI context boundaries & disclaimers',
+      id: "nav-trust",
+      category: "Navigation",
+      title: "Open Trust & Security Center",
+      description: "Data privacy practices, AI context boundaries & disclaimers",
       icon: Compass,
       action: () => {
-        navigate('/trust');
+        navigate("/trust");
         setIsOpen(false);
       },
-      keywords: ['trust', 'security', 'privacy', 'disclaimer', 'ai privacy'],
+      keywords: ["trust", "security", "privacy", "disclaimer", "ai privacy"],
     },
     {
-      id: 'nav-mechlab',
-      category: 'Navigation',
-      title: 'Open MechLab Suite',
-      description: 'Structural FEA, kinematics & material stress analysis',
+      id: "nav-mechlab",
+      category: "Navigation",
+      title: "Open MechLab Suite",
+      description: "Structural FEA, kinematics & material stress analysis",
       icon: Wrench,
       action: () => {
-        navigate('/mechlab');
+        navigate("/mechlab");
         setIsOpen(false);
       },
-      keywords: ['mechlab', 'fea', 'structures', 'stress', 'von mises'],
+      keywords: ["mechlab", "fea", "structures", "stress", "von mises"],
     },
     {
-      id: 'action-new-sim',
-      category: 'Actions',
-      title: 'Create New Simulation',
-      description: 'Launch a new CFD, FEA, or Thermal solver job',
+      id: "action-new-sim",
+      category: "Actions",
+      title: "Create New Simulation",
+      description: "Launch a new CFD, FEA, or Thermal solver job",
       icon: Zap,
       action: () => {
-        navigate('/projects/1?tab=simulations');
+        navigate("/projects/1?tab=simulations");
         addToast({
-          title: 'Simulation Launcher Ready',
-          description: 'Specify mesh and solver parameters to queue job.',
-          type: 'info',
+          title: "Simulation Launcher Ready",
+          description: "Specify mesh and solver parameters to queue job.",
+          type: "info",
         });
         setIsOpen(false);
       },
-      keywords: ['new simulation', 'run', 'launch', 'cfd', 'solve'],
+      keywords: ["new simulation", "run", "launch", "cfd", "solve"],
     },
     {
-      id: 'action-new-notebook',
-      category: 'Actions',
-      title: 'Open Engineering Notebook',
-      description: 'Jupyter-style markdown, LaTeX & code logbook',
+      id: "action-new-notebook",
+      category: "Actions",
+      title: "Open Engineering Notebook",
+      description: "Jupyter-style markdown, LaTeX & code logbook",
       icon: BookOpen,
       action: () => {
-        navigate('/projects/1?tab=notebook');
+        navigate("/projects/1?tab=notebook");
         setIsOpen(false);
       },
-      keywords: ['notebook', 'notes', 'equations', 'latex', 'python', 'journal'],
+      keywords: ["notebook", "notes", "equations", "latex", "python", "journal"],
     },
     {
-      id: 'unit-si',
-      category: 'Settings',
-      title: 'Set Unit System to SI (m, Pa, K, N, kg)',
+      id: "unit-si",
+      category: "Settings",
+      title: "Set Unit System to SI (m, Pa, K, N, kg)",
       description: `Current unit system is ${unitSystem}`,
       icon: Sliders,
       action: () => {
-        setUnitSystem('SI');
+        setUnitSystem("SI");
         addToast({
-          title: 'Units Standardized: SI',
-          description: 'All values updated to SI metric standards.',
-          type: 'success',
+          title: "Units Standardized: SI",
+          description: "All values updated to SI metric standards.",
+          type: "success",
         });
         setIsOpen(false);
       },
-      keywords: ['si', 'units', 'pascal', 'kelvin', 'meters'],
+      keywords: ["si", "units", "pascal", "kelvin", "meters"],
     },
     {
-      id: 'unit-imperial',
-      category: 'Settings',
-      title: 'Set Unit System to Imperial (ft, psi, °F, lbf, lb)',
+      id: "unit-imperial",
+      category: "Settings",
+      title: "Set Unit System to Imperial (ft, psi, °F, lbf, lb)",
       description: `Current unit system is ${unitSystem}`,
       icon: Sliders,
       action: () => {
-        setUnitSystem('Imperial');
+        setUnitSystem("Imperial");
         addToast({
-          title: 'Units Standardized: Imperial',
-          description: 'All values updated to Imperial units.',
-          type: 'info',
+          title: "Units Standardized: Imperial",
+          description: "All values updated to Imperial units.",
+          type: "info",
         });
         setIsOpen(false);
       },
-      keywords: ['imperial', 'units', 'psi', 'fahrenheit', 'feet', 'lbs'],
+      keywords: ["imperial", "units", "psi", "fahrenheit", "feet", "lbs"],
     },
   ];
 
@@ -256,10 +256,7 @@ export default function CommandPalette() {
             className="w-full bg-transparent text-sm text-white placeholder-white/40 focus:outline-none font-mono"
           />
           {query && (
-            <button
-              onClick={() => setQuery('')}
-              className="text-white/40 hover:text-white mr-2"
-            >
+            <button onClick={() => setQuery("")} className="text-white/40 hover:text-white mr-2">
               <X className="w-4 h-4" />
             </button>
           )}
@@ -275,49 +272,45 @@ export default function CommandPalette() {
               No matching commands or resources found for "{query}"
             </div>
           ) : (
-            (['Navigation', 'Actions', 'Tools', 'Settings'] as const).map(
-              (cat) => {
-                const catCommands = filteredCommands.filter(
-                  (c) => c.category === cat
-                );
-                if (catCommands.length === 0) return null;
+            (["Navigation", "Actions", "Tools", "Settings"] as const).map((cat) => {
+              const catCommands = filteredCommands.filter((c) => c.category === cat);
+              if (catCommands.length === 0) return null;
 
-                return (
-                  <div key={cat} className="pt-2 first:pt-0">
-                    <div className="px-3 py-1 text-[10px] font-mono font-semibold tracking-wider text-cyan-400/70 uppercase">
-                      {cat}
-                    </div>
-                    <div className="mt-1 space-y-1">
-                      {catCommands.map((cmd) => {
-                        const Icon = cmd.icon;
-                        return (
-                          <button
-                            key={cmd.id}
-                            onClick={cmd.action}
-                            className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-cyan-500/10 hover:border hover:border-cyan-500/30 text-left group transition-all"
-                          >
-                            <div className="flex items-center gap-3 min-w-0">
-                              <div className="p-1.5 rounded-md bg-white/5 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-colors shrink-0">
-                                <Icon className="w-4 h-4" />
-                              </div>
-                              <div className="truncate">
-                                <span className="block text-xs font-semibold text-white/90 group-hover:text-cyan-300">
-                                  {cmd.title}
-                                </span>
-                                <span className="block text-[10px] text-white/40 truncate">
-                                  {cmd.description}
-                                </span>
-                              </div>
-                            </div>
-                            <ArrowRight className="w-3.5 h-3.5 text-white/20 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-                          </button>
-                        );
-                      })}
-                    </div>
+              return (
+                <div key={cat} className="pt-2 first:pt-0">
+                  <div className="px-3 py-1 text-[10px] font-mono font-semibold tracking-wider text-cyan-400/70 uppercase">
+                    {cat}
                   </div>
-                );
-              }
-            )
+                  <div className="mt-1 space-y-1">
+                    {catCommands.map((cmd) => {
+                      const Icon = cmd.icon;
+                      return (
+                        <button
+                          key={cmd.id}
+                          onClick={cmd.action}
+                          className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-cyan-500/10 hover:border hover:border-cyan-500/30 text-left group transition-all"
+                        >
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="p-1.5 rounded-md bg-white/5 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-colors shrink-0">
+                              <Icon className="w-4 h-4" />
+                            </div>
+                            <div className="truncate">
+                              <span className="block text-xs font-semibold text-white/90 group-hover:text-cyan-300">
+                                {cmd.title}
+                              </span>
+                              <span className="block text-[10px] text-white/40 truncate">
+                                {cmd.description}
+                              </span>
+                            </div>
+                          </div>
+                          <ArrowRight className="w-3.5 h-3.5 text-white/20 group-hover:text-cyan-400 group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })
           )}
         </div>
 

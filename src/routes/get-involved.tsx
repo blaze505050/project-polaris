@@ -70,7 +70,8 @@ function GetInvolvedPage() {
               Get Involved with Polaris
             </h1>
             <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-2xl leading-relaxed">
-              Whether you are an institution looking to partner, an educator, or a student ready to join our engineering and volunteer cohorts.
+              Whether you are an institution looking to partner, an educator, or a student ready to
+              join our engineering and volunteer cohorts.
             </p>
           </ScrollReveal>
         </div>
@@ -94,7 +95,8 @@ function GetInvolvedPage() {
                     For Schools, Institutions, Universities, Organizations & Mentors
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Collaborate to bring hands-on astronomy workshops, experiential science sessions, and practical project-based learning to your students.
+                    Collaborate to bring hands-on astronomy workshops, experiential science
+                    sessions, and practical project-based learning to your students.
                   </p>
                 </div>
 
@@ -104,7 +106,12 @@ function GetInvolvedPage() {
                     size="default"
                     className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm active:scale-[0.97]"
                   >
-                    <a href="https://tally.so/r/LZL56l" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                    <a
+                      href="https://tally.so/r/LZL56l"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-center gap-1.5"
+                    >
                       <span>Submit Partnership Inquiry ↗</span>
                     </a>
                   </Button>
@@ -126,7 +133,8 @@ function GetInvolvedPage() {
                     For Student Leaders, Researchers, Designers & Organizers
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Work directly with founders and core team members to build student initiatives, manage community programs, organize workshops, and lead regional outreach.
+                    Work directly with founders and core team members to build student initiatives,
+                    manage community programs, organize workshops, and lead regional outreach.
                   </p>
                 </div>
 
@@ -137,7 +145,12 @@ function GetInvolvedPage() {
                     size="default"
                     className="w-full h-10 border-white/15 hover:border-white/25 text-foreground font-semibold rounded-lg text-xs active:scale-[0.97]"
                   >
-                    <a href="https://tally.so/r/RGy8ad" target="_blank" rel="noreferrer" className="flex items-center justify-center gap-1.5">
+                    <a
+                      href="https://tally.so/r/RGy8ad"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-center gap-1.5"
+                    >
                       <span>Apply to Core Team ↗</span>
                     </a>
                   </Button>
@@ -156,8 +169,13 @@ function GetInvolvedPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
               <div className="relative z-10 max-w-xl">
-                <div className="text-sm font-bold font-display text-foreground">Built by Students, for Students</div>
-                <div className="text-xs text-muted-foreground mt-1">Connecting passionate builders, curious researchers, and leaders across India to learn by doing.</div>
+                <div className="text-sm font-bold font-display text-foreground">
+                  Built by Students, for Students
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  Connecting passionate builders, curious researchers, and leaders across India to
+                  learn by doing.
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -206,8 +224,18 @@ function GetInvolvedPage() {
                     <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{d.desc}</p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-white/6">
-                    <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground active:scale-[0.97]">
-                      <a href={d.form} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                    <Button
+                      asChild
+                      size="sm"
+                      variant="ghost"
+                      className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground active:scale-[0.97]"
+                    >
+                      <a
+                        href={d.form}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1"
+                      >
                         <span>Register for {d.dept} ↗</span>
                       </a>
                     </Button>
@@ -249,9 +277,15 @@ function GetInvolvedPage() {
                 <CheckCircle className="size-10 text-primary mx-auto" />
                 <h3 className="text-lg font-bold font-display text-foreground">Message Received</h3>
                 <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-                  Thank you for reaching out to Project Polaris. Our team will review your inquiry and follow up shortly.
+                  Thank you for reaching out to Project Polaris. Our team will review your inquiry
+                  and follow up shortly.
                 </p>
-                <Button onClick={() => setFormSubmitted(false)} variant="outline" size="sm" className="mt-2 text-xs">
+                <Button
+                  onClick={() => setFormSubmitted(false)}
+                  variant="outline"
+                  size="sm"
+                  className="mt-2 text-xs"
+                >
                   Send Another Note
                 </Button>
               </div>
@@ -259,7 +293,9 @@ function GetInvolvedPage() {
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label htmlFor="inquiry-name" className="font-medium text-foreground">Your Name</label>
+                    <label htmlFor="inquiry-name" className="font-medium text-foreground">
+                      Your Name
+                    </label>
                     <input
                       id="inquiry-name"
                       type="text"
@@ -271,7 +307,9 @@ function GetInvolvedPage() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="inquiry-email" className="font-medium text-foreground">Email Address</label>
+                    <label htmlFor="inquiry-email" className="font-medium text-foreground">
+                      Email Address
+                    </label>
                     <input
                       id="inquiry-email"
                       type="email"
@@ -285,7 +323,9 @@ function GetInvolvedPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="inquiry-subject" className="font-medium text-foreground">Subject / Context</label>
+                  <label htmlFor="inquiry-subject" className="font-medium text-foreground">
+                    Subject / Context
+                  </label>
                   <input
                     id="inquiry-subject"
                     type="text"
@@ -298,7 +338,9 @@ function GetInvolvedPage() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label htmlFor="inquiry-message" className="font-medium text-foreground">Your Message</label>
+                  <label htmlFor="inquiry-message" className="font-medium text-foreground">
+                    Your Message
+                  </label>
                   <textarea
                     id="inquiry-message"
                     required
@@ -310,7 +352,11 @@ function GetInvolvedPage() {
                   />
                 </div>
 
-                <Button type="submit" size="default" className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs">
+                <Button
+                  type="submit"
+                  size="default"
+                  className="w-full h-10 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs"
+                >
                   <span>Send Message</span>
                 </Button>
               </form>

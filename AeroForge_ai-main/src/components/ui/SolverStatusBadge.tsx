@@ -1,21 +1,17 @@
-import React from 'react';
-import { Cpu, FlaskConical, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
+import React from "react";
+import { Cpu, FlaskConical, Calculator, Sparkles, CheckCircle2 } from "lucide-react";
 
 export type SolverClassificationType =
-  | 'analytical'
-  | 'reduced-order'
-  | 'numerical'
-  | 'experimental-ref'
-  | 'physics-ai';
+  "analytical" | "reduced-order" | "numerical" | "experimental-ref" | "physics-ai";
 
 interface SolverStatusBadgeProps {
   type: SolverClassificationType;
   className?: string;
 }
 
-export default function SolverStatusBadge({ type, className = '' }: SolverStatusBadgeProps) {
+export default function SolverStatusBadge({ type, className = "" }: SolverStatusBadgeProps) {
   switch (type) {
-    case 'analytical':
+    case "analytical":
       return (
         <span
           className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 ${className}`}
@@ -25,7 +21,7 @@ export default function SolverStatusBadge({ type, className = '' }: SolverStatus
         </span>
       );
 
-    case 'reduced-order':
+    case "reduced-order":
       return (
         <span
           className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 ${className}`}
@@ -35,7 +31,7 @@ export default function SolverStatusBadge({ type, className = '' }: SolverStatus
         </span>
       );
 
-    case 'numerical':
+    case "numerical":
       return (
         <span
           className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/30 ${className}`}
@@ -45,7 +41,7 @@ export default function SolverStatusBadge({ type, className = '' }: SolverStatus
         </span>
       );
 
-    case 'experimental-ref':
+    case "experimental-ref":
       return (
         <span
           className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30 ${className}`}
@@ -55,7 +51,7 @@ export default function SolverStatusBadge({ type, className = '' }: SolverStatus
         </span>
       );
 
-    case 'physics-ai':
+    case "physics-ai":
       return (
         <span
           className={`inline-flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 ${className}`}

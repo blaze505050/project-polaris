@@ -5,38 +5,38 @@
  */
 
 export type EntityType =
-  | 'User'
-  | 'Organization'
-  | 'Project'
-  | 'Requirement'
-  | 'Design'
-  | 'Geometry'
-  | 'Simulation'
-  | 'Experiment'
-  | 'Dataset'
-  | 'Result'
-  | 'OptimizationRun'
-  | 'ValidationCase'
-  | 'Notebook'
-  | 'ResearchPaper'
-  | 'Citation'
-  | 'Report'
-  | 'PublicArtifact'
-  | 'ToolRun'
-  | 'AIConversation'
-  | 'AuditEvent';
+  | "User"
+  | "Organization"
+  | "Project"
+  | "Requirement"
+  | "Design"
+  | "Geometry"
+  | "Simulation"
+  | "Experiment"
+  | "Dataset"
+  | "Result"
+  | "OptimizationRun"
+  | "ValidationCase"
+  | "Notebook"
+  | "ResearchPaper"
+  | "Citation"
+  | "Report"
+  | "PublicArtifact"
+  | "ToolRun"
+  | "AIConversation"
+  | "AuditEvent";
 
 export type EntityStatus =
-  | 'draft'
-  | 'active'
-  | 'queued'
-  | 'initializing'
-  | 'running'
-  | 'post_processing'
-  | 'completed'
-  | 'verified'
-  | 'failed'
-  | 'archived';
+  | "draft"
+  | "active"
+  | "queued"
+  | "initializing"
+  | "running"
+  | "post_processing"
+  | "completed"
+  | "verified"
+  | "failed"
+  | "archived";
 
 export interface EntityProvenance {
   sourceType?: EntityType;
@@ -65,11 +65,11 @@ export interface BaseEntity {
 export interface User extends BaseEntity {
   name: string;
   email: string;
-  role: 'Student' | 'Researcher' | 'Engineer' | 'Educator' | 'Admin';
+  role: "Student" | "Researcher" | "Engineer" | "Educator" | "Admin";
   organizationId?: string;
   preferences: {
-    unitSystem: 'SI' | 'Metric' | 'Imperial';
-    userMode: 'student' | 'professional';
+    unitSystem: "SI" | "Metric" | "Imperial";
+    userMode: "student" | "professional";
     reducedMotion: boolean;
   };
 }
@@ -77,7 +77,7 @@ export interface User extends BaseEntity {
 export interface Organization extends BaseEntity {
   name: string;
   domain?: string;
-  tier: 'Free' | 'Pro' | 'Research' | 'Enterprise';
+  tier: "Free" | "Pro" | "Research" | "Enterprise";
 }
 
 // ─── 2. Core Project & Requirements ──────────────────────────────────────────
@@ -85,7 +85,7 @@ export interface Organization extends BaseEntity {
 export interface ProjectEntity extends BaseEntity {
   name: string;
   description: string;
-  domain: 'Aerospace' | 'Mechanical' | 'Astrospace';
+  domain: "Aerospace" | "Mechanical" | "Astrospace";
   tags: string[];
   healthIndex: number; // 0 - 100%
   requirementIds: string[];
@@ -99,9 +99,9 @@ export interface RequirementEntity extends BaseEntity {
   description: string;
   targetMetric: string;
   targetValue: number;
-  operator: '>' | '<' | '>=' | '<=' | '==';
+  operator: ">" | "<" | ">=" | "<=" | "==";
   unit: string;
-  verificationStatus: 'unverified' | 'in_progress' | 'verified' | 'failed';
+  verificationStatus: "unverified" | "in_progress" | "verified" | "failed";
 }
 
 // ─── 3. Engineering Design & Geometry ───────────────────────────────────────
@@ -116,7 +116,7 @@ export interface DesignEntity extends BaseEntity {
 
 export interface GeometryEntity extends BaseEntity {
   name: string;
-  format: 'naca' | 'step' | 'stl' | 'iges' | 'obj';
+  format: "naca" | "step" | "stl" | "iges" | "obj";
   coordinateData?: { x: number; y: number; z?: number }[];
   fileUrl?: string;
   maxThickness?: number;
@@ -127,7 +127,8 @@ export interface GeometryEntity extends BaseEntity {
 
 export interface SimulationEntity extends BaseEntity {
   name: string;
-  solver: 'PrandtlGlauert' | 'EulerBernoulli' | 'ISAStandard' | 'KeplerianTwoBody' | 'OpenFOAM' | 'SU2';
+  solver:
+    "PrandtlGlauert" | "EulerBernoulli" | "ISAStandard" | "KeplerianTwoBody" | "OpenFOAM" | "SU2";
   inputs: Record<string, number | string>;
   outputs?: Record<string, number | string>;
   residuals?: { iteration: number; value: number }[];
@@ -150,7 +151,7 @@ export interface ExperimentEntity extends BaseEntity {
 export interface DatasetEntity extends BaseEntity {
   name: string;
   description: string;
-  format: 'csv' | 'json' | 'parquet';
+  format: "csv" | "json" | "parquet";
   rowCount: number;
   variables: string[];
   sampleData?: Record<string, any>[];

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Plus,
   FlaskConical,
@@ -11,8 +11,8 @@ import {
   CheckCircle2,
   Clock,
   AlertTriangle,
-} from 'lucide-react';
-import FeatureStatusBadge from '@/components/ui/FeatureStatusBadge';
+} from "lucide-react";
+import FeatureStatusBadge from "@/components/ui/FeatureStatusBadge";
 
 interface Experiment {
   id: string;
@@ -20,7 +20,7 @@ interface Experiment {
   hypothesis: string;
   variables: string[];
   method: string;
-  status: 'planned' | 'running' | 'completed' | 'failed';
+  status: "planned" | "running" | "completed" | "failed";
   linkedSimulations: string[];
   createdAt: Date;
   notes: string;
@@ -31,10 +31,10 @@ interface ExperimentManagerProps {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  planned: 'bg-white/5 text-white/60 border-white/10',
-  running: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-  completed: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-  failed: 'bg-red-500/10 text-red-400 border-red-500/30',
+  planned: "bg-white/5 text-white/60 border-white/10",
+  running: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
+  completed: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+  failed: "bg-red-500/10 text-red-400 border-red-500/30",
 };
 
 const STATUS_ICONS: Record<string, React.ElementType> = {
@@ -47,26 +47,26 @@ const STATUS_ICONS: Record<string, React.ElementType> = {
 export default function ExperimentManager({ projectId }: ExperimentManagerProps) {
   const [experiments, setExperiments] = useState<Experiment[]>([
     {
-      id: 'exp_1',
-      name: 'Baseline Aerodynamic Performance',
-      hypothesis: 'NACA 2412 achieves L/D > 14 at α=5° and Re=3×10⁶',
-      variables: ['angle_of_attack', 'reynolds_number', 'airfoil_profile'],
-      method: 'Parametric sweep of AoA from 0° to 15° at fixed Re',
-      status: 'completed',
-      linkedSimulations: ['sim_001'],
+      id: "exp_1",
+      name: "Baseline Aerodynamic Performance",
+      hypothesis: "NACA 2412 achieves L/D > 14 at α=5° and Re=3×10⁶",
+      variables: ["angle_of_attack", "reynolds_number", "airfoil_profile"],
+      method: "Parametric sweep of AoA from 0° to 15° at fixed Re",
+      status: "completed",
+      linkedSimulations: ["sim_001"],
       createdAt: new Date(Date.now() - 86400000 * 3),
-      notes: 'Max L/D of 15.2 achieved at α=6.5°. Exceeded target.',
+      notes: "Max L/D of 15.2 achieved at α=6.5°. Exceeded target.",
     },
     {
-      id: 'exp_2',
-      name: 'Morphing Trailing Edge Optimization',
-      hypothesis: 'Adaptive trailing edge deflection improves Cl by >12% in cruise',
-      variables: ['deflection_angle', 'hinge_position', 'flap_chord_ratio'],
-      method: 'DOE with 3-level factorial design, 27 combinations',
-      status: 'running',
-      linkedSimulations: ['sim_002', 'sim_003'],
+      id: "exp_2",
+      name: "Morphing Trailing Edge Optimization",
+      hypothesis: "Adaptive trailing edge deflection improves Cl by >12% in cruise",
+      variables: ["deflection_angle", "hinge_position", "flap_chord_ratio"],
+      method: "DOE with 3-level factorial design, 27 combinations",
+      status: "running",
+      linkedSimulations: ["sim_002", "sim_003"],
       createdAt: new Date(Date.now() - 86400000),
-      notes: 'Initial results show 8% improvement. Continuing optimization.',
+      notes: "Initial results show 8% improvement. Continuing optimization.",
     },
   ]);
 
@@ -74,10 +74,10 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
   const [selectedExperiment, setSelectedExperiment] = useState<string | null>(null);
 
   // New experiment form state
-  const [newName, setNewName] = useState('');
-  const [newHypothesis, setNewHypothesis] = useState('');
-  const [newMethod, setNewMethod] = useState('');
-  const [newVariables, setNewVariables] = useState('');
+  const [newName, setNewName] = useState("");
+  const [newHypothesis, setNewHypothesis] = useState("");
+  const [newMethod, setNewMethod] = useState("");
+  const [newVariables, setNewVariables] = useState("");
 
   const handleCreate = () => {
     if (!newName.trim()) return;
@@ -86,19 +86,22 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
       id: `exp_${Date.now()}`,
       name: newName,
       hypothesis: newHypothesis,
-      variables: newVariables.split(',').map((v) => v.trim()).filter(Boolean),
+      variables: newVariables
+        .split(",")
+        .map((v) => v.trim())
+        .filter(Boolean),
       method: newMethod,
-      status: 'planned',
+      status: "planned",
       linkedSimulations: [],
       createdAt: new Date(),
-      notes: '',
+      notes: "",
     };
 
     setExperiments([newExp, ...experiments]);
-    setNewName('');
-    setNewHypothesis('');
-    setNewMethod('');
-    setNewVariables('');
+    setNewName("");
+    setNewHypothesis("");
+    setNewMethod("");
+    setNewVariables("");
     setShowNewForm(false);
   };
 
@@ -107,10 +110,10 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
       ...exp,
       id: `exp_${Date.now()}`,
       name: `${exp.name} (Copy)`,
-      status: 'planned',
+      status: "planned",
       linkedSimulations: [],
       createdAt: new Date(),
-      notes: '',
+      notes: "",
     };
     setExperiments([dup, ...experiments]);
   };
@@ -145,12 +148,15 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
       {showNewForm && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           className="bg-[#080E1C] border border-cyan-500/30 rounded-lg p-4 space-y-3"
         >
           <div className="flex items-center justify-between mb-1">
             <h4 className="text-xs font-bold text-cyan-400 font-mono">NEW EXPERIMENT</h4>
-            <button onClick={() => setShowNewForm(false)} className="text-white/40 hover:text-white">
+            <button
+              onClick={() => setShowNewForm(false)}
+              className="text-white/40 hover:text-white"
+            >
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -211,7 +217,7 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
             <div
               key={exp.id}
               className={`bg-[#080E1C] border rounded-lg transition-colors ${
-                isSelected ? 'border-cyan-500/40' : 'border-white/10 hover:border-white/20'
+                isSelected ? "border-cyan-500/40" : "border-white/10 hover:border-white/20"
               }`}
             >
               <div
@@ -220,14 +226,22 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
               >
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
-                    <StatusIcon className={`w-4 h-4 ${
-                      exp.status === 'completed' ? 'text-emerald-400' :
-                      exp.status === 'running' ? 'text-cyan-400' :
-                      exp.status === 'failed' ? 'text-red-400' : 'text-white/40'
-                    }`} />
+                    <StatusIcon
+                      className={`w-4 h-4 ${
+                        exp.status === "completed"
+                          ? "text-emerald-400"
+                          : exp.status === "running"
+                            ? "text-cyan-400"
+                            : exp.status === "failed"
+                              ? "text-red-400"
+                              : "text-white/40"
+                      }`}
+                    />
                     <h4 className="text-xs font-bold text-white font-mono">{exp.name}</h4>
                   </div>
-                  <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border font-mono ${STATUS_STYLES[exp.status]}`}>
+                  <span
+                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded border font-mono ${STATUS_STYLES[exp.status]}`}
+                  >
                     {exp.status.toUpperCase()}
                   </span>
                 </div>
@@ -238,7 +252,7 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
               {isSelected && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   className="px-4 pb-4 border-t border-white/5 pt-3 space-y-3"
                 >
                   <div>
@@ -247,13 +261,18 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
                   </div>
                   <div>
                     <span className="text-[9px] text-white/40 font-mono uppercase">METHOD</span>
-                    <p className="text-xs text-white/80 font-sans mt-0.5">{exp.method || 'Not specified'}</p>
+                    <p className="text-xs text-white/80 font-sans mt-0.5">
+                      {exp.method || "Not specified"}
+                    </p>
                   </div>
                   <div>
                     <span className="text-[9px] text-white/40 font-mono uppercase">VARIABLES</span>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {exp.variables.map((v) => (
-                        <span key={v} className="text-[9px] px-1.5 py-0.5 bg-cyan-500/10 text-cyan-400 rounded font-mono">
+                        <span
+                          key={v}
+                          className="text-[9px] px-1.5 py-0.5 bg-cyan-500/10 text-cyan-400 rounded font-mono"
+                        >
                           {v}
                         </span>
                       ))}
@@ -291,7 +310,9 @@ export default function ExperimentManager({ projectId }: ExperimentManagerProps)
           <div className="text-center py-8 bg-[#080E1C] border border-white/10 rounded-lg">
             <FlaskConical className="w-8 h-8 text-white/20 mx-auto mb-3" />
             <p className="text-xs text-white/50">No experiments yet</p>
-            <p className="text-[10px] text-white/30 mt-1">Create your first experiment to track hypotheses and results</p>
+            <p className="text-[10px] text-white/30 mt-1">
+              Create your first experiment to track hypotheses and results
+            </p>
           </div>
         )}
       </div>

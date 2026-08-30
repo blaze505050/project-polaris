@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Eye, Aperture, Zap, Download, Play } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Eye, Aperture, Zap, Download, Play } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function ExoplanetImagingPage() {
   const [isImaging, setIsImaging] = useState(false);
@@ -14,32 +14,32 @@ export default function ExoplanetImagingPage() {
 
   const techniques = [
     {
-      id: 'direct-imaging',
-      name: 'Direct Imaging',
-      description: 'Directly observe light reflected or emitted by exoplanets',
-      contrast: '10⁻⁶',
-      wavelength: 'Infrared',
+      id: "direct-imaging",
+      name: "Direct Imaging",
+      description: "Directly observe light reflected or emitted by exoplanets",
+      contrast: "10⁻⁶",
+      wavelength: "Infrared",
     },
     {
-      id: 'transit',
-      name: 'Transit Photometry',
-      description: 'Measure brightness dips as planets cross their host star',
-      contrast: '10⁻²',
-      wavelength: 'Visible/IR',
+      id: "transit",
+      name: "Transit Photometry",
+      description: "Measure brightness dips as planets cross their host star",
+      contrast: "10⁻²",
+      wavelength: "Visible/IR",
     },
     {
-      id: 'radial-velocity',
-      name: 'Radial Velocity',
-      description: 'Detect stellar motion caused by planetary gravity',
-      contrast: 'N/A',
-      wavelength: 'Spectroscopy',
+      id: "radial-velocity",
+      name: "Radial Velocity",
+      description: "Detect stellar motion caused by planetary gravity",
+      contrast: "N/A",
+      wavelength: "Spectroscopy",
     },
     {
-      id: 'astrometry',
-      name: 'Astrometry',
-      description: 'Measure precise positions of stars over time',
-      contrast: 'N/A',
-      wavelength: 'Visible',
+      id: "astrometry",
+      name: "Astrometry",
+      description: "Measure precise positions of stars over time",
+      contrast: "N/A",
+      wavelength: "Visible",
     },
   ];
 
@@ -60,8 +60,8 @@ export default function ExoplanetImagingPage() {
             <h1 className="text-5xl font-bold text-white">Exoplanet Imaging</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Advanced imaging techniques for detecting and characterizing exoplanets.
-            Explore direct imaging, transit photometry, radial velocity, and astrometry methods.
+            Advanced imaging techniques for detecting and characterizing exoplanets. Explore direct
+            imaging, transit photometry, radial velocity, and astrometry methods.
           </p>
         </motion.div>
 
@@ -86,10 +86,42 @@ export default function ExoplanetImagingPage() {
                     {/* Star */}
                     <circle cx="50" cy="50" r="8" fill="#fbbf24" opacity="0.9" />
                     {/* Diffraction spikes */}
-                    <line x1="50" y1="20" x2="50" y2="0" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
-                    <line x1="50" y1="80" x2="50" y2="100" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
-                    <line x1="20" y1="50" x2="0" y2="50" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
-                    <line x1="80" y1="50" x2="100" y2="50" stroke="#fbbf24" strokeWidth="1" opacity="0.5" />
+                    <line
+                      x1="50"
+                      y1="20"
+                      x2="50"
+                      y2="0"
+                      stroke="#fbbf24"
+                      strokeWidth="1"
+                      opacity="0.5"
+                    />
+                    <line
+                      x1="50"
+                      y1="80"
+                      x2="50"
+                      y2="100"
+                      stroke="#fbbf24"
+                      strokeWidth="1"
+                      opacity="0.5"
+                    />
+                    <line
+                      x1="20"
+                      y1="50"
+                      x2="0"
+                      y2="50"
+                      stroke="#fbbf24"
+                      strokeWidth="1"
+                      opacity="0.5"
+                    />
+                    <line
+                      x1="80"
+                      y1="50"
+                      x2="100"
+                      y2="50"
+                      stroke="#fbbf24"
+                      strokeWidth="1"
+                      opacity="0.5"
+                    />
                     {/* Exoplanet */}
                     <circle cx="70" cy="50" r="2" fill="#06b6d4" opacity="0.8" />
                   </svg>
@@ -118,7 +150,7 @@ export default function ExoplanetImagingPage() {
                     onClick={() => setIsImaging(!isImaging)}
                     className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold flex items-center justify-center gap-2"
                   >
-                    {isImaging ? '⏸ Stop' : '▶ Start'} Imaging
+                    {isImaging ? "⏸ Stop" : "▶ Start"} Imaging
                   </Button>
                   <Button className="bg-slate-700 hover:bg-slate-600 text-white font-semibold">
                     <Download size={18} />
@@ -147,8 +179,8 @@ export default function ExoplanetImagingPage() {
                     onClick={() => setSelectedTechnique(tech)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedTechnique?.id === tech.id
-                        ? 'bg-cyan-600/20 border border-cyan-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-cyan-600/20 border border-cyan-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{tech.name}</div>
@@ -162,7 +194,8 @@ export default function ExoplanetImagingPage() {
                   <div className="text-sm text-slate-300 space-y-2">
                     <p className="text-xs text-slate-400">{selectedTechnique.description}</p>
                     <div className="mt-3">
-                      <span className="text-cyan-400 font-semibold">Contrast:</span> {selectedTechnique.contrast}
+                      <span className="text-cyan-400 font-semibold">Contrast:</span>{" "}
+                      {selectedTechnique.contrast}
                     </div>
                   </div>
                 </div>
@@ -232,20 +265,20 @@ export default function ExoplanetImagingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Multi-wavelength Imaging',
-                  description: 'Observe across UV, visible, and infrared wavelengths.',
+                  title: "Multi-wavelength Imaging",
+                  description: "Observe across UV, visible, and infrared wavelengths.",
                 },
                 {
-                  title: 'Adaptive Optics',
-                  description: 'Correct for atmospheric distortion to improve resolution.',
+                  title: "Adaptive Optics",
+                  description: "Correct for atmospheric distortion to improve resolution.",
                 },
                 {
-                  title: 'Spectroscopic Analysis',
-                  description: 'Analyze light spectra to determine planetary composition.',
+                  title: "Spectroscopic Analysis",
+                  description: "Analyze light spectra to determine planetary composition.",
                 },
                 {
-                  title: 'Time-series Photometry',
-                  description: 'Track brightness variations to detect transiting planets.',
+                  title: "Time-series Photometry",
+                  description: "Track brightness variations to detect transiting planets.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

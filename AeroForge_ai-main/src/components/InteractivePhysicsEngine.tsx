@@ -3,12 +3,12 @@
  * Real-time physics manipulation with advanced controls
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Slider } from '@/components/ui/slider';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Play, Pause, RotateCcw, Zap, Eye, Settings } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Slider } from "@/components/ui/slider";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Play, Pause, RotateCcw, Zap, Eye, Settings } from "lucide-react";
 
 interface PhysicsState {
   mass: number;
@@ -73,7 +73,7 @@ const InteractivePhysicsEngine: React.FC = () => {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const simulate = () => {
@@ -83,7 +83,7 @@ const InteractivePhysicsEngine: React.FC = () => {
       }
 
       // Clear canvas
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+      ctx.fillStyle = "rgba(15, 23, 42, 0.1)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update particles
@@ -98,11 +98,17 @@ const InteractivePhysicsEngine: React.FC = () => {
         // Boundary conditions
         if (particle.x - particle.radius < 0 || particle.x + particle.radius > canvas.width) {
           particle.vx *= -0.95;
-          particle.x = Math.max(particle.radius, Math.min(canvas.width - particle.radius, particle.x));
+          particle.x = Math.max(
+            particle.radius,
+            Math.min(canvas.width - particle.radius, particle.x),
+          );
         }
         if (particle.y - particle.radius < 0 || particle.y + particle.radius > canvas.height) {
           particle.vy *= -0.95;
-          particle.y = Math.max(particle.radius, Math.min(canvas.height - particle.radius, particle.y));
+          particle.y = Math.max(
+            particle.radius,
+            Math.min(canvas.height - particle.radius, particle.y),
+          );
         }
 
         return particle;
@@ -161,7 +167,7 @@ const InteractivePhysicsEngine: React.FC = () => {
       });
 
       // Draw grid
-      ctx.strokeStyle = 'rgba(14, 165, 233, 0.1)';
+      ctx.strokeStyle = "rgba(14, 165, 233, 0.1)";
       ctx.lineWidth = 0.5;
       for (let i = 0; i < canvas.width; i += 50) {
         ctx.beginPath();
@@ -212,12 +218,7 @@ const InteractivePhysicsEngine: React.FC = () => {
         <div className="space-y-6">
           {/* Canvas */}
           <div className="relative rounded-lg overflow-hidden border border-aerospace-blue/20 bg-aerospace-dark">
-            <canvas
-              ref={canvasRef}
-              width={800}
-              height={600}
-              className="w-full h-auto"
-            />
+            <canvas ref={canvasRef} width={800} height={600} className="w-full h-auto" />
             <div className="absolute top-4 right-4 bg-aerospace-dark/80 backdrop-blur px-3 py-2 rounded border border-aerospace-blue/30 text-xs font-mono text-aerospace-blue">
               {particles.length} particles | Energy: {calculateEnergy()} J
             </div>
@@ -233,7 +234,7 @@ const InteractivePhysicsEngine: React.FC = () => {
                 className="flex-1 border-aerospace-blue/30 hover:bg-aerospace-blue/10"
               >
                 {isRunning ? <Pause className="w-4 h-4 mr-2" /> : <Play className="w-4 h-4 mr-2" />}
-                {isRunning ? 'Pause' : 'Play'}
+                {isRunning ? "Pause" : "Play"}
               </Button>
               <Button
                 onClick={handleReset}
@@ -249,11 +250,15 @@ const InteractivePhysicsEngine: React.FC = () => {
             <div className="grid grid-cols-2 gap-2 text-xs">
               <div className="bg-aerospace-dark/50 p-2 rounded border border-aerospace-blue/20">
                 <div className="text-secondary-foreground">Mass</div>
-                <div className="text-aerospace-blue font-mono">{physicsState.mass.toFixed(2)} kg</div>
+                <div className="text-aerospace-blue font-mono">
+                  {physicsState.mass.toFixed(2)} kg
+                </div>
               </div>
               <div className="bg-aerospace-dark/50 p-2 rounded border border-aerospace-blue/20">
                 <div className="text-secondary-foreground">Velocity</div>
-                <div className="text-aerospace-blue font-mono">{physicsState.velocity.toFixed(2)} m/s</div>
+                <div className="text-aerospace-blue font-mono">
+                  {physicsState.velocity.toFixed(2)} m/s
+                </div>
               </div>
             </div>
           </div>
@@ -263,7 +268,9 @@ const InteractivePhysicsEngine: React.FC = () => {
             <div>
               <label className="text-sm text-secondary-foreground flex justify-between mb-2">
                 <span>Mass</span>
-                <span className="text-aerospace-blue font-mono">{physicsState.mass.toFixed(2)} kg</span>
+                <span className="text-aerospace-blue font-mono">
+                  {physicsState.mass.toFixed(2)} kg
+                </span>
               </label>
               <Slider
                 value={[physicsState.mass]}
@@ -278,7 +285,9 @@ const InteractivePhysicsEngine: React.FC = () => {
             <div>
               <label className="text-sm text-secondary-foreground flex justify-between mb-2">
                 <span>Velocity</span>
-                <span className="text-aerospace-blue font-mono">{physicsState.velocity.toFixed(2)} m/s</span>
+                <span className="text-aerospace-blue font-mono">
+                  {physicsState.velocity.toFixed(2)} m/s
+                </span>
               </label>
               <Slider
                 value={[physicsState.velocity]}
@@ -293,7 +302,9 @@ const InteractivePhysicsEngine: React.FC = () => {
             <div>
               <label className="text-sm text-secondary-foreground flex justify-between mb-2">
                 <span>Acceleration</span>
-                <span className="text-aerospace-blue font-mono">{physicsState.acceleration.toFixed(2)} m/s²</span>
+                <span className="text-aerospace-blue font-mono">
+                  {physicsState.acceleration.toFixed(2)} m/s²
+                </span>
               </label>
               <Slider
                 value={[physicsState.acceleration]}

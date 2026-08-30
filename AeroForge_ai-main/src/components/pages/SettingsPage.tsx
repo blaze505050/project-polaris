@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Settings,
   Shield,
@@ -19,28 +19,68 @@ import {
   Activity,
   Cpu,
   Lock,
-} from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
-import { useUnitStore, UnitSystem } from '@/stores/unitStore';
-import { useAeroForgeStore } from '@/stores/aeroforgeStore';
-import { useThemeStore, AeroForgeTheme } from '@/stores/themeStore';
-import { useToastStore } from '@/stores/toastStore';
-import { systemHealthService, SystemHealthReport } from '@/services/systemHealthService';
-import FeatureStatusBadge, { FeatureStatus } from '@/components/ui/FeatureStatusBadge';
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
+import { useUnitStore, UnitSystem } from "@/stores/unitStore";
+import { useAeroForgeStore } from "@/stores/aeroforgeStore";
+import { useThemeStore, AeroForgeTheme } from "@/stores/themeStore";
+import { useToastStore } from "@/stores/toastStore";
+import { systemHealthService, SystemHealthReport } from "@/services/systemHealthService";
+import FeatureStatusBadge, { FeatureStatus } from "@/components/ui/FeatureStatusBadge";
 
 const PLATFORM_FEATURES: { name: string; description: string; status: FeatureStatus }[] = [
-  { name: 'Project Workspaces', description: 'Create and manage engineering projects with parameters and datasets', status: 'available' },
-  { name: 'NACA Airfoil Analyzer', description: '4-digit airfoil generation, Cl/Cd polar estimation, pressure coefficient curves', status: 'available' },
-  { name: 'Rocket Propulsion Calculator', description: 'Tsiolkovsky equation, specific impulse, chamber pressure, thrust curve', status: 'available' },
-  { name: 'ISA Atmosphere Model', description: 'International Standard Atmosphere up to 85 km altitude', status: 'available' },
-  { name: 'Structural Analysis (FEA)', description: 'Euler-Bernoulli beam analysis, deflection diagrams, von Mises stress tensors', status: 'available' },
-  { name: 'Orbital Mechanics Suite', description: 'Two-body Kepler propagation, Hohmann Delta-V transfers, porkchop departure plots', status: 'available' },
-  { name: 'Physics AI Lab (FNO)', description: 'Fourier Neural Operator surrogate inference for 14ms flow field estimation', status: 'beta' },
-  { name: 'Digital Thread Provenance', description: 'Interactive graph tracking mathematical assumptions and validation gates', status: 'available' },
-  { name: 'Public Shareable Artifacts', description: 'Deterministic public URL sharing for verified calculations with checksums', status: 'available' },
-  { name: 'Validation Benchmarks', description: 'Automated comparison against NASA/Abbott wind tunnel and ISO empirical data', status: 'available' },
+  {
+    name: "Project Workspaces",
+    description: "Create and manage engineering projects with parameters and datasets",
+    status: "available",
+  },
+  {
+    name: "NACA Airfoil Analyzer",
+    description: "4-digit airfoil generation, Cl/Cd polar estimation, pressure coefficient curves",
+    status: "available",
+  },
+  {
+    name: "Rocket Propulsion Calculator",
+    description: "Tsiolkovsky equation, specific impulse, chamber pressure, thrust curve",
+    status: "available",
+  },
+  {
+    name: "ISA Atmosphere Model",
+    description: "International Standard Atmosphere up to 85 km altitude",
+    status: "available",
+  },
+  {
+    name: "Structural Analysis (FEA)",
+    description: "Euler-Bernoulli beam analysis, deflection diagrams, von Mises stress tensors",
+    status: "available",
+  },
+  {
+    name: "Orbital Mechanics Suite",
+    description: "Two-body Kepler propagation, Hohmann Delta-V transfers, porkchop departure plots",
+    status: "available",
+  },
+  {
+    name: "Physics AI Lab (FNO)",
+    description: "Fourier Neural Operator surrogate inference for 14ms flow field estimation",
+    status: "beta",
+  },
+  {
+    name: "Digital Thread Provenance",
+    description: "Interactive graph tracking mathematical assumptions and validation gates",
+    status: "available",
+  },
+  {
+    name: "Public Shareable Artifacts",
+    description: "Deterministic public URL sharing for verified calculations with checksums",
+    status: "available",
+  },
+  {
+    name: "Validation Benchmarks",
+    description: "Automated comparison against NASA/Abbott wind tunnel and ISO empirical data",
+    status: "available",
+  },
 ];
 
 export default function SettingsPage() {
@@ -49,7 +89,9 @@ export default function SettingsPage() {
   const { theme, setTheme } = useThemeStore();
   const { addToast } = useToastStore();
 
-  const [activeTab, setActiveTab] = useState<'general' | 'engineering' | 'data' | 'privacy' | 'security' | 'about'>('general');
+  const [activeTab, setActiveTab] = useState<
+    "general" | "engineering" | "data" | "privacy" | "security" | "about"
+  >("general");
   const [precision, setPrecision] = useState<number>(4);
   const [healthReport, setHealthReport] = useState<SystemHealthReport | null>(null);
   const [isCheckingHealth, setIsCheckingHealth] = useState(false);
@@ -85,18 +127,18 @@ export default function SettingsPage() {
   const handleExportArchive = () => {
     try {
       const exportData = {
-        app: 'AeroForge AI',
-        origin: 'Project Polaris',
-        version: '1.0.0',
+        app: "AeroForge AI",
+        origin: "Project Polaris",
+        version: "1.0.0",
         timestamp: Date.now(),
         unitSystem,
         userMode,
         experiments: savedExperiments,
       };
 
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `aeroforge-workspace-backup-${new Date().toISOString().slice(0, 10)}.aeroforge`;
       document.body.appendChild(a);
@@ -104,9 +146,9 @@ export default function SettingsPage() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      addToast({ type: 'success', title: 'Workspace archive downloaded (.aeroforge)' });
+      addToast({ type: "success", title: "Workspace archive downloaded (.aeroforge)" });
     } catch (err) {
-      addToast({ type: 'error', title: 'Export failed: ' + String(err) });
+      addToast({ type: "error", title: "Export failed: " + String(err) });
     }
   };
 
@@ -119,23 +161,23 @@ export default function SettingsPage() {
     reader.onload = (event) => {
       try {
         const raw = event.target?.result as string;
-        if (!raw) throw new Error('File content is empty');
+        if (!raw) throw new Error("File content is empty");
 
         const parsed = JSON.parse(raw);
 
         // Security validation
-        if (typeof parsed !== 'object' || parsed === null) {
-          throw new Error('Invalid archive format');
+        if (typeof parsed !== "object" || parsed === null) {
+          throw new Error("Invalid archive format");
         }
 
         // Validate expected origin
-        if (parsed.app !== 'AeroForge AI' && !parsed.experiments) {
-          throw new Error('Unrecognized archive schema');
+        if (parsed.app !== "AeroForge AI" && !parsed.experiments) {
+          throw new Error("Unrecognized archive schema");
         }
 
-        addToast({ type: 'success', title: 'Archive verified & loaded successfully!' });
+        addToast({ type: "success", title: "Archive verified & loaded successfully!" });
       } catch (err: any) {
-        addToast({ type: 'error', title: 'Import error: ' + (err.message || 'Malformed archive') });
+        addToast({ type: "error", title: "Import error: " + (err.message || "Malformed archive") });
       }
     };
     reader.readAsText(file);
@@ -143,13 +185,17 @@ export default function SettingsPage() {
 
   // Clear Local Data
   const handleClearData = () => {
-    if (window.confirm('Are you sure you want to clear all local calculations and cached experiments? This cannot be undone.')) {
+    if (
+      window.confirm(
+        "Are you sure you want to clear all local calculations and cached experiments? This cannot be undone.",
+      )
+    ) {
       try {
-        localStorage.removeItem('aeroforge_experiments');
-        addToast({ type: 'info', title: 'Local project workspace cache cleared.' });
+        localStorage.removeItem("aeroforge_experiments");
+        addToast({ type: "info", title: "Local project workspace cache cleared." });
         setStorageBytes(0);
       } catch (err) {
-        addToast({ type: 'error', title: 'Failed to clear storage' });
+        addToast({ type: "error", title: "Failed to clear storage" });
       }
     }
   };
@@ -174,19 +220,20 @@ export default function SettingsPage() {
               </span>
             </div>
             <p className="text-xs text-white/60 font-sans">
-              Workspace customization, precision calibration, unit governance, local data sovereignty, and system diagnostics.
+              Workspace customization, precision calibration, unit governance, local data
+              sovereignty, and system diagnostics.
             </p>
           </div>
 
           {/* Navigation Tabs */}
           <div className="flex items-center gap-2 border-b border-white/10 pb-2 overflow-x-auto">
             {[
-              { id: 'general', label: 'General & Theme', icon: Sliders },
-              { id: 'engineering', label: 'Engineering & Solvers', icon: Cpu },
-              { id: 'data', label: 'Data & Archive', icon: Database },
-              { id: 'privacy', label: 'Privacy & Sovereignty', icon: Shield },
-              { id: 'security', label: 'Diagnostics & Security', icon: Activity },
-              { id: 'about', label: 'About & Licenses', icon: Info },
+              { id: "general", label: "General & Theme", icon: Sliders },
+              { id: "engineering", label: "Engineering & Solvers", icon: Cpu },
+              { id: "data", label: "Data & Archive", icon: Database },
+              { id: "privacy", label: "Privacy & Sovereignty", icon: Shield },
+              { id: "security", label: "Diagnostics & Security", icon: Activity },
+              { id: "about", label: "About & Licenses", icon: Info },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -196,8 +243,8 @@ export default function SettingsPage() {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-[var(--af-accent)]/20 text-[var(--af-accent)] border border-[var(--af-border-accent)] shadow-md'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? "bg-[var(--af-accent)]/20 text-[var(--af-accent)] border border-[var(--af-border-accent)] shadow-md"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -208,7 +255,7 @@ export default function SettingsPage() {
           </div>
 
           {/* TAB 1: GENERAL & THEME */}
-          {activeTab === 'general' && (
+          {activeTab === "general" && (
             <div className="space-y-6">
               {/* Theme Selection */}
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
@@ -217,14 +264,30 @@ export default function SettingsPage() {
                   Visual Theme & Appearance
                 </h2>
                 <p className="text-xs text-white/60 font-sans">
-                  Choose between high-contrast dark workstation, clean technical light mode, or synchronize automatically with your system operating system.
+                  Choose between high-contrast dark workstation, clean technical light mode, or
+                  synchronize automatically with your system operating system.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                   {[
-                    { id: 'dark' as AeroForgeTheme, label: 'Dark Mode', sub: 'Deep space engineering workstation', icon: Moon },
-                    { id: 'light' as AeroForgeTheme, label: 'Light Mode', sub: 'Crisp technical white research lab', icon: Sun },
-                    { id: 'system' as AeroForgeTheme, label: 'System Sync', sub: 'Matches OS system appearance', icon: Laptop },
+                    {
+                      id: "dark" as AeroForgeTheme,
+                      label: "Dark Mode",
+                      sub: "Deep space engineering workstation",
+                      icon: Moon,
+                    },
+                    {
+                      id: "light" as AeroForgeTheme,
+                      label: "Light Mode",
+                      sub: "Crisp technical white research lab",
+                      icon: Sun,
+                    },
+                    {
+                      id: "system" as AeroForgeTheme,
+                      label: "System Sync",
+                      sub: "Matches OS system appearance",
+                      icon: Laptop,
+                    },
                   ].map((t) => {
                     const Icon = t.icon;
                     const isSelected = theme === t.id;
@@ -234,13 +297,19 @@ export default function SettingsPage() {
                         onClick={() => setTheme(t.id)}
                         className={`p-4 rounded-xl border text-left transition-all flex flex-col justify-between ${
                           isSelected
-                            ? 'border-[var(--af-accent)] bg-[var(--af-accent)]/10 shadow-lg shadow-[var(--af-accent)]/5'
-                            : 'border-white/10 bg-[#050914] hover:border-white/20'
+                            ? "border-[var(--af-accent)] bg-[var(--af-accent)]/10 shadow-lg shadow-[var(--af-accent)]/5"
+                            : "border-white/10 bg-[#050914] hover:border-white/20"
                         }`}
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <Icon className={`w-4 h-4 ${isSelected ? 'text-[var(--af-accent)]' : 'text-white/60'}`} />
-                          {isSelected && <span className="text-[10px] font-bold text-[var(--af-accent)]">ACTIVE</span>}
+                          <Icon
+                            className={`w-4 h-4 ${isSelected ? "text-[var(--af-accent)]" : "text-white/60"}`}
+                          />
+                          {isSelected && (
+                            <span className="text-[10px] font-bold text-[var(--af-accent)]">
+                              ACTIVE
+                            </span>
+                          )}
                         </div>
                         <div>
                           <div className="text-xs font-bold text-white">{t.label}</div>
@@ -274,7 +343,8 @@ export default function SettingsPage() {
                       <option value="Imperial">Imperial (psi, ft, mph, °F, lbf)</option>
                     </select>
                     <p className="text-[10px] text-white/40 font-sans">
-                      All solvers, aerodynamic polar charts, and stress matrices display values in this unit framework.
+                      All solvers, aerodynamic polar charts, and stress matrices display values in
+                      this unit framework.
                     </p>
                   </div>
 
@@ -284,14 +354,19 @@ export default function SettingsPage() {
                     </label>
                     <select
                       value={userMode}
-                      onChange={(e) => setMode(e.target.value as 'student' | 'professional')}
+                      onChange={(e) => setMode(e.target.value as "student" | "professional")}
                       className="w-full bg-[#050914] border border-white/15 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--af-accent)] transition-colors"
                     >
-                      <option value="student">Student / Educational (Guided tooltips & equation explanations)</option>
-                      <option value="professional">Professional / Research (High-density telemetry & direct matrices)</option>
+                      <option value="student">
+                        Student / Educational (Guided tooltips & equation explanations)
+                      </option>
+                      <option value="professional">
+                        Professional / Research (High-density telemetry & direct matrices)
+                      </option>
                     </select>
                     <p className="text-[10px] text-white/40 font-sans">
-                      Switches between explanatory step-by-step guidance and high-throughput engineering instrumentation.
+                      Switches between explanatory step-by-step guidance and high-throughput
+                      engineering instrumentation.
                     </p>
                   </div>
                 </div>
@@ -300,7 +375,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB 2: ENGINEERING & SOLVERS */}
-          {activeTab === 'engineering' && (
+          {activeTab === "engineering" && (
             <div className="space-y-6">
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
                 <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -333,7 +408,9 @@ export default function SettingsPage() {
                       defaultValue="prandtl-glauert"
                       className="w-full bg-[#050914] border border-white/15 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[var(--af-accent)]"
                     >
-                      <option value="prandtl-glauert">Prandtl-Glauert (M &lt; 0.70 Subsonic)</option>
+                      <option value="prandtl-glauert">
+                        Prandtl-Glauert (M &lt; 0.70 Subsonic)
+                      </option>
                       <option value="karman-tsien">Karman-Tsien (High Subsonic)</option>
                       <option value="laitone">Laitone Correction</option>
                     </select>
@@ -348,13 +425,18 @@ export default function SettingsPage() {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {PLATFORM_FEATURES.map((feat) => (
-                    <div key={feat.name} className="p-3 bg-[#050914] rounded-lg border border-white/5 flex flex-col justify-between">
+                    <div
+                      key={feat.name}
+                      className="p-3 bg-[#050914] rounded-lg border border-white/5 flex flex-col justify-between"
+                    >
                       <div>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-xs font-bold text-white">{feat.name}</span>
                           <FeatureStatusBadge status={feat.status} />
                         </div>
-                        <p className="text-[11px] text-white/50 font-sans leading-relaxed">{feat.description}</p>
+                        <p className="text-[11px] text-white/50 font-sans leading-relaxed">
+                          {feat.description}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -364,7 +446,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB 3: DATA & ARCHIVE */}
-          {activeTab === 'data' && (
+          {activeTab === "data" && (
             <div className="space-y-6">
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
                 <div className="flex items-center justify-between flex-wrap gap-2">
@@ -377,7 +459,8 @@ export default function SettingsPage() {
                   </span>
                 </div>
                 <p className="text-xs text-white/60 font-sans">
-                  AeroForge operates on full browser-local sovereignty. Export your projects, custom meshes, and calculation history into a portable encrypted `.aeroforge` file.
+                  AeroForge operates on full browser-local sovereignty. Export your projects, custom
+                  meshes, and calculation history into a portable encrypted `.aeroforge` file.
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
@@ -389,7 +472,9 @@ export default function SettingsPage() {
                     <Download className="w-5 h-5 text-[var(--af-accent)] mb-2" />
                     <div>
                       <div className="text-xs font-bold text-white">Export Workspace</div>
-                      <div className="text-[10px] text-white/40 font-sans mt-0.5">Download full .aeroforge archive</div>
+                      <div className="text-[10px] text-white/40 font-sans mt-0.5">
+                        Download full .aeroforge archive
+                      </div>
                     </div>
                   </button>
 
@@ -398,9 +483,16 @@ export default function SettingsPage() {
                     <Upload className="w-5 h-5 text-emerald-400 mb-2" />
                     <div>
                       <div className="text-xs font-bold text-white">Import Workspace</div>
-                      <div className="text-[10px] text-white/40 font-sans mt-0.5">Restore from .aeroforge file</div>
+                      <div className="text-[10px] text-white/40 font-sans mt-0.5">
+                        Restore from .aeroforge file
+                      </div>
                     </div>
-                    <input type="file" accept=".aeroforge,.json" onChange={handleImportArchive} className="hidden" />
+                    <input
+                      type="file"
+                      accept=".aeroforge,.json"
+                      onChange={handleImportArchive}
+                      className="hidden"
+                    />
                   </label>
 
                   {/* Clear Data */}
@@ -411,7 +503,9 @@ export default function SettingsPage() {
                     <Trash2 className="w-5 h-5 text-red-400 mb-2" />
                     <div>
                       <div className="text-xs font-bold text-white">Clear Local Cache</div>
-                      <div className="text-[10px] text-white/40 font-sans mt-0.5">Reset workspace cache</div>
+                      <div className="text-[10px] text-white/40 font-sans mt-0.5">
+                        Reset workspace cache
+                      </div>
                     </div>
                   </button>
                 </div>
@@ -420,7 +514,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB 4: PRIVACY & SOVEREIGNTY */}
-          {activeTab === 'privacy' && (
+          {activeTab === "privacy" && (
             <div className="space-y-6">
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
                 <h2 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -435,7 +529,8 @@ export default function SettingsPage() {
                       <span>ZERO THIRD-PARTY AI TRAINING:</span>
                     </div>
                     <p>
-                      Your airfoils, structural geometry files, CFD boundary conditions, and mathematical equations are never used to train public or commercial AI models.
+                      Your airfoils, structural geometry files, CFD boundary conditions, and
+                      mathematical equations are never used to train public or commercial AI models.
                     </p>
                   </div>
 
@@ -445,7 +540,9 @@ export default function SettingsPage() {
                       <span>CLIENT-SIDE EXECUTION FIRST:</span>
                     </div>
                     <p>
-                      All analytical calculations, numerical integrals, and WebGL visualizations execute locally in your browser sandbox using compiled WebAssembly and Three.js.
+                      All analytical calculations, numerical integrals, and WebGL visualizations
+                      execute locally in your browser sandbox using compiled WebAssembly and
+                      Three.js.
                     </p>
                   </div>
                 </div>
@@ -454,7 +551,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB 5: DIAGNOSTICS & SECURITY */}
-          {activeTab === 'security' && (
+          {activeTab === "security" && (
             <div className="space-y-6">
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
                 <div className="flex items-center justify-between flex-wrap gap-2">
@@ -467,7 +564,9 @@ export default function SettingsPage() {
                     disabled={isCheckingHealth}
                     className="flex items-center gap-1.5 text-xs text-[var(--af-accent)] bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg transition-all border border-white/10 disabled:opacity-50"
                   >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isCheckingHealth ? 'animate-spin' : ''}`} />
+                    <RefreshCw
+                      className={`w-3.5 h-3.5 ${isCheckingHealth ? "animate-spin" : ""}`}
+                    />
                     <span>Run Verification Check</span>
                   </button>
                 </div>
@@ -476,31 +575,56 @@ export default function SettingsPage() {
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       <div className="p-3 bg-[#050914] rounded-lg border border-white/5">
-                        <span className="text-[10px] text-white/40 uppercase block">Engine State</span>
-                        <span className="text-sm font-bold text-emerald-400 uppercase">{healthReport.overallStatus}</span>
+                        <span className="text-[10px] text-white/40 uppercase block">
+                          Engine State
+                        </span>
+                        <span className="text-sm font-bold text-emerald-400 uppercase">
+                          {healthReport.overallStatus}
+                        </span>
                       </div>
                       <div className="p-3 bg-[#050914] rounded-lg border border-white/5">
-                        <span className="text-[10px] text-white/40 uppercase block">Components</span>
-                        <span className="text-sm font-bold text-white">{healthReport.components.length} Active</span>
+                        <span className="text-[10px] text-white/40 uppercase block">
+                          Components
+                        </span>
+                        <span className="text-sm font-bold text-white">
+                          {healthReport.components.length} Active
+                        </span>
                       </div>
                       <div className="p-3 bg-[#050914] rounded-lg border border-white/5">
-                        <span className="text-[10px] text-white/40 uppercase block">Memory Heap</span>
-                        <span className="text-sm font-bold text-emerald-400">{healthReport.memoryUsageMb || 34} MB</span>
+                        <span className="text-[10px] text-white/40 uppercase block">
+                          Memory Heap
+                        </span>
+                        <span className="text-sm font-bold text-emerald-400">
+                          {healthReport.memoryUsageMb || 34} MB
+                        </span>
                       </div>
                       <div className="p-3 bg-[#050914] rounded-lg border border-white/5">
-                        <span className="text-[10px] text-white/40 uppercase block">Auth Status</span>
+                        <span className="text-[10px] text-white/40 uppercase block">
+                          Auth Status
+                        </span>
                         <span className="text-sm font-bold text-cyan-400">Local MVP</span>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-white uppercase">Diagnostic Results:</h4>
+                      <h4 className="text-xs font-bold text-white uppercase">
+                        Diagnostic Results:
+                      </h4>
                       <div className="max-h-60 overflow-y-auto space-y-1.5 pr-2">
                         {healthReport.components.map((r) => (
-                          <div key={r.name} className="p-2.5 bg-[#050914] rounded border border-white/5 flex items-center justify-between text-xs font-mono">
+                          <div
+                            key={r.name}
+                            className="p-2.5 bg-[#050914] rounded border border-white/5 flex items-center justify-between text-xs font-mono"
+                          >
                             <span className="text-white/80">{r.name}</span>
-                            <span className={r.status === 'operational' ? 'text-emerald-400 font-bold uppercase' : 'text-amber-400 font-bold uppercase'}>
-                              {r.status} ({r.latencyMs || '<1'}ms)
+                            <span
+                              className={
+                                r.status === "operational"
+                                  ? "text-emerald-400 font-bold uppercase"
+                                  : "text-amber-400 font-bold uppercase"
+                              }
+                            >
+                              {r.status} ({r.latencyMs || "<1"}ms)
                             </span>
                           </div>
                         ))}
@@ -515,7 +639,7 @@ export default function SettingsPage() {
           )}
 
           {/* TAB 6: ABOUT & POLARIS */}
-          {activeTab === 'about' && (
+          {activeTab === "about" && (
             <div className="space-y-6">
               <section className="bg-[var(--af-surface-1)] border border-white/10 rounded-xl p-6 space-y-4">
                 <div className="flex items-center gap-3">
@@ -535,16 +659,29 @@ export default function SettingsPage() {
                 </div>
 
                 <p className="text-xs text-white/70 font-sans leading-relaxed">
-                  AeroForge AI is an integrated computational engineering research environment developed by Project Polaris. Designed to make rigorous fluid dynamics, structural finite elements, and orbital propagation accessible to student builders and research teams worldwide.
+                  AeroForge AI is an integrated computational engineering research environment
+                  developed by Project Polaris. Designed to make rigorous fluid dynamics, structural
+                  finite elements, and orbital propagation accessible to student builders and
+                  research teams worldwide.
                 </p>
 
                 <div className="border-t border-white/10 pt-4 space-y-3">
-                  <h4 className="text-xs font-bold text-white uppercase">Open Source Foundations:</h4>
+                  <h4 className="text-xs font-bold text-white uppercase">
+                    Open Source Foundations:
+                  </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
-                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">Three.js (WebGL 3D)</div>
-                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">FastAPI & PyTorch</div>
-                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">Tailwind & PostCSS</div>
-                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">Lucide Icons</div>
+                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">
+                      Three.js (WebGL 3D)
+                    </div>
+                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">
+                      FastAPI & PyTorch
+                    </div>
+                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">
+                      Tailwind & PostCSS
+                    </div>
+                    <div className="p-2 bg-[#050914] rounded border border-white/5 text-white/80">
+                      Lucide Icons
+                    </div>
                   </div>
                 </div>
 

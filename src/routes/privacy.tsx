@@ -12,7 +12,10 @@ export const Route = createFileRoute("/privacy")({
           "How Project Polaris collects, uses and protects the information you share through our forms and community.",
       },
       { property: "og:title", content: "Privacy Policy — Project Polaris" },
-      { property: "og:description", content: "What we collect, why, and how you can have it removed." },
+      {
+        property: "og:description",
+        content: "What we collect, why, and how you can have it removed.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

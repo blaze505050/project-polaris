@@ -14,7 +14,7 @@ export interface ValidationResult {
     simulated: number;
     realWorld: number;
     deviation: number; // percentage
-    status: 'excellent' | 'good' | 'acceptable' | 'poor';
+    status: "excellent" | "good" | "acceptable" | "poor";
   }[];
 }
 
@@ -28,24 +28,33 @@ export interface RealWorldBenchmark {
 class ValidationService {
   // Real-world benchmarks for common aircraft
   private benchmarks: Map<string, RealWorldBenchmark[]> = new Map([
-    ['cessna-172', [
-      { parameter: 'dragCoefficient', value: 0.027, tolerance: 5, source: 'FAA Data' },
-      { parameter: 'liftCoefficient', value: 0.5, tolerance: 10, source: 'Wind Tunnel' },
-      { parameter: 'stallAngle', value: 16, tolerance: 2, source: 'Flight Test' },
-      { parameter: 'maxLiftCoefficient', value: 1.4, tolerance: 8, source: 'Wind Tunnel' },
-    ]],
-    ['boeing-747', [
-      { parameter: 'dragCoefficient', value: 0.018, tolerance: 5, source: 'CFD Validation' },
-      { parameter: 'liftCoefficient', value: 0.45, tolerance: 8, source: 'Flight Data' },
-      { parameter: 'stallAngle', value: 15, tolerance: 2, source: 'Flight Test' },
-      { parameter: 'maxLiftCoefficient', value: 1.8, tolerance: 10, source: 'Wind Tunnel' },
-    ]],
-    ['airbus-a380', [
-      { parameter: 'dragCoefficient', value: 0.019, tolerance: 5, source: 'CFD Validation' },
-      { parameter: 'liftCoefficient', value: 0.48, tolerance: 8, source: 'Flight Data' },
-      { parameter: 'stallAngle', value: 15.5, tolerance: 2, source: 'Flight Test' },
-      { parameter: 'maxLiftCoefficient', value: 1.9, tolerance: 10, source: 'Wind Tunnel' },
-    ]],
+    [
+      "cessna-172",
+      [
+        { parameter: "dragCoefficient", value: 0.027, tolerance: 5, source: "FAA Data" },
+        { parameter: "liftCoefficient", value: 0.5, tolerance: 10, source: "Wind Tunnel" },
+        { parameter: "stallAngle", value: 16, tolerance: 2, source: "Flight Test" },
+        { parameter: "maxLiftCoefficient", value: 1.4, tolerance: 8, source: "Wind Tunnel" },
+      ],
+    ],
+    [
+      "boeing-747",
+      [
+        { parameter: "dragCoefficient", value: 0.018, tolerance: 5, source: "CFD Validation" },
+        { parameter: "liftCoefficient", value: 0.45, tolerance: 8, source: "Flight Data" },
+        { parameter: "stallAngle", value: 15, tolerance: 2, source: "Flight Test" },
+        { parameter: "maxLiftCoefficient", value: 1.8, tolerance: 10, source: "Wind Tunnel" },
+      ],
+    ],
+    [
+      "airbus-a380",
+      [
+        { parameter: "dragCoefficient", value: 0.019, tolerance: 5, source: "CFD Validation" },
+        { parameter: "liftCoefficient", value: 0.48, tolerance: 8, source: "Flight Data" },
+        { parameter: "stallAngle", value: 15.5, tolerance: 2, source: "Flight Test" },
+        { parameter: "maxLiftCoefficient", value: 1.9, tolerance: 10, source: "Wind Tunnel" },
+      ],
+    ],
   ]);
 
   /**
@@ -60,12 +69,12 @@ class ValidationService {
       reynoldsNumber: number;
       machNumber: number;
     },
-    aircraftType: string = 'generic'
+    aircraftType: string = "generic",
   ): ValidationResult {
     const warnings: string[] = [];
     const errors: string[] = [];
     const recommendations: string[] = [];
-    const comparisonWithRealData: ValidationResult['comparisonWithRealData'] = [];
+    const comparisonWithRealData: ValidationResult["comparisonWithRealData"] = [];
 
     // Get benchmarks
     const benchmarks = this.benchmarks.get(aircraftType) || this.getGenericBenchmarks();
@@ -76,22 +85,22 @@ class ValidationService {
     // Validate each parameter
     for (const benchmark of benchmarks) {
       const simulated = simulatedData[benchmark.parameter as keyof typeof simulatedData];
-      
+
       if (simulated === undefined) continue;
 
       const deviation = Math.abs((simulated - benchmark.value) / benchmark.value) * 100;
       totalDeviation += deviation;
       validParameters++;
 
-      let status: 'excellent' | 'good' | 'acceptable' | 'poor';
+      let status: "excellent" | "good" | "acceptable" | "poor";
       if (deviation <= benchmark.tolerance * 0.5) {
-        status = 'excellent';
+        status = "excellent";
       } else if (deviation <= benchmark.tolerance) {
-        status = 'good';
+        status = "good";
       } else if (deviation <= benchmark.tolerance * 1.5) {
-        status = 'acceptable';
+        status = "acceptable";
       } else {
-        status = 'poor';
+        status = "poor";
       }
 
       comparisonWithRealData.push({
@@ -103,43 +112,45 @@ class ValidationService {
       });
 
       // Generate warnings/errors
-      if (status === 'poor') {
+      if (status === "poor") {
         errors.push(
-          `${benchmark.parameter} deviation (${deviation.toFixed(1)}%) exceeds tolerance (${benchmark.tolerance}%)`
+          `${benchmark.parameter} deviation (${deviation.toFixed(1)}%) exceeds tolerance (${benchmark.tolerance}%)`,
         );
-      } else if (status === 'acceptable') {
+      } else if (status === "acceptable") {
         warnings.push(
-          `${benchmark.parameter} is within acceptable range but higher than typical (${deviation.toFixed(1)}%)`
+          `${benchmark.parameter} is within acceptable range but higher than typical (${deviation.toFixed(1)}%)`,
         );
       }
     }
 
     // Validate Reynolds number range
     if (simulatedData.reynoldsNumber < 1e4) {
-      warnings.push('Reynolds number is very low - results may not be representative of full-scale flight');
+      warnings.push(
+        "Reynolds number is very low - results may not be representative of full-scale flight",
+      );
     } else if (simulatedData.reynoldsNumber > 1e8) {
-      warnings.push('Reynolds number is extremely high - ensure mesh resolution is adequate');
+      warnings.push("Reynolds number is extremely high - ensure mesh resolution is adequate");
     }
 
     // Validate Mach number range
     if (simulatedData.machNumber > 0.85 && simulatedData.machNumber < 1.2) {
-      warnings.push('Transonic flow regime detected - compressibility effects are significant');
-      recommendations.push('Consider using transonic CFD solver for improved accuracy');
+      warnings.push("Transonic flow regime detected - compressibility effects are significant");
+      recommendations.push("Consider using transonic CFD solver for improved accuracy");
     }
 
     // Generate recommendations
     if (errors.length > 0) {
-      recommendations.push('Review mesh quality and refinement in critical regions');
-      recommendations.push('Verify boundary conditions match experimental setup');
-      recommendations.push('Consider increasing number of iterations for better convergence');
+      recommendations.push("Review mesh quality and refinement in critical regions");
+      recommendations.push("Verify boundary conditions match experimental setup");
+      recommendations.push("Consider increasing number of iterations for better convergence");
     }
 
     if (warnings.length > 0) {
-      recommendations.push('Validate results against multiple data sources');
-      recommendations.push('Perform sensitivity analysis on key parameters');
+      recommendations.push("Validate results against multiple data sources");
+      recommendations.push("Perform sensitivity analysis on key parameters");
     }
 
-    const accuracy = validParameters > 0 ? Math.max(0, 100 - (totalDeviation / validParameters)) : 0;
+    const accuracy = validParameters > 0 ? Math.max(0, 100 - totalDeviation / validParameters) : 0;
 
     return {
       isValid: errors.length === 0,
@@ -162,17 +173,19 @@ class ValidationService {
       naturalFrequency: number;
     },
     materialYieldStrength: number,
-    allowableDisplacement: number
+    allowableDisplacement: number,
   ): ValidationResult {
     const warnings: string[] = [];
     const errors: string[] = [];
     const recommendations: string[] = [];
-    const comparisonWithRealData: ValidationResult['comparisonWithRealData'] = [];
+    const comparisonWithRealData: ValidationResult["comparisonWithRealData"] = [];
 
     // Check stress levels
     const stressRatio = simulatedData.maxStress / materialYieldStrength;
     if (stressRatio > 1.0) {
-      errors.push(`Maximum stress (${simulatedData.maxStress.toFixed(0)} Pa) exceeds yield strength`);
+      errors.push(
+        `Maximum stress (${simulatedData.maxStress.toFixed(0)} Pa) exceeds yield strength`,
+      );
     } else if (stressRatio > 0.8) {
       warnings.push(`Stress level is high (${(stressRatio * 100).toFixed(1)}% of yield strength)`);
     }
@@ -187,21 +200,23 @@ class ValidationService {
 
     // Check safety factor
     if (simulatedData.safetyFactor < 1.5) {
-      warnings.push(`Safety factor (${simulatedData.safetyFactor.toFixed(2)}) is below recommended minimum of 1.5`);
+      warnings.push(
+        `Safety factor (${simulatedData.safetyFactor.toFixed(2)}) is below recommended minimum of 1.5`,
+      );
     }
 
     // Check natural frequency
     if (simulatedData.naturalFrequency < 10) {
-      warnings.push('Low natural frequency may indicate potential resonance issues');
-      recommendations.push('Perform flutter analysis to check for aeroelastic instability');
+      warnings.push("Low natural frequency may indicate potential resonance issues");
+      recommendations.push("Perform flutter analysis to check for aeroelastic instability");
     }
 
     comparisonWithRealData.push({
-      parameter: 'Stress Ratio',
+      parameter: "Stress Ratio",
       simulated: stressRatio,
       realWorld: 0.7,
       deviation: Math.abs((stressRatio - 0.7) / 0.7) * 100,
-      status: stressRatio <= 0.7 ? 'good' : 'acceptable',
+      status: stressRatio <= 0.7 ? "good" : "acceptable",
     });
 
     const accuracy = Math.max(0, 100 - Math.abs(stressRatio - 0.7) * 100);
@@ -227,12 +242,12 @@ class ValidationService {
       heatFlux: number;
     },
     materialMeltingPoint: number,
-    allowableTemperature: number
+    allowableTemperature: number,
   ): ValidationResult {
     const warnings: string[] = [];
     const errors: string[] = [];
     const recommendations: string[] = [];
-    const comparisonWithRealData: ValidationResult['comparisonWithRealData'] = [];
+    const comparisonWithRealData: ValidationResult["comparisonWithRealData"] = [];
 
     // Check temperature limits
     if (simulatedData.maxTemperature > materialMeltingPoint) {
@@ -245,8 +260,10 @@ class ValidationService {
 
     // Check temperature gradient
     if (simulatedData.temperatureGradient > 1000) {
-      warnings.push(`High temperature gradient (${simulatedData.temperatureGradient.toFixed(0)} K/m) may cause thermal stress`);
-      recommendations.push('Consider thermal stress analysis');
+      warnings.push(
+        `High temperature gradient (${simulatedData.temperatureGradient.toFixed(0)} K/m) may cause thermal stress`,
+      );
+      recommendations.push("Consider thermal stress analysis");
     }
 
     // Check heat flux
@@ -256,11 +273,11 @@ class ValidationService {
 
     const tempRatio = simulatedData.maxTemperature / allowableTemperature;
     comparisonWithRealData.push({
-      parameter: 'Temperature Ratio',
+      parameter: "Temperature Ratio",
       simulated: tempRatio,
       realWorld: 0.85,
       deviation: Math.abs((tempRatio - 0.85) / 0.85) * 100,
-      status: tempRatio <= 0.85 ? 'good' : 'acceptable',
+      status: tempRatio <= 0.85 ? "good" : "acceptable",
     });
 
     const accuracy = Math.max(0, 100 - Math.abs(tempRatio - 0.85) * 100);
@@ -280,10 +297,10 @@ class ValidationService {
    */
   private getGenericBenchmarks(): RealWorldBenchmark[] {
     return [
-      { parameter: 'dragCoefficient', value: 0.025, tolerance: 10, source: 'Generic Aircraft' },
-      { parameter: 'liftCoefficient', value: 0.5, tolerance: 15, source: 'Generic Aircraft' },
-      { parameter: 'stallAngle', value: 15, tolerance: 3, source: 'Generic Aircraft' },
-      { parameter: 'maxLiftCoefficient', value: 1.5, tolerance: 15, source: 'Generic Aircraft' },
+      { parameter: "dragCoefficient", value: 0.025, tolerance: 10, source: "Generic Aircraft" },
+      { parameter: "liftCoefficient", value: 0.5, tolerance: 15, source: "Generic Aircraft" },
+      { parameter: "stallAngle", value: 15, tolerance: 3, source: "Generic Aircraft" },
+      { parameter: "maxLiftCoefficient", value: 1.5, tolerance: 15, source: "Generic Aircraft" },
     ];
   }
 

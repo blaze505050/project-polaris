@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, Cpu, Database, Server, X, MessageSquare, Terminal } from 'lucide-react';
-import { useProjectStore } from '@/stores/projectStore';
-import BetaFeedbackModal from './BetaFeedbackModal';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Activity, Cpu, Database, Server, X, MessageSquare, Terminal } from "lucide-react";
+import { useProjectStore } from "@/stores/projectStore";
+import BetaFeedbackModal from "./BetaFeedbackModal";
 
 export default function BetaDiagnosticOverlay() {
   const [isVisible, setIsVisible] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const { currentProject } = useProjectStore();
   const [storageKb, setStorageKb] = useState<number>(0);
-  const [backendStatus, setBackendStatus] = useState<'checking' | 'connected' | 'offline'>('checking');
+  const [backendStatus, setBackendStatus] = useState<"checking" | "connected" | "offline">(
+    "checking",
+  );
 
   useEffect(() => {
     // Keyboard shortcut handler: Ctrl+Shift+D
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
+      if (e.ctrlKey && e.shiftKey && (e.key === "D" || e.key === "d")) {
         e.preventDefault();
         setIsVisible((prev) => !prev);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   useEffect(() => {
@@ -40,17 +42,17 @@ export default function BetaDiagnosticOverlay() {
       }
 
       // Check FastAPI backend status
-      const API_BASE = (import.meta as any).env?.VITE_PHYSICS_AI_API_URL || 'http://localhost:8000';
+      const API_BASE = (import.meta as any).env?.VITE_PHYSICS_AI_API_URL || "http://localhost:8000";
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
 
       fetch(`${API_BASE}/health`, { signal: controller.signal })
         .then((res) => {
           clearTimeout(timeoutId);
-          setBackendStatus(res.ok ? 'connected' : 'offline');
+          setBackendStatus(res.ok ? "connected" : "offline");
         })
         .catch(() => {
-          setBackendStatus('offline');
+          setBackendStatus("offline");
         });
     }
   }, [isVisible]);
@@ -82,12 +84,16 @@ export default function BetaDiagnosticOverlay() {
           <div className="space-y-1 text-white/80">
             <div className="flex justify-between">
               <span className="text-white/40">Active Route:</span>
-              <span className="text-cyan-300 font-bold truncate max-w-[170px]">{window.location.pathname}</span>
+              <span className="text-cyan-300 font-bold truncate max-w-[170px]">
+                {window.location.pathname}
+              </span>
             </div>
 
             <div className="flex justify-between">
               <span className="text-white/40">Active Project:</span>
-              <span className="text-emerald-300 truncate max-w-[170px]">{currentProject?.name || 'Default Project'}</span>
+              <span className="text-emerald-300 truncate max-w-[170px]">
+                {currentProject?.name || "Default Project"}
+              </span>
             </div>
 
             <div className="flex justify-between">
@@ -99,9 +105,9 @@ export default function BetaDiagnosticOverlay() {
               <span className="text-white/40">FastAPI Backend:</span>
               <span
                 className={`px-1.5 py-0.2 rounded text-[10px] uppercase font-bold ${
-                  backendStatus === 'connected'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                    : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                  backendStatus === "connected"
+                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40"
+                    : "bg-amber-500/20 text-amber-300 border border-amber-500/40"
                 }`}
               >
                 {backendStatus}
@@ -122,10 +128,7 @@ export default function BetaDiagnosticOverlay() {
         </motion.div>
       </AnimatePresence>
 
-      <BetaFeedbackModal
-        isOpen={showFeedbackModal}
-        onClose={() => setShowFeedbackModal(false)}
-      />
+      <BetaFeedbackModal isOpen={showFeedbackModal} onClose={() => setShowFeedbackModal(false)} />
     </>
   );
 }

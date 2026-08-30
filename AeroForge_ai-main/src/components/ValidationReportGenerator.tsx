@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle2, AlertCircle, XCircle, Download, Share2, RefreshCw, FileText } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  CheckCircle2,
+  AlertCircle,
+  XCircle,
+  Download,
+  Share2,
+  RefreshCw,
+  FileText,
+} from "lucide-react";
 
 interface ValidationCheck {
   id: string;
   name: string;
   category: string;
-  status: 'passed' | 'warning' | 'failed';
+  status: "passed" | "warning" | "failed";
   message: string;
   details?: string;
 }
@@ -16,7 +24,7 @@ interface ValidationReport {
   name: string;
   simulationId: string;
   timestamp: Date;
-  overallStatus: 'passed' | 'warning' | 'failed';
+  overallStatus: "passed" | "warning" | "failed";
   checks: ValidationCheck[];
   score: number;
 }
@@ -28,76 +36,76 @@ interface ValidationReportGeneratorProps {
 export default function ValidationReportGenerator({ projectId }: ValidationReportGeneratorProps) {
   const [reports, setReports] = useState<ValidationReport[]>([
     {
-      id: '1',
-      name: 'Airfoil CFD Validation',
-      simulationId: '1',
+      id: "1",
+      name: "Airfoil CFD Validation",
+      simulationId: "1",
       timestamp: new Date(Date.now() - 3600000),
-      overallStatus: 'passed',
+      overallStatus: "passed",
       score: 94,
       checks: [
         {
-          id: '1',
-          name: 'Mesh Quality',
-          category: 'Geometry',
-          status: 'passed',
-          message: 'Mesh quality metrics within acceptable range',
-          details: 'Aspect ratio: 1.2-45.8, Skewness: 0.15-0.82',
+          id: "1",
+          name: "Mesh Quality",
+          category: "Geometry",
+          status: "passed",
+          message: "Mesh quality metrics within acceptable range",
+          details: "Aspect ratio: 1.2-45.8, Skewness: 0.15-0.82",
         },
         {
-          id: '2',
-          name: 'Convergence',
-          category: 'Simulation',
-          status: 'passed',
-          message: 'Solution converged after 2847 iterations',
-          details: 'Residuals: < 1e-5',
+          id: "2",
+          name: "Convergence",
+          category: "Simulation",
+          status: "passed",
+          message: "Solution converged after 2847 iterations",
+          details: "Residuals: < 1e-5",
         },
         {
-          id: '3',
-          name: 'Physical Bounds',
-          category: 'Results',
-          status: 'passed',
-          message: 'All results within expected physical bounds',
-          details: 'Pressure: 95-105 kPa, Velocity: 40-50 m/s',
+          id: "3",
+          name: "Physical Bounds",
+          category: "Results",
+          status: "passed",
+          message: "All results within expected physical bounds",
+          details: "Pressure: 95-105 kPa, Velocity: 40-50 m/s",
         },
         {
-          id: '4',
-          name: 'Mass Conservation',
-          category: 'Physics',
-          status: 'warning',
-          message: 'Mass conservation error: 0.8%',
-          details: 'Acceptable but monitor for larger domains',
+          id: "4",
+          name: "Mass Conservation",
+          category: "Physics",
+          status: "warning",
+          message: "Mass conservation error: 0.8%",
+          details: "Acceptable but monitor for larger domains",
         },
       ],
     },
     {
-      id: '2',
-      name: 'Structural Analysis Validation',
-      simulationId: '2',
+      id: "2",
+      name: "Structural Analysis Validation",
+      simulationId: "2",
       timestamp: new Date(Date.now() - 7200000),
-      overallStatus: 'warning',
+      overallStatus: "warning",
       score: 82,
       checks: [
         {
-          id: '1',
-          name: 'Boundary Conditions',
-          category: 'Setup',
-          status: 'passed',
-          message: 'Boundary conditions properly defined',
+          id: "1",
+          name: "Boundary Conditions",
+          category: "Setup",
+          status: "passed",
+          message: "Boundary conditions properly defined",
         },
         {
-          id: '2',
-          name: 'Material Properties',
-          category: 'Material',
-          status: 'passed',
-          message: 'Material properties verified',
+          id: "2",
+          name: "Material Properties",
+          category: "Material",
+          status: "passed",
+          message: "Material properties verified",
         },
         {
-          id: '3',
-          name: 'Stress Singularities',
-          category: 'Results',
-          status: 'warning',
-          message: 'Potential stress singularities detected near fixed support',
-          details: 'Consider refining mesh in this region',
+          id: "3",
+          name: "Stress Singularities",
+          category: "Results",
+          status: "warning",
+          message: "Potential stress singularities detected near fixed support",
+          details: "Consider refining mesh in this region",
         },
       ],
     },
@@ -106,40 +114,40 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
   const [expandedCheck, setExpandedCheck] = useState<string | null>(null);
 
-  const getStatusIcon = (status: ValidationCheck['status']) => {
+  const getStatusIcon = (status: ValidationCheck["status"]) => {
     switch (status) {
-      case 'passed':
+      case "passed":
         return <CheckCircle2 className="w-5 h-5 text-aerospace-success" />;
-      case 'warning':
+      case "warning":
         return <AlertCircle className="w-5 h-5 text-aerospace-warning" />;
-      case 'failed':
+      case "failed":
         return <XCircle className="w-5 h-5 text-aerospace-danger" />;
     }
   };
 
-  const getStatusColor = (status: ValidationCheck['status']) => {
+  const getStatusColor = (status: ValidationCheck["status"]) => {
     switch (status) {
-      case 'passed':
-        return 'bg-aerospace-success/10 text-aerospace-success';
-      case 'warning':
-        return 'bg-aerospace-warning/10 text-aerospace-warning';
-      case 'failed':
-        return 'bg-aerospace-danger/10 text-aerospace-danger';
+      case "passed":
+        return "bg-aerospace-success/10 text-aerospace-success";
+      case "warning":
+        return "bg-aerospace-warning/10 text-aerospace-warning";
+      case "failed":
+        return "bg-aerospace-danger/10 text-aerospace-danger";
     }
   };
 
-  const getOverallStatusColor = (status: ValidationReport['overallStatus']) => {
+  const getOverallStatusColor = (status: ValidationReport["overallStatus"]) => {
     switch (status) {
-      case 'passed':
-        return 'border-aerospace-success';
-      case 'warning':
-        return 'border-aerospace-warning';
-      case 'failed':
-        return 'border-aerospace-danger';
+      case "passed":
+        return "border-aerospace-success";
+      case "warning":
+        return "border-aerospace-warning";
+      case "failed":
+        return "border-aerospace-danger";
     }
   };
 
-  const selectedReportData = reports.find(r => r.id === selectedReport);
+  const selectedReportData = reports.find((r) => r.id === selectedReport);
 
   return (
     <div className="space-y-6">
@@ -158,13 +166,13 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
           <div className="text-sm">
             <p className="text-secondary-foreground">Passed</p>
             <p className="text-2xl font-bold text-aerospace-success">
-              {reports.filter(r => r.overallStatus === 'passed').length}
+              {reports.filter((r) => r.overallStatus === "passed").length}
             </p>
           </div>
           <div className="text-sm">
             <p className="text-secondary-foreground">Warnings</p>
             <p className="text-2xl font-bold text-aerospace-warning">
-              {reports.filter(r => r.overallStatus === 'warning').length}
+              {reports.filter((r) => r.overallStatus === "warning").length}
             </p>
           </div>
         </div>
@@ -193,13 +201,13 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
             >
               <div className="flex items-start gap-3">
                 <div className="mt-1">
-                  {report.overallStatus === 'passed' && (
+                  {report.overallStatus === "passed" && (
                     <CheckCircle2 className="w-5 h-5 text-aerospace-success" />
                   )}
-                  {report.overallStatus === 'warning' && (
+                  {report.overallStatus === "warning" && (
                     <AlertCircle className="w-5 h-5 text-aerospace-warning" />
                   )}
-                  {report.overallStatus === 'failed' && (
+                  {report.overallStatus === "failed" && (
                     <XCircle className="w-5 h-5 text-aerospace-danger" />
                   )}
                 </div>
@@ -213,10 +221,10 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
                       <div
                         className={`h-full ${
                           report.score >= 90
-                            ? 'bg-aerospace-success'
+                            ? "bg-aerospace-success"
                             : report.score >= 70
-                            ? 'bg-aerospace-warning'
-                            : 'bg-aerospace-danger'
+                              ? "bg-aerospace-warning"
+                              : "bg-aerospace-danger"
                         }`}
                         style={{ width: `${report.score}%` }}
                       />
@@ -260,11 +268,15 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-secondary-foreground text-sm mb-1">Validation Score</p>
-                    <p className="text-4xl font-bold text-foreground">{selectedReportData.score}%</p>
+                    <p className="text-4xl font-bold text-foreground">
+                      {selectedReportData.score}%
+                    </p>
                   </div>
                   <div className="w-24 h-24 rounded-full border-4 border-aerospace-blue flex items-center justify-center">
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-aerospace-blue">{selectedReportData.score}</p>
+                      <p className="text-2xl font-bold text-aerospace-blue">
+                        {selectedReportData.score}
+                      </p>
                       <p className="text-xs text-secondary-foreground">Score</p>
                     </div>
                   </div>
@@ -292,7 +304,9 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
                           <p className="text-xs text-secondary-foreground">{check.category}</p>
                         </div>
                       </div>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(check.status)}`}>
+                      <span
+                        className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(check.status)}`}
+                      >
                         {check.status.charAt(0).toUpperCase() + check.status.slice(1)}
                       </span>
                     </button>
@@ -300,7 +314,7 @@ export default function ValidationReportGenerator({ projectId }: ValidationRepor
                     {expandedCheck === check.id && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
+                        animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                         className="px-4 pb-4 border-t border-secondary/20"
                       >

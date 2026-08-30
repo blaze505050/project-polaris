@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, Award, Zap, ArrowRight, Lock } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { BookOpen, Award, Zap, ArrowRight, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function AstroLabAcademyPage() {
   const navigate = useNavigate();
@@ -13,69 +13,70 @@ export default function AstroLabAcademyPage() {
 
   const learningPaths = [
     {
-      id: 'beginner',
-      title: 'Astronomy Fundamentals',
-      level: 'Beginner',
-      duration: '4 weeks',
+      id: "beginner",
+      title: "Astronomy Fundamentals",
+      level: "Beginner",
+      duration: "4 weeks",
       modules: [
-        { name: 'Celestial Sphere', completed: true },
-        { name: 'Constellations & Stars', completed: true },
-        { name: 'Solar System', completed: false },
-        { name: 'Observational Techniques', completed: false },
+        { name: "Celestial Sphere", completed: true },
+        { name: "Constellations & Stars", completed: true },
+        { name: "Solar System", completed: false },
+        { name: "Observational Techniques", completed: false },
       ],
       progress: 50,
-      description: 'Start your astronomy journey with fundamental concepts and observational skills.',
+      description:
+        "Start your astronomy journey with fundamental concepts and observational skills.",
     },
     {
-      id: 'intermediate',
-      title: 'Astrophysics Essentials',
-      level: 'Intermediate',
-      duration: '8 weeks',
+      id: "intermediate",
+      title: "Astrophysics Essentials",
+      level: "Intermediate",
+      duration: "8 weeks",
       modules: [
-        { name: 'Stellar Physics', completed: false },
-        { name: 'Galaxies & Cosmology', completed: false },
-        { name: 'Black Holes', completed: false },
-        { name: 'Exoplanets', completed: false },
+        { name: "Stellar Physics", completed: false },
+        { name: "Galaxies & Cosmology", completed: false },
+        { name: "Black Holes", completed: false },
+        { name: "Exoplanets", completed: false },
       ],
       progress: 0,
-      description: 'Dive into astrophysical concepts and explore the universe at scale.',
+      description: "Dive into astrophysical concepts and explore the universe at scale.",
     },
     {
-      id: 'advanced',
-      title: 'Research Methods',
-      level: 'Advanced',
-      duration: '12 weeks',
+      id: "advanced",
+      title: "Research Methods",
+      level: "Advanced",
+      duration: "12 weeks",
       modules: [
-        { name: 'Data Analysis', completed: false },
-        { name: 'Simulation Techniques', completed: false },
-        { name: 'Research Project', completed: false },
-        { name: 'Publication Preparation', completed: false },
+        { name: "Data Analysis", completed: false },
+        { name: "Simulation Techniques", completed: false },
+        { name: "Research Project", completed: false },
+        { name: "Publication Preparation", completed: false },
       ],
       progress: 0,
-      description: 'Master research-level techniques and conduct your own astrophysical studies.',
+      description: "Master research-level techniques and conduct your own astrophysical studies.",
     },
   ];
 
   const certifications = [
     {
-      id: 'observer',
-      title: 'Certified Observer',
-      description: 'Master observational astronomy techniques',
-      requirements: 'Complete Astronomy Fundamentals path',
+      id: "observer",
+      title: "Certified Observer",
+      description: "Master observational astronomy techniques",
+      requirements: "Complete Astronomy Fundamentals path",
       locked: false,
     },
     {
-      id: 'astrophysicist',
-      title: 'Astrophysics Specialist',
-      description: 'Advanced understanding of stellar and galactic physics',
-      requirements: 'Complete Astrophysics Essentials path',
+      id: "astrophysicist",
+      title: "Astrophysics Specialist",
+      description: "Advanced understanding of stellar and galactic physics",
+      requirements: "Complete Astrophysics Essentials path",
       locked: true,
     },
     {
-      id: 'researcher',
-      title: 'Research Fellow',
-      description: 'Conduct independent astrophysical research',
-      requirements: 'Complete Research Methods path',
+      id: "researcher",
+      title: "Research Fellow",
+      description: "Conduct independent astrophysical research",
+      requirements: "Complete Research Methods path",
       locked: true,
     },
   ];
@@ -97,8 +98,8 @@ export default function AstroLabAcademyPage() {
             <h1 className="text-5xl font-bold text-white">AstroLab Academy</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Comprehensive educational pathway from fundamentals to research-level astronomy.
-            Learn at your own pace with interactive lessons, guided projects, and expert resources.
+            Comprehensive educational pathway from fundamentals to research-level astronomy. Learn
+            at your own pace with interactive lessons, guided projects, and expert resources.
           </p>
         </motion.div>
 
@@ -112,11 +113,7 @@ export default function AstroLabAcademyPage() {
           <h2 className="text-2xl font-bold text-white mb-6">Learning Paths</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {learningPaths.map((path) => (
-              <motion.div
-                key={path.id}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
+              <motion.div key={path.id} whileHover={{ y: -5 }} transition={{ duration: 0.3 }}>
                 <Card
                   className="bg-slate-800/50 border-slate-700 p-6 h-full flex flex-col cursor-pointer hover:border-amber-500/50 transition-all"
                   onClick={() => setSelectedPath(path)}
@@ -156,11 +153,15 @@ export default function AstroLabAcademyPage() {
                           <div
                             className={`w-4 h-4 rounded border ${
                               module.completed
-                                ? 'bg-green-600 border-green-500'
-                                : 'border-slate-600'
+                                ? "bg-green-600 border-green-500"
+                                : "border-slate-600"
                             }`}
                           />
-                          <span className={module.completed ? 'text-slate-300 line-through' : 'text-slate-300'}>
+                          <span
+                            className={
+                              module.completed ? "text-slate-300 line-through" : "text-slate-300"
+                            }
+                          >
                             {module.name}
                           </span>
                         </div>
@@ -192,8 +193,8 @@ export default function AstroLabAcademyPage() {
                 key={cert.id}
                 className={`p-6 h-full flex flex-col ${
                   cert.locked
-                    ? 'bg-slate-800/30 border-slate-700/50 opacity-60'
-                    : 'bg-slate-800/50 border-slate-700'
+                    ? "bg-slate-800/30 border-slate-700/50 opacity-60"
+                    : "bg-slate-800/50 border-slate-700"
                 }`}
               >
                 <div className="flex items-start justify-between mb-4">
@@ -218,8 +219,8 @@ export default function AstroLabAcademyPage() {
                   disabled={cert.locked}
                   className={`w-full font-semibold flex items-center justify-center gap-2 ${
                     cert.locked
-                      ? 'bg-slate-700 text-slate-500 cursor-not-allowed'
-                      : 'bg-amber-600 hover:bg-amber-700 text-white'
+                      ? "bg-slate-700 text-slate-500 cursor-not-allowed"
+                      : "bg-amber-600 hover:bg-amber-700 text-white"
                   }`}
                 >
                   {cert.locked ? (
@@ -250,28 +251,34 @@ export default function AstroLabAcademyPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Interactive Lessons',
-                  description: 'Engage with multimedia content covering all aspects of astronomy and astrophysics.',
+                  title: "Interactive Lessons",
+                  description:
+                    "Engage with multimedia content covering all aspects of astronomy and astrophysics.",
                 },
                 {
-                  title: 'Guided Projects',
-                  description: 'Work through real-world projects with step-by-step guidance from experts.',
+                  title: "Guided Projects",
+                  description:
+                    "Work through real-world projects with step-by-step guidance from experts.",
                 },
                 {
-                  title: 'Expert Mentorship',
-                  description: 'Connect with experienced astronomers and astrophysicists for guidance.',
+                  title: "Expert Mentorship",
+                  description:
+                    "Connect with experienced astronomers and astrophysicists for guidance.",
                 },
                 {
-                  title: 'Research Papers',
-                  description: 'Access curated collections of peer-reviewed research papers and articles.',
+                  title: "Research Papers",
+                  description:
+                    "Access curated collections of peer-reviewed research papers and articles.",
                 },
                 {
-                  title: 'Lab Simulations',
-                  description: 'Practice with all 14+ ASTROLAB labs integrated into your learning path.',
+                  title: "Lab Simulations",
+                  description:
+                    "Practice with all 14+ ASTROLAB labs integrated into your learning path.",
                 },
                 {
-                  title: 'Community Forum',
-                  description: 'Collaborate with other learners and share discoveries and insights.',
+                  title: "Community Forum",
+                  description:
+                    "Collaborate with other learners and share discoveries and insights.",
                 },
               ].map((resource, idx) => (
                 <div key={idx} className="flex gap-4">

@@ -54,7 +54,7 @@ export class BaseCrudService {
   private static async populateMultiRefs<T extends WixDataItem>(
     collectionId: string,
     item: T,
-    multiRefs: string[]
+    multiRefs: string[],
   ): Promise<T> {
     if (multiRefs.length === 0) return item;
 
@@ -66,14 +66,14 @@ export class BaseCrudService {
         // Fetch up to 1000 referenced items with total count
         const result = await items.queryReferenced(collectionId, item._id, refField, {
           limit: 1000,
-          returnTotalCount: true
+          returnTotalCount: true,
         });
 
         itemWithRefs[refField] = result.items;
         itemWithRefs._refMeta[refField] = {
           totalCount: result.totalCount ?? result.items.length,
           returnedCount: result.items.length,
-          hasMore: result.hasNext()
+          hasMore: result.hasNext(),
         };
       } catch {
         itemWithRefs[refField] = [];
@@ -92,7 +92,7 @@ export class BaseCrudService {
   static async create<T extends WixDataItem>(
     collectionId: string,
     itemData: Partial<T> | Record<string, unknown>,
-    multiReferences?: Record<string, any>
+    multiReferences?: Record<string, any>,
   ): Promise<T> {
     try {
       const result = (await items.insert(collectionId, itemData as Record<string, unknown>)) as T;
@@ -109,9 +109,7 @@ export class BaseCrudService {
     } catch (error) {
       // Should consider reverting the insert with a remove in order to prevent partial insert.
       console.error(`Error creating ${collectionId}:`, error);
-      throw new Error(
-        error instanceof Error ? error.message : `Failed to create ${collectionId}`
-      );
+      throw new Error(error instanceof Error ? error.message : `Failed to create ${collectionId}`);
     }
   }
 
@@ -122,7 +120,7 @@ export class BaseCrudService {
   static async getAll<T extends WixDataItem>(
     collectionId: string,
     includeRefs?: { singleRef?: string[]; multiRef?: string[] } | string[],
-    pagination?: PaginationOptions
+    pagination?: PaginationOptions,
   ): Promise<PaginatedResult<T>> {
     try {
       const limit = Math.min(pagination?.limit ?? 50, 1000);
@@ -151,9 +149,7 @@ export class BaseCrudService {
       };
     } catch (error) {
       console.error(`Error fetching ${collectionId}s:`, error);
-      throw new Error(
-        error instanceof Error ? error.message : `Failed to fetch ${collectionId}s`
-      );
+      throw new Error(error instanceof Error ? error.message : `Failed to fetch ${collectionId}s`);
     }
   }
 
@@ -165,13 +161,13 @@ export class BaseCrudService {
   static async getById<T extends WixDataItem>(
     collectionId: string,
     itemId: string,
-    includeRefs?: { singleRef?: string[]; multiRef?: string[] } | string[]
+    includeRefs?: { singleRef?: string[]; multiRef?: string[] } | string[],
   ): Promise<T | null> {
     try {
       // Support both old format (string[]) and new format ({ singleRef, multiRef })
       const isLegacyFormat = Array.isArray(includeRefs);
-      const singleRefs = isLegacyFormat ? includeRefs : (includeRefs?.singleRef || []);
-      const multiRefs = isLegacyFormat ? [] : (includeRefs?.multiRef || []);
+      const singleRefs = isLegacyFormat ? includeRefs : includeRefs?.singleRef || [];
+      const multiRefs = isLegacyFormat ? [] : includeRefs?.multiRef || [];
 
       let query = items.query(collectionId).eq("_id", itemId);
       if (singleRefs.length > 0) {
@@ -185,9 +181,7 @@ export class BaseCrudService {
       return this.populateMultiRefs<T>(collectionId, result.items[0] as T, multiRefs);
     } catch (error) {
       console.error(`Error fetching ${collectionId} by ID:`, error);
-      throw new Error(
-        error instanceof Error ? error.message : `Failed to fetch ${collectionId}`
-      );
+      throw new Error(error instanceof Error ? error.message : `Failed to fetch ${collectionId}`);
     }
   }
 
@@ -210,9 +204,7 @@ export class BaseCrudService {
       return result as T;
     } catch (error) {
       console.error(`Error updating ${collectionId}:`, error);
-      throw new Error(
-        error instanceof Error ? error.message : `Failed to update ${collectionId}`
-      );
+      throw new Error(error instanceof Error ? error.message : `Failed to update ${collectionId}`);
     }
   }
 
@@ -231,9 +223,7 @@ export class BaseCrudService {
       return result as T;
     } catch (error) {
       console.error(`Error deleting ${collectionId}:`, error);
-      throw new Error(
-        error instanceof Error ? error.message : `Failed to delete ${collectionId}`
-      );
+      throw new Error(error instanceof Error ? error.message : `Failed to delete ${collectionId}`);
     }
   }
 
@@ -246,7 +236,7 @@ export class BaseCrudService {
   static async addReferences(
     collectionId: string,
     itemId: string,
-    references: Record<string, string[]>
+    references: Record<string, string[]>,
   ): Promise<void> {
     try {
       for (const [fieldName, refIds] of Object.entries(references)) {
@@ -257,7 +247,7 @@ export class BaseCrudService {
     } catch (error) {
       console.error(`Error adding references to ${collectionId}:`, error);
       throw new Error(
-        error instanceof Error ? error.message : `Failed to add references to ${collectionId}`
+        error instanceof Error ? error.message : `Failed to add references to ${collectionId}`,
       );
     }
   }
@@ -271,7 +261,7 @@ export class BaseCrudService {
   static async removeReferences(
     collectionId: string,
     itemId: string,
-    references: Record<string, string[]>
+    references: Record<string, string[]>,
   ): Promise<void> {
     try {
       for (const [fieldName, refIds] of Object.entries(references)) {
@@ -282,9 +272,8 @@ export class BaseCrudService {
     } catch (error) {
       console.error(`Error removing references from ${collectionId}:`, error);
       throw new Error(
-        error instanceof Error ? error.message : `Failed to remove references from ${collectionId}`
+        error instanceof Error ? error.message : `Failed to remove references from ${collectionId}`,
       );
     }
   }
-
 }

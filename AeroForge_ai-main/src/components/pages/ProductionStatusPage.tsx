@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, AlertCircle, XCircle, Zap, Rocket, Shield, Database, Code } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  Zap,
+  Rocket,
+  Shield,
+  Database,
+  Code,
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface RouteStatus {
   path: string;
   name: string;
-  status: 'operational' | 'beta' | 'coming-soon' | 'maintenance';
+  status: "operational" | "beta" | "coming-soon" | "maintenance";
   description: string;
   category: string;
   lastChecked: Date;
@@ -15,50 +24,236 @@ interface RouteStatus {
 
 interface SystemStatus {
   component: string;
-  status: 'operational' | 'warning' | 'error';
+  status: "operational" | "warning" | "error";
   message: string;
   lastUpdated: Date;
 }
 
 const ROUTE_STATUS: RouteStatus[] = [
   // Core Pages
-  { path: '/', name: 'Home', status: 'operational', description: 'Landing page with feature overview', category: 'Core', lastChecked: new Date() },
-  { path: '/documentation', name: 'Documentation', status: 'operational', description: 'Technical documentation and guides', category: 'Core', lastChecked: new Date() },
-  { path: '/dashboard', name: 'Dashboard', status: 'operational', description: 'User dashboard and analytics', category: 'Core', lastChecked: new Date() },
-  { path: '/projects', name: 'Projects', status: 'operational', description: 'Project management interface', category: 'Core', lastChecked: new Date() },
+  {
+    path: "/",
+    name: "Home",
+    status: "operational",
+    description: "Landing page with feature overview",
+    category: "Core",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/documentation",
+    name: "Documentation",
+    status: "operational",
+    description: "Technical documentation and guides",
+    category: "Core",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    status: "operational",
+    description: "User dashboard and analytics",
+    category: "Core",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/projects",
+    name: "Projects",
+    status: "operational",
+    description: "Project management interface",
+    category: "Core",
+    lastChecked: new Date(),
+  },
 
   // Aerodynamics
-  { path: '/labs/aerodynamics', name: 'Aerodynamics Lab', status: 'operational', description: 'CFD and aerodynamic analysis tools', category: 'Aerodynamics', lastChecked: new Date() },
+  {
+    path: "/labs/aerodynamics",
+    name: "Aerodynamics Lab",
+    status: "operational",
+    description: "CFD and aerodynamic analysis tools",
+    category: "Aerodynamics",
+    lastChecked: new Date(),
+  },
 
   // AstroLab - Operational
-  { path: '/astrolab', name: 'AstroLab Hub', status: 'operational', description: 'Main AstroLab interface', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/spatial-globe', name: 'Spatial Globe', status: 'operational', description: '3D geospatial visualization', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/satellite-constellation', name: 'Satellite Constellation', status: 'operational', description: 'LEO/MEO/GEO tracking', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/orbital-mechanics', name: 'Orbital Mechanics', status: 'operational', description: 'Kepler element calculations', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/exoplanet-habitability', name: 'Exoplanet Habitability', status: 'operational', description: 'Habitable zone analysis', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/virtual-observatory', name: 'Virtual Observatory', status: 'operational', description: 'Deep space observation tools', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/radio-astronomy', name: 'Radio Astronomy', status: 'operational', description: 'Radio signal analysis', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/spaceflight-dynamics', name: 'Spaceflight Dynamics', status: 'operational', description: 'Launch and trajectory analysis', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/celestial-mechanics', name: 'Celestial Mechanics', status: 'operational', description: 'N-body simulation', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/atmospheric-science', name: 'Atmospheric Science', status: 'operational', description: 'Planetary atmosphere modeling', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/quantum-astrophysics', name: 'Quantum Astrophysics', status: 'beta', description: 'Quantum mechanics in astrophysics', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/mission-control', name: 'Mission Control', status: 'operational', description: 'Real-time mission monitoring', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/academy', name: 'Academy', status: 'operational', description: 'Educational resources and courses', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/professional', name: 'Professional Suite', status: 'operational', description: 'Enterprise-grade tools', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/investor-demo', name: 'Investor Demo', status: 'operational', description: 'Investor presentation suite', category: 'AstroLab', lastChecked: new Date() },
+  {
+    path: "/astrolab",
+    name: "AstroLab Hub",
+    status: "operational",
+    description: "Main AstroLab interface",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/spatial-globe",
+    name: "Spatial Globe",
+    status: "operational",
+    description: "3D geospatial visualization",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/satellite-constellation",
+    name: "Satellite Constellation",
+    status: "operational",
+    description: "LEO/MEO/GEO tracking",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/orbital-mechanics",
+    name: "Orbital Mechanics",
+    status: "operational",
+    description: "Kepler element calculations",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/exoplanet-habitability",
+    name: "Exoplanet Habitability",
+    status: "operational",
+    description: "Habitable zone analysis",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/virtual-observatory",
+    name: "Virtual Observatory",
+    status: "operational",
+    description: "Deep space observation tools",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/radio-astronomy",
+    name: "Radio Astronomy",
+    status: "operational",
+    description: "Radio signal analysis",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/spaceflight-dynamics",
+    name: "Spaceflight Dynamics",
+    status: "operational",
+    description: "Launch and trajectory analysis",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/celestial-mechanics",
+    name: "Celestial Mechanics",
+    status: "operational",
+    description: "N-body simulation",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/atmospheric-science",
+    name: "Atmospheric Science",
+    status: "operational",
+    description: "Planetary atmosphere modeling",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/quantum-astrophysics",
+    name: "Quantum Astrophysics",
+    status: "beta",
+    description: "Quantum mechanics in astrophysics",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/mission-control",
+    name: "Mission Control",
+    status: "operational",
+    description: "Real-time mission monitoring",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/academy",
+    name: "Academy",
+    status: "operational",
+    description: "Educational resources and courses",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/professional",
+    name: "Professional Suite",
+    status: "operational",
+    description: "Enterprise-grade tools",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/investor-demo",
+    name: "Investor Demo",
+    status: "operational",
+    description: "Investor presentation suite",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
 
   // Additional Labs
-  { path: '/astrolab/astrobiology-lab', name: 'Astrobiology Lab', status: 'operational', description: 'Exoplanet biology analysis', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/cosmology-explorer', name: 'Cosmology Explorer', status: 'operational', description: 'Universe expansion and structure', category: 'AstroLab', lastChecked: new Date() },
-  { path: '/astrolab/exoplanet-imaging', name: 'Exoplanet Imaging', status: 'operational', description: 'Direct imaging analysis', category: 'AstroLab', lastChecked: new Date() },
+  {
+    path: "/astrolab/astrobiology-lab",
+    name: "Astrobiology Lab",
+    status: "operational",
+    description: "Exoplanet biology analysis",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/cosmology-explorer",
+    name: "Cosmology Explorer",
+    status: "operational",
+    description: "Universe expansion and structure",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
+  {
+    path: "/astrolab/exoplanet-imaging",
+    name: "Exoplanet Imaging",
+    status: "operational",
+    description: "Direct imaging analysis",
+    category: "AstroLab",
+    lastChecked: new Date(),
+  },
 ];
 
 const SYSTEM_STATUS: SystemStatus[] = [
-  { component: 'Physics Engine', status: 'operational', message: 'All physics simulations running normally', lastUpdated: new Date() },
-  { component: 'CMS Database', status: 'operational', message: 'Experiments and reports collections operational', lastUpdated: new Date() },
-  { component: 'Validation Service', status: 'operational', message: 'Real-time validation active', lastUpdated: new Date() },
-  { component: 'Data Persistence', status: 'operational', message: 'All data being saved correctly', lastUpdated: new Date() },
-  { component: 'Navigation System', status: 'operational', message: 'All routes verified and functional', lastUpdated: new Date() },
+  {
+    component: "Physics Engine",
+    status: "operational",
+    message: "All physics simulations running normally",
+    lastUpdated: new Date(),
+  },
+  {
+    component: "CMS Database",
+    status: "operational",
+    message: "Experiments and reports collections operational",
+    lastUpdated: new Date(),
+  },
+  {
+    component: "Validation Service",
+    status: "operational",
+    message: "Real-time validation active",
+    lastUpdated: new Date(),
+  },
+  {
+    component: "Data Persistence",
+    status: "operational",
+    message: "All data being saved correctly",
+    lastUpdated: new Date(),
+  },
+  {
+    component: "Navigation System",
+    status: "operational",
+    message: "All routes verified and functional",
+    lastUpdated: new Date(),
+  },
 ];
 
 export default function ProductionStatusPage() {
@@ -72,13 +267,13 @@ export default function ProductionStatusPage() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'operational':
+      case "operational":
         return <CheckCircle className="w-5 h-5 text-green-500" />;
-      case 'beta':
+      case "beta":
         return <AlertCircle className="w-5 h-5 text-yellow-500" />;
-      case 'coming-soon':
+      case "coming-soon":
         return <Zap className="w-5 h-5 text-blue-500" />;
-      case 'maintenance':
+      case "maintenance":
         return <XCircle className="w-5 h-5 text-red-500" />;
       default:
         return null;
@@ -87,47 +282,53 @@ export default function ProductionStatusPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'operational':
-        return 'bg-green-500/10 text-green-500 border-green-500/20';
-      case 'beta':
-        return 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20';
-      case 'coming-soon':
-        return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
-      case 'maintenance':
-        return 'bg-red-500/10 text-red-500 border-red-500/20';
+      case "operational":
+        return "bg-green-500/10 text-green-500 border-green-500/20";
+      case "beta":
+        return "bg-yellow-500/10 text-yellow-500 border-yellow-500/20";
+      case "coming-soon":
+        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
+      case "maintenance":
+        return "bg-red-500/10 text-red-500 border-red-500/20";
       default:
-        return 'bg-gray-500/10 text-gray-500 border-gray-500/20';
+        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
     }
   };
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case 'operational':
-        return 'Operational';
-      case 'beta':
-        return 'Beta';
-      case 'coming-soon':
-        return 'Coming Soon';
-      case 'maintenance':
-        return 'Maintenance';
+      case "operational":
+        return "Operational";
+      case "beta":
+        return "Beta";
+      case "coming-soon":
+        return "Coming Soon";
+      case "maintenance":
+        return "Maintenance";
       default:
-        return 'Unknown';
+        return "Unknown";
     }
   };
 
-  const operationalCount = ROUTE_STATUS.filter((r) => r.status === 'operational').length;
-  const betaCount = ROUTE_STATUS.filter((r) => r.status === 'beta').length;
-  const comingSoonCount = ROUTE_STATUS.filter((r) => r.status === 'coming-soon').length;
+  const operationalCount = ROUTE_STATUS.filter((r) => r.status === "operational").length;
+  const betaCount = ROUTE_STATUS.filter((r) => r.status === "beta").length;
+  const comingSoonCount = ROUTE_STATUS.filter((r) => r.status === "coming-soon").length;
 
   return (
     <div className="min-h-screen bg-aerospace-dark text-foreground flex flex-col">
       <Header />
 
       <main className="flex-1 w-full max-w-[100rem] mx-auto px-6 py-12">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-12"
+        >
           {/* Header */}
           <div>
-            <h1 className="text-5xl font-bold text-foreground font-heading mb-4">Production Status</h1>
+            <h1 className="text-5xl font-bold text-foreground font-heading mb-4">
+              Production Status
+            </h1>
             <p className="text-lg text-secondary-foreground">
               Real-time system health and route verification for ASTROLAB
             </p>
@@ -183,7 +384,9 @@ export default function ProductionStatusPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h2 className="text-2xl font-bold text-foreground font-heading mb-6">System Components</h2>
+            <h2 className="text-2xl font-bold text-foreground font-heading mb-6">
+              System Components
+            </h2>
             <div className="space-y-3">
               {SYSTEM_STATUS.map((component, index) => (
                 <motion.div
@@ -194,9 +397,13 @@ export default function ProductionStatusPage() {
                   className="bg-primary border border-secondary/20 rounded-lg p-4 flex items-center justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    {component.status === 'operational' && <CheckCircle className="w-5 h-5 text-green-500" />}
-                    {component.status === 'warning' && <AlertCircle className="w-5 h-5 text-yellow-500" />}
-                    {component.status === 'error' && <XCircle className="w-5 h-5 text-red-500" />}
+                    {component.status === "operational" && (
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    )}
+                    {component.status === "warning" && (
+                      <AlertCircle className="w-5 h-5 text-yellow-500" />
+                    )}
+                    {component.status === "error" && <XCircle className="w-5 h-5 text-red-500" />}
                     <div>
                       <p className="font-semibold text-foreground">{component.component}</p>
                       <p className="text-sm text-secondary-foreground">{component.message}</p>
@@ -224,8 +431,8 @@ export default function ProductionStatusPage() {
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-lg font-mono text-sm transition-colors ${
                   selectedCategory === null
-                    ? 'bg-aerospace-blue text-white'
-                    : 'bg-primary border border-secondary/20 text-secondary-foreground hover:border-secondary/40'
+                    ? "bg-aerospace-blue text-white"
+                    : "bg-primary border border-secondary/20 text-secondary-foreground hover:border-secondary/40"
                 }`}
               >
                 All ({ROUTE_STATUS.length})
@@ -236,8 +443,8 @@ export default function ProductionStatusPage() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-lg font-mono text-sm transition-colors ${
                     selectedCategory === cat
-                      ? 'bg-aerospace-blue text-white'
-                      : 'bg-primary border border-secondary/20 text-secondary-foreground hover:border-secondary/40'
+                      ? "bg-aerospace-blue text-white"
+                      : "bg-primary border border-secondary/20 text-secondary-foreground hover:border-secondary/40"
                   }`}
                 >
                   {cat} ({ROUTE_STATUS.filter((r) => r.category === cat).length})
@@ -256,7 +463,9 @@ export default function ProductionStatusPage() {
                   className="bg-primary border border-secondary/20 rounded-lg overflow-hidden"
                 >
                   <button
-                    onClick={() => setExpandedRoute(expandedRoute === route.path ? null : route.path)}
+                    onClick={() =>
+                      setExpandedRoute(expandedRoute === route.path ? null : route.path)
+                    }
                     className="w-full p-4 flex items-center justify-between hover:bg-primary/80 transition-colors"
                   >
                     <div className="flex items-center gap-4 flex-1 text-left">
@@ -266,7 +475,9 @@ export default function ProductionStatusPage() {
                         <p className="text-sm text-secondary-foreground font-mono">{route.path}</p>
                       </div>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(route.status)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(route.status)}`}
+                    >
                       {getStatusLabel(route.status)}
                     </span>
                   </button>
@@ -274,7 +485,7 @@ export default function ProductionStatusPage() {
                   {expandedRoute === route.path && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
+                      animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       className="border-t border-secondary/20 bg-primary/50 p-4"
                     >
@@ -302,7 +513,9 @@ export default function ProductionStatusPage() {
               <div>
                 <h3 className="text-xl font-bold text-foreground mb-2">Production Ready</h3>
                 <p className="text-secondary-foreground mb-4">
-                  ASTROLAB has passed comprehensive system audit and is ready for production deployment. All core routes are operational, physics simulations are mathematically validated, and CMS operations are fully functional.
+                  ASTROLAB has passed comprehensive system audit and is ready for production
+                  deployment. All core routes are operational, physics simulations are
+                  mathematically validated, and CMS operations are fully functional.
                 </p>
                 <ul className="space-y-2 text-sm text-secondary-foreground">
                   <li className="flex items-center gap-2">

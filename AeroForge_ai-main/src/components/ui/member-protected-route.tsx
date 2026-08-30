@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
-import { useMember } from '@/integrations';
-import { SignIn } from '@/components/ui/sign-in';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { ReactNode } from "react";
+import { useMember } from "@/integrations";
+import { SignIn } from "@/components/ui/sign-in";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 interface SignInProps {
   title?: string;
@@ -41,7 +41,7 @@ export function MemberProtectedRoute({
   signInClassName = "",
   loadingClassName = "",
   signInProps = {},
-  loadingSpinnerProps = {}
+  loadingSpinnerProps = {},
 }: MemberProtectedRouteProps) {
   const { isAuthenticated, isLoading } = useMember();
 

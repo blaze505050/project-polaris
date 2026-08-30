@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { User } from "@supabase/supabase-js";
 import {
   Award,
@@ -80,6 +80,7 @@ interface AIResponse {
 
 export function Portal() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [activeTab, setActiveTab] = useState<"workspace" | "ai_mentor" | "skills">("workspace");
 
@@ -161,6 +162,7 @@ export function Portal() {
 
   async function signOut() {
     await supabase.auth.signOut();
+    queryClient.clear();
     navigate({ to: "/auth" });
   }
 
@@ -245,7 +247,12 @@ def verify_parameters(mach: float, altitude_km: float):
                 Open AeroForge Lab
               </Link>
             </Button>
-            <Button size="sm" variant="ghost" className="h-8 text-xs font-mono text-muted-foreground" onClick={signOut}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-8 text-xs font-mono text-muted-foreground"
+              onClick={signOut}
+            >
               Sign out
             </Button>
           </div>
@@ -261,17 +268,21 @@ def verify_parameters(mach: float, altitude_km: float):
               <span>Current Sprint Objective</span>
             </div>
             <p className="text-sm font-semibold text-foreground">
-              Validate oblique shock boundary conditions against NACA Report 1135 experimental tables.
+              Validate oblique shock boundary conditions against NACA Report 1135 experimental
+              tables.
             </p>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Target: Reduce residual divergence in Mach 2.0+ regimes and submit verification pull request.
+              Target: Reduce residual divergence in Mach 2.0+ regimes and submit verification pull
+              request.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Button
               size="sm"
               className="h-8 text-xs bg-foreground text-background font-medium"
-              onClick={() => handleAskMentor("Validate shockwave angle solver against NACA 1135 baseline")}
+              onClick={() =>
+                handleAskMentor("Validate shockwave angle solver against NACA 1135 baseline")
+              }
             >
               <Sparkles className="size-3.5 mr-1.5 text-primary" />
               Ask AI Mentor
@@ -329,7 +340,9 @@ def verify_parameters(mach: float, altitude_km: float):
               <div className="card-premium p-6">
                 <div className="flex items-center justify-between border-b border-border pb-4 mb-4">
                   <div>
-                    <span className="text-[10px] font-mono text-muted-foreground uppercase">Enrolled Cohort</span>
+                    <span className="text-[10px] font-mono text-muted-foreground uppercase">
+                      Enrolled Cohort
+                    </span>
                     <h2 className="text-base font-bold text-foreground mt-0.5">{activeCourse}</h2>
                   </div>
                   <span className="text-xs font-mono px-2 py-0.5 rounded bg-surface-2 border border-border text-foreground">
@@ -359,13 +372,20 @@ def verify_parameters(mach: float, altitude_km: float):
               {/* Sprint Tasks */}
               <div className="card-premium p-6">
                 <div className="flex items-center justify-between border-b border-border pb-3 mb-4">
-                  <h3 className="text-xs font-mono uppercase font-bold text-foreground">Sprint Deliverables & Tasks</h3>
-                  <span className="text-[11px] font-mono text-muted-foreground">3 / 4 Completed</span>
+                  <h3 className="text-xs font-mono uppercase font-bold text-foreground">
+                    Sprint Deliverables & Tasks
+                  </h3>
+                  <span className="text-[11px] font-mono text-muted-foreground">
+                    3 / 4 Completed
+                  </span>
                 </div>
 
                 <div className="space-y-2.5 font-mono text-xs">
                   {[
-                    { title: "Run 1D compressible isentropic flow solver verification", done: true },
+                    {
+                      title: "Run 1D compressible isentropic flow solver verification",
+                      done: true,
+                    },
                     { title: "Calculate shock angle β for wedge angles 5° to 25°", done: true },
                     { title: "Derive Rayleigh Pitot tube supersonic formula in notes", done: true },
                     { title: "Implement bisection guard for detached shock regimes", done: false },
@@ -379,8 +399,12 @@ def verify_parameters(mach: float, altitude_km: float):
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
-                        <CheckCircle2 className={`size-4 ${task.done ? "text-emerald-400" : "text-border-strong"}`} />
-                        <span className={task.done ? "line-through opacity-70" : ""}>{task.title}</span>
+                        <CheckCircle2
+                          className={`size-4 ${task.done ? "text-emerald-400" : "text-border-strong"}`}
+                        />
+                        <span className={task.done ? "line-through opacity-70" : ""}>
+                          {task.title}
+                        </span>
                       </div>
                       {!task.done && (
                         <button
@@ -418,7 +442,12 @@ def verify_parameters(mach: float, altitude_km: float):
                   <span>Engineering Toolkit</span>
                 </div>
                 <div className="space-y-2">
-                  <Button asChild variant="outline" size="sm" className="w-full justify-between h-9 text-xs font-mono">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-between h-9 text-xs font-mono"
+                  >
                     <Link to="/aeroforge">
                       <span className="flex items-center gap-2">
                         <Cpu className="size-3.5 text-primary" /> AeroForge 40+ Solvers
@@ -426,7 +455,12 @@ def verify_parameters(mach: float, altitude_km: float):
                       <ArrowRight className="size-3" />
                     </Link>
                   </Button>
-                  <Button asChild variant="outline" size="sm" className="w-full justify-between h-9 text-xs font-mono">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="w-full justify-between h-9 text-xs font-mono"
+                  >
                     <Link to="/projects">
                       <span className="flex items-center gap-2">
                         <Orbit className="size-3.5 text-accent" /> Sky Atlas Catalog
@@ -451,7 +485,8 @@ def verify_parameters(mach: float, altitude_km: float):
                   <span>Polaris AI Engineering Co-Pilot</span>
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed mb-4">
-                  Ask for numerical equations, code implementations, aerodynamic proofs, or literature validation.
+                  Ask for numerical equations, code implementations, aerodynamic proofs, or
+                  literature validation.
                 </p>
 
                 <div className="space-y-3">
@@ -511,8 +546,12 @@ def verify_parameters(mach: float, altitude_km: float):
                 <div className="card-premium p-6 space-y-6">
                   {/* Query Header */}
                   <div className="border-b border-border pb-4">
-                    <span className="text-[10px] font-mono text-primary uppercase font-bold">Engineering Output</span>
-                    <h3 className="text-base font-bold text-foreground mt-1">{activeAiOutput.query}</h3>
+                    <span className="text-[10px] font-mono text-primary uppercase font-bold">
+                      Engineering Output
+                    </span>
+                    <h3 className="text-base font-bold text-foreground mt-1">
+                      {activeAiOutput.query}
+                    </h3>
                   </div>
 
                   {/* Analysis */}
@@ -532,7 +571,10 @@ def verify_parameters(mach: float, altitude_km: float):
                     </h4>
                     <ul className="space-y-2 text-xs font-mono">
                       {activeAiOutput.steps.map((step, idx) => (
-                        <li key={idx} className="flex items-start gap-2 p-2.5 rounded bg-surface-2/30 border border-border">
+                        <li
+                          key={idx}
+                          className="flex items-start gap-2 p-2.5 rounded bg-surface-2/30 border border-border"
+                        >
                           <span className="text-primary font-bold">{idx + 1}.</span>
                           <span className="text-foreground">{step}</span>
                         </li>
@@ -571,7 +613,9 @@ def verify_parameters(mach: float, altitude_km: float):
 
                   {/* Academic References */}
                   <div className="pt-3 border-t border-border text-[11px] font-mono text-muted-foreground">
-                    <span className="font-bold uppercase text-foreground">Literature References:</span>
+                    <span className="font-bold uppercase text-foreground">
+                      Literature References:
+                    </span>
                     <ul className="mt-1 space-y-1">
                       {activeAiOutput.references.map((ref, idx) => (
                         <li key={idx}>• {ref}</li>
@@ -581,7 +625,8 @@ def verify_parameters(mach: float, altitude_km: float):
                 </div>
               ) : (
                 <div className="card-premium p-12 text-center text-muted-foreground text-xs font-mono">
-                  Select an engineering query or type a prompt to generate structured technical reviews.
+                  Select an engineering query or type a prompt to generate structured technical
+                  reviews.
                 </div>
               )}
             </div>
@@ -596,7 +641,8 @@ def verify_parameters(mach: float, altitude_km: float):
                 Verified Technical Capabilities
               </h3>
               <p className="text-xs text-muted-foreground mb-4">
-                Skills validated through completed assignments, simulation code contributions, and mentor reviews.
+                Skills validated through completed assignments, simulation code contributions, and
+                mentor reviews.
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -627,7 +673,12 @@ def verify_parameters(mach: float, altitude_km: float):
                   <span>Portfolio URL:</span>
                   <span className="text-muted-foreground">
                     {rows[0]?.portfolio_url ? (
-                      <a href={rows[0].portfolio_url} target="_blank" rel="noreferrer" className="text-primary underline">
+                      <a
+                        href={rows[0].portfolio_url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-primary underline"
+                      >
                         View Artifacts
                       </a>
                     ) : (

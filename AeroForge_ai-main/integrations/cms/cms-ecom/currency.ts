@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import { currentCart } from '@wix/ecom';
+import { create } from "zustand";
+import { currentCart } from "@wix/ecom";
 
 /**
  * Default currency code to use when the site currency is not available.
  */
-export const DEFAULT_CURRENCY = 'USD';
+export const DEFAULT_CURRENCY = "USD";
 
 /**
  * Formats a numeric amount as a currency string.
@@ -27,14 +27,14 @@ export const DEFAULT_CURRENCY = 'USD';
 export function formatPrice(amount: number, currencyCode: string): string {
   try {
     return new Intl.NumberFormat(undefined, {
-      style: 'currency',
+      style: "currency",
       currency: currencyCode,
     }).format(amount);
   } catch {
     // Fallback for invalid currency codes
     console.warn(`Invalid currency code: ${currencyCode}, falling back to ${DEFAULT_CURRENCY}`);
     return new Intl.NumberFormat(undefined, {
-      style: 'currency',
+      style: "currency",
       currency: DEFAULT_CURRENCY,
     }).format(amount);
   }
@@ -79,20 +79,20 @@ const useCurrencyStore = create<CurrencyStore>((set, get) => ({
         // Cart not found is fine - we just don't have currency yet
         const isNotFound =
           error &&
-          typeof error === 'object' &&
-          ((error as { details?: { applicationError?: { code?: string } } }).details?.applicationError
-            ?.code === 'CART_NOT_FOUND' ||
-            (error as { details?: { applicationError?: { code?: string } } }).details?.applicationError
-              ?.code === 'OWNED_CART_NOT_FOUND');
+          typeof error === "object" &&
+          ((error as { details?: { applicationError?: { code?: string } } }).details
+            ?.applicationError?.code === "CART_NOT_FOUND" ||
+            (error as { details?: { applicationError?: { code?: string } } }).details
+              ?.applicationError?.code === "OWNED_CART_NOT_FOUND");
 
         if (isNotFound) {
           set({ currency: null, isLoading: false, _initialized: true });
         } else {
-          console.warn('Failed to fetch currency:', error);
+          console.warn("Failed to fetch currency:", error);
           set({
             currency: null,
             isLoading: false,
-            error: error instanceof Error ? error.message : 'Failed to fetch currency',
+            error: error instanceof Error ? error.message : "Failed to fetch currency",
             _initialized: true,
           });
         }

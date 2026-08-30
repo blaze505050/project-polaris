@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Wind,
   Zap,
@@ -21,25 +21,18 @@ import {
   Shield,
   HelpCircle,
   FolderPlus,
-} from 'lucide-react';
-import { useToastStore } from '@/stores/toastStore';
-import { useUnitStore } from '@/stores/unitStore';
-import { analytics } from '@/services/productAnalytics';
-import {
-  AerodynamicSolver,
-  AtmosphericModel,
-} from '@/services/enhancedPhysicsEngine';
+} from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
+import { useUnitStore } from "@/stores/unitStore";
+import { analytics } from "@/services/productAnalytics";
+import { AerodynamicSolver, AtmosphericModel } from "@/services/enhancedPhysicsEngine";
 
-export default function GuidedEngineeringDemo({
-  onComplete,
-}: {
-  onComplete?: () => void;
-}) {
+export default function GuidedEngineeringDemo({ onComplete }: { onComplete?: () => void }) {
   const { addToast } = useToastStore();
   const { formatPressure } = useUnitStore();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [selectedAirfoil, setSelectedAirfoil] = useState('NACA 0012');
+  const [selectedAirfoil, setSelectedAirfoil] = useState("NACA 0012");
   const [camber, setCamber] = useState(2.0);
   const [thickness, setThickness] = useState(12.0);
   const [mach, setMach] = useState(0.82);
@@ -61,15 +54,15 @@ export default function GuidedEngineeringDemo({
   } | null>(null);
 
   const steps = [
-    { num: 1, title: 'Airfoil Selection', icon: Wind },
-    { num: 2, title: 'Geometry Morphing', icon: Sliders },
-    { num: 3, title: 'CFD Run', icon: Play },
-    { num: 4, title: 'Pressure Results', icon: BarChart3 },
-    { num: 5, title: 'Optimization Engine', icon: Zap },
-    { num: 6, title: 'Baseline vs Optimized', icon: Layers },
-    { num: 7, title: 'Notebook Sync', icon: BookOpen },
-    { num: 8, title: 'AI Copilot Insight', icon: Brain },
-    { num: 9, title: 'Report Export', icon: FileText },
+    { num: 1, title: "Airfoil Selection", icon: Wind },
+    { num: 2, title: "Geometry Morphing", icon: Sliders },
+    { num: 3, title: "CFD Run", icon: Play },
+    { num: 4, title: "Pressure Results", icon: BarChart3 },
+    { num: 5, title: "Optimization Engine", icon: Zap },
+    { num: 6, title: "Baseline vs Optimized", icon: Layers },
+    { num: 7, title: "Notebook Sync", icon: BookOpen },
+    { num: 8, title: "AI Copilot Insight", icon: Brain },
+    { num: 9, title: "Report Export", icon: FileText },
   ];
 
   // Helper to generate SVG path for NACA 4-digit airfoil
@@ -111,7 +104,7 @@ export default function GuidedEngineeringDemo({
     }
 
     const all = [...upperPoints, ...lowerPoints];
-    return `M ${all[0][0]},${all[0][1]} ` + all.map((pt) => `L ${pt[0]},${pt[1]}`).join(' ') + ' Z';
+    return `M ${all[0][0]},${all[0][1]} ` + all.map((pt) => `L ${pt[0]},${pt[1]}`).join(" ") + " Z";
   };
 
   const handleRunCFD = () => {
@@ -132,9 +125,9 @@ export default function GuidedEngineeringDemo({
       });
 
       addToast({
-        title: 'Compressible Solver Execution Complete',
+        title: "Compressible Solver Execution Complete",
         description: `Mach ${mach} flow field converged. L/D = ${ldVal.toFixed(2)}`,
-        type: 'success',
+        type: "success",
       });
       setCurrentStep(4);
     }, 800);
@@ -153,9 +146,9 @@ export default function GuidedEngineeringDemo({
         });
       }
       addToast({
-        title: 'Pareto Optimization Converged',
-        description: 'Drag reduced by 9.0%, L/D increased by +18.7%.',
-        type: 'success',
+        title: "Pareto Optimization Converged",
+        description: "Drag reduced by 9.0%, L/D increased by +18.7%.",
+        type: "success",
       });
       setCurrentStep(6);
     }, 1200);
@@ -176,7 +169,8 @@ export default function GuidedEngineeringDemo({
             Morphing Airfoil Aerodynamic Optimization Study
           </h2>
           <p className="text-xs text-white/60 font-sans mt-0.5">
-            Experience the complete end-to-end AeroForge engineering loop: Geometry → CFD → Optimization → Comparison → Notebook → AI Insight → AS9100 Report.
+            Experience the complete end-to-end AeroForge engineering loop: Geometry → CFD →
+            Optimization → Comparison → Notebook → AI Insight → AS9100 Report.
           </p>
         </div>
 
@@ -204,10 +198,10 @@ export default function GuidedEngineeringDemo({
               onClick={() => setCurrentStep(st.num)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] whitespace-nowrap transition-all ${
                 isCurrent
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold'
+                  ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold"
                   : isDone
-                  ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                  : 'bg-white/5 text-white/40 border border-white/10'
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                    : "bg-white/5 text-white/40 border border-white/10"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -228,23 +222,26 @@ export default function GuidedEngineeringDemo({
               Step 1: Choose Baseline Airfoil Geometry
             </h3>
             <p className="text-xs text-white/70 font-sans leading-relaxed">
-              Select an initial aerodynamic profile to analyze in subsonic to transonic compressible flow.
+              Select an initial aerodynamic profile to analyze in subsonic to transonic compressible
+              flow.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {['NACA 0012', 'NACA 4412', 'NASA SC(2)-0714 (Supercritical)'].map((af) => (
+              {["NACA 0012", "NACA 4412", "NASA SC(2)-0714 (Supercritical)"].map((af) => (
                 <button
                   key={af}
                   onClick={() => setSelectedAirfoil(af)}
                   className={`p-4 rounded-lg border text-left transition-all ${
                     selectedAirfoil === af
-                      ? 'border-cyan-400 bg-cyan-500/10 text-white font-bold'
-                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/30'
+                      ? "border-cyan-400 bg-cyan-500/10 text-white font-bold"
+                      : "border-white/10 bg-white/5 text-white/70 hover:border-white/30"
                   }`}
                 >
                   <Wind className="w-5 h-5 text-cyan-400 mb-2" />
                   <div className="text-xs">{af}</div>
                   <span className="text-[10px] text-white/40 block mt-1">
-                    {af.includes('Supercritical') ? 'Transonic shock mitigation' : 'Standard 4-digit series'}
+                    {af.includes("Supercritical")
+                      ? "Transonic shock mitigation"
+                      : "Standard 4-digit series"}
                   </span>
                 </button>
               ))}
@@ -332,7 +329,7 @@ export default function GuidedEngineeringDemo({
               className="w-full py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/20"
             >
               <Play className="w-4 h-4" />
-              <span>{isSimulating ? 'Solving Navier-Stokes Equations...' : 'Run CFD Solver'}</span>
+              <span>{isSimulating ? "Solving Navier-Stokes Equations..." : "Run CFD Solver"}</span>
             </button>
           </div>
         )}
@@ -371,7 +368,8 @@ export default function GuidedEngineeringDemo({
               Step 5: Run Multi-Objective Pareto Optimization Engine
             </h3>
             <p className="text-xs text-white/70 font-sans leading-relaxed">
-              Use genetic algorithms to maximize L/D while delaying shock-induced separation at Mach {mach}.
+              Use genetic algorithms to maximize L/D while delaying shock-induced separation at Mach{" "}
+              {mach}.
             </p>
             <button
               onClick={handleRunOptimization}
@@ -379,7 +377,9 @@ export default function GuidedEngineeringDemo({
               className="w-full py-3 rounded-lg bg-pink-500 hover:bg-pink-400 text-white font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-pink-500/20"
             >
               <Zap className="w-4 h-4" />
-              <span>{isSimulating ? 'Computing Pareto Frontier...' : 'Optimize Airfoil Shape'}</span>
+              <span>
+                {isSimulating ? "Computing Pareto Frontier..." : "Optimize Airfoil Shape"}
+              </span>
             </button>
           </div>
         )}
@@ -392,7 +392,9 @@ export default function GuidedEngineeringDemo({
             </h3>
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div className="bg-[#080E1C] p-3.5 rounded border border-white/10 space-y-2">
-                <span className="text-[10px] text-white/40 uppercase font-bold">BASELINE DESIGN</span>
+                <span className="text-[10px] text-white/40 uppercase font-bold">
+                  BASELINE DESIGN
+                </span>
                 <div className="flex justify-between">
                   <span>Lift (C_L):</span>
                   <span className="font-bold">{baselineResults.cl}</span>
@@ -408,7 +410,9 @@ export default function GuidedEngineeringDemo({
               </div>
 
               <div className="bg-[#080E1C] p-3.5 rounded border border-emerald-500/30 bg-emerald-500/5 space-y-2">
-                <span className="text-[10px] text-emerald-400 uppercase font-bold">OPTIMIZED DESIGN</span>
+                <span className="text-[10px] text-emerald-400 uppercase font-bold">
+                  OPTIMIZED DESIGN
+                </span>
                 <div className="flex justify-between">
                   <span>Lift (C_L):</span>
                   <span className="font-bold text-emerald-400">{optimizedResults.cl} (+8%)</span>
@@ -451,7 +455,9 @@ export default function GuidedEngineeringDemo({
                 <Brain className="w-4 h-4" />
                 <span>AI COPILOT ANALYSIS</span>
               </div>
-              "The shape optimization weakened the suction-side shockwave at $x/c = 0.42$, eliminating Mach stall and yielding a **+18.7% increase in L/D ratio**. Recommended next action: Verify structural yield margin on modified trailing edge."
+              "The shape optimization weakened the suction-side shockwave at $x/c = 0.42$,
+              eliminating Mach stall and yielding a **+18.7% increase in L/D ratio**. Recommended
+              next action: Verify structural yield margin on modified trailing edge."
             </div>
           </div>
         )}
@@ -470,29 +476,35 @@ export default function GuidedEngineeringDemo({
                 Guided Engineering Demo Complete!
               </h3>
               <p className="text-xs text-white/70 font-sans max-w-md mx-auto mt-1 leading-relaxed">
-                You have experienced the complete AeroForge digital engineering thread: Airfoil selection → CFD simulation → Shape optimization → Notebook sync → AI interpretation → Technical report export.
+                You have experienced the complete AeroForge digital engineering thread: Airfoil
+                selection → CFD simulation → Shape optimization → Notebook sync → AI interpretation
+                → Technical report export.
               </p>
             </div>
 
             <div className="bg-[#080E1C] p-4 rounded-xl border border-white/10 max-w-lg mx-auto text-left text-xs font-mono space-y-2">
               <div className="flex justify-between text-white/60">
                 <span>Execution Mode:</span>
-                <span className="text-cyan-400 font-bold">Interactive Demo (Precomputed Solvers)</span>
+                <span className="text-cyan-400 font-bold">
+                  Interactive Demo (Precomputed Solvers)
+                </span>
               </div>
               <div className="flex justify-between text-white/60">
                 <span>Baseline L/D Ratio:</span>
-                <span className="text-white">{baselineResults ? baselineResults.ld : '14.82'}</span>
+                <span className="text-white">{baselineResults ? baselineResults.ld : "14.82"}</span>
               </div>
               <div className="flex justify-between text-white/60">
                 <span>Optimized L/D Ratio:</span>
-                <span className="text-emerald-400 font-bold">{optimizedResults ? optimizedResults.ld : '17.59'} (+18.7%)</span>
+                <span className="text-emerald-400 font-bold">
+                  {optimizedResults ? optimizedResults.ld : "17.59"} (+18.7%)
+                </span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link
                 to="/projects"
-                onClick={() => analytics.track('project_created', { source: 'demo_completion' })}
+                onClick={() => analytics.track("project_created", { source: "demo_completion" })}
                 className="w-full sm:w-auto px-6 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/20 font-mono"
               >
                 <FolderPlus className="w-4 h-4" />
@@ -500,11 +512,11 @@ export default function GuidedEngineeringDemo({
               </Link>
               <button
                 onClick={() => {
-                  analytics.track('report_exported', { format: 'pdf', source: 'demo' });
+                  analytics.track("report_exported", { format: "pdf", source: "demo" });
                   addToast({
-                    title: 'AS9100 Report Downloaded',
-                    description: 'Technical verification document saved to PDF.',
-                    type: 'success',
+                    title: "AS9100 Report Downloaded",
+                    description: "Technical verification document saved to PDF.",
+                    type: "success",
                   });
                   if (onComplete) onComplete();
                 }}

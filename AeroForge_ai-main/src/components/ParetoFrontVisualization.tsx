@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   ScatterChart,
   Scatter,
@@ -17,9 +17,9 @@ import {
   Area,
   ReferenceLine,
   LineChart,
-} from 'recharts';
-import { Solution } from '@/services/multiObjectiveOptimizationService';
-import { Maximize2, Minimize2, TrendingUp, Zap } from 'lucide-react';
+} from "recharts";
+import { Solution } from "@/services/multiObjectiveOptimizationService";
+import { Maximize2, Minimize2, TrendingUp, Zap } from "lucide-react";
 
 interface ParetoVisualizationProps {
   paretoFront: Solution[];
@@ -33,12 +33,12 @@ interface ParetoVisualizationProps {
 }
 
 const getColorByRank = (rank: number | undefined, maxRank: number): string => {
-  if (!rank) return '#0EA5E9';
+  if (!rank) return "#0EA5E9";
   const ratio = rank / maxRank;
-  if (ratio < 0.25) return '#10B981';
-  if (ratio < 0.5) return '#0EA5E9';
-  if (ratio < 0.75) return '#F59E0B';
-  return '#EF4444';
+  if (ratio < 0.25) return "#10B981";
+  if (ratio < 0.5) return "#0EA5E9";
+  if (ratio < 0.75) return "#F59E0B";
+  return "#EF4444";
 };
 
 export default function ParetoFrontVisualization({
@@ -46,7 +46,7 @@ export default function ParetoFrontVisualization({
   convergenceHistory,
   statistics,
 }: ParetoVisualizationProps) {
-  const [viewMode, setViewMode] = useState<'2d' | '3d-like' | 'metrics'>('2d');
+  const [viewMode, setViewMode] = useState<"2d" | "3d-like" | "metrics">("2d");
 
   const maxRank = Math.max(...paretoFront.map((s) => s.rank || 0), 1);
 
@@ -54,10 +54,10 @@ export default function ParetoFrontVisualization({
   const paretoData = useMemo(() => {
     return paretoFront.map((sol, idx) => ({
       id: idx,
-      drag: sol.objectives['Drag'],
-      lift: sol.objectives['Lift'],
-      weight: sol.objectives['Weight'],
-      efficiency: sol.objectives['Efficiency'],
+      drag: sol.objectives["Drag"],
+      lift: sol.objectives["Lift"],
+      weight: sol.objectives["Weight"],
+      efficiency: sol.objectives["Efficiency"],
       rank: sol.rank || 0,
       color: getColorByRank(sol.rank, maxRank),
       size: 50 + (maxRank - (sol.rank || 0)) * 10,
@@ -68,10 +68,10 @@ export default function ParetoFrontVisualization({
   const metricsData = useMemo(() => {
     return paretoFront.slice(0, 15).map((sol, idx) => ({
       id: idx,
-      drag: sol.objectives['Drag'],
-      lift: sol.objectives['Lift'],
-      weight: sol.objectives['Weight'] / 10, // Scale for visibility
-      efficiency: sol.objectives['Efficiency'],
+      drag: sol.objectives["Drag"],
+      lift: sol.objectives["Lift"],
+      weight: sol.objectives["Weight"] / 10, // Scale for visibility
+      efficiency: sol.objectives["Efficiency"],
     }));
   }, [paretoFront]);
 
@@ -79,9 +79,10 @@ export default function ParetoFrontVisualization({
   const convergenceData = useMemo(() => {
     return convergenceHistory.map((item, idx) => ({
       ...item,
-      smoothed: convergenceHistory
-        .slice(Math.max(0, idx - 2), idx + 3)
-        .reduce((sum, h) => sum + h.hypervolume, 0) / Math.min(5, idx + 3),
+      smoothed:
+        convergenceHistory
+          .slice(Math.max(0, idx - 2), idx + 3)
+          .reduce((sum, h) => sum + h.hypervolume, 0) / Math.min(5, idx + 3),
     }));
   }, [convergenceHistory]);
 
@@ -93,25 +94,25 @@ export default function ParetoFrontVisualization({
         animate={{ opacity: 1, y: 0 }}
         className="flex gap-3 bg-slate-800 rounded-xl p-4 border border-slate-700"
       >
-        {(['2d', '3d-like', 'metrics'] as const).map((mode) => (
+        {(["2d", "3d-like", "metrics"] as const).map((mode) => (
           <button
             key={mode}
             onClick={() => setViewMode(mode)}
             className={`px-4 py-2 rounded-lg font-paragraph font-semibold transition-all ${
               viewMode === mode
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                ? "bg-blue-600 text-white shadow-lg"
+                : "bg-slate-700 text-slate-300 hover:bg-slate-600"
             }`}
           >
-            {mode === '2d' && 'Standard 2D'}
-            {mode === '3d-like' && '3D-Like View'}
-            {mode === 'metrics' && 'Metrics'}
+            {mode === "2d" && "Standard 2D"}
+            {mode === "3d-like" && "3D-Like View"}
+            {mode === "metrics" && "Metrics"}
           </button>
         ))}
       </motion.div>
 
       {/* 2D Standard View */}
-      {viewMode === '2d' && (
+      {viewMode === "2d" && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -130,16 +131,20 @@ export default function ParetoFrontVisualization({
                   dataKey="drag"
                   type="number"
                   stroke="#94a3b8"
-                  label={{ value: 'Drag (Lower is Better)', position: 'insideBottomRight', offset: -5 }}
+                  label={{
+                    value: "Drag (Lower is Better)",
+                    position: "insideBottomRight",
+                    offset: -5,
+                  }}
                 />
                 <YAxis
                   dataKey="lift"
                   stroke="#94a3b8"
-                  label={{ value: 'Lift (Higher is Better)', angle: -90, position: 'insideLeft' }}
+                  label={{ value: "Lift (Higher is Better)", angle: -90, position: "insideLeft" }}
                 />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-                  cursor={{ strokeDasharray: '3 3' }}
+                  contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
+                  cursor={{ strokeDasharray: "3 3" }}
                 />
                 <Scatter name="Pareto Front" data={paretoData}>
                   {paretoData.map((entry, index) => (
@@ -163,16 +168,24 @@ export default function ParetoFrontVisualization({
                   dataKey="weight"
                   type="number"
                   stroke="#94a3b8"
-                  label={{ value: 'Weight (Lower is Better)', position: 'insideBottomRight', offset: -5 }}
+                  label={{
+                    value: "Weight (Lower is Better)",
+                    position: "insideBottomRight",
+                    offset: -5,
+                  }}
                 />
                 <YAxis
                   dataKey="efficiency"
                   stroke="#94a3b8"
-                  label={{ value: 'Efficiency (Higher is Better)', angle: -90, position: 'insideLeft' }}
+                  label={{
+                    value: "Efficiency (Higher is Better)",
+                    angle: -90,
+                    position: "insideLeft",
+                  }}
                 />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-                  cursor={{ strokeDasharray: '3 3' }}
+                  contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
+                  cursor={{ strokeDasharray: "3 3" }}
                 />
                 <Scatter name="Pareto Front" data={paretoData}>
                   {paretoData.map((entry, index) => (
@@ -186,7 +199,7 @@ export default function ParetoFrontVisualization({
       )}
 
       {/* 3D-Like View */}
-      {viewMode === '3d-like' && (
+      {viewMode === "3d-like" && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -207,16 +220,16 @@ export default function ParetoFrontVisualization({
                   dataKey="drag"
                   type="number"
                   stroke="#94a3b8"
-                  label={{ value: 'Drag Coefficient', position: 'insideBottomRight', offset: -5 }}
+                  label={{ value: "Drag Coefficient", position: "insideBottomRight", offset: -5 }}
                 />
                 <YAxis
                   dataKey="lift"
                   stroke="#94a3b8"
-                  label={{ value: 'Lift Coefficient', angle: -90, position: 'insideLeft' }}
+                  label={{ value: "Lift Coefficient", angle: -90, position: "insideLeft" }}
                 />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
-                  cursor={{ strokeDasharray: '3 3' }}
+                  contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
+                  cursor={{ strokeDasharray: "3 3" }}
                   content={({ active, payload }) => {
                     if (active && payload && payload[0]) {
                       const data = payload[0].payload;
@@ -225,7 +238,9 @@ export default function ParetoFrontVisualization({
                           <p className="text-blue-400">Drag: {data.drag.toFixed(4)}</p>
                           <p className="text-green-400">Lift: {data.lift.toFixed(4)}</p>
                           <p className="text-yellow-400">Weight: {data.weight.toFixed(2)}</p>
-                          <p className="text-purple-400">Efficiency: {data.efficiency.toFixed(4)}</p>
+                          <p className="text-purple-400">
+                            Efficiency: {data.efficiency.toFixed(4)}
+                          </p>
                           <p className="text-slate-300">Rank: {data.rank}</p>
                         </div>
                       );
@@ -249,7 +264,10 @@ export default function ParetoFrontVisualization({
               Convergence Trajectory
             </h4>
             <ResponsiveContainer width="100%" height={350}>
-              <AreaChart data={convergenceData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <AreaChart
+                data={convergenceData}
+                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+              >
                 <defs>
                   <linearGradient id="convergenceGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.8} />
@@ -260,11 +278,11 @@ export default function ParetoFrontVisualization({
                 <XAxis
                   dataKey="generation"
                   stroke="#94a3b8"
-                  label={{ value: 'Generation', position: 'insideBottomRight', offset: -5 }}
+                  label={{ value: "Generation", position: "insideBottomRight", offset: -5 }}
                 />
                 <YAxis stroke="#94a3b8" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
+                  contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
                 />
                 <Area
                   type="monotone"
@@ -285,7 +303,12 @@ export default function ParetoFrontVisualization({
                   y={statistics.bestFitness}
                   stroke="#F59E0B"
                   strokeDasharray="5 5"
-                  label={{ value: 'Best Fitness', position: 'right', fill: '#F59E0B', fontSize: 12 }}
+                  label={{
+                    value: "Best Fitness",
+                    position: "right",
+                    fill: "#F59E0B",
+                    fontSize: 12,
+                  }}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -294,7 +317,7 @@ export default function ParetoFrontVisualization({
       )}
 
       {/* Metrics View */}
-      {viewMode === 'metrics' && (
+      {viewMode === "metrics" && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -307,12 +330,15 @@ export default function ParetoFrontVisualization({
               Objective Metrics Comparison (Top 15)
             </h4>
             <ResponsiveContainer width="100%" height={400}>
-              <ComposedChart data={metricsData} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <ComposedChart
+                data={metricsData}
+                margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                 <XAxis dataKey="id" stroke="#94a3b8" />
                 <YAxis stroke="#94a3b8" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569' }}
+                  contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
                 />
                 <Legend />
                 <Bar dataKey="drag" fill="#0EA5E9" fillOpacity={0.7} name="Drag" />
@@ -333,28 +359,28 @@ export default function ParetoFrontVisualization({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
-                label: 'Best Fitness',
+                label: "Best Fitness",
                 value: statistics.bestFitness.toFixed(6),
-                icon: '⚡',
-                color: 'blue',
+                icon: "⚡",
+                color: "blue",
               },
               {
-                label: 'Average Fitness',
+                label: "Average Fitness",
                 value: statistics.averageFitness.toFixed(6),
-                icon: '📊',
-                color: 'green',
+                icon: "📊",
+                color: "green",
               },
               {
-                label: 'Population Diversity',
+                label: "Population Diversity",
                 value: statistics.diversity.toFixed(4),
-                icon: '🎯',
-                color: 'purple',
+                icon: "🎯",
+                color: "purple",
               },
               {
-                label: 'Spread Metric',
+                label: "Spread Metric",
                 value: statistics.spreadMetric.toFixed(4),
-                icon: '📈',
-                color: 'orange',
+                icon: "📈",
+                color: "orange",
               },
             ].map((stat, idx) => (
               <motion.div

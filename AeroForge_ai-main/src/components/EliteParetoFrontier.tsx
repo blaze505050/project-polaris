@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import {
   ScatterChart,
   Scatter,
@@ -13,16 +13,8 @@ import {
   Line,
   ComposedChart,
   Bar,
-} from 'recharts';
-import {
-  Maximize2,
-  Minimize2,
-  Download,
-  Filter,
-  Settings,
-  TrendingUp,
-  Zap,
-} from 'lucide-react';
+} from "recharts";
+import { Maximize2, Minimize2, Download, Filter, Settings, TrendingUp, Zap } from "lucide-react";
 
 interface ParetoPoint {
   id: string;
@@ -48,7 +40,7 @@ export default function EliteParetoFrontier({
   xAxis,
   yAxis,
   zAxis,
-  title = 'Pareto Frontier Analysis',
+  title = "Pareto Frontier Analysis",
   onPointSelect,
 }: EliteParetoFrontierProps) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -57,7 +49,7 @@ export default function EliteParetoFrontier({
   const [view3D, setView3D] = useState(false);
 
   const paretoFront = useMemo(() => {
-    return data.filter(p => !p.isDominated);
+    return data.filter((p) => !p.isDominated);
   }, [data]);
 
   const displayData = useMemo(() => {
@@ -71,29 +63,29 @@ export default function EliteParetoFrontier({
 
   const downloadData = () => {
     const csv = [
-      ['ID', xAxis, yAxis, ...(zAxis ? [zAxis] : []), 'Status'],
-      ...displayData.map(p => [
+      ["ID", xAxis, yAxis, ...(zAxis ? [zAxis] : []), "Status"],
+      ...displayData.map((p) => [
         p.label,
         p.x.toFixed(4),
         p.y.toFixed(4),
         ...(zAxis && p.z ? [p.z.toFixed(4)] : []),
-        p.isDominated ? 'Dominated' : 'Pareto Optimal',
+        p.isDominated ? "Dominated" : "Pareto Optimal",
       ]),
     ]
-      .map(row => row.join(','))
-      .join('\n');
+      .map((row) => row.join(","))
+      .join("\n");
 
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `pareto-frontier-${Date.now()}.csv`;
     a.click();
   };
 
   const containerClass = isExpanded
-    ? 'fixed inset-0 z-50 bg-aerospace-dark p-6'
-    : 'relative w-full h-96';
+    ? "fixed inset-0 z-50 bg-aerospace-dark p-6"
+    : "relative w-full h-96";
 
   return (
     <motion.div
@@ -125,7 +117,7 @@ export default function EliteParetoFrontier({
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsExpanded(!isExpanded)}
             className="p-2 rounded-lg bg-aerospace-blue/10 hover:bg-aerospace-blue/20 text-aerospace-blue transition-colors"
-            title={isExpanded ? 'Minimize' : 'Expand'}
+            title={isExpanded ? "Minimize" : "Expand"}
           >
             {isExpanded ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
           </motion.button>
@@ -140,12 +132,12 @@ export default function EliteParetoFrontier({
           onClick={() => setShowDominated(!showDominated)}
           className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
             showDominated
-              ? 'bg-aerospace-blue text-white'
-              : 'bg-aerospace-blue/10 text-aerospace-blue hover:bg-aerospace-blue/20'
+              ? "bg-aerospace-blue text-white"
+              : "bg-aerospace-blue/10 text-aerospace-blue hover:bg-aerospace-blue/20"
           }`}
         >
           <Filter size={14} className="inline mr-1" />
-          {showDominated ? 'Hide' : 'Show'} Dominated
+          {showDominated ? "Hide" : "Show"} Dominated
         </motion.button>
 
         {zAxis && (
@@ -155,18 +147,18 @@ export default function EliteParetoFrontier({
             onClick={() => setView3D(!view3D)}
             className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
               view3D
-                ? 'bg-aerospace-accent text-white'
-                : 'bg-aerospace-accent/10 text-aerospace-accent hover:bg-aerospace-accent/20'
+                ? "bg-aerospace-accent text-white"
+                : "bg-aerospace-accent/10 text-aerospace-accent hover:bg-aerospace-accent/20"
             }`}
           >
             <Zap size={14} className="inline mr-1" />
-            {view3D ? '3D' : '2D'} View
+            {view3D ? "3D" : "2D"} View
           </motion.button>
         )}
       </div>
 
       {/* Chart */}
-      <div className={isExpanded ? 'h-[calc(100vh-200px)]' : 'h-80'}>
+      <div className={isExpanded ? "h-[calc(100vh-200px)]" : "h-80"}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(14, 165, 233, 0.1)" />
@@ -175,21 +167,21 @@ export default function EliteParetoFrontier({
               dataKey="x"
               name={xAxis}
               stroke="rgba(203, 213, 225, 0.5)"
-              label={{ value: xAxis, position: 'insideBottomRight', offset: -5 }}
+              label={{ value: xAxis, position: "insideBottomRight", offset: -5 }}
             />
             <YAxis
               type="number"
               dataKey="y"
               name={yAxis}
               stroke="rgba(203, 213, 225, 0.5)"
-              label={{ value: yAxis, angle: -90, position: 'insideLeft' }}
+              label={{ value: yAxis, angle: -90, position: "insideLeft" }}
             />
             <Tooltip
-              cursor={{ strokeDasharray: '3 3' }}
+              cursor={{ strokeDasharray: "3 3" }}
               contentStyle={{
-                backgroundColor: 'rgba(15, 23, 42, 0.95)',
-                border: '1px solid rgba(14, 165, 233, 0.3)',
-                borderRadius: '8px',
+                backgroundColor: "rgba(15, 23, 42, 0.95)",
+                border: "1px solid rgba(14, 165, 233, 0.3)",
+                borderRadius: "8px",
               }}
               formatter={(value: any) => value.toFixed(4)}
             />
@@ -208,7 +200,7 @@ export default function EliteParetoFrontier({
             {showDominated && (
               <Scatter
                 name="Dominated"
-                data={data.filter(p => p.isDominated)}
+                data={data.filter((p) => p.isDominated)}
                 fill="rgba(239, 68, 68, 0.4)"
                 onClick={(data: any) => handlePointClick(data)}
                 cursor="pointer"
@@ -223,7 +215,7 @@ export default function EliteParetoFrontier({
         <motion.div
           className="p-4 border-t border-aerospace-blue/20 bg-aerospace-blue/5"
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

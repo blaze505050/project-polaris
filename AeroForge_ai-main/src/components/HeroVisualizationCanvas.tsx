@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Play, Pause, Sliders } from 'lucide-react';
-import { generateNACA4Digit } from '@/services/physicsEngine';
+import React, { useEffect, useRef, useState } from "react";
+import { Play, Pause, Sliders } from "lucide-react";
+import { generateNACA4Digit } from "@/services/physicsEngine";
 
 export default function HeroVisualizationCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,7 +28,7 @@ export default function HeroVisualizationCanvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animId: number;
@@ -62,21 +62,27 @@ export default function HeroVisualizationCanvas() {
       });
     }
 
-    const nacaGeo = generateNACA4Digit('2412', 60);
+    const nacaGeo = generateNACA4Digit("2412", 60);
 
     const draw = () => {
-      ctx.fillStyle = '#050914';
+      ctx.fillStyle = "#050914";
       ctx.fillRect(0, 0, w, h);
 
       // Engineering grid
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
       ctx.lineWidth = 0.5;
       const step = 32;
       for (let x = 0; x < w; x += step) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
       }
       for (let y = 0; y < h; y += step) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
       }
 
       // Airfoil parameters
@@ -90,7 +96,8 @@ export default function HeroVisualizationCanvas() {
       for (let i = 0; i < numStreamlines; i++) {
         const baseY = (i / numStreamlines) * h + 8;
         ctx.beginPath();
-        ctx.strokeStyle = i < numStreamlines / 2 ? 'rgba(0, 240, 255, 0.22)' : 'rgba(59, 130, 246, 0.22)';
+        ctx.strokeStyle =
+          i < numStreamlines / 2 ? "rgba(0, 240, 255, 0.22)" : "rgba(59, 130, 246, 0.22)";
         ctx.lineWidth = 1;
 
         for (let x = 0; x <= w; x += 12) {
@@ -134,7 +141,7 @@ export default function HeroVisualizationCanvas() {
 
         const py = baseY + defY;
 
-        ctx.fillStyle = baseY < cy ? '#00F0FF' : '#3B82F6';
+        ctx.fillStyle = baseY < cy ? "#00F0FF" : "#3B82F6";
         ctx.beginPath();
         ctx.arc(p.x, py, 1.4, 0, Math.PI * 2);
         ctx.fill();
@@ -148,8 +155,8 @@ export default function HeroVisualizationCanvas() {
 
         // Pressure distribution glow
         const grad = ctx.createRadialGradient(0, 0, 10, 0, 0, chordLen);
-        grad.addColorStop(0, 'rgba(0, 240, 255, 0.16)');
-        grad.addColorStop(1, 'transparent');
+        grad.addColorStop(0, "rgba(0, 240, 255, 0.16)");
+        grad.addColorStop(1, "transparent");
         ctx.fillStyle = grad;
         ctx.beginPath();
         ctx.arc(0, 0, chordLen * 0.85, 0, Math.PI * 2);
@@ -157,7 +164,7 @@ export default function HeroVisualizationCanvas() {
 
         // Upper surface (Suction side - Cyan)
         ctx.beginPath();
-        ctx.strokeStyle = '#00F0FF';
+        ctx.strokeStyle = "#00F0FF";
         ctx.lineWidth = 2.5;
         nacaGeo.upper.forEach((pt, idx) => {
           const px = (pt.x - 0.25) * chordLen;
@@ -168,7 +175,7 @@ export default function HeroVisualizationCanvas() {
 
         // Lower surface (Pressure side - Blue)
         ctx.beginPath();
-        ctx.strokeStyle = '#3B82F6';
+        ctx.strokeStyle = "#3B82F6";
         ctx.lineWidth = 2.5;
         nacaGeo.lower.forEach((pt, idx) => {
           const px = (pt.x - 0.25) * chordLen;
@@ -178,7 +185,7 @@ export default function HeroVisualizationCanvas() {
         ctx.stroke();
 
         // Chord reference line
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
         ctx.setLineDash([3, 3]);
         ctx.beginPath();
         ctx.moveTo(-0.25 * chordLen, 0);
@@ -190,14 +197,14 @@ export default function HeroVisualizationCanvas() {
       }
 
       // Telemetry Overlay
-      ctx.fillStyle = '#94A3B8';
+      ctx.fillStyle = "#94A3B8";
       ctx.font = '10px "JetBrains Mono", monospace';
       ctx.fillText(`FLOW VECTOR: ${speed} m/s`, 16, 24);
-      ctx.fillText(`ANGLE OF ATTACK: ${aoa}° ${isHovered ? '(CURSOR DYNAMIC)' : ''}`, 16, 38);
+      ctx.fillText(`ANGLE OF ATTACK: ${aoa}° ${isHovered ? "(CURSOR DYNAMIC)" : ""}`, 16, 38);
       ctx.fillText(`AIRFOIL: NACA 2412`, 16, 52);
 
       // Scientific Disclaimer Label
-      ctx.fillStyle = '#F59E0B';
+      ctx.fillStyle = "#F59E0B";
       ctx.font = '9px "JetBrains Mono", monospace';
       ctx.fillText(`REDUCED-ORDER POTENTIAL FLOW SIMULATION`, w - 230, 24);
 
@@ -258,7 +265,7 @@ export default function HeroVisualizationCanvas() {
           className="flex items-center gap-1.5 px-3 py-1 rounded bg-white/5 hover:bg-white/10 text-white/70 border border-white/10 transition-colors"
         >
           {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
-          {isPaused ? 'Resume' : 'Pause'}
+          {isPaused ? "Resume" : "Pause"}
         </button>
       </div>
     </div>

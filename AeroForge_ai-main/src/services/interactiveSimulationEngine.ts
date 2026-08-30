@@ -4,9 +4,9 @@
  * Supports live parameter adjustment and instant feedback
  */
 
-import CFDPhysicsEngine, { SimulationConfig, AerodynamicCoefficients } from './cfdPhysicsEngine';
-import { AerodynamicSolver, AtmosphericModel, NumericalIntegrator } from './enhancedPhysicsEngine';
-import { validationService } from './validationService';
+import CFDPhysicsEngine, { SimulationConfig, AerodynamicCoefficients } from "./cfdPhysicsEngine";
+import { AerodynamicSolver, AtmosphericModel, NumericalIntegrator } from "./enhancedPhysicsEngine";
+import { validationService } from "./validationService";
 
 export interface InteractiveSimulationState {
   isRunning: boolean;
@@ -28,8 +28,8 @@ export interface SimulationParameters {
   angleOfAttack: number;
   altitude: number;
   meshSize: number;
-  turbulenceModel: 'k-epsilon' | 'k-omega' | 'spalart-allmaras' | 'les';
-  solverType: 'RANS' | 'URANS' | 'DES' | 'DNS';
+  turbulenceModel: "k-epsilon" | "k-omega" | "spalart-allmaras" | "les";
+  solverType: "RANS" | "URANS" | "DES" | "DNS";
   timeStep: number;
   maxIterations: number;
 }
@@ -89,7 +89,7 @@ class InteractiveSimulationEngine {
    */
   startSimulation(): void {
     if (!this.engine) {
-      console.error('Engine not initialized');
+      console.error("Engine not initialized");
       return;
     }
 
@@ -124,7 +124,7 @@ class InteractiveSimulationEngine {
     const currentTime = performance.now();
     this.state.elapsedTime = (currentTime - this.startTime) / 1000; // seconds
     const timePerIteration = this.state.elapsedTime / this.state.currentIteration;
-    this.state.estimatedTimeRemaining = 
+    this.state.estimatedTimeRemaining =
       timePerIteration * (this.state.totalIterations - this.state.currentIteration);
 
     // Notify subscribers
@@ -245,8 +245,8 @@ class InteractiveSimulationEngine {
         angleOfAttack: 5,
         altitude: 0,
         meshSize: 10000,
-        turbulenceModel: 'k-epsilon',
-        solverType: 'RANS',
+        turbulenceModel: "k-epsilon",
+        solverType: "RANS",
         timeStep: 0.001,
         maxIterations: this.state.totalIterations,
       },

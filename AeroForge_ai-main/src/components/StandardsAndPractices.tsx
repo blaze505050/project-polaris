@@ -1,35 +1,35 @@
-import React from 'react';
-import { ShieldCheck, CheckCircle2, Lock, GitBranch, Terminal, FileCheck } from 'lucide-react';
+import React from "react";
+import { ShieldCheck, CheckCircle2, Lock, GitBranch, Terminal, FileCheck } from "lucide-react";
 
 export default function StandardsAndPractices() {
   const practices = [
     {
-      title: 'Reproducible Workflows',
-      badge: 'AS9100 Rev D Aligned',
-      desc: 'Full digital thread provenance tracing Result → Experiment → Simulation → Mesh → Dataset with 1-click JSON reproducibility packages.',
+      title: "Reproducible Workflows",
+      badge: "AS9100 Rev D Aligned",
+      desc: "Full digital thread provenance tracing Result → Experiment → Simulation → Mesh → Dataset with 1-click JSON reproducibility packages.",
       icon: GitBranch,
-      color: 'text-cyan-400 border-cyan-500/30 bg-cyan-500/10',
+      color: "text-cyan-400 border-cyan-500/30 bg-cyan-500/10",
     },
     {
-      title: 'Accessibility Conformance',
-      badge: 'WCAG 2.1 AA Aligned',
-      desc: 'High contrast JetBrains Mono data typography, full keyboard navigation, explicit focus indicators, and screen reader labels.',
+      title: "Accessibility Conformance",
+      badge: "WCAG 2.1 AA Aligned",
+      desc: "High contrast JetBrains Mono data typography, full keyboard navigation, explicit focus indicators, and screen reader labels.",
       icon: CheckCircle2,
-      color: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+      color: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
     },
     {
-      title: 'Data Sovereignty & Security',
-      badge: 'Transparent Privacy',
-      desc: 'TLS 1.3 transit encryption, AES-256 storage, zero third-party AI model training, and 1-click export of STL, CSV, and JSON data.',
+      title: "Data Sovereignty & Security",
+      badge: "Transparent Privacy",
+      desc: "TLS 1.3 transit encryption, AES-256 storage, zero third-party AI model training, and 1-click export of STL, CSV, and JSON data.",
       icon: Lock,
-      color: 'text-pink-400 border-pink-500/30 bg-pink-500/10',
+      color: "text-pink-400 border-pink-500/30 bg-pink-500/10",
     },
     {
-      title: 'Transparent Physics Methodology',
-      badge: 'Verifiable Solvers',
-      desc: 'Open-source solver support (OpenFOAM, SU2, CalculiX), documented US Standard Atmosphere models, and explicit unit conversions.',
+      title: "Transparent Physics Methodology",
+      badge: "Verifiable Solvers",
+      desc: "Open-source solver support (OpenFOAM, SU2, CalculiX), documented US Standard Atmosphere models, and explicit unit conversions.",
       icon: Terminal,
-      color: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+      color: "text-amber-400 border-amber-500/30 bg-amber-500/10",
     },
   ];
 
@@ -44,7 +44,8 @@ export default function StandardsAndPractices() {
             </h3>
           </div>
           <p className="text-xs text-white/60 font-sans mt-0.5 max-w-2xl">
-            AeroForge operates on evidence-based engineering practices, reproducible data pipelines, and transparent data sovereignty.
+            AeroForge operates on evidence-based engineering practices, reproducible data pipelines,
+            and transparent data sovereignty.
           </p>
         </div>
       </div>

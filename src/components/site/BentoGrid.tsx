@@ -26,7 +26,8 @@ export function BentoGrid() {
             How experiential learning happens in practice.
           </h2>
           <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-            Instead of standard lectures and passive notes, students organize into functional teams, solve tangible engineering problems, and publish verifiable work.
+            Instead of standard lectures and passive notes, students organize into functional teams,
+            solve tangible engineering problems, and publish verifiable work.
           </p>
         </div>
 
@@ -42,11 +43,10 @@ export function BentoGrid() {
                 <span>Active Sprints</span>
               </div>
 
-              <h3 className="text-lg font-semibold text-foreground">
-                Engineering & Simulation
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground">Engineering & Simulation</h3>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                Student software and hardware teams building authentic tools like AeroForge AI (aerodynamics & orbital solvers) and Sky Atlas deep-sky catalogs.
+                Student software and hardware teams building authentic tools like AeroForge AI
+                (aerodynamics & orbital solvers) and Sky Atlas deep-sky catalogs.
               </p>
 
               <div className="mt-4 pt-3 border-t border-border space-y-2 text-xs font-mono text-muted-foreground">
@@ -62,7 +62,10 @@ export function BentoGrid() {
             </div>
 
             <div className="mt-6 pt-4 border-t border-border">
-              <Link to="/projects" className="text-xs font-medium text-primary hover:underline inline-flex items-center gap-1">
+              <Link
+                to="/projects"
+                className="text-xs font-medium text-primary hover:underline inline-flex items-center gap-1"
+              >
                 <span>View active projects</span>
                 <ArrowRight className="size-3" />
               </Link>
@@ -79,11 +82,10 @@ export function BentoGrid() {
                 <span>Mon–Fri Drops</span>
               </div>
 
-              <h3 className="text-lg font-semibold text-foreground">
-                Daily Scientific Inquiries
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground">Daily Scientific Inquiries</h3>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                Curated morning deeptech drops ("Aaj Ka Gyan") based on weekly scientific themes — turning curious questions into daily discussion threads.
+                Curated morning deeptech drops ("Aaj Ka Gyan") based on weekly scientific themes —
+                turning curious questions into daily discussion threads.
               </p>
 
               <div className="mt-4 pt-3 border-t border-border space-y-2 text-xs font-mono text-muted-foreground">
@@ -121,11 +123,10 @@ export function BentoGrid() {
                 <span>Practitioner Guidance</span>
               </div>
 
-              <h3 className="text-lg font-semibold text-foreground">
-                Practitioner Cohorts
-              </h3>
+              <h3 className="text-lg font-semibold text-foreground">Practitioner Cohorts</h3>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                Interactive masterclasses and direct reviews from aerospace propulsion leads, space scientists, and university educators.
+                Interactive masterclasses and direct reviews from aerospace propulsion leads, space
+                scientists, and university educators.
               </p>
 
               <div className="mt-4 pt-3 border-t border-border space-y-2 text-xs font-mono text-muted-foreground">
@@ -141,7 +142,10 @@ export function BentoGrid() {
             </div>
 
             <div className="mt-6 pt-4 border-t border-border">
-              <Link to="/programs" className="text-xs font-medium text-accent hover:underline inline-flex items-center gap-1">
+              <Link
+                to="/programs"
+                className="text-xs font-medium text-accent hover:underline inline-flex items-center gap-1"
+              >
                 <span>Explore program archives</span>
                 <ArrowRight className="size-3" />
               </Link>

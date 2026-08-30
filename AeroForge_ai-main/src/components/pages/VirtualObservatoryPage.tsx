@@ -1,66 +1,66 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Telescope, Search, Download, Settings, Play, Pause, RotateCcw } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Telescope, Search, Download, Settings, Play, Pause, RotateCcw } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function VirtualObservatoryPage() {
   const [isSimulating, setIsSimulating] = useState(false);
   const [selectedObject, setSelectedObject] = useState(null);
   const [exposureTime, setExposureTime] = useState(30);
-  const [filter, setFilter] = useState('visible');
+  const [filter, setFilter] = useState("visible");
 
   const celestialObjects = [
     {
-      id: 'm31',
-      name: 'Andromeda Galaxy',
-      type: 'Galaxy',
-      ra: '00h42m44.3s',
-      dec: '+41°16\'09"',
+      id: "m31",
+      name: "Andromeda Galaxy",
+      type: "Galaxy",
+      ra: "00h42m44.3s",
+      dec: "+41°16'09\"",
       magnitude: 3.4,
-      distance: '2.5 Mly',
-      description: 'The nearest major galaxy to the Milky Way',
+      distance: "2.5 Mly",
+      description: "The nearest major galaxy to the Milky Way",
     },
     {
-      id: 'm42',
-      name: 'Orion Nebula',
-      type: 'Nebula',
-      ra: '05h35m24s',
-      dec: '-05°23\'14"',
+      id: "m42",
+      name: "Orion Nebula",
+      type: "Nebula",
+      ra: "05h35m24s",
+      dec: "-05°23'14\"",
       magnitude: 4.0,
-      distance: '1,344 ly',
-      description: 'A stellar nursery with active star formation',
+      distance: "1,344 ly",
+      description: "A stellar nursery with active star formation",
     },
     {
-      id: 'm51',
-      name: 'Whirlpool Galaxy',
-      type: 'Galaxy',
-      ra: '13h29m52.7s',
-      dec: '+47°11\'43"',
+      id: "m51",
+      name: "Whirlpool Galaxy",
+      type: "Galaxy",
+      ra: "13h29m52.7s",
+      dec: "+47°11'43\"",
       magnitude: 8.4,
-      distance: '23 Mly',
-      description: 'A classic spiral galaxy with prominent arms',
+      distance: "23 Mly",
+      description: "A classic spiral galaxy with prominent arms",
     },
     {
-      id: 'sirius',
-      name: 'Sirius A',
-      type: 'Star',
-      ra: '06h45m08.9s',
-      dec: '-16°42\'46"',
+      id: "sirius",
+      name: "Sirius A",
+      type: "Star",
+      ra: "06h45m08.9s",
+      dec: "-16°42'46\"",
       magnitude: -1.46,
-      distance: '8.6 ly',
-      description: 'The brightest star in the night sky',
+      distance: "8.6 ly",
+      description: "The brightest star in the night sky",
     },
   ];
 
   const filters = [
-    { id: 'visible', name: 'Visible Light', wavelength: '400-700 nm' },
-    { id: 'infrared', name: 'Infrared', wavelength: '700 nm - 1 mm' },
-    { id: 'ultraviolet', name: 'Ultraviolet', wavelength: '10-400 nm' },
-    { id: 'xray', name: 'X-Ray', wavelength: '0.01-10 nm' },
+    { id: "visible", name: "Visible Light", wavelength: "400-700 nm" },
+    { id: "infrared", name: "Infrared", wavelength: "700 nm - 1 mm" },
+    { id: "ultraviolet", name: "Ultraviolet", wavelength: "10-400 nm" },
+    { id: "xray", name: "X-Ray", wavelength: "0.01-10 nm" },
   ];
 
   return (
@@ -80,8 +80,8 @@ export default function VirtualObservatoryPage() {
             <h1 className="text-5xl font-bold text-white">Virtual Observatory</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Conduct real-time celestial observations using professional-grade instruments. 
-            Access live sky data, perform photometric surveys, and analyze stellar spectra.
+            Conduct real-time celestial observations using professional-grade instruments. Access
+            live sky data, perform photometric surveys, and analyze stellar spectra.
           </p>
         </motion.div>
 
@@ -98,7 +98,9 @@ export default function VirtualObservatoryPage() {
                 <div className="text-center">
                   <Telescope size={64} className="text-slate-600 mx-auto mb-4" />
                   <p className="text-slate-400">
-                    {selectedObject ? `Observing: ${selectedObject.name}` : 'Select an object to observe'}
+                    {selectedObject
+                      ? `Observing: ${selectedObject.name}`
+                      : "Select an object to observe"}
                   </p>
                 </div>
               </div>
@@ -131,8 +133,8 @@ export default function VirtualObservatoryPage() {
                         onClick={() => setFilter(f.id)}
                         className={`p-3 rounded-lg text-sm font-medium transition-all ${
                           filter === f.id
-                            ? 'bg-cyan-600 text-white'
-                            : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                            ? "bg-cyan-600 text-white"
+                            : "bg-slate-700/50 text-slate-300 hover:bg-slate-700"
                         }`}
                       >
                         <div className="font-semibold">{f.name}</div>
@@ -188,8 +190,8 @@ export default function VirtualObservatoryPage() {
                     onClick={() => setSelectedObject(obj)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedObject?.id === obj.id
-                        ? 'bg-cyan-600/20 border border-cyan-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-cyan-600/20 border border-cyan-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{obj.name}</div>
@@ -231,13 +233,13 @@ export default function VirtualObservatoryPage() {
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="text-sm text-slate-400 mb-2">Apparent Magnitude</div>
                 <div className="text-2xl font-bold text-cyan-400">
-                  {selectedObject?.magnitude || '—'}
+                  {selectedObject?.magnitude || "—"}
                 </div>
               </div>
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="text-sm text-slate-400 mb-2">Distance</div>
                 <div className="text-2xl font-bold text-cyan-400">
-                  {selectedObject?.distance || '—'}
+                  {selectedObject?.distance || "—"}
                 </div>
               </div>
               <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold flex items-center justify-center gap-2">
@@ -253,7 +255,7 @@ export default function VirtualObservatoryPage() {
               <div className="bg-slate-900/50 rounded-lg p-4">
                 <div className="text-sm text-slate-400 mb-2">Spectral Type</div>
                 <div className="text-2xl font-bold text-cyan-400">
-                  {selectedObject?.type || '—'}
+                  {selectedObject?.type || "—"}
                 </div>
               </div>
               <div className="bg-slate-900/50 rounded-lg p-4">
@@ -275,20 +277,23 @@ export default function VirtualObservatoryPage() {
           transition={{ delay: 0.5 }}
         >
           <Card className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">How to Use the Virtual Observatory</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">
+              How to Use the Virtual Observatory
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
-                  title: 'Select an Object',
-                  description: 'Choose from the catalog or search for specific celestial objects.',
+                  title: "Select an Object",
+                  description: "Choose from the catalog or search for specific celestial objects.",
                 },
                 {
-                  title: 'Configure Observation',
-                  description: 'Set exposure time and select the appropriate observation filter.',
+                  title: "Configure Observation",
+                  description: "Set exposure time and select the appropriate observation filter.",
                 },
                 {
-                  title: 'Analyze Results',
-                  description: 'View photometric and spectroscopic data, then export for further analysis.',
+                  title: "Analyze Results",
+                  description:
+                    "View photometric and spectroscopic data, then export for further analysis.",
                 },
               ].map((step, idx) => (
                 <div key={idx} className="flex gap-4">

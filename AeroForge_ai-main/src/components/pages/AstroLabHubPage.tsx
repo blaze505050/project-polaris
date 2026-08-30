@@ -1,71 +1,74 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Flame, Orbit, Droplets } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Flame, Orbit, Droplets } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function AstroLabHubPage() {
   const navigate = useNavigate();
 
   const tools = [
     {
-      id: 'orbital-mechanics',
-      title: 'Orbital Mechanics Simulator',
+      id: "orbital-mechanics",
+      title: "Orbital Mechanics Simulator",
       icon: Orbit,
-      description: 'Real-time visualization of orbital dynamics and Keplerian mechanics. Simulate satellite orbits, calculate orbital parameters, and understand the physics of celestial motion.',
+      description:
+        "Real-time visualization of orbital dynamics and Keplerian mechanics. Simulate satellite orbits, calculate orbital parameters, and understand the physics of celestial motion.",
       features: [
-        'Interactive orbit visualization',
-        'Real-time calculations',
-        'Multiple central bodies (Earth, Sun, Moon)',
-        'Orbital element analysis',
+        "Interactive orbit visualization",
+        "Real-time calculations",
+        "Multiple central bodies (Earth, Sun, Moon)",
+        "Orbital element analysis",
       ],
-      path: '/astrolab/orbital-mechanics-enhanced',
-      color: 'from-blue-600 to-cyan-600',
+      path: "/astrolab/orbital-mechanics-enhanced",
+      color: "from-blue-600 to-cyan-600",
       applications: [
-        'Satellite mission planning',
-        'Space debris tracking',
-        'Interplanetary trajectory design',
+        "Satellite mission planning",
+        "Space debris tracking",
+        "Interplanetary trajectory design",
       ],
     },
     {
-      id: 'exoplanet-habitability',
-      title: 'Exoplanet Habitability Calculator',
+      id: "exoplanet-habitability",
+      title: "Exoplanet Habitability Calculator",
       icon: Droplets,
-      description: 'Assess the potential for life on distant worlds using advanced astrophysical models. Evaluate habitability zones, atmospheric retention, and biosignature potential.',
+      description:
+        "Assess the potential for life on distant worlds using advanced astrophysical models. Evaluate habitability zones, atmospheric retention, and biosignature potential.",
       features: [
-        'Habitable zone calculation',
-        'Equilibrium temperature modeling',
-        'Atmospheric retention analysis',
-        'Habitability scoring system',
+        "Habitable zone calculation",
+        "Equilibrium temperature modeling",
+        "Atmospheric retention analysis",
+        "Habitability scoring system",
       ],
-      path: '/astrolab/exoplanet-habitability',
-      color: 'from-green-600 to-emerald-600',
+      path: "/astrolab/exoplanet-habitability",
+      color: "from-green-600 to-emerald-600",
       applications: [
-        'Exoplanet characterization',
-        'JWST observation planning',
-        'Biosignature detection strategy',
+        "Exoplanet characterization",
+        "JWST observation planning",
+        "Biosignature detection strategy",
       ],
     },
     {
-      id: 'stellar-evolution',
-      title: 'Stellar Evolution Simulator',
+      id: "stellar-evolution",
+      title: "Stellar Evolution Simulator",
       icon: Flame,
-      description: 'Explore the life cycle of stars from birth to death using Hertzsprung-Russell diagram principles. Understand stellar physics and evolution across different masses.',
+      description:
+        "Explore the life cycle of stars from birth to death using Hertzsprung-Russell diagram principles. Understand stellar physics and evolution across different masses.",
       features: [
-        'HR diagram visualization',
-        'Mass-dependent evolution',
-        'Stellar lifecycle stages',
-        'Physical property tracking',
+        "HR diagram visualization",
+        "Mass-dependent evolution",
+        "Stellar lifecycle stages",
+        "Physical property tracking",
       ],
-      path: '/astrolab/stellar-evolution',
-      color: 'from-orange-600 to-red-600',
+      path: "/astrolab/stellar-evolution",
+      color: "from-orange-600 to-red-600",
       applications: [
-        'Stellar population studies',
-        'Exoplanet host star analysis',
-        'Galactic evolution modeling',
+        "Stellar population studies",
+        "Exoplanet host star analysis",
+        "Galactic evolution modeling",
       ],
     },
   ];
@@ -102,8 +105,9 @@ export default function AstroLabHubPage() {
             Professional-Grade Astrophysical Simulation Tools
           </p>
           <p className="text-lg text-slate-400 max-w-3xl mx-auto">
-            Explore the cosmos with scientifically accurate simulations. From orbital mechanics to stellar evolution, 
-            these tools solve real-world astrophysical problems while inspiring the next generation of astronomers and engineers.
+            Explore the cosmos with scientifically accurate simulations. From orbital mechanics to
+            stellar evolution, these tools solve real-world astrophysical problems while inspiring
+            the next generation of astronomers and engineers.
           </p>
         </motion.div>
 
@@ -186,7 +190,7 @@ export default function AstroLabHubPage() {
         >
           <Card className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700 p-12">
             <h2 className="text-3xl font-bold text-white mb-8">Why These Tools Matter</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h3 className="text-xl font-semibold text-cyan-400 mb-4">For Students</h3>
@@ -244,12 +248,13 @@ export default function AstroLabHubPage() {
         >
           <Card className="bg-slate-800/50 border-slate-700 p-12">
             <h2 className="text-3xl font-bold text-white mb-8">Scientific Foundation</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-slate-900/50 rounded-lg p-6 border border-slate-700">
                 <h4 className="text-lg font-semibold text-blue-400 mb-3">Orbital Mechanics</h4>
                 <p className="text-slate-300 text-sm mb-4">
-                  Based on Kepler's laws and Newton's law of universal gravitation. Accurate for all orbital regimes from LEO to interplanetary trajectories.
+                  Based on Kepler's laws and Newton's law of universal gravitation. Accurate for all
+                  orbital regimes from LEO to interplanetary trajectories.
                 </p>
                 <code className="text-xs text-cyan-300 bg-slate-900 p-2 rounded block">
                   T² = (4π²/GM) × a³
@@ -257,9 +262,12 @@ export default function AstroLabHubPage() {
               </div>
 
               <div className="bg-slate-900/50 rounded-lg p-6 border border-slate-700">
-                <h4 className="text-lg font-semibold text-green-400 mb-3">Habitability Assessment</h4>
+                <h4 className="text-lg font-semibold text-green-400 mb-3">
+                  Habitability Assessment
+                </h4>
                 <p className="text-slate-300 text-sm mb-4">
-                  Implements Kopparapu et al. habitable zone models with Stefan-Boltzmann radiation calculations and atmospheric retention physics.
+                  Implements Kopparapu et al. habitable zone models with Stefan-Boltzmann radiation
+                  calculations and atmospheric retention physics.
                 </p>
                 <code className="text-xs text-cyan-300 bg-slate-900 p-2 rounded block">
                   T_eq = (L_star × (1-A) / 4σ)^0.25
@@ -269,7 +277,8 @@ export default function AstroLabHubPage() {
               <div className="bg-slate-900/50 rounded-lg p-6 border border-slate-700">
                 <h4 className="text-lg font-semibold text-orange-400 mb-3">Stellar Evolution</h4>
                 <p className="text-slate-300 text-sm mb-4">
-                  Uses mass-luminosity and mass-radius relations with Hertzsprung-Russell diagram principles for accurate evolutionary tracks.
+                  Uses mass-luminosity and mass-radius relations with Hertzsprung-Russell diagram
+                  principles for accurate evolutionary tracks.
                 </p>
                 <code className="text-xs text-cyan-300 bg-slate-900 p-2 rounded block">
                   L ∝ M^3.5, R ∝ M^0.5
@@ -293,13 +302,13 @@ export default function AstroLabHubPage() {
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Button
-                onClick={() => navigate('/astrolab/orbital-mechanics-enhanced')}
+                onClick={() => navigate("/astrolab/orbital-mechanics-enhanced")}
                 className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 font-semibold"
               >
                 Start with Orbital Mechanics
               </Button>
               <Button
-                onClick={() => navigate('/astrolab/exoplanet-habitability')}
+                onClick={() => navigate("/astrolab/exoplanet-habitability")}
                 className="bg-slate-700 hover:bg-slate-600 text-white px-8 py-3 font-semibold"
               >
                 Explore Exoplanets

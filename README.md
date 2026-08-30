@@ -1,4 +1,5 @@
 # PROJECT POLARIS × AEROFORGE AI
+
 > **Learning through Building, rather than Building after learning.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-blue.svg)](https://www.typescriptlang.org/)
@@ -47,25 +48,27 @@ PROJECT POLARIS (Monorepo Ecosystem)
 
 ## 3. Core Research Labs & Solvers
 
-| Pillar / Lab | Mathematical Models & Features | Solver Classification |
-| :--- | :--- | :---: |
-| **AeroLab** | 4-Digit NACA Airfoils, Prandtl-Glauert Compressibility, Boundary Layer Friction, $C_l / C_d$ Polars | `ANALYTICAL / NUMERICAL` |
-| **MechLab** | Euler-Bernoulli Elastic Beams, Mohr's Stress Circle, Thin-Walled Pressure Vessels, Von Mises Yield | `NUMERICAL (FEA)` |
-| **AstroLab** | Two-Body Keplerian Orbit Propagation, Hohmann Delta-V Maneuvers, Deep Space Photometry | `NUMERICAL` |
-| **Physics AI** | 2D Navier-Stokes Surrogates (14ms Flow Field Inference via Fourier Neural Operators) | `EXPERIMENTAL (AI)` |
-| **Validation** | Automated Overlay Comparison against NASA / Abbott Empirical Wind Tunnel Datasets | `EMPIRICAL BENCHMARK` |
-| **Digital Thread** | Cryptographic SHA-256 Provenance Records Linking Parameters $\to$ Mesh $\to$ Public Share Artifact | `DETERMINISTIC` |
+| Pillar / Lab       | Mathematical Models & Features                                                                      |  Solver Classification   |
+| :----------------- | :-------------------------------------------------------------------------------------------------- | :----------------------: |
+| **AeroLab**        | 4-Digit NACA Airfoils, Prandtl-Glauert Compressibility, Boundary Layer Friction, $C_l / C_d$ Polars | `ANALYTICAL / NUMERICAL` |
+| **MechLab**        | Euler-Bernoulli Elastic Beams, Mohr's Stress Circle, Thin-Walled Pressure Vessels, Von Mises Yield  |    `NUMERICAL (FEA)`     |
+| **AstroLab**       | Two-Body Keplerian Orbit Propagation, Hohmann Delta-V Maneuvers, Deep Space Photometry              |       `NUMERICAL`        |
+| **Physics AI**     | 2D Navier-Stokes Surrogates (14ms Flow Field Inference via Fourier Neural Operators)                |   `EXPERIMENTAL (AI)`    |
+| **Validation**     | Automated Overlay Comparison against NASA / Abbott Empirical Wind Tunnel Datasets                   |  `EMPIRICAL BENCHMARK`   |
+| **Digital Thread** | Cryptographic SHA-256 Provenance Records Linking Parameters $\to$ Mesh $\to$ Public Share Artifact  |     `DETERMINISTIC`      |
 
 ---
 
 ## 4. Local Development
 
 ### Prerequisites
+
 - **Node.js**: v18.0+ or v20.0+
 - **npm**: v9.0+
 - **Python**: v3.10+ (Only required for local Physics AI GPU backend)
 
 ### Step 1: Install Dependencies
+
 ```bash
 # Install root dependencies
 npm install
@@ -77,9 +80,11 @@ cd ..
 ```
 
 ### Step 2: Launch Development Server
+
 ```bash
 npm run dev
 ```
+
 Open `http://localhost:5173` to explore Project Polaris and the embedded AeroForge Lab.
 
 ---

@@ -62,43 +62,137 @@ export const SESSION_TYPES = [
 ] as const;
 
 export const SCHEDULE = [
-  { day: "Day 1", focus: "Orientation + Mission Reveal", type: "Concept", output: "Polaris Mission Brief V1" },
-  { day: "Day 2", focus: "Astronomy — What do we know?", type: "Concept", output: "Astronomical Evidence Report" },
-  { day: "Day 3", focus: "Astrophysics — Does the physics work?", type: "Concept", output: "Planet Physics Profile" },
-  { day: "Day 4", focus: "Breather — Evidence exchange + team discussion", type: "Peer + Team", output: "Peer Feedback Log" },
-  { day: "Day 5", focus: "Coding × Astronomy × Astrophysics", type: "Concept", output: "Data-Analysis Artifact" },
-  { day: "Day 6", focus: "Astrobiology — Could life exist?", type: "Concept", output: "Habitability Assessment" },
-  { day: "Day 7", focus: "Breather — Habitability debate & direction check-in", type: "Team", output: "Project Direction Note" },
-  { day: "Day 8", focus: "Astronautics — How would we investigate?", type: "Concept", output: "Mission Architecture V1" },
-  { day: "Day 9", focus: "Aeronautics + Engineering Systems", type: "Concept", output: "Mission System Map" },
-  { day: "Day 10", focus: "Breather — Systems show & tell", type: "Team", output: "Peer Feedback Log" },
-  { day: "Day 11", focus: "Entrepreneurship × Space Innovation", type: "Concept", output: "Polaris Innovation Canvas" },
-  { day: "Day 12", focus: "Research & build sprint + final project discussion", type: "Work + Team", output: "Evidence Bank + Prototype V1" },
-  { day: "Day 13", focus: "Mentor review, then iterate & defence prep", type: "Mentor", output: "Project V2 + Presentation Package" },
-  { day: "Day 14", focus: "Polaris Mission Showcase", type: "Showcase", output: "Final Project + Portfolio" },
+  {
+    day: "Day 1",
+    focus: "Orientation + Mission Reveal",
+    type: "Concept",
+    output: "Polaris Mission Brief V1",
+  },
+  {
+    day: "Day 2",
+    focus: "Astronomy — What do we know?",
+    type: "Concept",
+    output: "Astronomical Evidence Report",
+  },
+  {
+    day: "Day 3",
+    focus: "Astrophysics — Does the physics work?",
+    type: "Concept",
+    output: "Planet Physics Profile",
+  },
+  {
+    day: "Day 4",
+    focus: "Breather — Evidence exchange + team discussion",
+    type: "Peer + Team",
+    output: "Peer Feedback Log",
+  },
+  {
+    day: "Day 5",
+    focus: "Coding × Astronomy × Astrophysics",
+    type: "Concept",
+    output: "Data-Analysis Artifact",
+  },
+  {
+    day: "Day 6",
+    focus: "Astrobiology — Could life exist?",
+    type: "Concept",
+    output: "Habitability Assessment",
+  },
+  {
+    day: "Day 7",
+    focus: "Breather — Habitability debate & direction check-in",
+    type: "Team",
+    output: "Project Direction Note",
+  },
+  {
+    day: "Day 8",
+    focus: "Astronautics — How would we investigate?",
+    type: "Concept",
+    output: "Mission Architecture V1",
+  },
+  {
+    day: "Day 9",
+    focus: "Aeronautics + Engineering Systems",
+    type: "Concept",
+    output: "Mission System Map",
+  },
+  {
+    day: "Day 10",
+    focus: "Breather — Systems show & tell",
+    type: "Team",
+    output: "Peer Feedback Log",
+  },
+  {
+    day: "Day 11",
+    focus: "Entrepreneurship × Space Innovation",
+    type: "Concept",
+    output: "Polaris Innovation Canvas",
+  },
+  {
+    day: "Day 12",
+    focus: "Research & build sprint + final project discussion",
+    type: "Work + Team",
+    output: "Evidence Bank + Prototype V1",
+  },
+  {
+    day: "Day 13",
+    focus: "Mentor review, then iterate & defence prep",
+    type: "Mentor",
+    output: "Project V2 + Presentation Package",
+  },
+  {
+    day: "Day 14",
+    focus: "Polaris Mission Showcase",
+    type: "Showcase",
+    output: "Final Project + Portfolio",
+  },
 ] as const;
 
 export const DOMAINS = [
-  { name: "Astronomy", body: "Observation & data inform spacecraft, rovers, UAVs and research tools." },
+  {
+    name: "Astronomy",
+    body: "Observation & data inform spacecraft, rovers, UAVs and research tools.",
+  },
   { name: "Astrophysics", body: "Gravity, orbits & energy support mission design and simulation." },
-  { name: "Astrobiology", body: "Habitability & biosignatures inform rovers, habitats and sensors." },
+  {
+    name: "Astrobiology",
+    body: "Habitability & biosignatures inform rovers, habitats and sensors.",
+  },
   { name: "Aeronautics", body: "Flight & aerodynamics support drones and aerial exploration." },
-  { name: "Astronautics", body: "Mission architecture supports satellites, rovers and infrastructure." },
+  {
+    name: "Astronautics",
+    body: "Mission architecture supports satellites, rovers and infrastructure.",
+  },
   { name: "Coding & Data", body: "Analysis and simulation strengthen every project type." },
-  { name: "Research & Evidence", body: "Makes every claim defensible and scientifically grounded." },
+  {
+    name: "Research & Evidence",
+    body: "Makes every claim defensible and scientifically grounded.",
+  },
   { name: "Entrepreneurship", body: "Turns a technical idea into a usable, impactful solution." },
 ] as const;
 
 export const PROJECT_TRACKS = [
   { name: "Spacecraft / Satellite Concept", domains: "Astronautics · Astrophysics · Coding" },
-  { name: "Planetary Rover / Exploration Vehicle", domains: "Astronautics · Astrobiology · Aeronautics" },
+  {
+    name: "Planetary Rover / Exploration Vehicle",
+    domains: "Astronautics · Astrobiology · Aeronautics",
+  },
   { name: "UAV / Drone Sensing & Mapping System", domains: "Aeronautics · Coding" },
   { name: "Astronomical Observation & Data Tool", domains: "Astronomy · Coding" },
-  { name: "Habitability / Biosignature Analysis Tool", domains: "Astrobiology · Astrophysics · Coding" },
-  { name: "Space-Weather / Disaster Monitoring Concept", domains: "Astrophysics · Astronautics · Coding" },
+  {
+    name: "Habitability / Biosignature Analysis Tool",
+    domains: "Astrobiology · Astrophysics · Coding",
+  },
+  {
+    name: "Space-Weather / Disaster Monitoring Concept",
+    domains: "Astrophysics · Astronautics · Coding",
+  },
   { name: "Mission-Control / Planning Simulation", domains: "Astronautics · Coding · Innovation" },
   { name: "AI / Data-Driven Exploration Concept", domains: "Coding · Research" },
-  { name: "Space-to-Earth Innovation / Startup Concept", domains: "Entrepreneurship · any technical domain" },
+  {
+    name: "Space-to-Earth Innovation / Startup Concept",
+    domains: "Entrepreneurship · any technical domain",
+  },
   { name: "Research-Based Scientific Investigation", domains: "Research · 1–2 technical domains" },
 ] as const;
 
@@ -141,10 +235,26 @@ export const ZERO_COST = [
 ] as const;
 
 export const PROGRAM_PEOPLE = [
-  { count: "1", role: "Lead Program Mentor", body: "Overall academic and project direction & quality." },
-  { count: "4", role: "Domain Mentors", body: "Astronomy/Astrophysics · Aerospace · Coding/Data · Astrobiology." },
-  { count: "1", role: "Innovation Mentor", body: "Problem–solution thinking and pitching; may be a guest specialist." },
-  { count: "2–4", role: "Project Associates", body: "Track attendance, milestones, doubts and progress." },
+  {
+    count: "1",
+    role: "Lead Program Mentor",
+    body: "Overall academic and project direction & quality.",
+  },
+  {
+    count: "4",
+    role: "Domain Mentors",
+    body: "Astronomy/Astrophysics · Aerospace · Coding/Data · Astrobiology.",
+  },
+  {
+    count: "1",
+    role: "Innovation Mentor",
+    body: "Problem–solution thinking and pitching; may be a guest specialist.",
+  },
+  {
+    count: "2–4",
+    role: "Project Associates",
+    body: "Track attendance, milestones, doubts and progress.",
+  },
 ] as const;
 
 export const AWARDS = [

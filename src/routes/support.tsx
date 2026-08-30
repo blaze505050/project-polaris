@@ -4,6 +4,8 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { saveUserSubmission } from "@/lib/cms-store";
 import {
   HelpCircle,
@@ -57,25 +59,58 @@ const FAQS = [
 
 export function SupportPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [category, setCategory] = useState("General Support");
   const [message, setMessage] = useState("");
 
-  const handleSubmitTicket = (e: React.FormEvent) => {
+  const handleSubmitTicket = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !message) return;
+    if (!email || !message) {
+      toast.error("Please fill in your email and message.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
 
-    saveUserSubmission({
-      type: "contact_inquiry",
-      name: name || "Student / Partner",
-      email,
-      programTitle: `Support Ticket: ${category}`,
-      message,
-    });
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.from("contact_messages").insert({
+        name: name.trim() || "Student / Partner",
+        email: email.trim(),
+        topic: `Support: ${category}`,
+        message: message.trim(),
+      });
 
-    setSubmitted(true);
+      if (error) {
+        console.error("[Support] Ticket submission error:", error);
+        toast.error(
+          "Unable to submit support ticket. Please try again or email projectpolaris.8@gmail.com directly.",
+        );
+        setSubmitting(false);
+        return;
+      }
+
+      saveUserSubmission({
+        type: "contact_inquiry",
+        name: name || "Student / Partner",
+        email,
+        programTitle: `Support Ticket: ${category}`,
+        message,
+      });
+
+      setSubmitted(true);
+      toast.success("Support ticket submitted — we'll reply by email within 24h.");
+    } catch (err) {
+      console.error("[Support] Network error:", err);
+      toast.error("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -231,7 +266,9 @@ export function SupportPage() {
                 </div>
 
                 <div className="space-y-1.5 text-left">
-                  <label className="text-muted-foreground font-medium">Message / Problem Description</label>
+                  <label className="text-muted-foreground font-medium">
+                    Message / Problem Description
+                  </label>
                   <textarea
                     rows={4}
                     placeholder="Describe your issue or question in detail..."
@@ -242,17 +279,27 @@ export function SupportPage() {
                   />
                 </div>
 
-                <Button type="submit" size="default" className="h-10 px-6 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90">
+                <Button
+                  type="submit"
+                  disabled={submitting}
+                  size="default"
+                  className="h-10 px-6 bg-primary text-primary-foreground font-semibold rounded-lg text-xs hover:bg-primary/90"
+                >
                   <Send className="size-3.5 mr-1.5" />
-                  Submit Support Ticket
+                  {submitting ? "Submitting Ticket…" : "Submit Support Ticket"}
                 </Button>
               </form>
             ) : (
               <div className="p-6 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-2">
                 <CheckCircle2 className="size-8 text-emerald-400 mx-auto" />
-                <h4 className="font-bold text-foreground font-display text-base">Support Ticket Received!</h4>
+                <h4 className="font-bold text-foreground font-display text-base">
+                  Support Ticket Received!
+                </h4>
                 <p className="text-xs text-muted-foreground max-w-sm mx-auto">
-                  Thank you, <span className="font-semibold text-foreground">{name || "Explorer"}</span>. Our operations desk has logged your request and will reach out to <span className="font-semibold text-foreground">{email}</span>.
+                  Thank you,{" "}
+                  <span className="font-semibold text-foreground">{name || "Explorer"}</span>. Our
+                  operations desk has logged your request and will reach out to{" "}
+                  <span className="font-semibold text-foreground">{email}</span>.
                 </p>
                 <button
                   type="button"

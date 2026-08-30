@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
-import { motion } from 'framer-motion';
-import { ZoomIn, ZoomOut, RotateCcw, Layers, Gauge, Zap } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
+import React, { useRef, useEffect, useState } from "react";
+import * as THREE from "three";
+import { motion } from "framer-motion";
+import { ZoomIn, ZoomOut, RotateCcw, Layers, Gauge, Zap } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
 
 interface CMBData {
   temperature: number;
@@ -20,7 +20,9 @@ export default function CMBExplorerPage() {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const sphereRef = useRef<THREE.Mesh | null>(null);
   const [zoom, setZoom] = useState(1);
-  const [selectedBand, setSelectedBand] = useState<'temperature' | 'polarization' | 'dust'>('temperature');
+  const [selectedBand, setSelectedBand] = useState<"temperature" | "polarization" | "dust">(
+    "temperature",
+  );
   const [cmbData, setCmbData] = useState<CMBData>({
     temperature: 2.725,
     anisotropy: 0.00001,
@@ -40,7 +42,7 @@ export default function CMBExplorerPage() {
       75,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       0.1,
-      10000
+      10000,
     );
     camera.position.z = 2.5 / zoom;
     cameraRef.current = camera;
@@ -55,10 +57,10 @@ export default function CMBExplorerPage() {
     const geometry = new THREE.SphereGeometry(1, 256, 256);
 
     // Generate CMB-like texture
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = 2048;
     canvas.height = 1024;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
 
     // Create Perlin-like noise pattern
     const imageData = ctx.createImageData(canvas.width, canvas.height);
@@ -67,15 +69,15 @@ export default function CMBExplorerPage() {
     for (let i = 0; i < data.length; i += 4) {
       const value = Math.random() * 255;
       const temp = 2.725 + (value - 127.5) * 0.00001 * 1000;
-      
+
       // Color based on temperature
       let r, g, b;
-      if (selectedBand === 'temperature') {
+      if (selectedBand === "temperature") {
         const normalized = (temp - 2.72) / 0.00001;
         r = Math.max(0, Math.min(255, 128 + normalized * 50));
         g = 128;
         b = Math.max(0, Math.min(255, 128 - normalized * 50));
-      } else if (selectedBand === 'polarization') {
+      } else if (selectedBand === "polarization") {
         r = Math.floor(Math.random() * 100 + 100);
         g = Math.floor(Math.random() * 100 + 100);
         b = 200;
@@ -113,10 +115,7 @@ export default function CMBExplorerPage() {
       transparent: true,
       opacity: 0.2,
     });
-    const gridLines = new THREE.LineSegments(
-      new THREE.EdgesGeometry(gridGeometry),
-      gridMaterial
-    );
+    const gridLines = new THREE.LineSegments(new THREE.EdgesGeometry(gridGeometry), gridMaterial);
     scene.add(gridLines);
 
     // Lighting
@@ -154,10 +153,10 @@ export default function CMBExplorerPage() {
       renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
       renderer.dispose();
       containerRef.current?.removeChild(renderer.domElement);
@@ -225,9 +224,9 @@ export default function CMBExplorerPage() {
                 </label>
                 <div className="space-y-2">
                   {[
-                    { id: 'temperature', label: 'Temperature', icon: Gauge },
-                    { id: 'polarization', label: 'Polarization', icon: Layers },
-                    { id: 'dust', label: 'Dust Emission', icon: Zap },
+                    { id: "temperature", label: "Temperature", icon: Gauge },
+                    { id: "polarization", label: "Polarization", icon: Layers },
+                    { id: "dust", label: "Dust Emission", icon: Zap },
                   ].map((band) => {
                     const Icon = band.icon;
                     return (
@@ -236,8 +235,8 @@ export default function CMBExplorerPage() {
                         onClick={() => setSelectedBand(band.id as any)}
                         className={`w-full p-3 rounded-lg border transition-all flex items-center gap-2 ${
                           selectedBand === band.id
-                            ? 'bg-aerospace-blue/20 border-aerospace-blue/50'
-                            : 'bg-primary/20 border-aerospace-blue/10 hover:border-aerospace-blue/30'
+                            ? "bg-aerospace-blue/20 border-aerospace-blue/50"
+                            : "bg-primary/20 border-aerospace-blue/10 hover:border-aerospace-blue/30"
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -281,9 +280,13 @@ export default function CMBExplorerPage() {
 
               {/* Info */}
               <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20 text-xs text-foreground/70">
-                <p className="mb-2 font-semibold text-aerospace-blue">Cosmic Microwave Background</p>
+                <p className="mb-2 font-semibold text-aerospace-blue">
+                  Cosmic Microwave Background
+                </p>
                 <p>
-                  Explore the oldest light in the universe. The CMB is the thermal radiation left over from the Big Bang, providing insights into the early universe's structure and composition.
+                  Explore the oldest light in the universe. The CMB is the thermal radiation left
+                  over from the Big Bang, providing insights into the early universe's structure and
+                  composition.
                 </p>
               </div>
             </Card>

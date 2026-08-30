@@ -1,2 +1,2 @@
 // Re-export from main entities file for backward compatibility
-export type { DesignVersions } from './index';
+export type { DesignVersions } from "./index";

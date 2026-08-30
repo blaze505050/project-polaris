@@ -73,7 +73,8 @@ function SpotlightPage() {
               Recognising the people and ideas moving Polaris forward.
             </p>
             <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-xl leading-relaxed">
-              Polaris doesn't just teach students. It notices the ones who go out and do something with what they learn.
+              Polaris doesn't just teach students. It notices the ones who go out and do something
+              with what they learn.
             </p>
           </ScrollReveal>
         </div>
@@ -98,7 +99,9 @@ function SpotlightPage() {
                       <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/25 font-semibold text-[10px] uppercase">
                         {featuredSpotlight.category}
                       </span>
-                      <span className="text-[11px] text-muted-foreground font-mono">{featuredSpotlight.date}</span>
+                      <span className="text-[11px] text-muted-foreground font-mono">
+                        {featuredSpotlight.date}
+                      </span>
                     </div>
 
                     <h2 className="text-2xl sm:text-3xl font-bold font-display text-foreground leading-snug">
@@ -136,8 +139,19 @@ function SpotlightPage() {
                       </Button>
                       {featuredSpotlight.links &&
                         featuredSpotlight.links.map((link) => (
-                          <Button key={link.label} asChild variant="outline" size="sm" className="h-9 px-4 text-xs border-white/10 hover:border-white/20">
-                            <a href={link.url} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                          <Button
+                            key={link.label}
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="h-9 px-4 text-xs border-white/10 hover:border-white/20"
+                          >
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-1"
+                            >
                               <span>{link.label}</span>
                               <ExternalLink className="size-3" />
                             </a>
@@ -212,7 +226,9 @@ function SpotlightPage() {
                       <span className="px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20 font-semibold text-[10px] uppercase">
                         {entry.category}
                       </span>
-                      <span className="text-[11px] text-muted-foreground font-mono">{entry.date}</span>
+                      <span className="text-[11px] text-muted-foreground font-mono">
+                        {entry.date}
+                      </span>
                     </div>
 
                     <h3 className="text-lg font-bold font-display text-foreground leading-snug">
@@ -273,20 +289,28 @@ function SpotlightPage() {
 
             <div className="space-y-3 pt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed border-t border-white/6">
               <div>
-                <span className="text-[10px] uppercase font-semibold text-primary block mb-1">Their Journey & Story</span>
+                <span className="text-[10px] uppercase font-semibold text-primary block mb-1">
+                  Their Journey & Story
+                </span>
                 <p>{activeModalSpotlight.story}</p>
               </div>
 
               {activeModalSpotlight.accomplishment && (
                 <div className="p-3.5 rounded-xl bg-surface-2 border border-white/6">
-                  <span className="text-[10px] uppercase font-semibold text-foreground block mb-1">What Was Accomplished</span>
-                  <p className="text-foreground/90 font-medium">{activeModalSpotlight.accomplishment}</p>
+                  <span className="text-[10px] uppercase font-semibold text-foreground block mb-1">
+                    What Was Accomplished
+                  </span>
+                  <p className="text-foreground/90 font-medium">
+                    {activeModalSpotlight.accomplishment}
+                  </p>
                 </div>
               )}
 
               {activeModalSpotlight.contributionToPolaris && (
                 <div>
-                  <span className="text-[10px] uppercase font-semibold text-primary block mb-1">Contribution to Polaris</span>
+                  <span className="text-[10px] uppercase font-semibold text-primary block mb-1">
+                    Contribution to Polaris
+                  </span>
                   <p>{activeModalSpotlight.contributionToPolaris}</p>
                 </div>
               )}

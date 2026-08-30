@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { FlowField, MeshData } from '@/services/cfdPhysicsEngine';
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { FlowField, MeshData } from "@/services/cfdPhysicsEngine";
 
 interface CFDVisualizationProps {
   flowField: FlowField | null;
   meshData: MeshData | null;
   isRunning: boolean;
   convergence: number;
-  visualizationType: 'velocity' | 'pressure' | 'turbulence' | 'streamlines';
+  visualizationType: "velocity" | "pressure" | "turbulence" | "streamlines";
 }
 
 export default function CFDVisualization({
@@ -24,7 +24,7 @@ export default function CFDVisualization({
     if (!canvasRef.current || !flowField || !meshData) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -32,21 +32,21 @@ export default function CFDVisualization({
     canvas.height = canvas.offsetHeight;
 
     // Clear canvas
-    ctx.fillStyle = '#0F172A';
+    ctx.fillStyle = "#0F172A";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw based on visualization type
     switch (visualizationType) {
-      case 'velocity':
+      case "velocity":
         drawVelocityField(ctx, canvas, flowField, meshData);
         break;
-      case 'pressure':
+      case "pressure":
         drawPressureField(ctx, canvas, flowField, meshData);
         break;
-      case 'turbulence':
+      case "turbulence":
         drawTurbulenceField(ctx, canvas, flowField, meshData);
         break;
-      case 'streamlines':
+      case "streamlines":
         drawStreamlines(ctx, canvas, flowField, meshData);
         break;
     }
@@ -59,13 +59,10 @@ export default function CFDVisualization({
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
     flowField: FlowField,
-    meshData: MeshData
+    meshData: MeshData,
   ) => {
     const nodes = meshData.nodes;
-    const maxVelocity = Math.max(
-      ...flowField.u.map(Math.abs),
-      ...flowField.v.map(Math.abs)
-    );
+    const maxVelocity = Math.max(...flowField.u.map(Math.abs), ...flowField.v.map(Math.abs));
 
     // Draw velocity vectors
     const step = Math.max(1, Math.floor(nodes.length / 100));
@@ -98,8 +95,14 @@ export default function CFDVisualization({
       const arrowSize = 5;
       ctx.beginPath();
       ctx.moveTo(endX, endY);
-      ctx.lineTo(endX - arrowSize * Math.cos(angle - Math.PI / 6), endY - arrowSize * Math.sin(angle - Math.PI / 6));
-      ctx.lineTo(endX - arrowSize * Math.cos(angle + Math.PI / 6), endY - arrowSize * Math.sin(angle + Math.PI / 6));
+      ctx.lineTo(
+        endX - arrowSize * Math.cos(angle - Math.PI / 6),
+        endY - arrowSize * Math.sin(angle - Math.PI / 6),
+      );
+      ctx.lineTo(
+        endX - arrowSize * Math.cos(angle + Math.PI / 6),
+        endY - arrowSize * Math.sin(angle + Math.PI / 6),
+      );
       ctx.closePath();
       ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
       ctx.fill();
@@ -110,7 +113,7 @@ export default function CFDVisualization({
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
     flowField: FlowField,
-    meshData: MeshData
+    meshData: MeshData,
   ) => {
     const nodes = meshData.nodes;
     const minPressure = Math.min(...flowField.p);
@@ -176,7 +179,7 @@ export default function CFDVisualization({
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
     flowField: FlowField,
-    meshData: MeshData
+    meshData: MeshData,
   ) => {
     const nodes = meshData.nodes;
     const maxK = Math.max(...flowField.turbulence.k);
@@ -209,13 +212,10 @@ export default function CFDVisualization({
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
     flowField: FlowField,
-    meshData: MeshData
+    meshData: MeshData,
   ) => {
     const nodes = meshData.nodes;
-    const maxVelocity = Math.max(
-      ...flowField.u.map(Math.abs),
-      ...flowField.v.map(Math.abs)
-    );
+    const maxVelocity = Math.max(...flowField.u.map(Math.abs), ...flowField.v.map(Math.abs));
 
     // Draw streamlines starting from inlet
     const numStreamlines = 15;
@@ -243,9 +243,7 @@ export default function CFDVisualization({
         let nearestIdx = 0;
         let minDist = Infinity;
         for (let i = 0; i < nodes.length; i++) {
-          const dist = Math.sqrt(
-            Math.pow(nodes[i].x - x, 2) + Math.pow(nodes[i].y - y, 2)
-          );
+          const dist = Math.sqrt(Math.pow(nodes[i].x - x, 2) + Math.pow(nodes[i].y - y, 2));
           if (dist < minDist) {
             minDist = dist;
             nearestIdx = i;
@@ -271,9 +269,9 @@ export default function CFDVisualization({
   const drawMeshOutline = (
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
-    meshData: MeshData
+    meshData: MeshData,
   ) => {
-    ctx.strokeStyle = '#0EA5E9';
+    ctx.strokeStyle = "#0EA5E9";
     ctx.lineWidth = 0.5;
     ctx.globalAlpha = 0.2;
 

@@ -1,82 +1,82 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Rocket, Activity, Radio, AlertCircle, CheckCircle, Clock } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Rocket, Activity, Radio, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function MissionControlPage() {
   const [selectedMission, setSelectedMission] = useState(null);
 
   const missions = [
     {
-      id: 'mars-rover',
-      name: 'Mars Rover Alpha',
-      status: 'active',
-      statusLabel: 'Active',
+      id: "mars-rover",
+      name: "Mars Rover Alpha",
+      status: "active",
+      statusLabel: "Active",
       progress: 85,
       telemetry: {
-        altitude: '0 m',
-        velocity: '0.5 m/s',
-        temperature: '-63°C',
-        power: '92%',
+        altitude: "0 m",
+        velocity: "0.5 m/s",
+        temperature: "-63°C",
+        power: "92%",
       },
-      lastUpdate: '2 minutes ago',
+      lastUpdate: "2 minutes ago",
     },
     {
-      id: 'lunar-orbiter',
-      name: 'Lunar Orbiter Beta',
-      status: 'active',
-      statusLabel: 'Active',
+      id: "lunar-orbiter",
+      name: "Lunar Orbiter Beta",
+      status: "active",
+      statusLabel: "Active",
       progress: 65,
       telemetry: {
-        altitude: '100 km',
-        velocity: '1.68 km/s',
-        temperature: '-120°C',
-        power: '78%',
+        altitude: "100 km",
+        velocity: "1.68 km/s",
+        temperature: "-120°C",
+        power: "78%",
       },
-      lastUpdate: '5 minutes ago',
+      lastUpdate: "5 minutes ago",
     },
     {
-      id: 'deep-space',
-      name: 'Deep Space Probe',
-      status: 'nominal',
-      statusLabel: 'Nominal',
+      id: "deep-space",
+      name: "Deep Space Probe",
+      status: "nominal",
+      statusLabel: "Nominal",
       progress: 45,
       telemetry: {
-        distance: '2.5 AU',
-        velocity: '15 km/s',
-        temperature: '-200°C',
-        power: '65%',
+        distance: "2.5 AU",
+        velocity: "15 km/s",
+        temperature: "-200°C",
+        power: "65%",
       },
-      lastUpdate: '1 hour ago',
+      lastUpdate: "1 hour ago",
     },
   ];
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'active':
-        return 'text-green-400';
-      case 'nominal':
-        return 'text-blue-400';
-      case 'warning':
-        return 'text-yellow-400';
-      case 'critical':
-        return 'text-red-400';
+      case "active":
+        return "text-green-400";
+      case "nominal":
+        return "text-blue-400";
+      case "warning":
+        return "text-yellow-400";
+      case "critical":
+        return "text-red-400";
       default:
-        return 'text-slate-400';
+        return "text-slate-400";
     }
   };
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'active':
-      case 'nominal':
+      case "active":
+      case "nominal":
         return <CheckCircle size={16} />;
-      case 'warning':
+      case "warning":
         return <AlertCircle size={16} />;
-      case 'critical':
+      case "critical":
         return <AlertCircle size={16} />;
       default:
         return <Activity size={16} />;
@@ -100,8 +100,8 @@ export default function MissionControlPage() {
             <h1 className="text-5xl font-bold text-white">Mission Control Center</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Real-time mission monitoring and control. Manage spacecraft operations, monitor telemetry,
-            and execute commands for active missions.
+            Real-time mission monitoring and control. Manage spacecraft operations, monitor
+            telemetry, and execute commands for active missions.
           </p>
         </motion.div>
 
@@ -125,7 +125,9 @@ export default function MissionControlPage() {
                   <div className="flex items-start justify-between">
                     <div>
                       <h4 className="text-2xl font-bold text-white mb-2">{selectedMission.name}</h4>
-                      <div className={`flex items-center gap-2 ${getStatusColor(selectedMission.status)}`}>
+                      <div
+                        className={`flex items-center gap-2 ${getStatusColor(selectedMission.status)}`}
+                      >
                         {getStatusIcon(selectedMission.status)}
                         <span className="font-semibold">{selectedMission.statusLabel}</span>
                       </div>
@@ -142,7 +144,9 @@ export default function MissionControlPage() {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="text-sm text-slate-300">Mission Progress</span>
-                      <span className="text-sm font-semibold text-rose-400">{selectedMission.progress}%</span>
+                      <span className="text-sm font-semibold text-rose-400">
+                        {selectedMission.progress}%
+                      </span>
                     </div>
                     <div className="w-full bg-slate-700 rounded-full h-3">
                       <div
@@ -161,7 +165,7 @@ export default function MissionControlPage() {
                       {Object.entries(selectedMission.telemetry).map(([key, value]) => (
                         <div key={key} className="bg-slate-900/50 rounded-lg p-3">
                           <div className="text-xs text-slate-400 capitalize mb-1">
-                            {key.replace(/([A-Z])/g, ' $1').trim()}
+                            {key.replace(/([A-Z])/g, " $1").trim()}
                           </div>
                           <div className="text-lg font-bold text-rose-400">{String(value)}</div>
                         </div>
@@ -206,13 +210,15 @@ export default function MissionControlPage() {
                     onClick={() => setSelectedMission(mission)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedMission?.id === mission.id
-                        ? 'bg-rose-600/20 border border-rose-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-rose-600/20 border border-rose-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <div className="font-semibold text-white">{mission.name}</div>
-                      <div className={`flex items-center gap-1 text-xs ${getStatusColor(mission.status)}`}>
+                      <div
+                        className={`flex items-center gap-1 text-xs ${getStatusColor(mission.status)}`}
+                      >
                         {getStatusIcon(mission.status)}
                       </div>
                     </div>
@@ -303,20 +309,20 @@ export default function MissionControlPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Real-time Telemetry',
-                  description: 'Monitor spacecraft systems and sensor data in real-time.',
+                  title: "Real-time Telemetry",
+                  description: "Monitor spacecraft systems and sensor data in real-time.",
                 },
                 {
-                  title: 'Command Sequencing',
-                  description: 'Create and execute complex command sequences for spacecraft.',
+                  title: "Command Sequencing",
+                  description: "Create and execute complex command sequences for spacecraft.",
                 },
                 {
-                  title: 'Timeline Management',
-                  description: 'Plan and manage mission timelines with precision scheduling.',
+                  title: "Timeline Management",
+                  description: "Plan and manage mission timelines with precision scheduling.",
                 },
                 {
-                  title: 'Data Analysis',
-                  description: 'Analyze mission data and generate comprehensive reports.',
+                  title: "Data Analysis",
+                  description: "Analyze mission data and generate comprehensive reports.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

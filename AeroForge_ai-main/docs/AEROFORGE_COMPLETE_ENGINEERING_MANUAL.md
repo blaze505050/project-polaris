@@ -2,11 +2,12 @@
 
 **Document Version:** 1.0.0 — Production Reference  
 **Date:** August 17, 2026  
-**Target Audience:** Aerospace Engineers, Mechanical Systems Designers, Astrodynamics Researchers, Computational Physicists, Software Architects  
+**Target Audience:** Aerospace Engineers, Mechanical Systems Designers, Astrodynamics Researchers, Computational Physicists, Software Architects
 
 ---
 
 ## Table of Contents
+
 1. [Platform Architecture & System Ecosystem](#1-platform-architecture--system-ecosystem)
 2. [API Technical Reference](#2-api-technical-reference)
    - [2.1 Physics AI FastAPI REST API](#21-physics-ai-fastapi-rest-api)
@@ -57,6 +58,7 @@ AeroForge AI is built around a decoupled architecture separating client-side hig
 ### 2.1 Physics AI FastAPI REST API
 
 #### Endpoint: `GET /health`
+
 Returns backend health status, system environment, and PyTorch CUDA GPU availability.
 
 ```json
@@ -69,9 +71,11 @@ Returns backend health status, system environment, and PyTorch CUDA GPU availabi
 ```
 
 #### Endpoint: `POST /api/physics-ai/predict`
+
 Executes Fourier Neural Operator (FNO) surrogate inference for 2D airfoil pressure field prediction.
 
 **Request Payload:**
+
 ```json
 {
   "model_id": "fno_airfoil_2d",
@@ -79,19 +83,24 @@ Executes Fourier Neural Operator (FNO) surrogate inference for 2D airfoil pressu
     "mach": 0.75,
     "angle_of_attack": 4.0,
     "reynolds_number": 6500000.0,
-    "airfoil_grid": [[0.0, 0.0], [0.5, 0.06], [1.0, 0.0]]
+    "airfoil_grid": [
+      [0.0, 0.0],
+      [0.5, 0.06],
+      [1.0, 0.0]
+    ]
   }
 }
 ```
 
 **Response Payload:**
+
 ```json
 {
   "status": "COMPLETED",
   "execution_time_ms": 14.2,
   "execution_target": "cuda:0",
   "results": {
-    "lift_coefficient": 0.5420,
+    "lift_coefficient": 0.542,
     "drag_coefficient": 0.0312,
     "pressure_field_sample": [-0.85, -0.42, 0.12, 0.98]
   }
@@ -103,9 +112,11 @@ Executes Fourier Neural Operator (FNO) surrogate inference for 2D airfoil pressu
 ### 2.2 Public Artifact Cloud Registry REST API
 
 #### Endpoint: `POST /api/public-artifacts`
+
 Publishes an immutable snapshot of an experiment artifact to the cloud registry.
 
 **Request Payload:**
+
 ```json
 {
   "id": "PUB-EXP-2026-0914",
@@ -119,6 +130,7 @@ Publishes an immutable snapshot of an experiment artifact to the cloud registry.
 ```
 
 #### Endpoint: `GET /api/public-artifacts/{artifact_id}`
+
 Retrieves a public artifact by ID for clean incognito context rendering.
 
 ---
@@ -130,6 +142,7 @@ The 2D Fourier Neural Operator parameterizes integral operators in Fourier space
 $$v_{k+1}(x) = \sigma \left( W v_k(x) + \mathcal{F}^{-1} \left( R_{\phi} \cdot \mathcal{F}(v_k) \right)(x) \right)$$
 
 Where:
+
 - $\mathcal{F}$ is the 2D Fast Fourier Transform (FFT).
 - $R_{\phi}$ is a parameterized weight matrix acting on lower Fourier modes.
 - $\sigma$ is a non-linear activation function (GELU).
@@ -139,18 +152,22 @@ Where:
 ## 4. AeroLab Aerodynamics Solver Manual
 
 ### 4.1 Thin Airfoil Theory Solver
+
 - **Governing Equations:**
   $$C_L = 2\pi (\alpha - \alpha_0)$$
   $$\alpha_0 = -\frac{1}{\pi} \int_{0}^{\pi} \frac{dz}{dx} (\theta) (\cos \theta - 1) d\theta$$
 - **Assumptions:** Incompressible, inviscid, thin section ($t/c \le 0.12$), small angles of attack ($\alpha \le 12^\circ$).
 
 ### 4.2 Prandtl-Glauert Compressibility Correction
+
 - **Governing Equation:**
   $$C_p = \frac{C_{p,0}}{\sqrt{1 - M_\infty^2}}$$
 - **Valid Domain:** Subcritical subsonic flow ($M_\infty \le 0.80$).
 
 ### 4.3 ISO 2533 Standard Atmosphere (7-Layer Model)
+
 Computes temperature, pressure, density, and dynamic viscosity from sea level up to 86 km:
+
 - Troposphere ($0 \le h < 11\text{ km}$): $T = T_0 - L \cdot h$ where $L = 6.5\text{ K/km}$.
 - Stratosphere ($11 \le h < 20\text{ km}$): $T = 216.65\text{ K}$ (Isothermal).
 
@@ -159,6 +176,7 @@ Computes temperature, pressure, density, and dynamic viscosity from sea level up
 ## 5. MechLab Structural Mechanics Manual
 
 ### 5.1 Euler-Bernoulli Beam Bending Solver
+
 - **Deflection Formula (Cantilever Beam under End Load $F$):**
   $$\delta(x) = \frac{F x^2}{6 E I} (3L - x)$$
   $$\delta_{\max} = \frac{F L^3}{3 E I}$$
@@ -172,6 +190,7 @@ Where $E$ is Young's Modulus, $I$ is Second Moment of Area, and $y$ is distance 
 ## 6. AstroLab Space Systems Manual
 
 ### 6.1 Keplerian Orbital Mechanics & Vis-Viva Solver
+
 - **Vis-Viva Equation:**
   $$v = \sqrt{\mu \left( \frac{2}{r} - \frac{1}{a} \right)}$$
 - **Orbital Period (Kepler's Third Law):**
@@ -197,7 +216,11 @@ Project state exports follow the `.aeroforge` JSON package specification:
       { "id": "req_1", "code": "REQ-AERO-01", "specification": "L/D > 14.5", "status": "VERIFIED" }
     ],
     "simulations": [
-      { "id": "sim_1", "name": "Prandtl-Glauert Compressibility Sweep", "solver": "Thin Airfoil + PG" }
+      {
+        "id": "sim_1",
+        "name": "Prandtl-Glauert Compressibility Sweep",
+        "solver": "Thin Airfoil + PG"
+      }
     ]
   }
 }

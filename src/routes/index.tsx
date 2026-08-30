@@ -272,7 +272,7 @@ function HomePage() {
                           : "border-white/8 bg-card/70 backdrop-blur-sm hover:border-white/20"
                       }`}
                       style={{
-                        transition: 'all 250ms cubic-bezier(0.23, 1, 0.32, 1)',
+                        transition: "all 250ms cubic-bezier(0.23, 1, 0.32, 1)",
                         transitionDelay: `${idx * 40}ms`,
                       }}
                     >
@@ -281,7 +281,9 @@ function HomePage() {
                         <span>→</span>
                       </div>
                       <h3 className="text-xs font-bold font-display text-foreground">{m.title}</h3>
-                      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{m.desc}</p>
+                      <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
+                        {m.desc}
+                      </p>
                     </div>
                   );
                 })}
@@ -307,43 +309,94 @@ function HomePage() {
 
               <div className="grid gap-3 font-sans">
                 <ScrollReveal direction="up" delay={40}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
+                  <div
+                    className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80"
+                    style={{
+                      transition:
+                        "border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(197, 157, 255, 0.3)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.transform = "";
+                    }}
+                  >
                     <div className="flex items-baseline gap-3 mb-1">
-                      <span className="text-xs font-mono font-bold text-primary">01. Application</span>
+                      <span className="text-xs font-mono font-bold text-primary">
+                        01. Application
+                      </span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">
                         KNOWLEDGE ≠ ACTION
                       </h3>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Knowing a concept or memorizing textbook formulas doesn't mean knowing how to build, test, and deploy something real with it.
+                      Knowing a concept or memorizing textbook formulas doesn't mean knowing how to
+                      build, test, and deploy something real with it.
                     </p>
                   </div>
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delay={80}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
+                  <div
+                    className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80"
+                    style={{
+                      transition:
+                        "border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(197, 157, 255, 0.3)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.transform = "";
+                    }}
+                  >
                     <div className="flex items-baseline gap-3 mb-1">
-                      <span className="text-xs font-mono font-bold text-primary">02. Ecosystem</span>
+                      <span className="text-xs font-mono font-bold text-primary">
+                        02. Ecosystem
+                      </span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">
                         CURIOSITY ≠ ACCESS
                       </h3>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      Being deeply curious doesn't guarantee access to the tools, mentorship, computational software, or environment to explore freely.
+                      Being deeply curious doesn't guarantee access to the tools, mentorship,
+                      computational software, or environment to explore freely.
                     </p>
                   </div>
                 </ScrollReveal>
 
                 <ScrollReveal direction="up" delay={120}>
-                  <div className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80" style={{ transition: 'border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(197, 157, 255, 0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.transform = ''; }}>
+                  <div
+                    className="p-4 sm:p-5 rounded-xl border border-white/8 bg-card/80"
+                    style={{
+                      transition:
+                        "border-color 250ms cubic-bezier(0.23, 1, 0.32, 1), transform 250ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 400ms cubic-bezier(0.23, 1, 0.32, 1)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(197, 157, 255, 0.3)";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "";
+                      e.currentTarget.style.transform = "";
+                    }}
+                  >
                     <div className="flex items-baseline gap-3 mb-1">
-                      <span className="text-xs font-mono font-bold text-primary">03. Democratization</span>
+                      <span className="text-xs font-mono font-bold text-primary">
+                        03. Democratization
+                      </span>
                       <h3 className="text-sm sm:text-base font-bold font-display text-foreground">
                         OPPORTUNITY ≠ AFFORDABILITY
                       </h3>
                     </div>
                     <p className="text-xs text-muted-foreground leading-relaxed">
-                      An opportunity isn't truly accessible if paywalls and heavy costs put it out of reach for curious students.
+                      An opportunity isn't truly accessible if paywalls and heavy costs put it out
+                      of reach for curious students.
                     </p>
                   </div>
                 </ScrollReveal>
@@ -412,7 +465,12 @@ function HomePage() {
                   What's Happening Now?
                 </h2>
               </div>
-              <Button asChild variant="outline" size="sm" className="font-sans text-xs border-white/10 hover:border-white/20 active:scale-[0.97]">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="font-sans text-xs border-white/10 hover:border-white/20 active:scale-[0.97]"
+              >
                 <Link to="/programs">View All Programs →</Link>
               </Button>
             </div>
@@ -476,22 +534,30 @@ function HomePage() {
                     </div>
                     <div className="flex items-center gap-2 font-mono text-xs">
                       <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.days).padStart(2, "0")}</span>
+                        <span className="text-sm font-bold text-primary block leading-none">
+                          {String(timeLeft.days).padStart(2, "0")}
+                        </span>
                         <span className="text-[9px] text-muted-foreground uppercase">Days</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
                       <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.hours).padStart(2, "0")}</span>
+                        <span className="text-sm font-bold text-primary block leading-none">
+                          {String(timeLeft.hours).padStart(2, "0")}
+                        </span>
                         <span className="text-[9px] text-muted-foreground uppercase">Hours</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
                       <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">{String(timeLeft.minutes).padStart(2, "0")}</span>
+                        <span className="text-sm font-bold text-primary block leading-none">
+                          {String(timeLeft.minutes).padStart(2, "0")}
+                        </span>
                         <span className="text-[9px] text-muted-foreground uppercase">Mins</span>
                       </div>
                       <span className="text-primary font-bold">:</span>
                       <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-emerald-400 block leading-none">{String(timeLeft.seconds).padStart(2, "0")}</span>
+                        <span className="text-sm font-bold text-emerald-400 block leading-none">
+                          {String(timeLeft.seconds).padStart(2, "0")}
+                        </span>
                         <span className="text-[9px] text-muted-foreground uppercase">Secs</span>
                       </div>
                     </div>
@@ -503,7 +569,12 @@ function HomePage() {
                       size="default"
                       className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs active:scale-[0.97]"
                     >
-                      <a href={featuredSession.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                      <a
+                        href={featuredSession.ctaUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-2"
+                      >
                         <span>Register Now (Free)</span>
                         <ArrowRight className="size-3.5" />
                       </a>
@@ -550,7 +621,8 @@ function HomePage() {
                     </ul>
 
                     <div className="pt-3 border-t border-white/10 text-[11px] text-muted-foreground">
-                      Whether you are an astronomy enthusiast or simply curious about the Universe, join us on this journey through the stars! 🌠
+                      Whether you are an astronomy enthusiast or simply curious about the Universe,
+                      join us on this journey through the stars! 🌠
                     </div>
                   </div>
                 </div>
@@ -570,7 +642,8 @@ function HomePage() {
                   More than a community. An environment to explore.
                 </h2>
                 <p className="text-xs text-muted-foreground max-w-2xl">
-                  Connect with hundreds of students, participate in quizzes, and explore space together.
+                  Connect with hundreds of students, participate in quizzes, and explore space
+                  together.
                 </p>
               </ScrollReveal>
             </div>
@@ -586,7 +659,9 @@ function HomePage() {
                     className="size-14 rounded-lg object-cover border border-primary/20 shrink-0"
                   />
                   <div>
-                    <div className="text-xs font-bold font-display text-foreground">Student-Led & Independent</div>
+                    <div className="text-xs font-bold font-display text-foreground">
+                      Student-Led & Independent
+                    </div>
                     <p className="text-[11px] text-muted-foreground mt-0.5">
                       Empowering young aerospace and physics researchers across India.
                     </p>
@@ -625,7 +700,12 @@ function HomePage() {
                 icon: Compass,
               },
             ].map((c, i) => (
-              <ScrollReveal key={c.title} direction="up" delay={i * 30} className="min-w-[240px] sm:min-w-0 snap-start">
+              <ScrollReveal
+                key={c.title}
+                direction="up"
+                delay={i * 30}
+                className="min-w-[240px] sm:min-w-0 snap-start"
+              >
                 <div className="p-4 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between hover:border-primary/30 transition-colors">
                   <div>
                     <div className="size-8 rounded-lg bg-surface-2 border border-white/8 flex items-center justify-center text-primary mb-3">
@@ -676,7 +756,9 @@ function HomePage() {
                   Polaris isn't built only for students. It's built with students.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed font-sans">
-                  Join our active student volunteer corps across four specialized departments. Gain hands-on leadership, design simulations, moderate scientist sessions, and build open resources.
+                  Join our active student volunteer corps across four specialized departments. Gain
+                  hands-on leadership, design simulations, moderate scientist sessions, and build
+                  open resources.
                 </p>
 
                 <div className="pt-2">
@@ -741,14 +823,29 @@ function HomePage() {
                       link: "https://forms.gle/qUtQhWUNhmWtuSQu8",
                     },
                   ].map((d) => (
-                    <div key={d.dept} className="p-4 rounded-xl border border-white/8 bg-card flex flex-col justify-between hover:border-primary/30 transition-colors">
+                    <div
+                      key={d.dept}
+                      className="p-4 rounded-xl border border-white/8 bg-card flex flex-col justify-between hover:border-primary/30 transition-colors"
+                    >
                       <div>
                         <h3 className="text-sm font-bold font-display text-foreground">{d.dept}</h3>
-                        <p className="text-[11px] text-muted-foreground mt-1 leading-snug">{d.desc}</p>
+                        <p className="text-[11px] text-muted-foreground mt-1 leading-snug">
+                          {d.desc}
+                        </p>
                       </div>
                       <div className="mt-4 pt-2 border-t border-white/6">
-                        <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-semibold text-primary hover:text-foreground active:scale-[0.97]">
-                          <a href={d.link} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                        <Button
+                          asChild
+                          size="sm"
+                          variant="ghost"
+                          className="h-7 px-0 text-xs font-semibold text-primary hover:text-foreground active:scale-[0.97]"
+                        >
+                          <a
+                            href={d.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-1"
+                          >
                             <span>Apply ({d.dept})</span>
                             <ExternalLink className="size-3" />
                           </a>
@@ -809,12 +906,21 @@ function HomePage() {
               <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
                 <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full card-gold-hover">
                   <div>
-                    <h3 className="text-base font-bold font-display text-foreground">{item.title}</h3>
-                    <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-base font-bold font-display text-foreground">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                      {item.desc}
+                    </p>
                   </div>
                   <div className="mt-5 pt-3 border-t border-white/6">
                     {item.isDirectLink && item.to ? (
-                      <Button asChild size="sm" variant="ghost" className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground active:scale-[0.97]">
+                      <Button
+                        asChild
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 px-0 text-xs font-medium text-primary hover:text-foreground active:scale-[0.97]"
+                      >
                         <Link to={item.to}>{item.cta}</Link>
                       </Button>
                     ) : (
@@ -847,10 +953,12 @@ function HomePage() {
                   What is Project Polaris?
                 </h2>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
-                  Project Polaris is a student-led experiential learning ecosystem built by students, for students.
+                  Project Polaris is a student-led experiential learning ecosystem built by
+                  students, for students.
                 </p>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed font-sans">
-                  We bridge the gap between traditional education and real-world learning by creating opportunities to build, research, experiment, collaborate, and showcase.
+                  We bridge the gap between traditional education and real-world learning by
+                  creating opportunities to build, research, experiment, collaborate, and showcase.
                 </p>
 
                 <div className="pt-2">
@@ -877,9 +985,17 @@ function HomePage() {
                   className="absolute inset-0 size-full object-cover opacity-65 hover:opacity-85 transition-opacity duration-500"
                 />
                 <div className="relative z-10 p-5 rounded-xl bg-background/85 backdrop-blur-md border border-white/12 text-center max-w-xs shadow-2xl">
-                  <img src={polarisLogo} alt="Polaris Logo" className="size-8 mx-auto mb-2 object-contain" />
-                  <div className="text-xs font-bold font-display text-foreground">Built by Students, for Students</div>
-                  <div className="text-[11px] text-muted-foreground mt-0.5">Empowering curious minds to build real systems</div>
+                  <img
+                    src={polarisLogo}
+                    alt="Polaris Logo"
+                    className="size-8 mx-auto mb-2 object-contain"
+                  />
+                  <div className="text-xs font-bold font-display text-foreground">
+                    Built by Students, for Students
+                  </div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">
+                    Empowering curious minds to build real systems
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -900,11 +1016,36 @@ function HomePage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center font-sans">
             {[
-              { target: 1000, suffix: "+", label: "Students Reached", note: "Across interactive sessions" },
-              { target: 230, suffix: "+", label: "Community Members", note: "Active WhatsApp learners" },
-              { target: 28, suffix: "+", label: "Contributors", note: "Volunteers, associates & team" },
-              { target: 100, suffix: "+", label: "Cumulative Participants", note: "Deep session attendance" },
-              { target: 4, suffix: "", label: "Workshops Conducted", note: "1-day expert masterclasses" },
+              {
+                target: 1000,
+                suffix: "+",
+                label: "Students Reached",
+                note: "Across interactive sessions",
+              },
+              {
+                target: 230,
+                suffix: "+",
+                label: "Community Members",
+                note: "Active WhatsApp learners",
+              },
+              {
+                target: 28,
+                suffix: "+",
+                label: "Contributors",
+                note: "Volunteers, associates & team",
+              },
+              {
+                target: 100,
+                suffix: "+",
+                label: "Cumulative Participants",
+                note: "Deep session attendance",
+              },
+              {
+                target: 4,
+                suffix: "",
+                label: "Workshops Conducted",
+                note: "1-day expert masterclasses",
+              },
             ].map((stat, idx) => (
               <ScrollReveal key={stat.label} direction="up" delay={idx * 20}>
                 <div className="p-4 rounded-xl border border-white/8 bg-card/90">
@@ -912,7 +1053,9 @@ function HomePage() {
                     <CountUp target={stat.target} suffix={stat.suffix} />
                   </div>
                   <div className="text-xs font-semibold text-foreground mt-1">{stat.label}</div>
-                  <div className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block">{stat.note}</div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5 hidden sm:block">
+                    {stat.note}
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
@@ -956,7 +1099,9 @@ function HomePage() {
                 <button
                   type="button"
                   aria-label="Previous Review"
-                  onClick={() => setReviewIndex((prev) => (prev > 0 ? prev - 1 : STUDENT_REVIEWS.length - 1))}
+                  onClick={() =>
+                    setReviewIndex((prev) => (prev > 0 ? prev - 1 : STUDENT_REVIEWS.length - 1))
+                  }
                   className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors active:scale-[0.97]"
                 >
                   <ChevronLeft className="size-4" />
@@ -964,7 +1109,9 @@ function HomePage() {
                 <button
                   type="button"
                   aria-label="Next Review"
-                  onClick={() => setReviewIndex((prev) => (prev < STUDENT_REVIEWS.length - 1 ? prev + 1 : 0))}
+                  onClick={() =>
+                    setReviewIndex((prev) => (prev < STUDENT_REVIEWS.length - 1 ? prev + 1 : 0))
+                  }
                   className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors active:scale-[0.97]"
                 >
                   <ChevronRight className="size-4" />
@@ -974,7 +1121,11 @@ function HomePage() {
           </ScrollReveal>
 
           {/* Review Cards Grid with Cross-fade Transition */}
-          <div aria-live="polite" aria-atomic="true" className="grid gap-4 md:grid-cols-2 font-sans">
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="grid gap-4 md:grid-cols-2 font-sans"
+          >
             {[
               STUDENT_REVIEWS[reviewIndex],
               STUDENT_REVIEWS[(reviewIndex + 1) % STUDENT_REVIEWS.length],
@@ -991,7 +1142,9 @@ function HomePage() {
                     {review.name.charAt(0)}
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-foreground font-display">{review.name}</div>
+                    <div className="text-xs font-bold text-foreground font-display">
+                      {review.name}
+                    </div>
                     <div className="text-[10px] text-muted-foreground">{review.role}</div>
                   </div>
                 </div>
@@ -1013,7 +1166,8 @@ function HomePage() {
                 Voices Behind Polaris
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                Distinguished scientists, founders, and engineers who have led sessions for Polaris explorers.
+                Distinguished scientists, founders, and engineers who have led sessions for Polaris
+                explorers.
               </p>
             </div>
           </ScrollReveal>
@@ -1026,7 +1180,9 @@ function HomePage() {
                     <div className="size-10 rounded-full bg-surface-2 border border-white/8 flex items-center justify-center text-primary font-bold text-sm mb-3">
                       {speaker.name.charAt(0)}
                     </div>
-                    <h3 className="text-sm font-bold font-display text-foreground">{speaker.name}</h3>
+                    <h3 className="text-sm font-bold font-display text-foreground">
+                      {speaker.name}
+                    </h3>
                     <p className="text-xs text-primary font-medium mt-0.5">{speaker.designation}</p>
                     <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
                       "{speaker.topic}"

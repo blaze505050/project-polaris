@@ -3,10 +3,10 @@
  * Production-ready N-body gravity simulation
  */
 
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import GravitySimulator from '@/components/GravitySimulator';
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import GravitySimulator from "@/components/GravitySimulator";
 
 export default function AstroLabP0GravityPage() {
   return (

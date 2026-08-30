@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Radio, Waves, Activity, Download, Play, Pause } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Radio, Waves, Activity, Download, Play, Pause } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function RadioAstronomyPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -12,30 +12,30 @@ export default function RadioAstronomyPage() {
 
   const signals = [
     {
-      id: 'pulsar-b1919',
-      name: 'PSR B1919+21',
-      type: 'Pulsar',
-      frequency: '1420 MHz',
-      period: '1.337 s',
-      description: 'The first discovered pulsar',
+      id: "pulsar-b1919",
+      name: "PSR B1919+21",
+      type: "Pulsar",
+      frequency: "1420 MHz",
+      period: "1.337 s",
+      description: "The first discovered pulsar",
       signalStrength: 85,
     },
     {
-      id: 'cmb',
-      name: 'Cosmic Microwave Background',
-      type: 'Radiation',
-      frequency: '160 GHz',
-      period: 'Continuous',
-      description: 'Afterglow of the Big Bang',
+      id: "cmb",
+      name: "Cosmic Microwave Background",
+      type: "Radiation",
+      frequency: "160 GHz",
+      period: "Continuous",
+      description: "Afterglow of the Big Bang",
       signalStrength: 92,
     },
     {
-      id: 'quasar-3c273',
-      name: '3C 273',
-      type: 'Quasar',
-      frequency: '1400 MHz',
-      period: 'Variable',
-      description: 'Brightest quasar in the sky',
+      id: "quasar-3c273",
+      name: "3C 273",
+      type: "Quasar",
+      frequency: "1400 MHz",
+      period: "Variable",
+      description: "Brightest quasar in the sky",
       signalStrength: 78,
     },
   ];
@@ -57,8 +57,8 @@ export default function RadioAstronomyPage() {
             <h1 className="text-5xl font-bold text-white">Radio Astronomy Suite</h1>
           </div>
           <p className="text-lg text-slate-300 max-w-3xl">
-            Analyze radio signals from space. Study pulsars, quasars, and the cosmic microwave background
-            using advanced signal processing and interferometry techniques.
+            Analyze radio signals from space. Study pulsars, quasars, and the cosmic microwave
+            background using advanced signal processing and interferometry techniques.
           </p>
         </motion.div>
 
@@ -119,11 +119,15 @@ export default function RadioAstronomyPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-slate-900/50 rounded-lg p-4">
                     <div className="text-sm text-slate-400 mb-2">Signal Strength</div>
-                    <div className="text-2xl font-bold text-indigo-400">{selectedSignal.signalStrength}%</div>
+                    <div className="text-2xl font-bold text-indigo-400">
+                      {selectedSignal.signalStrength}%
+                    </div>
                   </div>
                   <div className="bg-slate-900/50 rounded-lg p-4">
                     <div className="text-sm text-slate-400 mb-2">Frequency</div>
-                    <div className="text-2xl font-bold text-indigo-400">{selectedSignal.frequency}</div>
+                    <div className="text-2xl font-bold text-indigo-400">
+                      {selectedSignal.frequency}
+                    </div>
                   </div>
                 </div>
               )}
@@ -149,8 +153,8 @@ export default function RadioAstronomyPage() {
                     onClick={() => setSelectedSignal(signal)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedSignal?.id === signal.id
-                        ? 'bg-indigo-600/20 border border-indigo-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-indigo-600/20 border border-indigo-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{signal.name}</div>
@@ -164,7 +168,8 @@ export default function RadioAstronomyPage() {
                 <div className="mt-4 pt-4 border-t border-slate-700">
                   <div className="text-sm text-slate-300 space-y-2">
                     <div>
-                      <span className="text-indigo-400 font-semibold">Period:</span> {selectedSignal.period}
+                      <span className="text-indigo-400 font-semibold">Period:</span>{" "}
+                      {selectedSignal.period}
                     </div>
                     <div className="text-xs text-slate-400 mt-3">{selectedSignal.description}</div>
                   </div>
@@ -185,20 +190,22 @@ export default function RadioAstronomyPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Pulsar Detection',
-                  description: 'Identify and analyze periodic radio signals from rotating neutron stars.',
+                  title: "Pulsar Detection",
+                  description:
+                    "Identify and analyze periodic radio signals from rotating neutron stars.",
                 },
                 {
-                  title: 'Interferometry',
-                  description: 'Combine signals from multiple telescopes for enhanced resolution.',
+                  title: "Interferometry",
+                  description: "Combine signals from multiple telescopes for enhanced resolution.",
                 },
                 {
-                  title: 'CMB Analysis',
-                  description: 'Study the cosmic microwave background radiation and its properties.',
+                  title: "CMB Analysis",
+                  description:
+                    "Study the cosmic microwave background radiation and its properties.",
                 },
                 {
-                  title: 'Quasar Monitoring',
-                  description: 'Track variable radio sources and analyze their temporal behavior.',
+                  title: "Quasar Monitoring",
+                  description: "Track variable radio sources and analyze their temporal behavior.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

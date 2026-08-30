@@ -43,7 +43,8 @@ export function ErrorState({ note }: { note?: string }) {
     >
       <h3 className="font-display text-xl">We couldn't load this right now</h3>
       <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground">
-        {note ?? "Please refresh the page. If it keeps happening, get in touch and we'll look into it."}
+        {note ??
+          "Please refresh the page. If it keeps happening, get in touch and we'll look into it."}
       </p>
     </div>
   );

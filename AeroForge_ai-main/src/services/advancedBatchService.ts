@@ -3,14 +3,14 @@
  * Provides scheduling, resource management, and advanced monitoring
  */
 
-import { batchProcessingService, BatchJob, BatchOperationType } from './batchProcessingService';
+import { batchProcessingService, BatchJob, BatchOperationType } from "./batchProcessingService";
 
 export interface BatchSchedule {
   id: string;
   jobName: string;
   operationType: BatchOperationType;
   itemCount: number;
-  schedule: 'once' | 'daily' | 'weekly' | 'monthly';
+  schedule: "once" | "daily" | "weekly" | "monthly";
   scheduledTime: Date;
   enabled: boolean;
   createdAt: Date;
@@ -22,7 +22,7 @@ export interface ResourceAllocation {
   cpuAllocation: number; // 0-100%
   memoryAllocation: number; // MB
   maxConcurrentItems: number;
-  priorityLevel: 'low' | 'normal' | 'high';
+  priorityLevel: "low" | "normal" | "high";
 }
 
 export interface BatchMetrics {
@@ -49,8 +49,8 @@ class AdvancedBatchService {
     jobName: string,
     operationType: BatchOperationType,
     itemCount: number,
-    schedule: 'once' | 'daily' | 'weekly' | 'monthly',
-    scheduledTime: Date
+    schedule: "once" | "daily" | "weekly" | "monthly",
+    scheduledTime: Date,
   ): BatchSchedule {
     const scheduleId = `schedule-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
@@ -79,16 +79,16 @@ class AdvancedBatchService {
     const next = new Date(baseTime);
 
     switch (schedule) {
-      case 'daily':
+      case "daily":
         next.setDate(next.getDate() + 1);
         break;
-      case 'weekly':
+      case "weekly":
         next.setDate(next.getDate() + 7);
         break;
-      case 'monthly':
+      case "monthly":
         next.setMonth(next.getMonth() + 1);
         break;
-      case 'once':
+      case "once":
       default:
         return baseTime;
     }
@@ -129,7 +129,7 @@ class AdvancedBatchService {
       schedule.operationType,
       items,
       { scheduledJobId: schedule.id },
-      'normal'
+      "normal",
     );
 
     // Track metrics
@@ -139,15 +139,12 @@ class AdvancedBatchService {
   /**
    * Allocate resources to a job
    */
-  allocateResources(
-    jobId: string,
-    allocation: Partial<ResourceAllocation>
-  ): ResourceAllocation {
+  allocateResources(jobId: string, allocation: Partial<ResourceAllocation>): ResourceAllocation {
     const defaultAllocation: ResourceAllocation = {
       cpuAllocation: 50,
       memoryAllocation: 1024,
       maxConcurrentItems: 5,
-      priorityLevel: 'normal',
+      priorityLevel: "normal",
     };
 
     const finalAllocation = { ...defaultAllocation, ...allocation };
@@ -174,18 +171,20 @@ class AdvancedBatchService {
       const currentJob = batchProcessingService.getJob(jobId);
       if (!currentJob) return;
 
-      if (currentJob.status === 'completed' || currentJob.status === 'failed') {
+      if (currentJob.status === "completed" || currentJob.status === "failed") {
         const metrics: BatchMetrics = {
           jobId,
           totalDuration: currentJob.results?.totalProcessingTime || 0,
           averageItemDuration: currentJob.results?.averageProcessingTime || 0,
-          successRate: currentJob.totalItems > 0 
-            ? (currentJob.results?.successful || 0) / currentJob.totalItems 
-            : 0,
-          failureRate: currentJob.totalItems > 0 
-            ? (currentJob.results?.failed || 0) / currentJob.totalItems 
-            : 0,
-          throughput: currentJob.results?.totalProcessingTime 
+          successRate:
+            currentJob.totalItems > 0
+              ? (currentJob.results?.successful || 0) / currentJob.totalItems
+              : 0,
+          failureRate:
+            currentJob.totalItems > 0
+              ? (currentJob.results?.failed || 0) / currentJob.totalItems
+              : 0,
+          throughput: currentJob.results?.totalProcessingTime
             ? currentJob.completedItems / (currentJob.results.totalProcessingTime / 1000)
             : 0,
           peakMemoryUsage: Math.random() * 500 + 100, // Simulated
@@ -298,16 +297,18 @@ class AdvancedBatchService {
       };
     }
 
-    const avgSuccessRate = allMetrics.reduce((sum, m) => sum + m.successRate, 0) / allMetrics.length;
-    const avgFailureRate = allMetrics.reduce((sum, m) => sum + m.failureRate, 0) / allMetrics.length;
+    const avgSuccessRate =
+      allMetrics.reduce((sum, m) => sum + m.successRate, 0) / allMetrics.length;
+    const avgFailureRate =
+      allMetrics.reduce((sum, m) => sum + m.failureRate, 0) / allMetrics.length;
     const avgThroughput = allMetrics.reduce((sum, m) => sum + m.throughput, 0) / allMetrics.length;
 
     const bestPerformingJob = allMetrics.reduce((best, current) =>
-      current.successRate > best.successRate ? current : best
+      current.successRate > best.successRate ? current : best,
     );
 
     const worstPerformingJob = allMetrics.reduce((worst, current) =>
-      current.failureRate > worst.failureRate ? current : worst
+      current.failureRate > worst.failureRate ? current : worst,
     );
 
     return {
@@ -341,20 +342,20 @@ Average Throughput: ${stats.averageThroughput.toFixed(2)} items/sec
 SCHEDULED JOBS
 --------------
 Total Schedules: ${schedules.length}
-Active Schedules: ${schedules.filter(s => s.enabled).length}
-Paused Schedules: ${schedules.filter(s => !s.enabled).length}
+Active Schedules: ${schedules.filter((s) => s.enabled).length}
+Paused Schedules: ${schedules.filter((s) => !s.enabled).length}
 
 BEST PERFORMING JOB
 -------------------
-Job ID: ${stats.bestPerformingJob?.jobId || 'N/A'}
-Success Rate: ${stats.bestPerformingJob ? (stats.bestPerformingJob.successRate * 100).toFixed(2) : 'N/A'}%
-Throughput: ${stats.bestPerformingJob?.throughput.toFixed(2) || 'N/A'} items/sec
+Job ID: ${stats.bestPerformingJob?.jobId || "N/A"}
+Success Rate: ${stats.bestPerformingJob ? (stats.bestPerformingJob.successRate * 100).toFixed(2) : "N/A"}%
+Throughput: ${stats.bestPerformingJob?.throughput.toFixed(2) || "N/A"} items/sec
 
 WORST PERFORMING JOB
 --------------------
-Job ID: ${stats.worstPerformingJob?.jobId || 'N/A'}
-Failure Rate: ${stats.worstPerformingJob ? (stats.worstPerformingJob.failureRate * 100).toFixed(2) : 'N/A'}%
-Throughput: ${stats.worstPerformingJob?.throughput.toFixed(2) || 'N/A'} items/sec
+Job ID: ${stats.worstPerformingJob?.jobId || "N/A"}
+Failure Rate: ${stats.worstPerformingJob ? (stats.worstPerformingJob.failureRate * 100).toFixed(2) : "N/A"}%
+Throughput: ${stats.worstPerformingJob?.throughput.toFixed(2) || "N/A"} items/sec
 
 === END REPORT ===
     `;
@@ -367,7 +368,7 @@ Throughput: ${stats.worstPerformingJob?.throughput.toFixed(2) || 'N/A'} items/se
    */
   exportPerformanceReport(): Blob {
     const report = this.generatePerformanceReport();
-    return new Blob([report], { type: 'text/plain' });
+    return new Blob([report], { type: "text/plain" });
   }
 
   /**

@@ -19,7 +19,10 @@ export const Route = createFileRoute("/community")({
           "Daily science drops, interactive challenges, live sessions and discussions with students, mentors and professionals inside the Project Polaris community.",
       },
       { property: "og:title", content: "Community — Project Polaris" },
-      { property: "og:description", content: "Sessions, discussions and daily learning with builders." },
+      {
+        property: "og:description",
+        content: "Sessions, discussions and daily learning with builders.",
+      },
     ],
   }),
   component: Community,
@@ -67,13 +70,23 @@ function Community() {
               An active laboratory where curiosity is normal.
             </h1>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Students, researchers, mentors, and engineers learning in public across daily science drops and weekly sprints.
+              Students, researchers, mentors, and engineers learning in public across daily science
+              drops and weekly sprints.
             </p>
           </ScrollReveal>
 
           <div className="pt-4 flex justify-center">
-            <Button asChild size="default" className="h-11 px-7 rounded-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors active:scale-[0.97]">
-              <a href={SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+            <Button
+              asChild
+              size="default"
+              className="h-11 px-7 rounded-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors active:scale-[0.97]"
+            >
+              <a
+                href={SITE.communityUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2"
+              >
                 <MessageCircle className="size-4 text-emerald-950" />
                 <span>Join WhatsApp Community</span>
               </a>
@@ -101,8 +114,12 @@ function Community() {
                 <div className="p-6 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between card-gold-hover">
                   <div>
                     <span className="font-mono text-xs text-gold font-bold">0{i + 1}</span>
-                    <h3 className="mt-2 text-base font-bold font-display text-foreground">{ritual.name}</h3>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{ritual.note}</p>
+                    <h3 className="mt-2 text-base font-bold font-display text-foreground">
+                      {ritual.name}
+                    </h3>
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                      {ritual.note}
+                    </p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -135,8 +152,12 @@ function Community() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
               <div className="relative z-10 max-w-lg">
-                <div className="text-sm font-bold font-display text-foreground">For the Curious. By the Curious.</div>
-                <div className="text-xs text-muted-foreground mt-1">A welcoming space where curiosity meets action through interactive exploration.</div>
+                <div className="text-sm font-bold font-display text-foreground">
+                  For the Curious. By the Curious.
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">
+                  A welcoming space where curiosity meets action through interactive exploration.
+                </div>
               </div>
             </div>
           </ScrollReveal>
@@ -148,12 +169,20 @@ function Community() {
                 <div className="p-6 rounded-xl border border-white/8 bg-card h-full flex flex-col justify-between card-gold-hover">
                   <div>
                     <div className="flex items-center justify-between text-xs font-mono text-muted-foreground mb-3">
-                      <span className="px-2 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary font-medium text-[10px]">{workshop.tag}</span>
+                      <span className="px-2 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary font-medium text-[10px]">
+                        {workshop.tag}
+                      </span>
                       <span>{workshop.date}</span>
                     </div>
-                    <h4 className="text-base font-bold font-display text-foreground leading-snug">{workshop.title}</h4>
-                    <p className="mt-2 text-xs font-mono text-gold font-medium">{workshop.mentor} · {workshop.mentorOrg}</p>
-                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed line-clamp-3">{workshop.summary}</p>
+                    <h4 className="text-base font-bold font-display text-foreground leading-snug">
+                      {workshop.title}
+                    </h4>
+                    <p className="mt-2 text-xs font-mono text-gold font-medium">
+                      {workshop.mentor} · {workshop.mentorOrg}
+                    </p>
+                    <p className="mt-3 text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                      {workshop.summary}
+                    </p>
                   </div>
 
                   <div className="mt-5 pt-3 border-t border-white/6 flex items-center justify-between text-xs font-mono">
@@ -177,14 +206,25 @@ function Community() {
 
           {/* Upcoming Live Sessions */}
           <div className="mt-16">
-            <h3 className="text-base font-mono font-semibold uppercase tracking-wider text-muted-foreground mb-6">Upcoming Scheduled Sessions</h3>
+            <h3 className="text-base font-mono font-semibold uppercase tracking-wider text-muted-foreground mb-6">
+              Upcoming Scheduled Sessions
+            </h3>
             {isLoading ? <LoadingCards /> : null}
             {isError ? <ErrorState /> : null}
             {!isLoading && !isError && events.length === 0 ? (
               <div className="p-8 rounded-xl border border-white/8 bg-card text-center">
-                <p className="text-sm font-semibold text-foreground">Next cohort sessions announced in WhatsApp</p>
-                <p className="mt-1 text-xs text-muted-foreground">Join our WhatsApp community for instant registration links and live invites.</p>
-                <Button asChild size="sm" variant="outline" className="mt-4 h-9 px-5 rounded-full text-xs active:scale-[0.97]">
+                <p className="text-sm font-semibold text-foreground">
+                  Next cohort sessions announced in WhatsApp
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Join our WhatsApp community for instant registration links and live invites.
+                </p>
+                <Button
+                  asChild
+                  size="sm"
+                  variant="outline"
+                  className="mt-4 h-9 px-5 rounded-full text-xs active:scale-[0.97]"
+                >
                   <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
                     Join Community
                   </a>
@@ -194,13 +234,18 @@ function Community() {
             {!isLoading && !isError && events.length > 0 ? (
               <div className="space-y-4">
                 {events.map((event) => (
-                  <div key={event.id} className="p-6 rounded-xl border border-white/8 bg-card flex flex-col md:flex-row md:items-center justify-between gap-4 card-gold-hover">
+                  <div
+                    key={event.id}
+                    className="p-6 rounded-xl border border-white/8 bg-card flex flex-col md:flex-row md:items-center justify-between gap-4 card-gold-hover"
+                  >
                     <div>
                       <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground mb-1">
                         <Calendar className="size-3 text-primary" />
                         <span>{formatDate(event.event_date) ?? "Date TBD"}</span>
                       </div>
-                      <h4 className="text-lg font-bold font-display text-foreground">{event.title}</h4>
+                      <h4 className="text-lg font-bold font-display text-foreground">
+                        {event.title}
+                      </h4>
                       {event.speaker ? (
                         <p className="font-mono text-xs text-primary mt-1">
                           {event.speaker} {event.speaker_note ? `· ${event.speaker_note}` : ""}
@@ -208,8 +253,17 @@ function Community() {
                       ) : null}
                     </div>
                     {event.registration_link ? (
-                      <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-bold rounded-lg shrink-0 active:scale-[0.97]">
-                        <a href={event.registration_link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="h-9 px-5 bg-primary text-primary-foreground font-bold rounded-lg shrink-0 active:scale-[0.97]"
+                      >
+                        <a
+                          href={event.registration_link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-1.5"
+                        >
                           <span>Register</span>
                           <ExternalLink className="size-3" />
                         </a>

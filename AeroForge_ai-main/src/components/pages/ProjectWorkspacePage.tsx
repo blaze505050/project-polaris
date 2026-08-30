@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState, useMemo } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   BookOpen,
   Cpu,
@@ -26,22 +26,22 @@ import {
   HelpCircle,
   AlertTriangle,
   Sparkles,
-} from 'lucide-react';
-import { useProjectStore } from '@/stores/projectStore';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
-import AICopilotSidebar from '@/components/AICopilotSidebar';
-import EngineeringNotebook from '@/components/EngineeringNotebook';
-import SimulationManager from '@/components/SimulationManager';
-import DatasetManager from '@/components/DatasetManager';
-import ResultsViewer from '@/components/ResultsViewer';
-import ValidationReportGenerator from '@/components/ValidationReportGenerator';
-import EngineeringTable, { ColumnDef } from '@/components/ui/EngineeringTable';
-import GuidedEngineeringDemo from '@/components/GuidedEngineeringDemo';
-import UniversalComparison from '@/components/UniversalComparison';
-import DigitalThreadProvenance from '@/components/DigitalThreadProvenance';
-import ProjectOnboardingModal from '@/components/ProjectOnboardingModal';
+} from "lucide-react";
+import { useProjectStore } from "@/stores/projectStore";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
+import AICopilotSidebar from "@/components/AICopilotSidebar";
+import EngineeringNotebook from "@/components/EngineeringNotebook";
+import SimulationManager from "@/components/SimulationManager";
+import DatasetManager from "@/components/DatasetManager";
+import ResultsViewer from "@/components/ResultsViewer";
+import ValidationReportGenerator from "@/components/ValidationReportGenerator";
+import EngineeringTable, { ColumnDef } from "@/components/ui/EngineeringTable";
+import GuidedEngineeringDemo from "@/components/GuidedEngineeringDemo";
+import UniversalComparison from "@/components/UniversalComparison";
+import DigitalThreadProvenance from "@/components/DigitalThreadProvenance";
+import ProjectOnboardingModal from "@/components/ProjectOnboardingModal";
 
 interface RequirementItem {
   id: string;
@@ -50,13 +50,20 @@ interface RequirementItem {
   specification: string;
   targetValue: string;
   currentValue: string;
-  status: 'VERIFIED' | 'IN_PROGRESS' | 'FAILED';
+  status: "VERIFIED" | "IN_PROGRESS" | "FAILED";
 }
 
 export default function ProjectWorkspacePage() {
   const { projectId } = useParams<{ projectId: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { currentProject, projects, setCurrentProject, workspace, updateWorkspaceTab, addRequirement } = useProjectStore();
+  const {
+    currentProject,
+    projects,
+    setCurrentProject,
+    workspace,
+    updateWorkspaceTab,
+    addRequirement,
+  } = useProjectStore();
   const [showCopilot, setShowCopilot] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [showOnboardingModal, setShowOnboardingModal] = useState(false);
@@ -76,11 +83,11 @@ export default function ProjectWorkspacePage() {
     }
   }, [activeProject, currentProject, setCurrentProject]);
 
-  const initialTab = searchParams.get('tab') || workspace?.activeTab || 'overview';
+  const initialTab = searchParams.get("tab") || workspace?.activeTab || "overview";
   const [activeTab, setActiveTab] = useState<string>(initialTab);
 
   useEffect(() => {
-    const tabFromUrl = searchParams.get('tab');
+    const tabFromUrl = searchParams.get("tab");
     if (tabFromUrl) setActiveTab(tabFromUrl);
   }, [searchParams]);
 
@@ -101,39 +108,44 @@ export default function ProjectWorkspacePage() {
   }));
 
   const reqColumns: ColumnDef<RequirementItem>[] = [
-    { key: 'code', header: 'Req Code', accessor: (r) => r.code, width: '120px' },
-    { key: 'category', header: 'Category', accessor: (r) => r.category, width: '120px' },
-    { key: 'specification', header: 'Engineering Spec', accessor: (r) => r.specification },
-    { key: 'targetValue', header: 'Target Value', accessor: (r) => r.targetValue, width: '120px' },
-    { key: 'currentValue', header: 'Current Value', accessor: (r) => r.currentValue, width: '150px' },
+    { key: "code", header: "Req Code", accessor: (r) => r.code, width: "120px" },
+    { key: "category", header: "Category", accessor: (r) => r.category, width: "120px" },
+    { key: "specification", header: "Engineering Spec", accessor: (r) => r.specification },
+    { key: "targetValue", header: "Target Value", accessor: (r) => r.targetValue, width: "120px" },
     {
-      key: 'status',
-      header: 'Compliance',
+      key: "currentValue",
+      header: "Current Value",
+      accessor: (r) => r.currentValue,
+      width: "150px",
+    },
+    {
+      key: "status",
+      header: "Compliance",
       accessor: (r) => (
         <span
           className={`px-2 py-0.5 rounded text-[10px] font-bold border font-mono ${
-            r.status === 'VERIFIED'
-              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-              : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+            r.status === "VERIFIED"
+              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+              : "bg-amber-500/10 text-amber-400 border-amber-500/30"
           }`}
         >
           {r.status}
         </span>
       ),
-      width: '120px',
+      width: "120px",
     },
   ];
 
   const tabs = [
-    { id: 'overview', label: 'Project Overview', icon: Folder },
-    { id: 'requirements', label: 'Requirements Matrix', icon: FileCheck },
-    { id: 'comparison', label: 'Design Comparison', icon: Layers },
-    { id: 'provenance', label: 'Digital Thread', icon: GitBranch },
-    { id: 'notebook', label: 'Engineering Notebook', icon: BookOpen },
-    { id: 'simulations', label: 'Simulation Manager', icon: Cpu },
-    { id: 'datasets', label: 'Datasets & CAD', icon: Database },
-    { id: 'results', label: 'Results & Visuals', icon: BarChart3 },
-    { id: 'validation', label: 'Validation Sign-off', icon: CheckCircle2 },
+    { id: "overview", label: "Project Overview", icon: Folder },
+    { id: "requirements", label: "Requirements Matrix", icon: FileCheck },
+    { id: "comparison", label: "Design Comparison", icon: Layers },
+    { id: "provenance", label: "Digital Thread", icon: GitBranch },
+    { id: "notebook", label: "Engineering Notebook", icon: BookOpen },
+    { id: "simulations", label: "Simulation Manager", icon: Cpu },
+    { id: "datasets", label: "Datasets & CAD", icon: Database },
+    { id: "results", label: "Results & Visuals", icon: BarChart3 },
+    { id: "validation", label: "Validation Sign-off", icon: CheckCircle2 },
   ];
 
   return (
@@ -179,11 +191,11 @@ export default function ProjectWorkspacePage() {
                   <span className="text-[10px] text-white/40">ID: PRJ-2026-HYPER-04</span>
                 </div>
                 <h1 className="text-2xl font-bold text-white tracking-tight">
-                  {currentProject?.name || 'Hypersonic UAV Aerodynamics & Structural Optimization'}
+                  {currentProject?.name || "Hypersonic UAV Aerodynamics & Structural Optimization"}
                 </h1>
                 <p className="text-xs text-white/60 font-sans max-w-3xl leading-relaxed">
                   {currentProject?.description ||
-                    'Multi-physics design iteration suite evaluating Mach 5.0 boundary layer shockwave dynamics, aerothermal heat flux, and wing-root FEA stress margins.'}
+                    "Multi-physics design iteration suite evaluating Mach 5.0 boundary layer shockwave dynamics, aerothermal heat flux, and wing-root FEA stress margins."}
                 </p>
               </div>
 
@@ -230,8 +242,8 @@ export default function ProjectWorkspacePage() {
                     onClick={() => handleTabChange(tab.id)}
                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                       isActive
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-lg shadow-cyan-500/10'
-                        : 'text-white/60 hover:text-white hover:bg-white/5'
+                        ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-lg shadow-cyan-500/10"
+                        : "text-white/60 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -259,7 +271,7 @@ export default function ProjectWorkspacePage() {
 
           {/* Active Tab Workspace Content */}
           <div className="space-y-6">
-            {activeTab === 'overview' && (
+            {activeTab === "overview" && (
               <div className="space-y-6">
                 {/* INTELLIGENT NEXT BEST ACTION WIDGET */}
                 <div className="bg-[#080E1C] border border-amber-500/40 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
@@ -272,13 +284,14 @@ export default function ProjectWorkspacePage() {
                         RECOMMENDED NEXT BEST ACTION
                       </span>
                       <p className="text-xs text-white/90 font-sans mt-0.5">
-                        Latest CFD Case 04 achieved a <strong>-7.4% drag reduction</strong>, but structural wing-root yield margin remains unverified for Design v0.8.
+                        Latest CFD Case 04 achieved a <strong>-7.4% drag reduction</strong>, but
+                        structural wing-root yield margin remains unverified for Design v0.8.
                       </p>
                     </div>
                   </div>
 
                   <button
-                    onClick={() => handleTabChange('simulations')}
+                    onClick={() => handleTabChange("simulations")}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shrink-0"
                   >
                     <span>Run Structural FEA Verification</span>
@@ -305,10 +318,14 @@ export default function ProjectWorkspacePage() {
                     <div className="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/30 rounded-xl p-4 space-y-3">
                       <div className="flex items-center gap-2">
                         <Zap className="w-4 h-4 text-cyan-400" />
-                        <h3 className="font-bold text-xs text-white uppercase">AI COPILOT ANALYSIS</h3>
+                        <h3 className="font-bold text-xs text-white uppercase">
+                          AI COPILOT ANALYSIS
+                        </h3>
                       </div>
                       <p className="text-xs text-white/80 leading-relaxed font-sans">
-                        "Based on CFD Case 04 results, the pressure coefficient gradient near the wing root indicates micro-separation at Mach 0.88. Recommend smoothing leading-edge radius by 0.4mm."
+                        "Based on CFD Case 04 results, the pressure coefficient gradient near the
+                        wing root indicates micro-separation at Mach 0.88. Recommend smoothing
+                        leading-edge radius by 0.4mm."
                       </p>
                       <button
                         onClick={() => setShowCopilot(true)}
@@ -325,7 +342,7 @@ export default function ProjectWorkspacePage() {
               </div>
             )}
 
-            {activeTab === 'requirements' && (
+            {activeTab === "requirements" && (
               <EngineeringTable
                 title="System Engineering Requirements Matrix"
                 description="AS9100 Rev D requirement tracking and test verification logs."
@@ -335,32 +352,26 @@ export default function ProjectWorkspacePage() {
               />
             )}
 
-            {activeTab === 'comparison' && <UniversalComparison />}
+            {activeTab === "comparison" && <UniversalComparison />}
 
-            {activeTab === 'provenance' && <DigitalThreadProvenance />}
+            {activeTab === "provenance" && <DigitalThreadProvenance />}
 
-            {activeTab === 'notebook' && <EngineeringNotebook projectId={projectId} />}
+            {activeTab === "notebook" && <EngineeringNotebook projectId={projectId} />}
 
-            {activeTab === 'simulations' && <SimulationManager projectId={projectId} />}
+            {activeTab === "simulations" && <SimulationManager projectId={projectId} />}
 
-            {activeTab === 'datasets' && <DatasetManager projectId={projectId!} />}
+            {activeTab === "datasets" && <DatasetManager projectId={projectId!} />}
 
-            {activeTab === 'results' && <ResultsViewer projectId={projectId!} />}
+            {activeTab === "results" && <ResultsViewer projectId={projectId!} />}
 
-            {activeTab === 'validation' && (
-              <ValidationReportGenerator projectId={projectId!} />
-            )}
+            {activeTab === "validation" && <ValidationReportGenerator projectId={projectId!} />}
           </div>
         </main>
       </div>
 
       <Footer />
 
-      <AICopilotSidebar
-        projectId={projectId}
-        isOpen={showCopilot}
-        onToggle={setShowCopilot}
-      />
+      <AICopilotSidebar projectId={projectId} isOpen={showCopilot} onToggle={setShowCopilot} />
 
       <ProjectOnboardingModal
         isOpen={showOnboardingModal}

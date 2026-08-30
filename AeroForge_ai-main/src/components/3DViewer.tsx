@@ -1,8 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { AeroForgeDSL } from '@/services/dslSchema';
-import { Maximize2, RotateCcw, Download, Minimize2, Eye, EyeOff, Zap, Grid3x3, Layers, Lightbulb, Palette, Maximize, Minimize } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { AeroForgeDSL } from "@/services/dslSchema";
+import {
+  Maximize2,
+  RotateCcw,
+  Download,
+  Minimize2,
+  Eye,
+  EyeOff,
+  Zap,
+  Grid3x3,
+  Layers,
+  Lightbulb,
+  Palette,
+  Maximize,
+  Minimize,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Viewer3DProps {
   dsl: AeroForgeDSL | null;
@@ -36,7 +50,12 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
   const selectedObjectRef = useRef<THREE.Mesh | null>(null);
   const measurementLineRef = useRef<THREE.Line | null>(null);
   const measurementPointsRef = useRef<THREE.Points | null>(null);
-  const lightsRef = useRef<{ main: THREE.Light; fill: THREE.Light; rim: THREE.Light; point: THREE.Light }>({
+  const lightsRef = useRef<{
+    main: THREE.Light;
+    fill: THREE.Light;
+    rim: THREE.Light;
+    point: THREE.Light;
+  }>({
     main: null as any,
     fill: null as any,
     rim: null as any,
@@ -54,8 +73,8 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
   const [fps, setFps] = useState(60);
   const [isAutoRotating, setIsAutoRotating] = useState(true);
   const [rotationSpeed, setRotationSpeed] = useState(0.001);
-  const [lightingMode, setLightingMode] = useState<'studio' | 'dramatic' | 'soft'>('studio');
-  const [renderMode, setRenderMode] = useState<'solid' | 'wireframe' | 'hybrid'>('solid');
+  const [lightingMode, setLightingMode] = useState<"studio" | "dramatic" | "soft">("studio");
+  const [renderMode, setRenderMode] = useState<"solid" | "wireframe" | "hybrid">("solid");
   const [featureTree, setFeatureTree] = useState<FeatureNode[]>([]);
   const fpsCounterRef = useRef({ frames: 0, lastTime: Date.now() });
   const autoRotateRef = useRef(true);
@@ -87,18 +106,18 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     // Renderer setup with advanced settings
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ 
-        antialias: true, 
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
         alpha: true,
-        precision: 'highp',
-        powerPreference: 'high-performance',
-        failIfMajorPerformanceCaveat: false
+        precision: "highp",
+        powerPreference: "high-performance",
+        failIfMajorPerformanceCaveat: false,
       });
     } catch (e) {
-      console.error('WebGL initialization failed:', e);
+      console.error("WebGL initialization failed:", e);
       return;
     }
-    
+
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -106,7 +125,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
-    
+
     // Clear container before appending
     while (targetContainer.firstChild) {
       targetContainer.removeChild(targetContainer.firstChild);
@@ -115,7 +134,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     rendererRef.current = renderer;
 
     // Advanced Lighting Setup with Dynamic Modes
-    const setupLighting = (mode: 'studio' | 'dramatic' | 'soft') => {
+    const setupLighting = (mode: "studio" | "dramatic" | "soft") => {
       // Clear existing lights
       scene.children.forEach((child) => {
         if (child instanceof THREE.Light) {
@@ -123,7 +142,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         }
       });
 
-      if (mode === 'studio') {
+      if (mode === "studio") {
         // Studio lighting - balanced, professional
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
@@ -155,7 +174,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         scene.add(pointLight);
 
         lightsRef.current = { main: mainLight, fill: fillLight, rim: rimLight, point: pointLight };
-      } else if (mode === 'dramatic') {
+      } else if (mode === "dramatic") {
         // Dramatic lighting - high contrast, cinematic
         const ambientLight = new THREE.AmbientLight(0x1a1a2e, 0.3);
         scene.add(ambientLight);
@@ -182,8 +201,13 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         pointLight.castShadow = true;
         scene.add(pointLight);
 
-        lightsRef.current = { main: mainLight, fill: new THREE.DirectionalLight(0x000000, 0), rim: rimLight, point: pointLight };
-      } else if (mode === 'soft') {
+        lightsRef.current = {
+          main: mainLight,
+          fill: new THREE.DirectionalLight(0x000000, 0),
+          rim: rimLight,
+          point: pointLight,
+        };
+      } else if (mode === "soft") {
         // Soft lighting - diffuse, gentle
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
@@ -209,11 +233,16 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         rimLight.position.set(0, 50, -200);
         scene.add(rimLight);
 
-        lightsRef.current = { main: mainLight, fill: fillLight, rim: rimLight, point: new THREE.DirectionalLight(0x000000, 0) };
+        lightsRef.current = {
+          main: mainLight,
+          fill: fillLight,
+          rim: rimLight,
+          point: new THREE.DirectionalLight(0x000000, 0),
+        };
       }
     };
 
-    setupLighting('studio');
+    setupLighting("studio");
 
     // Grid helper
     const gridHelper = new THREE.GridHelper(800, 80, 0x444444, 0x222222);
@@ -230,7 +259,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     let velocity = { x: 0, y: 0 };
     let isMouseDown = false;
 
-    renderer.domElement.addEventListener('mousedown', (e) => {
+    renderer.domElement.addEventListener("mousedown", (e) => {
       isDragging = true;
       isMouseDown = true;
       autoRotateRef.current = false;
@@ -238,7 +267,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       velocity = { x: 0, y: 0 };
     });
 
-    renderer.domElement.addEventListener('mousemove', (e) => {
+    renderer.domElement.addEventListener("mousemove", (e) => {
       mouseRef.current.x = (e.clientX / width) * 2 - 1;
       mouseRef.current.y = -(e.clientY / height) * 2 + 1;
 
@@ -265,12 +294,12 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       }
     });
 
-    renderer.domElement.addEventListener('mouseup', () => {
+    renderer.domElement.addEventListener("mouseup", () => {
       isDragging = false;
       isMouseDown = false;
     });
 
-    renderer.domElement.addEventListener('wheel', (e) => {
+    renderer.domElement.addEventListener("wheel", (e) => {
       e.preventDefault();
       if (cameraRef.current) {
         const direction = cameraRef.current.position.clone().normalize();
@@ -282,10 +311,10 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     });
 
     // Double-click to select/deselect
-    renderer.domElement.addEventListener('dblclick', (e) => {
+    renderer.domElement.addEventListener("dblclick", (e) => {
       raycasterRef.current.setFromCamera(mouseRef.current, camera);
       const intersects = raycasterRef.current.intersectObjects(meshesRef.current);
-      
+
       if (intersects.length > 0) {
         const mesh = intersects[0].object as THREE.Mesh;
         if (selectedObjectRef.current === mesh) {
@@ -302,7 +331,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     // Animation loop with FPS counter
     const animate = () => {
       requestAnimationFrame(animate);
-      
+
       // FPS counter
       fpsCounterRef.current.frames++;
       const now = Date.now();
@@ -375,15 +404,15 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       renderer.setSize(newWidth, newHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      renderer.domElement.removeEventListener('mousedown', () => {});
-      renderer.domElement.removeEventListener('mousemove', () => {});
-      renderer.domElement.removeEventListener('mouseup', () => {});
-      renderer.domElement.removeEventListener('wheel', () => {});
-      renderer.domElement.removeEventListener('dblclick', () => {});
+      window.removeEventListener("resize", handleResize);
+      renderer.domElement.removeEventListener("mousedown", () => {});
+      renderer.domElement.removeEventListener("mousemove", () => {});
+      renderer.domElement.removeEventListener("mouseup", () => {});
+      renderer.domElement.removeEventListener("wheel", () => {});
+      renderer.domElement.removeEventListener("dblclick", () => {});
       targetContainer?.removeChild(renderer.domElement);
     };
   }, [isFullscreen]);
@@ -436,45 +465,45 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       let segmentDetail = 32; // Default segment detail
 
       // Adjust segment detail based on feature type for better quality
-      if (feature.type === 'HOLE' || feature.type === 'FILLET') {
+      if (feature.type === "HOLE" || feature.type === "FILLET") {
         segmentDetail = 64;
       }
 
-      if (feature.type === 'PAD') {
-        if (feature.padProfile === 'RECTANGULAR') {
-          const width = (feature.padWidth?.value || 100);
-          const length = (feature.padLength?.value || 100);
-          const height = (feature.padHeight?.value || 10);
+      if (feature.type === "PAD") {
+        if (feature.padProfile === "RECTANGULAR") {
+          const width = feature.padWidth?.value || 100;
+          const length = feature.padLength?.value || 100;
+          const height = feature.padHeight?.value || 10;
           geometry = new THREE.BoxGeometry(width, height, length, 32, 32, 32);
           position.y = height / 2;
-        } else if (feature.padProfile === 'CIRCULAR') {
+        } else if (feature.padProfile === "CIRCULAR") {
           const radius = (feature.padWidth?.value || 50) / 2;
-          const height = (feature.padHeight?.value || 50);
+          const height = feature.padHeight?.value || 50;
           geometry = new THREE.CylinderGeometry(radius, radius, height, segmentDetail, 32);
           position.y = height / 2;
         }
-      } else if (feature.type === 'HOLE') {
+      } else if (feature.type === "HOLE") {
         const diameter = (feature.holeDiameter?.value || 6) / 2;
         geometry = new THREE.CylinderGeometry(diameter, diameter, 100, segmentDetail, 32);
         if (feature.coordinate) {
           position.x = feature.coordinate.x?.value || 0;
           position.z = feature.coordinate.z?.value || 0;
         }
-      } else if (feature.type === 'FILLET') {
-        const radius = (feature.radius?.value || 2);
+      } else if (feature.type === "FILLET") {
+        const radius = feature.radius?.value || 2;
         geometry = new THREE.SphereGeometry(radius, segmentDetail, segmentDetail);
-      } else if (feature.type === 'POCKET') {
-        const width = (feature.padWidth?.value || 50);
-        const length = (feature.padLength?.value || 50);
-        const height = (feature.padHeight?.value || 5);
+      } else if (feature.type === "POCKET") {
+        const width = feature.padWidth?.value || 50;
+        const length = feature.padLength?.value || 50;
+        const height = feature.padHeight?.value || 5;
         geometry = new THREE.BoxGeometry(width, height, length, 32, 32, 32);
-      } else if (feature.type === 'CHAMFER') {
-        const size = (feature.chamferDistance?.value || 2);
+      } else if (feature.type === "CHAMFER") {
+        const size = feature.chamferDistance?.value || 2;
         geometry = new THREE.ConeGeometry(size, size * 2, 32);
-      } else if (feature.type === 'AIRFOIL') {
+      } else if (feature.type === "AIRFOIL") {
         // Create a simplified airfoil shape
-        const length = (feature.padLength?.value || 100);
-        const height = (feature.padHeight?.value || 20);
+        const length = feature.padLength?.value || 100;
+        const height = feature.padHeight?.value || 20;
         geometry = new THREE.ConeGeometry(height / 2, length, 32);
       }
 
@@ -495,19 +524,19 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
           roughness: 0.5,
           emissive: 0x000000,
           emissiveIntensity: 0,
-          wireframe: renderMode === 'wireframe',
+          wireframe: renderMode === "wireframe",
           side: THREE.DoubleSide,
         });
 
         const mesh = new THREE.Mesh(geometry, material);
-        
+
         // Apply coordinate-based positioning if available
         if (feature.coordinate) {
           position.x = feature.coordinate.x?.value || position.x;
           position.y = feature.coordinate.y?.value || position.y;
           position.z = feature.coordinate.z?.value || position.z;
         }
-        
+
         mesh.position.set(position.x, position.y, position.z);
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -542,7 +571,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       cameraZ *= 1.8; // Increased from 1.5 for better framing
 
       const center = box.getCenter(new THREE.Vector3());
-      cameraRef.current!.position.set(center.x + cameraZ * 0.8, center.y + cameraZ * 0.8, center.z + cameraZ);
+      cameraRef.current!.position.set(
+        center.x + cameraZ * 0.8,
+        center.y + cameraZ * 0.8,
+        center.z + cameraZ,
+      );
       cameraRef.current!.lookAt(center);
     }
   }, [dsl, renderMode]);
@@ -556,8 +589,8 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
 
   const handleDownloadScreenshot = () => {
     if (rendererRef.current) {
-      const link = document.createElement('a');
-      link.href = rendererRef.current.domElement.toDataURL('image/png');
+      const link = document.createElement("a");
+      link.href = rendererRef.current.domElement.toDataURL("image/png");
       link.download = `aeroforge-3d-${Date.now()}.png`;
       link.click();
     }
@@ -572,7 +605,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
     });
   };
 
-  const changeLightingMode = (mode: 'studio' | 'dramatic' | 'soft') => {
+  const changeLightingMode = (mode: "studio" | "dramatic" | "soft") => {
     setLightingMode(mode);
     if (sceneRef.current) {
       // Re-setup lighting with new mode
@@ -582,7 +615,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         }
       });
 
-      if (mode === 'studio') {
+      if (mode === "studio") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 1.2);
@@ -607,7 +640,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         pointLight.position.set(100, 200, 100);
         pointLight.castShadow = true;
         sceneRef.current.add(pointLight);
-      } else if (mode === 'dramatic') {
+      } else if (mode === "dramatic") {
         const ambientLight = new THREE.AmbientLight(0x1a1a2e, 0.3);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -629,7 +662,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
         pointLight.position.set(200, 300, 200);
         pointLight.castShadow = true;
         sceneRef.current.add(pointLight);
-      } else if (mode === 'soft') {
+      } else if (mode === "soft") {
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         sceneRef.current.add(ambientLight);
         const mainLight = new THREE.DirectionalLight(0xffffff, 0.8);
@@ -666,7 +699,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
   const toggleGrid = () => {
     setShowGrid(!showGrid);
     if (sceneRef.current) {
-      const gridHelper = sceneRef.current.getObjectByName('grid');
+      const gridHelper = sceneRef.current.getObjectByName("grid");
       if (gridHelper) gridHelper.visible = !showGrid;
     }
   };
@@ -674,7 +707,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
   const toggleAxes = () => {
     setShowAxes(!showAxes);
     if (sceneRef.current) {
-      const axesHelper = sceneRef.current.getObjectByName('axes');
+      const axesHelper = sceneRef.current.getObjectByName("axes");
       if (axesHelper) axesHelper.visible = !showAxes;
     }
   };
@@ -690,7 +723,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
       <div
         ref={containerRef}
         className={`relative bg-gray-900 overflow-hidden ${
-          isFullscreen ? 'hidden' : 'w-full h-96 lg:h-[600px] rounded-lg border border-secondary/20'
+          isFullscreen ? "hidden" : "w-full h-96 lg:h-[600px] rounded-lg border border-secondary/20"
         }`}
       >
         {isLoading && (
@@ -728,11 +761,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => changeLightingMode('studio')}
+              onClick={() => changeLightingMode("studio")}
               className={`p-2 rounded transition-all ${
-                lightingMode === 'studio'
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                lightingMode === "studio"
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
               }`}
               title="Studio lighting"
             >
@@ -741,11 +774,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => changeLightingMode('dramatic')}
+              onClick={() => changeLightingMode("dramatic")}
               className={`p-2 rounded transition-all ${
-                lightingMode === 'dramatic'
-                  ? 'bg-pink-500 text-white'
-                  : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                lightingMode === "dramatic"
+                  ? "bg-pink-500 text-white"
+                  : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
               }`}
               title="Dramatic lighting"
             >
@@ -754,11 +787,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => changeLightingMode('soft')}
+              onClick={() => changeLightingMode("soft")}
               className={`p-2 rounded transition-all ${
-                lightingMode === 'soft'
-                  ? 'bg-yellow-500 text-white'
-                  : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                lightingMode === "soft"
+                  ? "bg-yellow-500 text-white"
+                  : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
               }`}
               title="Soft lighting"
             >
@@ -771,11 +804,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setRenderMode('solid')}
+              onClick={() => setRenderMode("solid")}
               className={`p-2 rounded transition-all ${
-                renderMode === 'solid'
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                renderMode === "solid"
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
               }`}
               title="Solid rendering"
             >
@@ -784,11 +817,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setRenderMode('wireframe')}
+              onClick={() => setRenderMode("wireframe")}
               className={`p-2 rounded transition-all ${
-                renderMode === 'wireframe'
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                renderMode === "wireframe"
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
               }`}
               title="Wireframe rendering"
             >
@@ -803,8 +836,8 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             onClick={toggleAutoRotate}
             className={`p-2 rounded-lg shadow transition-all ${
               isAutoRotating
-                ? 'bg-cyan-500 text-white'
-                : 'bg-gray-800 text-cyan-300 hover:bg-gray-700'
+                ? "bg-cyan-500 text-white"
+                : "bg-gray-800 text-cyan-300 hover:bg-gray-700"
             }`}
             title="Toggle auto-rotate"
           >
@@ -821,9 +854,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             whileTap={{ scale: 0.95 }}
             onClick={toggleGrid}
             className={`p-2 rounded-lg shadow transition-all ${
-              showGrid
-                ? 'bg-cyan-500 text-white'
-                : 'bg-gray-800 text-cyan-300 hover:bg-gray-700'
+              showGrid ? "bg-cyan-500 text-white" : "bg-gray-800 text-cyan-300 hover:bg-gray-700"
             }`}
             title="Toggle grid"
           >
@@ -872,7 +903,9 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
           {dsl && (
             <div className="mt-2 text-cyan-400/70 space-y-1">
               <div>📦 {dsl.features?.length || 0} features</div>
-              <div>📊 {stats.vertices} vertices • {stats.triangles} triangles</div>
+              <div>
+                📊 {stats.vertices} vertices • {stats.triangles} triangles
+              </div>
               {selectedFeature && (
                 <div className="text-pink-400">✓ Selected: {selectedFeature}</div>
               )}
@@ -910,11 +943,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => changeLightingMode('studio')}
+                onClick={() => changeLightingMode("studio")}
                 className={`p-2 rounded transition-all ${
-                  lightingMode === 'studio'
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                  lightingMode === "studio"
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
                 }`}
                 title="Studio lighting"
               >
@@ -923,11 +956,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => changeLightingMode('dramatic')}
+                onClick={() => changeLightingMode("dramatic")}
                 className={`p-2 rounded transition-all ${
-                  lightingMode === 'dramatic'
-                    ? 'bg-pink-500 text-white'
-                    : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                  lightingMode === "dramatic"
+                    ? "bg-pink-500 text-white"
+                    : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
                 }`}
                 title="Dramatic lighting"
               >
@@ -936,11 +969,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => changeLightingMode('soft')}
+                onClick={() => changeLightingMode("soft")}
                 className={`p-2 rounded transition-all ${
-                  lightingMode === 'soft'
-                    ? 'bg-yellow-500 text-white'
-                    : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                  lightingMode === "soft"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
                 }`}
                 title="Soft lighting"
               >
@@ -953,11 +986,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setRenderMode('solid')}
+                onClick={() => setRenderMode("solid")}
                 className={`p-2 rounded transition-all ${
-                  renderMode === 'solid'
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                  renderMode === "solid"
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
                 }`}
                 title="Solid rendering"
               >
@@ -966,11 +999,11 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setRenderMode('wireframe')}
+                onClick={() => setRenderMode("wireframe")}
                 className={`p-2 rounded transition-all ${
-                  renderMode === 'wireframe'
-                    ? 'bg-cyan-500 text-white'
-                    : 'bg-gray-700 text-cyan-300 hover:bg-gray-600'
+                  renderMode === "wireframe"
+                    ? "bg-cyan-500 text-white"
+                    : "bg-gray-700 text-cyan-300 hover:bg-gray-600"
                 }`}
                 title="Wireframe rendering"
               >
@@ -985,8 +1018,8 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               onClick={toggleAutoRotate}
               className={`p-2 rounded-lg shadow transition-all ${
                 isAutoRotating
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-800 text-cyan-300 hover:bg-gray-700'
+                  ? "bg-cyan-500 text-white"
+                  : "bg-gray-800 text-cyan-300 hover:bg-gray-700"
               }`}
               title="Toggle auto-rotate"
             >
@@ -1003,9 +1036,7 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
               whileTap={{ scale: 0.95 }}
               onClick={toggleGrid}
               className={`p-2 rounded-lg shadow transition-all ${
-                showGrid
-                  ? 'bg-cyan-500 text-white'
-                  : 'bg-gray-800 text-cyan-300 hover:bg-gray-700'
+                showGrid ? "bg-cyan-500 text-white" : "bg-gray-800 text-cyan-300 hover:bg-gray-700"
               }`}
               title="Toggle grid"
             >
@@ -1054,7 +1085,9 @@ export default function Viewer3D({ dsl, isLoading = false }: Viewer3DProps) {
             {dsl && (
               <div className="mt-2 text-cyan-400/70 space-y-1">
                 <div>📦 {dsl.features?.length || 0} features</div>
-                <div>📊 {stats.vertices} vertices • {stats.triangles} triangles</div>
+                <div>
+                  📊 {stats.vertices} vertices • {stats.triangles} triangles
+                </div>
                 {selectedFeature && (
                   <div className="text-pink-400">✓ Selected: {selectedFeature}</div>
                 )}

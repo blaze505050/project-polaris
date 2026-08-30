@@ -3,10 +3,10 @@
  * Production-ready exoplanet transit detection simulator
  */
 
-import React from 'react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import TransitSimulator from '@/components/TransitSimulator';
+import React from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import TransitSimulator from "@/components/TransitSimulator";
 
 export default function AstroLabP0TransitPage() {
   return (

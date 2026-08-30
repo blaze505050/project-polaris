@@ -5,13 +5,23 @@
 
 export interface FilterConfig {
   field: string;
-  operator: 'equals' | 'contains' | 'startsWith' | 'endsWith' | 'gt' | 'lt' | 'gte' | 'lte' | 'in' | 'between';
+  operator:
+    | "equals"
+    | "contains"
+    | "startsWith"
+    | "endsWith"
+    | "gt"
+    | "lt"
+    | "gte"
+    | "lte"
+    | "in"
+    | "between";
   value: any;
 }
 
 export interface SortConfig {
   field: string;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }
 
 export interface SearchConfig {
@@ -28,10 +38,7 @@ export class FilterEngine {
   /**
    * Apply filters to items
    */
-  static filter<T extends Record<string, any>>(
-    items: T[],
-    filters: FilterConfig[]
-  ): T[] {
+  static filter<T extends Record<string, any>>(items: T[], filters: FilterConfig[]): T[] {
     if (filters.length === 0) return items;
 
     return items.filter((item) => {
@@ -44,30 +51,30 @@ export class FilterEngine {
    */
   private static matchesFilter<T extends Record<string, any>>(
     item: T,
-    filter: FilterConfig
+    filter: FilterConfig,
   ): boolean {
     const value = this.getNestedValue(item, filter.field);
 
     switch (filter.operator) {
-      case 'equals':
+      case "equals":
         return value === filter.value;
-      case 'contains':
+      case "contains":
         return String(value).toLowerCase().includes(String(filter.value).toLowerCase());
-      case 'startsWith':
+      case "startsWith":
         return String(value).toLowerCase().startsWith(String(filter.value).toLowerCase());
-      case 'endsWith':
+      case "endsWith":
         return String(value).toLowerCase().endsWith(String(filter.value).toLowerCase());
-      case 'gt':
+      case "gt":
         return Number(value) > Number(filter.value);
-      case 'lt':
+      case "lt":
         return Number(value) < Number(filter.value);
-      case 'gte':
+      case "gte":
         return Number(value) >= Number(filter.value);
-      case 'lte':
+      case "lte":
         return Number(value) <= Number(filter.value);
-      case 'in':
+      case "in":
         return Array.isArray(filter.value) && filter.value.includes(value);
-      case 'between':
+      case "between":
         return (
           Array.isArray(filter.value) &&
           Number(value) >= Number(filter.value[0]) &&
@@ -82,7 +89,7 @@ export class FilterEngine {
    * Get nested object value by dot notation
    */
   private static getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    return path.split(".").reduce((current, prop) => current?.[prop], obj);
   }
 }
 
@@ -93,10 +100,7 @@ export class SortEngine {
   /**
    * Sort items by multiple criteria
    */
-  static sort<T extends Record<string, any>>(
-    items: T[],
-    sortConfigs: SortConfig[]
-  ): T[] {
+  static sort<T extends Record<string, any>>(items: T[], sortConfigs: SortConfig[]): T[] {
     if (sortConfigs.length === 0) return items;
 
     return [...items].sort((a, b) => {
@@ -106,7 +110,7 @@ export class SortEngine {
 
         const comparison = this.compare(aValue, bValue);
         if (comparison !== 0) {
-          return config.direction === 'asc' ? comparison : -comparison;
+          return config.direction === "asc" ? comparison : -comparison;
         }
       }
       return 0;
@@ -121,7 +125,7 @@ export class SortEngine {
     if (a == null) return -1;
     if (b == null) return 1;
 
-    if (typeof a === 'number' && typeof b === 'number') {
+    if (typeof a === "number" && typeof b === "number") {
       return a - b;
     }
 
@@ -134,7 +138,7 @@ export class SortEngine {
    * Get nested object value by dot notation
    */
   private static getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    return path.split(".").reduce((current, prop) => current?.[prop], obj);
   }
 }
 
@@ -145,10 +149,7 @@ export class SearchEngine {
   /**
    * Search items with optional fuzzy matching
    */
-  static search<T extends Record<string, any>>(
-    items: T[],
-    config: SearchConfig
-  ): T[] {
+  static search<T extends Record<string, any>>(items: T[], config: SearchConfig): T[] {
     const { query, fields, caseSensitive = false, fuzzy = false } = config;
 
     if (!query) return items;
@@ -204,7 +205,7 @@ export class SearchEngine {
    * Get nested object value by dot notation
    */
   private static getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    return path.split(".").reduce((current, prop) => current?.[prop], obj);
   }
 }
 
@@ -217,7 +218,7 @@ export class FacetedSearchEngine {
    */
   static generateFacets<T extends Record<string, any>>(
     items: T[],
-    facetFields: string[]
+    facetFields: string[],
   ): Record<string, { value: string; count: number }[]> {
     const facets: Record<string, Map<string, number>> = {};
 
@@ -249,7 +250,7 @@ export class FacetedSearchEngine {
    * Get nested object value by dot notation
    */
   private static getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((current, prop) => current?.[prop], obj);
+    return path.split(".").reduce((current, prop) => current?.[prop], obj);
   }
 }
 
@@ -261,12 +262,12 @@ export class QueryBuilder<T extends Record<string, any>> {
   private sorts: SortConfig[] = [];
   private searchConfig: SearchConfig | null = null;
 
-  addFilter(field: string, operator: FilterConfig['operator'], value: any): this {
+  addFilter(field: string, operator: FilterConfig["operator"], value: any): this {
     this.filters.push({ field, operator, value });
     return this;
   }
 
-  addSort(field: string, direction: 'asc' | 'desc' = 'asc'): this {
+  addSort(field: string, direction: "asc" | "desc" = "asc"): this {
     this.sorts.push({ field, direction });
     return this;
   }

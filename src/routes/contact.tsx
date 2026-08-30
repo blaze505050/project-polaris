@@ -29,7 +29,10 @@ export const Route = createFileRoute("/contact")({
           "Get in touch with the Project Polaris team about joining, school collaborations, masterclasses, mentorship, or technical partnerships.",
       },
       { property: "og:title", content: "Contact & Inquiries — Project Polaris" },
-      { property: "og:description", content: "Reach out to Project Polaris. We read and respond to every message." },
+      {
+        property: "og:description",
+        content: "Reach out to Project Polaris. We read and respond to every message.",
+      },
     ],
   }),
   component: Contact,
@@ -144,7 +147,8 @@ function Contact() {
                     Response SLA
                   </p>
                   <p className="text-xs text-muted-foreground leading-relaxed font-body">
-                    We are a student-led engineering collective — incoming messages are reviewed daily, with typical replies within 24 to 48 hours.
+                    We are a student-led engineering collective — incoming messages are reviewed
+                    daily, with typical replies within 24 to 48 hours.
                   </p>
                 </div>
               </div>
@@ -194,7 +198,8 @@ function Contact() {
                   Send Us a Transmission
                 </h3>
                 <p className="text-xs text-muted-foreground mt-1 font-body">
-                  Fill out the form below. Messages are dispatched directly to the core coordination team.
+                  Fill out the form below. Messages are dispatched directly to the core coordination
+                  team.
                 </p>
               </div>
               <ContactForm />

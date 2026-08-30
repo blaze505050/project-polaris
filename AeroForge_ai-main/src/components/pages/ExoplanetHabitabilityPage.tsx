@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { BarChart3, Droplets, Thermometer, Wind, Zap, Search, Info } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { BarChart3, Droplets, Thermometer, Wind, Zap, Search, Info } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
 
 interface ExoplanetData {
   name: string;
@@ -20,92 +20,93 @@ interface ExoplanetData {
 
 const EXOPLANET_DATABASE: ExoplanetData[] = [
   {
-    name: 'Proxima Centauri b',
-    starName: 'Proxima Centauri',
+    name: "Proxima Centauri b",
+    starName: "Proxima Centauri",
     distance: 4.24,
     radius: 1.1,
     mass: 1.27,
     temperature: 234,
     habitabilityScore: 0.74,
     waterPresence: 0.65,
-    atmosphereType: 'Unknown',
+    atmosphereType: "Unknown",
     discoveryYear: 2016,
   },
   {
-    name: 'TRAPPIST-1e',
-    starName: 'TRAPPIST-1',
+    name: "TRAPPIST-1e",
+    starName: "TRAPPIST-1",
     distance: 12.1,
     radius: 0.92,
     mass: 0.62,
     temperature: 246,
     habitabilityScore: 0.86,
     waterPresence: 0.78,
-    atmosphereType: 'Potentially Habitable',
+    atmosphereType: "Potentially Habitable",
     discoveryYear: 2017,
   },
   {
-    name: 'Kepler-452b',
-    starName: 'Kepler-452',
+    name: "Kepler-452b",
+    starName: "Kepler-452",
     distance: 1206,
     radius: 1.6,
     mass: 5.0,
     temperature: 265,
     habitabilityScore: 0.71,
     waterPresence: 0.72,
-    atmosphereType: 'Earth-like',
+    atmosphereType: "Earth-like",
     discoveryYear: 2015,
   },
   {
-    name: 'Gliese 667Cc',
-    starName: 'Gliese 667C',
+    name: "Gliese 667Cc",
+    starName: "Gliese 667C",
     distance: 23.62,
     radius: 1.5,
     mass: 3.8,
     temperature: 228,
     habitabilityScore: 0.79,
     waterPresence: 0.81,
-    atmosphereType: 'Potentially Habitable',
+    atmosphereType: "Potentially Habitable",
     discoveryYear: 2011,
   },
   {
-    name: 'K2-18b',
-    starName: 'K2-18',
+    name: "K2-18b",
+    starName: "K2-18",
     distance: 124,
     radius: 2.6,
     mass: 8.63,
     temperature: 265,
     habitabilityScore: 0.68,
     waterPresence: 0.75,
-    atmosphereType: 'Water-Rich',
+    atmosphereType: "Water-Rich",
     discoveryYear: 2015,
   },
 ];
 
 export default function ExoplanetHabitabilityPage() {
   const [selectedPlanet, setSelectedPlanet] = useState<ExoplanetData>(EXOPLANET_DATABASE[0]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'habitability' | 'distance' | 'temperature'>('habitability');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState<"habitability" | "distance" | "temperature">("habitability");
 
-  const filteredPlanets = EXOPLANET_DATABASE.filter(p =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.starName.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredPlanets = EXOPLANET_DATABASE.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.starName.toLowerCase().includes(searchTerm.toLowerCase()),
   ).sort((a, b) => {
-    if (sortBy === 'habitability') return b.habitabilityScore - a.habitabilityScore;
-    if (sortBy === 'distance') return a.distance - b.distance;
-    if (sortBy === 'temperature') return a.temperature - b.temperature;
+    if (sortBy === "habitability") return b.habitabilityScore - a.habitabilityScore;
+    if (sortBy === "distance") return a.distance - b.distance;
+    if (sortBy === "temperature") return a.temperature - b.temperature;
     return 0;
   });
 
   const getHabitabilityColor = (score: number) => {
-    if (score > 0.8) return 'from-green-500 to-emerald-500';
-    if (score > 0.6) return 'from-yellow-500 to-amber-500';
-    return 'from-red-500 to-orange-500';
+    if (score > 0.8) return "from-green-500 to-emerald-500";
+    if (score > 0.6) return "from-yellow-500 to-amber-500";
+    return "from-red-500 to-orange-500";
   };
 
   const getHabitabilityLabel = (score: number) => {
-    if (score > 0.8) return 'Highly Habitable';
-    if (score > 0.6) return 'Potentially Habitable';
-    return 'Low Habitability';
+    if (score > 0.8) return "Highly Habitable";
+    if (score > 0.6) return "Potentially Habitable";
+    return "Low Habitability";
   };
 
   return (
@@ -123,7 +124,8 @@ export default function ExoplanetHabitabilityPage() {
             <span className="text-aerospace-blue">Exoplanet</span> Habitability Analyzer
           </h1>
           <p className="text-xl text-foreground/70 max-w-3xl">
-            Analyze and compare exoplanets based on habitability indicators, atmospheric composition, and stellar proximity.
+            Analyze and compare exoplanets based on habitability indicators, atmospheric
+            composition, and stellar proximity.
           </p>
         </motion.div>
 
@@ -174,14 +176,16 @@ export default function ExoplanetHabitabilityPage() {
                     whileHover={{ scale: 1.02 }}
                     className={`w-full p-3 rounded-lg border transition-all text-left ${
                       selectedPlanet.name === planet.name
-                        ? 'bg-aerospace-blue/20 border-aerospace-blue/50'
-                        : 'bg-primary/20 border-aerospace-blue/10 hover:border-aerospace-blue/30'
+                        ? "bg-aerospace-blue/20 border-aerospace-blue/50"
+                        : "bg-primary/20 border-aerospace-blue/10 hover:border-aerospace-blue/30"
                     }`}
                   >
                     <p className="font-mono text-sm text-aerospace-blue">{planet.name}</p>
                     <p className="text-xs text-foreground/60">{planet.starName}</p>
                     <div className="mt-2 flex items-center gap-2">
-                      <div className={`h-2 w-full rounded-full bg-gradient-to-r ${getHabitabilityColor(planet.habitabilityScore)}`} />
+                      <div
+                        className={`h-2 w-full rounded-full bg-gradient-to-r ${getHabitabilityColor(planet.habitabilityScore)}`}
+                      />
                       <span className="text-xs text-foreground/70 whitespace-nowrap">
                         {(planet.habitabilityScore * 100).toFixed(0)}%
                       </span>
@@ -201,7 +205,7 @@ export default function ExoplanetHabitabilityPage() {
             {/* Main Card */}
             <Card className="bg-primary/40 border-aerospace-blue/20 p-8 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-64 h-64 bg-aerospace-blue/5 rounded-full blur-3xl" />
-              
+
               <div className="relative z-10">
                 <div className="mb-8">
                   <h2 className="font-heading text-4xl font-bold mb-2">{selectedPlanet.name}</h2>
@@ -214,7 +218,9 @@ export default function ExoplanetHabitabilityPage() {
                     <h3 className="font-mono text-sm uppercase tracking-wider text-aerospace-blue">
                       Habitability Index
                     </h3>
-                    <span className={`px-3 py-1 rounded-full text-sm font-mono bg-gradient-to-r ${getHabitabilityColor(selectedPlanet.habitabilityScore)} text-white`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-mono bg-gradient-to-r ${getHabitabilityColor(selectedPlanet.habitabilityScore)} text-white`}
+                    >
                       {getHabitabilityLabel(selectedPlanet.habitabilityScore)}
                     </span>
                   </div>
@@ -222,7 +228,7 @@ export default function ExoplanetHabitabilityPage() {
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${selectedPlanet.habitabilityScore * 100}%` }}
-                      transition={{ duration: 1, ease: 'easeOut' }}
+                      transition={{ duration: 1, ease: "easeOut" }}
                       className={`h-full bg-gradient-to-r ${getHabitabilityColor(selectedPlanet.habitabilityScore)}`}
                     />
                   </div>
@@ -236,7 +242,9 @@ export default function ExoplanetHabitabilityPage() {
                   <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
                     <div className="flex items-center gap-2 mb-2">
                       <Thermometer className="w-4 h-4 text-aerospace-blue" />
-                      <span className="text-xs font-mono text-aerospace-blue uppercase">Temperature</span>
+                      <span className="text-xs font-mono text-aerospace-blue uppercase">
+                        Temperature
+                      </span>
                     </div>
                     <p className="text-2xl font-bold">{selectedPlanet.temperature}K</p>
                   </div>
@@ -244,15 +252,21 @@ export default function ExoplanetHabitabilityPage() {
                   <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
                     <div className="flex items-center gap-2 mb-2">
                       <Droplets className="w-4 h-4 text-aerospace-accent" />
-                      <span className="text-xs font-mono text-aerospace-accent uppercase">Water</span>
+                      <span className="text-xs font-mono text-aerospace-accent uppercase">
+                        Water
+                      </span>
                     </div>
-                    <p className="text-2xl font-bold">{(selectedPlanet.waterPresence * 100).toFixed(0)}%</p>
+                    <p className="text-2xl font-bold">
+                      {(selectedPlanet.waterPresence * 100).toFixed(0)}%
+                    </p>
                   </div>
 
                   <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
                     <div className="flex items-center gap-2 mb-2">
                       <Zap className="w-4 h-4 text-aerospace-success" />
-                      <span className="text-xs font-mono text-aerospace-success uppercase">Distance</span>
+                      <span className="text-xs font-mono text-aerospace-success uppercase">
+                        Distance
+                      </span>
                     </div>
                     <p className="text-2xl font-bold">{selectedPlanet.distance} ly</p>
                   </div>
@@ -260,7 +274,9 @@ export default function ExoplanetHabitabilityPage() {
                   <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
                     <div className="flex items-center gap-2 mb-2">
                       <BarChart3 className="w-4 h-4 text-aerospace-warning" />
-                      <span className="text-xs font-mono text-aerospace-warning uppercase">Radius</span>
+                      <span className="text-xs font-mono text-aerospace-warning uppercase">
+                        Radius
+                      </span>
                     </div>
                     <p className="text-2xl font-bold">{selectedPlanet.radius}R⊕</p>
                   </div>
@@ -276,7 +292,9 @@ export default function ExoplanetHabitabilityPage() {
                   <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
                     <div className="flex items-center gap-2 mb-2">
                       <Info className="w-4 h-4 text-aerospace-accent" />
-                      <span className="text-xs font-mono text-aerospace-accent uppercase">Discovered</span>
+                      <span className="text-xs font-mono text-aerospace-accent uppercase">
+                        Discovered
+                      </span>
                     </div>
                     <p className="text-2xl font-bold">{selectedPlanet.discoveryYear}</p>
                   </div>
@@ -284,7 +302,9 @@ export default function ExoplanetHabitabilityPage() {
 
                 {/* Atmosphere */}
                 <div className="p-4 bg-aerospace-dark/50 rounded-lg border border-aerospace-blue/20">
-                  <p className="text-xs font-mono text-aerospace-blue uppercase tracking-wider mb-2">Atmosphere Type</p>
+                  <p className="text-xs font-mono text-aerospace-blue uppercase tracking-wider mb-2">
+                    Atmosphere Type
+                  </p>
                   <p className="text-lg font-semibold">{selectedPlanet.atmosphereType}</p>
                 </div>
               </div>
@@ -307,22 +327,30 @@ export default function ExoplanetHabitabilityPage() {
                   <tr className="border-b border-aerospace-blue/10">
                     <td className="py-3">Radius</td>
                     <td className="text-right">{selectedPlanet.radius} R⊕</td>
-                    <td className="text-right text-aerospace-accent">{(selectedPlanet.radius).toFixed(2)}x</td>
+                    <td className="text-right text-aerospace-accent">
+                      {selectedPlanet.radius.toFixed(2)}x
+                    </td>
                   </tr>
                   <tr className="border-b border-aerospace-blue/10">
                     <td className="py-3">Mass</td>
                     <td className="text-right">{selectedPlanet.mass} M⊕</td>
-                    <td className="text-right text-aerospace-accent">{(selectedPlanet.mass).toFixed(2)}x</td>
+                    <td className="text-right text-aerospace-accent">
+                      {selectedPlanet.mass.toFixed(2)}x
+                    </td>
                   </tr>
                   <tr className="border-b border-aerospace-blue/10">
                     <td className="py-3">Temperature</td>
                     <td className="text-right">{selectedPlanet.temperature}K</td>
-                    <td className="text-right text-aerospace-accent">{(selectedPlanet.temperature / 288).toFixed(2)}x</td>
+                    <td className="text-right text-aerospace-accent">
+                      {(selectedPlanet.temperature / 288).toFixed(2)}x
+                    </td>
                   </tr>
                   <tr>
                     <td className="py-3">Distance</td>
                     <td className="text-right">{selectedPlanet.distance} ly</td>
-                    <td className="text-right text-aerospace-accent">{(selectedPlanet.distance / 4.24).toFixed(1)}x Proxima</td>
+                    <td className="text-right text-aerospace-accent">
+                      {(selectedPlanet.distance / 4.24).toFixed(1)}x Proxima
+                    </td>
                   </tr>
                 </tbody>
               </table>

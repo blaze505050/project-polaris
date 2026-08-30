@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { useExperimentStore } from '@/stores/experimentStore';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Trash2, Download, Play, FileJson, X } from 'lucide-react';
-import { format } from 'date-fns';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useExperimentStore } from "@/stores/experimentStore";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Trash2, Download, Play, FileJson, X } from "lucide-react";
+import { format } from "date-fns";
 
 export default function MyLabExperimentsList() {
   const navigate = useNavigate();
   const experiments = useExperimentStore((state) => state.getAllExperiments());
   const deleteExperiment = useExperimentStore((state) => state.deleteExperiment);
   const exportExperiments = useExperimentStore((state) => state.exportExperiments);
-  const [selectedFormat, setSelectedFormat] = useState<'json' | 'csv'>('json');
+  const [selectedFormat, setSelectedFormat] = useState<"json" | "csv">("json");
   const [selectedExpId, setSelectedExpId] = useState<string | null>(null);
   const selectedExp = experiments.find((e) => e.id === selectedExpId);
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this experiment?')) {
+    if (confirm("Are you sure you want to delete this experiment?")) {
       deleteExperiment(id);
     }
   };
 
   const handleExport = () => {
     const data = exportExperiments(selectedFormat);
-    if (!data || data.trim() === '') {
-      alert('No experiments to export');
+    if (!data || data.trim() === "") {
+      alert("No experiments to export");
       return;
     }
-    const element = document.createElement('a');
+    const element = document.createElement("a");
     const file = new Blob([data], {
-      type: selectedFormat === 'json' ? 'application/json' : 'text/csv',
+      type: selectedFormat === "json" ? "application/json" : "text/csv",
     });
     element.href = URL.createObjectURL(file);
-    element.download = `astrolab-experiments-${new Date().toISOString().split('T')[0]}.${selectedFormat}`;
+    element.download = `astrolab-experiments-${new Date().toISOString().split("T")[0]}.${selectedFormat}`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -47,20 +47,20 @@ export default function MyLabExperimentsList() {
    */
   const handleReRun = (exp: any) => {
     // Store experiment in sessionStorage for restoration
-    sessionStorage.setItem('activeExperiment', JSON.stringify(exp));
-    
+    sessionStorage.setItem("activeExperiment", JSON.stringify(exp));
+
     // Navigate to appropriate simulation based on type
     const routeMap: Record<string, string> = {
-      orbital: '/astrolab/simulations?tab=orbital',
-      gravity: '/astrolab/simulations?tab=gravity',
-      transit: '/astrolab/simulations?tab=transit',
-      stellar: '/astrolab/simulations?tab=stellar',
-      leo: '/space-problems?problem=leo',
-      exoplanet: '/space-problems?problem=transit',
-      'star-classification': '/space-problems?problem=star',
+      orbital: "/astrolab/simulations?tab=orbital",
+      gravity: "/astrolab/simulations?tab=gravity",
+      transit: "/astrolab/simulations?tab=transit",
+      stellar: "/astrolab/simulations?tab=stellar",
+      leo: "/space-problems?problem=leo",
+      exoplanet: "/space-problems?problem=transit",
+      "star-classification": "/space-problems?problem=star",
     };
 
-    const route = routeMap[exp.type] || '/astrolab/simulations';
+    const route = routeMap[exp.type] || "/astrolab/simulations";
     navigate(route);
   };
 
@@ -73,15 +73,15 @@ export default function MyLabExperimentsList() {
 
   const getTypeColor = (type: string) => {
     const colors: Record<string, string> = {
-      orbital: 'from-blue-600 to-cyan-600',
-      gravity: 'from-purple-600 to-pink-600',
-      transit: 'from-orange-600 to-red-600',
-      stellar: 'from-yellow-600 to-orange-600',
-      leo: 'from-green-600 to-emerald-600',
-      exoplanet: 'from-indigo-600 to-purple-600',
-      'star-classification': 'from-amber-600 to-yellow-600',
+      orbital: "from-blue-600 to-cyan-600",
+      gravity: "from-purple-600 to-pink-600",
+      transit: "from-orange-600 to-red-600",
+      stellar: "from-yellow-600 to-orange-600",
+      leo: "from-green-600 to-emerald-600",
+      exoplanet: "from-indigo-600 to-purple-600",
+      "star-classification": "from-amber-600 to-yellow-600",
     };
-    return colors[type] || 'from-slate-600 to-slate-700';
+    return colors[type] || "from-slate-600 to-slate-700";
   };
 
   if (experiments.length === 0) {
@@ -101,7 +101,7 @@ export default function MyLabExperimentsList() {
       <div className="flex gap-2 justify-end">
         <select
           value={selectedFormat}
-          onChange={(e) => setSelectedFormat(e.target.value as 'json' | 'csv')}
+          onChange={(e) => setSelectedFormat(e.target.value as "json" | "csv")}
           className="px-3 py-2 bg-slate-700 border border-slate-600 rounded-md text-white text-sm"
         >
           <option value="json">JSON</option>
@@ -134,22 +134,18 @@ export default function MyLabExperimentsList() {
 
                 <div className="p-4 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-bold text-white flex-1 line-clamp-2">
-                      {exp.name}
-                    </h3>
+                    <h3 className="text-lg font-bold text-white flex-1 line-clamp-2">{exp.name}</h3>
                     <span className="ml-2 px-2 py-1 bg-slate-700 rounded text-xs text-slate-300 whitespace-nowrap">
                       {exp.type}
                     </span>
                   </div>
 
                   <p className="text-xs text-slate-400 mb-3">
-                    {format(new Date(exp.timestamp), 'MMM d, yyyy HH:mm')}
+                    {format(new Date(exp.timestamp), "MMM d, yyyy HH:mm")}
                   </p>
 
                   {exp.notes && (
-                    <p className="text-sm text-slate-300 mb-3 line-clamp-2">
-                      {exp.notes}
-                    </p>
+                    <p className="text-sm text-slate-300 mb-3 line-clamp-2">{exp.notes}</p>
                   )}
 
                   {/* Results Preview */}
@@ -159,12 +155,12 @@ export default function MyLabExperimentsList() {
                         .slice(0, 2)
                         .map(([key, value]) => {
                           let displayValue = value;
-                          if (typeof value === 'number') {
+                          if (typeof value === "number") {
                             displayValue = value > 1e6 ? value.toExponential(2) : value.toFixed(2);
                           }
                           return `${key}: ${displayValue}`;
                         })
-                        .join(' | ')}
+                        .join(" | ")}
                     </p>
                   </div>
 
@@ -226,7 +222,9 @@ export default function MyLabExperimentsList() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-400 font-semibold">Date</p>
-                  <p className="text-sm">{format(new Date(selectedExp.timestamp), 'MMM d, yyyy HH:mm:ss')}</p>
+                  <p className="text-sm">
+                    {format(new Date(selectedExp.timestamp), "MMM d, yyyy HH:mm:ss")}
+                  </p>
                 </div>
               </div>
 
@@ -260,7 +258,10 @@ export default function MyLabExperimentsList() {
                   <p className="text-xs text-slate-400 font-semibold mb-2">Tags</p>
                   <div className="flex flex-wrap gap-2">
                     {selectedExp.tags.map((tag: string) => (
-                      <span key={tag} className="px-2 py-1 bg-blue-600/30 text-blue-300 rounded text-xs">
+                      <span
+                        key={tag}
+                        className="px-2 py-1 bg-blue-600/30 text-blue-300 rounded text-xs"
+                      >
                         {tag}
                       </span>
                     ))}

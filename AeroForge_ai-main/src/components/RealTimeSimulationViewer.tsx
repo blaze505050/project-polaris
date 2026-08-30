@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Play,
   Pause,
@@ -14,8 +14,8 @@ import {
   Gauge,
   AlertCircle,
   CheckCircle,
-} from 'lucide-react';
-import { realTimeSimulationService, SimulationSession } from '@/services/realTimeSimulationService';
+} from "lucide-react";
+import { realTimeSimulationService, SimulationSession } from "@/services/realTimeSimulationService";
 
 interface RealTimeSimulationViewerProps {
   sessionId: string;
@@ -30,9 +30,9 @@ export default function RealTimeSimulationViewer({
 }: RealTimeSimulationViewerProps) {
   const [session, setSession] = useState<SimulationSession | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedTab, setSelectedTab] = useState<'aerodynamics' | 'flow' | 'turbulence' | 'convergence'>(
-    'aerodynamics'
-  );
+  const [selectedTab, setSelectedTab] = useState<
+    "aerodynamics" | "flow" | "turbulence" | "convergence"
+  >("aerodynamics");
   const [autoRefresh, setAutoRefresh] = useState(true);
 
   useEffect(() => {
@@ -41,13 +41,13 @@ export default function RealTimeSimulationViewer({
         const newSession = await realTimeSimulationService.initializeSession(
           sessionId,
           `Simulation ${sessionId}`,
-          dataSourceId
+          dataSourceId,
         );
         setSession(newSession);
         setIsLoading(false);
 
         // Subscribe to real-time updates
-        const unsubscribe = realTimeSimulationService.subscribe(sessionId, updatedSession => {
+        const unsubscribe = realTimeSimulationService.subscribe(sessionId, (updatedSession) => {
           if (autoRefresh) {
             setSession(updatedSession);
           }
@@ -55,7 +55,7 @@ export default function RealTimeSimulationViewer({
 
         return () => unsubscribe();
       } catch (error) {
-        console.error('Error initializing simulation:', error);
+        console.error("Error initializing simulation:", error);
         setIsLoading(false);
       }
     };
@@ -70,9 +70,9 @@ export default function RealTimeSimulationViewer({
   const handlePlayPause = () => {
     if (!session) return;
 
-    if (session.status === 'running') {
+    if (session.status === "running") {
       realTimeSimulationService.pauseSession(sessionId);
-    } else if (session.status === 'paused') {
+    } else if (session.status === "paused") {
       realTimeSimulationService.resumeSession(sessionId, dataSourceId);
     }
   };
@@ -85,9 +85,9 @@ export default function RealTimeSimulationViewer({
   const handleExport = () => {
     if (!session) return;
     const data = realTimeSimulationService.exportResults(sessionId);
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `simulation-${sessionId}-${new Date().toISOString()}.json`;
     a.click();
@@ -117,18 +117,18 @@ export default function RealTimeSimulationViewer({
   }
 
   const statusColor =
-    session.status === 'running'
-      ? 'text-aerospace-success'
-      : session.status === 'paused'
-        ? 'text-aerospace-warning'
-        : 'text-aerospace-blue';
+    session.status === "running"
+      ? "text-aerospace-success"
+      : session.status === "paused"
+        ? "text-aerospace-warning"
+        : "text-aerospace-blue";
 
   const statusBgColor =
-    session.status === 'running'
-      ? 'bg-aerospace-success'
-      : session.status === 'paused'
-        ? 'bg-aerospace-warning'
-        : 'bg-aerospace-blue';
+    session.status === "running"
+      ? "bg-aerospace-success"
+      : session.status === "paused"
+        ? "bg-aerospace-warning"
+        : "bg-aerospace-blue";
 
   return (
     <motion.div
@@ -144,7 +144,9 @@ export default function RealTimeSimulationViewer({
             <div className="flex items-center gap-4 flex-wrap">
               <div className="flex items-center gap-2">
                 <div className={`w-3 h-3 rounded-full ${statusBgColor} animate-pulse`} />
-                <span className={`text-sm font-medium capitalize ${statusColor}`}>{session.status}</span>
+                <span className={`text-sm font-medium capitalize ${statusColor}`}>
+                  {session.status}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-secondary-foreground text-sm">
                 <Activity size={16} />
@@ -152,7 +154,11 @@ export default function RealTimeSimulationViewer({
               </div>
               <div className="flex items-center gap-2 text-secondary-foreground text-sm">
                 <Gauge size={16} />
-                Convergence: {session.convergenceHistory.length > 0 ? session.convergenceHistory[session.convergenceHistory.length - 1].toFixed(2) : '0'}%
+                Convergence:{" "}
+                {session.convergenceHistory.length > 0
+                  ? session.convergenceHistory[session.convergenceHistory.length - 1].toFixed(2)
+                  : "0"}
+                %
               </div>
             </div>
           </div>
@@ -187,12 +193,12 @@ export default function RealTimeSimulationViewer({
             whileTap={{ scale: 0.95 }}
             onClick={handlePlayPause}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-              session.status === 'running'
-                ? 'bg-aerospace-warning/20 text-aerospace-warning hover:bg-aerospace-warning/30'
-                : 'bg-aerospace-success/20 text-aerospace-success hover:bg-aerospace-success/30'
+              session.status === "running"
+                ? "bg-aerospace-warning/20 text-aerospace-warning hover:bg-aerospace-warning/30"
+                : "bg-aerospace-success/20 text-aerospace-success hover:bg-aerospace-success/30"
             }`}
           >
-            {session.status === 'running' ? (
+            {session.status === "running" ? (
               <>
                 <Pause size={18} /> Pause
               </>
@@ -237,18 +243,18 @@ export default function RealTimeSimulationViewer({
             onClick={() => setAutoRefresh(!autoRefresh)}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
               autoRefresh
-                ? 'bg-aerospace-success/20 text-aerospace-success'
-                : 'bg-slate-700/50 text-secondary-foreground'
+                ? "bg-aerospace-success/20 text-aerospace-success"
+                : "bg-slate-700/50 text-secondary-foreground"
             }`}
           >
-            <Zap size={18} /> {autoRefresh ? 'Live' : 'Paused'}
+            <Zap size={18} /> {autoRefresh ? "Live" : "Paused"}
           </motion.button>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="p-4 border-b border-aerospace-blue/20 flex gap-2 overflow-x-auto">
-        {(['aerodynamics', 'flow', 'turbulence', 'convergence'] as const).map(tab => (
+        {(["aerodynamics", "flow", "turbulence", "convergence"] as const).map((tab) => (
           <motion.button
             key={tab}
             whileHover={{ scale: 1.05 }}
@@ -256,8 +262,8 @@ export default function RealTimeSimulationViewer({
             onClick={() => setSelectedTab(tab)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap ${
               selectedTab === tab
-                ? 'bg-aerospace-blue text-white'
-                : 'bg-slate-700/50 text-secondary-foreground hover:bg-slate-700'
+                ? "bg-aerospace-blue text-white"
+                : "bg-slate-700/50 text-secondary-foreground hover:bg-slate-700"
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -267,12 +273,8 @@ export default function RealTimeSimulationViewer({
 
       {/* Content */}
       <div className="p-6 space-y-6">
-        {selectedTab === 'aerodynamics' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-4"
-          >
+        {selectedTab === "aerodynamics" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Wind size={20} className="text-aerospace-blue" />
               Aerodynamic Coefficients
@@ -354,12 +356,8 @@ export default function RealTimeSimulationViewer({
           </motion.div>
         )}
 
-        {selectedTab === 'flow' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-4"
-          >
+        {selectedTab === "flow" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Wind size={20} className="text-aerospace-blue" />
               Flow Visualization
@@ -370,41 +368,49 @@ export default function RealTimeSimulationViewer({
                 <div>
                   <p className="text-sm text-secondary-foreground mb-2">Velocity Field</p>
                   <div className="grid grid-cols-10 gap-1">
-                    {session.flowVisualization.velocityField.flat().slice(0, 50).map((val, idx) => (
-                      <div
-                        key={idx}
-                        className="w-full aspect-square rounded-sm"
-                        style={{
-                          backgroundColor: `hsl(${200 + (val / 50) * 60}, 70%, ${50 - (val / 50) * 20}%)`,
-                        }}
-                        title={`Velocity: ${val.toFixed(2)} m/s`}
-                      />
-                    ))}
+                    {session.flowVisualization.velocityField
+                      .flat()
+                      .slice(0, 50)
+                      .map((val, idx) => (
+                        <div
+                          key={idx}
+                          className="w-full aspect-square rounded-sm"
+                          style={{
+                            backgroundColor: `hsl(${200 + (val / 50) * 60}, 70%, ${50 - (val / 50) * 20}%)`,
+                          }}
+                          title={`Velocity: ${val.toFixed(2)} m/s`}
+                        />
+                      ))}
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm text-secondary-foreground mb-2">Pressure Field</p>
                   <div className="grid grid-cols-10 gap-1">
-                    {session.flowVisualization.pressureField.flat().slice(0, 50).map((val, idx) => (
-                      <div
-                        key={idx}
-                        className="w-full aspect-square rounded-sm"
-                        style={{
-                          backgroundColor: `hsl(${0 + ((val - 101325) / 5000) * 60}, 70%, ${50 + ((val - 101325) / 5000) * 20}%)`,
-                        }}
-                        title={`Pressure: ${val.toFixed(0)} Pa`}
-                      />
-                    ))}
+                    {session.flowVisualization.pressureField
+                      .flat()
+                      .slice(0, 50)
+                      .map((val, idx) => (
+                        <div
+                          key={idx}
+                          className="w-full aspect-square rounded-sm"
+                          style={{
+                            backgroundColor: `hsl(${0 + ((val - 101325) / 5000) * 60}, 70%, ${50 + ((val - 101325) / 5000) * 20}%)`,
+                          }}
+                          title={`Pressure: ${val.toFixed(0)} Pa`}
+                        />
+                      ))}
                   </div>
                 </div>
 
                 <div>
-                  <p className="text-sm text-secondary-foreground mb-2">Streamlines: {session.flowVisualization.streamlines.length} detected</p>
+                  <p className="text-sm text-secondary-foreground mb-2">
+                    Streamlines: {session.flowVisualization.streamlines.length} detected
+                  </p>
                   <p className="text-xs text-secondary-foreground">
                     {session.flowVisualization.streamlines.length > 0
-                      ? `Average streamline length: ${(session.flowVisualization.streamlines[0]?.length || 0)} points`
-                      : 'No streamlines detected'}
+                      ? `Average streamline length: ${session.flowVisualization.streamlines[0]?.length || 0} points`
+                      : "No streamlines detected"}
                   </p>
                 </div>
               </div>
@@ -412,12 +418,8 @@ export default function RealTimeSimulationViewer({
           </motion.div>
         )}
 
-        {selectedTab === 'turbulence' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-4"
-          >
+        {selectedTab === "turbulence" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <Zap size={20} className="text-aerospace-blue" />
               Turbulence Parameters
@@ -449,14 +451,20 @@ export default function RealTimeSimulationViewer({
               <p className="text-sm text-secondary-foreground mb-3">Reynolds Stress Tensor</p>
               <div className="grid grid-cols-3 gap-2 text-center">
                 {session.turbulence.reynoldsStress.length > 0 ? (
-                  (session.turbulence.reynoldsStress as any[]).slice(0, 9).map((val: any, idx: number) => (
-                    <div key={idx} className="bg-slate-700 rounded p-2">
-                      <p className="text-xs text-secondary-foreground">σ{idx}</p>
-                      <p className="text-lg font-bold text-aerospace-blue">
-                        {typeof val === 'number' ? val.toFixed(2) : (Array.isArray(val) ? (val[0]?.toFixed(2) ?? '0.00') : '0.00')}
-                      </p>
-                    </div>
-                  ))
+                  (session.turbulence.reynoldsStress as any[])
+                    .slice(0, 9)
+                    .map((val: any, idx: number) => (
+                      <div key={idx} className="bg-slate-700 rounded p-2">
+                        <p className="text-xs text-secondary-foreground">σ{idx}</p>
+                        <p className="text-lg font-bold text-aerospace-blue">
+                          {typeof val === "number"
+                            ? val.toFixed(2)
+                            : Array.isArray(val)
+                              ? (val[0]?.toFixed(2) ?? "0.00")
+                              : "0.00"}
+                        </p>
+                      </div>
+                    ))
                 ) : (
                   <p className="col-span-3 text-secondary-foreground text-sm">Computing...</p>
                 )}
@@ -465,12 +473,8 @@ export default function RealTimeSimulationViewer({
           </motion.div>
         )}
 
-        {selectedTab === 'convergence' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="space-y-4"
-          >
+        {selectedTab === "convergence" && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
             <h3 className="text-lg font-bold text-white flex items-center gap-2">
               <TrendingUp size={20} className="text-aerospace-blue" />
               Convergence History
@@ -496,13 +500,20 @@ export default function RealTimeSimulationViewer({
                     <div>
                       <p className="text-xs text-secondary-foreground">Current</p>
                       <p className="text-2xl font-bold text-aerospace-blue">
-                        {session.convergenceHistory[session.convergenceHistory.length - 1].toFixed(2)}%
+                        {session.convergenceHistory[session.convergenceHistory.length - 1].toFixed(
+                          2,
+                        )}
+                        %
                       </p>
                     </div>
                     <div>
                       <p className="text-xs text-secondary-foreground">Average</p>
                       <p className="text-2xl font-bold text-aerospace-accent">
-                        {(session.convergenceHistory.reduce((a, b) => a + b, 0) / session.convergenceHistory.length).toFixed(2)}%
+                        {(
+                          session.convergenceHistory.reduce((a, b) => a + b, 0) /
+                          session.convergenceHistory.length
+                        ).toFixed(2)}
+                        %
                       </p>
                     </div>
                     <div>

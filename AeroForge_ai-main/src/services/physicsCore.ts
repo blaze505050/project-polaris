@@ -7,7 +7,7 @@
  * - Planetary surface generation
  */
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
 export interface PhysicsBody {
   id: string;
@@ -16,7 +16,7 @@ export interface PhysicsBody {
   position: THREE.Vector3; // meters
   velocity: THREE.Vector3; // m/s
   radius: number; // meters
-  type: 'star' | 'planet' | 'moon' | 'asteroid' | 'black_hole';
+  type: "star" | "planet" | "moon" | "asteroid" | "black_hole";
   temperature?: number; // Kelvin
   luminosity?: number; // Solar luminosities
   atmosphere?: AtmosphereData;
@@ -46,7 +46,7 @@ export interface TerrainConfig {
 
 // Physical constants
 export const CONSTANTS = {
-  G: 6.67430e-11, // Gravitational constant (m³ kg⁻¹ s⁻²)
+  G: 6.6743e-11, // Gravitational constant (m³ kg⁻¹ s⁻²)
   c: 299792458, // Speed of light (m/s)
   AU: 1.496e11, // Astronomical Unit (m)
   SOLAR_MASS: 1.989e30, // kg
@@ -70,10 +70,7 @@ export class BarnesHutTree {
 
   insert(body: PhysicsBody): void {
     if (!this.root) {
-      this.root = new BarnesHutNode(
-        new THREE.Vector3(-1e12, -1e12, -1e12),
-        2e12
-      );
+      this.root = new BarnesHutNode(new THREE.Vector3(-1e12, -1e12, -1e12), 2e12);
     }
     this.root.insert(body);
   }
@@ -140,13 +137,15 @@ class BarnesHutNode {
     ];
 
     for (const offset of offsets) {
-      const newCenter = this.center.clone().add(
-        new THREE.Vector3(
-          offset[0] * halfSize / 2,
-          offset[1] * halfSize / 2,
-          offset[2] * halfSize / 2
-        )
-      );
+      const newCenter = this.center
+        .clone()
+        .add(
+          new THREE.Vector3(
+            (offset[0] * halfSize) / 2,
+            (offset[1] * halfSize) / 2,
+            (offset[2] * halfSize) / 2,
+          ),
+        );
       this.children.push(new BarnesHutNode(newCenter, halfSize));
     }
 
@@ -196,15 +195,13 @@ class BarnesHutNode {
     this.totalMass = 0;
 
     for (const body of this.bodies) {
-      this.centerOfMass.add(
-        new THREE.Vector3().copy(body.position).multiplyScalar(body.mass)
-      );
+      this.centerOfMass.add(new THREE.Vector3().copy(body.position).multiplyScalar(body.mass));
       this.totalMass += body.mass;
     }
 
     for (const child of this.children) {
       this.centerOfMass.add(
-        new THREE.Vector3().copy(child.centerOfMass).multiplyScalar(child.totalMass)
+        new THREE.Vector3().copy(child.centerOfMass).multiplyScalar(child.totalMass),
       );
       this.totalMass += child.totalMass;
     }
@@ -227,17 +224,13 @@ export class GeneralRelativityEngine {
     sourcePosition: THREE.Vector3,
     lensPosition: THREE.Vector3,
     lensMass: number,
-    observerPosition: THREE.Vector3
+    observerPosition: THREE.Vector3,
   ): number {
     const r = new THREE.Vector3().subVectors(lensPosition, observerPosition).length();
-    const b = new THREE.Vector3()
-      .subVectors(sourcePosition, lensPosition)
-      .length();
+    const b = new THREE.Vector3().subVectors(sourcePosition, lensPosition).length();
 
     // Einstein radius
-    const theta_e = Math.sqrt(
-      (4 * CONSTANTS.G * lensMass) / (CONSTANTS.c * CONSTANTS.c * r)
-    );
+    const theta_e = Math.sqrt((4 * CONSTANTS.G * lensMass) / (CONSTANTS.c * CONSTANTS.c * r));
 
     // Deflection angle (simplified)
     return (2 * theta_e) / Math.max(b, theta_e);
@@ -247,10 +240,7 @@ export class GeneralRelativityEngine {
    * Calculate time dilation factor (Schwarzschild metric)
    * Returns the time dilation factor (< 1 means time runs slower)
    */
-  static calculateTimeDilation(
-    position: THREE.Vector3,
-    centralMass: number
-  ): number {
+  static calculateTimeDilation(position: THREE.Vector3, centralMass: number): number {
     const r = position.length();
     const rs = (2 * CONSTANTS.G * centralMass) / (CONSTANTS.c * CONSTANTS.c);
 
@@ -269,11 +259,7 @@ export class GeneralRelativityEngine {
   /**
    * Calculate accretion disk temperature
    */
-  static accretionDiskTemperature(
-    mass: number,
-    accretionRate: number,
-    radius: number
-  ): number {
+  static accretionDiskTemperature(mass: number, accretionRate: number, radius: number): number {
     const rs = this.schwarzschildRadius(mass);
     const innerRadius = 3 * rs;
 
@@ -281,8 +267,7 @@ export class GeneralRelativityEngine {
 
     const x = radius / innerRadius;
     const temp =
-      (3 * CONSTANTS.G * mass * accretionRate) /
-      (8 * Math.PI * 5.67e-8 * Math.pow(radius, 3)) *
+      ((3 * CONSTANTS.G * mass * accretionRate) / (8 * Math.PI * 5.67e-8 * Math.pow(radius, 3))) *
       (1 - Math.sqrt(1 / x));
 
     return Math.pow(temp, 0.25);
@@ -307,11 +292,8 @@ export class TerrainGenerator {
 
     // Shuffle with seed
     for (let i = 255; i > 0; i--) {
-      const j = Math.floor((seed * 73856093 ^ i * 19349663) % (i + 1));
-      [this.permutation[i], this.permutation[j]] = [
-        this.permutation[j],
-        this.permutation[i],
-      ];
+      const j = Math.floor(((seed * 73856093) ^ (i * 19349663)) % (i + 1));
+      [this.permutation[i], this.permutation[j]] = [this.permutation[j], this.permutation[i]];
     }
 
     // Duplicate for wrapping
@@ -346,7 +328,11 @@ export class TerrainGenerator {
     const p0 = this.lerp(this.grad(aaa, xf, yf, zf), this.grad(baa, xf - 1, yf, zf), u);
     const p1 = this.lerp(this.grad(aba, xf, yf - 1, zf), this.grad(bba, xf - 1, yf - 1, zf), u);
     const p2 = this.lerp(this.grad(aab, xf, yf, zf - 1), this.grad(bab, xf - 1, yf, zf - 1), u);
-    const p3 = this.lerp(this.grad(abb, xf, yf - 1, zf - 1), this.grad(bbb, xf - 1, yf - 1, zf - 1), u);
+    const p3 = this.lerp(
+      this.grad(abb, xf, yf - 1, zf - 1),
+      this.grad(bbb, xf - 1, yf - 1, zf - 1),
+      u,
+    );
 
     const q0 = this.lerp(p0, p1, v);
     const q1 = this.lerp(p2, p3, v);
@@ -357,7 +343,14 @@ export class TerrainGenerator {
   /**
    * Generate fractional Brownian motion
    */
-  fbm(x: number, y: number, z: number, octaves: number, persistence: number, lacunarity: number): number {
+  fbm(
+    x: number,
+    y: number,
+    z: number,
+    octaves: number,
+    persistence: number,
+    lacunarity: number,
+  ): number {
     let value = 0;
     let amplitude = 1;
     let frequency = 1;
@@ -400,7 +393,7 @@ export class VolumetricRenderer {
     position: THREE.Vector3,
     center: THREE.Vector3,
     radius: number,
-    falloff: number = 2
+    falloff: number = 2,
   ): number {
     const distance = position.distanceTo(center);
     if (distance > radius) return 0;
@@ -417,7 +410,7 @@ export class VolumetricRenderer {
     center: THREE.Vector3,
     radius: number,
     baseColor: THREE.Color,
-    temperature: number
+    temperature: number,
   ): THREE.Color {
     const density = this.calculateDensity(position, center, radius);
     const color = baseColor.clone();
@@ -457,9 +450,7 @@ export class OrbitalMechanics {
    * Calculate orbital period (Kepler's third law)
    */
   static orbitalPeriod(centralMass: number, semiMajorAxis: number): number {
-    return 2 * Math.PI * Math.sqrt(
-      Math.pow(semiMajorAxis, 3) / (CONSTANTS.G * centralMass)
-    );
+    return 2 * Math.PI * Math.sqrt(Math.pow(semiMajorAxis, 3) / (CONSTANTS.G * centralMass));
   }
 
   /**
@@ -468,7 +459,7 @@ export class OrbitalMechanics {
   static calculateOrbitalElements(
     position: THREE.Vector3,
     velocity: THREE.Vector3,
-    centralMass: number
+    centralMass: number,
   ) {
     const r = position.length();
     const v = velocity.length();
@@ -483,7 +474,9 @@ export class OrbitalMechanics {
     const h = new THREE.Vector3().crossVectors(position, velocity).length();
 
     // Eccentricity
-    const e = Math.sqrt(1 + (2 * energy * h * h) / (CONSTANTS.G * CONSTANTS.G * centralMass * centralMass));
+    const e = Math.sqrt(
+      1 + (2 * energy * h * h) / (CONSTANTS.G * CONSTANTS.G * centralMass * centralMass),
+    );
 
     // Inclination
     const i = Math.acos(h / (r * v));

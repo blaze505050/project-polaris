@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BookOpen, ChevronDown, ChevronUp, Info, ShieldCheck, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { BookOpen, ChevronDown, ChevronUp, Info, ShieldCheck, AlertCircle } from "lucide-react";
 
 export interface UnitDefinition {
   symbol: string;
@@ -24,7 +24,10 @@ interface SimulationMetadataPanelProps {
   className?: string;
 }
 
-export default function SimulationMetadataPanel({ metadata, className = '' }: SimulationMetadataPanelProps) {
+export default function SimulationMetadataPanel({
+  metadata,
+  className = "",
+}: SimulationMetadataPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -35,12 +38,18 @@ export default function SimulationMetadataPanel({ metadata, className = '' }: Si
       >
         <div className="flex items-center gap-2 text-xs font-mono text-cyan-400">
           <BookOpen className="w-4 h-4 text-cyan-400" />
-          <span className="font-semibold uppercase tracking-wider">Engineering Model & Physics Documentation</span>
+          <span className="font-semibold uppercase tracking-wider">
+            Engineering Model & Physics Documentation
+          </span>
           <span className="text-[10px] text-white/40 px-2 py-0.5 rounded bg-white/5 border border-white/5">
             {metadata.solverName} (v{metadata.version})
           </span>
         </div>
-        {isOpen ? <ChevronUp className="w-4 h-4 text-white/40" /> : <ChevronDown className="w-4 h-4 text-white/40" />}
+        {isOpen ? (
+          <ChevronUp className="w-4 h-4 text-white/40" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-white/40" />
+        )}
       </button>
 
       {isOpen && (
@@ -52,7 +61,9 @@ export default function SimulationMetadataPanel({ metadata, className = '' }: Si
             </h4>
             <div className="space-y-1 bg-black/40 p-3 rounded-lg border border-white/5 font-mono text-cyan-300">
               {metadata.governingEquations.map((eq, i) => (
-                <div key={i} className="leading-relaxed">{eq}</div>
+                <div key={i} className="leading-relaxed">
+                  {eq}
+                </div>
               ))}
             </div>
           </div>
@@ -117,7 +128,9 @@ export default function SimulationMetadataPanel({ metadata, className = '' }: Si
             </h4>
             <div className="space-y-0.5 text-[10px] text-white/40 italic">
               {metadata.references.map((ref, i) => (
-                <div key={i}>[{i + 1}] {ref}</div>
+                <div key={i}>
+                  [{i + 1}] {ref}
+                </div>
               ))}
             </div>
           </div>

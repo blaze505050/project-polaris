@@ -48,7 +48,9 @@ function buildAeroForge() {
 
   // 1. Verify directory integrity
   if (!fs.existsSync(AEROFORGE_DIR)) {
-    console.error(`[AEROFORGE BUILD] Critical Error: AeroForge directory not found at ${AEROFORGE_DIR}`);
+    console.error(
+      `[AEROFORGE BUILD] Critical Error: AeroForge directory not found at ${AEROFORGE_DIR}`,
+    );
     process.exit(1);
   }
 
@@ -59,13 +61,19 @@ function buildAeroForge() {
   }
 
   const nodeModulesPath = path.join(AEROFORGE_DIR, "node_modules");
-  const viteBinPath = path.join(nodeModulesPath, ".bin", process.platform === "win32" ? "vite.cmd" : "vite");
+  const viteBinPath = path.join(
+    nodeModulesPath,
+    ".bin",
+    process.platform === "win32" ? "vite.cmd" : "vite",
+  );
   const isCI = Boolean(process.env.CI || process.env.VERCEL || process.env.GITHUB_ACTIONS);
   const needsInstall = !fs.existsSync(nodeModulesPath) || !fs.existsSync(viteBinPath);
 
   // 2. Deterministic dependency installation
   if (needsInstall || isCI) {
-    console.log(`[AEROFORGE BUILD] Installing AeroForge dependencies (CI=${isCI}, needsInstall=${needsInstall})...`);
+    console.log(
+      `[AEROFORGE BUILD] Installing AeroForge dependencies (CI=${isCI}, needsInstall=${needsInstall})...`,
+    );
     try {
       const lockfilePath = path.join(AEROFORGE_DIR, "package-lock.json");
       if (fs.existsSync(lockfilePath)) {
@@ -112,18 +120,24 @@ function buildAeroForge() {
   const indexHtmlPath = path.join(distDir, "index.html");
 
   if (!fs.existsSync(distDir)) {
-    console.error(`[AEROFORGE BUILD] Build output verification failed: Directory does not exist at ${distDir}`);
+    console.error(
+      `[AEROFORGE BUILD] Build output verification failed: Directory does not exist at ${distDir}`,
+    );
     process.exit(1);
   }
 
   if (!fs.existsSync(indexHtmlPath)) {
-    console.error(`[AEROFORGE BUILD] Build output verification failed: index.html missing at ${indexHtmlPath}`);
+    console.error(
+      `[AEROFORGE BUILD] Build output verification failed: index.html missing at ${indexHtmlPath}`,
+    );
     process.exit(1);
   }
 
   const stat = fs.statSync(indexHtmlPath);
   if (stat.size === 0) {
-    console.error(`[AEROFORGE BUILD] Build output verification failed: index.html is empty at ${indexHtmlPath}`);
+    console.error(
+      `[AEROFORGE BUILD] Build output verification failed: index.html is empty at ${indexHtmlPath}`,
+    );
     process.exit(1);
   }
 
@@ -140,7 +154,9 @@ function buildAeroForge() {
   // 6. Final verification of public/aeroforge/index.html
   const finalIndexHtml = path.join(DEST_DIR, "index.html");
   if (!fs.existsSync(finalIndexHtml) || fs.statSync(finalIndexHtml).size === 0) {
-    console.error(`[AEROFORGE BUILD] Critical Error: Integration verification failed at ${finalIndexHtml}`);
+    console.error(
+      `[AEROFORGE BUILD] Critical Error: Integration verification failed at ${finalIndexHtml}`,
+    );
     process.exit(1);
   }
 

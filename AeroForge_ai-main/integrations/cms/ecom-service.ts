@@ -7,52 +7,52 @@ import { redirects } from "@wix/redirects";
 const CMS_APP_ID = "e593b0bd-b783-45b8-97c2-873d42aacaf4";
 
 /**
-     * Buy now - skips the cart and goes directly to checkout.
-     * Creates a checkout with the specified items and redirects to payment.
-     * NOTE: Always show a loading state - this redirects and takes time!
-     *
-     * @param items - Array of items with collectionId, itemId, and optional quantity
-     */
+ * Buy now - skips the cart and goes directly to checkout.
+ * Creates a checkout with the specified items and redirects to payment.
+ * NOTE: Always show a loading state - this redirects and takes time!
+ *
+ * @param items - Array of items with collectionId, itemId, and optional quantity
+ */
 export async function buyNow(
-      items: Array<{ collectionId: string; itemId: string; quantity?: number }>
+  items: Array<{ collectionId: string; itemId: string; quantity?: number }>,
 ): Promise<void> {
-      if (items.length === 0) {
-        throw new Error("At least one item is required for checkout");
-      }
+  if (items.length === 0) {
+    throw new Error("At least one item is required for checkout");
+  }
 
   const lineItems = items.map((item) => ({
-        catalogReference: {
-          catalogItemId: item.itemId,
-          appId: CMS_APP_ID,
-          options: { collectionId: item.collectionId },
-        },
-        quantity: item.quantity ?? 1,
-      }));
+    catalogReference: {
+      catalogItemId: item.itemId,
+      appId: CMS_APP_ID,
+      options: { collectionId: item.collectionId },
+    },
+    quantity: item.quantity ?? 1,
+  }));
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkoutResult = await (checkout.createCheckout as any)({
-        lineItems,
-        channelType: checkout.ChannelType.WEB,
-      });
+    lineItems,
+    channelType: checkout.ChannelType.WEB,
+  });
 
-      if (!checkoutResult._id) {
-        throw new Error("Failed to create checkout: missing checkout ID");
-      }
+  if (!checkoutResult._id) {
+    throw new Error("Failed to create checkout: missing checkout ID");
+  }
 
-      const { redirectSession } = await redirects.createRedirectSession({
-        ecomCheckout: { checkoutId: checkoutResult._id },
-        callbacks: {
-          postFlowUrl: typeof window !== "undefined" ? window.location.href : "",
-        },
-      });
+  const { redirectSession } = await redirects.createRedirectSession({
+    ecomCheckout: { checkoutId: checkoutResult._id },
+    callbacks: {
+      postFlowUrl: typeof window !== "undefined" ? window.location.href : "",
+    },
+  });
 
-      if (!redirectSession?.fullUrl) {
-        throw new Error("Failed to create redirect session: missing redirect URL");
-      }
+  if (!redirectSession?.fullUrl) {
+    throw new Error("Failed to create redirect session: missing redirect URL");
+  }
 
-      if (typeof window !== "undefined") {
-        window.location.href = redirectSession.fullUrl;
-      }
+  if (typeof window !== "undefined") {
+    window.location.href = redirectSession.fullUrl;
+  }
 }
 
 /**
@@ -70,9 +70,7 @@ export function useEcomService() {
     isCartAvailable = true;
   } catch {
     // Cart provider not available - cart operations won't work
-    console.warn(
-      "Cart service not available. Use buyNow() for direct purchases."
-    );
+    console.warn("Cart service not available. Use buyNow() for direct purchases.");
   }
 
   /**
@@ -80,7 +78,7 @@ export function useEcomService() {
    * @param items - Array of items with collectionId, itemId, and optional quantity
    */
   const addToCart = async (
-    items: Array<{ collectionId: string; itemId: string; quantity?: number }>
+    items: Array<{ collectionId: string; itemId: string; quantity?: number }>,
   ): Promise<void> => {
     if (!cartService) {
       throw new Error("Cart service not available. Use buyNow() instead.");

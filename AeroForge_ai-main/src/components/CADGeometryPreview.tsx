@@ -1,8 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, Minimize2, RotateCcw, Download, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react';
-import CADGeometryService, { CADGeometry, GeometryMetrics } from '@/services/cadGeometryService';
+import { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Maximize2,
+  Minimize2,
+  RotateCcw,
+  Download,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
+import CADGeometryService, { CADGeometry, GeometryMetrics } from "@/services/cadGeometryService";
 
 interface CADGeometryPreviewProps {
   file: File | null;
@@ -32,7 +41,7 @@ export default function CADGeometryPreview({
   // Initialize Three.js scene
   useEffect(() => {
     const container = isFullscreen
-      ? document.getElementById('cad-preview-fullscreen')
+      ? document.getElementById("cad-preview-fullscreen")
       : containerRef.current;
 
     if (!container || container.clientWidth === 0) return;
@@ -125,10 +134,10 @@ export default function CADGeometryPreview({
       renderer.setSize(newWidth, newHeight);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationId);
       renderer.dispose();
       container.removeChild(renderer.domElement);
@@ -146,7 +155,7 @@ export default function CADGeometryPreview({
 
         // Simulate loading progress
         const progressInterval = setInterval(() => {
-          setLoadingProgress(prev => Math.min(prev + Math.random() * 30, 90));
+          setLoadingProgress((prev) => Math.min(prev + Math.random() * 30, 90));
         }, 200);
 
         const loadedGeometry = await CADGeometryService.loadSTLFile(file);
@@ -159,7 +168,7 @@ export default function CADGeometryPreview({
         // Reset progress after a delay
         setTimeout(() => setLoadingProgress(0), 1000);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load CAD file');
+        setError(err instanceof Error ? err.message : "Failed to load CAD file");
         setLoadingProgress(0);
       }
     };
@@ -199,14 +208,14 @@ export default function CADGeometryPreview({
         warnings: geometry.warnings,
       },
       null,
-      2
+      2,
     );
 
-    const blob = new Blob([data], { type: 'application/json' });
+    const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'geometry-metrics.json';
+    a.download = "geometry-metrics.json";
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -310,7 +319,11 @@ export default function CADGeometryPreview({
                 className="p-2 hover:bg-aerospace-blue/20 rounded-lg transition-colors"
                 title="Fullscreen"
               >
-                {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+                {isFullscreen ? (
+                  <Minimize2 className="w-5 h-5" />
+                ) : (
+                  <Maximize2 className="w-5 h-5" />
+                )}
               </button>
             </div>
           </motion.div>
@@ -362,10 +375,7 @@ export default function CADGeometryPreview({
 
       {/* Fullscreen portal */}
       {isFullscreen && (
-        <div
-          id="cad-preview-fullscreen"
-          className="fixed inset-0 z-50 bg-aerospace-dark"
-        />
+        <div id="cad-preview-fullscreen" className="fixed inset-0 z-50 bg-aerospace-dark" />
       )}
     </>
   );

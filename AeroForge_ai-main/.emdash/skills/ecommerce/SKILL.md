@@ -14,6 +14,7 @@ This skill contains all patterns for implementing shopping cart, checkout, and p
 **Cart and buyNow ONLY work with `@catalog` collections.**
 
 Before implementing ecommerce features:
+
 1. Check `src/entities/index.ts` for catalog collections
 2. If NO `@catalog` exists → do NOT implement cart/buyNow
 3. If `@catalog` exists → MUST implement cart or buyNow
@@ -44,11 +45,13 @@ const { currency } = useCurrency();
 ```
 
 The `formatPrice()` function:
+
 - Formats prices with proper locale (symbol placement, decimals)
 - Uses Intl.NumberFormat for browser-native formatting
 - Falls back to USD if invalid currency code provided
 
 The `useCurrency()` hook:
+
 - Fetches site currency from the ecommerce API
 - Represents the site's currency from Business Manager
 - Returns `null` while loading, use `DEFAULT_CURRENCY` as fallback
@@ -101,13 +104,13 @@ const MyComponent = () => {
 
 ```typescript
 interface CartItem {
-  id: string;           // Cart item ID
+  id: string; // Cart item ID
   collectionId: string; // Collection the item belongs to
-  itemId: string;       // Original item ID from collection
-  name: string;         // Product name
-  price: number;        // Item price
-  quantity: number;     // Quantity in cart
-  image?: string;       // Product image URL (optional)
+  itemId: string; // Original item ID from collection
+  name: string; // Product name
+  price: number; // Item price
+  quantity: number; // Quantity in cart
+  image?: string; // Product image URL (optional)
 }
 ```
 
@@ -120,9 +123,9 @@ const { actions } = useCart();
 
 // Add item to cart (quantity defaults to 1)
 actions.addToCart({
-  collectionId: 'products',
+  collectionId: "products",
   itemId: item._id,
-  quantity: 1
+  quantity: 1,
 });
 
 // Remove item from cart (pass the whole cart item object)
@@ -234,22 +237,22 @@ True during checkout process - disable the checkout button:
 For direct purchase without adding to cart:
 
 ```typescript
-import { buyNow } from '@/integrations';
+import { buyNow } from "@/integrations";
 
 const handleBuyNow = async () => {
   await buyNow([
     {
-      collectionId: 'products',
+      collectionId: "products",
       itemId: item._id,
-      quantity: 1
-    }
+      quantity: 1,
+    },
   ]);
 };
 
 // Multiple items
 await buyNow([
-  { collectionId: 'products', itemId: 'item-1', quantity: 2 },
-  { collectionId: 'products', itemId: 'item-2', quantity: 1 },
+  { collectionId: "products", itemId: "item-1", quantity: 2 },
+  { collectionId: "products", itemId: "item-2", quantity: 1 },
 ]);
 ```
 

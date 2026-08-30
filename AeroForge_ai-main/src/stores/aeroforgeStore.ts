@@ -5,13 +5,13 @@
  * saved experiments with localStorage persistence.
  */
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
-export type UserMode = 'student' | 'professional';
-export type Pillar = 'astrolab' | 'aerolab' | 'mechlab';
+export type UserMode = "student" | "professional";
+export type Pillar = "astrolab" | "aerolab" | "mechlab";
 
 export interface SavedExperiment {
   id: string;
@@ -26,8 +26,8 @@ export interface SavedExperiment {
 }
 
 export interface SimulationSettings {
-  timeStep: number;      // seconds
-  trailLength: number;   // number of points
+  timeStep: number; // seconds
+  trailLength: number; // number of points
   showGrid: boolean;
   showLabels: boolean;
   animationSpeed: number; // multiplier
@@ -55,7 +55,7 @@ interface AeroForgeState {
   updateSimulationSettings: (settings: Partial<SimulationSettings>) => void;
 
   // Actions — Experiments
-  saveExperiment: (experiment: Omit<SavedExperiment, 'id' | 'timestamp'>) => void;
+  saveExperiment: (experiment: Omit<SavedExperiment, "id" | "timestamp">) => void;
   deleteExperiment: (id: string) => void;
   updateExperimentNotes: (id: string, notes: string) => void;
   clearAllExperiments: () => void;
@@ -77,15 +77,15 @@ export const useAeroForgeStore = create<AeroForgeState>()(
   persist(
     (set) => ({
       // Initial state
-      userMode: 'student',
-      activePillar: 'astrolab',
+      userMode: "student",
+      activePillar: "astrolab",
       simulationSettings: DEFAULT_SIMULATION_SETTINGS,
       savedExperiments: [],
 
       // Mode actions
       toggleMode: () =>
         set((state) => ({
-          userMode: state.userMode === 'student' ? 'professional' : 'student',
+          userMode: state.userMode === "student" ? "professional" : "student",
         })),
 
       setMode: (mode) => set({ userMode: mode }),
@@ -118,30 +118,28 @@ export const useAeroForgeStore = create<AeroForgeState>()(
 
       updateExperimentNotes: (id, notes) =>
         set((state) => ({
-          savedExperiments: state.savedExperiments.map((e) =>
-            e.id === id ? { ...e, notes } : e
-          ),
+          savedExperiments: state.savedExperiments.map((e) => (e.id === id ? { ...e, notes } : e)),
         })),
 
       clearAllExperiments: () => set({ savedExperiments: [] }),
     }),
     {
-      name: 'aeroforge-state', // localStorage key
+      name: "aeroforge-state", // localStorage key
       partialize: (state) => ({
         userMode: state.userMode,
         activePillar: state.activePillar,
         simulationSettings: state.simulationSettings,
         savedExperiments: state.savedExperiments,
       }),
-    }
-  )
+    },
+  ),
 );
 
 // ─── Selector Hooks ──────────────────────────────────────────────────────────
 
 export const useUserMode = () => useAeroForgeStore((s) => s.userMode);
-export const useIsStudentMode = () => useAeroForgeStore((s) => s.userMode === 'student');
-export const useIsProfessionalMode = () => useAeroForgeStore((s) => s.userMode === 'professional');
+export const useIsStudentMode = () => useAeroForgeStore((s) => s.userMode === "student");
+export const useIsProfessionalMode = () => useAeroForgeStore((s) => s.userMode === "professional");
 export const useActivePillar = () => useAeroForgeStore((s) => s.activePillar);
 export const useSimulationSettings = () => useAeroForgeStore((s) => s.simulationSettings);
 export const useSavedExperiments = () => useAeroForgeStore((s) => s.savedExperiments);

@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, AlertCircle, XCircle, ChevronDown, Download, Share2, TrendingUp } from 'lucide-react';
-import { ValidationResult } from '@/services/validationService';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  CheckCircle2,
+  AlertCircle,
+  XCircle,
+  ChevronDown,
+  Download,
+  Share2,
+  TrendingUp,
+} from "lucide-react";
+import { ValidationResult } from "@/services/validationService";
 
 interface ValidationReportPanelProps {
   result: ValidationResult;
@@ -16,7 +24,7 @@ export default function ValidationReportPanel({
   onExport,
   onShare,
 }: ValidationReportPanelProps) {
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['comparison']));
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["comparison"]));
 
   const toggleSection = (section: string) => {
     const newExpanded = new Set(expandedSections);
@@ -30,13 +38,13 @@ export default function ValidationReportPanel({
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'excellent':
+      case "excellent":
         return <CheckCircle2 className="w-5 h-5 text-aerospace-success" />;
-      case 'good':
+      case "good":
         return <CheckCircle2 className="w-5 h-5 text-aerospace-success" />;
-      case 'acceptable':
+      case "acceptable":
         return <AlertCircle className="w-5 h-5 text-aerospace-warning" />;
-      case 'poor':
+      case "poor":
         return <XCircle className="w-5 h-5 text-aerospace-danger" />;
       default:
         return null;
@@ -45,24 +53,24 @@ export default function ValidationReportPanel({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'excellent':
-        return 'bg-aerospace-success/10 border-aerospace-success/30';
-      case 'good':
-        return 'bg-aerospace-success/10 border-aerospace-success/30';
-      case 'acceptable':
-        return 'bg-aerospace-warning/10 border-aerospace-warning/30';
-      case 'poor':
-        return 'bg-aerospace-danger/10 border-aerospace-danger/30';
+      case "excellent":
+        return "bg-aerospace-success/10 border-aerospace-success/30";
+      case "good":
+        return "bg-aerospace-success/10 border-aerospace-success/30";
+      case "acceptable":
+        return "bg-aerospace-warning/10 border-aerospace-warning/30";
+      case "poor":
+        return "bg-aerospace-danger/10 border-aerospace-danger/30";
       default:
-        return 'bg-primary/50 border-aerospace-blue/20';
+        return "bg-primary/50 border-aerospace-blue/20";
     }
   };
 
   const getAccuracyColor = (accuracy: number) => {
-    if (accuracy >= 95) return 'text-aerospace-success';
-    if (accuracy >= 85) return 'text-aerospace-success';
-    if (accuracy >= 75) return 'text-aerospace-warning';
-    return 'text-aerospace-danger';
+    if (accuracy >= 95) return "text-aerospace-success";
+    if (accuracy >= 85) return "text-aerospace-success";
+    if (accuracy >= 75) return "text-aerospace-warning";
+    return "text-aerospace-danger";
   };
 
   return (
@@ -107,7 +115,9 @@ export default function ValidationReportPanel({
         <div className="flex items-center gap-4">
           <div className="flex-1">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className={`text-3xl font-bold font-heading ${getAccuracyColor(result.accuracy)}`}>
+              <span
+                className={`text-3xl font-bold font-heading ${getAccuracyColor(result.accuracy)}`}
+              >
                 {result.accuracy.toFixed(1)}%
               </span>
               <span className="text-secondary-foreground text-sm">Accuracy</span>
@@ -116,13 +126,13 @@ export default function ValidationReportPanel({
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: `${result.accuracy}%` }}
-                transition={{ duration: 1, ease: 'easeOut' }}
+                transition={{ duration: 1, ease: "easeOut" }}
                 className={`h-full ${
                   result.accuracy >= 85
-                    ? 'bg-aerospace-success'
+                    ? "bg-aerospace-success"
                     : result.accuracy >= 75
-                    ? 'bg-aerospace-warning'
-                    : 'bg-aerospace-danger'
+                      ? "bg-aerospace-warning"
+                      : "bg-aerospace-danger"
                 }`}
               />
             </div>
@@ -134,9 +144,7 @@ export default function ValidationReportPanel({
               ) : (
                 <XCircle className="w-5 h-5 text-aerospace-danger" />
               )}
-              <span className="text-sm font-medium">
-                {result.isValid ? 'Valid' : 'Invalid'}
-              </span>
+              <span className="text-sm font-medium">{result.isValid ? "Valid" : "Invalid"}</span>
             </div>
             <div className="text-xs text-secondary-foreground">
               {result.errors.length} errors, {result.warnings.length} warnings
@@ -150,7 +158,7 @@ export default function ValidationReportPanel({
         {/* Comparison Section */}
         <motion.div className="border-b border-aerospace-blue/10">
           <button
-            onClick={() => toggleSection('comparison')}
+            onClick={() => toggleSection("comparison")}
             className="w-full px-6 py-4 flex items-center justify-between hover:bg-primary/50 transition-colors"
           >
             <div className="flex items-center gap-3">
@@ -161,7 +169,7 @@ export default function ValidationReportPanel({
               </span>
             </div>
             <motion.div
-              animate={{ rotate: expandedSections.has('comparison') ? 180 : 0 }}
+              animate={{ rotate: expandedSections.has("comparison") ? 180 : 0 }}
               transition={{ duration: 0.3 }}
             >
               <ChevronDown className="w-5 h-5 text-secondary-foreground" />
@@ -169,10 +177,10 @@ export default function ValidationReportPanel({
           </button>
 
           <AnimatePresence>
-            {expandedSections.has('comparison') && (
+            {expandedSections.has("comparison") && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
+                animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 className="px-6 py-4 bg-primary/30 space-y-3"
               >
@@ -189,11 +197,15 @@ export default function ValidationReportPanel({
                         {getStatusIcon(item.status)}
                         <span className="font-medium text-foreground">{item.parameter}</span>
                       </div>
-                      <span className={`text-sm font-mono ${
-                        item.deviation <= 5 ? 'text-aerospace-success' :
-                        item.deviation <= 15 ? 'text-aerospace-warning' :
-                        'text-aerospace-danger'
-                      }`}>
+                      <span
+                        className={`text-sm font-mono ${
+                          item.deviation <= 5
+                            ? "text-aerospace-success"
+                            : item.deviation <= 15
+                              ? "text-aerospace-warning"
+                              : "text-aerospace-danger"
+                        }`}
+                      >
                         {item.deviation.toFixed(1)}% deviation
                       </span>
                     </div>
@@ -222,7 +234,7 @@ export default function ValidationReportPanel({
         {result.errors.length > 0 && (
           <motion.div>
             <button
-              onClick={() => toggleSection('errors')}
+              onClick={() => toggleSection("errors")}
               className="w-full px-6 py-4 flex items-center justify-between hover:bg-primary/50 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -231,7 +243,7 @@ export default function ValidationReportPanel({
                 <span className="text-xs text-aerospace-danger">({result.errors.length})</span>
               </div>
               <motion.div
-                animate={{ rotate: expandedSections.has('errors') ? 180 : 0 }}
+                animate={{ rotate: expandedSections.has("errors") ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <ChevronDown className="w-5 h-5 text-secondary-foreground" />
@@ -239,10 +251,10 @@ export default function ValidationReportPanel({
             </button>
 
             <AnimatePresence>
-              {expandedSections.has('errors') && (
+              {expandedSections.has("errors") && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="px-6 py-4 bg-aerospace-danger/10 space-y-2"
                 >
@@ -268,7 +280,7 @@ export default function ValidationReportPanel({
         {result.warnings.length > 0 && (
           <motion.div>
             <button
-              onClick={() => toggleSection('warnings')}
+              onClick={() => toggleSection("warnings")}
               className="w-full px-6 py-4 flex items-center justify-between hover:bg-primary/50 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -277,7 +289,7 @@ export default function ValidationReportPanel({
                 <span className="text-xs text-aerospace-warning">({result.warnings.length})</span>
               </div>
               <motion.div
-                animate={{ rotate: expandedSections.has('warnings') ? 180 : 0 }}
+                animate={{ rotate: expandedSections.has("warnings") ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <ChevronDown className="w-5 h-5 text-secondary-foreground" />
@@ -285,10 +297,10 @@ export default function ValidationReportPanel({
             </button>
 
             <AnimatePresence>
-              {expandedSections.has('warnings') && (
+              {expandedSections.has("warnings") && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="px-6 py-4 bg-aerospace-warning/10 space-y-2"
                 >
@@ -314,16 +326,18 @@ export default function ValidationReportPanel({
         {result.recommendations.length > 0 && (
           <motion.div>
             <button
-              onClick={() => toggleSection('recommendations')}
+              onClick={() => toggleSection("recommendations")}
               className="w-full px-6 py-4 flex items-center justify-between hover:bg-primary/50 transition-colors"
             >
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="w-5 h-5 text-aerospace-success" />
                 <span className="font-medium text-foreground">Recommendations</span>
-                <span className="text-xs text-aerospace-success">({result.recommendations.length})</span>
+                <span className="text-xs text-aerospace-success">
+                  ({result.recommendations.length})
+                </span>
               </div>
               <motion.div
-                animate={{ rotate: expandedSections.has('recommendations') ? 180 : 0 }}
+                animate={{ rotate: expandedSections.has("recommendations") ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <ChevronDown className="w-5 h-5 text-secondary-foreground" />
@@ -331,10 +345,10 @@ export default function ValidationReportPanel({
             </button>
 
             <AnimatePresence>
-              {expandedSections.has('recommendations') && (
+              {expandedSections.has("recommendations") && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
+                  animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   className="px-6 py-4 bg-aerospace-success/10 space-y-2"
                 >

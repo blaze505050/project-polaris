@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Rocket, Target, Zap, Download, Play, Pause } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Rocket, Target, Zap, Download, Play, Pause } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function SpaceflightDynamicsPage() {
   const [isSimulating, setIsSimulating] = useState(false);
@@ -14,36 +14,36 @@ export default function SpaceflightDynamicsPage() {
 
   const missions = [
     {
-      id: 'leo-transfer',
-      name: 'LEO Transfer Orbit',
-      type: 'Earth Orbit',
+      id: "leo-transfer",
+      name: "LEO Transfer Orbit",
+      type: "Earth Orbit",
       deltaV: 9.7,
-      duration: '90 min',
-      description: 'Transfer from Earth surface to Low Earth Orbit',
+      duration: "90 min",
+      description: "Transfer from Earth surface to Low Earth Orbit",
     },
     {
-      id: 'gto',
-      name: 'Geostationary Transfer',
-      type: 'Earth-GEO',
+      id: "gto",
+      name: "Geostationary Transfer",
+      type: "Earth-GEO",
       deltaV: 10.9,
-      duration: '5.5 hours',
-      description: 'Transfer from LEO to Geostationary Orbit',
+      duration: "5.5 hours",
+      description: "Transfer from LEO to Geostationary Orbit",
     },
     {
-      id: 'lunar-transfer',
-      name: 'Lunar Transfer',
-      type: 'Earth-Moon',
+      id: "lunar-transfer",
+      name: "Lunar Transfer",
+      type: "Earth-Moon",
       deltaV: 3.2,
-      duration: '3 days',
-      description: 'Trans-lunar injection and lunar orbit insertion',
+      duration: "3 days",
+      description: "Trans-lunar injection and lunar orbit insertion",
     },
     {
-      id: 'mars-transfer',
-      name: 'Mars Transfer Orbit',
-      type: 'Interplanetary',
+      id: "mars-transfer",
+      name: "Mars Transfer Orbit",
+      type: "Interplanetary",
       deltaV: 5.3,
-      duration: '6-9 months',
-      description: 'Hohmann transfer from Earth to Mars',
+      duration: "6-9 months",
+      description: "Hohmann transfer from Earth to Mars",
     },
   ];
 
@@ -89,12 +89,41 @@ export default function SpaceflightDynamicsPage() {
                   {/* Central body */}
                   <circle cx="200" cy="200" r="30" fill="#3b82f6" opacity="0.8" />
                   {/* Orbit paths */}
-                  <circle cx="200" cy="200" r="80" fill="none" stroke="#60a5fa" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
-                  <circle cx="200" cy="200" r="120" fill="none" stroke="#0ea5e9" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
-                  <circle cx="200" cy="200" r="160" fill="none" stroke="#06b6d4" strokeWidth="1" strokeDasharray="5,5" opacity="0.5" />
+                  <circle
+                    cx="200"
+                    cy="200"
+                    r="80"
+                    fill="none"
+                    stroke="#60a5fa"
+                    strokeWidth="1"
+                    strokeDasharray="5,5"
+                    opacity="0.5"
+                  />
+                  <circle
+                    cx="200"
+                    cy="200"
+                    r="120"
+                    fill="none"
+                    stroke="#0ea5e9"
+                    strokeWidth="1"
+                    strokeDasharray="5,5"
+                    opacity="0.5"
+                  />
+                  <circle
+                    cx="200"
+                    cy="200"
+                    r="160"
+                    fill="none"
+                    stroke="#06b6d4"
+                    strokeWidth="1"
+                    strokeDasharray="5,5"
+                    opacity="0.5"
+                  />
                   {/* Spacecraft */}
                   <circle cx="280" cy="200" r="6" fill="#ef4444" />
-                  <text x="290" y="205" fill="#ef4444" fontSize="12">Spacecraft</text>
+                  <text x="290" y="205" fill="#ef4444" fontSize="12">
+                    Spacecraft
+                  </text>
                 </svg>
               </div>
 
@@ -160,8 +189,8 @@ export default function SpaceflightDynamicsPage() {
                     onClick={() => setSelectedMission(mission)}
                     className={`w-full p-4 rounded-lg text-left transition-all ${
                       selectedMission?.id === mission.id
-                        ? 'bg-red-600/20 border border-red-500'
-                        : 'bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50'
+                        ? "bg-red-600/20 border border-red-500"
+                        : "bg-slate-700/30 border border-slate-700 hover:bg-slate-700/50"
                     }`}
                   >
                     <div className="font-semibold text-white">{mission.name}</div>
@@ -177,10 +206,12 @@ export default function SpaceflightDynamicsPage() {
                 <div className="mt-4 pt-4 border-t border-slate-700">
                   <div className="text-sm text-slate-300 space-y-2">
                     <div>
-                      <span className="text-red-400 font-semibold">Delta-V:</span> {selectedMission.deltaV} km/s
+                      <span className="text-red-400 font-semibold">Delta-V:</span>{" "}
+                      {selectedMission.deltaV} km/s
                     </div>
                     <div>
-                      <span className="text-red-400 font-semibold">Duration:</span> {selectedMission.duration}
+                      <span className="text-red-400 font-semibold">Duration:</span>{" "}
+                      {selectedMission.duration}
                     </div>
                     <div className="text-xs text-slate-400 mt-3">{selectedMission.description}</div>
                   </div>
@@ -251,20 +282,22 @@ export default function SpaceflightDynamicsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  title: 'Trajectory Design',
-                  description: 'Calculate optimal transfer orbits using Hohmann transfers and Lambert solutions.',
+                  title: "Trajectory Design",
+                  description:
+                    "Calculate optimal transfer orbits using Hohmann transfers and Lambert solutions.",
                 },
                 {
-                  title: 'Delta-V Analysis',
-                  description: 'Determine fuel requirements and mission feasibility for any trajectory.',
+                  title: "Delta-V Analysis",
+                  description:
+                    "Determine fuel requirements and mission feasibility for any trajectory.",
                 },
                 {
-                  title: 'Launch Windows',
-                  description: 'Identify optimal launch opportunities for interplanetary missions.',
+                  title: "Launch Windows",
+                  description: "Identify optimal launch opportunities for interplanetary missions.",
                 },
                 {
-                  title: 'Orbital Mechanics',
-                  description: 'Analyze orbital elements and predict spacecraft positions.',
+                  title: "Orbital Mechanics",
+                  description: "Analyze orbital elements and predict spacecraft positions.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

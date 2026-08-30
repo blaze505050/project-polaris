@@ -3,23 +3,31 @@
  * P0 Functional Simulation - HR Diagram & Stellar Properties
  */
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Save, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Save, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import {
   getHRDiagramPosition,
   calculateStellarLuminosity,
   calculateStellarRadius,
   calculateStellarTemperature,
   StellarProperties,
-} from '@/services/physicsEngine';
-import { useMyLabStore } from '@/stores/myLabStore';
+} from "@/services/physicsEngine";
+import { useMyLabStore } from "@/stores/myLabStore";
 
 interface SimulationState {
   mass: number; // solar masses
@@ -28,11 +36,11 @@ interface SimulationState {
 
 // HR Diagram reference stars
 const HR_REFERENCE_STARS = [
-  { name: 'Sirius A', mass: 2.02, temp: 9940, lum: 26 },
-  { name: 'Sun', mass: 1, temp: 5778, lum: 1 },
-  { name: 'Proxima Centauri', mass: 0.12, temp: 3042, lum: 0.0017 },
-  { name: 'Betelgeuse', mass: 16.5, temp: 3500, lum: 140000 },
-  { name: 'Rigel', mass: 17, temp: 11000, lum: 120000 },
+  { name: "Sirius A", mass: 2.02, temp: 9940, lum: 26 },
+  { name: "Sun", mass: 1, temp: 5778, lum: 1 },
+  { name: "Proxima Centauri", mass: 0.12, temp: 3042, lum: 0.0017 },
+  { name: "Betelgeuse", mass: 16.5, temp: 3500, lum: 140000 },
+  { name: "Rigel", mass: 17, temp: 11000, lum: 120000 },
 ];
 
 export default function StellarEvolutionSimulator() {
@@ -41,7 +49,7 @@ export default function StellarEvolutionSimulator() {
     error: null,
   });
 
-  const [experimentName, setExperimentName] = useState('Stellar Evolution Study');
+  const [experimentName, setExperimentName] = useState("Stellar Evolution Study");
   const addExperiment = useMyLabStore((s) => s.addExperiment);
 
   // Calculate stellar properties
@@ -62,8 +70,8 @@ export default function StellarEvolutionSimulator() {
   const handleMassChange = (value: number) => {
     setState((s) => {
       const errors: string[] = [];
-      if (value <= 0) errors.push('Mass must be positive');
-      if (value > 100) errors.push('Mass exceeds simulation limits');
+      if (value <= 0) errors.push("Mass must be positive");
+      if (value > 100) errors.push("Mass exceeds simulation limits");
 
       return {
         ...s,
@@ -76,7 +84,7 @@ export default function StellarEvolutionSimulator() {
   const handleSaveExperiment = () => {
     const id = addExperiment({
       name: experimentName,
-      type: 'stellar',
+      type: "stellar",
       data: {
         mass: state.mass,
       },
@@ -126,7 +134,7 @@ export default function StellarEvolutionSimulator() {
                   type="number"
                   scale="log"
                   domain={[2000, 50000]}
-                  label={{ value: 'Temperature (K)', position: 'insideBottomRight', offset: -10 }}
+                  label={{ value: "Temperature (K)", position: "insideBottomRight", offset: -10 }}
                   tick={{ fontSize: 10 }}
                   reversed
                 />
@@ -135,12 +143,12 @@ export default function StellarEvolutionSimulator() {
                   type="number"
                   scale="log"
                   domain={[0.001, 1000000]}
-                  label={{ value: 'Luminosity (L☉)', angle: -90, position: 'insideLeft' }}
+                  label={{ value: "Luminosity (L☉)", angle: -90, position: "insideLeft" }}
                   tick={{ fontSize: 10 }}
                 />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#1E293B', border: '1px solid #0EA5E9' }}
-                  formatter={(value) => (typeof value === 'number' ? value.toFixed(0) : value)}
+                  contentStyle={{ backgroundColor: "#1E293B", border: "1px solid #0EA5E9" }}
+                  formatter={(value) => (typeof value === "number" ? value.toFixed(0) : value)}
                   labelFormatter={(label) => `Temp: ${label}K`}
                 />
                 {/* Main sequence */}
@@ -168,9 +176,7 @@ export default function StellarEvolutionSimulator() {
 
           <div className="space-y-3">
             <div>
-              <Label className="text-sm">
-                Mass: {state.mass.toFixed(2)} M☉
-              </Label>
+              <Label className="text-sm">Mass: {state.mass.toFixed(2)} M☉</Label>
               <Input
                 type="range"
                 min="0.1"
@@ -187,9 +193,7 @@ export default function StellarEvolutionSimulator() {
           <div className="space-y-3 pt-4 border-t border-secondary">
             <div className="p-3 bg-primary rounded">
               <p className="text-secondary-foreground text-xs mb-1">Radius</p>
-              <p className="text-accent-foreground font-semibold">
-                {stellar.radius.toFixed(2)} R☉
-              </p>
+              <p className="text-accent-foreground font-semibold">{stellar.radius.toFixed(2)} R☉</p>
             </div>
 
             <div className="p-3 bg-primary rounded">
@@ -292,11 +296,11 @@ export default function StellarEvolutionSimulator() {
 }
 
 function getSpectralType(temp: number): string {
-  if (temp > 30000) return 'O';
-  if (temp > 10000) return 'B';
-  if (temp > 7500) return 'A';
-  if (temp > 6000) return 'F';
-  if (temp > 5200) return 'G';
-  if (temp > 3700) return 'K';
-  return 'M';
+  if (temp > 30000) return "O";
+  if (temp > 10000) return "B";
+  if (temp > 7500) return "A";
+  if (temp > 6000) return "F";
+  if (temp > 5200) return "G";
+  if (temp > 3700) return "K";
+  return "M";
 }

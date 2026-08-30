@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   LineChart,
   Line,
@@ -13,19 +13,12 @@ import {
   ResponsiveContainer,
   ComposedChart,
   Bar,
-} from 'recharts';
-import {
-  TrendingUp,
-  AlertCircle,
-  CheckCircle,
-  Zap,
-  Clock,
-  Activity,
-} from 'lucide-react';
+} from "recharts";
+import { TrendingUp, AlertCircle, CheckCircle, Zap, Clock, Activity } from "lucide-react";
 import ConvergenceMonitoringService, {
   ConvergenceMetrics,
   ConvergenceReport,
-} from '@/services/convergenceMonitoringService';
+} from "@/services/convergenceMonitoringService";
 
 interface AdvancedConvergenceMonitorProps {
   metrics: ConvergenceMetrics;
@@ -41,7 +34,9 @@ export default function AdvancedConvergenceMonitor({
   maxIterations,
 }: AdvancedConvergenceMonitorProps) {
   const [report, setReport] = useState<ConvergenceReport | null>(null);
-  const [selectedResidual, setSelectedResidual] = useState<'continuity' | 'momentum' | 'energy' | 'turbulence'>('continuity');
+  const [selectedResidual, setSelectedResidual] = useState<
+    "continuity" | "momentum" | "energy" | "turbulence"
+  >("continuity");
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
@@ -132,7 +127,11 @@ export default function AdvancedConvergenceMonitor({
             {Math.abs(metrics.convergenceRate).toFixed(3)}
           </p>
           <p className="text-xs text-secondary-foreground mt-1">
-            {metrics.convergenceRate < -0.05 ? 'Good' : metrics.convergenceRate < 0 ? 'Acceptable' : 'Poor'}
+            {metrics.convergenceRate < -0.05
+              ? "Good"
+              : metrics.convergenceRate < 0
+                ? "Acceptable"
+                : "Poor"}
           </p>
         </motion.div>
 
@@ -150,7 +149,9 @@ export default function AdvancedConvergenceMonitor({
             {Math.max(0, metrics.estimatedIterationsToConvergence)}
           </p>
           <p className="text-xs text-secondary-foreground mt-1">
-            {metrics.estimatedIterationsToConvergence > maxIterations ? 'May exceed limit' : 'Within limit'}
+            {metrics.estimatedIterationsToConvergence > maxIterations
+              ? "May exceed limit"
+              : "Within limit"}
           </p>
         </motion.div>
 
@@ -186,7 +187,7 @@ export default function AdvancedConvergenceMonitor({
             {(stats.clStability * 100).toFixed(0)}%
           </p>
           <p className="text-xs text-secondary-foreground mt-1">
-            {stats.clStability > 0.8 ? 'Stable' : 'Unstable'}
+            {stats.clStability > 0.8 ? "Stable" : "Unstable"}
           </p>
         </motion.div>
       </div>
@@ -202,23 +203,19 @@ export default function AdvancedConvergenceMonitor({
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={residualData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444444" />
-            <XAxis
-              dataKey="iteration"
-              stroke="#CBD5E1"
-              style={{ fontSize: '12px' }}
-            />
+            <XAxis dataKey="iteration" stroke="#CBD5E1" style={{ fontSize: "12px" }} />
             <YAxis
               stroke="#CBD5E1"
-              style={{ fontSize: '12px' }}
-              label={{ value: 'log10(Residual)', angle: -90, position: 'insideLeft' }}
+              style={{ fontSize: "12px" }}
+              label={{ value: "log10(Residual)", angle: -90, position: "insideLeft" }}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#1E293B',
-                border: '1px solid #0EA5E9',
-                borderRadius: '8px',
+                backgroundColor: "#1E293B",
+                border: "1px solid #0EA5E9",
+                borderRadius: "8px",
               }}
-              labelStyle={{ color: '#E2E8F0' }}
+              labelStyle={{ color: "#E2E8F0" }}
             />
             <Legend />
             <Line
@@ -268,22 +265,15 @@ export default function AdvancedConvergenceMonitor({
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={forceData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#444444" />
-            <XAxis
-              dataKey="iteration"
-              stroke="#CBD5E1"
-              style={{ fontSize: '12px' }}
-            />
-            <YAxis
-              stroke="#CBD5E1"
-              style={{ fontSize: '12px' }}
-            />
+            <XAxis dataKey="iteration" stroke="#CBD5E1" style={{ fontSize: "12px" }} />
+            <YAxis stroke="#CBD5E1" style={{ fontSize: "12px" }} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#1E293B',
-                border: '1px solid #0EA5E9',
-                borderRadius: '8px',
+                backgroundColor: "#1E293B",
+                border: "1px solid #0EA5E9",
+                borderRadius: "8px",
               }}
-              labelStyle={{ color: '#E2E8F0' }}
+              labelStyle={{ color: "#E2E8F0" }}
             />
             <Legend />
             <Line
@@ -344,7 +334,9 @@ export default function AdvancedConvergenceMonitor({
 
             {report?.recommendations.length > 0 && (
               <div className="mt-4 pt-4 border-t border-aerospace-warning/20">
-                <p className="text-secondary-foreground text-sm font-medium mb-2">Recommendations:</p>
+                <p className="text-secondary-foreground text-sm font-medium mb-2">
+                  Recommendations:
+                </p>
                 <ul className="space-y-1">
                   {report.recommendations.map((rec, idx) => (
                     <li key={idx} className="text-foreground text-sm flex items-start gap-2">
@@ -391,14 +383,14 @@ export default function AdvancedConvergenceMonitor({
         onClick={() => setShowDetails(!showDetails)}
         className="w-full py-3 px-4 bg-primary rounded-lg border border-aerospace-blue/20 text-foreground hover:bg-primary/80 transition-colors font-medium"
       >
-        {showDetails ? 'Hide' : 'Show'} Detailed Metrics
+        {showDetails ? "Hide" : "Show"} Detailed Metrics
       </motion.button>
 
       <AnimatePresence>
         {showDetails && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="bg-primary rounded-lg p-6 border border-aerospace-blue/20 grid grid-cols-2 md:grid-cols-3 gap-4"
           >
@@ -412,11 +404,15 @@ export default function AdvancedConvergenceMonitor({
             </div>
             <div>
               <p className="text-secondary-foreground text-sm">Avg Residual</p>
-              <p className="text-foreground font-semibold">{stats.averageResidual.toExponential(2)}</p>
+              <p className="text-foreground font-semibold">
+                {stats.averageResidual.toExponential(2)}
+              </p>
             </div>
             <div>
               <p className="text-secondary-foreground text-sm">CD Stability</p>
-              <p className="text-foreground font-semibold">{(stats.cdStability * 100).toFixed(0)}%</p>
+              <p className="text-foreground font-semibold">
+                {(stats.cdStability * 100).toFixed(0)}%
+              </p>
             </div>
             <div>
               <p className="text-secondary-foreground text-sm">Mesh Aspect Ratio</p>

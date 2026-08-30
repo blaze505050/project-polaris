@@ -12,7 +12,7 @@ This skill contains all patterns for working with the Wix CMS, BaseCrudService, 
 ## BaseCrudService Import
 
 ```typescript
-import { BaseCrudService } from '@/integrations';
+import { BaseCrudService } from "@/integrations";
 ```
 
 ---
@@ -23,12 +23,12 @@ import { BaseCrudService } from '@/integrations';
 
 ```typescript
 // ✅ CORRECT
-BaseCrudService.getById('collection-id', 'item-id');
-BaseCrudService.update('collection-id', { _id: 'item-id', title: 'Updated' });
-BaseCrudService.delete('collection-id', 'item-id');
+BaseCrudService.getById("collection-id", "item-id");
+BaseCrudService.update("collection-id", { _id: "item-id", title: "Updated" });
+BaseCrudService.delete("collection-id", "item-id");
 
 // ❌ WRONG - will fail silently or return wrong data
-BaseCrudService.getById('item-id', 'collection-id');
+BaseCrudService.getById("item-id", "collection-id");
 ```
 
 ---
@@ -38,10 +38,10 @@ BaseCrudService.getById('item-id', 'collection-id');
 ### Create
 
 ```typescript
-await BaseCrudService.create('collection-id', { 
-  title: 'New Item', 
-  description: 'Item description',
-  id: crypto.randomUUID() 
+await BaseCrudService.create("collection-id", {
+  title: "New Item",
+  description: "Item description",
+  id: crypto.randomUUID(),
 });
 ```
 
@@ -49,35 +49,39 @@ await BaseCrudService.create('collection-id', {
 
 ```typescript
 // Basic usage
-const result = await BaseCrudService.getAll<EntityType>('collection-id');
+const result = await BaseCrudService.getAll<EntityType>("collection-id");
 
 // With custom page size
-const result = await BaseCrudService.getAll<EntityType>('collection-id', [], { 
-  limit: 20 
+const result = await BaseCrudService.getAll<EntityType>("collection-id", [], {
+  limit: 20,
 });
 
 // With pagination offset
-const result = await BaseCrudService.getAll<EntityType>('collection-id', [], { 
+const result = await BaseCrudService.getAll<EntityType>("collection-id", [], {
   limit: 20,
-  skip: 40  // Skip first 40 items
+  skip: 40, // Skip first 40 items
 });
 
 // With references
-const result = await BaseCrudService.getAll<EntityType>('collection-id', {
-  singleRef: ['author', 'category'],
-  multiRef: ['tags', 'relatedItems']
-}, { limit: 20 });
+const result = await BaseCrudService.getAll<EntityType>(
+  "collection-id",
+  {
+    singleRef: ["author", "category"],
+    multiRef: ["tags", "relatedItems"],
+  },
+  { limit: 20 },
+);
 ```
 
 ### Result Shape
 
 ```typescript
 interface PaginatedResult<T> {
-  items: T[];           // Items for current page
-  totalCount: number;   // Total items in collection
-  hasNext: boolean;     // More items exist?
-  currentPage: number;  // Current page (0-indexed)
-  pageSize: number;     // Items per page
+  items: T[]; // Items for current page
+  totalCount: number; // Total items in collection
+  hasNext: boolean; // More items exist?
+  currentPage: number; // Current page (0-indexed)
+  pageSize: number; // Items per page
   nextSkip: number | null; // Offset for next page (null if no more)
 }
 ```
@@ -86,38 +90,35 @@ interface PaginatedResult<T> {
 
 ```typescript
 // Basic
-const item = await BaseCrudService.getById<EntityType>('collection-id', 'item-id');
+const item = await BaseCrudService.getById<EntityType>("collection-id", "item-id");
 
 // With single references (one-to-one relationships)
-const item = await BaseCrudService.getById<EntityType>(
-  'collection-id', 
-  'item-id',
-  { singleRef: ['author', 'category'] }
-);
+const item = await BaseCrudService.getById<EntityType>("collection-id", "item-id", {
+  singleRef: ["author", "category"],
+});
 
 // With multi references (one-to-many relationships)
-const item = await BaseCrudService.getById<EntityType>(
-  'collection-id', 
-  'item-id',
-  { singleRef: ['author'], multiRef: ['tags', 'comments'] }
-);
+const item = await BaseCrudService.getById<EntityType>("collection-id", "item-id", {
+  singleRef: ["author"],
+  multiRef: ["tags", "comments"],
+});
 ```
 
 ### Update
 
 ```typescript
 // Only include fields to update - others are preserved automatically
-await BaseCrudService.update<EntityType>('collection-id', { 
-  _id: 'item-id', 
-  title: 'Updated Title',
-  description: 'Updated description'
+await BaseCrudService.update<EntityType>("collection-id", {
+  _id: "item-id",
+  title: "Updated Title",
+  description: "Updated description",
 });
 ```
 
 ### Delete
 
 ```typescript
-await BaseCrudService.delete('collection-id', 'item-id');
+await BaseCrudService.delete("collection-id", "item-id");
 ```
 
 ---
@@ -128,22 +129,22 @@ await BaseCrudService.delete('collection-id', 'item-id');
 
 ```typescript
 // Add tags to an item
-await BaseCrudService.addReferences('collection-id', 'item-id', { 
-  tags: ['tag-id-1', 'tag-id-2'] 
+await BaseCrudService.addReferences("collection-id", "item-id", {
+  tags: ["tag-id-1", "tag-id-2"],
 });
 
 // Add multiple reference types
-await BaseCrudService.addReferences('posts', 'post-id', { 
-  tags: ['tag-1', 'tag-2'],
-  categories: ['cat-1']
+await BaseCrudService.addReferences("posts", "post-id", {
+  tags: ["tag-1", "tag-2"],
+  categories: ["cat-1"],
 });
 ```
 
 ### Remove Multi-References
 
 ```typescript
-await BaseCrudService.removeReferences('collection-id', 'item-id', { 
-  tags: ['tag-id-1'] 
+await BaseCrudService.removeReferences("collection-id", "item-id", {
+  tags: ["tag-id-1"],
 });
 ```
 
@@ -172,11 +173,11 @@ Update UI state immediately BEFORE the API call for a responsive experience. On 
 
 ```typescript
 // Step 1: Update UI immediately
-setItems(prev => [...prev, newItem]);
+setItems((prev) => [...prev, newItem]);
 
 // Step 2: Make API call
 try {
-  await BaseCrudService.create('collection-id', newItem);
+  await BaseCrudService.create("collection-id", newItem);
 } catch {
   // Step 3: Revert on failure
   loadData();
@@ -189,10 +190,10 @@ try {
 const handleCreate = async (newItem: EntityType) => {
   // Optimistically add to UI
   const tempItem = { ...newItem, _id: crypto.randomUUID() };
-  setItems(prev => [tempItem, ...prev]);
-  
+  setItems((prev) => [tempItem, ...prev]);
+
   try {
-    await BaseCrudService.create('collection-id', tempItem);
+    await BaseCrudService.create("collection-id", tempItem);
   } catch {
     // Revert on failure
     loadData();
@@ -205,12 +206,10 @@ const handleCreate = async (newItem: EntityType) => {
 ```typescript
 const handleUpdate = async (itemId: string, updates: Partial<EntityType>) => {
   // Optimistically update UI
-  setItems(prev => prev.map(item => 
-    item._id === itemId ? { ...item, ...updates } : item
-  ));
-  
+  setItems((prev) => prev.map((item) => (item._id === itemId ? { ...item, ...updates } : item)));
+
   try {
-    await BaseCrudService.update('collection-id', { _id: itemId, ...updates });
+    await BaseCrudService.update("collection-id", { _id: itemId, ...updates });
   } catch {
     loadData();
   }
@@ -222,10 +221,10 @@ const handleUpdate = async (itemId: string, updates: Partial<EntityType>) => {
 ```typescript
 const handleDelete = async (itemId: string) => {
   // Optimistically remove from UI
-  setItems(prev => prev.filter(item => item._id !== itemId));
-  
+  setItems((prev) => prev.filter((item) => item._id !== itemId));
+
   try {
-    await BaseCrudService.delete('collection-id', itemId);
+    await BaseCrudService.delete("collection-id", itemId);
   } catch {
     loadData();
   }
@@ -235,6 +234,7 @@ const handleDelete = async (itemId: string) => {
 ### When to Use Loading States Instead
 
 Use loading states only for:
+
 - Initial page load
 - Pagination / Load More
 - Data fetching that doesn't modify existing data
@@ -277,19 +277,19 @@ const ListPage = () => {
 
   const loadData = async (skip = 0, append = false) => {
     if (skip > 0) setIsLoadingMore(true);
-    
+
     try {
-      const result = await BaseCrudService.getAll<Item>('items', [], { 
+      const result = await BaseCrudService.getAll<Item>('items', [], {
         limit: PAGE_SIZE,
-        skip 
+        skip
       });
-      
+
       if (append) {
         setItems(prev => [...prev, ...result.items]);
       } else {
         setItems(result.items);
       }
-      
+
       setHasNext(result.hasNext);
       setNextSkip(result.nextSkip);
     } finally {
@@ -310,7 +310,7 @@ const ListPage = () => {
   return (
     <div className="max-w-[100rem] mx-auto px-4 py-16">
       <h1 className="font-heading text-4xl mb-8">Items</h1>
-      
+
       {/* Reserve vertical space to prevent layout shift */}
       <div className="min-h-[400px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -328,11 +328,11 @@ const ListPage = () => {
           ))}
         </div>
       </div>
-      
+
       {/* Load More */}
       {hasNext && (
         <div className="flex justify-center mt-8">
-          <Button 
+          <Button
             onClick={handleLoadMore}
             disabled={isLoadingMore}
             variant="outline"
@@ -369,18 +369,18 @@ const ListPage = () => {
     observerRef.current = new IntersectionObserver(handleObserver, {
       rootMargin: '100px',
     });
-    
+
     if (loadMoreRef.current) {
       observerRef.current.observe(loadMoreRef.current);
     }
-    
+
     return () => observerRef.current?.disconnect();
   }, [handleObserver]);
 
   return (
     <div>
       {/* ... items grid */}
-      
+
       {/* Invisible trigger for infinite scroll */}
       {hasNext && <div ref={loadMoreRef} className="h-1" />}
     </div>
@@ -434,14 +434,14 @@ const DetailPage = () => {
         setIsLoading(false);
         return;
       }
-      
+
       try {
         const data = await BaseCrudService.getById<Item>(
-          'items', 
+          'items',
           id,
           { singleRef: ['author'] }
         );
-        
+
         if (!data) {
           setNotFound(true);
         } else {
@@ -453,7 +453,7 @@ const DetailPage = () => {
         setIsLoading(false);
       }
     };
-    
+
     loadItem();
   }, [id]);
 
@@ -487,22 +487,22 @@ const DetailPage = () => {
       animate={{ opacity: 1 }}
       className="max-w-[100rem] mx-auto px-4 py-16"
     >
-      <Button 
-        variant="ghost" 
+      <Button
+        variant="ghost"
         onClick={() => navigate(-1)}
         className="mb-8"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </Button>
-      
+
       <article>
         <h1 className="font-heading text-4xl md:text-5xl mb-6">{item.title}</h1>
-        
+
         {item.author && (
           <div className="flex items-center gap-3 mb-8">
-            <Image 
-              src={item.author.avatar} 
+            <Image
+              src={item.author.avatar}
               alt={item.author.name}
               width={40}
               className="rounded-full"
@@ -510,17 +510,17 @@ const DetailPage = () => {
             <span className="font-paragraph">{item.author.name}</span>
           </div>
         )}
-        
+
         {item.image && (
           <div className="aspect-video relative mb-8 rounded-lg overflow-hidden">
-            <Image 
-              src={item.image} 
+            <Image
+              src={item.image}
               alt={item.title}
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         )}
-        
+
         <div className="prose max-w-none">
           <p className="font-paragraph text-lg">{item.description}</p>
           <div className="font-paragraph mt-8">{item.content}</div>
@@ -583,7 +583,7 @@ If you're unsure whether the user wants UI components created or just data manag
 Before using any collection, verify it exists:
 
 ```typescript
-import { CollectionIds } from '@/services';
+import { CollectionIds } from "@/services";
 
 // Use the collection IDs defined in the entities
 const result = await BaseCrudService.getAll<EntityType>(CollectionIds.ITEMS);

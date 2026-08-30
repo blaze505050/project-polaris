@@ -3,18 +3,18 @@
  * P0 Challenges - Interactive problem-solving scenarios
  */
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle2, Lock, Rocket, Brain, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { CheckCircle2, Lock, Rocket, Brain, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 interface Challenge {
   id: string;
   title: string;
   description: string;
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   icon: React.ComponentType<{ className?: string }>;
   simulator: string;
   completed: boolean;
@@ -23,105 +23,101 @@ interface Challenge {
 
 const CHALLENGES: Challenge[] = [
   {
-    id: 'earth-orbit',
-    title: 'Stable Earth Orbit',
-    description: 'Calculate the orbital parameters for a stable Earth orbit',
-    difficulty: 'easy',
+    id: "earth-orbit",
+    title: "Stable Earth Orbit",
+    description: "Calculate the orbital parameters for a stable Earth orbit",
+    difficulty: "easy",
     icon: Rocket,
-    simulator: '/astrolab/p0/orbital',
+    simulator: "/astrolab/p0/orbital",
     completed: false,
-    objective: 'Set a = 1 AU, e = 0.2, i = 0° to match Earth\'s orbit',
+    objective: "Set a = 1 AU, e = 0.2, i = 0° to match Earth's orbit",
   },
   {
-    id: 'geostationary',
-    title: 'Geostationary Satellite',
-    description: 'Find the orbital period for a geostationary satellite',
-    difficulty: 'medium',
+    id: "geostationary",
+    title: "Geostationary Satellite",
+    description: "Find the orbital period for a geostationary satellite",
+    difficulty: "medium",
     icon: Zap,
-    simulator: '/astrolab/p0/orbital',
+    simulator: "/astrolab/p0/orbital",
     completed: false,
-    objective: 'Calculate the semi-major axis for a 24-hour orbital period',
+    objective: "Calculate the semi-major axis for a 24-hour orbital period",
   },
   {
-    id: 'three-body',
-    title: 'Three-Body Dynamics',
-    description: 'Simulate the chaotic three-body problem',
-    difficulty: 'hard',
+    id: "three-body",
+    title: "Three-Body Dynamics",
+    description: "Simulate the chaotic three-body problem",
+    difficulty: "hard",
     icon: Brain,
-    simulator: '/astrolab/p0/gravity',
+    simulator: "/astrolab/p0/gravity",
     completed: false,
-    objective: 'Observe the chaotic motion of three equal-mass stars',
+    objective: "Observe the chaotic motion of three equal-mass stars",
   },
   {
-    id: 'earth-sun',
-    title: 'Earth-Sun System',
-    description: 'Simulate the gravitational interaction between Earth and Sun',
-    difficulty: 'easy',
+    id: "earth-sun",
+    title: "Earth-Sun System",
+    description: "Simulate the gravitational interaction between Earth and Sun",
+    difficulty: "easy",
     icon: Rocket,
-    simulator: '/astrolab/p0/gravity',
+    simulator: "/astrolab/p0/gravity",
     completed: false,
-    objective: 'Run the Earth-Sun preset and observe orbital stability',
+    objective: "Run the Earth-Sun preset and observe orbital stability",
   },
   {
-    id: 'transit-detection',
-    title: 'Detect an Exoplanet',
-    description: 'Use transit photometry to detect an exoplanet',
-    difficulty: 'medium',
+    id: "transit-detection",
+    title: "Detect an Exoplanet",
+    description: "Use transit photometry to detect an exoplanet",
+    difficulty: "medium",
     icon: Zap,
-    simulator: '/astrolab/p0/transit',
+    simulator: "/astrolab/p0/transit",
     completed: false,
-    objective: 'Create a transit with depth > 0.1% and duration > 2 hours',
+    objective: "Create a transit with depth > 0.1% and duration > 2 hours",
   },
   {
-    id: 'habitable-zone',
-    title: 'Habitable Zone Transit',
-    description: 'Find a planet in the habitable zone of its star',
-    difficulty: 'hard',
+    id: "habitable-zone",
+    title: "Habitable Zone Transit",
+    description: "Find a planet in the habitable zone of its star",
+    difficulty: "hard",
     icon: Brain,
-    simulator: '/astrolab/p0/transit',
+    simulator: "/astrolab/p0/transit",
     completed: false,
-    objective: 'Set orbital period between 200-500 days with detectable transit',
+    objective: "Set orbital period between 200-500 days with detectable transit",
   },
   {
-    id: 'main-sequence',
-    title: 'Main Sequence Stars',
-    description: 'Explore the Hertzsprung-Russell diagram',
-    difficulty: 'easy',
+    id: "main-sequence",
+    title: "Main Sequence Stars",
+    description: "Explore the Hertzsprung-Russell diagram",
+    difficulty: "easy",
     icon: Rocket,
-    simulator: '/astrolab/p0/stellar',
+    simulator: "/astrolab/p0/stellar",
     completed: false,
-    objective: 'Vary stellar mass and observe position on HR diagram',
+    objective: "Vary stellar mass and observe position on HR diagram",
   },
   {
-    id: 'stellar-evolution',
-    title: 'Stellar Evolution Path',
-    description: 'Trace a star\'s evolution from birth to death',
-    difficulty: 'medium',
+    id: "stellar-evolution",
+    title: "Stellar Evolution Path",
+    description: "Trace a star's evolution from birth to death",
+    difficulty: "medium",
     icon: Zap,
-    simulator: '/astrolab/p0/stellar',
+    simulator: "/astrolab/p0/stellar",
     completed: false,
-    objective: 'Compare properties of O, G, and M-type stars',
+    objective: "Compare properties of O, G, and M-type stars",
   },
 ];
 
 const difficultyColors = {
-  easy: 'bg-green-500/20 text-green-300 border-green-500/30',
-  medium: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
-  hard: 'bg-red-500/20 text-red-300 border-red-500/30',
+  easy: "bg-green-500/20 text-green-300 border-green-500/30",
+  medium: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
+  hard: "bg-red-500/20 text-red-300 border-red-500/30",
 };
 
 export default function SpaceProblemsBoard() {
   const [challenges, setChallenges] = useState(CHALLENGES);
-  const [filter, setFilter] = useState<'all' | 'easy' | 'medium' | 'hard'>('all');
+  const [filter, setFilter] = useState<"all" | "easy" | "medium" | "hard">("all");
 
-  const filteredChallenges = challenges.filter(
-    (c) => filter === 'all' || c.difficulty === filter
-  );
+  const filteredChallenges = challenges.filter((c) => filter === "all" || c.difficulty === filter);
 
   const handleCompleteChallenge = (id: string) => {
-    setChallenges((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c))
-    );
+    setChallenges((prev) => prev.map((c) => (c.id === id ? { ...c, completed: !c.completed } : c)));
   };
 
   const completedCount = challenges.filter((c) => c.completed).length;
@@ -157,11 +153,11 @@ export default function SpaceProblemsBoard() {
 
       {/* Filters */}
       <div className="flex gap-2 flex-wrap">
-        {(['all', 'easy', 'medium', 'hard'] as const).map((level) => (
+        {(["all", "easy", "medium", "hard"] as const).map((level) => (
           <Button
             key={level}
             onClick={() => setFilter(level)}
-            variant={filter === level ? 'default' : 'outline'}
+            variant={filter === level ? "default" : "outline"}
             className="capitalize"
           >
             {level}
@@ -182,7 +178,7 @@ export default function SpaceProblemsBoard() {
             >
               <Card
                 className={`p-6 space-y-4 h-full flex flex-col ${
-                  challenge.completed ? 'border-accent/50 bg-primary/50' : ''
+                  challenge.completed ? "border-accent/50 bg-primary/50" : ""
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
@@ -206,9 +202,7 @@ export default function SpaceProblemsBoard() {
                   )}
                 </div>
 
-                <p className="text-sm text-secondary-foreground flex-1">
-                  {challenge.description}
-                </p>
+                <p className="text-sm text-secondary-foreground flex-1">{challenge.description}</p>
 
                 <div className="p-3 bg-primary rounded text-xs">
                   <p className="text-secondary-foreground mb-1">Objective:</p>
@@ -226,7 +220,7 @@ export default function SpaceProblemsBoard() {
                   variant="outline"
                   className="w-full"
                 >
-                  {challenge.completed ? '✓ Completed' : 'Mark Complete'}
+                  {challenge.completed ? "✓ Completed" : "Mark Complete"}
                 </Button>
               </Card>
             </motion.div>

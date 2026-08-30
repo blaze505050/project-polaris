@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Plus,
   Save,
@@ -15,14 +15,14 @@ import {
   Sparkles,
   BookOpen,
   Share2,
-} from 'lucide-react';
-import { useToastStore } from '@/stores/toastStore';
+} from "lucide-react";
+import { useToastStore } from "@/stores/toastStore";
 
 interface NotebookSection {
   id: string;
   title: string;
   content: string;
-  type: 'markdown' | 'code' | 'equation';
+  type: "markdown" | "code" | "equation";
   linkedSimulation?: string;
   linkedDataset?: string;
   codeOutput?: string;
@@ -41,45 +41,45 @@ export default function EngineeringNotebook({
 
   const [sections, setSections] = useState<NotebookSection[]>([
     {
-      id: 'sec_1',
-      title: '1. Executive Summary & Hypersonic Aerodynamics Theory',
+      id: "sec_1",
+      title: "1. Executive Summary & Hypersonic Aerodynamics Theory",
       content:
-        '# AeroForge Engineering Lab Note #04\n\n## Hypersonic Boundary Layer & Shockwave Dynamics\nIn supersonic flow over a thin wedge at Mach 5.0, the oblique shock wave angle $\\beta$ satisfies the exact relation:\n$$\\tan \\theta = 2 \\cot \\beta \\frac{M_1^2 \\sin^2 \\beta - 1}{M_1^2 (\\gamma + \\cos 2\\beta) + 2}$$\n\nBoundary layer thickness $\\delta(x)$ grows according to laminar compressible theory:\n$$\\delta(x) \\approx 5.0 \\frac{x}{\\sqrt{Re_x}} \\left(1 + 0.03 M_1^2\\right)$$',
-      type: 'markdown',
-      linkedSimulation: 'SIM-2026-0419 (Transonic Wing CFD)',
-      linkedDataset: 'Mesh Geometry v3.4',
+        "# AeroForge Engineering Lab Note #04\n\n## Hypersonic Boundary Layer & Shockwave Dynamics\nIn supersonic flow over a thin wedge at Mach 5.0, the oblique shock wave angle $\\beta$ satisfies the exact relation:\n$$\\tan \\theta = 2 \\cot \\beta \\frac{M_1^2 \\sin^2 \\beta - 1}{M_1^2 (\\gamma + \\cos 2\\beta) + 2}$$\n\nBoundary layer thickness $\\delta(x)$ grows according to laminar compressible theory:\n$$\\delta(x) \\approx 5.0 \\frac{x}{\\sqrt{Re_x}} \\left(1 + 0.03 M_1^2\\right)$$",
+      type: "markdown",
+      linkedSimulation: "SIM-2026-0419 (Transonic Wing CFD)",
+      linkedDataset: "Mesh Geometry v3.4",
     },
     {
-      id: 'sec_2',
-      title: '2. Python Aerodynamic Analysis Script',
+      id: "sec_2",
+      title: "2. Python Aerodynamic Analysis Script",
       content:
         'import numpy as np\n\ndef calculate_pressure_coefficient(p, p_inf, q_inf):\n    """Calculates non-dimensional Cp over airfoil surface."""\n    return (p - p_inf) / q_inf\n\n# OpenFOAM exported pressure values\np_surface = np.array([101.3, 115.2, 98.4, 82.1, 75.6]) # kPa\nq_infinity = 42.5 # kPa\nCp = calculate_pressure_coefficient(p_surface, 101.3, q_infinity)\nprint("Calculated Cp vector:", np.round(Cp, 4))',
-      type: 'code',
-      codeOutput: 'Calculated Cp vector: [ 0.      0.3271 -0.0682 -0.4518 -0.6047]',
+      type: "code",
+      codeOutput: "Calculated Cp vector: [ 0.      0.3271 -0.0682 -0.4518 -0.6047]",
     },
     {
-      id: 'sec_3',
-      title: '3. Governing Navier-Stokes Boundary Equations',
+      id: "sec_3",
+      title: "3. Governing Navier-Stokes Boundary Equations",
       content:
-        '$$\\frac{\\partial \\rho}{\\partial t} + \\nabla \\cdot (\\rho \\mathbf{u}) = 0$$\n$$\\rho \\left( \\frac{\\partial \\mathbf{u}}{\\partial t} + \\mathbf{u} \\cdot \\nabla \\mathbf{u} \\right) = -\\nabla p + \\mu \\nabla^2 \\mathbf{u} + \\mathbf{f}$$',
-      type: 'equation',
+        "$$\\frac{\\partial \\rho}{\\partial t} + \\nabla \\cdot (\\rho \\mathbf{u}) = 0$$\n$$\\rho \\left( \\frac{\\partial \\mathbf{u}}{\\partial t} + \\mathbf{u} \\cdot \\nabla \\mathbf{u} \\right) = -\\nabla p + \\mu \\nabla^2 \\mathbf{u} + \\mathbf{f}$$",
+      type: "equation",
     },
   ]);
 
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'split' | 'preview'>('split');
+  const [viewMode, setViewMode] = useState<"split" | "preview">("split");
   const [isSaving, setIsSaving] = useState(false);
 
-  const addSection = (type: NotebookSection['type']) => {
+  const addSection = (type: NotebookSection["type"]) => {
     const newSec: NotebookSection = {
       id: `sec_${Date.now()}`,
       title: `Section ${sections.length + 1}: New ${type.toUpperCase()}`,
       content:
-        type === 'equation'
-          ? '$$C_p = \\frac{p - p_\\infty}{\\frac{1}{2} \\rho_\\infty V_\\infty^2}$$'
-          : type === 'code'
-          ? 'import numpy as np\n# Compute aerodynamic forces\nprint("Forces solved.")'
-          : '## Engineering Analysis\nDocument your design methodology and observations here.',
+        type === "equation"
+          ? "$$C_p = \\frac{p - p_\\infty}{\\frac{1}{2} \\rho_\\infty V_\\infty^2}$$"
+          : type === "code"
+            ? 'import numpy as np\n# Compute aerodynamic forces\nprint("Forces solved.")'
+            : "## Engineering Analysis\nDocument your design methodology and observations here.",
       type,
     };
     setSections([...sections, newSec]);
@@ -94,9 +94,9 @@ export default function EngineeringNotebook({
       codeOutput: `[Kernel Execution OK] Timestamp: ${new Date().toLocaleTimeString()}\nComputation completed in 0.04s. Outputs stored to project dataset.`,
     });
     addToast({
-      title: 'Code Cell Executed',
-      description: 'Output updated in notebook workspace.',
-      type: 'success',
+      title: "Code Cell Executed",
+      description: "Output updated in notebook workspace.",
+      type: "success",
     });
   };
 
@@ -105,9 +105,9 @@ export default function EngineeringNotebook({
     setTimeout(() => {
       setIsSaving(false);
       addToast({
-        title: 'Notebook Saved',
-        description: 'All equations, markdown cells, and code logs synced to project storage.',
-        type: 'success',
+        title: "Notebook Saved",
+        description: "All equations, markdown cells, and code logs synced to project storage.",
+        type: "success",
       });
     }, 600);
   };
@@ -128,17 +128,21 @@ export default function EngineeringNotebook({
           {/* View Mode */}
           <div className="flex items-center gap-1 bg-[#050914] p-1 border border-white/10 rounded">
             <button
-              onClick={() => setViewMode('split')}
+              onClick={() => setViewMode("split")}
               className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
-                viewMode === 'split' ? 'bg-cyan-500 text-black font-bold' : 'text-white/60 hover:text-white'
+                viewMode === "split"
+                  ? "bg-cyan-500 text-black font-bold"
+                  : "text-white/60 hover:text-white"
               }`}
             >
               Split View
             </button>
             <button
-              onClick={() => setViewMode('preview')}
+              onClick={() => setViewMode("preview")}
               className={`px-2.5 py-1 rounded text-[11px] transition-colors ${
-                viewMode === 'preview' ? 'bg-cyan-500 text-black font-bold' : 'text-white/60 hover:text-white'
+                viewMode === "preview"
+                  ? "bg-cyan-500 text-black font-bold"
+                  : "text-white/60 hover:text-white"
               }`}
             >
               Formatted Preview
@@ -147,21 +151,21 @@ export default function EngineeringNotebook({
 
           {/* Add Section */}
           <button
-            onClick={() => addSection('markdown')}
+            onClick={() => addSection("markdown")}
             className="flex items-center gap-1 px-2.5 py-1 rounded border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
           >
             <Plus className="w-3.5 h-3.5 text-cyan-400" />
             <span>+ Text</span>
           </button>
           <button
-            onClick={() => addSection('code')}
+            onClick={() => addSection("code")}
             className="flex items-center gap-1 px-2.5 py-1 rounded border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
           >
             <Plus className="w-3.5 h-3.5 text-pink-400" />
             <span>+ Code</span>
           </button>
           <button
-            onClick={() => addSection('equation')}
+            onClick={() => addSection("equation")}
             className="flex items-center gap-1 px-2.5 py-1 rounded border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
           >
             <Plus className="w-3.5 h-3.5 text-amber-400" />
@@ -175,7 +179,7 @@ export default function EngineeringNotebook({
             className="flex items-center gap-1.5 px-3 py-1 rounded bg-cyan-500 hover:bg-cyan-400 text-black font-bold transition-all disabled:opacity-50"
           >
             <Save className="w-3.5 h-3.5" />
-            <span>{isSaving ? 'Saving...' : 'Save Notebook'}</span>
+            <span>{isSaving ? "Saving..." : "Save Notebook"}</span>
           </button>
         </div>
       </div>
@@ -208,7 +212,7 @@ export default function EngineeringNotebook({
                     {section.linkedSimulation}
                   </span>
                 )}
-                {section.type === 'code' && (
+                {section.type === "code" && (
                   <button
                     onClick={() => runCodeBlock(section.id)}
                     className="flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors"
@@ -218,9 +222,7 @@ export default function EngineeringNotebook({
                   </button>
                 )}
                 <button
-                  onClick={() =>
-                    setSections(sections.filter((s) => s.id !== section.id))
-                  }
+                  onClick={() => setSections(sections.filter((s) => s.id !== section.id))}
                   className="text-white/40 hover:text-red-400 p-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -230,7 +232,7 @@ export default function EngineeringNotebook({
 
             {/* Cell Body */}
             <div className="p-3">
-              {viewMode === 'split' ? (
+              {viewMode === "split" ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <textarea
                     value={section.content}
@@ -253,7 +255,7 @@ export default function EngineeringNotebook({
               )}
 
               {/* Code execution terminal output box */}
-              {section.type === 'code' && section.codeOutput && (
+              {section.type === "code" && section.codeOutput && (
                 <div className="mt-3 bg-[#03060D] border border-white/10 rounded p-2.5 space-y-1">
                   <div className="text-[10px] text-emerald-400 font-mono flex items-center gap-1">
                     <Terminal className="w-3 h-3" />

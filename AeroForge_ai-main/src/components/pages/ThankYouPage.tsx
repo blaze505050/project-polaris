@@ -1,13 +1,16 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { CheckCircle2, ArrowLeft, Home, Compass } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { usePageMeta } from '@/hooks/usePageMeta';
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { CheckCircle2, ArrowLeft, Home, Compass } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function ThankYouPage() {
-  usePageMeta('Transmission Confirmed', 'Your message or inquiry has been received by the AeroForge team.');
+  usePageMeta(
+    "Transmission Confirmed",
+    "Your message or inquiry has been received by the AeroForge team.",
+  );
 
   return (
     <div className="min-h-screen bg-[#060B18] flex flex-col">
@@ -29,7 +32,8 @@ export default function ThankYouPage() {
 
           <h1 className="text-2xl font-bold text-white mb-2">Thank You</h1>
           <p className="text-xs text-white/60 mb-8 leading-relaxed">
-            Your telemetry log or inquiry has been recorded. Our research engineering team will review the dispatch and follow up if required.
+            Your telemetry log or inquiry has been recorded. Our research engineering team will
+            review the dispatch and follow up if required.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">

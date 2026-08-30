@@ -20,7 +20,7 @@ import {
   PieChart,
   ComposedChart,
   RadarChart,
-  
+
   // Chart elements
   Line,
   Bar,
@@ -31,23 +31,23 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  
+
   // Axes and grid
   XAxis,
   YAxis,
   CartesianGrid,
-  
+
   // Interactive elements
   Tooltip,
   Legend,
-  
+
   // Container (REQUIRED)
   ResponsiveContainer,
-  
+
   // Reference elements
   ReferenceLine,
   ReferenceArea,
-} from 'recharts';
+} from "recharts";
 ```
 
 ---
@@ -90,26 +90,26 @@ const BasicBarChart = () => (
   <ResponsiveContainer width="100%" height={300}>
     <BarChart data={data}>
       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-      <XAxis 
-        dataKey="name" 
+      <XAxis
+        dataKey="name"
         tick={{ fill: 'hsl(var(--muted-foreground))' }}
         axisLine={{ stroke: 'hsl(var(--border))' }}
       />
-      <YAxis 
+      <YAxis
         tick={{ fill: 'hsl(var(--muted-foreground))' }}
         axisLine={{ stroke: 'hsl(var(--border))' }}
       />
-      <Tooltip 
-        contentStyle={{ 
+      <Tooltip
+        contentStyle={{
           backgroundColor: 'hsl(var(--card))',
           border: '1px solid hsl(var(--border))',
           borderRadius: '8px'
         }}
       />
       <Legend />
-      <Bar 
-        dataKey="value" 
-        fill="hsl(var(--primary))" 
+      <Bar
+        dataKey="value"
+        fill="hsl(var(--primary))"
         radius={[4, 4, 0, 0]}
       />
     </BarChart>
@@ -133,8 +133,8 @@ const GroupedBarChart = () => (
       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
       <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-      <Tooltip 
-        contentStyle={{ 
+      <Tooltip
+        contentStyle={{
           backgroundColor: 'hsl(var(--card))',
           border: '1px solid hsl(var(--border))',
           borderRadius: '8px'
@@ -187,18 +187,18 @@ const BasicLineChart = () => (
       <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
       <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-      <Tooltip 
-        contentStyle={{ 
+      <Tooltip
+        contentStyle={{
           backgroundColor: 'hsl(var(--card))',
           border: '1px solid hsl(var(--border))',
           borderRadius: '8px'
         }}
       />
       <Legend />
-      <Line 
-        type="monotone" 
-        dataKey="value" 
-        stroke="hsl(var(--primary))" 
+      <Line
+        type="monotone"
+        dataKey="value"
+        stroke="hsl(var(--primary))"
         strokeWidth={2}
         dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2 }}
         activeDot={{ r: 6, fill: 'hsl(var(--primary))' }}
@@ -226,17 +226,17 @@ const MultiLineChart = () => (
       <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <Tooltip />
       <Legend />
-      <Line 
-        type="monotone" 
-        dataKey="current" 
-        stroke="hsl(var(--primary))" 
+      <Line
+        type="monotone"
+        dataKey="current"
+        stroke="hsl(var(--primary))"
         strokeWidth={2}
         name="This Year"
       />
-      <Line 
-        type="monotone" 
-        dataKey="previous" 
-        stroke="hsl(var(--muted-foreground))" 
+      <Line
+        type="monotone"
+        dataKey="previous"
+        stroke="hsl(var(--muted-foreground))"
         strokeWidth={2}
         strokeDasharray="5 5"
         name="Last Year"
@@ -260,10 +260,10 @@ const BasicAreaChart = () => (
       <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <Tooltip />
-      <Area 
-        type="monotone" 
-        dataKey="value" 
-        stroke="hsl(var(--primary))" 
+      <Area
+        type="monotone"
+        dataKey="value"
+        stroke="hsl(var(--primary))"
         fill="hsl(var(--primary) / 0.2)"
         strokeWidth={2}
       />
@@ -288,10 +288,10 @@ const GradientAreaChart = () => (
       <XAxis dataKey="name" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
       <Tooltip />
-      <Area 
-        type="monotone" 
-        dataKey="value" 
-        stroke="hsl(var(--primary))" 
+      <Area
+        type="monotone"
+        dataKey="value"
+        stroke="hsl(var(--primary))"
         fill="url(#colorValue)"
         strokeWidth={2}
       />
@@ -377,54 +377,54 @@ const DonutChart = () => (
 
 ```typescript
 // Primary color
-fill="hsl(var(--primary))"
-stroke="hsl(var(--primary))"
+fill = "hsl(var(--primary))";
+stroke = "hsl(var(--primary))";
 
 // With opacity
-fill="hsl(var(--primary) / 0.2)"
+fill = "hsl(var(--primary) / 0.2)";
 
 // Secondary color
-fill="hsl(var(--secondary))"
+fill = "hsl(var(--secondary))";
 
 // Muted/gray
-fill="hsl(var(--muted))"
-stroke="hsl(var(--muted-foreground))"
+fill = "hsl(var(--muted))";
+stroke = "hsl(var(--muted-foreground))";
 
 // Border color for grid
-stroke="hsl(var(--border))"
+stroke = "hsl(var(--border))";
 
 // Background for tooltip
-backgroundColor: 'hsl(var(--card))'
+backgroundColor: "hsl(var(--card))";
 ```
 
 ### Common Color Palette
 
 ```typescript
 const CHART_COLORS = [
-  'hsl(var(--primary))',
-  'hsl(var(--secondary))',
-  'hsl(220 70% 50%)',    // Blue
-  'hsl(160 60% 45%)',    // Green
-  'hsl(30 80% 55%)',     // Orange
-  'hsl(280 65% 60%)',    // Purple
+  "hsl(var(--primary))",
+  "hsl(var(--secondary))",
+  "hsl(220 70% 50%)", // Blue
+  "hsl(160 60% 45%)", // Green
+  "hsl(30 80% 55%)", // Orange
+  "hsl(280 65% 60%)", // Purple
 ];
 ```
 
 ### Tooltip Styling
 
 ```typescript
-<Tooltip 
-  contentStyle={{ 
+<Tooltip
+  contentStyle={{
     backgroundColor: 'hsl(var(--card))',
     border: '1px solid hsl(var(--border))',
     borderRadius: '8px',
     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
   }}
-  labelStyle={{ 
+  labelStyle={{
     color: 'hsl(var(--foreground))',
     fontWeight: 600
   }}
-  itemStyle={{ 
+  itemStyle={{
     color: 'hsl(var(--muted-foreground))'
   }}
 />
@@ -438,17 +438,17 @@ const CHART_COLORS = [
 
 ```typescript
 // Currency on Y-axis
-<YAxis 
+<YAxis
   tickFormatter={(value) => `$${value.toLocaleString()}`}
 />
 
 // Percentage
-<YAxis 
+<YAxis
   tickFormatter={(value) => `${value}%`}
 />
 
 // Compact numbers (1K, 1M)
-<YAxis 
+<YAxis
   tickFormatter={(value) => {
     if (value >= 1000000) return `${(value / 1000000).toFixed(1)}M`;
     if (value >= 1000) return `${(value / 1000).toFixed(1)}K`;
@@ -463,15 +463,15 @@ const CHART_COLORS = [
 import moment from 'moment';
 
 // Format dates on X-axis
-<XAxis 
-  dataKey="date" 
-  tickFormatter={(value) => moment(value).format('MMM D')} 
+<XAxis
+  dataKey="date"
+  tickFormatter={(value) => moment(value).format('MMM D')}
 />
 
 // Full date format
-<XAxis 
-  dataKey="date" 
-  tickFormatter={(value) => moment(value).format('MMM D, YYYY')} 
+<XAxis
+  dataKey="date"
+  tickFormatter={(value) => moment(value).format('MMM D, YYYY')}
 />
 ```
 
@@ -519,8 +519,8 @@ const ChartCard = ({ title, description, children }) => (
 );
 
 // Usage
-<ChartCard 
-  title="Monthly Revenue" 
+<ChartCard
+  title="Monthly Revenue"
   description="Revenue trends over the past 6 months"
 >
   <ResponsiveContainer width="100%" height={300}>
@@ -588,7 +588,7 @@ const Dashboard = () => {
   return (
     <div className="max-w-[100rem] mx-auto px-4 py-16">
       <h1 className="font-heading text-3xl md:text-4xl mb-8">Analytics Dashboard</h1>
-      
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
@@ -610,7 +610,7 @@ const Dashboard = () => {
           </motion.div>
         ))}
       </div>
-      
+
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Chart */}
@@ -626,8 +626,8 @@ const Dashboard = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="month" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
               <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-              <Tooltip 
-                contentStyle={{ 
+              <Tooltip
+                contentStyle={{
                   backgroundColor: 'hsl(var(--card))',
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px'
@@ -639,7 +639,7 @@ const Dashboard = () => {
             </BarChart>
           </ResponsiveContainer>
         </motion.div>
-        
+
         {/* Traffic Sources */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -667,7 +667,7 @@ const Dashboard = () => {
             </PieChart>
           </ResponsiveContainer>
         </motion.div>
-        
+
         {/* Trend Line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -681,18 +681,18 @@ const Dashboard = () => {
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="month" tick={{ fill: 'hsl(var(--muted-foreground))' }} />
               <YAxis tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-              <Tooltip 
-                contentStyle={{ 
+              <Tooltip
+                contentStyle={{
                   backgroundColor: 'hsl(var(--card))',
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '8px'
                 }}
               />
               <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="revenue" 
-                stroke="hsl(var(--primary))" 
+              <Line
+                type="monotone"
+                dataKey="revenue"
+                stroke="hsl(var(--primary))"
                 strokeWidth={2}
                 dot={{ fill: 'hsl(var(--primary))' }}
               />

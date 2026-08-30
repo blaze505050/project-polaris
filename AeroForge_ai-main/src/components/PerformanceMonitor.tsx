@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, AlertCircle, CheckCircle2 } from 'lucide-react';
+import React, { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Activity, AlertCircle, CheckCircle2 } from "lucide-react";
 
 interface PerformanceMetrics {
   fps: number;
   memory: number;
   renderTime: number;
-  status: 'good' | 'warning' | 'critical';
+  status: "good" | "warning" | "critical";
 }
 
 export default function PerformanceMonitor() {
@@ -14,7 +14,7 @@ export default function PerformanceMonitor() {
     fps: 60,
     memory: 0,
     renderTime: 0,
-    status: 'good',
+    status: "good",
   });
   const [isVisible, setIsVisible] = useState(false);
   const fpsRef = useRef({ frames: 0, lastTime: Date.now() });
@@ -31,9 +31,9 @@ export default function PerformanceMonitor() {
         const memory = (performance as any).memory?.usedJSHeapSize || 0;
         const renderTime = now - renderStartRef.current;
 
-        let status: 'good' | 'warning' | 'critical' = 'good';
-        if (fps < 30 || memory > 500000000) status = 'critical';
-        else if (fps < 45 || memory > 300000000) status = 'warning';
+        let status: "good" | "warning" | "critical" = "good";
+        if (fps < 30 || memory > 500000000) status = "critical";
+        else if (fps < 45 || memory > 300000000) status = "warning";
 
         setMetrics({
           fps,
@@ -56,23 +56,23 @@ export default function PerformanceMonitor() {
 
   const getStatusColor = () => {
     switch (metrics.status) {
-      case 'good':
-        return 'text-aerospace-success';
-      case 'warning':
-        return 'text-aerospace-warning';
-      case 'critical':
-        return 'text-aerospace-danger';
+      case "good":
+        return "text-aerospace-success";
+      case "warning":
+        return "text-aerospace-warning";
+      case "critical":
+        return "text-aerospace-danger";
       default:
-        return 'text-foreground';
+        return "text-foreground";
     }
   };
 
   const getStatusIcon = () => {
     switch (metrics.status) {
-      case 'good':
+      case "good":
         return <CheckCircle2 className="w-4 h-4" />;
-      case 'warning':
-      case 'critical':
+      case "warning":
+      case "critical":
         return <AlertCircle className="w-4 h-4" />;
       default:
         return <Activity className="w-4 h-4" />;
@@ -91,9 +91,7 @@ export default function PerformanceMonitor() {
           <div className="flex items-center gap-4">
             <div className={`flex items-center gap-2 ${getStatusColor()}`}>
               {getStatusIcon()}
-              <span className="text-xs font-mono">
-                {metrics.status.toUpperCase()}
-              </span>
+              <span className="text-xs font-mono">{metrics.status.toUpperCase()}</span>
             </div>
             <div className="flex gap-4 text-xs font-mono text-foreground/70">
               <div>

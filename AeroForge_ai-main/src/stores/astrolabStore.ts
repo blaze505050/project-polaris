@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-export type LabMode = 'explorer' | 'learning' | 'research' | 'investor-demo';
+export type LabMode = "explorer" | "learning" | "research" | "investor-demo";
 
 export interface ExperimentData {
   id: string;
@@ -10,7 +10,7 @@ export interface ExperimentData {
   results: Record<string, any>;
   timestamp: Date;
   notes: string;
-  status: 'running' | 'completed' | 'failed';
+  status: "running" | "completed" | "failed";
 }
 
 export interface AstroLabState {
@@ -18,7 +18,7 @@ export interface AstroLabState {
   experiments: ExperimentData[];
   selectedExperiment: ExperimentData | null;
   isSimulationRunning: boolean;
-  
+
   // Actions
   setMode: (mode: LabMode) => void;
   addExperiment: (experiment: ExperimentData) => void;
@@ -30,13 +30,13 @@ export interface AstroLabState {
 }
 
 export const useAstroLabStore = create<AstroLabState>((set) => ({
-  currentMode: 'explorer',
+  currentMode: "explorer",
   experiments: [],
   selectedExperiment: null,
   isSimulationRunning: false,
 
   setMode: (mode) => set({ currentMode: mode }),
-  
+
   addExperiment: (experiment) =>
     set((state) => ({
       experiments: [...state.experiments, experiment],
@@ -45,9 +45,7 @@ export const useAstroLabStore = create<AstroLabState>((set) => ({
 
   updateExperiment: (id, updates) =>
     set((state) => ({
-      experiments: state.experiments.map((exp) =>
-        exp.id === id ? { ...exp, ...updates } : exp
-      ),
+      experiments: state.experiments.map((exp) => (exp.id === id ? { ...exp, ...updates } : exp)),
       selectedExperiment:
         state.selectedExperiment?.id === id
           ? { ...state.selectedExperiment, ...updates }
@@ -56,16 +54,13 @@ export const useAstroLabStore = create<AstroLabState>((set) => ({
 
   selectExperiment: (id) =>
     set((state) => ({
-      selectedExperiment: id
-        ? state.experiments.find((exp) => exp.id === id) || null
-        : null,
+      selectedExperiment: id ? state.experiments.find((exp) => exp.id === id) || null : null,
     })),
 
   deleteExperiment: (id) =>
     set((state) => ({
       experiments: state.experiments.filter((exp) => exp.id !== id),
-      selectedExperiment:
-        state.selectedExperiment?.id === id ? null : state.selectedExperiment,
+      selectedExperiment: state.selectedExperiment?.id === id ? null : state.selectedExperiment,
     })),
 
   setSimulationRunning: (running) => set({ isSimulationRunning: running }),

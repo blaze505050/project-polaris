@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Search, ExternalLink, Shield, Cpu, BookOpen, Layers, X, Filter, Play } from 'lucide-react';
-import { ModelCard, ModelStatus, ModelCategory } from '@/types/physicsAi';
-import { MODEL_REGISTRY } from '@/services/physicsAi/modelRegistryData';
-import ModelInspectionModal from './ModelInspectionModal';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Search, ExternalLink, Shield, Cpu, BookOpen, Layers, X, Filter, Play } from "lucide-react";
+import { ModelCard, ModelStatus, ModelCategory } from "@/types/physicsAi";
+import { MODEL_REGISTRY } from "@/services/physicsAi/modelRegistryData";
+import ModelInspectionModal from "./ModelInspectionModal";
 
 interface Props {
   onRunInAeroForge?: (modelId: string) => void;
 }
 
 export default function ModelRegistryView({ onRunInAeroForge }: Props) {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [statusFilter, setStatusFilter] = useState<string>('ALL');
-  const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [statusFilter, setStatusFilter] = useState<string>("ALL");
+  const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
   const [selectedModel, setSelectedModel] = useState<ModelCard | null>(null);
 
   const filteredModels = MODEL_REGISTRY.filter((m) => {
@@ -20,21 +20,21 @@ export default function ModelRegistryView({ onRunInAeroForge }: Props) {
       m.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       m.domain.toLowerCase().includes(searchTerm.toLowerCase()) ||
       m.architecture.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'ALL' || m.status === statusFilter;
-    const matchesCategory = categoryFilter === 'ALL' || m.category === categoryFilter;
+    const matchesStatus = statusFilter === "ALL" || m.status === statusFilter;
+    const matchesCategory = categoryFilter === "ALL" || m.category === categoryFilter;
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
   const getStatusBadge = (status: ModelStatus) => {
     switch (status) {
-      case 'LIVE':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
-      case 'PROTOTYPE':
-        return 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30';
-      case 'RESEARCH':
-        return 'bg-purple-500/10 text-purple-300 border-purple-500/30';
-      case 'PLANNED':
-        return 'bg-white/5 text-white/40 border-white/10';
+      case "LIVE":
+        return "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+      case "PROTOTYPE":
+        return "bg-cyan-500/10 text-cyan-300 border-cyan-500/30";
+      case "RESEARCH":
+        return "bg-purple-500/10 text-purple-300 border-purple-500/30";
+      case "PLANNED":
+        return "bg-white/5 text-white/40 border-white/10";
     }
   };
 
@@ -65,14 +65,14 @@ export default function ModelRegistryView({ onRunInAeroForge }: Props) {
         {/* Status Filters */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 font-mono text-xs">
           <span className="text-[10px] text-white/40 uppercase mr-1">Status:</span>
-          {['ALL', 'LIVE', 'PROTOTYPE', 'RESEARCH', 'PLANNED'].map((st) => (
+          {["ALL", "LIVE", "PROTOTYPE", "RESEARCH", "PLANNED"].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
               className={`px-2.5 py-1 rounded text-[11px] transition-all border ${
                 statusFilter === st
-                  ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-bold'
-                  : 'bg-white/5 text-white/50 border-white/5 hover:bg-white/10 hover:text-white'
+                  ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-bold"
+                  : "bg-white/5 text-white/50 border-white/5 hover:bg-white/10 hover:text-white"
               }`}
             >
               {st}
@@ -98,8 +98,10 @@ export default function ModelRegistryView({ onRunInAeroForge }: Props) {
                   </span>
                   <h3 className="text-base font-bold text-white font-mono">{model.name}</h3>
                 </div>
-                <span className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold ${getStatusBadge(model.status)}`}>
-                  {model.status === 'LIVE' ? 'LIVE IN AEROFORGE' : model.status}
+                <span
+                  className={`px-2 py-0.5 rounded border text-[10px] font-mono font-bold ${getStatusBadge(model.status)}`}
+                >
+                  {model.status === "LIVE" ? "LIVE IN AEROFORGE" : model.status}
                 </span>
               </div>
 
@@ -116,7 +118,10 @@ export default function ModelRegistryView({ onRunInAeroForge }: Props) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-white/40">Application:</span>
-                  <span className="text-cyan-300 truncate max-w-[170px]" title={model.aeroforgeApplication}>
+                  <span
+                    className="text-cyan-300 truncate max-w-[170px]"
+                    title={model.aeroforgeApplication}
+                  >
                     {model.aeroforgeApplication}
                   </span>
                 </div>

@@ -34,7 +34,8 @@ export function NotFoundPage() {
             Lost in Deep Space?
           </h2>
           <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-            The orbital trajectory or page you are looking for does not exist or has been shifted into another sector. Let's recalculate your state vectors.
+            The orbital trajectory or page you are looking for does not exist or has been shifted
+            into another sector. Let's recalculate your state vectors.
           </p>
         </div>
 
@@ -75,13 +76,22 @@ export function NotFoundPage() {
         </div>
 
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
-          <Button asChild size="default" className="h-10 px-6 font-semibold text-xs bg-primary text-primary-foreground shadow-sm hover:bg-primary/90">
+          <Button
+            asChild
+            size="default"
+            className="h-10 px-6 font-semibold text-xs bg-primary text-primary-foreground shadow-sm hover:bg-primary/90"
+          >
             <Link to="/" className="flex items-center gap-2">
               <Home className="size-3.5" />
               <span>Return Home</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" size="default" className="h-10 px-5 text-xs border-white/10 hover:border-white/20 text-foreground">
+          <Button
+            asChild
+            variant="outline"
+            size="default"
+            className="h-10 px-5 text-xs border-white/10 hover:border-white/20 text-foreground"
+          >
             <Link to="/get-involved">Contact Team</Link>
           </Button>
         </div>

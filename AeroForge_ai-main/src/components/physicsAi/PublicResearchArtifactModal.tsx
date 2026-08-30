@@ -1,7 +1,17 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Check, Copy, Share2, ShieldAlert, Sparkles, Download, ExternalLink, Lock } from 'lucide-react';
-import { AirfoilSurrogateInputs, AirfoilSurrogateResult } from '@/types/physicsAi';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  X,
+  Check,
+  Copy,
+  Share2,
+  ShieldAlert,
+  Sparkles,
+  Download,
+  ExternalLink,
+  Lock,
+} from "lucide-react";
+import { AirfoilSurrogateInputs, AirfoilSurrogateResult } from "@/types/physicsAi";
 
 interface Props {
   isOpen: boolean;
@@ -18,12 +28,14 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
   const artifactId = `pub-af-fno-${Date.now().toString(36)}`;
   const artifactUrl = `${window.location.origin}/share/${artifactId}`;
 
-  const checkpointSha256 = result.physicsResiduals.checkpointSha256 || '288174fe4315df5eb624524368aff65b763a027ef8559172ae2181bf128cb989';
+  const checkpointSha256 =
+    result.physicsResiduals.checkpointSha256 ||
+    "288174fe4315df5eb624524368aff65b763a027ef8559172ae2181bf128cb989";
   const paramCount = result.physicsResiduals.parameterCount || 485120;
 
   const payload = {
     title: `Physics AI FNO Airfoil Analysis — ${inputs.airfoilName}`,
-    disclaimer: 'EXPERIMENTAL PHYSICS AI — NOT CERTIFIED ENGINEERING ANALYSIS',
+    disclaimer: "EXPERIMENTAL PHYSICS AI — NOT CERTIFIED ENGINEERING ANALYSIS",
     date: new Date().toISOString(),
     inputs,
     resultSummary: {
@@ -46,14 +58,14 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
       distributionCheck: result.distributionCheck,
     },
     reproducibilityProvenance: {
-      platform: 'AeroForge Physics AI Lab',
-      modelId: 'fno',
-      checkpointFile: 'fno_naca_2d_v2.pt',
+      platform: "AeroForge Physics AI Lab",
+      modelId: "fno",
+      checkpointFile: "fno_naca_2d_v2.pt",
       checkpointSha256: checkpointSha256,
       parameterCount: paramCount,
-      upstreamSource: 'https://github.com/zongyi-li/fourier_neural_operator',
-      license: 'MIT License',
-      solverVerification: 'AeroForge Analytical Potential Flow Theory',
+      upstreamSource: "https://github.com/zongyi-li/fourier_neural_operator",
+      license: "MIT License",
+      solverVerification: "AeroForge Analytical Potential Flow Theory",
     },
   };
 
@@ -75,7 +87,9 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-cyan-400" />
-            <h2 className="text-lg font-extrabold font-mono text-white">Public Research Artifact Generator</h2>
+            <h2 className="text-lg font-extrabold font-mono text-white">
+              Public Research Artifact Generator
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -89,9 +103,12 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
         <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-3 text-amber-300 font-mono text-xs">
           <ShieldAlert className="w-5 h-5 shrink-0 text-amber-400" />
           <div>
-            <span className="font-extrabold block">EXPERIMENTAL PHYSICS AI — NOT CERTIFIED ENGINEERING ANALYSIS</span>
+            <span className="font-extrabold block">
+              EXPERIMENTAL PHYSICS AI — NOT CERTIFIED ENGINEERING ANALYSIS
+            </span>
             <span className="text-[10px] text-amber-300/70 font-sans">
-              This artifact contains surrogate model predictions for scientific evaluation. Must not be used for flight certification.
+              This artifact contains surrogate model predictions for scientific evaluation. Must not
+              be used for flight certification.
             </span>
           </div>
         </div>
@@ -105,24 +122,34 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
 
           <div className="flex justify-between border-b border-white/5 pb-2">
             <span className="text-white/40">AIRFOIL & FLOW:</span>
-            <span className="text-white/90">{inputs.airfoilName} (M={inputs.mach}, Re={inputs.reynolds.toExponential(1)}, α={inputs.aoa}°)</span>
+            <span className="text-white/90">
+              {inputs.airfoilName} (M={inputs.mach}, Re={inputs.reynolds.toExponential(1)}, α=
+              {inputs.aoa}°)
+            </span>
           </div>
 
           <div className="flex justify-between border-b border-white/5 pb-2">
             <span className="text-white/40">NEURAL OPERATOR:</span>
-            <span className="text-purple-300">{result.modelName} (v{result.modelVersion})</span>
+            <span className="text-purple-300">
+              {result.modelName} (v{result.modelVersion})
+            </span>
           </div>
 
           <div className="flex justify-between border-b border-white/5 pb-2">
             <span className="text-white/40">CHECKPOINT SHA256:</span>
-            <span className="text-emerald-400 font-bold truncate max-w-[280px]" title={checkpointSha256}>
+            <span
+              className="text-emerald-400 font-bold truncate max-w-[280px]"
+              title={checkpointSha256}
+            >
               {checkpointSha256}
             </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-white/40">PREDICTED FORCES:</span>
-            <span className="text-emerald-400 font-bold">CL = {result.cl}, CD = {result.cd} (Δ {result.errorMetrics.relClErrorPct}%)</span>
+            <span className="text-emerald-400 font-bold">
+              CL = {result.cl}, CD = {result.cd} (Δ {result.errorMetrics.relClErrorPct}%)
+            </span>
           </div>
         </div>
 
@@ -141,7 +168,7 @@ export default function PublicResearchArtifactModal({ isOpen, onClose, inputs, r
               className="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-lg transition-all flex items-center gap-1.5 shrink-0"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Copied' : 'Copy Link'}
+              {copied ? "Copied" : "Copy Link"}
             </button>
           </div>
         </div>

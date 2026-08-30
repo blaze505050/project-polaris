@@ -3,21 +3,36 @@
  * Ultra-high-quality data visualizations, advanced analytics, and professional-grade UI
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, Zap, Globe, TrendingUp, Radio, AlertCircle, Maximize2, Settings, Download } from 'lucide-react';
-import { missionControlEngine, TelemetryData, SpectralAnalysis, GravitationalWaveSignal } from '@/services/missionControlEngine';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Clock,
+  Zap,
+  Globe,
+  TrendingUp,
+  Radio,
+  AlertCircle,
+  Maximize2,
+  Settings,
+  Download,
+} from "lucide-react";
+import {
+  missionControlEngine,
+  TelemetryData,
+  SpectralAnalysis,
+  GravitationalWaveSignal,
+} from "@/services/missionControlEngine";
 
 interface DashboardMetric {
   label: string;
   value: string | number;
   unit?: string;
-  status: 'nominal' | 'warning' | 'critical';
+  status: "nominal" | "warning" | "critical";
   trend?: number;
 }
 
 const PremiumAstroLabSuite: React.FC = () => {
-  const [currentModule, setCurrentModule] = useState('mission-control');
+  const [currentModule, setCurrentModule] = useState("mission-control");
   const [utcTime, setUtcTime] = useState(new Date());
   const [telemetryData, setTelemetryData] = useState<TelemetryData | null>(null);
   const [spectralData, setSpectralData] = useState<SpectralAnalysis[]>([]);
@@ -30,7 +45,7 @@ const PremiumAstroLabSuite: React.FC = () => {
   // Initialize telemetry stream
   useEffect(() => {
     const telemetryInterval = setInterval(() => {
-      const newTelemetry = missionControlEngine.generateTelemetry('ISS', Date.now());
+      const newTelemetry = missionControlEngine.generateTelemetry("ISS", Date.now());
       setTelemetryData(newTelemetry);
       missionControlEngine.addTelemetry(newTelemetry);
 
@@ -40,30 +55,30 @@ const PremiumAstroLabSuite: React.FC = () => {
 
       setSystemMetrics([
         {
-          label: 'Altitude',
+          label: "Altitude",
           value: stats.avgAltitude.toFixed(1),
-          unit: 'km',
-          status: stats.avgAltitude > 350 && stats.avgAltitude < 450 ? 'nominal' : 'warning',
+          unit: "km",
+          status: stats.avgAltitude > 350 && stats.avgAltitude < 450 ? "nominal" : "warning",
           trend: Math.random() * 2 - 1,
         },
         {
-          label: 'Velocity',
+          label: "Velocity",
           value: stats.avgVelocity.toFixed(2),
-          unit: 'km/s',
-          status: 'nominal',
+          unit: "km/s",
+          status: "nominal",
           trend: Math.random() * 0.1 - 0.05,
         },
         {
-          label: 'Inclination',
+          label: "Inclination",
           value: newTelemetry.inclination.toFixed(1),
-          unit: '°',
-          status: 'nominal',
+          unit: "°",
+          status: "nominal",
         },
         {
-          label: 'System Load',
+          label: "System Load",
           value: (45 + Math.random() * 20).toFixed(0),
-          unit: '%',
-          status: Math.random() > 0.8 ? 'warning' : 'nominal',
+          unit: "%",
+          status: Math.random() > 0.8 ? "warning" : "nominal",
         },
       ]);
     }, 1000);
@@ -81,24 +96,25 @@ const PremiumAstroLabSuite: React.FC = () => {
     if (!spectralCanvasRef.current || !telemetryData) return;
 
     const canvas = spectralCanvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Generate mock signal data
-    const signalData = Array.from({ length: 256 }, (_, i) =>
-      Math.sin((i / 256) * Math.PI * 4) * 100 + Math.random() * 20
+    const signalData = Array.from(
+      { length: 256 },
+      (_, i) => Math.sin((i / 256) * Math.PI * 4) * 100 + Math.random() * 20,
     );
 
     const spectral = missionControlEngine.performSpectralAnalysis(signalData);
     setSpectralData(spectral);
 
     // Clear canvas
-    ctx.fillStyle = '#0B0E14';
+    ctx.fillStyle = "#0B0E14";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw spectral bars
     const barWidth = canvas.width / spectral.length;
-    const maxIntensity = Math.max(...spectral.map(s => s.intensity));
+    const maxIntensity = Math.max(...spectral.map((s) => s.intensity));
 
     spectral.forEach((data, index) => {
       const height = (data.intensity / maxIntensity) * canvas.height * 0.8;
@@ -123,19 +139,19 @@ const PremiumAstroLabSuite: React.FC = () => {
     if (!canvasRef.current) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const animate = () => {
       // Clear with gradient
       const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#0B0E14');
-      gradient.addColorStop(1, '#131924');
+      gradient.addColorStop(0, "#0B0E14");
+      gradient.addColorStop(1, "#131924");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw orbital grid
-      ctx.strokeStyle = '#00F0FF33';
+      ctx.strokeStyle = "#00F0FF33";
       ctx.lineWidth = 1;
       for (let i = 0; i < 12; i++) {
         const angle = (i / 12) * Math.PI * 2;
@@ -150,13 +166,13 @@ const PremiumAstroLabSuite: React.FC = () => {
       }
 
       // Draw Earth
-      ctx.fillStyle = '#1a3a52';
+      ctx.fillStyle = "#1a3a52";
       ctx.beginPath();
       ctx.arc(canvas.width / 2, canvas.height / 2, 80, 0, Math.PI * 2);
       ctx.fill();
 
       // Draw satellite orbit
-      ctx.strokeStyle = '#00F0FF';
+      ctx.strokeStyle = "#00F0FF";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.arc(canvas.width / 2, canvas.height / 2, 120, 0, Math.PI * 2);
@@ -168,15 +184,15 @@ const PremiumAstroLabSuite: React.FC = () => {
         const satX = canvas.width / 2 + Math.cos(angle) * 120;
         const satY = canvas.height / 2 + Math.sin(angle) * 120;
 
-        ctx.fillStyle = '#FF007A';
+        ctx.fillStyle = "#FF007A";
         ctx.beginPath();
         ctx.arc(satX, satY, 8, 0, Math.PI * 2);
         ctx.fill();
 
         // Glow
-        ctx.shadowColor = '#FF007A';
+        ctx.shadowColor = "#FF007A";
         ctx.shadowBlur = 20;
-        ctx.strokeStyle = '#FF007A';
+        ctx.strokeStyle = "#FF007A";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(satX, satY, 12, 0, Math.PI * 2);
@@ -191,32 +207,46 @@ const PremiumAstroLabSuite: React.FC = () => {
   }, [telemetryData]);
 
   const modules = [
-    { id: 'mission-control', label: 'Mission Control', icon: '🎛️' },
-    { id: 'spectral-analysis', label: 'Spectral Analysis', icon: '📊' },
-    { id: 'gravitational-waves', label: 'Gravitational Waves', icon: '〰️' },
-    { id: 'tle-processor', label: 'TLE Processor', icon: '📡' },
-    { id: 'orbital-mechanics', label: 'Orbital Mechanics', icon: '⚙️' },
+    { id: "mission-control", label: "Mission Control", icon: "🎛️" },
+    { id: "spectral-analysis", label: "Spectral Analysis", icon: "📊" },
+    { id: "gravitational-waves", label: "Gravitational Waves", icon: "〰️" },
+    { id: "tle-processor", label: "TLE Processor", icon: "📡" },
+    { id: "orbital-mechanics", label: "Orbital Mechanics", icon: "⚙️" },
   ];
 
   const renderModule = () => {
     switch (currentModule) {
-      case 'mission-control':
-        return <MissionControlDashboard telemetryData={telemetryData} metrics={systemMetrics} canvasRef={canvasRef} />;
-      case 'spectral-analysis':
+      case "mission-control":
+        return (
+          <MissionControlDashboard
+            telemetryData={telemetryData}
+            metrics={systemMetrics}
+            canvasRef={canvasRef}
+          />
+        );
+      case "spectral-analysis":
         return <SpectralAnalysisModule canvasRef={spectralCanvasRef} data={spectralData} />;
-      case 'gravitational-waves':
+      case "gravitational-waves":
         return <GravitationalWaveModule />;
-      case 'tle-processor':
+      case "tle-processor":
         return <TLEProcessorModule />;
-      case 'orbital-mechanics':
+      case "orbital-mechanics":
         return <OrbitalMechanicsModule telemetryData={telemetryData} />;
       default:
-        return <MissionControlDashboard telemetryData={telemetryData} metrics={systemMetrics} canvasRef={canvasRef} />;
+        return (
+          <MissionControlDashboard
+            telemetryData={telemetryData}
+            metrics={systemMetrics}
+            canvasRef={canvasRef}
+          />
+        );
     }
   };
 
   return (
-    <div className={`min-h-screen bg-[#0B0E14] text-foreground overflow-hidden ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}>
+    <div
+      className={`min-h-screen bg-[#0B0E14] text-foreground overflow-hidden ${isFullscreen ? "fixed inset-0 z-50" : ""}`}
+    >
       {/* Premium Navigation Bar */}
       <nav className="sticky top-0 z-40 bg-gradient-to-r from-[#0B0E14] via-[#0B0E14]/95 to-[#0B0E14] backdrop-blur-xl border-b border-[#00F0FF]/20 px-6 py-4 shadow-2xl">
         <div className="max-w-[120rem] mx-auto flex items-center justify-between">
@@ -243,13 +273,17 @@ const PremiumAstroLabSuite: React.FC = () => {
           {/* Status Bar */}
           <div className="flex items-center gap-6">
             <div className="hidden lg:flex items-center gap-6 px-6 border-l border-r border-[#00F0FF]/20">
-              <motion.div animate={{ opacity: [0.5, 1] }} transition={{ duration: 2, repeat: Infinity }} className="flex items-center gap-2 text-xs font-mono">
+              <motion.div
+                animate={{ opacity: [0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="flex items-center gap-2 text-xs font-mono"
+              >
                 <div className="w-2 h-2 rounded-full bg-[#10B981]" />
                 <span className="text-[#10B981]">LIVE</span>
               </motion.div>
               <div className="flex items-center gap-2 text-xs font-mono text-secondary-foreground">
                 <Clock size={12} />
-                {utcTime.toUTCString().split(' ')[4]}
+                {utcTime.toUTCString().split(" ")[4]}
               </div>
             </div>
 
@@ -275,8 +309,8 @@ const PremiumAstroLabSuite: React.FC = () => {
               whileTap={{ scale: 0.98 }}
               className={`px-4 py-2 rounded-lg font-mono text-sm whitespace-nowrap transition-all ${
                 currentModule === mod.id
-                  ? 'bg-gradient-to-r from-[#00F0FF]/30 to-[#FF007A]/30 text-[#00F0FF] border border-[#00F0FF]/50 shadow-lg shadow-[#00F0FF]/20'
-                  : 'bg-[#131924]/40 text-secondary-foreground border border-[#00F0FF]/10 hover:border-[#00F0FF]/30'
+                  ? "bg-gradient-to-r from-[#00F0FF]/30 to-[#FF007A]/30 text-[#00F0FF] border border-[#00F0FF]/50 shadow-lg shadow-[#00F0FF]/20"
+                  : "bg-[#131924]/40 text-secondary-foreground border border-[#00F0FF]/10 hover:border-[#00F0FF]/30"
               }`}
             >
               {mod.icon} {mod.label}
@@ -354,9 +388,9 @@ const MissionControlDashboard: React.FC<{
 // Metric Card Component
 const MetricCard: React.FC<{ metric: any; delay: number }> = ({ metric, delay }) => {
   const statusColor = {
-    nominal: '#10B981',
-    warning: '#F59E0B',
-    critical: '#EF4444',
+    nominal: "#10B981",
+    warning: "#F59E0B",
+    critical: "#EF4444",
   };
 
   return (
@@ -379,9 +413,10 @@ const MetricCard: React.FC<{ metric: any; delay: number }> = ({ metric, delay })
       </div>
       {metric.trend !== undefined && (
         <div className="mt-2 flex items-center gap-1 text-xs">
-          <TrendingUp size={12} style={{ color: metric.trend > 0 ? '#10B981' : '#EF4444' }} />
-          <span style={{ color: metric.trend > 0 ? '#10B981' : '#EF4444' }}>
-            {metric.trend > 0 ? '+' : ''}{metric.trend.toFixed(2)}
+          <TrendingUp size={12} style={{ color: metric.trend > 0 ? "#10B981" : "#EF4444" }} />
+          <span style={{ color: metric.trend > 0 ? "#10B981" : "#EF4444" }}>
+            {metric.trend > 0 ? "+" : ""}
+            {metric.trend.toFixed(2)}
           </span>
         </div>
       )}
@@ -393,21 +428,25 @@ const MetricCard: React.FC<{ metric: any; delay: number }> = ({ metric, delay })
 const TelemetryPanel: React.FC<{ title: string; data: TelemetryData; type?: string }> = ({
   title,
   data,
-  type = 'position',
+  type = "position",
 }) => {
   const items =
-    type === 'position'
+    type === "position"
       ? [
-          { label: 'Latitude', value: data.latitude.toFixed(4), unit: '°' },
-          { label: 'Longitude', value: data.longitude.toFixed(4), unit: '°' },
-          { label: 'Altitude', value: data.altitude.toFixed(2), unit: 'km' },
-          { label: 'Velocity', value: data.velocity.toFixed(3), unit: 'km/s' },
+          { label: "Latitude", value: data.latitude.toFixed(4), unit: "°" },
+          { label: "Longitude", value: data.longitude.toFixed(4), unit: "°" },
+          { label: "Altitude", value: data.altitude.toFixed(2), unit: "km" },
+          { label: "Velocity", value: data.velocity.toFixed(3), unit: "km/s" },
         ]
       : [
-          { label: 'Inclination', value: data.inclination.toFixed(2), unit: '°' },
-          { label: 'Eccentricity', value: data.eccentricity.toFixed(6), unit: '' },
-          { label: 'Semi-Major Axis', value: (data.semiMajorAxis / 1000).toFixed(1), unit: '1000 km' },
-          { label: 'Mean Anomaly', value: data.meanAnomaly.toFixed(2), unit: '°' },
+          { label: "Inclination", value: data.inclination.toFixed(2), unit: "°" },
+          { label: "Eccentricity", value: data.eccentricity.toFixed(6), unit: "" },
+          {
+            label: "Semi-Major Axis",
+            value: (data.semiMajorAxis / 1000).toFixed(1),
+            unit: "1000 km",
+          },
+          { label: "Mean Anomaly", value: data.meanAnomaly.toFixed(2), unit: "°" },
         ];
 
   return (
@@ -419,11 +458,16 @@ const TelemetryPanel: React.FC<{ title: string; data: TelemetryData; type?: stri
       <h3 className="text-lg font-bold text-[#00F0FF] font-mono mb-4">{title}</h3>
       <div className="space-y-3">
         {items.map((item, idx) => (
-          <div key={idx} className="flex justify-between items-center pb-3 border-b border-[#00F0FF]/10 last:border-0">
+          <div
+            key={idx}
+            className="flex justify-between items-center pb-3 border-b border-[#00F0FF]/10 last:border-0"
+          >
             <span className="text-sm text-secondary-foreground font-mono">{item.label}</span>
             <div className="text-right">
               <span className="text-[#00F0FF] font-mono font-bold">{item.value}</span>
-              {item.unit && <span className="text-xs text-secondary-foreground ml-1">{item.unit}</span>}
+              {item.unit && (
+                <span className="text-xs text-secondary-foreground ml-1">{item.unit}</span>
+              )}
             </div>
           </div>
         ))}
@@ -433,10 +477,10 @@ const TelemetryPanel: React.FC<{ title: string; data: TelemetryData; type?: stri
 };
 
 // Spectral Analysis Module
-const SpectralAnalysisModule: React.FC<{ canvasRef: React.RefObject<HTMLCanvasElement>; data: SpectralAnalysis[] }> = ({
-  canvasRef,
-  data,
-}) => {
+const SpectralAnalysisModule: React.FC<{
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  data: SpectralAnalysis[];
+}> = ({ canvasRef, data }) => {
   return (
     <div className="w-full min-h-screen bg-[#0B0E14] p-6">
       <div className="max-w-[120rem] mx-auto space-y-6">
@@ -477,7 +521,7 @@ const GravitationalWaveModule: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const newSignal = missionControlEngine.generateGravitationalWaveSignal();
-      setSignals(prev => [newSignal, ...prev.slice(0, 9)]);
+      setSignals((prev) => [newSignal, ...prev.slice(0, 9)]);
     }, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -504,7 +548,9 @@ const GravitationalWaveModule: React.FC = () => {
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-mono text-[#FF007A] font-bold">{signal.source}</span>
-                  <span className={`text-xs font-mono px-2 py-1 rounded ${signal.snr > 10 ? 'bg-[#10B981]/20 text-[#10B981]' : 'bg-[#F59E0B]/20 text-[#F59E0B]'}`}>
+                  <span
+                    className={`text-xs font-mono px-2 py-1 rounded ${signal.snr > 10 ? "bg-[#10B981]/20 text-[#10B981]" : "bg-[#F59E0B]/20 text-[#F59E0B]"}`}
+                  >
                     SNR: {signal.snr.toFixed(1)}
                   </span>
                 </div>
@@ -519,7 +565,9 @@ const GravitationalWaveModule: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-secondary-foreground">Time:</span>
-                    <div className="text-[#00F0FF]">{new Date(signal.timestamp).toUTCString().split(' ')[4]}</div>
+                    <div className="text-[#00F0FF]">
+                      {new Date(signal.timestamp).toUTCString().split(" ")[4]}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -535,14 +583,14 @@ const GravitationalWaveModule: React.FC = () => {
 const TLEProcessorModule: React.FC = () => {
   const sampleTLEs = [
     {
-      name: 'ISS (ZARYA)',
-      line1: '1 25544U 98067A   21001.00000000  .00002182  00000-0  41420-4 0  9990',
-      line2: '2 25544  51.6461 339.8014 0002571  34.5857 120.4689 15.48919393 10001',
+      name: "ISS (ZARYA)",
+      line1: "1 25544U 98067A   21001.00000000  .00002182  00000-0  41420-4 0  9990",
+      line2: "2 25544  51.6461 339.8014 0002571  34.5857 120.4689 15.48919393 10001",
     },
     {
-      name: 'HUBBLE SPACE TELESCOPE',
-      line1: '1 20580U 90037B   21001.00000000  .00000000  00000-0  00000+0 0  9990',
-      line2: '2 20580  28.4698 283.8974 0002853 206.6047 153.4734 15.09688462999999',
+      name: "HUBBLE SPACE TELESCOPE",
+      line1: "1 20580U 90037B   21001.00000000  .00000000  00000-0  00000+0 0  9990",
+      line2: "2 20580  28.4698 283.8974 0002853 206.6047 153.4734 15.09688462999999",
     },
   ];
 
@@ -590,7 +638,9 @@ const TLEProcessorModule: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-secondary-foreground">Period:</span>
-                      <div className="text-[#00F0FF]">{(1440 / parsed.meanMotion).toFixed(1)} min</div>
+                      <div className="text-[#00F0FF]">
+                        {(1440 / parsed.meanMotion).toFixed(1)} min
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -604,7 +654,9 @@ const TLEProcessorModule: React.FC = () => {
 };
 
 // Orbital Mechanics Module
-const OrbitalMechanicsModule: React.FC<{ telemetryData: TelemetryData | null }> = ({ telemetryData }) => {
+const OrbitalMechanicsModule: React.FC<{ telemetryData: TelemetryData | null }> = ({
+  telemetryData,
+}) => {
   return (
     <div className="w-full min-h-screen bg-[#0B0E14] p-6">
       <div className="max-w-[120rem] mx-auto space-y-6">
@@ -613,7 +665,9 @@ const OrbitalMechanicsModule: React.FC<{ telemetryData: TelemetryData | null }> 
           animate={{ opacity: 1, scale: 1 }}
           className="bg-gradient-to-br from-[#131924]/60 to-[#1a1f2e]/40 backdrop-blur-xl border border-[#00F0FF]/20 rounded-xl p-6"
         >
-          <h2 className="text-xl font-bold text-[#00F0FF] font-mono mb-6">Orbital Mechanics Calculator</h2>
+          <h2 className="text-xl font-bold text-[#00F0FF] font-mono mb-6">
+            Orbital Mechanics Calculator
+          </h2>
 
           {telemetryData && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -622,7 +676,9 @@ const OrbitalMechanicsModule: React.FC<{ telemetryData: TelemetryData | null }> 
                 <div className="space-y-2 text-sm font-mono">
                   <div className="flex justify-between">
                     <span className="text-secondary-foreground">Semi-Major Axis (a):</span>
-                    <span className="text-[#00F0FF]">{(telemetryData.semiMajorAxis / 1000).toFixed(1)} 1000 km</span>
+                    <span className="text-[#00F0FF]">
+                      {(telemetryData.semiMajorAxis / 1000).toFixed(1)} 1000 km
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary-foreground">Eccentricity (e):</span>

@@ -6,14 +6,14 @@
 export const AstronomicalConstants = {
   // Fundamental Constants (SI units)
   SPEED_OF_LIGHT: 299792458, // m/s
-  GRAVITATIONAL_CONSTANT: 6.67430e-11, // m³ kg⁻¹ s⁻²
+  GRAVITATIONAL_CONSTANT: 6.6743e-11, // m³ kg⁻¹ s⁻²
   PLANCK_CONSTANT: 6.62607015e-34, // J·s
   BOLTZMANN_CONSTANT: 1.380649e-23, // J/K
   AVOGADRO_NUMBER: 6.02214076e23, // mol⁻¹
 
   // Solar System Constants
   SOLAR_MASS: 1.98892e30, // kg
-  SOLAR_RADIUS: 6.95700e8, // m
+  SOLAR_RADIUS: 6.957e8, // m
   SOLAR_LUMINOSITY: 3.828e26, // W
   SOLAR_CONSTANT: 1361, // W/m² (at Earth's distance)
 
@@ -108,27 +108,27 @@ export const OrbitalRanges = {
  */
 export const SatelliteOrbitalTypes = {
   LEO: {
-    name: 'Low Earth Orbit',
+    name: "Low Earth Orbit",
     altitudeRange: [160, 2000], // km
     period: [88, 127], // minutes
   },
   MEO: {
-    name: 'Medium Earth Orbit',
+    name: "Medium Earth Orbit",
     altitudeRange: [2000, 35786], // km
     period: [127, 1436], // minutes
   },
   GEO: {
-    name: 'Geostationary Orbit',
+    name: "Geostationary Orbit",
     altitudeRange: [35786, 35786], // km
     period: [1436, 1436], // minutes
   },
   HEO: {
-    name: 'High Earth Orbit',
+    name: "High Earth Orbit",
     altitudeRange: [35786, 1000000], // km
     period: [1436, Infinity], // minutes
   },
   ESCAPE: {
-    name: 'Escape Trajectory',
+    name: "Escape Trajectory",
     altitudeRange: [1000000, Infinity], // km
     period: [Infinity, Infinity], // minutes
   },
@@ -139,7 +139,7 @@ export const SatelliteOrbitalTypes = {
  */
 export const PhotometricSystems = {
   JOHNSON_COUSINS: {
-    name: 'Johnson-Cousins',
+    name: "Johnson-Cousins",
     bands: {
       U: { wavelength: 365, bandwidth: 66 },
       B: { wavelength: 445, bandwidth: 94 },
@@ -149,7 +149,7 @@ export const PhotometricSystems = {
     },
   },
   SDSS: {
-    name: 'Sloan Digital Sky Survey',
+    name: "Sloan Digital Sky Survey",
     bands: {
       u: { wavelength: 355, bandwidth: 57 },
       g: { wavelength: 469, bandwidth: 106 },
@@ -159,7 +159,7 @@ export const PhotometricSystems = {
     },
   },
   GAIA: {
-    name: 'Gaia Mission',
+    name: "Gaia Mission",
     bands: {
       G: { wavelength: 673, bandwidth: 446 },
       BP: { wavelength: 532, bandwidth: 280 },
@@ -172,29 +172,35 @@ export const PhotometricSystems = {
  * Coordinate System Definitions
  */
 export const CoordinateSystems = {
-  ICRS: 'International Celestial Reference System',
-  FK5: 'Fifth Fundamental Catalogue (J2000.0)',
-  ECLIPTIC: 'Ecliptic Coordinates',
-  GALACTIC: 'Galactic Coordinates',
-  HORIZONTAL: 'Horizontal/Alt-Az Coordinates',
+  ICRS: "International Celestial Reference System",
+  FK5: "Fifth Fundamental Catalogue (J2000.0)",
+  ECLIPTIC: "Ecliptic Coordinates",
+  GALACTIC: "Galactic Coordinates",
+  HORIZONTAL: "Horizontal/Alt-Az Coordinates",
 };
 
 /**
  * Utility function to get orbital period from semi-major axis
  * Using Kepler\'s Third Law: T² = (4π²/GM) * a³
  */
-export function getOrbitalPeriod(semiMajorAxis: number, centralBodyMass: number = AstronomicalConstants.SOLAR_MASS): number {
+export function getOrbitalPeriod(
+  semiMajorAxis: number,
+  centralBodyMass: number = AstronomicalConstants.SOLAR_MASS,
+): number {
   const GM = AstronomicalConstants.GRAVITATIONAL_CONSTANT * centralBodyMass;
-  const T = 2 * Math.PI * Math.sqrt((semiMajorAxis ** 3) / GM);
+  const T = 2 * Math.PI * Math.sqrt(semiMajorAxis ** 3 / GM);
   return T; // seconds
 }
 
 /**
  * Utility function to get semi-major axis from orbital period
  */
-export function getSemiMajorAxis(period: number, centralBodyMass: number = AstronomicalConstants.SOLAR_MASS): number {
+export function getSemiMajorAxis(
+  period: number,
+  centralBodyMass: number = AstronomicalConstants.SOLAR_MASS,
+): number {
   const GM = AstronomicalConstants.GRAVITATIONAL_CONSTANT * centralBodyMass;
-  const a = Math.cbrt((GM * (period ** 2)) / (4 * Math.PI ** 2));
+  const a = Math.cbrt((GM * period ** 2) / (4 * Math.PI ** 2));
   return a; // meters
 }
 
@@ -202,7 +208,10 @@ export function getSemiMajorAxis(period: number, centralBodyMass: number = Astro
  * Utility function to get orbital velocity at a given distance
  * v = sqrt(GM/r)
  */
-export function getOrbitalVelocity(distance: number, centralBodyMass: number = AstronomicalConstants.SOLAR_MASS): number {
+export function getOrbitalVelocity(
+  distance: number,
+  centralBodyMass: number = AstronomicalConstants.SOLAR_MASS,
+): number {
   const GM = AstronomicalConstants.GRAVITATIONAL_CONSTANT * centralBodyMass;
   const v = Math.sqrt(GM / distance);
   return v; // m/s
@@ -212,7 +221,10 @@ export function getOrbitalVelocity(distance: number, centralBodyMass: number = A
  * Utility function to get escape velocity
  * v_escape = sqrt(2GM/r)
  */
-export function getEscapeVelocity(distance: number, centralBodyMass: number = AstronomicalConstants.SOLAR_MASS): number {
+export function getEscapeVelocity(
+  distance: number,
+  centralBodyMass: number = AstronomicalConstants.SOLAR_MASS,
+): number {
   const GM = AstronomicalConstants.GRAVITATIONAL_CONSTANT * centralBodyMass;
   const v = Math.sqrt((2 * GM) / distance);
   return v; // m/s

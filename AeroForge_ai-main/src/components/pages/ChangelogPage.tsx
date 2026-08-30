@@ -1,14 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { GitCommit, Tag, Sparkles, Cpu, Layers, Bug, CheckCircle2, Sliders } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import CommandCenterSidebar from '@/components/CommandCenterSidebar';
+import React from "react";
+import { motion } from "framer-motion";
+import { GitCommit, Tag, Sparkles, Cpu, Layers, Bug, CheckCircle2, Sliders } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CommandCenterSidebar from "@/components/CommandCenterSidebar";
 
 interface ReleaseNote {
   version: string;
   date: string;
-  badge: 'STABLE' | 'BETA' | 'PATCH';
+  badge: "STABLE" | "BETA" | "PATCH";
   highlights: string[];
   features: string[];
   improvements: string[];
@@ -18,50 +18,48 @@ interface ReleaseNote {
 export default function ChangelogPage() {
   const releases: ReleaseNote[] = [
     {
-      version: 'v0.9.4',
-      date: 'August 12, 2026',
-      badge: 'STABLE',
+      version: "v0.9.4",
+      date: "August 12, 2026",
+      badge: "STABLE",
       highlights: [
         '5-Minute Guided Engineering Demo ("Morphing Airfoil Research")',
-        'Central Engineering Unit Store (SI, Metric, Imperial converters)',
-        'Global Command Palette (⌘K) keyboard shortcut navigation',
+        "Central Engineering Unit Store (SI, Metric, Imperial converters)",
+        "Global Command Palette (⌘K) keyboard shortcut navigation",
       ],
       features: [
-        'Browser-native ASCII STL geometry exporter in CAD service',
-        'Digital Thread Provenance tree & 1-Click Reproduce Run modal',
-        'Universal Design Comparison matrix with Lift, Drag & Stress delta indicators',
-        'Project Health Index (84% score tracking requirement matrix verification)',
+        "Browser-native ASCII STL geometry exporter in CAD service",
+        "Digital Thread Provenance tree & 1-Click Reproduce Run modal",
+        "Universal Design Comparison matrix with Lift, Drag & Stress delta indicators",
+        "Project Health Index (84% score tracking requirement matrix verification)",
       ],
       improvements: [
-        'HPC Simulation Manager stdout/stderr live log viewer drawer',
-        'High-density JetBrains Mono data typography across all engineering tables',
-        'Actionable empty states with template guidance & direct CTAs',
+        "HPC Simulation Manager stdout/stderr live log viewer drawer",
+        "High-density JetBrains Mono data typography across all engineering tables",
+        "Actionable empty states with template guidance & direct CTAs",
       ],
       fixes: [
-        'Fixed WebGL renderer aspect ratio handling in fullscreen preview modal',
-        'Resolved parameter reactivity in US Standard Atmosphere viscosity solver',
+        "Fixed WebGL renderer aspect ratio handling in fullscreen preview modal",
+        "Resolved parameter reactivity in US Standard Atmosphere viscosity solver",
       ],
     },
     {
-      version: 'v0.9.0',
-      date: 'July 28, 2026',
-      badge: 'BETA',
+      version: "v0.9.0",
+      date: "July 28, 2026",
+      badge: "BETA",
       highlights: [
-        'AstroLab & AeroLab multi-physics calculation engine launch',
-        'Jupyter + Obsidian style Engineering Notebook with LaTeX math rendering',
+        "AstroLab & AeroLab multi-physics calculation engine launch",
+        "Jupyter + Obsidian style Engineering Notebook with LaTeX math rendering",
       ],
       features: [
-        'Compressible aerodynamic solver for NACA 4-digit airfoils',
-        'Oblique shockwave & Sutton-Graves hypersonics calculator',
-        'Porkchop plot interplanetary trajectory architect',
+        "Compressible aerodynamic solver for NACA 4-digit airfoils",
+        "Oblique shockwave & Sutton-Graves hypersonics calculator",
+        "Porkchop plot interplanetary trajectory architect",
       ],
       improvements: [
-        'Added dark mode aerospace command center design language',
-        'Optimized WebGL Three.js render loop to 60 FPS on mobile GPUs',
+        "Added dark mode aerospace command center design language",
+        "Optimized WebGL Three.js render loop to 60 FPS on mobile GPUs",
       ],
-      fixes: [
-        'Fixed state persistence key collisions in Zustands storage',
-      ],
+      fixes: ["Fixed state persistence key collisions in Zustands storage"],
     },
   ];
 
@@ -87,7 +85,10 @@ export default function ChangelogPage() {
           {/* Release Timeline */}
           <div className="space-y-8">
             {releases.map((rel, idx) => (
-              <div key={idx} className="bg-[#080E1C] border border-white/10 rounded-xl p-6 space-y-4 shadow-2xl">
+              <div
+                key={idx}
+                className="bg-[#080E1C] border border-white/10 rounded-xl p-6 space-y-4 shadow-2xl"
+              >
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2.5">
                     <Tag className="w-4 h-4 text-cyan-400" />

@@ -1,12 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
 
 interface Engineering3DCanvasProps {
   scrollProgress: number; // 0 to 1
-  activeDomain?: 'aerospace' | 'mechanical' | 'astrospace';
+  activeDomain?: "aerospace" | "mechanical" | "astrospace";
 }
 
-export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'aerospace' }: Engineering3DCanvasProps) {
+export default function Engineering3DCanvas({
+  scrollProgress,
+  activeDomain = "aerospace",
+}: Engineering3DCanvasProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef(scrollProgress);
   const domainRef = useRef(activeDomain);
@@ -34,7 +37,11 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 12);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x040814, 1);
@@ -60,15 +67,35 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     const shape = new THREE.Shape();
     // NACA 2412 profile shape
     const pts = [
-      [1.0, 0.002], [0.8, 0.024], [0.6, 0.045], [0.4, 0.06], [0.2, 0.058], [0.1, 0.045], [0.05, 0.032], [0.0, 0.0],
-      [0.05, -0.012], [0.1, -0.018], [0.2, -0.022], [0.4, -0.02], [0.6, -0.015], [0.8, -0.008], [1.0, -0.002]
+      [1.0, 0.002],
+      [0.8, 0.024],
+      [0.6, 0.045],
+      [0.4, 0.06],
+      [0.2, 0.058],
+      [0.1, 0.045],
+      [0.05, 0.032],
+      [0.0, 0.0],
+      [0.05, -0.012],
+      [0.1, -0.018],
+      [0.2, -0.022],
+      [0.4, -0.02],
+      [0.6, -0.015],
+      [0.8, -0.008],
+      [1.0, -0.002],
     ];
     shape.moveTo((pts[0][0] - 0.3) * 4, pts[0][1] * 4);
     for (let i = 1; i < pts.length; i++) {
       shape.lineTo((pts[i][0] - 0.3) * 4, pts[i][1] * 4);
     }
 
-    const extrudeSettings = { depth: 3.5, bevelEnabled: true, bevelSegments: 3, steps: 2, bevelSize: 0.05, bevelThickness: 0.05 };
+    const extrudeSettings = {
+      depth: 3.5,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      steps: 2,
+      bevelSize: 0.05,
+      bevelThickness: 0.05,
+    };
     const wingGeo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
     wingGeo.center();
 
@@ -84,7 +111,12 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     mainGroup.add(wingMesh);
 
     // Wireframe overlay on wing
-    const wireMat = new THREE.MeshBasicMaterial({ color: 0x0ea5e9, wireframe: true, transparent: true, opacity: 0.3 });
+    const wireMat = new THREE.MeshBasicMaterial({
+      color: 0x0ea5e9,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3,
+    });
     const wireMesh = new THREE.Mesh(wingGeo, wireMat);
     wireMesh.rotation.y = -Math.PI / 4;
     wireMesh.rotation.x = 0.15;
@@ -102,7 +134,7 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
       particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 8;
       particleSpeeds[i] = 0.03 + Math.random() * 0.05;
     }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMat = new THREE.PointsMaterial({
       color: 0x38bdf8,
@@ -130,15 +162,25 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     orbitGroup.position.set(0, 10, 0);
 
     const earthGeo = new THREE.SphereGeometry(1.2, 32, 32);
-    const earthMat = new THREE.MeshStandardMaterial({ color: 0x0f1830, wireframe: true, roughness: 0.5 });
+    const earthMat = new THREE.MeshStandardMaterial({
+      color: 0x0f1830,
+      wireframe: true,
+      roughness: 0.5,
+    });
     const earthMesh = new THREE.Mesh(earthGeo, earthMat);
     orbitGroup.add(earthMesh);
 
     // Ellipse Ring
     const curve = new THREE.EllipseCurve(0, 0, 3.2, 2.0, 0, 2 * Math.PI, false, 0);
     const points = curve.getPoints(64);
-    const ellipseGeo = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(p.x, p.y, 0)));
-    const ellipseMat = new THREE.LineBasicMaterial({ color: 0x0ea5e9, transparent: true, opacity: 0.75 });
+    const ellipseGeo = new THREE.BufferGeometry().setFromPoints(
+      points.map((p) => new THREE.Vector3(p.x, p.y, 0)),
+    );
+    const ellipseMat = new THREE.LineBasicMaterial({
+      color: 0x0ea5e9,
+      transparent: true,
+      opacity: 0.75,
+    });
     const ellipseLine = new THREE.Line(ellipseGeo, ellipseMat);
     ellipseLine.rotation.x = Math.PI / 3;
     orbitGroup.add(ellipseLine);
@@ -153,7 +195,7 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // 5. Animation Loop
     let animId: number;
@@ -181,18 +223,19 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
       camera.position.x = Math.cos(progress * Math.PI * 0.5) * 0.8;
 
       // Rotation of wing geometry
-      wingMesh.rotation.y = -Math.PI / 4 + progress * Math.PI * 0.8 + Math.sin(elapsedTime * 0.5) * 0.05;
+      wingMesh.rotation.y =
+        -Math.PI / 4 + progress * Math.PI * 0.8 + Math.sin(elapsedTime * 0.5) * 0.05;
       wingMesh.rotation.x = 0.15 + Math.cos(elapsedTime * 0.4) * 0.03;
       wireMesh.rotation.copy(wingMesh.rotation);
 
       // Domain-specific spatial transforms
-      if (currentDomain === 'mechanical') {
+      if (currentDomain === "mechanical") {
         beamMesh.position.y = THREE.MathUtils.lerp(beamMesh.position.y, 0, 0.08);
         wingMesh.position.y = THREE.MathUtils.lerp(wingMesh.position.y, -12, 0.08);
         wireMesh.position.y = wingMesh.position.y;
         orbitGroup.position.y = THREE.MathUtils.lerp(orbitGroup.position.y, 12, 0.08);
         beamMesh.rotation.y = elapsedTime * 0.2;
-      } else if (currentDomain === 'astrospace') {
+      } else if (currentDomain === "astrospace") {
         orbitGroup.position.y = THREE.MathUtils.lerp(orbitGroup.position.y, 0, 0.08);
         wingMesh.position.y = THREE.MathUtils.lerp(wingMesh.position.y, -12, 0.08);
         wireMesh.position.y = wingMesh.position.y;
@@ -214,7 +257,7 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     // 6. Cleanup & Disposal
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
 
       wingGeo.dispose();
       wingMat.dispose();
@@ -239,8 +282,7 @@ export default function Engineering3DCanvas({ scrollProgress, activeDomain = 'ae
     <div
       ref={mountRef}
       className="fixed inset-0 pointer-events-none z-0 opacity-70 transition-opacity duration-700"
-      style={{ filter: 'drop-shadow(0 0 40px rgba(14, 165, 233, 0.15))' }}
+      style={{ filter: "drop-shadow(0 0 40px rgba(14, 165, 233, 0.15))" }}
     />
   );
 }
-

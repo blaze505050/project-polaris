@@ -1,22 +1,18 @@
-export type ModelStatus = 'LIVE' | 'PROTOTYPE' | 'RESEARCH' | 'PLANNED';
+export type ModelStatus = "LIVE" | "PROTOTYPE" | "RESEARCH" | "PLANNED";
 
 export type ModelCategory =
-  | 'General PDE'
-  | 'External Aerodynamics'
-  | 'Physics-Informed'
-  | 'Atmospheric'
-  | 'Multi-Physics';
+  "General PDE" | "External Aerodynamics" | "Physics-Informed" | "Atmospheric" | "Multi-Physics";
 
 export type JobState =
-  | 'QUEUED'
-  | 'VALIDATING'
-  | 'PREPROCESSING'
-  | 'RUNNING'
-  | 'POSTPROCESSING'
-  | 'VALIDATING_RESULT'
-  | 'COMPLETED'
-  | 'FAILED'
-  | 'CANCELLED';
+  | "QUEUED"
+  | "VALIDATING"
+  | "PREPROCESSING"
+  | "RUNNING"
+  | "POSTPROCESSING"
+  | "VALIDATING_RESULT"
+  | "COMPLETED"
+  | "FAILED"
+  | "CANCELLED";
 
 export interface ModelCard {
   id: string;
@@ -72,10 +68,10 @@ export interface AirfoilSurrogateInputs {
   maxCamber: number; // e.g. 0.02 (2%)
   camberPos: number; // e.g. 0.4 (40%)
   thickness: number; // e.g. 0.12 (12%)
-  reynolds: number;  // e.g. 3e6
-  mach: number;      // e.g. 0.15
-  aoa: number;       // degrees, e.g. 4.0
-  bcType: 'no-slip' | 'free-slip' | 'farfield-pressure' | 'inlet-outlet';
+  reynolds: number; // e.g. 3e6
+  mach: number; // e.g. 0.15
+  aoa: number; // degrees, e.g. 4.0
+  bcType: "no-slip" | "free-slip" | "farfield-pressure" | "inlet-outlet";
   gridResolution: number;
 }
 
@@ -101,7 +97,8 @@ export interface AirfoilSurrogateResult {
   modelVersion: string;
   executionStatus: string;
   inferenceTimeMs: number;
-  distributionCheck: 'Within training distribution' | 'Near training boundary' | 'Outside known training range';
+  distributionCheck:
+    "Within training distribution" | "Near training boundary" | "Outside known training range";
   uncertaintyAvailable: boolean;
   uncertaintyPct: number | null;
   cl: number;
@@ -194,7 +191,7 @@ export interface ModelRouterRequest {
   domain: string;
   pdeType: string;
   geometryType: string;
-  speedRequirement: 'real-time' | 'interactive' | 'batch';
+  speedRequirement: "real-time" | "interactive" | "batch";
   physicsCategory: ModelCategory;
 }
 
@@ -210,7 +207,7 @@ export interface ModelRouterRecommendation {
 export interface JobSubmissionPayload {
   modelId: string;
   inputs: AirfoilSurrogateInputs;
-  device?: 'auto' | 'cpu' | 'cuda';
+  device?: "auto" | "cpu" | "cuda";
 }
 
 export interface JobStatusResponse {

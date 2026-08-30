@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 // Component to handle automatic scroll management
 export function ScrollToTop() {
@@ -16,7 +16,7 @@ export function ScrollToTop() {
       setTimeout(() => {
         const element = document.getElementById(location.hash.slice(1));
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     } else {
@@ -25,7 +25,7 @@ export function ScrollToTop() {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: isSamePage ? 'smooth' : 'auto'
+        behavior: isSamePage ? "smooth" : "auto",
       });
     }
 

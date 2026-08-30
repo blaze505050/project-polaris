@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { useExperimentStore } from '@/stores/experimentStore';
-import { Download, FileText, Calendar, Tag } from 'lucide-react';
-import { format } from 'date-fns';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useExperimentStore } from "@/stores/experimentStore";
+import { Download, FileText, Calendar, Tag } from "lucide-react";
+import { format } from "date-fns";
 
 export default function AstroLabReportsPage() {
   const experiments = useExperimentStore((state) => state.getAllExperiments());
@@ -196,7 +196,7 @@ export default function AstroLabReportsPage() {
       </div>
       <div class="metadata-item">
         <div class="metadata-label">Generated Date</div>
-        <div class="metadata-value">${format(new Date(selectedExp.timestamp), 'MMMM d, yyyy HH:mm:ss')}</div>
+        <div class="metadata-value">${format(new Date(selectedExp.timestamp), "MMMM d, yyyy HH:mm:ss")}</div>
       </div>
       <div class="metadata-item">
         <div class="metadata-label">Experiment ID</div>
@@ -205,14 +205,18 @@ export default function AstroLabReportsPage() {
     </div>
   </div>
 
-  ${selectedExp.notes ? `
+  ${
+    selectedExp.notes
+      ? `
   <div class="section">
     <h2>Research Notes</h2>
     <div class="notes-box">
-      <p>${selectedExp.notes.replace(/\n/g, '<br>')}</p>
+      <p>${selectedExp.notes.replace(/\n/g, "<br>")}</p>
     </div>
   </div>
-  ` : ''}
+  `
+      : ""
+  }
 
   <div class="section">
     <h2>Input Parameters</h2>
@@ -220,10 +224,10 @@ export default function AstroLabReportsPage() {
       ${Object.entries(selectedExp.parameters)
         .map(([key, value]) => {
           let displayValue = value;
-          if (typeof value === 'number') {
+          if (typeof value === "number") {
             displayValue = value > 1e6 ? value.toExponential(3) : value.toFixed(6);
           } else if (value === null || value === undefined) {
-            displayValue = 'N/A';
+            displayValue = "N/A";
           }
           return `
         <div class="param-row">
@@ -232,7 +236,7 @@ export default function AstroLabReportsPage() {
         </div>
           `;
         })
-        .join('')}
+        .join("")}
     </div>
   </div>
 
@@ -242,10 +246,10 @@ export default function AstroLabReportsPage() {
       ${Object.entries(selectedExp.results)
         .map(([key, value]) => {
           let displayValue = value;
-          if (typeof value === 'number') {
+          if (typeof value === "number") {
             displayValue = value > 1e6 ? value.toExponential(3) : value.toFixed(6);
           } else if (value === null || value === undefined) {
-            displayValue = 'N/A';
+            displayValue = "N/A";
           }
           return `
         <div class="param-row">
@@ -254,19 +258,23 @@ export default function AstroLabReportsPage() {
         </div>
           `;
         })
-        .join('')}
+        .join("")}
     </div>
   </div>
 
-  ${selectedExp.tags && selectedExp.tags.length > 0 ? `
+  ${
+    selectedExp.tags && selectedExp.tags.length > 0
+      ? `
   <div class="section">
     <h2>Tags</h2>
-    <p>${selectedExp.tags.join(', ')}</p>
+    <p>${selectedExp.tags.join(", ")}</p>
   </div>
-  ` : ''}
+  `
+      : ""
+  }
 
   <div class="footer">
-    <p><strong>ASTROLAB Report Generated:</strong> ${format(new Date(), 'MMMM d, yyyy HH:mm:ss')}</p>
+    <p><strong>ASTROLAB Report Generated:</strong> ${format(new Date(), "MMMM d, yyyy HH:mm:ss")}</p>
     <p>This report contains physics-accurate calculations based on established astrophysical principles.</p>
     <p>All equations validated against peer-reviewed references and NASA standards.</p>
     <div class="certification-badge">✓ ISO 9001:2015 Certified | Aerospace Grade</div>
@@ -275,11 +283,11 @@ export default function AstroLabReportsPage() {
 </html>
     `;
 
-    const blob = new Blob([html], { type: 'text/html' });
+    const blob = new Blob([html], { type: "text/html" });
     const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = url;
-    link.download = `astrolab-report-${selectedExp.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.html`;
+    link.download = `astrolab-report-${selectedExp.name.replace(/\s+/g, "-")}-${new Date().toISOString().split("T")[0]}.html`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -315,11 +323,7 @@ export default function AstroLabReportsPage() {
       <Header />
 
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">Experiment Reports</h1>
           <p className="text-slate-400">
             Generate and download detailed reports from your saved experiments.
@@ -338,8 +342,8 @@ export default function AstroLabReportsPage() {
                     onClick={() => setSelectedExp(exp)}
                     className={`w-full text-left p-3 rounded-lg transition-all ${
                       selectedExp?.id === exp.id
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                        ? "bg-blue-600 text-white"
+                        : "bg-slate-700 text-slate-300 hover:bg-slate-600"
                     }`}
                   >
                     <p className="font-medium line-clamp-1">{exp.name}</p>
@@ -360,13 +364,11 @@ export default function AstroLabReportsPage() {
               >
                 <Card className="bg-slate-800 border-slate-700 p-6">
                   <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-white mb-2">
-                      {selectedExp.name}
-                    </h2>
+                    <h2 className="text-2xl font-bold text-white mb-2">{selectedExp.name}</h2>
                     <div className="flex flex-wrap gap-4 text-sm text-slate-400">
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4" />
-                        {format(new Date(selectedExp.timestamp), 'MMM d, yyyy HH:mm')}
+                        {format(new Date(selectedExp.timestamp), "MMM d, yyyy HH:mm")}
                       </div>
                       <div className="flex items-center gap-2">
                         <Tag className="w-4 h-4" />
@@ -391,7 +393,7 @@ export default function AstroLabReportsPage() {
                           <div key={key} className="flex justify-between text-sm">
                             <span className="text-slate-400">{key}</span>
                             <span className="text-cyan-400 font-mono">
-                              {typeof value === 'number'
+                              {typeof value === "number"
                                 ? value > 1e6
                                   ? value.toExponential(2)
                                   : value.toFixed(4)
@@ -411,7 +413,7 @@ export default function AstroLabReportsPage() {
                           <div key={key} className="flex justify-between text-sm">
                             <span className="text-slate-400">{key}</span>
                             <span className="text-green-400 font-mono">
-                              {typeof value === 'number'
+                              {typeof value === "number"
                                 ? value > 1e6
                                   ? value.toExponential(2)
                                   : value.toFixed(4)

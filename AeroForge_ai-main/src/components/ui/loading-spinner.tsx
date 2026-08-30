@@ -7,7 +7,7 @@ interface LoadingSpinnerProps {
 export function LoadingSpinner({
   message = "Loading...",
   className = "min-h-screen flex items-center justify-center",
-  spinnerClassName = "animate-spin rounded-full h-8 w-8 border-b-2 border-primary"
+  spinnerClassName = "animate-spin rounded-full h-8 w-8 border-b-2 border-primary",
 }: LoadingSpinnerProps) {
   return (
     <div className={className}>

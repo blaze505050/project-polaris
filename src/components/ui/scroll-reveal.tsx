@@ -55,7 +55,7 @@ export function ScrollReveal({
           observer.unobserve(el);
         }
       },
-      { threshold, rootMargin: "0px 0px -60px 0px" }
+      { threshold, rootMargin: "0px 0px -60px 0px" },
     );
 
     observer.observe(el);
@@ -118,11 +118,7 @@ export function ScrollReveal({
   // If stagger is set, wrap children with staggered delays
   if (stagger && React.Children.count(children) > 1) {
     return (
-      <div
-        ref={ref}
-        className={cn(className)}
-        {...props}
-      >
+      <div ref={ref} className={cn(className)} {...props}>
         {React.Children.map(children, (child, i) => {
           const childDelay = delay + i * stagger;
           return (
@@ -134,7 +130,9 @@ export function ScrollReveal({
                 transition: [
                   `opacity ${finalDuration}ms cubic-bezier(0.23, 1, 0.32, 1) ${childDelay}ms`,
                   `transform ${finalDuration}ms cubic-bezier(0.23, 1, 0.32, 1) ${childDelay}ms`,
-                  direction === "blur" ? `filter ${finalDuration}ms cubic-bezier(0.23, 1, 0.32, 1) ${childDelay}ms` : "",
+                  direction === "blur"
+                    ? `filter ${finalDuration}ms cubic-bezier(0.23, 1, 0.32, 1) ${childDelay}ms`
+                    : "",
                 ]
                   .filter(Boolean)
                   .join(", "),

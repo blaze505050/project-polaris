@@ -1,6 +1,6 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Copy } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { Copy } from "lucide-react";
 
 interface EquationDisplayProps {
   title: string;
@@ -34,48 +34,48 @@ export default function EquationDisplay({
 
     // Greek letters
     const greekLetters: Record<string, string> = {
-      '\\alpha': 'α',
-      '\\beta': 'β',
-      '\\gamma': 'γ',
-      '\\delta': 'δ',
-      '\\epsilon': 'ε',
-      '\\theta': 'θ',
-      '\\lambda': 'λ',
-      '\\mu': 'μ',
-      '\\pi': 'π',
-      '\\rho': 'ρ',
-      '\\sigma': 'σ',
-      '\\tau': 'τ',
-      '\\omega': 'ω',
-      '\\Omega': 'Ω',
-      '\\Delta': 'Δ',
-      '\\Sigma': 'Σ',
+      "\\alpha": "α",
+      "\\beta": "β",
+      "\\gamma": "γ",
+      "\\delta": "δ",
+      "\\epsilon": "ε",
+      "\\theta": "θ",
+      "\\lambda": "λ",
+      "\\mu": "μ",
+      "\\pi": "π",
+      "\\rho": "ρ",
+      "\\sigma": "σ",
+      "\\tau": "τ",
+      "\\omega": "ω",
+      "\\Omega": "Ω",
+      "\\Delta": "Δ",
+      "\\Sigma": "Σ",
     };
 
     Object.entries(greekLetters).forEach(([tex, unicode]) => {
-      rendered = rendered.replace(new RegExp(tex, 'g'), unicode);
+      rendered = rendered.replace(new RegExp(tex, "g"), unicode);
     });
 
     // Superscripts and subscripts (simplified)
-    rendered = rendered.replace(/\^{([^}]+)}/g, '^($1)');
-    rendered = rendered.replace(/_({[^}]+}|[^}])/g, '_($1)');
+    rendered = rendered.replace(/\^{([^}]+)}/g, "^($1)");
+    rendered = rendered.replace(/_({[^}]+}|[^}])/g, "_($1)");
 
     // Common symbols
-    rendered = rendered.replace(/\\frac{([^}]+)}{([^}]+)}/g, '($1)/($2)');
-    rendered = rendered.replace(/\\sqrt{([^}]+)}/g, '√($1)');
-    rendered = rendered.replace(/\\cdot/g, '·');
-    rendered = rendered.replace(/\\times/g, '×');
-    rendered = rendered.replace(/\\div/g, '÷');
-    rendered = rendered.replace(/\\pm/g, '±');
-    rendered = rendered.replace(/\\approx/g, '≈');
-    rendered = rendered.replace(/\\leq/g, '≤');
-    rendered = rendered.replace(/\\geq/g, '≥');
-    rendered = rendered.replace(/\\neq/g, '≠');
-    rendered = rendered.replace(/\\infty/g, '∞');
-    rendered = rendered.replace(/\\sum/g, '∑');
-    rendered = rendered.replace(/\\int/g, '∫');
-    rendered = rendered.replace(/\\partial/g, '∂');
-    rendered = rendered.replace(/\\nabla/g, '∇');
+    rendered = rendered.replace(/\\frac{([^}]+)}{([^}]+)}/g, "($1)/($2)");
+    rendered = rendered.replace(/\\sqrt{([^}]+)}/g, "√($1)");
+    rendered = rendered.replace(/\\cdot/g, "·");
+    rendered = rendered.replace(/\\times/g, "×");
+    rendered = rendered.replace(/\\div/g, "÷");
+    rendered = rendered.replace(/\\pm/g, "±");
+    rendered = rendered.replace(/\\approx/g, "≈");
+    rendered = rendered.replace(/\\leq/g, "≤");
+    rendered = rendered.replace(/\\geq/g, "≥");
+    rendered = rendered.replace(/\\neq/g, "≠");
+    rendered = rendered.replace(/\\infty/g, "∞");
+    rendered = rendered.replace(/\\sum/g, "∑");
+    rendered = rendered.replace(/\\int/g, "∫");
+    rendered = rendered.replace(/\\partial/g, "∂");
+    rendered = rendered.replace(/\\nabla/g, "∇");
 
     return rendered;
   };
@@ -104,9 +104,7 @@ export default function EquationDisplay({
       <div className="p-6 bg-[#0B0E14]/30">
         <div className="font-mono text-center mb-4">
           {displayMode ? (
-            <div className="text-lg text-[#00F0FF] leading-relaxed">
-              {renderLatex(latex)}
-            </div>
+            <div className="text-lg text-[#00F0FF] leading-relaxed">{renderLatex(latex)}</div>
           ) : (
             <div className="text-sm text-[#00F0FF] leading-relaxed inline-block">
               {renderLatex(latex)}

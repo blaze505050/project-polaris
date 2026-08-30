@@ -122,7 +122,12 @@ function ShowcasePage() {
             <Plus className="size-3.5 mr-1" />
             Submit Your Project
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40"
+          >
             <Link to="/projects">Explore Build Squads</Link>
           </Button>
         </div>
@@ -174,7 +179,9 @@ function ShowcasePage() {
                       <span className="text-muted-foreground text-[11px]">{p.team}</span>
                     </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">{p.title}</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold font-display text-foreground">
+                      {p.title}
+                    </h3>
                     <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed font-body">
                       {p.summary}
                     </p>
@@ -186,7 +193,11 @@ function ShowcasePage() {
                       <span>Verified Artifact</span>
                     </span>
                     <div className="flex items-center gap-2">
-                      <Button asChild size="sm" className="h-8 px-3.5 text-xs font-mono font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg">
+                      <Button
+                        asChild
+                        size="sm"
+                        className="h-8 px-3.5 text-xs font-mono font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg"
+                      >
                         <Link to={p.link || "/projects"} className="flex items-center gap-1">
                           <span>Live Demo</span>
                           <ArrowRight className="size-3 text-primary" />
@@ -211,9 +222,12 @@ function ShowcasePage() {
             >
               ✕ Close
             </button>
-            <h3 className="text-xl font-bold font-display text-foreground mb-1">Submit Your Project</h3>
+            <h3 className="text-xl font-bold font-display text-foreground mb-1">
+              Submit Your Project
+            </h3>
             <p className="text-xs text-muted-foreground mb-6 font-body">
-              Submit your space, physics, software, or hardware project to be peer-reviewed and featured on the Polaris Showcase.
+              Submit your space, physics, software, or hardware project to be peer-reviewed and
+              featured on the Polaris Showcase.
             </p>
             <ProjectSubmissionForm onSuccess={() => setShowSubmitModal(false)} />
           </div>

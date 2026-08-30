@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { CheckCircle, AlertCircle, XCircle, RefreshCw } from 'lucide-react';
-import QualityAssuranceService, { ValidationResult } from '@/services/qualityAssuranceService';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { CheckCircle, AlertCircle, XCircle, RefreshCw } from "lucide-react";
+import QualityAssuranceService, { ValidationResult } from "@/services/qualityAssuranceService";
 
 export default function QualityAssuranceDashboard() {
   const [results, setResults] = useState<ValidationResult[]>([]);
@@ -22,26 +22,26 @@ export default function QualityAssuranceDashboard() {
     runQA();
   }, []);
 
-  const passed = results.filter((r) => r.status === 'pass').length;
-  const failed = results.filter((r) => r.status === 'fail').length;
-  const warnings = results.filter((r) => r.status === 'warning').length;
+  const passed = results.filter((r) => r.status === "pass").length;
+  const failed = results.filter((r) => r.status === "fail").length;
+  const warnings = results.filter((r) => r.status === "warning").length;
   const total = results.length;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'pass':
+      case "pass":
         return <CheckCircle className="w-5 h-5 text-aerospace-success" />;
-      case 'fail':
+      case "fail":
         return <XCircle className="w-5 h-5 text-aerospace-danger" />;
-      case 'warning':
+      case "warning":
         return <AlertCircle className="w-5 h-5 text-aerospace-warning" />;
       default:
         return null;
     }
   };
 
-  const overallStatus = failed === 0 ? 'Production Ready' : 'Requires Attention';
-  const overallColor = failed === 0 ? 'text-aerospace-success' : 'text-aerospace-danger';
+  const overallStatus = failed === 0 ? "Production Ready" : "Requires Attention";
+  const overallColor = failed === 0 ? "text-aerospace-success" : "text-aerospace-danger";
 
   return (
     <div className="w-full space-y-6">
@@ -55,8 +55,8 @@ export default function QualityAssuranceDashboard() {
           disabled={isRunning}
           className="px-4 py-2 bg-aerospace-blue text-white font-mono text-sm font-bold rounded-lg hover:bg-aerospace-accent disabled:opacity-50 transition-colors flex items-center gap-2"
         >
-          <RefreshCw className={`w-4 h-4 ${isRunning ? 'animate-spin' : ''}`} />
-          {isRunning ? 'Running...' : 'Run QA Suite'}
+          <RefreshCw className={`w-4 h-4 ${isRunning ? "animate-spin" : ""}`} />
+          {isRunning ? "Running..." : "Run QA Suite"}
         </button>
       </div>
 
@@ -74,7 +74,9 @@ export default function QualityAssuranceDashboard() {
             </p>
           </div>
           <div className="text-right">
-            <p className="text-3xl font-bold text-aerospace-blue">{passed}/{total}</p>
+            <p className="text-3xl font-bold text-aerospace-blue">
+              {passed}/{total}
+            </p>
             <p className="text-xs text-foreground/60 font-mono">Tests Passed</p>
           </div>
         </div>
@@ -89,7 +91,7 @@ export default function QualityAssuranceDashboard() {
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${(passed / total) * 100}%` }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+              transition={{ duration: 1, ease: "easeOut" }}
               className="h-full bg-gradient-to-r from-aerospace-success to-aerospace-blue"
             />
           </div>
@@ -99,9 +101,24 @@ export default function QualityAssuranceDashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Passed', value: passed, color: 'text-aerospace-success', bg: 'bg-aerospace-success/10' },
-          { label: 'Warnings', value: warnings, color: 'text-aerospace-warning', bg: 'bg-aerospace-warning/10' },
-          { label: 'Failed', value: failed, color: 'text-aerospace-danger', bg: 'bg-aerospace-danger/10' },
+          {
+            label: "Passed",
+            value: passed,
+            color: "text-aerospace-success",
+            bg: "bg-aerospace-success/10",
+          },
+          {
+            label: "Warnings",
+            value: warnings,
+            color: "text-aerospace-warning",
+            bg: "bg-aerospace-warning/10",
+          },
+          {
+            label: "Failed",
+            value: failed,
+            color: "text-aerospace-danger",
+            bg: "bg-aerospace-danger/10",
+          },
         ].map((stat, idx) => (
           <motion.div
             key={idx}

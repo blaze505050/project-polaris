@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Target, Lock, Lightbulb, CheckCircle, ArrowRight } from 'lucide-react';
-import { BaseCrudService } from '@/integrations';
-import { SpaceChallenges } from '@/entities';
-import { Image } from '@/components/ui/image';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Target, Lock, Lightbulb, CheckCircle, ArrowRight } from "lucide-react";
+import { BaseCrudService } from "@/integrations";
+import { SpaceChallenges } from "@/entities";
+import { Image } from "@/components/ui/image";
 
 interface ChallengeWithProgress extends SpaceChallenges {
   completed?: boolean;
@@ -15,21 +15,23 @@ export default function SpaceChallengesBoard() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedChallenge, setSelectedChallenge] = useState<ChallengeWithProgress | null>(null);
   const [showHint, setShowHint] = useState(false);
-  const [filterDifficulty, setFilterDifficulty] = useState<string>('all');
+  const [filterDifficulty, setFilterDifficulty] = useState<string>("all");
 
   useEffect(() => {
     const loadChallenges = async () => {
       try {
-        const result = await BaseCrudService.getAll<SpaceChallenges>('spacechallenges', [], { limit: 50 });
+        const result = await BaseCrudService.getAll<SpaceChallenges>("spacechallenges", [], {
+          limit: 50,
+        });
         setChallenges(
           result.items.map((c) => ({
             ...c,
             completed: false,
             progress: 0,
-          }))
+          })),
         );
       } catch (error) {
-        console.error('Error loading challenges:', error);
+        console.error("Error loading challenges:", error);
       } finally {
         setIsLoading(false);
       }
@@ -38,20 +40,20 @@ export default function SpaceChallengesBoard() {
   }, []);
 
   const filteredChallenges =
-    filterDifficulty === 'all'
+    filterDifficulty === "all"
       ? challenges
       : challenges.filter((c) => c.difficultyLevel === filterDifficulty);
 
   const difficultyColors: Record<string, string> = {
-    Beginner: 'text-aerospace-success',
-    Intermediate: 'text-aerospace-warning',
-    Advanced: 'text-aerospace-danger',
+    Beginner: "text-aerospace-success",
+    Intermediate: "text-aerospace-warning",
+    Advanced: "text-aerospace-danger",
   };
 
   const difficultyBgColors: Record<string, string> = {
-    Beginner: 'bg-aerospace-success/10 border-aerospace-success/30',
-    Intermediate: 'bg-aerospace-warning/10 border-aerospace-warning/30',
-    Advanced: 'bg-aerospace-danger/10 border-aerospace-danger/30',
+    Beginner: "bg-aerospace-success/10 border-aerospace-success/30",
+    Intermediate: "bg-aerospace-warning/10 border-aerospace-warning/30",
+    Advanced: "bg-aerospace-danger/10 border-aerospace-danger/30",
   };
 
   return (
@@ -69,17 +71,17 @@ export default function SpaceChallengesBoard() {
 
         {/* Difficulty Filter */}
         <div className="flex gap-2 flex-wrap">
-          {['all', 'Beginner', 'Intermediate', 'Advanced'].map((level) => (
+          {["all", "Beginner", "Intermediate", "Advanced"].map((level) => (
             <button
               key={level}
               onClick={() => setFilterDifficulty(level)}
               className={`px-4 py-2 rounded-lg font-mono text-sm transition-colors ${
                 filterDifficulty === level
-                  ? 'bg-aerospace-blue text-white'
-                  : 'bg-primary border border-secondary/30 text-foreground hover:border-aerospace-blue/50'
+                  ? "bg-aerospace-blue text-white"
+                  : "bg-primary border border-secondary/30 text-foreground hover:border-aerospace-blue/50"
               }`}
             >
-              {level === 'all' ? 'All Levels' : level}
+              {level === "all" ? "All Levels" : level}
             </button>
           ))}
         </div>
@@ -106,8 +108,8 @@ export default function SpaceChallengesBoard() {
               onClick={() => setSelectedChallenge(challenge)}
               className={`relative p-6 rounded-xl border-2 cursor-pointer transition-all group ${
                 selectedChallenge?._id === challenge._id
-                  ? 'border-aerospace-blue bg-aerospace-blue/10'
-                  : 'border-secondary/30 bg-primary hover:border-aerospace-blue/50'
+                  ? "border-aerospace-blue bg-aerospace-blue/10"
+                  : "border-secondary/30 bg-primary hover:border-aerospace-blue/50"
               }`}
             >
               {/* Image */}
@@ -126,8 +128,8 @@ export default function SpaceChallengesBoard() {
               {/* Difficulty Badge */}
               <div
                 className={`inline-block px-3 py-1 rounded-full text-xs font-mono mb-3 border ${
-                  difficultyBgColors[challenge.difficultyLevel || 'Beginner']
-                } ${difficultyColors[challenge.difficultyLevel || 'Beginner']}`}
+                  difficultyBgColors[challenge.difficultyLevel || "Beginner"]
+                } ${difficultyColors[challenge.difficultyLevel || "Beginner"]}`}
               >
                 {challenge.difficultyLevel}
               </div>
@@ -146,7 +148,9 @@ export default function SpaceChallengesBoard() {
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-foreground/60 font-mono">Progress</span>
-                  <span className="text-xs text-aerospace-blue font-mono">{challenge.progress || 0}%</span>
+                  <span className="text-xs text-aerospace-blue font-mono">
+                    {challenge.progress || 0}%
+                  </span>
                 </div>
                 <div className="w-full h-2 bg-primary/50 rounded-full overflow-hidden">
                   <div
@@ -210,7 +214,7 @@ export default function SpaceChallengesBoard() {
               className="flex items-center gap-2 text-aerospace-blue hover:text-aerospace-accent transition-colors font-mono text-sm"
             >
               <Lightbulb className="w-4 h-4" />
-              {showHint ? 'Hide Hint' : 'Show Hint'}
+              {showHint ? "Hide Hint" : "Show Hint"}
             </button>
             {showHint && selectedChallenge.hints && (
               <motion.div

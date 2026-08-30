@@ -35,8 +35,8 @@ export interface SimulationConfig {
   reynoldsNumber: number;
   machNumber: number;
   angleOfAttack: number;
-  turbulenceModel: 'k-epsilon' | 'k-omega' | 'spalart-allmaras' | 'les';
-  solverType: 'RANS' | 'URANS' | 'DES' | 'DNS';
+  turbulenceModel: "k-epsilon" | "k-omega" | "spalart-allmaras" | "les";
+  solverType: "RANS" | "URANS" | "DES" | "DNS";
   timeStep: number;
   iterations: number;
 }
@@ -75,7 +75,7 @@ class CFDPhysicsEngine {
     const speedOfSound = 343; // m/s
 
     // Adjust for Mach number effects
-    const machAdjustedDensity = density * (1 + 0.2 * config.machNumber ** 2) ** (-2.5);
+    const machAdjustedDensity = density * (1 + 0.2 * config.machNumber ** 2) ** -2.5;
 
     return {
       density: machAdjustedDensity,
@@ -119,9 +119,9 @@ class CFDPhysicsEngine {
       nodes,
       elements,
       boundaries: new Map([
-        ['inlet', [0]],
-        ['outlet', [nodes.length - 1]],
-        ['wall', Array.from({ length: elementsPerLayer }, (_, i) => i)],
+        ["inlet", [0]],
+        ["outlet", [nodes.length - 1]],
+        ["wall", Array.from({ length: elementsPerLayer }, (_, i) => i)],
       ]),
     };
   }
@@ -182,9 +182,9 @@ class CFDPhysicsEngine {
       this.solvePressureCorrection();
 
       // Turbulence equations
-      if (this.config.turbulenceModel === 'k-omega') {
+      if (this.config.turbulenceModel === "k-omega") {
         this.solveKOmegaEquations();
-      } else if (this.config.turbulenceModel === 'k-epsilon') {
+      } else if (this.config.turbulenceModel === "k-epsilon") {
         this.solveKEpsilonEquations();
       }
 
@@ -216,17 +216,20 @@ class CFDPhysicsEngine {
       // Convective term with upwinding for stability
       let convection: number;
       if (this.flowField.u[i] >= 0) {
-        convection = this.flowField.u[i] * (this.flowField.u[i] - this.flowField.u[i - 1]) / dx;
+        convection = (this.flowField.u[i] * (this.flowField.u[i] - this.flowField.u[i - 1])) / dx;
       } else {
-        convection = this.flowField.u[i] * (this.flowField.u[i + 1] - this.flowField.u[i]) / dx;
+        convection = (this.flowField.u[i] * (this.flowField.u[i + 1] - this.flowField.u[i])) / dx;
       }
 
       // Diffusive term (viscous forces)
-      const diffusion = kinematicViscosity * 
-                       (this.flowField.u[i + 1] - 2 * this.flowField.u[i] + this.flowField.u[i - 1]) / (dx * dx);
+      const diffusion =
+        (kinematicViscosity *
+          (this.flowField.u[i + 1] - 2 * this.flowField.u[i] + this.flowField.u[i - 1])) /
+        (dx * dx);
 
       // Pressure gradient term
-      const pressureGradient = (this.flowField.p[i + 1] - this.flowField.p[i - 1]) / (2 * dx * this.fluidProps.density);
+      const pressureGradient =
+        (this.flowField.p[i + 1] - this.flowField.p[i - 1]) / (2 * dx * this.fluidProps.density);
 
       // Update velocity with proper time stepping
       this.flowField.u[i] += timeStep * (diffusion - convection - pressureGradient);
@@ -241,8 +244,9 @@ class CFDPhysicsEngine {
 
     for (let i = 1; i < n - 1; i++) {
       // Laplacian of pressure
-      const laplacian = (this.flowField.p[i + 1] - 2 * this.flowField.p[i] + this.flowField.p[i - 1]) / (dx * dx);
-      
+      const laplacian =
+        (this.flowField.p[i + 1] - 2 * this.flowField.p[i] + this.flowField.p[i - 1]) / (dx * dx);
+
       // Divergence of velocity (continuity error)
       const divergence = (this.flowField.u[i + 1] - this.flowField.u[i - 1]) / (2 * dx);
 
@@ -271,18 +275,27 @@ class CFDPhysicsEngine {
       const production = this.fluidProps.density * nuT * S * S;
 
       // k equation
-      const k_diffusion = (nuT / sigma_k) * (this.flowField.turbulence.k[i + 1] - 2 * k + this.flowField.turbulence.k[i - 1]) / (dx * dx);
+      const k_diffusion =
+        ((nuT / sigma_k) *
+          (this.flowField.turbulence.k[i + 1] - 2 * k + this.flowField.turbulence.k[i - 1])) /
+        (dx * dx);
       const k_dissipation = beta * this.fluidProps.density * k * omega;
       this.flowField.turbulence.k[i] += 0.01 * (production + k_diffusion - k_dissipation);
 
       // omega equation
-      const omega_diffusion = (nuT / sigma_omega) * (this.flowField.turbulence.omega[i + 1] - 2 * omega + this.flowField.turbulence.omega[i - 1]) / (dx * dx);
-      const omega_production = gamma * production / (nuT + 1e-10);
+      const omega_diffusion =
+        ((nuT / sigma_omega) *
+          (this.flowField.turbulence.omega[i + 1] -
+            2 * omega +
+            this.flowField.turbulence.omega[i - 1])) /
+        (dx * dx);
+      const omega_production = (gamma * production) / (nuT + 1e-10);
       const omega_dissipation = beta * this.fluidProps.density * omega * omega;
-      this.flowField.turbulence.omega[i] += 0.01 * (omega_production + omega_diffusion - omega_dissipation);
+      this.flowField.turbulence.omega[i] +=
+        0.01 * (omega_production + omega_diffusion - omega_dissipation);
 
       // Update turbulent viscosity
-      this.flowField.turbulence.nuT[i] = this.fluidProps.density * k / Math.max(omega, 1e-10);
+      this.flowField.turbulence.nuT[i] = (this.fluidProps.density * k) / Math.max(omega, 1e-10);
     }
   }
 
@@ -299,22 +312,31 @@ class CFDPhysicsEngine {
     for (let i = 1; i < n - 1; i++) {
       const k = this.flowField.turbulence.k[i];
       const epsilon = this.flowField.turbulence.epsilon[i];
-      const nuT = this.fluidProps.density * c_mu * k * k / Math.max(epsilon, 1e-10);
+      const nuT = (this.fluidProps.density * c_mu * k * k) / Math.max(epsilon, 1e-10);
 
       // Production term
       const S = Math.abs((this.flowField.u[i + 1] - this.flowField.u[i - 1]) / (2 * dx));
       const production = nuT * S * S;
 
       // k equation
-      const k_diffusion = ((this.fluidProps.viscosity + nuT / sigma_k) * (this.flowField.turbulence.k[i + 1] - 2 * k + this.flowField.turbulence.k[i - 1])) / (dx * dx);
+      const k_diffusion =
+        ((this.fluidProps.viscosity + nuT / sigma_k) *
+          (this.flowField.turbulence.k[i + 1] - 2 * k + this.flowField.turbulence.k[i - 1])) /
+        (dx * dx);
       const k_dissipation = epsilon;
       this.flowField.turbulence.k[i] += 0.01 * (production + k_diffusion - k_dissipation);
 
       // epsilon equation
-      const epsilon_diffusion = ((this.fluidProps.viscosity + nuT / sigma_epsilon) * (this.flowField.turbulence.epsilon[i + 1] - 2 * epsilon + this.flowField.turbulence.epsilon[i - 1])) / (dx * dx);
-      const epsilon_production = c1_epsilon * epsilon / k * production;
-      const epsilon_dissipation = c2_epsilon * epsilon * epsilon / k;
-      this.flowField.turbulence.epsilon[i] += 0.01 * (epsilon_production + epsilon_diffusion - epsilon_dissipation);
+      const epsilon_diffusion =
+        ((this.fluidProps.viscosity + nuT / sigma_epsilon) *
+          (this.flowField.turbulence.epsilon[i + 1] -
+            2 * epsilon +
+            this.flowField.turbulence.epsilon[i - 1])) /
+        (dx * dx);
+      const epsilon_production = ((c1_epsilon * epsilon) / k) * production;
+      const epsilon_dissipation = (c2_epsilon * epsilon * epsilon) / k;
+      this.flowField.turbulence.epsilon[i] +=
+        0.01 * (epsilon_production + epsilon_diffusion - epsilon_dissipation);
 
       this.flowField.turbulence.nuT[i] = nuT;
     }
@@ -335,10 +357,14 @@ class CFDPhysicsEngine {
       continuityRes += Math.abs(div);
 
       // Momentum residual (Navier-Stokes equation)
-      const convection = this.flowField.u[i] * (this.flowField.u[i + 1] - this.flowField.u[i - 1]) / (2 * dx);
-      const diffusion = kinematicViscosity * 
-                       (this.flowField.u[i + 1] - 2 * this.flowField.u[i] + this.flowField.u[i - 1]) / (dx * dx);
-      const pressureGradient = (this.flowField.p[i + 1] - this.flowField.p[i - 1]) / (2 * dx * this.fluidProps.density);
+      const convection =
+        (this.flowField.u[i] * (this.flowField.u[i + 1] - this.flowField.u[i - 1])) / (2 * dx);
+      const diffusion =
+        (kinematicViscosity *
+          (this.flowField.u[i + 1] - 2 * this.flowField.u[i] + this.flowField.u[i - 1])) /
+        (dx * dx);
+      const pressureGradient =
+        (this.flowField.p[i + 1] - this.flowField.p[i - 1]) / (2 * dx * this.fluidProps.density);
 
       const momentumEquation = convection + pressureGradient - diffusion;
       momentumRes += Math.abs(momentumEquation);
@@ -371,7 +397,7 @@ class CFDPhysicsEngine {
     let wallShearStress = 0;
     let pressureIntegral = 0;
 
-    const wallIndices = this.meshData.boundaries.get('wall') || [];
+    const wallIndices = this.meshData.boundaries.get("wall") || [];
     const n = this.flowField.u.length;
     const dx = 2 / Math.sqrt(n);
 
@@ -381,14 +407,14 @@ class CFDPhysicsEngine {
         // Pressure coefficient integration
         const pressureDiff = this.flowField.p[idx] - 101325;
         pressureIntegral += pressureDiff;
-        
+
         // Drag force from pressure (normal stress)
         dragForce += pressureDiff * dx;
-        
+
         // Lift force from pressure (perpendicular to flow)
         const angleRad = (this.config.angleOfAttack * Math.PI) / 180;
         liftForce += pressureDiff * Math.sin(angleRad) * dx;
-        
+
         // Wall shear stress (viscous drag)
         if (idx + 1 < this.flowField.u.length) {
           const velocityGradient = (this.flowField.u[idx + 1] - this.flowField.u[idx]) / dx;
@@ -411,9 +437,10 @@ class CFDPhysicsEngine {
     const pressureCoefficient = pressureIntegral / (wallIndices.length * dynamicPressure);
 
     // Calculate convergence metric with exponential smoothing
-    const convergence = Math.max(0, Math.min(100, 
-      100 * (1 - Math.exp(-this.convergenceHistory.length / 20))
-    ));
+    const convergence = Math.max(
+      0,
+      Math.min(100, 100 * (1 - Math.exp(-this.convergenceHistory.length / 20))),
+    );
 
     return {
       dragCoefficient,

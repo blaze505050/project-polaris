@@ -1,9 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Download, Settings, Satellite, Eye, BarChart3, Zap, Play, Pause } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowLeft,
+  Download,
+  Settings,
+  Satellite,
+  Eye,
+  BarChart3,
+  Zap,
+  Play,
+  Pause,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 interface ConstellationData {
   id: string;
@@ -29,7 +39,7 @@ interface SatellitePoint {
 export default function AstroLabSatelliteConstellationPage() {
   const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [selectedShell, setSelectedShell] = useState<string>('LEO');
+  const [selectedShell, setSelectedShell] = useState<string>("LEO");
   const [rotation, setRotation] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [showCoverage, setShowCoverage] = useState(true);
@@ -38,36 +48,36 @@ export default function AstroLabSatelliteConstellationPage() {
 
   const constellations: ConstellationData[] = [
     {
-      id: 'leo',
-      name: 'LEO Constellation',
+      id: "leo",
+      name: "LEO Constellation",
       altitude: 550,
-      shell: 'LEO',
+      shell: "LEO",
       count: 12000,
-      color: '#00F0FF',
+      color: "#00F0FF",
       coverage: 99,
       planes: 72,
       satsPerPlane: 22,
       inclination: 53,
     },
     {
-      id: 'meo',
-      name: 'MEO Constellation',
+      id: "meo",
+      name: "MEO Constellation",
       altitude: 20200,
-      shell: 'MEO',
+      shell: "MEO",
       count: 600,
-      color: '#F59E0B',
+      color: "#F59E0B",
       coverage: 95,
       planes: 6,
       satsPerPlane: 100,
       inclination: 55,
     },
     {
-      id: 'geo',
-      name: 'GEO Ring',
+      id: "geo",
+      name: "GEO Ring",
       altitude: 35786,
-      shell: 'GEO',
+      shell: "GEO",
       count: 500,
-      color: '#A78BFA',
+      color: "#A78BFA",
       coverage: 100,
       planes: 1,
       satsPerPlane: 500,
@@ -75,7 +85,8 @@ export default function AstroLabSatelliteConstellationPage() {
     },
   ];
 
-  const currentConstellation = constellations.find(c => c.shell === selectedShell) || constellations[0];
+  const currentConstellation =
+    constellations.find((c) => c.shell === selectedShell) || constellations[0];
 
   // Generate satellite positions
   const satellites = useMemo(() => {
@@ -89,7 +100,7 @@ export default function AstroLabSatelliteConstellationPage() {
 
       for (let slot = 0; slot < currentConstellation.satsPerPlane; slot++) {
         const slotAngle = (slot / currentConstellation.satsPerPlane) * Math.PI * 2;
-        
+
         // Position in orbital plane
         const x_orb = orbitRadius * Math.cos(slotAngle);
         const y_orb = orbitRadius * Math.sin(slotAngle);
@@ -113,7 +124,7 @@ export default function AstroLabSatelliteConstellationPage() {
 
   useEffect(() => {
     if (!isRunning) return;
-    const interval = setInterval(() => setRotation(r => (r + 0.5) % 360), 50);
+    const interval = setInterval(() => setRotation((r) => (r + 0.5) % 360), 50);
     return () => clearInterval(interval);
   }, [isRunning]);
 
@@ -121,34 +132,34 @@ export default function AstroLabSatelliteConstellationPage() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const width = canvas.width;
     const height = canvas.height;
     const centerX = width / 2;
     const centerY = height / 2;
-    const scale = Math.min(width, height) / (currentConstellation.altitude * 4) * zoomLevel;
+    const scale = (Math.min(width, height) / (currentConstellation.altitude * 4)) * zoomLevel;
 
     // Background
     const bgGradient = ctx.createLinearGradient(0, 0, width, height);
-    bgGradient.addColorStop(0, '#0B0E14');
-    bgGradient.addColorStop(1, '#131924');
+    bgGradient.addColorStop(0, "#0B0E14");
+    bgGradient.addColorStop(1, "#131924");
     ctx.fillStyle = bgGradient;
     ctx.fillRect(0, 0, width, height);
 
     // Stars
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = "#FFFFFF";
     ctx.globalAlpha = 0.6;
     for (let i = 0; i < 300; i++) {
-      const x = Math.sin(i * 12.9898) * 43758.5453 % width;
-      const y = Math.cos(i * 78.233) * 43758.5453 % height;
+      const x = (Math.sin(i * 12.9898) * 43758.5453) % width;
+      const y = (Math.cos(i * 78.233) * 43758.5453) % height;
       ctx.fillRect(x, y, 1.5, 1.5);
     }
     ctx.globalAlpha = 1;
 
     // Earth
-    ctx.fillStyle = '#1a5a7a';
+    ctx.fillStyle = "#1a5a7a";
     ctx.beginPath();
     ctx.arc(centerX, centerY, 6371 * scale, 0, Math.PI * 2);
     ctx.fill();
@@ -168,7 +179,7 @@ export default function AstroLabSatelliteConstellationPage() {
     ctx.fillStyle = currentConstellation.color;
     ctx.globalAlpha = 0.8;
 
-    satellites.forEach(sat => {
+    satellites.forEach((sat) => {
       // Apply rotation
       const rot_rad = (rotation * Math.PI) / 180;
       const x_rot = sat.x * Math.cos(rot_rad) - sat.y * Math.sin(rot_rad);
@@ -203,45 +214,62 @@ export default function AstroLabSatelliteConstellationPage() {
       satellites: satellites.length,
       coverage: currentConstellation.coverage,
     };
-    
+
     const csv = [
-      ['Constellation Data'],
-      ['Name', currentConstellation.name],
-      ['Altitude', `${currentConstellation.altitude} km`],
-      ['Total Satellites', currentConstellation.count],
-      ['Coverage', `${currentConstellation.coverage}%`],
-      ['Orbital Planes', currentConstellation.planes],
-      ['Sats per Plane', currentConstellation.satsPerPlane],
-      ['Inclination', `${currentConstellation.inclination}°`],
-    ].map(row => row.join(',')).join('\n');
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
+      ["Constellation Data"],
+      ["Name", currentConstellation.name],
+      ["Altitude", `${currentConstellation.altitude} km`],
+      ["Total Satellites", currentConstellation.count],
+      ["Coverage", `${currentConstellation.coverage}%`],
+      ["Orbital Planes", currentConstellation.planes],
+      ["Sats per Plane", currentConstellation.satsPerPlane],
+      ["Inclination", `${currentConstellation.inclination}°`],
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = `constellation-${new Date().toISOString().split('T')[0]}.csv`;
+    a.download = `constellation-${new Date().toISOString().split("T")[0]}.csv`;
     a.click();
   };
 
   return (
     <div className="min-h-screen bg-[#0B0E14] text-foreground flex flex-col">
       <Header />
-      
+
       <main className="flex-1 w-full max-w-[120rem] mx-auto px-6 py-8">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
           {/* Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <button onClick={() => navigate('/astrolab')} className="p-2 hover:bg-[#131924] rounded-lg transition">
+              <button
+                onClick={() => navigate("/astrolab")}
+                className="p-2 hover:bg-[#131924] rounded-lg transition"
+              >
                 <ArrowLeft size={20} className="text-[#00F0FF]" />
               </button>
               <div>
-                <h1 className="text-4xl font-bold text-[#00F0FF] font-mono">Satellite Constellation Mapper</h1>
-                <p className="text-secondary-foreground text-sm">Real-time orbital shell visualization</p>
+                <h1 className="text-4xl font-bold text-[#00F0FF] font-mono">
+                  Satellite Constellation Mapper
+                </h1>
+                <p className="text-secondary-foreground text-sm">
+                  Real-time orbital shell visualization
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={handleExport} className="p-2 hover:bg-[#131924] rounded-lg transition" title="Export data">
+              <button
+                onClick={handleExport}
+                className="p-2 hover:bg-[#131924] rounded-lg transition"
+                title="Export data"
+              >
                 <Download size={20} className="text-[#00F0FF]" />
               </button>
               <button className="p-2 hover:bg-[#131924] rounded-lg transition" title="Settings">
@@ -254,12 +282,7 @@ export default function AstroLabSatelliteConstellationPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3">
               <div className="bg-[#131924]/60 backdrop-blur-md border border-[#00F0FF33] rounded-lg overflow-hidden">
-                <canvas
-                  ref={canvasRef}
-                  width={800}
-                  height={600}
-                  className="w-full"
-                />
+                <canvas ref={canvasRef} width={800} height={600} className="w-full" />
               </div>
 
               {/* Controls */}
@@ -269,14 +292,14 @@ export default function AstroLabSatelliteConstellationPage() {
                   className="flex items-center justify-center gap-2 px-4 py-2 bg-[#00F0FF]/20 text-[#00F0FF] border border-[#00F0FF] rounded-lg hover:bg-[#00F0FF]/30 transition font-mono text-sm"
                 >
                   {isRunning ? <Pause size={16} /> : <Play size={16} />}
-                  {isRunning ? 'Pause' : 'Play'}
+                  {isRunning ? "Pause" : "Play"}
                 </button>
                 <button
                   onClick={() => setShowCoverage(!showCoverage)}
                   className={`flex items-center justify-center gap-2 px-4 py-2 border rounded-lg transition font-mono text-sm ${
                     showCoverage
-                      ? 'bg-[#10B981]/20 text-[#10B981] border-[#10B981]'
-                      : 'bg-[#475569]/20 text-secondary-foreground border-[#475569]'
+                      ? "bg-[#10B981]/20 text-[#10B981] border-[#10B981]"
+                      : "bg-[#475569]/20 text-secondary-foreground border-[#475569]"
                   }`}
                 >
                   <Eye size={16} />
@@ -303,21 +326,26 @@ export default function AstroLabSatelliteConstellationPage() {
               <div className="bg-[#131924]/60 backdrop-blur-md border border-[#00F0FF33] rounded-lg p-4">
                 <h3 className="text-sm font-mono font-bold text-[#00F0FF] mb-3">Constellations</h3>
                 <div className="space-y-2">
-                  {constellations.map(const_data => (
+                  {constellations.map((const_data) => (
                     <button
                       key={const_data.id}
                       onClick={() => setSelectedShell(const_data.shell)}
                       className={`w-full text-left px-3 py-2 rounded text-xs font-mono transition ${
                         selectedShell === const_data.shell
-                          ? 'bg-[#00F0FF]/30 border border-[#00F0FF] text-[#00F0FF]'
-                          : 'bg-[#0B0E14]/50 border border-[#475569] text-secondary-foreground hover:border-[#00F0FF]'
+                          ? "bg-[#00F0FF]/30 border border-[#00F0FF] text-[#00F0FF]"
+                          : "bg-[#0B0E14]/50 border border-[#475569] text-secondary-foreground hover:border-[#00F0FF]"
                       }`}
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: const_data.color }} />
+                        <div
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: const_data.color }}
+                        />
                         <span>{const_data.name}</span>
                       </div>
-                      <div className="text-[10px] opacity-60">{const_data.count.toLocaleString()} satellites</div>
+                      <div className="text-[10px] opacity-60">
+                        {const_data.count.toLocaleString()} satellites
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -336,11 +364,15 @@ export default function AstroLabSatelliteConstellationPage() {
                 <div className="space-y-2 text-xs font-mono">
                   <div className="flex justify-between">
                     <span className="text-secondary-foreground">Altitude:</span>
-                    <span className="text-[#00F0FF]">{currentConstellation.altitude.toLocaleString()} km</span>
+                    <span className="text-[#00F0FF]">
+                      {currentConstellation.altitude.toLocaleString()} km
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary-foreground">Total Sats:</span>
-                    <span className="text-[#FF007A]">{currentConstellation.count.toLocaleString()}</span>
+                    <span className="text-[#FF007A]">
+                      {currentConstellation.count.toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary-foreground">Coverage:</span>
@@ -378,7 +410,7 @@ export default function AstroLabSatelliteConstellationPage() {
                   </div>
                   <div className="flex justify-between">
                     <span>Status:</span>
-                    <span className="text-[#10B981]">{isRunning ? 'Active' : 'Paused'}</span>
+                    <span className="text-[#10B981]">{isRunning ? "Active" : "Paused"}</span>
                   </div>
                 </div>
               </div>

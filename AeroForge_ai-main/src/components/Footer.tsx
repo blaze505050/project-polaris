@@ -1,59 +1,59 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ExternalLink, AlertTriangle, Cpu, Mail, CheckCircle2, Shield } from 'lucide-react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { ExternalLink, AlertTriangle, Cpu, Mail, CheckCircle2, Shield } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && email.includes('@')) {
+    if (email && email.includes("@")) {
       setSubscribed(true);
-      setEmail('');
+      setEmail("");
     }
   };
 
   const footerSections = [
     {
-      title: 'Project Polaris',
+      title: "Project Polaris",
       links: [
-        { label: 'Polaris Portal Home', href: '/', externalTab: true },
-        { label: 'Student Programs', href: '/programs', externalTab: true },
-        { label: 'Innovation Projects', href: '/projects', externalTab: true },
-        { label: 'Community Learning', href: '/community', externalTab: true },
-        { label: 'Contact Team', href: '/contact', externalTab: true },
+        { label: "Polaris Portal Home", href: "/", externalTab: true },
+        { label: "Student Programs", href: "/programs", externalTab: true },
+        { label: "Innovation Projects", href: "/projects", externalTab: true },
+        { label: "Community Learning", href: "/community", externalTab: true },
+        { label: "Contact Team", href: "/contact", externalTab: true },
       ],
     },
     {
-      title: 'AeroForge Labs',
+      title: "AeroForge Labs",
       links: [
-        { label: 'AeroLab Aerodynamics', path: '/aerolab' },
-        { label: 'MechLab Structures', path: '/mechlab' },
-        { label: 'AstroLab Orbital Suite', path: '/astrolab' },
-        { label: 'Physics AI Lab', path: '/physics-ai' },
-        { label: 'Validation Center', path: '/validation' },
+        { label: "AeroLab Aerodynamics", path: "/aerolab" },
+        { label: "MechLab Structures", path: "/mechlab" },
+        { label: "AstroLab Orbital Suite", path: "/astrolab" },
+        { label: "Physics AI Lab", path: "/physics-ai" },
+        { label: "Validation Center", path: "/validation" },
       ],
     },
     {
-      title: 'Resources',
+      title: "Resources",
       links: [
-        { label: 'Documentation Hub', path: '/documentation' },
-        { label: 'Engineering Demo', path: '/demo' },
-        { label: 'Public Artifacts', path: '/share/EXP-2026-NACA2412' },
-        { label: 'System Settings', path: '/settings' },
-        { label: 'Platform Changelog', path: '/changelog' },
+        { label: "Documentation Hub", path: "/documentation" },
+        { label: "Engineering Demo", path: "/demo" },
+        { label: "Public Artifacts", path: "/share/EXP-2026-NACA2412" },
+        { label: "System Settings", path: "/settings" },
+        { label: "Platform Changelog", path: "/changelog" },
       ],
     },
     {
-      title: 'Governance & Trust',
+      title: "Governance & Trust",
       links: [
-        { label: 'Privacy Policy', path: '/privacy' },
-        { label: 'Terms of Service', path: '/terms' },
-        { label: 'Security Practices', path: '/legal' },
-        { label: 'Scientific Disclaimer', path: '/legal' },
-        { label: 'Trust Center', path: '/trust' },
+        { label: "Privacy Policy", path: "/privacy" },
+        { label: "Terms of Service", path: "/terms" },
+        { label: "Security Practices", path: "/legal" },
+        { label: "Scientific Disclaimer", path: "/legal" },
+        { label: "Trust Center", path: "/trust" },
       ],
     },
   ];
@@ -69,13 +69,19 @@ export default function Footer() {
                 Project Polaris Ecosystem
               </span>
             </div>
-            <h4 className="text-base font-bold text-white font-sans">Stay in the loop with Project Polaris</h4>
+            <h4 className="text-base font-bold text-white font-sans">
+              Stay in the loop with Project Polaris
+            </h4>
             <p className="text-xs text-white/60 font-sans mt-0.5">
-              Updates on AeroForge releases, aerospace research, open workshops, and student engineering challenges.
+              Updates on AeroForge releases, aerospace research, open workshops, and student
+              engineering challenges.
             </p>
           </div>
 
-          <form onSubmit={handleSubscribe} className="flex items-center gap-2 w-full md:w-auto max-w-md">
+          <form
+            onSubmit={handleSubscribe}
+            className="flex items-center gap-2 w-full md:w-auto max-w-md"
+          >
             {subscribed ? (
               <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg font-sans">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
@@ -126,7 +132,8 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-xs text-white/60 font-sans leading-relaxed">
-              Browser-based engineering operating system for aerospace aerodynamics, CFD simulation, structural FEA, and orbital research.
+              Browser-based engineering operating system for aerospace aerodynamics, CFD simulation,
+              structural FEA, and orbital research.
             </p>
             <div className="inline-flex items-center gap-2 text-[10px] text-[var(--af-accent)] bg-[var(--af-surface-1)] px-2.5 py-1 rounded border border-[var(--af-border-accent)]">
               <Cpu className="w-3 h-3" />
@@ -150,7 +157,9 @@ export default function Footer() {
                         className="text-white/60 hover:text-[var(--af-accent)] transition-colors flex items-center gap-1 group"
                       >
                         <span>{link.label}</span>
-                        <span className="text-[10px] text-white/30 group-hover:text-[var(--af-accent)]">↗</span>
+                        <span className="text-[10px] text-white/30 group-hover:text-[var(--af-accent)]">
+                          ↗
+                        </span>
                       </a>
                     ) : (
                       <Link
@@ -175,7 +184,11 @@ export default function Footer() {
             <span>ENGINEERING DISCLAIMER & VERIFICATION NOTICE:</span>
           </div>
           <p className="pl-1">
-            AeroForge numerical outputs, computational fluid dynamics (CFD) estimates, finite element structural stresses, and AI recommendations are provided for research and educational evaluation purposes. All critical results must be independently verified by qualified aerospace or mechanical engineering professionals before use in production hardware, flight systems, or safety-critical infrastructure.
+            AeroForge numerical outputs, computational fluid dynamics (CFD) estimates, finite
+            element structural stresses, and AI recommendations are provided for research and
+            educational evaluation purposes. All critical results must be independently verified by
+            qualified aerospace or mechanical engineering professionals before use in production
+            hardware, flight systems, or safety-critical infrastructure.
           </p>
         </div>
 
@@ -200,5 +213,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-

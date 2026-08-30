@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Zap,
   Cpu,
@@ -13,34 +13,34 @@ import {
   Sparkles,
   BookOpen,
   ShieldCheck,
-} from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import PhysicsAiHeaderBanner from '@/components/physicsAi/PhysicsAiHeaderBanner';
-import AirfoilExperimentUI from '@/components/physicsAi/AirfoilExperimentUI';
-import ModelRegistryView from '@/components/physicsAi/ModelRegistryView';
-import DatasetRegistryView from '@/components/physicsAi/DatasetRegistryView';
-import ModelRouterView from '@/components/physicsAi/ModelRouterView';
-import ActiveLearningRoadmapView from '@/components/physicsAi/ActiveLearningRoadmapView';
-import ResearchRoadmapView from '@/components/physicsAi/ResearchRoadmapView';
-import ThirdPartyLicensesModal from '@/components/physicsAi/ThirdPartyLicensesModal';
-import { usePageMeta } from '@/hooks/usePageMeta';
+} from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import PhysicsAiHeaderBanner from "@/components/physicsAi/PhysicsAiHeaderBanner";
+import AirfoilExperimentUI from "@/components/physicsAi/AirfoilExperimentUI";
+import ModelRegistryView from "@/components/physicsAi/ModelRegistryView";
+import DatasetRegistryView from "@/components/physicsAi/DatasetRegistryView";
+import ModelRouterView from "@/components/physicsAi/ModelRouterView";
+import ActiveLearningRoadmapView from "@/components/physicsAi/ActiveLearningRoadmapView";
+import ResearchRoadmapView from "@/components/physicsAi/ResearchRoadmapView";
+import ThirdPartyLicensesModal from "@/components/physicsAi/ThirdPartyLicensesModal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
-type TabType = 'experiment' | 'models' | 'datasets' | 'router' | 'active-learning' | 'roadmap';
+type TabType = "experiment" | "models" | "datasets" | "router" | "active-learning" | "roadmap";
 
 export default function PhysicsAiLabPage() {
   usePageMeta(
-    'Physics AI Lab | Accelerated Simulation & Neural Operators',
-    'Explore neural operators, graph models, and physics-informed learning for accelerated engineering simulation.'
+    "Physics AI Lab | Accelerated Simulation & Neural Operators",
+    "Explore neural operators, graph models, and physics-informed learning for accelerated engineering simulation.",
   );
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialTab = (searchParams.get('tab') as TabType) || 'experiment';
+  const initialTab = (searchParams.get("tab") as TabType) || "experiment";
   const [activeTab, setActiveTab] = useState<TabType>(initialTab);
   const [showLicenseModal, setShowLicenseModal] = useState<boolean>(false);
 
   useEffect(() => {
-    const tabParam = searchParams.get('tab') as TabType;
+    const tabParam = searchParams.get("tab") as TabType;
     if (tabParam && tabParam !== activeTab) {
       setActiveTab(tabParam);
     }
@@ -74,13 +74,14 @@ export default function PhysicsAiLabPage() {
             </h1>
 
             <p className="text-sm md:text-base text-white/70 font-sans leading-relaxed">
-              Explore neural operators, graph models and physics-informed learning for accelerated engineering simulation.
+              Explore neural operators, graph models and physics-informed learning for accelerated
+              engineering simulation.
             </p>
 
             {/* Primary & Secondary CTAs */}
             <div className="flex items-center gap-3 pt-2 flex-wrap font-mono text-xs">
               <button
-                onClick={() => handleTabChange('experiment')}
+                onClick={() => handleTabChange("experiment")}
                 className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold transition-all shadow-lg flex items-center gap-2"
               >
                 Run Physics AI Experiment
@@ -88,7 +89,7 @@ export default function PhysicsAiLabPage() {
               </button>
 
               <button
-                onClick={() => handleTabChange('models')}
+                onClick={() => handleTabChange("models")}
                 className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold border border-white/10 transition-all flex items-center gap-2"
               >
                 Explore Models
@@ -117,7 +118,9 @@ export default function PhysicsAiLabPage() {
               Scientific Positioning & Verification Disclaimer
             </span>
             <p className="text-amber-200/80 font-sans text-xs leading-relaxed">
-              Physics AI models are experimental research tools. Predictions must not be treated as certified engineering analysis. Where available, compare predictions against validated analytical or numerical solvers.
+              Physics AI models are experimental research tools. Predictions must not be treated as
+              certified engineering analysis. Where available, compare predictions against validated
+              analytical or numerical solvers.
             </p>
           </div>
         </div>
@@ -125,12 +128,12 @@ export default function PhysicsAiLabPage() {
         {/* SUB-NAVIGATION TABS */}
         <div className="flex items-center gap-2 border-b border-white/10 pb-2 overflow-x-auto font-mono text-xs">
           {[
-            { id: 'experiment', label: 'Airfoil AI Experiment', icon: Zap },
-            { id: 'models', label: 'Model Registry', icon: Cpu },
-            { id: 'datasets', label: 'Dataset Registry', icon: Database },
-            { id: 'router', label: 'Model Router', icon: Sliders },
-            { id: 'active-learning', label: 'Active Learning', icon: RefreshCw },
-            { id: 'roadmap', label: 'Research Roadmap', icon: Layers },
+            { id: "experiment", label: "Airfoil AI Experiment", icon: Zap },
+            { id: "models", label: "Model Registry", icon: Cpu },
+            { id: "datasets", label: "Dataset Registry", icon: Database },
+            { id: "router", label: "Model Router", icon: Sliders },
+            { id: "active-learning", label: "Active Learning", icon: RefreshCw },
+            { id: "roadmap", label: "Research Roadmap", icon: Layers },
           ].map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -140,11 +143,11 @@ export default function PhysicsAiLabPage() {
                 onClick={() => handleTabChange(tab.id as TabType)}
                 className={`px-4 py-2 rounded-xl transition-all flex items-center gap-2 whitespace-nowrap font-bold ${
                   isActive
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-md'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white border border-transparent'
+                    ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-md"
+                    : "text-white/60 hover:bg-white/5 hover:text-white border border-transparent"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-400' : 'text-white/40'}`} />
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-cyan-400" : "text-white/40"}`} />
                 {tab.label}
               </button>
             );
@@ -153,12 +156,12 @@ export default function PhysicsAiLabPage() {
 
         {/* TAB CONTENT VIEWS */}
         <div className="w-full">
-          {activeTab === 'experiment' && <AirfoilExperimentUI />}
-          {activeTab === 'models' && <ModelRegistryView />}
-          {activeTab === 'datasets' && <DatasetRegistryView />}
-          {activeTab === 'router' && <ModelRouterView />}
-          {activeTab === 'active-learning' && <ActiveLearningRoadmapView />}
-          {activeTab === 'roadmap' && <ResearchRoadmapView />}
+          {activeTab === "experiment" && <AirfoilExperimentUI />}
+          {activeTab === "models" && <ModelRegistryView />}
+          {activeTab === "datasets" && <DatasetRegistryView />}
+          {activeTab === "router" && <ModelRouterView />}
+          {activeTab === "active-learning" && <ActiveLearningRoadmapView />}
+          {activeTab === "roadmap" && <ResearchRoadmapView />}
         </div>
       </main>
 

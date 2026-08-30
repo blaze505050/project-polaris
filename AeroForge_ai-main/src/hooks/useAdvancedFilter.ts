@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState } from "react";
 import {
   FilterEngine,
   SortEngine,
@@ -8,7 +8,7 @@ import {
   type FilterConfig,
   type SortConfig,
   type SearchConfig,
-} from '@/services/advancedFilteringService';
+} from "@/services/advancedFilteringService";
 
 interface UseAdvancedFilterOptions<T> {
   items: T[];
@@ -23,7 +23,7 @@ export function useAdvancedFilter<T extends Record<string, any>>({
 }: UseAdvancedFilterOptions<T>) {
   const [filters, setFilters] = useState<FilterConfig[]>([]);
   const [sorts, setSorts] = useState<SortConfig[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [pageSize, setPageSize] = useState(defaultPageSize);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -60,7 +60,7 @@ export function useAdvancedFilter<T extends Record<string, any>>({
   }, [paginator, currentPage]);
 
   // Callbacks
-  const addFilter = useCallback((field: string, operator: FilterConfig['operator'], value: any) => {
+  const addFilter = useCallback((field: string, operator: FilterConfig["operator"], value: any) => {
     setFilters((prev) => [...prev, { field, operator, value }]);
     setCurrentPage(0);
   }, []);
@@ -75,7 +75,7 @@ export function useAdvancedFilter<T extends Record<string, any>>({
     setCurrentPage(0);
   }, []);
 
-  const addSort = useCallback((field: string, direction: 'asc' | 'desc' = 'asc') => {
+  const addSort = useCallback((field: string, direction: "asc" | "desc" = "asc") => {
     setSorts((prev) => [...prev, { field, direction }]);
   }, []);
 
@@ -104,33 +104,36 @@ export function useAdvancedFilter<T extends Record<string, any>>({
     }
   }, [paginator]);
 
-  const goToPage = useCallback((page: number) => {
-    const maxPage = paginator.getTotalPages() - 1;
-    setCurrentPage(Math.max(0, Math.min(page, maxPage)));
-  }, [paginator]);
+  const goToPage = useCallback(
+    (page: number) => {
+      const maxPage = paginator.getTotalPages() - 1;
+      setCurrentPage(Math.max(0, Math.min(page, maxPage)));
+    },
+    [paginator],
+  );
 
   return {
     // Data
     items: currentPageItems,
     filteredItems,
     totalItems: filteredItems.length,
-    
+
     // Filters
     filters,
     addFilter,
     removeFilter,
     clearFilters,
-    
+
     // Sorting
     sorts,
     addSort,
     removeSort,
     clearSorts,
-    
+
     // Search
     searchQuery,
     search,
-    
+
     // Pagination
     currentPage,
     pageSize,

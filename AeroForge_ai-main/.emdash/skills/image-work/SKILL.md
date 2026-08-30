@@ -16,10 +16,10 @@ This skill contains all patterns for working with images, media galleries, and t
 ```typescript
 import { Image } from '@/components/ui/image';
 
-<Image 
-  src="image-url" 
-  alt="Description of image" 
-  width={800} 
+<Image
+  src="image-url"
+  alt="Description of image"
+  width={800}
 />
 ```
 
@@ -57,10 +57,10 @@ When no image URL is available, use the placeholder URL with a unique ID:
 const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.png";
 
 // Use with unique ID
-<Image 
-  src={`${IMAGE_PLACEHOLDER}?id=hero-main`} 
-  alt="Hero background" 
-  width={1920} 
+<Image
+  src={`${IMAGE_PLACEHOLDER}?id=hero-main`}
+  alt="Hero background"
+  width={1920}
 />
 ```
 
@@ -84,15 +84,11 @@ https://static.wixstatic.com/media/12d367_71ebdd7141d041e4be3d91d80d4578dd~mv2.p
 
 ```typescript
 // Good IDs
-`${IMAGE_PLACEHOLDER}?id=hero-background`
-`${IMAGE_PLACEHOLDER}?id=about-section-image`
-`${IMAGE_PLACEHOLDER}?id=team-member-john`
-`${IMAGE_PLACEHOLDER}?id=product-thumbnail-1`
-
+`${IMAGE_PLACEHOLDER}?id=hero-background``${IMAGE_PLACEHOLDER}?id=about-section-image``${IMAGE_PLACEHOLDER}?id=team-member-john``${IMAGE_PLACEHOLDER}?id=product-thumbnail-1`
 // Bad IDs (won't work with post-processing)
-`${IMAGE_PLACEHOLDER}?id=hero background`  // spaces
-`${IMAGE_PLACEHOLDER}?id=image#1`          // special chars
-`${IMAGE_PLACEHOLDER}`                      // missing ID
+`${IMAGE_PLACEHOLDER}?id=hero background` // spaces
+`${IMAGE_PLACEHOLDER}?id=image#1` // special chars
+`${IMAGE_PLACEHOLDER}`; // missing ID
 ```
 
 ---
@@ -112,29 +108,29 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 
 // Define data with placeholder URLs embedded
 const teamMembers = [
-  { 
-    name: "John Smith", 
+  {
+    name: "John Smith",
     role: "CEO",
-    image: `${IMAGE_PLACEHOLDER}?id=team-john` 
+    image: `${IMAGE_PLACEHOLDER}?id=team-john`
   },
-  { 
-    name: "Jane Doe", 
+  {
+    name: "Jane Doe",
     role: "CTO",
-    image: `${IMAGE_PLACEHOLDER}?id=team-jane` 
+    image: `${IMAGE_PLACEHOLDER}?id=team-jane`
   },
-  { 
-    name: "Bob Wilson", 
+  {
+    name: "Bob Wilson",
     role: "Designer",
-    image: `${IMAGE_PLACEHOLDER}?id=team-bob` 
+    image: `${IMAGE_PLACEHOLDER}?id=team-bob`
   },
 ];
 
 // Render the list
 {teamMembers.map(member => (
   <div key={member.name} className="text-center">
-    <Image 
-      src={member.image} 
-      alt={member.name} 
+    <Image
+      src={member.image}
+      alt={member.name}
       width={200}
       className="rounded-full mx-auto mb-4"
     />
@@ -154,9 +150,9 @@ const teamMembers = [
 ];
 
 {teamMembers.map((member, index) => (
-  <Image 
+  <Image
     // This won't work! Post-processor can't find these
-    src={`${IMAGE_PLACEHOLDER}?id=team-${index}`} 
+    src={`${IMAGE_PLACEHOLDER}?id=team-${index}`}
     alt={member.name}
   />
 ))}
@@ -184,8 +180,8 @@ const Gallery = () => (
   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
     {galleryImages.map(img => (
       <div key={img.id} className="aspect-square relative overflow-hidden rounded-lg">
-        <Image 
-          src={img.src} 
+        <Image
+          src={img.src}
           alt={img.alt}
           className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
@@ -202,8 +198,8 @@ const MasonryGallery = () => (
   <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
     {galleryImages.map(img => (
       <div key={img.id} className="mb-4 break-inside-avoid">
-        <Image 
-          src={img.src} 
+        <Image
+          src={img.src}
           alt={img.alt}
           className="w-full rounded-lg"
         />
@@ -222,23 +218,23 @@ const FeaturedGallery = () => (
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
     {/* Large featured image */}
     <div className="md:row-span-2 aspect-square md:aspect-auto relative rounded-lg overflow-hidden">
-      <Image 
+      <Image
         src={`${IMAGE_PLACEHOLDER}?id=gallery-featured`}
         alt="Featured image"
         className="absolute inset-0 w-full h-full object-cover"
       />
     </div>
-    
+
     {/* Smaller images */}
     <div className="aspect-video relative rounded-lg overflow-hidden">
-      <Image 
+      <Image
         src={`${IMAGE_PLACEHOLDER}?id=gallery-small-1`}
         alt="Gallery image 1"
         className="absolute inset-0 w-full h-full object-cover"
       />
     </div>
     <div className="aspect-video relative rounded-lg overflow-hidden">
-      <Image 
+      <Image
         src={`${IMAGE_PLACEHOLDER}?id=gallery-small-2`}
         alt="Gallery image 2"
         className="absolute inset-0 w-full h-full object-cover"
@@ -274,9 +270,9 @@ const FeaturedGallery = () => (
 For purely decorative images, use an empty alt with aria-hidden:
 
 ```typescript
-<Image 
-  src={decorativePattern} 
-  alt="" 
+<Image
+  src={decorativePattern}
+  alt=""
   aria-hidden="true"
   className="absolute inset-0 opacity-10"
 />
@@ -310,7 +306,7 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 
 <section className="relative min-h-[80vh]">
   <div className="absolute inset-0">
-    <Image 
+    <Image
       src={`${IMAGE_PLACEHOLDER}?id=hero-background`}
       alt="Beautiful landscape background"
       width={1920}
@@ -327,7 +323,7 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 ### Profile/Avatar Image
 
 ```typescript
-<Image 
+<Image
   src={member.photo || `${IMAGE_PLACEHOLDER}?id=avatar-default`}
   alt={`${member.name}'s profile photo`}
   width={100}
@@ -340,7 +336,7 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 ```typescript
 <div className="rounded-lg overflow-hidden border">
   <div className="aspect-video relative">
-    <Image 
+    <Image
       src={item.image}
       alt={item.title}
       width={600}
@@ -356,12 +352,12 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 ### Background Image
 
 ```typescript
-<section 
+<section
   className="relative py-24"
   style={{ backgroundColor: 'var(--muted)' }}
 >
   <div className="absolute inset-0 opacity-20">
-    <Image 
+    <Image
       src={`${IMAGE_PLACEHOLDER}?id=section-pattern`}
       alt=""
       aria-hidden="true"
@@ -381,7 +377,7 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 **Do NOT use:**
 
 - ❌ Unsplash
-- ❌ Pexels  
+- ❌ Pexels
 - ❌ Pixabay
 - ❌ Any other external image sources
 - ❌ Lorem Picsum
@@ -402,8 +398,8 @@ const IMAGE_PLACEHOLDER = "https://static.wixstatic.com/media/12d367_71ebdd7141d
 Images below the fold should use lazy loading (handled automatically by the Image component in most cases):
 
 ```typescript
-<Image 
-  src={url} 
+<Image
+  src={url}
   alt="Below fold content"
   loading="lazy"
 />
@@ -414,8 +410,8 @@ Images below the fold should use lazy loading (handled automatically by the Imag
 For hero/above-fold images that should load immediately:
 
 ```typescript
-<Image 
-  src={heroImage} 
+<Image
+  src={heroImage}
   alt="Hero"
   loading="eager"
   fetchPriority="high"

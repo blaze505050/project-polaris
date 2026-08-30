@@ -12,8 +12,10 @@ export const SITE = {
     "To build one of the world's most impactful student engineering communities—one that empowers young minds to become builders, researchers, and innovators.",
   communityUrl: "https://chat.whatsapp.com/FdbxPikc9aGLxiHu0gWqIX",
   volunteerUrl: "https://polaris-volunteer-program-8.my.canva.site",
-  associateFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
-  feedbackFormUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
+  associateFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
+  feedbackFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
   phone: "+91 97970 42664",
   emails: ["project.polaris8@gmail.com", "contactprojectpolaris@gmail.com"],
   instagramUrl: "https://www.instagram.com/project_polaris_?igsh=cGR3aGdkdjd2Y2hm",
@@ -24,27 +26,32 @@ export const THREE_PILLARS = [
   {
     key: "BUILD",
     title: "Build Real Projects",
-    description: "Build authentic physics simulations, astronomical databases, data pipelines, and computational aerospace models with verifiable code.",
+    description:
+      "Build authentic physics simulations, astronomical databases, data pipelines, and computational aerospace models with verifiable code.",
     badge: "Engineering Core",
   },
   {
     key: "LEARN",
     title: "Learn What You Need",
-    description: "Learn on-demand through mentor office hours, ISRO scientist masterclasses, peer code reviews, and structured problem roadmaps.",
+    description:
+      "Learn on-demand through mentor office hours, ISRO scientist masterclasses, peer code reviews, and structured problem roadmaps.",
     badge: "Cohorts & Mentors",
   },
   {
     key: "CONNECT",
     title: "Connect in Squads",
-    description: "Collaborate in small sprint squads of 3–5 builders. Tackle open challenges, conduct research, and ship together.",
+    description:
+      "Collaborate in small sprint squads of 3–5 builders. Tackle open challenges, conduct research, and ship together.",
     badge: "Sprint Teams",
   },
 ] as const;
 
 export const BRAND_POSITIONING = {
   line1: "A student-led space and physics engineering ecosystem.",
-  line2: "Bridging academic theory with real engineering practice through open-source software, physical prototypes, and peer research cohorts.",
-  line3: "Students build numerical physics simulations, launch telemetry kits, and publish technical research alongside mentors.",
+  line2:
+    "Bridging academic theory with real engineering practice through open-source software, physical prototypes, and peer research cohorts.",
+  line3:
+    "Students build numerical physics simulations, launch telemetry kits, and publish technical research alongside mentors.",
 } as const;
 
 export const NAV_LINKS = [
@@ -67,15 +74,42 @@ export const BRAND_VALUES = [
 ] as const;
 
 export const VALUES = [
-  { name: "Curiosity", note: "We encourage questioning, deep exploration, and continuous inquiry beyond textbook bounds." },
-  { name: "Innovation", note: "We embrace bold creativity and seek better, computational ways to solve engineering problems." },
-  { name: "Practical Learning", note: "Real learning happens when knowledge is immediately applied to build and test real systems." },
-  { name: "Accessibility", note: "Industry-relevant tools and research opportunities should be universally open to all students." },
-  { name: "Collaboration", note: "Breakthroughs happen when diverse, passionate student minds work together in agile sprint cohorts." },
-  { name: "Excellence", note: "We continuously refine, test, simulate, and verify everything we build to high engineering standards." },
-  { name: "Integrity", note: "We value honesty, rigorous scientific verification, academic ethics, and transparency." },
-  { name: "Growth Mindset", note: "We view obstacles as learning moments and encourage fearless experimentation." },
-  { name: "Student Empowerment", note: "We put students in the driver's seat to lead projects, departments, and public masterclasses." },
+  {
+    name: "Curiosity",
+    note: "We encourage questioning, deep exploration, and continuous inquiry beyond textbook bounds.",
+  },
+  {
+    name: "Innovation",
+    note: "We embrace bold creativity and seek better, computational ways to solve engineering problems.",
+  },
+  {
+    name: "Practical Learning",
+    note: "Real learning happens when knowledge is immediately applied to build and test real systems.",
+  },
+  {
+    name: "Accessibility",
+    note: "Industry-relevant tools and research opportunities should be universally open to all students.",
+  },
+  {
+    name: "Collaboration",
+    note: "Breakthroughs happen when diverse, passionate student minds work together in agile sprint cohorts.",
+  },
+  {
+    name: "Excellence",
+    note: "We continuously refine, test, simulate, and verify everything we build to high engineering standards.",
+  },
+  {
+    name: "Integrity",
+    note: "We value honesty, rigorous scientific verification, academic ethics, and transparency.",
+  },
+  {
+    name: "Growth Mindset",
+    note: "We view obstacles as learning moments and encourage fearless experimentation.",
+  },
+  {
+    name: "Student Empowerment",
+    note: "We put students in the driver's seat to lead projects, departments, and public masterclasses.",
+  },
 ] as const;
 
 export const HOW_IT_WORKS_STEPS = [
@@ -178,7 +212,11 @@ export const BUILD_SQUADS = [
 export const STATS = [
   { value: "40+", label: "Physics solvers", note: "CFD, FEA, orbital & propulsion suites." },
   { value: "10+", label: "Active project squads", note: "Student teams building open systems." },
-  { value: "120+", label: "Community builders", note: "Curious students & mentors learning together." },
+  {
+    value: "120+",
+    label: "Community builders",
+    note: "Curious students & mentors learning together.",
+  },
   { value: "90+", label: "Aaj Ka Gyan posts", note: "Daily curated scientific inquiry drops." },
   { value: "100%", label: "Open source & free", note: "No barrier to start experimenting." },
 ] as const;
@@ -231,7 +269,13 @@ export const PROJECTS = [
     blurb:
       "Browser-based engineering research workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital mechanics.",
     roadmap: ["01 Understand", "02 Model", "03 Implement", "04 Validate", "05 Ship"],
-    deliverables: ["Working Simulation", "GitHub Repository", "Technical Report", "Showcase Page", "Mentor Review"],
+    deliverables: [
+      "Working Simulation",
+      "GitHub Repository",
+      "Technical Report",
+      "Showcase Page",
+      "Mentor Review",
+    ],
     cta: "Launch AeroForge Lab",
     link: "/projects",
     featured: true,
@@ -287,7 +331,12 @@ export const PROJECTS = [
     blurb:
       "A ready-to-run interactive laboratory curriculum, stomp rocket telemetry kit, and telescope workshop modules for middle and high schools.",
     roadmap: ["01 Scope", "02 Build Kit", "03 Test in Schools", "04 Refine", "05 Deploy"],
-    deliverables: ["Curriculum Modules", "Hardware Specs", "Facilitator Guide", "Student Worksheets"],
+    deliverables: [
+      "Curriculum Modules",
+      "Hardware Specs",
+      "Facilitator Guide",
+      "Student Worksheets",
+    ],
     link: "/schools",
   },
 ] as const;
@@ -328,8 +377,10 @@ export const PROGRAMS = [
   {
     slug: "community-learning",
     name: "Daily Science Drops (Aaj Ka Gyan)",
-    blurb: "Daily educational content, Saturday problem polls, quizzes, and collaborative technical discussions.",
-    purpose: "To make scientific curiosity and learning a daily habit rather than an occasional event.",
+    blurb:
+      "Daily educational content, Saturday problem polls, quizzes, and collaborative technical discussions.",
+    purpose:
+      "To make scientific curiosity and learning a daily habit rather than an occasional event.",
     who: "Everyone in the Polaris student community.",
     gain: [
       "A consistent daily learning rhythm",
@@ -356,7 +407,7 @@ export const WORKSHOPS = [
       "Rocket propulsion principles, specific impulse & thrust curves",
       "Mentor's aerospace journey, defence projects & propulsion research",
       "Interactive Q&A and Pitch & Win student challenge",
-      "Practical pathways for young builders to explore aerospace beyond textbooks"
+      "Practical pathways for young builders to explore aerospace beyond textbooks",
     ],
     tag: "ROCKETRY & PROPULSION",
   },
@@ -374,7 +425,7 @@ export const WORKSHOPS = [
       "Journey from aspiring aerospace student to ISRO Satellite Operations Scientist",
       "Post-launch operations: satellite tracking, orbit prediction & station keeping",
       "Space Situational Awareness (SSA) & orbital collision avoidance maneuvers",
-      "Multidisciplinary careers across aerospace, AI, computer science, physics & math"
+      "Multidisciplinary careers across aerospace, AI, computer science, physics & math",
     ],
     tag: "ISRO & SATELLITE OPERATIONS",
   },
@@ -392,7 +443,7 @@ export const WORKSHOPS = [
       "Galactic morphological classification & Milky Way architecture",
       "Stellar life cycle: from hydrogen clouds to nebulae and stellar remnants",
       "Interactive constellation hunting & astronomy rapid-fire quizzes",
-      "Build-a-Galaxy Challenge: hands-on galactic design & presentation"
+      "Build-a-Galaxy Challenge: hands-on galactic design & presentation",
     ],
     tag: "ASTRONOMY & ASTROPHYSICS",
   },
@@ -443,11 +494,32 @@ export const RECOGNITION_SYSTEM = [
 export const RECOGNITION = RECOGNITION_SYSTEM;
 
 export const WORKING_CULTURE = [
-  { rule: "Be respectful", detail: "Value every peer's perspective and support an inclusive environment." },
-  { rule: "Take ownership", detail: "Own assigned initiatives from start to finish with proactive initiative." },
-  { rule: "Communicate professionally", detail: "Maintain transparent, clear, and prompt communication." },
-  { rule: "Meet deadlines", detail: "Respect team timelines and deliverables with high consistency." },
-  { rule: "Be open to feedback", detail: "Embrace constructive reviews as opportunities for rapid growth." },
-  { rule: "Support fellow members", detail: "Collaborate, share knowledge, and lift others up as you grow." },
-  { rule: "Continuously learn", detail: "Stay curious, experiment fearlessly, and improve every day." },
+  {
+    rule: "Be respectful",
+    detail: "Value every peer's perspective and support an inclusive environment.",
+  },
+  {
+    rule: "Take ownership",
+    detail: "Own assigned initiatives from start to finish with proactive initiative.",
+  },
+  {
+    rule: "Communicate professionally",
+    detail: "Maintain transparent, clear, and prompt communication.",
+  },
+  {
+    rule: "Meet deadlines",
+    detail: "Respect team timelines and deliverables with high consistency.",
+  },
+  {
+    rule: "Be open to feedback",
+    detail: "Embrace constructive reviews as opportunities for rapid growth.",
+  },
+  {
+    rule: "Support fellow members",
+    detail: "Collaborate, share knowledge, and lift others up as you grow.",
+  },
+  {
+    rule: "Continuously learn",
+    detail: "Stay curious, experiment fearlessly, and improve every day.",
+  },
 ] as const;

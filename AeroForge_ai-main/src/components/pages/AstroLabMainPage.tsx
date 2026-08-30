@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import {
   Telescope,
   Globe,
@@ -16,224 +16,304 @@ import {
   BookOpen,
   ArrowRight,
   Search,
-} from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import FeatureStatusBadge from '@/components/ui/FeatureStatusBadge';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import FeatureStatusBadge from "@/components/ui/FeatureStatusBadge";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function AstroLabMainPage() {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const labs = [
     {
-      id: 'virtual-observatory',
-      title: 'Virtual Observatory',
+      id: "virtual-observatory",
+      title: "Virtual Observatory",
       icon: Telescope,
-      category: 'observation',
-      description: 'Real-time celestial observation and data analysis. Access live telescope feeds, conduct photometric surveys, and analyze stellar spectra.',
-      features: ['Live sky mapping', 'Photometric analysis', 'Spectroscopy tools', 'Object catalog search'],
-      color: 'from-blue-600 to-cyan-600',
-      difficulty: 'Beginner',
-      path: '/astrolab/virtual-observatory',
+      category: "observation",
+      description:
+        "Real-time celestial observation and data analysis. Access live telescope feeds, conduct photometric surveys, and analyze stellar spectra.",
+      features: [
+        "Live sky mapping",
+        "Photometric analysis",
+        "Spectroscopy tools",
+        "Object catalog search",
+      ],
+      color: "from-blue-600 to-cyan-600",
+      difficulty: "Beginner",
+      path: "/astrolab/virtual-observatory",
     },
     {
-      id: 'planetary-explorer',
-      title: 'Planetary Explorer',
+      id: "planetary-explorer",
+      title: "Planetary Explorer",
       icon: Globe,
-      category: 'planetary',
-      description: 'Explore planetary systems, atmospheres, and geology. Study exoplanet characteristics and habitability zones.',
-      features: ['Exoplanet database', 'Habitability calculator', 'Atmospheric modeling', 'Orbital parameters'],
-      color: 'from-green-600 to-emerald-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/exoplanet-habitability',
+      category: "planetary",
+      description:
+        "Explore planetary systems, atmospheres, and geology. Study exoplanet characteristics and habitability zones.",
+      features: [
+        "Exoplanet database",
+        "Habitability calculator",
+        "Atmospheric modeling",
+        "Orbital parameters",
+      ],
+      color: "from-green-600 to-emerald-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/exoplanet-habitability",
     },
     {
-      id: 'stellar-evolution',
-      title: 'Stellar Evolution Lab',
+      id: "stellar-evolution",
+      title: "Stellar Evolution Lab",
       icon: Flame,
-      category: 'stellar',
-      description: 'Track stellar lifecycles from birth to death. Visualize HR diagrams and understand stellar physics.',
-      features: ['HR diagram', 'Mass-luminosity relations', 'Lifecycle stages', 'Spectral classification'],
-      color: 'from-orange-600 to-red-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/stellar-evolution',
+      category: "stellar",
+      description:
+        "Track stellar lifecycles from birth to death. Visualize HR diagrams and understand stellar physics.",
+      features: [
+        "HR diagram",
+        "Mass-luminosity relations",
+        "Lifecycle stages",
+        "Spectral classification",
+      ],
+      color: "from-orange-600 to-red-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/stellar-evolution",
     },
     {
-      id: 'black-hole-simulator',
-      title: 'Black Hole Simulator',
+      id: "black-hole-simulator",
+      title: "Black Hole Simulator",
       icon: Zap,
-      category: 'cosmology',
-      description: 'Explore extreme gravity and relativistic physics. Visualize event horizons and accretion disks.',
-      features: ['Event horizon visualization', 'Spacetime curvature', 'Accretion disk dynamics', 'Gravitational lensing'],
-      color: 'from-purple-600 to-pink-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/black-hole-simulator',
+      category: "cosmology",
+      description:
+        "Explore extreme gravity and relativistic physics. Visualize event horizons and accretion disks.",
+      features: [
+        "Event horizon visualization",
+        "Spacetime curvature",
+        "Accretion disk dynamics",
+        "Gravitational lensing",
+      ],
+      color: "from-purple-600 to-pink-600",
+      difficulty: "Advanced",
+      path: "/astrolab/black-hole-simulator",
     },
     {
-      id: 'radio-astronomy',
-      title: 'Radio Astronomy Suite',
+      id: "radio-astronomy",
+      title: "Radio Astronomy Suite",
       icon: Radio,
-      category: 'observation',
-      description: 'Analyze radio signals from space. Study pulsars, quasars, and cosmic microwave background.',
-      features: ['Signal processing', 'Pulsar detection', 'CMB analysis', 'Interferometry'],
-      color: 'from-indigo-600 to-blue-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/radio-astronomy',
+      category: "observation",
+      description:
+        "Analyze radio signals from space. Study pulsars, quasars, and cosmic microwave background.",
+      features: ["Signal processing", "Pulsar detection", "CMB analysis", "Interferometry"],
+      color: "from-indigo-600 to-blue-600",
+      difficulty: "Advanced",
+      path: "/astrolab/radio-astronomy",
     },
     {
-      id: 'spaceflight-dynamics',
-      title: 'Spaceflight Dynamics',
+      id: "spaceflight-dynamics",
+      title: "Spaceflight Dynamics",
       icon: Rocket,
-      category: 'spaceflight',
-      description: 'Design and simulate spacecraft trajectories. Plan missions and optimize orbital transfers.',
-      features: ['Trajectory design', 'Orbital mechanics', 'Mission planning', 'Delta-v calculations'],
-      color: 'from-red-600 to-orange-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/spaceflight-dynamics',
+      category: "spaceflight",
+      description:
+        "Design and simulate spacecraft trajectories. Plan missions and optimize orbital transfers.",
+      features: [
+        "Trajectory design",
+        "Orbital mechanics",
+        "Mission planning",
+        "Delta-v calculations",
+      ],
+      color: "from-red-600 to-orange-600",
+      difficulty: "Advanced",
+      path: "/astrolab/spaceflight-dynamics",
     },
     {
-      id: 'astrobiology-lab',
-      title: 'Astrobiology Lab',
+      id: "astrobiology-lab",
+      title: "Astrobiology Lab",
       icon: Microscope,
-      category: 'life',
-      description: 'Study conditions for life in the universe. Analyze biosignatures and habitability factors.',
-      features: ['Biosignature detection', 'Extremophile analysis', 'Habitability assessment', 'SETI parameters'],
-      color: 'from-lime-600 to-green-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/astrobiology-lab',
+      category: "life",
+      description:
+        "Study conditions for life in the universe. Analyze biosignatures and habitability factors.",
+      features: [
+        "Biosignature detection",
+        "Extremophile analysis",
+        "Habitability assessment",
+        "SETI parameters",
+      ],
+      color: "from-lime-600 to-green-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/astrobiology-lab",
     },
     {
-      id: 'cosmology-explorer',
-      title: 'Cosmology Explorer',
+      id: "cosmology-explorer",
+      title: "Cosmology Explorer",
       icon: Waves,
-      category: 'cosmology',
-      description: 'Explore the universe at large scales. Study dark matter, dark energy, and cosmic structure.',
-      features: ['Universe expansion', 'Dark matter mapping', 'Galaxy clusters', 'Redshift analysis'],
-      color: 'from-violet-600 to-purple-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/cosmology-explorer',
+      category: "cosmology",
+      description:
+        "Explore the universe at large scales. Study dark matter, dark energy, and cosmic structure.",
+      features: [
+        "Universe expansion",
+        "Dark matter mapping",
+        "Galaxy clusters",
+        "Redshift analysis",
+      ],
+      color: "from-violet-600 to-purple-600",
+      difficulty: "Advanced",
+      path: "/astrolab/cosmology-explorer",
     },
     {
-      id: 'exoplanet-imaging',
-      title: 'Exoplanet Imaging',
+      id: "exoplanet-imaging",
+      title: "Exoplanet Imaging",
       icon: Eye,
-      category: 'observation',
-      description: 'Advanced imaging techniques for detecting and characterizing exoplanets.',
-      features: ['Direct imaging', 'Transit photometry', 'Radial velocity', 'Astrometry'],
-      color: 'from-cyan-600 to-blue-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/exoplanet-imaging',
+      category: "observation",
+      description: "Advanced imaging techniques for detecting and characterizing exoplanets.",
+      features: ["Direct imaging", "Transit photometry", "Radial velocity", "Astrometry"],
+      color: "from-cyan-600 to-blue-600",
+      difficulty: "Advanced",
+      path: "/astrolab/exoplanet-imaging",
     },
     {
-      id: 'celestial-mechanics',
-      title: 'Celestial Mechanics',
+      id: "celestial-mechanics",
+      title: "Celestial Mechanics",
       icon: Compass,
-      category: 'mechanics',
-      description: 'Master orbital mechanics and gravitational interactions. Solve N-body problems.',
-      features: ['Orbital elements', 'Perturbation analysis', 'Resonances', 'Stability analysis'],
-      color: 'from-sky-600 to-cyan-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/celestial-mechanics',
+      category: "mechanics",
+      description:
+        "Master orbital mechanics and gravitational interactions. Solve N-body problems.",
+      features: ["Orbital elements", "Perturbation analysis", "Resonances", "Stability analysis"],
+      color: "from-sky-600 to-cyan-600",
+      difficulty: "Advanced",
+      path: "/astrolab/celestial-mechanics",
     },
     {
-      id: 'atmospheric-science',
-      title: 'Atmospheric Science',
+      id: "atmospheric-science",
+      title: "Atmospheric Science",
       icon: Wind,
-      category: 'planetary',
-      description: 'Study planetary atmospheres and climate systems. Model atmospheric dynamics.',
-      features: ['Atmospheric composition', 'Climate modeling', 'Weather simulation', 'Radiation transfer'],
-      color: 'from-teal-600 to-cyan-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/atmospheric-science',
+      category: "planetary",
+      description: "Study planetary atmospheres and climate systems. Model atmospheric dynamics.",
+      features: [
+        "Atmospheric composition",
+        "Climate modeling",
+        "Weather simulation",
+        "Radiation transfer",
+      ],
+      color: "from-teal-600 to-cyan-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/atmospheric-science",
     },
     {
-      id: 'quantum-astrophysics',
-      title: 'Quantum Astrophysics',
+      id: "quantum-astrophysics",
+      title: "Quantum Astrophysics",
       icon: Lightbulb,
-      category: 'physics',
-      description: 'Explore quantum effects in astrophysical systems. Study neutron stars and quantum gravity.',
-      features: ['Quantum mechanics', 'Neutron star physics', 'Quantum tunneling', 'Hawking radiation'],
-      color: 'from-yellow-600 to-orange-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/quantum-astrophysics',
+      category: "physics",
+      description:
+        "Explore quantum effects in astrophysical systems. Study neutron stars and quantum gravity.",
+      features: [
+        "Quantum mechanics",
+        "Neutron star physics",
+        "Quantum tunneling",
+        "Hawking radiation",
+      ],
+      color: "from-yellow-600 to-orange-600",
+      difficulty: "Advanced",
+      path: "/astrolab/quantum-astrophysics",
     },
     {
-      id: 'celestial-mechanics',
-      title: 'Celestial Mechanics',
+      id: "celestial-mechanics",
+      title: "Celestial Mechanics",
       icon: Compass,
-      category: 'mechanics',
-      description: 'Master orbital mechanics and gravitational interactions. Solve N-body problems.',
-      features: ['Orbital elements', 'Perturbation analysis', 'Resonances', 'Stability analysis'],
-      color: 'from-sky-600 to-cyan-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/celestial-mechanics',
+      category: "mechanics",
+      description:
+        "Master orbital mechanics and gravitational interactions. Solve N-body problems.",
+      features: ["Orbital elements", "Perturbation analysis", "Resonances", "Stability analysis"],
+      color: "from-sky-600 to-cyan-600",
+      difficulty: "Advanced",
+      path: "/astrolab/celestial-mechanics",
     },
     {
-      id: 'atmospheric-science',
-      title: 'Atmospheric Science',
+      id: "atmospheric-science",
+      title: "Atmospheric Science",
       icon: Wind,
-      category: 'planetary',
-      description: 'Study planetary atmospheres and climate systems. Model atmospheric dynamics.',
-      features: ['Atmospheric composition', 'Climate modeling', 'Weather simulation', 'Radiation transfer'],
-      color: 'from-teal-600 to-cyan-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/atmospheric-science',
+      category: "planetary",
+      description: "Study planetary atmospheres and climate systems. Model atmospheric dynamics.",
+      features: [
+        "Atmospheric composition",
+        "Climate modeling",
+        "Weather simulation",
+        "Radiation transfer",
+      ],
+      color: "from-teal-600 to-cyan-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/atmospheric-science",
     },
     {
-      id: 'astrolab-academy',
-      title: 'AstroLab Academy',
+      id: "astrolab-academy",
+      title: "AstroLab Academy",
       icon: BookOpen,
-      category: 'education',
-      description: 'Comprehensive educational pathway. Learn astronomy from fundamentals to research-level topics.',
-      features: ['Interactive lessons', 'Guided projects', 'Certification paths', 'Expert resources'],
-      color: 'from-amber-600 to-yellow-600',
-      difficulty: 'All Levels',
-      path: '/astrolab/academy',
+      category: "education",
+      description:
+        "Comprehensive educational pathway. Learn astronomy from fundamentals to research-level topics.",
+      features: [
+        "Interactive lessons",
+        "Guided projects",
+        "Certification paths",
+        "Expert resources",
+      ],
+      color: "from-amber-600 to-yellow-600",
+      difficulty: "All Levels",
+      path: "/astrolab/academy",
     },
     {
-      id: 'mission-control',
-      title: 'Mission Control Center',
+      id: "mission-control",
+      title: "Mission Control Center",
       icon: Rocket,
-      category: 'spaceflight',
-      description: 'Real-time mission monitoring and control. Manage spacecraft operations and communications.',
-      features: ['Telemetry monitoring', 'Command sequencing', 'Timeline management', 'Data analysis'],
-      color: 'from-rose-600 to-red-600',
-      difficulty: 'Advanced',
-      path: '/astrolab/mission-control',
+      category: "spaceflight",
+      description:
+        "Real-time mission monitoring and control. Manage spacecraft operations and communications.",
+      features: [
+        "Telemetry monitoring",
+        "Command sequencing",
+        "Timeline management",
+        "Data analysis",
+      ],
+      color: "from-rose-600 to-red-600",
+      difficulty: "Advanced",
+      path: "/astrolab/mission-control",
     },
     {
-      id: 'planetary-explorer',
-      title: 'Planetary Explorer',
+      id: "planetary-explorer",
+      title: "Planetary Explorer",
       icon: Globe,
-      category: 'planetary',
-      description: 'Explore planetary systems, atmospheres, and geology. Study exoplanet characteristics and habitability zones.',
-      features: ['Exoplanet database', 'Habitability calculator', 'Atmospheric modeling', 'Orbital parameters'],
-      color: 'from-green-600 to-emerald-600',
-      difficulty: 'Intermediate',
-      path: '/astrolab/exoplanet-habitability',
+      category: "planetary",
+      description:
+        "Explore planetary systems, atmospheres, and geology. Study exoplanet characteristics and habitability zones.",
+      features: [
+        "Exoplanet database",
+        "Habitability calculator",
+        "Atmospheric modeling",
+        "Orbital parameters",
+      ],
+      color: "from-green-600 to-emerald-600",
+      difficulty: "Intermediate",
+      path: "/astrolab/exoplanet-habitability",
     },
   ];
 
   const categories = [
-    { id: 'all', label: 'All Labs', icon: Telescope },
-    { id: 'observation', label: 'Observation', icon: Eye },
-    { id: 'planetary', label: 'Planetary', icon: Globe },
-    { id: 'stellar', label: 'Stellar', icon: Flame },
-    { id: 'cosmology', label: 'Cosmology', icon: Waves },
-    { id: 'spaceflight', label: 'Spaceflight', icon: Rocket },
-    { id: 'education', label: 'Education', icon: BookOpen },
+    { id: "all", label: "All Labs", icon: Telescope },
+    { id: "observation", label: "Observation", icon: Eye },
+    { id: "planetary", label: "Planetary", icon: Globe },
+    { id: "stellar", label: "Stellar", icon: Flame },
+    { id: "cosmology", label: "Cosmology", icon: Waves },
+    { id: "spaceflight", label: "Spaceflight", icon: Rocket },
+    { id: "education", label: "Education", icon: BookOpen },
   ];
 
   const filteredLabs = labs.filter((lab) => {
-    const matchesSearch = lab.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch =
+      lab.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lab.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || lab.category === selectedCategory;
+    const matchesCategory = selectedCategory === "all" || lab.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -267,7 +347,9 @@ export default function AstroLabMainPage() {
           <div className="inline-block mb-6">
             <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30">
               <Telescope size={18} className="text-cyan-400" />
-              <span className="text-cyan-400 font-semibold text-sm">Space & Orbital Engineering Lab</span>
+              <span className="text-cyan-400 font-semibold text-sm">
+                Space & Orbital Engineering Lab
+              </span>
               <FeatureStatusBadge status="beta" />
             </div>
           </div>
@@ -280,8 +362,9 @@ export default function AstroLabMainPage() {
           </h1>
 
           <p className="text-xl text-slate-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Explore the cosmos with 14+ interactive laboratories. From observational astronomy to cutting-edge astrophysics,
-            conduct real research with scientifically accurate simulations and professional-grade tools.
+            Explore the cosmos with 14+ interactive laboratories. From observational astronomy to
+            cutting-edge astrophysics, conduct real research with scientifically accurate
+            simulations and professional-grade tools.
           </p>
 
           <div className="flex gap-4 justify-center flex-wrap">
@@ -304,7 +387,10 @@ export default function AstroLabMainPage() {
         >
           <div className="mb-6">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+              <Search
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"
+                size={20}
+              />
               <Input
                 placeholder="Search labs..."
                 value={searchTerm}
@@ -324,8 +410,8 @@ export default function AstroLabMainPage() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
                     selectedCategory === cat.id
-                      ? 'bg-cyan-600 text-white'
-                      : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
+                      ? "bg-cyan-600 text-white"
+                      : "bg-slate-800/50 text-slate-300 hover:bg-slate-700/50"
                   }`}
                 >
                   <Icon size={18} />
@@ -405,10 +491,10 @@ export default function AstroLabMainPage() {
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Interactive Labs', value: '14+' },
-              { label: 'Simulations', value: '100+' },
-              { label: 'Research Tools', value: '50+' },
-              { label: 'Users Worldwide', value: '10K+' },
+              { label: "Interactive Labs", value: "14+" },
+              { label: "Simulations", value: "100+" },
+              { label: "Research Tools", value: "50+" },
+              { label: "Users Worldwide", value: "10K+" },
             ].map((stat, idx) => (
               <Card key={idx} className="bg-slate-800/30 border-slate-700 p-6 text-center">
                 <div className="text-3xl font-bold text-cyan-400 mb-2">{stat.value}</div>
@@ -431,28 +517,34 @@ export default function AstroLabMainPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
-                  title: 'Research-Grade Accuracy',
-                  description: 'All simulations based on peer-reviewed physics and real astronomical data.',
+                  title: "Research-Grade Accuracy",
+                  description:
+                    "All simulations based on peer-reviewed physics and real astronomical data.",
                 },
                 {
-                  title: 'Interactive Learning',
-                  description: 'Hands-on experience with complex astrophysical concepts and phenomena.',
+                  title: "Interactive Learning",
+                  description:
+                    "Hands-on experience with complex astrophysical concepts and phenomena.",
                 },
                 {
-                  title: 'Professional Tools',
-                  description: 'Industry-standard instruments and analysis techniques used by real astronomers.',
+                  title: "Professional Tools",
+                  description:
+                    "Industry-standard instruments and analysis techniques used by real astronomers.",
                 },
                 {
-                  title: 'Real Data Integration',
-                  description: 'Access to actual observations from major telescopes and space missions.',
+                  title: "Real Data Integration",
+                  description:
+                    "Access to actual observations from major telescopes and space missions.",
                 },
                 {
-                  title: 'Collaborative Environment',
-                  description: 'Share findings, collaborate on projects, and contribute to citizen science.',
+                  title: "Collaborative Environment",
+                  description:
+                    "Share findings, collaborate on projects, and contribute to citizen science.",
                 },
                 {
-                  title: 'Continuous Updates',
-                  description: 'Regular additions of new discoveries, tools, and educational content.',
+                  title: "Continuous Updates",
+                  description:
+                    "Regular additions of new discoveries, tools, and educational content.",
                 },
               ].map((feature, idx) => (
                 <div key={idx} className="flex gap-4">

@@ -1,10 +1,10 @@
-declare module '@wix/members' {
+declare module "@wix/members" {
   export namespace members {
     export interface GetMyMemberResponse {
       member: {
         loginEmail?: string;
         loginEmailVerified?: boolean;
-        status?: 'UNKNOWN' | 'PENDING' | 'APPROVED' | 'BLOCKED' | 'OFFLINE';
+        status?: "UNKNOWN" | "PENDING" | "APPROVED" | "BLOCKED" | "OFFLINE";
         contact?: {
           firstName?: string;
           lastName?: string;
@@ -32,13 +32,28 @@ declare module '@wix/members' {
   };
 }
 
-declare module '@wix/data' {
+declare module "@wix/data" {
   export const items: {
     query(collectionId: string): any;
-    queryReferenced(collectionId: string, itemId: string, refField: string, options?: any): Promise<any>;
+    queryReferenced(
+      collectionId: string,
+      itemId: string,
+      refField: string,
+      options?: any,
+    ): Promise<any>;
     insert(collectionId: string, itemData: any): Promise<any>;
-    insertReference(collectionId: string, propertyName: string, itemId: string, refIds: string[]): Promise<any>;
-    removeReference(collectionId: string, propertyName: string, itemId: string, refIds: string[]): Promise<any>;
+    insertReference(
+      collectionId: string,
+      propertyName: string,
+      itemId: string,
+      refIds: string[],
+    ): Promise<any>;
+    removeReference(
+      collectionId: string,
+      propertyName: string,
+      itemId: string,
+      refIds: string[],
+    ): Promise<any>;
     update(collectionId: string, itemData: any): Promise<any>;
     remove(collectionId: string, itemId: string): Promise<any>;
   };
@@ -50,7 +65,7 @@ declare module '@wix/data' {
   }
 }
 
-declare module '@wix/ecom' {
+declare module "@wix/ecom" {
   export namespace currentCart {
     export type Cart = any;
     export interface LineItem {
@@ -75,32 +90,32 @@ declare module '@wix/ecom' {
   };
 }
 
-declare module '@wix/redirects' {
+declare module "@wix/redirects" {
   export const redirects: {
     createRedirectSession(options?: any): Promise<any>;
   };
 }
 
-declare module '@wix/services-manager-react' {
+declare module "@wix/services-manager-react" {
   export function useWixModules(): any;
   export function useService<T = any>(service?: T): any;
 }
 
-declare module '@wix/ecom/services' {
+declare module "@wix/ecom/services" {
   export const currentCart: any;
   export const CurrentCartServiceDefinition: any;
 }
 
-declare module '@wix/seo/components' {
+declare module "@wix/seo/components" {
   export const SEO: any;
 }
 
-declare module '@wix/seo/services' {
+declare module "@wix/seo/services" {
   export function loadSEOTagsServiceConfig(options?: any): Promise<any>;
 }
 
-declare module '@wix/image-kit' {
-  export type FittingType = 'fill' | 'fit';
+declare module "@wix/image-kit" {
+  export type FittingType = "fill" | "fit";
   export type ImageTransformOptions = any;
   export const getPlaceholder: any;
   export const sdk: any;

@@ -33,8 +33,12 @@ export function HeroHUD() {
         {/* Center Pulsing Sphere */}
         <div className="relative flex flex-col items-center justify-center text-center p-6 rounded-full size-40 sm:size-48 bg-slate-950/80 border border-primary/40 shadow-inner">
           <Orbit className="size-8 text-primary animate-pulse" />
-          <span className="mt-2 font-display text-sm sm:text-base font-bold text-foreground">POLARIS 1.0</span>
-          <span className="text-[10px] font-mono text-primary/80 uppercase tracking-widest mt-0.5">Core Active</span>
+          <span className="mt-2 font-display text-sm sm:text-base font-bold text-foreground">
+            POLARIS 1.0
+          </span>
+          <span className="text-[10px] font-mono text-primary/80 uppercase tracking-widest mt-0.5">
+            Core Active
+          </span>
           <span className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-mono text-emerald-400">
             <span className="size-1.5 rounded-full bg-emerald-400 animate-ping" />
             RESEARCH ACTIVE
@@ -47,8 +51,12 @@ export function HeroHUD() {
             <Compass className="size-4 animate-pulse" />
           </div>
           <div>
-            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">Sky Atlas Catalog</div>
-            <div className="font-mono text-xs font-bold text-foreground">110 Deep-Sky Messier Objects</div>
+            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">
+              Sky Atlas Catalog
+            </div>
+            <div className="font-mono text-xs font-bold text-foreground">
+              110 Deep-Sky Messier Objects
+            </div>
           </div>
         </div>
 
@@ -58,8 +66,12 @@ export function HeroHUD() {
             <Activity className="size-4" />
           </div>
           <div>
-            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">AeroForge Physics</div>
-            <div className="font-mono text-xs font-bold text-foreground">Mach {telemetry.mach} · 40+ Solvers</div>
+            <div className="text-[10px] font-ui text-muted-foreground uppercase tracking-wider">
+              AeroForge Physics
+            </div>
+            <div className="font-mono text-xs font-bold text-foreground">
+              Mach {telemetry.mach} · 40+ Solvers
+            </div>
           </div>
         </div>
 
@@ -69,7 +81,9 @@ export function HeroHUD() {
             <Sparkles className="size-3.5" />
           </div>
           <div className="text-left">
-            <div className="text-[9px] font-ui text-muted-foreground uppercase tracking-wider">Expert Network</div>
+            <div className="text-[9px] font-ui text-muted-foreground uppercase tracking-wider">
+              Expert Network
+            </div>
             <div className="font-mono text-xs font-bold text-foreground">ISRO · Aerospace Labs</div>
           </div>
         </div>

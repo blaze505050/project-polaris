@@ -30,7 +30,7 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
       const timer = setTimeout(() => {
         if (modalRef.current) {
           const focusable = modalRef.current.querySelectorAll<HTMLElement>(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
           );
           if (focusable.length > 0) {
             focusable[0].focus();
@@ -49,8 +49,8 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
         if (e.key === "Tab" && modalRef.current) {
           const focusable = Array.from(
             modalRef.current.querySelectorAll<HTMLElement>(
-              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            )
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+            ),
           ).filter((el) => !el.hasAttribute("disabled") && el.offsetParent !== null);
 
           if (focusable.length === 0) return;
@@ -80,7 +80,10 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
         document.removeEventListener("keydown", handleKeyDown);
         document.body.style.overflow = "";
         // Restore focus sequentially to the element that triggered the modal
-        if (previousActiveElement.current && typeof previousActiveElement.current.focus === "function") {
+        if (
+          previousActiveElement.current &&
+          typeof previousActiveElement.current.focus === "function"
+        ) {
           previousActiveElement.current.focus();
         }
       };
@@ -110,11 +113,15 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               <Shield className="size-3.5" />
               <span>Project Polaris Governance Charter</span>
             </div>
-            <h2 id="transparency-modal-title" className="text-xl md:text-2xl font-display font-bold text-foreground tracking-tight">
+            <h2
+              id="transparency-modal-title"
+              className="text-xl md:text-2xl font-display font-bold text-foreground tracking-tight"
+            >
               AeroForge AI & Polaris Transparency Protocol
             </h2>
             <p id="transparency-modal-desc" className="text-xs text-muted-foreground">
-              Detailed breakdown of Project Polaris institutional structure, legal status, student leadership, operations, and ethics.
+              Detailed breakdown of Project Polaris institutional structure, legal status, student
+              leadership, operations, and ethics.
             </p>
           </div>
           <button
@@ -136,7 +143,10 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               <span>1. Institutional Relationship</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              AeroForge AI is an official, non-commercial engineering research laboratory built and maintained by <strong className="text-foreground">Project Polaris</strong>. It is designed to close the engineering tools access gap for students and self-taught builders worldwide.
+              AeroForge AI is an official, non-commercial engineering research laboratory built and
+              maintained by <strong className="text-foreground">Project Polaris</strong>. It is
+              designed to close the engineering tools access gap for students and self-taught
+              builders worldwide.
             </p>
           </div>
 
@@ -147,7 +157,16 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               <span>2. 100% Client-Side Sovereignty</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              All CAD geometries (<code className="text-emerald-600 dark:text-emerald-300 bg-surface-2 px-1 rounded">.STL</code>, <code className="text-emerald-600 dark:text-emerald-300 bg-surface-2 px-1 rounded">.STEP</code>), finite element meshes, and airfoil parameters execute entirely within your local browser sandbox. Zero telemetry or user engineering IP is sold or harvested.
+              All CAD geometries (
+              <code className="text-emerald-600 dark:text-emerald-300 bg-surface-2 px-1 rounded">
+                .STL
+              </code>
+              ,{" "}
+              <code className="text-emerald-600 dark:text-emerald-300 bg-surface-2 px-1 rounded">
+                .STEP
+              </code>
+              ), finite element meshes, and airfoil parameters execute entirely within your local
+              browser sandbox. Zero telemetry or user engineering IP is sold or harvested.
             </p>
           </div>
 
@@ -158,7 +177,9 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               <span>3. Open Mathematical Models</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Every formula (Prandtl-Glauert compressibility, Euler-Bernoulli beam deflections, Tsiolkovsky rocket equations, Keplerian two-body propagations) is explicitly documented with standard assumptions and scientific limits.
+              Every formula (Prandtl-Glauert compressibility, Euler-Bernoulli beam deflections,
+              Tsiolkovsky rocket equations, Keplerian two-body propagations) is explicitly
+              documented with standard assumptions and scientific limits.
             </p>
           </div>
 
@@ -169,7 +190,9 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               <span>4. Scientific Verification Notice</span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              AeroForge outputs are preliminary reduced-order models for educational and conceptual research. They must be independently benchmarked with high-fidelity CFD or wind tunnel tests prior to manufacturing flight hardware.
+              AeroForge outputs are preliminary reduced-order models for educational and conceptual
+              research. They must be independently benchmarked with high-fidelity CFD or wind tunnel
+              tests prior to manufacturing flight hardware.
             </p>
           </div>
         </div>
@@ -219,7 +242,12 @@ export function TransparencyModal({ isOpen, onClose }: TransparencyModalProps) {
               size="sm"
               className="rounded-lg bg-primary text-primary-foreground font-semibold"
             >
-              <a href="/privacy" target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+              <a
+                href="/privacy"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5"
+              >
                 <span>View Full Privacy Charter</span>
                 <ExternalLink className="size-3.5" />
               </a>

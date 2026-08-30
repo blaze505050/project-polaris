@@ -58,9 +58,7 @@ export const Route = createFileRoute("/courses")({
       { property: "og:url", content: "https://projectpolaris.in/courses" },
       { property: "og:type", content: "website" },
     ],
-    links: [
-      { rel: "canonical", href: "https://projectpolaris.in/courses" },
-    ],
+    links: [{ rel: "canonical", href: "https://projectpolaris.in/courses" }],
     scripts: [
       {
         type: "application/ld+json",
@@ -82,7 +80,8 @@ function CoursesPage() {
     return LEARNING_CATALOG.filter((item) => {
       if (selectedType !== "all" && item.type !== selectedType) return false;
       if (selectedTopic !== "all" && !item.topics.includes(selectedTopic)) return false;
-      if (selectedLevel !== "all" && item.level !== selectedLevel && item.level !== "all") return false;
+      if (selectedLevel !== "all" && item.level !== selectedLevel && item.level !== "all")
+        return false;
       return true;
     });
   }, [selectedType, selectedTopic, selectedLevel]);
@@ -95,12 +94,21 @@ function CoursesPage() {
         lead="Workshops, short courses, bootcamps and projects designed around demonstrable skills and real systems."
       >
         <div className="flex flex-wrap items-center gap-3">
-          <Button asChild size="sm" className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors">
+          <Button
+            asChild
+            size="sm"
+            className="h-9 px-4 bg-primary text-primary-foreground font-bold font-mono text-xs shadow-sm hover:bg-primary/90 transition-colors"
+          >
             <a href={SITE.communityUrl} target="_blank" rel="noreferrer">
               Join WhatsApp Community
             </a>
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="h-9 px-4 font-mono text-xs border-white/15 hover:border-primary/40"
+          >
             <Link to="/resources">Browse Free Resources</Link>
           </Button>
         </div>
@@ -228,8 +236,12 @@ function CoursesPage() {
                     {/* Instructor / Mentor Tag if Present */}
                     {item.instructor && (
                       <div className="mt-3 p-2 rounded-lg bg-surface-2/60 border border-white/6 text-[11px] font-body text-muted-foreground flex items-center justify-between">
-                        <span>Lead: <strong className="text-foreground">{item.instructor.name}</strong></span>
-                        <span className="text-primary text-[10px] font-mono">{item.instructor.org}</span>
+                        <span>
+                          Lead: <strong className="text-foreground">{item.instructor.name}</strong>
+                        </span>
+                        <span className="text-primary text-[10px] font-mono">
+                          {item.instructor.org}
+                        </span>
                       </div>
                     )}
 
@@ -239,7 +251,10 @@ function CoursesPage() {
                         What you learn & build:
                       </span>
                       {item.outcomes.slice(0, 2).map((out) => (
-                        <div key={out} className="flex items-start gap-1.5 text-[11px] font-body text-foreground/90">
+                        <div
+                          key={out}
+                          className="flex items-start gap-1.5 text-[11px] font-body text-foreground/90"
+                        >
                           <CheckCircle2 className="size-3 text-emerald-400 shrink-0 mt-0.5" />
                           <span>{out}</span>
                         </div>
@@ -257,8 +272,17 @@ function CoursesPage() {
                       <ChevronRight className="size-3" />
                     </button>
 
-                    <Button asChild size="sm" className="h-8 px-3.5 text-xs font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg">
-                      <a href={item.link || SITE.communityUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                    <Button
+                      asChild
+                      size="sm"
+                      className="h-8 px-3.5 text-xs font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg"
+                    >
+                      <a
+                        href={item.link || SITE.communityUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-1"
+                      >
                         <span>{item.ctaText || "Enroll"}</span>
                         <ArrowUpRight className="size-3 text-primary" />
                       </a>
@@ -271,7 +295,9 @@ function CoursesPage() {
 
           {filteredItems.length === 0 && (
             <div className="text-center py-16 p-8 rounded-2xl border border-white/8 bg-surface-2/30 font-mono">
-              <p className="text-sm text-muted-foreground">No learning items match the selected filters.</p>
+              <p className="text-sm text-muted-foreground">
+                No learning items match the selected filters.
+              </p>
               <Button
                 onClick={() => {
                   setSelectedType("all");
@@ -309,7 +335,9 @@ function CoursesPage() {
               <span className="text-gold capitalize">{activeItemModal.level}</span>
             </div>
 
-            <h3 className="text-2xl font-bold font-display text-foreground">{activeItemModal.title}</h3>
+            <h3 className="text-2xl font-bold font-display text-foreground">
+              {activeItemModal.title}
+            </h3>
             {activeItemModal.subtitle && (
               <p className="text-xs text-primary/80 font-body mt-1">{activeItemModal.subtitle}</p>
             )}
@@ -322,13 +350,26 @@ function CoursesPage() {
             {activeItemModal.instructor && (
               <div className="mt-4 p-3 rounded-xl bg-surface-2 border border-white/6 flex items-center justify-between text-xs">
                 <div>
-                  <span className="text-[10px] text-muted-foreground uppercase block">Instructor / Mentor</span>
-                  <span className="font-bold text-foreground mt-0.5 block">{activeItemModal.instructor.name}</span>
-                  <span className="text-[11px] text-muted-foreground">{activeItemModal.instructor.role} ({activeItemModal.instructor.org})</span>
+                  <span className="text-[10px] text-muted-foreground uppercase block">
+                    Instructor / Mentor
+                  </span>
+                  <span className="font-bold text-foreground mt-0.5 block">
+                    {activeItemModal.instructor.name}
+                  </span>
+                  <span className="text-[11px] text-muted-foreground">
+                    {activeItemModal.instructor.role} ({activeItemModal.instructor.org})
+                  </span>
                 </div>
                 {activeItemModal.instructor.linkedin && (
-                  <Button asChild size="sm" variant="outline" className="h-7 text-[11px] border-white/10">
-                    <a href={activeItemModal.instructor.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+                  <Button
+                    asChild
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-[11px] border-white/10"
+                  >
+                    <a href={activeItemModal.instructor.linkedin} target="_blank" rel="noreferrer">
+                      LinkedIn
+                    </a>
                   </Button>
                 )}
               </div>
@@ -337,10 +378,15 @@ function CoursesPage() {
             {/* Syllabus / Agenda */}
             {activeItemModal.syllabus && (
               <div className="mt-5">
-                <h4 className="text-xs font-bold uppercase text-foreground mb-2">Detailed Syllabus</h4>
+                <h4 className="text-xs font-bold uppercase text-foreground mb-2">
+                  Detailed Syllabus
+                </h4>
                 <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                   {activeItemModal.syllabus.map((s) => (
-                    <div key={s.title} className="p-2.5 rounded-lg bg-surface-2/60 border border-white/6 text-xs">
+                    <div
+                      key={s.title}
+                      className="p-2.5 rounded-lg bg-surface-2/60 border border-white/6 text-xs"
+                    >
                       <p className="font-bold text-foreground">{s.title}</p>
                       <p className="text-[11px] text-muted-foreground font-body mt-0.5">{s.desc}</p>
                     </div>
@@ -352,19 +398,38 @@ function CoursesPage() {
             {/* Capstone Final Project */}
             {activeItemModal.finalProject && (
               <div className="mt-4 p-3 rounded-xl bg-primary/10 border border-primary/20 text-xs">
-                <span className="text-[10px] text-primary font-bold uppercase block">Final Engineering Artifact</span>
-                <span className="font-bold text-foreground mt-0.5 block">{activeItemModal.finalProject.title}</span>
-                <p className="text-[11px] text-muted-foreground font-body mt-1">{activeItemModal.finalProject.desc}</p>
+                <span className="text-[10px] text-primary font-bold uppercase block">
+                  Final Engineering Artifact
+                </span>
+                <span className="font-bold text-foreground mt-0.5 block">
+                  {activeItemModal.finalProject.title}
+                </span>
+                <p className="text-[11px] text-muted-foreground font-body mt-1">
+                  {activeItemModal.finalProject.desc}
+                </p>
               </div>
             )}
 
             {/* CTAs */}
             <div className="mt-6 pt-4 border-t border-white/8 flex items-center justify-between">
-              <Button onClick={() => setActiveItemModal(null)} variant="ghost" size="sm" className="text-xs">
+              <Button
+                onClick={() => setActiveItemModal(null)}
+                variant="ghost"
+                size="sm"
+                className="text-xs"
+              >
                 Back to Catalog
               </Button>
-              <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-bold text-xs shadow-sm hover:bg-primary/90 transition-colors">
-                <a href={activeItemModal.link || SITE.communityUrl} target="_blank" rel="noreferrer">
+              <Button
+                asChild
+                size="sm"
+                className="h-9 px-5 bg-primary text-primary-foreground font-bold text-xs shadow-sm hover:bg-primary/90 transition-colors"
+              >
+                <a
+                  href={activeItemModal.link || SITE.communityUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {activeItemModal.ctaText || "Enroll Now"}
                 </a>
               </Button>

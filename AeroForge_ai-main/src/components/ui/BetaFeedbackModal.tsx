@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, MessageSquare, AlertTriangle, Lightbulb, ShieldAlert, CheckCircle2, Send } from 'lucide-react';
-import { useFeedbackStore, FeedbackItem } from '@/stores/feedbackStore';
-import { useToastStore } from '@/stores/toastStore';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  X,
+  MessageSquare,
+  AlertTriangle,
+  Lightbulb,
+  ShieldAlert,
+  CheckCircle2,
+  Send,
+} from "lucide-react";
+import { useFeedbackStore, FeedbackItem } from "@/stores/feedbackStore";
+import { useToastStore } from "@/stores/toastStore";
 
 interface BetaFeedbackModalProps {
   isOpen: boolean;
@@ -13,10 +21,10 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
   const { addFeedback } = useFeedbackStore();
   const { addToast } = useToastStore();
 
-  const [category, setCategory] = useState<FeedbackItem['category']>('bug');
-  const [severity, setSeverity] = useState<FeedbackItem['severity']>('medium');
-  const [message, setMessage] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
+  const [category, setCategory] = useState<FeedbackItem["category"]>("bug");
+  const [severity, setSeverity] = useState<FeedbackItem["severity"]>("medium");
+  const [message, setMessage] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
@@ -37,13 +45,13 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
       });
 
       addToast({
-        type: 'success',
-        title: 'Feedback Submitted',
-        description: 'Thank you for helping us improve AeroForge AI!',
+        type: "success",
+        title: "Feedback Submitted",
+        description: "Thank you for helping us improve AeroForge AI!",
       });
 
       setIsSubmitting(false);
-      setMessage('');
+      setMessage("");
       onClose();
     }, 400);
   };
@@ -79,10 +87,10 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
               </label>
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                 {[
-                  { id: 'bug', label: 'Bug Report', icon: AlertTriangle },
-                  { id: 'ux', label: 'UX Friction', icon: MessageSquare },
-                  { id: 'accuracy', label: 'Accuracy Check', icon: ShieldAlert },
-                  { id: 'feature', label: 'Idea / Feature', icon: Lightbulb },
+                  { id: "bug", label: "Bug Report", icon: AlertTriangle },
+                  { id: "ux", label: "UX Friction", icon: MessageSquare },
+                  { id: "accuracy", label: "Accuracy Check", icon: ShieldAlert },
+                  { id: "feature", label: "Idea / Feature", icon: Lightbulb },
                 ].map((item) => {
                   const Icon = item.icon;
                   const isSelected = category === item.id;
@@ -90,11 +98,11 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
                     <button
                       key={item.id}
                       type="button"
-                      onClick={() => setCategory(item.id as FeedbackItem['category'])}
+                      onClick={() => setCategory(item.id as FeedbackItem["category"])}
                       className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
                         isSelected
-                          ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300 font-bold'
-                          : 'bg-[#050914] border-white/10 text-white/60 hover:border-white/20'
+                          ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 font-bold"
+                          : "bg-[#050914] border-white/10 text-white/60 hover:border-white/20"
                       }`}
                     >
                       <Icon className="w-3.5 h-3.5" />
@@ -111,17 +119,17 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
                 Severity
               </label>
               <div className="flex items-center gap-2 text-xs font-mono">
-                {(['low', 'medium', 'high', 'critical'] as const).map((sev) => (
+                {(["low", "medium", "high", "critical"] as const).map((sev) => (
                   <button
                     key={sev}
                     type="button"
                     onClick={() => setSeverity(sev)}
                     className={`flex-1 py-1.5 rounded-lg border text-center uppercase text-[10px] font-bold transition-all ${
                       severity === sev
-                        ? sev === 'critical' || sev === 'high'
-                          ? 'bg-rose-500/20 border-rose-500 text-rose-300'
-                          : 'bg-cyan-500/20 border-cyan-500 text-cyan-300'
-                        : 'bg-[#050914] border-white/10 text-white/50 hover:border-white/20'
+                        ? sev === "critical" || sev === "high"
+                          ? "bg-rose-500/20 border-rose-500 text-rose-300"
+                          : "bg-cyan-500/20 border-cyan-500 text-cyan-300"
+                        : "bg-[#050914] border-white/10 text-white/50 hover:border-white/20"
                     }`}
                   >
                     {sev}
@@ -174,7 +182,7 @@ export default function BetaFeedbackModal({ isOpen, onClose }: BetaFeedbackModal
                 className="px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-black font-bold text-xs font-mono transition-all flex items-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>{isSubmitting ? 'Submitting...' : 'Submit Feedback'}</span>
+                <span>{isSubmitting ? "Submitting..." : "Submit Feedback"}</span>
               </button>
             </div>
           </form>

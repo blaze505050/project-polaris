@@ -33,6 +33,13 @@ export function SchoolOutreachForm() {
     const email = get("email");
     const message = get("message");
     const consent = fd.get("consent") === "on";
+    const botTrap = get("polaris_school_trap");
+
+    // Silent drop for automated bots
+    if (botTrap) {
+      setDone(true);
+      return;
+    }
 
     if (schoolName.length < 2 || schoolName.length > MAX.text) {
       toast.error("Please enter your school or organisation name.");
@@ -98,6 +105,15 @@ export function SchoolOutreachForm() {
 
   return (
     <form onSubmit={onSubmit} className="card-elevated space-y-7 p-7 md:p-10">
+      {/* Anti-spam Bot Honeypot */}
+      <input
+        type="text"
+        name="polaris_school_trap"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="school_name">School / organisation *</Label>
@@ -105,15 +121,33 @@ export function SchoolOutreachForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="contact_name">Your name *</Label>
-          <Input id="contact_name" name="contact_name" required maxLength={120} autoComplete="name" />
+          <Input
+            id="contact_name"
+            name="contact_name"
+            required
+            maxLength={120}
+            autoComplete="name"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="contact_role">Your role</Label>
-          <Input id="contact_role" name="contact_role" maxLength={120} placeholder="Teacher, principal, coordinator…" />
+          <Input
+            id="contact_role"
+            name="contact_role"
+            maxLength={120}
+            placeholder="Teacher, principal, coordinator…"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email *</Label>
-          <Input id="email" name="email" type="email" required maxLength={MAX.text} autoComplete="email" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            required
+            maxLength={MAX.text}
+            autoComplete="email"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="phone">Phone</Label>
@@ -125,7 +159,12 @@ export function SchoolOutreachForm() {
         </div>
         <div className="space-y-2">
           <Label htmlFor="student_count">Approx. number of students</Label>
-          <Input id="student_count" name="student_count" maxLength={60} placeholder="40, 150, whole school…" />
+          <Input
+            id="student_count"
+            name="student_count"
+            maxLength={60}
+            placeholder="40, 150, whole school…"
+          />
         </div>
         <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="preferred_timeline">Preferred timeline</Label>

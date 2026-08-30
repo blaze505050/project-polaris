@@ -87,7 +87,11 @@ export interface SpotlightEntry {
 export interface IndustrySprintProject {
   id: string;
   title: string;
-  domain: "Aerospace & Rocketry" | "Astrophysics & Space Science" | "CSE & AI for Science" | "Mechanical & Systems";
+  domain:
+    | "Aerospace & Rocketry"
+    | "Astrophysics & Space Science"
+    | "CSE & AI for Science"
+    | "Mechanical & Systems";
   difficulty: "Foundational" | "Intermediate" | "Industry Standard";
   sprintDuration: string;
   teamSize: string;
@@ -236,7 +240,8 @@ export const INITIAL_PROGRAMS: ProgramEvent[] = [
   {
     id: "star-universe-aug29",
     title: "Exploring the Star Universe: A Journey into the Wonders of Astronomy",
-    subtitle: "Join us for an engaging astronomy session as we embark on a journey through the fascinating world of stars and cosmos.",
+    subtitle:
+      "Join us for an engaging astronomy session as we embark on a journey through the fascinating world of stars and cosmos.",
     category: "workshop",
     status: "upcoming",
     date: "29 August 2026",
@@ -292,10 +297,9 @@ export const INITIAL_PROGRAMS: ProgramEvent[] = [
     status: "coming-soon",
     date: "Coming Soon",
     mode: "Online",
-    details: "Collaborative cohorts where student squads develop projects and practical prototypes.",
-    benefits: [
-      "TBD",
-    ],
+    details:
+      "Collaborative cohorts where student squads develop projects and practical prototypes.",
+    benefits: ["TBD"],
     ctaText: "Details to be disclosed soon",
     ctaUrl: "#",
     featured: false,
@@ -310,10 +314,9 @@ export const INITIAL_PROGRAMS: ProgramEvent[] = [
     status: "coming-soon",
     date: "Coming Soon",
     mode: "Hybrid",
-    details: "Lead astronomy observation sessions, workshops, and science culture in Tier-2, Tier-3 cities and remote regions.",
-    benefits: [
-      "TBD",
-    ],
+    details:
+      "Lead astronomy observation sessions, workshops, and science culture in Tier-2, Tier-3 cities and remote regions.",
+    benefits: ["TBD"],
     ctaText: "Launching Soon",
     ctaUrl: "/chapters",
     featured: false,
@@ -323,15 +326,15 @@ export const INITIAL_PROGRAMS: ProgramEvent[] = [
   {
     id: "mentor-panel-soon",
     title: "Mentor Panel & Fellowships",
-    subtitle: "Guidance and interactive reviews from experienced scientists, researchers, and mentors.",
+    subtitle:
+      "Guidance and interactive reviews from experienced scientists, researchers, and mentors.",
     category: "course",
     status: "coming-soon",
     date: "Coming Soon",
     mode: "Online",
-    details: "Direct technical guidance and reviews on student science projects, simulations, and research.",
-    benefits: [
-      "TBD",
-    ],
+    details:
+      "Direct technical guidance and reviews on student science projects, simulations, and research.",
+    benefits: ["TBD"],
     ctaText: "Coming Soon",
     ctaUrl: "#",
     featured: false,
@@ -372,7 +375,8 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     speaker: "Project Polaris Core",
     designation: "Astrophysics Lead & Moderators",
     speakerLinkedin: "https://www.linkedin.com/company/project-polaris/",
-    topic: "Interactive astronomy storytelling, astrophysical quiz, and constellation-hunting challenge.",
+    topic:
+      "Interactive astronomy storytelling, astrophysical quiz, and constellation-hunting challenge.",
     participants: "12 Participants",
     summary:
       "Community observation night and constellation mapping challenge examining deep-sky objects.",
@@ -384,7 +388,8 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     speaker: "Ms. Vranda Gupta",
     designation: "Founder, Stellar Freaks",
     speakerLinkedin: "https://www.linkedin.com/in/vranda-gupta-stellarfreaks/",
-    topic: "Deep space astrophysics, interstellar nebulae classification, and galactic evolutionary dynamics.",
+    topic:
+      "Deep space astrophysics, interstellar nebulae classification, and galactic evolutionary dynamics.",
     participants: "60+ Participants",
     summary:
       "A landmark interactive milestone exploring planetary nebulae, galactic morphology, and spectroscopic observations.",
@@ -474,7 +479,8 @@ export const INITIAL_SPOTLIGHT: SpotlightEntry[] = [
       "During our fourth masterclass, participants analyzed real astronomical spectral lines to identify chemical compositions of star-forming regions.",
     accomplishment:
       "Highest single-session attendance and verified participation certificates issued to 60+ active learners.",
-    contributionToPolaris: "Validated the experiential live masterclass model with active quizzes and hands-on exercises.",
+    contributionToPolaris:
+      "Validated the experiential live masterclass model with active quizzes and hands-on exercises.",
     image: "/night-observation.webp",
     featured: false,
     date: "9 August 2026",
@@ -487,7 +493,8 @@ export const INITIAL_SPOTLIGHT: SpotlightEntry[] = [
     story:
       "From scheduling ISRO scientist sessions to preparing study guides and computational models, our student volunteers power every single Polaris program.",
     accomplishment: "Coordinated 4 interactive workshops reaching 1,000+ students across India.",
-    contributionToPolaris: "The backbone of community moderation, outreach partnerships, and cohort onboarding.",
+    contributionToPolaris:
+      "The backbone of community moderation, outreach partnerships, and cohort onboarding.",
     image: "/students-building.webp",
     featured: false,
     date: "July - August 2026",
@@ -500,8 +507,10 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
     name: "Aditya",
     department: "Executive & Engineering",
     role: "Founder & Technical Lead",
-    intro: "Aerospace simulation enthusiast focused on making computational physics and rocketry tools accessible to every curious student.",
-    whatIBring: "Architecting numerical simulation engines, software platforms, and ecosystem direction.",
+    intro:
+      "Aerospace simulation enthusiast focused on making computational physics and rocketry tools accessible to every curious student.",
+    whatIBring:
+      "Architecting numerical simulation engines, software platforms, and ecosystem direction.",
     orbitRadius: 130,
     orbitAngle: 0.2,
     speed: 0.0006,
@@ -511,7 +520,8 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
     name: "Core Operations",
     department: "Operations & Logistics",
     role: "Program & Logistics Lead",
-    intro: "Managing session timelines, scientist masterclasses, student cohort registration, and certificate verification.",
+    intro:
+      "Managing session timelines, scientist masterclasses, student cohort registration, and certificate verification.",
     whatIBring: "Ensuring smooth execution of every workshop and real-time student support.",
     orbitRadius: 190,
     orbitAngle: 1.8,
@@ -522,7 +532,8 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
     name: "Research Cohort",
     department: "Scientific Research",
     role: "Research & Simulation Fellow",
-    intro: "Guiding students through formulating research hypotheses, data collection, and peer-reviewed technical paper preparation.",
+    intro:
+      "Guiding students through formulating research hypotheses, data collection, and peer-reviewed technical paper preparation.",
     whatIBring: "Bridging textbook theory with numerical CFD and orbital trajectory verification.",
     orbitRadius: 240,
     orbitAngle: 3.4,
@@ -533,8 +544,10 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
     name: "Outreach & Partnerships",
     department: "Community & Schools",
     role: "Institutional Outreach Lead",
-    intro: "Connecting Project Polaris with schools, colleges, and astronomy clubs across Tier-2 and Tier-3 cities.",
-    whatIBring: "Expanding access to space science for students without institutional infrastructure.",
+    intro:
+      "Connecting Project Polaris with schools, colleges, and astronomy clubs across Tier-2 and Tier-3 cities.",
+    whatIBring:
+      "Expanding access to space science for students without institutional infrastructure.",
     orbitRadius: 160,
     orbitAngle: 4.8,
     speed: -0.0005,
@@ -545,7 +558,8 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
     department: "Design & Publications",
     role: "Media & Publications Lead",
     intro: "Crafting technical explainers, Aaj Ka Gyan drops, and open educational resources.",
-    whatIBring: "Translating complex aerospace concepts into engaging, digestible visual knowledge.",
+    whatIBring:
+      "Translating complex aerospace concepts into engaging, digestible visual knowledge.",
     orbitRadius: 210,
     orbitAngle: 5.9,
     speed: 0.0004,
@@ -737,7 +751,8 @@ const INITIAL_SUBMISSIONS: UserSubmission[] = [
     type: "contact_inquiry",
     name: "Dr. K. N. Rao",
     email: "knrao@institute.edu",
-    message: "Interested in organizing a Polaris satellite simulation workshop for our undergraduate engineering department.",
+    message:
+      "Interested in organizing a Polaris satellite simulation workshop for our undergraduate engineering department.",
     timestamp: "2026-08-26T16:40:00.000Z",
   },
   {
@@ -766,7 +781,7 @@ export function getUserSubmissions(): UserSubmission[] {
 }
 
 export function saveUserSubmission(
-  submission: Omit<UserSubmission, "id" | "timestamp">
+  submission: Omit<UserSubmission, "id" | "timestamp">,
 ): UserSubmission {
   const current = getUserSubmissions();
   const newEntry: UserSubmission = {
@@ -796,4 +811,3 @@ export function clearAllUserSubmissions() {
     localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify([]));
   }
 }
-

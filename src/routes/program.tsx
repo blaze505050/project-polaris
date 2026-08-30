@@ -202,7 +202,10 @@ function ProgramPage() {
             <ul className="mt-8 space-y-4">
               {QUALITY_BAR.map((q) => (
                 <li key={q} className="flex gap-3 text-sm text-muted-foreground">
-                  <span aria-hidden="true" className="mt-2 size-1 shrink-0 rounded-full bg-primary" />
+                  <span
+                    aria-hidden="true"
+                    className="mt-2 size-1 shrink-0 rounded-full bg-primary"
+                  />
                   {q}
                 </li>
               ))}

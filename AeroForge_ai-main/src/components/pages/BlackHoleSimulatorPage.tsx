@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Card } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
-import Advanced3DBlackHole from '@/components/Advanced3DBlackHole';
-import { RelativisticCalculator, CONSTANTS } from '@/services/advancedPhysicsSimulator';
-import { Zap, Gauge, Info } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Card } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
+import Advanced3DBlackHole from "@/components/Advanced3DBlackHole";
+import { RelativisticCalculator, CONSTANTS } from "@/services/advancedPhysicsSimulator";
+import { Zap, Gauge, Info } from "lucide-react";
 
 export default function BlackHoleSimulatorPage() {
   const [mass, setMass] = useState(10); // Solar masses
@@ -16,12 +16,19 @@ export default function BlackHoleSimulatorPage() {
 
   const blackHoleMass = mass * CONSTANTS.SOLAR_MASS;
   const schwarzschildRadius = RelativisticCalculator.schwarzschildRadius(blackHoleMass);
-  const ergosphereRadius = schwarzschildRadius * (1 + Math.sqrt(Math.max(0, 1 - spinParameter * spinParameter)));
+  const ergosphereRadius =
+    schwarzschildRadius * (1 + Math.sqrt(Math.max(0, 1 - spinParameter * spinParameter)));
   const photonSphereRadius = schwarzschildRadius * 1.5;
 
   // Calculate physical properties
-  const timeDilationAtPhotonSphere = RelativisticCalculator.timeDilationFactor(blackHoleMass, photonSphereRadius);
-  const lensingAngle = RelativisticCalculator.lensingDeflectionAngle(blackHoleMass, photonSphereRadius);
+  const timeDilationAtPhotonSphere = RelativisticCalculator.timeDilationFactor(
+    blackHoleMass,
+    photonSphereRadius,
+  );
+  const lensingAngle = RelativisticCalculator.lensingDeflectionAngle(
+    blackHoleMass,
+    photonSphereRadius,
+  );
 
   return (
     <div className="min-h-screen bg-aerospace-dark text-foreground">
@@ -34,11 +41,10 @@ export default function BlackHoleSimulatorPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <h1 className="text-5xl font-bold mb-4 text-aerospace-blue">
-            Black Hole Simulator
-          </h1>
+          <h1 className="text-5xl font-bold mb-4 text-aerospace-blue">Black Hole Simulator</h1>
           <p className="text-xl text-secondary-foreground">
-            Explore extreme spacetime curvature with relativistic physics and high-fidelity 3D rendering.
+            Explore extreme spacetime curvature with relativistic physics and high-fidelity 3D
+            rendering.
           </p>
         </motion.div>
 
@@ -150,7 +156,8 @@ export default function BlackHoleSimulatorPage() {
               <div className="flex justify-between">
                 <span className="text-secondary-foreground">Event Horizon Area:</span>
                 <span className="text-aerospace-blue font-mono">
-                  {(4 * Math.PI * schwarzschildRadius * schwarzschildRadius / 1e12).toFixed(2)} × 10¹² km²
+                  {((4 * Math.PI * schwarzschildRadius * schwarzschildRadius) / 1e12).toFixed(2)} ×
+                  10¹² km²
                 </span>
               </div>
             </div>
@@ -178,7 +185,11 @@ export default function BlackHoleSimulatorPage() {
               <div className="flex justify-between">
                 <span className="text-secondary-foreground">Escape Velocity (Surface):</span>
                 <span className="text-aerospace-blue font-mono">
-                  {(CONSTANTS.SPEED_OF_LIGHT * Math.sqrt(schwarzschildRadius / (schwarzschildRadius * 2))).toFixed(0)} m/s
+                  {(
+                    CONSTANTS.SPEED_OF_LIGHT *
+                    Math.sqrt(schwarzschildRadius / (schwarzschildRadius * 2))
+                  ).toFixed(0)}{" "}
+                  m/s
                 </span>
               </div>
               <div className="text-xs text-secondary-foreground mt-4">
@@ -196,10 +207,12 @@ export default function BlackHoleSimulatorPage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           <Card className="bg-primary border-aerospace-blue/30 p-6">
-            <h3 className="text-lg font-bold text-aerospace-blue mb-4">Schwarzschild Black Holes</h3>
+            <h3 className="text-lg font-bold text-aerospace-blue mb-4">
+              Schwarzschild Black Holes
+            </h3>
             <p className="text-sm text-secondary-foreground mb-4">
-              Non-rotating black holes described by the Schwarzschild metric. The event horizon is a perfect sphere
-              where spacetime curvature becomes infinite.
+              Non-rotating black holes described by the Schwarzschild metric. The event horizon is a
+              perfect sphere where spacetime curvature becomes infinite.
             </p>
             <ul className="text-sm text-secondary-foreground space-y-2">
               <li>• Event horizon: r_s = 2GM/c²</li>
@@ -211,8 +224,8 @@ export default function BlackHoleSimulatorPage() {
           <Card className="bg-primary border-aerospace-blue/30 p-6">
             <h3 className="text-lg font-bold text-aerospace-blue mb-4">Kerr Black Holes</h3>
             <p className="text-sm text-secondary-foreground mb-4">
-              Rotating black holes with spin parameter a (0 ≤ a ≤ M). The ergosphere allows energy extraction
-              via the Penrose process.
+              Rotating black holes with spin parameter a (0 ≤ a ≤ M). The ergosphere allows energy
+              extraction via the Penrose process.
             </p>
             <ul className="text-sm text-secondary-foreground space-y-2">
               <li>• Ergosphere: r_e = M + √(M² - a²)</li>
@@ -224,7 +237,8 @@ export default function BlackHoleSimulatorPage() {
           <Card className="bg-primary border-aerospace-blue/30 p-6">
             <h3 className="text-lg font-bold text-aerospace-blue mb-4">Accretion Disks</h3>
             <p className="text-sm text-secondary-foreground mb-4">
-              Matter spiraling into black holes forms accretion disks with extreme temperatures and radiation.
+              Matter spiraling into black holes forms accretion disks with extreme temperatures and
+              radiation.
             </p>
             <ul className="text-sm text-secondary-foreground space-y-2">
               <li>• Innermost stable circular orbit (ISCO)</li>
@@ -236,7 +250,8 @@ export default function BlackHoleSimulatorPage() {
           <Card className="bg-primary border-aerospace-blue/30 p-6">
             <h3 className="text-lg font-bold text-aerospace-blue mb-4">Gravitational Lensing</h3>
             <p className="text-sm text-secondary-foreground mb-4">
-              Massive black holes bend spacetime, deflecting light paths and creating multiple images of distant objects.
+              Massive black holes bend spacetime, deflecting light paths and creating multiple
+              images of distant objects.
             </p>
             <ul className="text-sm text-secondary-foreground space-y-2">
               <li>• Einstein rings and arcs</li>

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Plus, Upload, Download, Trash2, File, Folder, Eye, Share2 } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Plus, Upload, Download, Trash2, File, Folder, Eye, Share2 } from "lucide-react";
 
 interface DatasetFile {
   id: string;
   name: string;
-  type: 'geometry' | 'mesh' | 'results' | 'other';
+  type: "geometry" | "mesh" | "results" | "other";
   size: number;
   uploadedAt: Date;
   format: string;
@@ -18,58 +18,58 @@ interface DatasetManagerProps {
 export default function DatasetManager({ projectId }: DatasetManagerProps) {
   const [datasets, setDatasets] = useState<DatasetFile[]>([
     {
-      id: '1',
-      name: 'airfoil_geometry.step',
-      type: 'geometry',
+      id: "1",
+      name: "airfoil_geometry.step",
+      type: "geometry",
       size: 2.4,
       uploadedAt: new Date(Date.now() - 86400000),
-      format: 'STEP',
+      format: "STEP",
     },
     {
-      id: '2',
-      name: 'mesh_refined_v2.msh',
-      type: 'mesh',
+      id: "2",
+      name: "mesh_refined_v2.msh",
+      type: "mesh",
       size: 15.8,
       uploadedAt: new Date(Date.now() - 43200000),
-      format: 'Gmsh',
+      format: "Gmsh",
     },
     {
-      id: '3',
-      name: 'cfd_results_run1.h5',
-      type: 'results',
+      id: "3",
+      name: "cfd_results_run1.h5",
+      type: "results",
       size: 342.5,
       uploadedAt: new Date(Date.now() - 3600000),
-      format: 'HDF5',
+      format: "HDF5",
     },
   ]);
 
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [filterType, setFilterType] = useState<DatasetFile['type'] | 'all'>('all');
+  const [filterType, setFilterType] = useState<DatasetFile["type"] | "all">("all");
   const [showUploadDialog, setShowUploadDialog] = useState(false);
 
-  const getTypeIcon = (type: DatasetFile['type']) => {
+  const getTypeIcon = (type: DatasetFile["type"]) => {
     switch (type) {
-      case 'geometry':
-        return '🔷';
-      case 'mesh':
-        return '🔶';
-      case 'results':
-        return '📊';
+      case "geometry":
+        return "🔷";
+      case "mesh":
+        return "🔶";
+      case "results":
+        return "📊";
       default:
-        return '📄';
+        return "📄";
     }
   };
 
-  const getTypeColor = (type: DatasetFile['type']) => {
+  const getTypeColor = (type: DatasetFile["type"]) => {
     switch (type) {
-      case 'geometry':
-        return 'text-aerospace-blue';
-      case 'mesh':
-        return 'text-aerospace-accent';
-      case 'results':
-        return 'text-aerospace-success';
+      case "geometry":
+        return "text-aerospace-blue";
+      case "mesh":
+        return "text-aerospace-accent";
+      case "results":
+        return "text-aerospace-success";
       default:
-        return 'text-secondary-foreground';
+        return "text-secondary-foreground";
     }
   };
 
@@ -84,13 +84,14 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (hours < 1) return 'Just now';
+    if (hours < 1) return "Just now";
     if (hours < 24) return `${hours}h ago`;
     if (days < 7) return `${days}d ago`;
     return date.toLocaleDateString();
   };
 
-  const filteredDatasets = filterType === 'all' ? datasets : datasets.filter(d => d.type === filterType);
+  const filteredDatasets =
+    filterType === "all" ? datasets : datasets.filter((d) => d.type === filterType);
 
   return (
     <div className="space-y-6">
@@ -102,41 +103,41 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
       >
         <div className="flex items-center gap-2">
           <button
-            onClick={() => setFilterType('all')}
+            onClick={() => setFilterType("all")}
             className={`px-3 py-2 rounded transition-colors ${
-              filterType === 'all'
-                ? 'bg-aerospace-blue text-white'
-                : 'text-secondary-foreground hover:text-foreground'
+              filterType === "all"
+                ? "bg-aerospace-blue text-white"
+                : "text-secondary-foreground hover:text-foreground"
             }`}
           >
             All
           </button>
           <button
-            onClick={() => setFilterType('geometry')}
+            onClick={() => setFilterType("geometry")}
             className={`px-3 py-2 rounded transition-colors ${
-              filterType === 'geometry'
-                ? 'bg-aerospace-blue text-white'
-                : 'text-secondary-foreground hover:text-foreground'
+              filterType === "geometry"
+                ? "bg-aerospace-blue text-white"
+                : "text-secondary-foreground hover:text-foreground"
             }`}
           >
             Geometry
           </button>
           <button
-            onClick={() => setFilterType('mesh')}
+            onClick={() => setFilterType("mesh")}
             className={`px-3 py-2 rounded transition-colors ${
-              filterType === 'mesh'
-                ? 'bg-aerospace-blue text-white'
-                : 'text-secondary-foreground hover:text-foreground'
+              filterType === "mesh"
+                ? "bg-aerospace-blue text-white"
+                : "text-secondary-foreground hover:text-foreground"
             }`}
           >
             Mesh
           </button>
           <button
-            onClick={() => setFilterType('results')}
+            onClick={() => setFilterType("results")}
             className={`px-3 py-2 rounded transition-colors ${
-              filterType === 'results'
-                ? 'bg-aerospace-blue text-white'
-                : 'text-secondary-foreground hover:text-foreground'
+              filterType === "results"
+                ? "bg-aerospace-blue text-white"
+                : "text-secondary-foreground hover:text-foreground"
             }`}
           >
             Results
@@ -145,9 +146,8 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
 
         <div className="flex items-center gap-2">
           <div className="text-sm text-secondary-foreground">
-            {filteredDatasets.length} file{filteredDatasets.length !== 1 ? 's' : ''}
-            {' '}
-            ({formatFileSize(filteredDatasets.reduce((sum, f) => sum + f.size, 0))})
+            {filteredDatasets.length} file{filteredDatasets.length !== 1 ? "s" : ""} (
+            {formatFileSize(filteredDatasets.reduce((sum, f) => sum + f.size, 0))})
           </div>
           <button
             onClick={() => setShowUploadDialog(true)}
@@ -169,7 +169,9 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
           >
             <Folder className="w-12 h-12 text-secondary-foreground mx-auto mb-4 opacity-50" />
             <p className="text-secondary-foreground mb-2">No datasets found</p>
-            <p className="text-sm text-secondary-foreground">Upload geometry, meshes, or results files to get started</p>
+            <p className="text-sm text-secondary-foreground">
+              Upload geometry, meshes, or results files to get started
+            </p>
           </motion.div>
         ) : (
           filteredDatasets.map((file, index) => (
@@ -180,7 +182,9 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
               transition={{ delay: index * 0.05 }}
               onClick={() => setSelectedFile(file.id)}
               className={`bg-primary border border-secondary/20 rounded-lg p-4 cursor-pointer transition-all ${
-                selectedFile === file.id ? 'border-aerospace-blue bg-primary/80' : 'hover:border-secondary/40'
+                selectedFile === file.id
+                  ? "border-aerospace-blue bg-primary/80"
+                  : "hover:border-secondary/40"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -189,7 +193,9 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-foreground font-medium truncate">{file.name}</h3>
                     <div className="flex items-center gap-3 text-sm text-secondary-foreground mt-1">
-                      <span className={`px-2 py-1 rounded bg-secondary/20 ${getTypeColor(file.type)}`}>
+                      <span
+                        className={`px-2 py-1 rounded bg-secondary/20 ${getTypeColor(file.type)}`}
+                      >
                         {file.type.charAt(0).toUpperCase() + file.type.slice(1)}
                       </span>
                       <span>{file.format}</span>
@@ -230,7 +236,7 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setDatasets(datasets.filter(d => d.id !== file.id));
+                      setDatasets(datasets.filter((d) => d.id !== file.id));
                       setSelectedFile(null);
                     }}
                     className="p-2 hover:bg-aerospace-danger/20 rounded transition-colors text-secondary-foreground hover:text-aerospace-danger"
@@ -264,11 +270,15 @@ export default function DatasetManager({ projectId }: DatasetManagerProps) {
               <div className="border-2 border-dashed border-secondary/40 rounded-lg p-8 text-center hover:border-aerospace-blue transition-colors cursor-pointer">
                 <Upload className="w-8 h-8 text-secondary-foreground mx-auto mb-2" />
                 <p className="text-foreground font-medium">Drop files here or click to browse</p>
-                <p className="text-sm text-secondary-foreground mt-1">Supported: STEP, STL, MSH, H5, VTK</p>
+                <p className="text-sm text-secondary-foreground mt-1">
+                  Supported: STEP, STL, MSH, H5, VTK
+                </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">Dataset Type</label>
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Dataset Type
+                </label>
                 <select className="w-full bg-aerospace-dark text-foreground px-3 py-2 rounded border border-secondary/20 focus:border-aerospace-blue focus:outline-none">
                   <option>Geometry</option>
                   <option>Mesh</option>

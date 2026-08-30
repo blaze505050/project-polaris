@@ -110,7 +110,7 @@ export class ConvergenceMonitoringService {
       cl: number;
       cd: number;
       cm: number;
-    }
+    },
   ): ConvergenceMetrics {
     // Update residuals
     metrics.residuals.continuity.push(residuals.continuity);
@@ -135,16 +135,17 @@ export class ConvergenceMonitoringService {
     metrics.estimatedIterationsToConvergence = this.estimateIterationsToConvergence(
       metrics.residuals.continuity,
       metrics.convergenceRate,
-      this.targetResidual
+      this.targetResidual,
     );
 
     // Check convergence
     metrics.isConverged = this.checkConvergence(metrics);
 
     // Add to history
-    const avgResidual = (residuals.continuity + residuals.momentum + residuals.energy + residuals.turbulence) / 4;
+    const avgResidual =
+      (residuals.continuity + residuals.momentum + residuals.energy + residuals.turbulence) / 4;
     const avgForce = Math.sqrt(forces.cl ** 2 + forces.cd ** 2 + forces.cm ** 2);
-    
+
     metrics.convergenceHistory.push({
       iteration,
       residuals: avgResidual,
@@ -197,7 +198,7 @@ export class ConvergenceMonitoringService {
   private static estimateIterationsToConvergence(
     residuals: number[],
     convergenceRate: number,
-    targetResidual: number
+    targetResidual: number,
   ): number {
     if (residuals.length === 0 || convergenceRate >= 0) {
       return this.maxIterations;
@@ -226,7 +227,7 @@ export class ConvergenceMonitoringService {
 
     // Check if all residuals are below target
     const recentResiduals = residuals.slice(-this.convergenceWindow);
-    const allBelowTarget = recentResiduals.every(r => r < this.targetResidual);
+    const allBelowTarget = recentResiduals.every((r) => r < this.targetResidual);
 
     if (!allBelowTarget) {
       return false;
@@ -247,7 +248,7 @@ export class ConvergenceMonitoringService {
     if (values.length === 0) return 0;
 
     const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const squaredDiffs = values.map(v => (v - mean) ** 2);
+    const squaredDiffs = values.map((v) => (v - mean) ** 2);
     return squaredDiffs.reduce((a, b) => a + b, 0) / values.length;
   }
 
@@ -260,17 +261,17 @@ export class ConvergenceMonitoringService {
 
     // Check convergence rate
     if (metrics.convergenceRate > -0.01) {
-      warnings.push('Convergence rate is very slow or diverging');
-      recommendations.push('Try reducing time step or increasing mesh refinement');
+      warnings.push("Convergence rate is very slow or diverging");
+      recommendations.push("Try reducing time step or increasing mesh refinement");
     } else if (metrics.convergenceRate > -0.05) {
-      warnings.push('Convergence rate is slower than expected');
-      recommendations.push('Consider adjusting turbulence model or solver settings');
+      warnings.push("Convergence rate is slower than expected");
+      recommendations.push("Consider adjusting turbulence model or solver settings");
     }
 
     // Check estimated iterations
     if (metrics.estimatedIterationsToConvergence > this.maxIterations) {
-      warnings.push('Estimated iterations exceed maximum - may not converge');
-      recommendations.push('Review simulation setup and boundary conditions');
+      warnings.push("Estimated iterations exceed maximum - may not converge");
+      recommendations.push("Review simulation setup and boundary conditions");
     }
 
     // Check residual oscillations
@@ -280,8 +281,8 @@ export class ConvergenceMonitoringService {
       const mean = recentResiduals.reduce((a, b) => a + b, 0) / recentResiduals.length;
 
       if (variance / (mean || 1) > 0.5) {
-        warnings.push('Residuals are oscillating significantly');
-        recommendations.push('Try increasing relaxation factors or using under-relaxation');
+        warnings.push("Residuals are oscillating significantly");
+        recommendations.push("Try increasing relaxation factors or using under-relaxation");
       }
     }
 
@@ -292,20 +293,20 @@ export class ConvergenceMonitoringService {
       const clMean = recentCl.reduce((a, b) => a + b, 0) / recentCl.length;
 
       if (clVariance / (Math.abs(clMean) || 1) > 0.1) {
-        warnings.push('Lift coefficient is not stable');
-        recommendations.push('Continue iterations or refine mesh in critical regions');
+        warnings.push("Lift coefficient is not stable");
+        recommendations.push("Continue iterations or refine mesh in critical regions");
       }
     }
 
     // Check mesh quality
     if (metrics.qualityMetrics.aspectRatio > 1000) {
-      warnings.push('Mesh has very high aspect ratio');
-      recommendations.push('Regenerate mesh with better quality settings');
+      warnings.push("Mesh has very high aspect ratio");
+      recommendations.push("Regenerate mesh with better quality settings");
     }
 
     if (metrics.qualityMetrics.skewness > 0.85) {
-      warnings.push('Mesh has high skewness');
-      recommendations.push('Improve mesh quality to avoid convergence issues');
+      warnings.push("Mesh has high skewness");
+      recommendations.push("Improve mesh quality to avoid convergence issues");
     }
 
     return {
@@ -333,24 +334,24 @@ export class ConvergenceMonitoringService {
     const cl = metrics.forceCoefficients.cl;
     const cd = metrics.forceCoefficients.cd;
 
-    const residualReduction = residuals.length > 1
-      ? (residuals[0] - residuals[residuals.length - 1]) / residuals[0]
-      : 0;
+    const residualReduction =
+      residuals.length > 1 ? (residuals[0] - residuals[residuals.length - 1]) / residuals[0] : 0;
 
-    const averageResidual = residuals.length > 0
-      ? residuals.reduce((a, b) => a + b, 0) / residuals.length
-      : 0;
+    const averageResidual =
+      residuals.length > 0 ? residuals.reduce((a, b) => a + b, 0) / residuals.length : 0;
 
     const minResidual = residuals.length > 0 ? Math.min(...residuals) : 0;
     const maxResidual = residuals.length > 0 ? Math.max(...residuals) : 0;
 
-    const clStability = cl.length > 20
-      ? 1 - (this.calculateVariance(cl.slice(-20)) / (Math.abs(cl[cl.length - 1]) || 1))
-      : 0;
+    const clStability =
+      cl.length > 20
+        ? 1 - this.calculateVariance(cl.slice(-20)) / (Math.abs(cl[cl.length - 1]) || 1)
+        : 0;
 
-    const cdStability = cd.length > 20
-      ? 1 - (this.calculateVariance(cd.slice(-20)) / (Math.abs(cd[cd.length - 1]) || 1))
-      : 0;
+    const cdStability =
+      cd.length > 20
+        ? 1 - this.calculateVariance(cd.slice(-20)) / (Math.abs(cd[cd.length - 1]) || 1)
+        : 0;
 
     return {
       residualReduction: Math.max(0, Math.min(1, residualReduction)),
@@ -374,7 +375,7 @@ export class ConvergenceMonitoringService {
       const isIncreasing = recent.every((val, i, arr) => i === 0 || val >= arr[i - 1]);
 
       if (isIncreasing) {
-        issues.push('Simulation appears to be diverging');
+        issues.push("Simulation appears to be diverging");
       }
     }
 
@@ -385,7 +386,7 @@ export class ConvergenceMonitoringService {
       const mean = recent.reduce((a, b) => a + b, 0) / recent.length;
 
       if (variance / (mean || 1) < 0.001) {
-        issues.push('Convergence appears to be stagnating');
+        issues.push("Convergence appears to be stagnating");
       }
     }
 
@@ -401,7 +402,7 @@ export class ConvergenceMonitoringService {
       }
 
       if (oscillations > recent.length * 0.5) {
-        issues.push('Residuals are oscillating significantly');
+        issues.push("Residuals are oscillating significantly");
       }
     }
 

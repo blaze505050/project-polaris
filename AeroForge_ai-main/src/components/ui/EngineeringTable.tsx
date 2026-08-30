@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   ChevronDown,
   ChevronUp,
@@ -7,14 +7,14 @@ import {
   Filter,
   SlidersHorizontal,
   Check,
-} from 'lucide-react';
+} from "lucide-react";
 
 export interface ColumnDef<T> {
   key: string;
   header: string;
   accessor: (row: T) => any;
   sortable?: boolean;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
   width?: string;
   unit?: string;
 }
@@ -38,13 +38,13 @@ export default function EngineeringTable<T>({
   description,
   pageSize = 10,
   onRowClick,
-  exportFilename = 'aeroforge-data-export',
+  exportFilename = "aeroforge-data-export",
 }: EngineeringTableProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  const [filterQuery, setFilterQuery] = useState('');
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [filterQuery, setFilterQuery] = useState("");
   const [visibleColumns, setVisibleColumns] = useState<Set<string>>(
-    new Set(columns.map((c) => c.key))
+    new Set(columns.map((c) => c.key)),
   );
   const [showColPicker, setShowColPicker] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,14 +52,14 @@ export default function EngineeringTable<T>({
   // Sorting
   const handleSort = (key: string) => {
     if (sortKey === key) {
-      if (sortDirection === 'asc') setSortDirection('desc');
+      if (sortDirection === "asc") setSortDirection("desc");
       else {
         setSortKey(null);
-        setSortDirection('asc');
+        setSortDirection("asc");
       }
     } else {
       setSortKey(key);
-      setSortDirection('asc');
+      setSortDirection("asc");
     }
   };
 
@@ -87,29 +87,26 @@ export default function EngineeringTable<T>({
     if (valB === null || valB === undefined) return -1;
 
     const cmp = valA < valB ? -1 : 1;
-    return sortDirection === 'asc' ? cmp : -cmp;
+    return sortDirection === "asc" ? cmp : -cmp;
   });
 
   // Pagination
   const totalPages = Math.ceil(sortedData.length / pageSize) || 1;
-  const paginatedData = sortedData.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  const paginatedData = sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   // Export CSV
   const handleExportCSV = () => {
     const activeCols = columns.filter((c) => visibleColumns.has(c.key));
-    const headers = activeCols.map((c) => `"${c.header}${c.unit ? ` (${c.unit})` : ''}"`).join(',');
+    const headers = activeCols.map((c) => `"${c.header}${c.unit ? ` (${c.unit})` : ""}"`).join(",");
     const rows = sortedData.map((row) =>
-      activeCols.map((c) => `"${String(c.accessor(row) ?? '').replace(/"/g, '""')}"`).join(',')
+      activeCols.map((c) => `"${String(c.accessor(row) ?? "").replace(/"/g, '""')}"`).join(","),
     );
 
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers, ...rows].join('\n');
+    const csvContent = "data:text/csv;charset=utf-8," + [headers, ...rows].join("\n");
     const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `${exportFilename}.csv`);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `${exportFilename}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -170,9 +167,7 @@ export default function EngineeringTable<T>({
                     className="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-white/5 text-left text-white/80"
                   >
                     <span className="truncate">{col.header}</span>
-                    {visibleColumns.has(col.key) && (
-                      <Check className="w-3.5 h-3.5 text-cyan-400" />
-                    )}
+                    {visibleColumns.has(col.key) && <Check className="w-3.5 h-3.5 text-cyan-400" />}
                   </button>
                 ))}
               </div>
@@ -203,8 +198,8 @@ export default function EngineeringTable<T>({
                     style={{ width: col.width }}
                     onClick={() => col.sortable !== false && handleSort(col.key)}
                     className={`px-3 py-2.5 font-semibold ${
-                      col.sortable !== false ? 'cursor-pointer hover:text-white select-none' : ''
-                    } ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'}`}
+                      col.sortable !== false ? "cursor-pointer hover:text-white select-none" : ""
+                    } ${col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : "text-left"}`}
                   >
                     <div className="flex items-center gap-1 inline-flex">
                       <span>{col.header}</span>
@@ -212,7 +207,7 @@ export default function EngineeringTable<T>({
                       {col.sortable !== false && (
                         <span className="text-white/30">
                           {sortKey === col.key ? (
-                            sortDirection === 'asc' ? (
+                            sortDirection === "asc" ? (
                               <ChevronUp className="w-3 h-3 text-cyan-400" />
                             ) : (
                               <ChevronDown className="w-3 h-3 text-cyan-400" />
@@ -243,7 +238,9 @@ export default function EngineeringTable<T>({
                   key={keyExtractor(row)}
                   onClick={() => onRowClick && onRowClick(row)}
                   className={`transition-colors ${
-                    onRowClick ? 'cursor-pointer hover:bg-cyan-500/10 hover:text-white' : 'hover:bg-white/[0.02]'
+                    onRowClick
+                      ? "cursor-pointer hover:bg-cyan-500/10 hover:text-white"
+                      : "hover:bg-white/[0.02]"
                   }`}
                 >
                   {columns
@@ -254,14 +251,14 @@ export default function EngineeringTable<T>({
                         <td
                           key={col.key}
                           className={`px-3 py-2 ${
-                            col.align === 'right'
-                              ? 'text-right'
-                              : col.align === 'center'
-                              ? 'text-center'
-                              : 'text-left'
+                            col.align === "right"
+                              ? "text-right"
+                              : col.align === "center"
+                                ? "text-center"
+                                : "text-left"
                           }`}
                         >
-                          {val !== null && val !== undefined ? String(val) : '—'}
+                          {val !== null && val !== undefined ? String(val) : "—"}
                         </td>
                       );
                     })}
@@ -275,7 +272,7 @@ export default function EngineeringTable<T>({
       {/* Pagination Footer */}
       <div className="p-2.5 bg-[#0A1224] border-t border-white/10 flex items-center justify-between text-white/50 text-[11px]">
         <div>
-          Showing {sortedData.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} to{' '}
+          Showing {sortedData.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} to{" "}
           {Math.min(currentPage * pageSize, sortedData.length)} of {sortedData.length} records
         </div>
         <div className="flex items-center gap-1">

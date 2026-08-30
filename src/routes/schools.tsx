@@ -34,10 +34,22 @@ const FORMATS = [
 ];
 
 const STEPS = [
-  { step: "Request", note: "Submit your school details, target student group size, and preferred topics." },
-  { step: "Curriculum Alignment", note: "A short sync with our educators to align with your school's academic timetable." },
-  { step: "Logistics & Materials", note: "We share laboratory kits, software requirements, and session blueprints." },
-  { step: "Delivery & Verification", note: "We facilitate the workshop with student mentors and provide verified certificates." },
+  {
+    step: "Request",
+    note: "Submit your school details, target student group size, and preferred topics.",
+  },
+  {
+    step: "Curriculum Alignment",
+    note: "A short sync with our educators to align with your school's academic timetable.",
+  },
+  {
+    step: "Logistics & Materials",
+    note: "We share laboratory kits, software requirements, and session blueprints.",
+  },
+  {
+    step: "Delivery & Verification",
+    note: "We facilitate the workshop with student mentors and provide verified certificates.",
+  },
 ];
 
 const FAQS = [
@@ -134,7 +146,9 @@ function Schools() {
                   <div>
                     <f.icon className="size-5 text-primary mb-3" aria-hidden="true" />
                     <h3 className="text-lg font-bold text-foreground">{f.name}</h3>
-                    <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">{f.note}</p>
+                    <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      {f.note}
+                    </p>
                   </div>
                 </article>
               </ScrollReveal>
@@ -147,14 +161,18 @@ function Schools() {
         <div className="shell">
           <ScrollReveal direction="up">
             <p className="eyebrow mb-2">Process</p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">From initial request to classroom delivery</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+              From initial request to classroom delivery
+            </h2>
           </ScrollReveal>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((s, i) => (
               <ScrollReveal key={s.step} direction="up" delay={i * 60}>
                 <div className="card-premium p-6 h-full flex flex-col justify-between">
                   <div>
-                    <span className="font-mono text-xs font-bold text-primary">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-xs font-bold text-primary">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
                     <h3 className="mt-2 text-base font-bold text-foreground">{s.step}</h3>
                     <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.note}</p>
                   </div>
@@ -170,9 +188,12 @@ function Schools() {
           <ScrollReveal direction="up">
             <div className="text-center mb-8">
               <p className="eyebrow mb-2">Inquiry Form</p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Request a School Collaboration</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+                Request a School Collaboration
+              </h2>
               <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Submit your school's details and our academic outreach team will contact you within 24 hours.
+                Submit your school's details and our academic outreach team will contact you within
+                24 hours.
               </p>
             </div>
             <SchoolOutreachForm />

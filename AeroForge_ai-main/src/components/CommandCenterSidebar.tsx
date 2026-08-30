@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Home,
   FolderOpen,
@@ -25,8 +25,8 @@ import {
   FileCode,
   FlaskConical,
   BarChart3,
-} from 'lucide-react';
-import { useProjectStore } from '@/stores/projectStore';
+} from "lucide-react";
+import { useProjectStore } from "@/stores/projectStore";
 
 interface NavItem {
   id: string;
@@ -39,77 +39,77 @@ interface NavItem {
 
 const MAIN_NAV: NavItem[] = [
   {
-    id: 'dashboard',
-    label: 'Dashboard',
+    id: "dashboard",
+    label: "Dashboard",
     icon: <Home className="w-4 h-4 text-cyan-400" />,
-    path: '/dashboard',
+    path: "/dashboard",
   },
   {
-    id: 'projects',
-    label: 'Projects',
+    id: "projects",
+    label: "Projects",
     icon: <FolderOpen className="w-4 h-4 text-cyan-400" />,
-    path: '/projects',
+    path: "/projects",
   },
   {
-    id: 'labs',
-    label: 'Labs',
+    id: "labs",
+    label: "Labs",
     icon: <Microscope className="w-4 h-4 text-cyan-400" />,
     children: [
       {
-        id: 'aerodynamics',
-        label: 'Aerodynamics',
+        id: "aerodynamics",
+        label: "Aerodynamics",
         icon: <Wind className="w-3.5 h-3.5 text-cyan-400" />,
-        path: '/labs/aerodynamics',
+        path: "/labs/aerodynamics",
       },
       {
-        id: 'aerolab',
-        label: 'AeroLab Suite',
+        id: "aerolab",
+        label: "AeroLab Suite",
         icon: <Rocket className="w-3.5 h-3.5 text-pink-400" />,
-        path: '/aerolab',
+        path: "/aerolab",
       },
       {
-        id: 'structures',
-        label: 'Structures & Materials',
+        id: "structures",
+        label: "Structures & Materials",
         icon: <Layers className="w-3.5 h-3.5 text-amber-400" />,
-        path: '/mechlab',
+        path: "/mechlab",
       },
       {
-        id: 'thermal',
-        label: 'Thermal',
+        id: "thermal",
+        label: "Thermal",
         icon: <Thermometer className="w-3.5 h-3.5 text-red-400" />,
-        path: '/astrolab/hypersonic-reentry',
+        path: "/astrolab/hypersonic-reentry",
       },
       {
-        id: 'space',
-        label: 'Space & Orbital',
+        id: "space",
+        label: "Space & Orbital",
         icon: <Orbit className="w-3.5 h-3.5 text-purple-400" />,
-        path: '/astrolab',
+        path: "/astrolab",
       },
       {
-        id: 'controls',
-        label: 'Controls & Dynamics',
+        id: "controls",
+        label: "Controls & Dynamics",
         icon: <Gauge className="w-3.5 h-3.5 text-blue-400" />,
-        path: '/astrolab/astrodynamics-sandbox',
+        path: "/astrolab/astrodynamics-sandbox",
       },
     ],
   },
   {
-    id: 'notebook',
-    label: 'Notebook',
+    id: "notebook",
+    label: "Notebook",
     icon: <BookOpen className="w-4 h-4 text-emerald-400" />,
-    path: '/documentation',
+    path: "/documentation",
   },
   {
-    id: 'results',
-    label: 'Results',
+    id: "results",
+    label: "Results",
     icon: <BarChart3 className="w-4 h-4 text-amber-400" />,
-    path: '/projects',
+    path: "/projects",
   },
   {
-    id: 'settings',
-    label: 'Settings',
+    id: "settings",
+    label: "Settings",
     icon: <Settings className="w-4 h-4 text-white/50" />,
-    path: '/settings',
+    path: "/settings",
   },
 ];
 
@@ -118,14 +118,10 @@ interface CommandCenterSidebarProps {
   onClose?: () => void;
 }
 
-export default function CommandCenterSidebar({
-  isOpen = true,
-}: CommandCenterSidebarProps) {
+export default function CommandCenterSidebar({ isOpen = true }: CommandCenterSidebarProps) {
   const location = useLocation();
   const { currentProject } = useProjectStore();
-  const [expandedItems, setExpandedItems] = useState<Set<string>>(
-    new Set(['labs'])
-  );
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set(["labs"]));
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const isActive = (path?: string) => {
@@ -133,8 +129,8 @@ export default function CommandCenterSidebar({
     // Exact match or starts-with for nested routes
     if (location.pathname === path) return true;
     // For routes with query params, check the base path
-    if (path.includes('?')) {
-      const basePath = path.split('?')[0];
+    if (path.includes("?")) {
+      const basePath = path.split("?")[0];
       return location.pathname === basePath;
     }
     return false;
@@ -167,8 +163,8 @@ export default function CommandCenterSidebar({
             onClick={() => toggleExpanded(item.id)}
             className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-mono transition-all ${
               isExpanded || isGroupActive(item)
-                ? 'bg-white/5 text-cyan-400 font-semibold'
-                : 'text-white/70 hover:bg-white/[0.04] hover:text-white'
+                ? "bg-white/5 text-cyan-400 font-semibold"
+                : "text-white/70 hover:bg-white/[0.04] hover:text-white"
             }`}
           >
             <div className="flex items-center gap-2.5">
@@ -177,17 +173,17 @@ export default function CommandCenterSidebar({
             </div>
             <ChevronDown
               className={`w-3.5 h-3.5 text-white/40 transition-transform ${
-                isExpanded ? 'rotate-180 text-cyan-400' : ''
+                isExpanded ? "rotate-180 text-cyan-400" : ""
               }`}
             />
           </button>
         ) : (
           <Link
-            to={item.path || '#'}
+            to={item.path || "#"}
             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-mono transition-all ${
               active
-                ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold'
-                : 'text-white/70 hover:bg-white/[0.04] hover:text-white'
+                ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 font-semibold"
+                : "text-white/70 hover:bg-white/[0.04] hover:text-white"
             }`}
           >
             {item.icon}
@@ -217,9 +213,7 @@ export default function CommandCenterSidebar({
           <Zap className="w-4 h-4 text-cyan-400" />
           AEROFORGE OS
         </h2>
-        <p className="text-[10px] text-white/40 mt-0.5">
-          Engineering Workspace
-        </p>
+        <p className="text-[10px] text-white/40 mt-0.5">Engineering Workspace</p>
       </div>
 
       {/* Navigation Links */}
@@ -237,14 +231,11 @@ export default function CommandCenterSidebar({
             to={`/projects/${currentProject._id}`}
             className="block bg-[#0A1224] rounded-lg p-2.5 border border-cyan-500/20 hover:border-cyan-500/40 transition-colors"
           >
-            <p className="font-semibold text-xs text-white truncate">
-              {currentProject.name}
-            </p>
+            <p className="font-semibold text-xs text-white truncate">{currentProject.name}</p>
             <div className="flex items-center gap-2 mt-1 text-[10px] text-white/50">
               <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
-                {currentProject.status.charAt(0).toUpperCase() +
-                  currentProject.status.slice(1)}
+                {currentProject.status.charAt(0).toUpperCase() + currentProject.status.slice(1)}
               </span>
             </div>
           </Link>
@@ -278,11 +269,7 @@ export default function CommandCenterSidebar({
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className="p-3 rounded-full bg-cyan-500 text-black shadow-2xl hover:bg-cyan-400 transition-colors"
         >
-          {isMobileOpen ? (
-            <X className="w-5 h-5" />
-          ) : (
-            <Menu className="w-5 h-5" />
-          )}
+          {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 

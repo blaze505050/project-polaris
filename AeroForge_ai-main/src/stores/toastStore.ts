@@ -1,16 +1,16 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 export interface ToastMessage {
   id: string;
   title: string;
   description?: string;
-  type: 'info' | 'success' | 'warning' | 'error';
+  type: "info" | "success" | "warning" | "error";
   timestamp: number;
 }
 
 interface ToastStore {
   toasts: ToastMessage[];
-  addToast: (toast: Omit<ToastMessage, 'id' | 'timestamp'>) => void;
+  addToast: (toast: Omit<ToastMessage, "id" | "timestamp">) => void;
   removeToast: (id: string) => void;
   clearToasts: () => void;
 }

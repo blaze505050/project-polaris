@@ -12,9 +12,13 @@ export function HeroProductPreview() {
   // Compute live aerodynamic physics parameters
   const aero = useMemo(() => {
     const cl0 = airfoil === "0012" ? 0.0 : airfoil === "2412" ? 0.24 : 0.44;
-    const cl = Number((cl0 + 0.11 * alpha * (1 / Math.sqrt(Math.max(0.1, 1 - mach * mach)))).toFixed(3));
+    const cl = Number(
+      (cl0 + 0.11 * alpha * (1 / Math.sqrt(Math.max(0.1, 1 - mach * mach)))).toFixed(3),
+    );
     const cd0 = airfoil === "0012" ? 0.008 : 0.009;
-    const cd = Number((cd0 + 0.045 * cl * cl + (mach > 0.75 ? Math.pow(mach - 0.75, 3) * 0.5 : 0)).toFixed(4));
+    const cd = Number(
+      (cd0 + 0.045 * cl * cl + (mach > 0.75 ? Math.pow(mach - 0.75, 3) * 0.5 : 0)).toFixed(4),
+    );
     const reynolds = Number((mach * 5.2).toFixed(2));
     const ld = Number((cl / Math.max(0.001, cd)).toFixed(1));
     return { cl, cd, reynolds, ld };
@@ -70,14 +74,28 @@ export function HeroProductPreview() {
       const m = airfoil === "2412" ? 0.02 : airfoil === "4415" ? 0.04 : 0.0;
       for (let x = -chord / 2; x <= chord / 2; x += 5) {
         const xc = (x + chord / 2) / chord;
-        const yt = 5 * t * (0.2969 * Math.sqrt(xc) - 0.126 * xc - 0.3516 * xc * xc + 0.2843 * Math.pow(xc, 3) - 0.1015 * Math.pow(xc, 4));
+        const yt =
+          5 *
+          t *
+          (0.2969 * Math.sqrt(xc) -
+            0.126 * xc -
+            0.3516 * xc * xc +
+            0.2843 * Math.pow(xc, 3) -
+            0.1015 * Math.pow(xc, 4));
         const yc = m * (2 * xc - xc * xc);
         ctx.lineTo(x, -(yc + yt) * chord * 0.7);
       }
       // Lower surface
       for (let x = chord / 2; x >= -chord / 2; x -= 5) {
         const xc = (x + chord / 2) / chord;
-        const yt = 5 * t * (0.2969 * Math.sqrt(xc) - 0.126 * xc - 0.3516 * xc * xc + 0.2843 * Math.pow(xc, 3) - 0.1015 * Math.pow(xc, 4));
+        const yt =
+          5 *
+          t *
+          (0.2969 * Math.sqrt(xc) -
+            0.126 * xc -
+            0.3516 * xc * xc +
+            0.2843 * Math.pow(xc, 3) -
+            0.1015 * Math.pow(xc, 4));
         const yc = m * (2 * xc - xc * xc);
         ctx.lineTo(x, -(yc - yt) * chord * 0.7);
       }
@@ -206,19 +224,27 @@ export function HeroProductPreview() {
         <div className="grid grid-cols-4 gap-2 pt-1 font-mono text-center">
           <div className="p-2 rounded-lg bg-surface-2/60 border border-white/6">
             <span className="text-[9px] text-muted-foreground uppercase block">Lift (CL)</span>
-            <span className="text-xs sm:text-sm font-bold text-foreground mt-0.5 block">{aero.cl}</span>
+            <span className="text-xs sm:text-sm font-bold text-foreground mt-0.5 block">
+              {aero.cl}
+            </span>
           </div>
           <div className="p-2 rounded-lg bg-surface-2/60 border border-white/6">
             <span className="text-[9px] text-muted-foreground uppercase block">Drag (CD)</span>
-            <span className="text-xs sm:text-sm font-bold text-primary mt-0.5 block">{aero.cd}</span>
+            <span className="text-xs sm:text-sm font-bold text-primary mt-0.5 block">
+              {aero.cd}
+            </span>
           </div>
           <div className="p-2 rounded-lg bg-surface-2/60 border border-white/6">
             <span className="text-[9px] text-muted-foreground uppercase block">Reynolds</span>
-            <span className="text-xs sm:text-sm font-bold text-foreground mt-0.5 block">{aero.reynolds}M</span>
+            <span className="text-xs sm:text-sm font-bold text-foreground mt-0.5 block">
+              {aero.reynolds}M
+            </span>
           </div>
           <div className="p-2 rounded-lg bg-surface-2/60 border border-white/6">
             <span className="text-[9px] text-muted-foreground uppercase block">Solvers</span>
-            <span className="text-xs sm:text-sm font-bold text-emerald-400 mt-0.5 block">40+ In Lab</span>
+            <span className="text-xs sm:text-sm font-bold text-emerald-400 mt-0.5 block">
+              40+ In Lab
+            </span>
           </div>
         </div>
 
@@ -227,7 +253,11 @@ export function HeroProductPreview() {
           <span className="text-muted-foreground text-[11px]">
             Spalart-Allmaras & Prandtl-Glauert CFD
           </span>
-          <Button asChild size="sm" className="h-8 px-4 text-xs font-mono font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg">
+          <Button
+            asChild
+            size="sm"
+            className="h-8 px-4 text-xs font-mono font-bold bg-foreground text-background hover:bg-foreground/90 rounded-lg"
+          >
             <Link to="/projects" className="flex items-center gap-1.5">
               <span>Open AeroForge Lab</span>
               <ArrowRight className="size-3 text-primary" />

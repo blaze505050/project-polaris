@@ -4,9 +4,12 @@ import {
   AirfoilSurrogateResult,
   JobStatusResponse,
   CanonicalDatasetEntry,
-} from '@/types/physicsAi';
+} from "@/types/physicsAi";
 
-export interface PhysicsModelAdapterContract<TInput = AirfoilSurrogateInputs, TOutput = AirfoilSurrogateResult> {
+export interface PhysicsModelAdapterContract<
+  TInput = AirfoilSurrogateInputs,
+  TOutput = AirfoilSurrogateResult,
+> {
   adapterId: string;
   modelId: string;
 
@@ -28,7 +31,10 @@ export interface PhysicsModelAdapterContract<TInput = AirfoilSurrogateInputs, TO
   /**
    * Asynchronously submits inference job to execution worker.
    */
-  submitJob(inputs: TInput, device?: 'auto' | 'cpu' | 'cuda'): Promise<{ jobId: string; status: JobStatusResponse }>;
+  submitJob(
+    inputs: TInput,
+    device?: "auto" | "cpu" | "cuda",
+  ): Promise<{ jobId: string; status: JobStatusResponse }>;
 
   /**
    * Polls job state, progress, and logs.

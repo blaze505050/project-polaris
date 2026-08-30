@@ -1,13 +1,30 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Maximize2, Minimize2, Save, Download, Upload, Share2, 
-  Settings, Eye, Grid3x3, Layers, Zap, RotateCw, Copy, Trash2,
-  Play, Pause, SkipBack, SkipForward, Volume2, VolumeX
-} from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Maximize2,
+  Minimize2,
+  Save,
+  Download,
+  Upload,
+  Share2,
+  Settings,
+  Eye,
+  Grid3x3,
+  Layers,
+  Zap,
+  RotateCw,
+  Copy,
+  Trash2,
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 
 interface CADWorkspaceProps {
   projectId: string;
@@ -17,7 +34,7 @@ interface CADWorkspaceProps {
 export default function CADWorkspace({ projectId, projectName }: CADWorkspaceProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [viewMode, setViewMode] = useState<'3d' | '2d' | 'wireframe'>('3d');
+  const [viewMode, setViewMode] = useState<"3d" | "2d" | "wireframe">("3d");
   const [showGrid, setShowGrid] = useState(true);
   const [showLayers, setShowLayers] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -27,22 +44,22 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
   const [selectedLayer, setSelectedLayer] = useState(0);
 
   const layers = [
-    { id: 1, name: 'Main Body', visible: true, locked: false },
-    { id: 2, name: 'Internal Structure', visible: true, locked: false },
-    { id: 3, name: 'Surface Details', visible: true, locked: false },
-    { id: 4, name: 'Annotations', visible: true, locked: false },
+    { id: 1, name: "Main Body", visible: true, locked: false },
+    { id: 2, name: "Internal Structure", visible: true, locked: false },
+    { id: 3, name: "Surface Details", visible: true, locked: false },
+    { id: 4, name: "Annotations", visible: true, locked: false },
   ];
 
   const handleSave = async () => {
     setIsSaving(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSaving(false);
   };
 
   const handleExport = () => {
     if (!canvasRef.current) return;
-    const link = document.createElement('a');
-    link.href = canvasRef.current.toDataURL('image/png');
+    const link = document.createElement("a");
+    link.href = canvasRef.current.toDataURL("image/png");
     link.download = `${projectName}-preview.png`;
     link.click();
   };
@@ -51,7 +68,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
   React.useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     // Set canvas size
@@ -60,11 +77,11 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
 
     // Draw a simple 3D-like representation
     const drawFrame = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+      ctx.fillStyle = "rgba(15, 23, 42, 0.8)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw grid
-      ctx.strokeStyle = 'rgba(10, 165, 225, 0.1)';
+      ctx.strokeStyle = "rgba(10, 165, 225, 0.1)";
       ctx.lineWidth = 1;
       for (let i = 0; i < canvas.width; i += 50) {
         ctx.beginPath();
@@ -90,7 +107,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
       const cos = Math.cos(angle);
       const sin = Math.sin(angle);
 
-      ctx.strokeStyle = 'rgba(10, 165, 225, 0.8)';
+      ctx.strokeStyle = "rgba(10, 165, 225, 0.8)";
       ctx.lineWidth = 2;
 
       // Draw cube edges
@@ -112,9 +129,18 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
       });
 
       const edges = [
-        [0, 1], [1, 2], [2, 3], [3, 0],
-        [4, 5], [5, 6], [6, 7], [7, 4],
-        [0, 4], [1, 5], [2, 6], [3, 7],
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [3, 0],
+        [4, 5],
+        [5, 6],
+        [6, 7],
+        [7, 4],
+        [0, 4],
+        [1, 5],
+        [2, 6],
+        [3, 7],
       ];
 
       edges.forEach(([a, b]) => {
@@ -132,15 +158,17 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
     drawFrame();
   }, []);
 
-  const handleRotate = (axis: 'x' | 'y' | 'z', direction: number) => {
-    setRotation(prev => ({
+  const handleRotate = (axis: "x" | "y" | "z", direction: number) => {
+    setRotation((prev) => ({
       ...prev,
       [axis]: (prev[axis] + direction * 15) % 360,
     }));
   };
 
   return (
-    <div className={`flex flex-col h-full bg-aerospace-dark ${isFullscreen ? 'fixed inset-0 z-50' : ''}`}>
+    <div
+      className={`flex flex-col h-full bg-aerospace-dark ${isFullscreen ? "fixed inset-0 z-50" : ""}`}
+    >
       {/* Toolbar */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -155,14 +183,14 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
         <div className="flex items-center gap-2 flex-wrap">
           {/* View Mode */}
           <div className="flex items-center gap-1 bg-primary/50 rounded-lg p-1">
-            {['3d', '2d', 'wireframe'].map((mode) => (
+            {["3d", "2d", "wireframe"].map((mode) => (
               <button
                 key={mode}
                 onClick={() => setViewMode(mode as any)}
                 className={`px-3 py-1 rounded text-sm font-medium transition-all ${
                   viewMode === mode
-                    ? 'bg-aerospace-accent text-black'
-                    : 'text-secondary-foreground hover:text-white'
+                    ? "bg-aerospace-accent text-black"
+                    : "text-secondary-foreground hover:text-white"
                 }`}
               >
                 {mode.toUpperCase()}
@@ -175,7 +203,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
             size="sm"
             variant="ghost"
             onClick={() => setShowGrid(!showGrid)}
-            className={showGrid ? 'bg-aerospace-blue/20' : ''}
+            className={showGrid ? "bg-aerospace-blue/20" : ""}
             title="Toggle Grid"
           >
             <Grid3x3 className="w-4 h-4" />
@@ -185,7 +213,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
             size="sm"
             variant="ghost"
             onClick={() => setShowLayers(!showLayers)}
-            className={showLayers ? 'bg-aerospace-blue/20' : ''}
+            className={showLayers ? "bg-aerospace-blue/20" : ""}
             title="Toggle Layers"
           >
             <Layers className="w-4 h-4" />
@@ -193,48 +221,35 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
 
           {/* Zoom */}
           <div className="flex items-center gap-2 bg-primary/50 rounded-lg px-2 py-1">
-            <button onClick={() => setZoom(Math.max(10, zoom - 10))} className="text-secondary-foreground hover:text-white">
+            <button
+              onClick={() => setZoom(Math.max(10, zoom - 10))}
+              className="text-secondary-foreground hover:text-white"
+            >
               −
             </button>
             <span className="text-sm text-white min-w-[40px] text-center">{zoom}%</span>
-            <button onClick={() => setZoom(Math.min(500, zoom + 10))} className="text-secondary-foreground hover:text-white">
+            <button
+              onClick={() => setZoom(Math.min(500, zoom + 10))}
+              className="text-secondary-foreground hover:text-white"
+            >
               +
             </button>
           </div>
 
           {/* Actions */}
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={handleSave}
-            disabled={isSaving}
-            title="Save"
-          >
+          <Button size="sm" variant="ghost" onClick={handleSave} disabled={isSaving} title="Save">
             <Save className="w-4 h-4" />
           </Button>
 
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={handleExport}
-            title="Export"
-          >
+          <Button size="sm" variant="ghost" onClick={handleExport} title="Export">
             <Download className="w-4 h-4" />
           </Button>
 
-          <Button
-            size="sm"
-            variant="ghost"
-            title="Share"
-          >
+          <Button size="sm" variant="ghost" title="Share">
             <Share2 className="w-4 h-4" />
           </Button>
 
-          <Button
-            size="sm"
-            variant="ghost"
-            title="Settings"
-          >
+          <Button size="sm" variant="ghost" title="Settings">
             <Settings className="w-4 h-4" />
           </Button>
 
@@ -267,8 +282,8 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
                   onClick={() => setSelectedLayer(i)}
                   className={`p-3 rounded-lg cursor-pointer transition-all ${
                     selectedLayer === i
-                      ? 'bg-aerospace-accent/20 border border-aerospace-accent'
-                      : 'bg-primary/30 border border-transparent hover:border-aerospace-blue/50'
+                      ? "bg-aerospace-accent/20 border border-aerospace-accent"
+                      : "bg-primary/30 border border-transparent hover:border-aerospace-blue/50"
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -297,10 +312,10 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
               className="w-full h-full"
               style={{
                 transform: `scale(${zoom / 100}) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`,
-                transformOrigin: 'center',
+                transformOrigin: "center",
               }}
             />
-            
+
             {/* Grid Background */}
             {showGrid && (
               <div
@@ -310,7 +325,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
                     linear-gradient(0deg, transparent 24%, rgba(10, 165, 225, 0.05) 25%, rgba(10, 165, 225, 0.05) 26%, transparent 27%, transparent 74%, rgba(10, 165, 225, 0.05) 75%, rgba(10, 165, 225, 0.05) 76%, transparent 77%, transparent),
                     linear-gradient(90deg, transparent 24%, rgba(10, 165, 225, 0.05) 25%, rgba(10, 165, 225, 0.05) 26%, transparent 27%, transparent 74%, rgba(10, 165, 225, 0.05) 75%, rgba(10, 165, 225, 0.05) 76%, transparent 77%, transparent)
                   `,
-                  backgroundSize: '50px 50px',
+                  backgroundSize: "50px 50px",
                 }}
               />
             )}
@@ -329,10 +344,10 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
                 rotateY: rotation.y,
                 rotateZ: rotation.z,
               }}
-              transition={{ type: 'spring', stiffness: 50 }}
+              transition={{ type: "spring", stiffness: 50 }}
               className="absolute w-32 h-32 bg-gradient-to-br from-aerospace-blue to-aerospace-accent rounded-lg shadow-2xl"
               style={{
-                perspective: '1000px',
+                perspective: "1000px",
               }}
             />
           </div>
@@ -341,7 +356,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
           <div className="bg-primary/50 border-t border-aerospace-blue/30 p-3 flex items-center justify-center gap-2">
             <span className="text-secondary-foreground text-xs">Rotate:</span>
             <div className="flex gap-1">
-              {['x', 'y', 'z'].map((axis) => (
+              {["x", "y", "z"].map((axis) => (
                 <div key={axis} className="flex gap-1">
                   <button
                     onClick={() => handleRotate(axis as any, -1)}
@@ -379,8 +394,12 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
         >
           <Tabs defaultValue="properties" className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-primary/50">
-              <TabsTrigger value="properties" className="text-xs">Properties</TabsTrigger>
-              <TabsTrigger value="history" className="text-xs">History</TabsTrigger>
+              <TabsTrigger value="properties" className="text-xs">
+                Properties
+              </TabsTrigger>
+              <TabsTrigger value="history" className="text-xs">
+                History
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="properties" className="space-y-4 mt-4">
@@ -396,7 +415,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
               <div>
                 <label className="text-secondary-foreground text-xs font-medium">Dimensions</label>
                 <div className="grid grid-cols-3 gap-2 mt-1">
-                  {['X', 'Y', 'Z'].map((axis) => (
+                  {["X", "Y", "Z"].map((axis) => (
                     <input
                       key={axis}
                       type="number"
@@ -420,7 +439,7 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
               <div>
                 <label className="text-secondary-foreground text-xs font-medium">Color</label>
                 <div className="flex gap-2 mt-1">
-                  {['#0EA5E9', '#06B6D4', '#10B981', '#F59E0B'].map((color) => (
+                  {["#0EA5E9", "#06B6D4", "#10B981", "#F59E0B"].map((color) => (
                     <button
                       key={color}
                       className="w-8 h-8 rounded border-2 border-aerospace-blue/30 hover:border-aerospace-accent"
@@ -433,11 +452,14 @@ export default function CADWorkspace({ projectId, projectName }: CADWorkspacePro
 
             <TabsContent value="history" className="space-y-2 mt-4">
               {[
-                { action: 'Created layer', time: '2 min ago' },
-                { action: 'Modified geometry', time: '5 min ago' },
-                { action: 'Changed material', time: '10 min ago' },
+                { action: "Created layer", time: "2 min ago" },
+                { action: "Modified geometry", time: "5 min ago" },
+                { action: "Changed material", time: "10 min ago" },
               ].map((item, i) => (
-                <div key={i} className="text-xs p-2 bg-primary/30 rounded border border-aerospace-blue/20">
+                <div
+                  key={i}
+                  className="text-xs p-2 bg-primary/30 rounded border border-aerospace-blue/20"
+                >
                   <p className="text-white font-medium">{item.action}</p>
                   <p className="text-secondary-foreground">{item.time}</p>
                 </div>

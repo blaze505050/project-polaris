@@ -29,7 +29,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
     const starCount = isMobile ? 25 : Math.min(Math.floor((width * height) / 14000), 75);
     const stars: Star[] = [];
 
-    let mouse = { x: -1000, y: -1000, active: false };
+    const mouse = { x: -1000, y: -1000, active: false };
 
     for (let i = 0; i < starCount; i++) {
       const r = isMobile ? Math.random() * 1.4 + 0.6 : Math.random() * 1.8 + 0.8;

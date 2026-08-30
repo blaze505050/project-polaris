@@ -4,9 +4,12 @@ import { UserCheck, Sparkles, Compass } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function TeamConstellation() {
-  const [selectedId, setSelectedId] = useState<string>(TEAM_CONSTELLATION_MEMBERS[0]?.id || "aditya");
+  const [selectedId, setSelectedId] = useState<string>(
+    TEAM_CONSTELLATION_MEMBERS[0]?.id || "aditya",
+  );
 
-  const selectedMember = TEAM_CONSTELLATION_MEMBERS.find((m) => m.id === selectedId) || TEAM_CONSTELLATION_MEMBERS[0];
+  const selectedMember =
+    TEAM_CONSTELLATION_MEMBERS.find((m) => m.id === selectedId) || TEAM_CONSTELLATION_MEMBERS[0];
 
   return (
     <div className="space-y-6 font-sans">
@@ -22,7 +25,7 @@ export function TeamConstellation() {
                 "p-5 rounded-xl border bg-card cursor-pointer transition-all flex flex-col justify-between h-full",
                 isSelected
                   ? "border-primary/50 shadow-[0_0_24px_rgba(197,157,255,0.12)] bg-surface-2/60"
-                  : "border-white/8 hover:border-white/20"
+                  : "border-white/8 hover:border-white/20",
               )}
             >
               <div className="space-y-3">
@@ -31,7 +34,9 @@ export function TeamConstellation() {
                     {member.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold font-display text-foreground">{member.name}</h3>
+                    <h3 className="text-base font-bold font-display text-foreground">
+                      {member.name}
+                    </h3>
                     <p className="text-xs text-primary font-medium">{member.role}</p>
                   </div>
                 </div>
@@ -40,13 +45,13 @@ export function TeamConstellation() {
                   {member.department}
                 </div>
 
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {member.intro}
-                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{member.intro}</p>
               </div>
 
               <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-[11px] text-muted-foreground">
-                <span className="italic text-foreground/80 font-sans line-clamp-1">"{member.whatIBring}"</span>
+                <span className="italic text-foreground/80 font-sans line-clamp-1">
+                  "{member.whatIBring}"
+                </span>
                 <UserCheck className="size-3.5 text-emerald-400 shrink-0 ml-2" />
               </div>
             </div>
@@ -63,8 +68,12 @@ export function TeamConstellation() {
                 {selectedMember.name.charAt(0)}
               </div>
               <div>
-                <h3 className="text-lg font-bold font-display text-foreground">{selectedMember.name}</h3>
-                <p className="text-xs text-primary font-medium">{selectedMember.role} · {selectedMember.department}</p>
+                <h3 className="text-lg font-bold font-display text-foreground">
+                  {selectedMember.name}
+                </h3>
+                <p className="text-xs text-primary font-medium">
+                  {selectedMember.role} · {selectedMember.department}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">

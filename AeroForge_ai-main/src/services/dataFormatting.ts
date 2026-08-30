@@ -11,15 +11,15 @@ export class DataFormatter {
    * @param useExponential - Force exponential notation
    */
   static scientific(value: number, precision: number = 3, useExponential: boolean = false): string {
-    if (value === 0) return '0.00e+00';
-    
+    if (value === 0) return "0.00e+00";
+
     const exponent = Math.floor(Math.log10(Math.abs(value)));
     const mantissa = value / Math.pow(10, exponent);
-    
+
     if (useExponential || Math.abs(exponent) > 3) {
-      return `${mantissa.toFixed(precision - 1)}e${exponent >= 0 ? '+' : ''}${exponent.toString().padStart(2, '0')}`;
+      return `${mantissa.toFixed(precision - 1)}e${exponent >= 0 ? "+" : ""}${exponent.toString().padStart(2, "0")}`;
     }
-    
+
     return mantissa.toFixed(precision - 1);
   }
 
@@ -27,14 +27,14 @@ export class DataFormatter {
    * Format angle in degrees to DMS (Degrees, Minutes, Seconds)
    */
   static angleToDMS(degrees: number, precision: number = 2): string {
-    const sign = degrees < 0 ? '-' : '+';
+    const sign = degrees < 0 ? "-" : "+";
     const absDegrees = Math.abs(degrees);
-    
+
     const d = Math.floor(absDegrees);
     const m = Math.floor((absDegrees - d) * 60);
     const s = ((absDegrees - d) * 60 - m) * 60;
-    
-    return `${sign}${d.toString().padStart(2, '0')}°${m.toString().padStart(2, '0')}'${s.toFixed(precision).padStart(precision + 3, '0')}"`;
+
+    return `${sign}${d.toString().padStart(2, "0")}°${m.toString().padStart(2, "0")}'${s.toFixed(precision).padStart(precision + 3, "0")}"`;
   }
 
   /**
@@ -53,16 +53,16 @@ export class DataFormatter {
     const raHours = Math.floor(ra);
     const raMinutes = Math.floor((ra - raHours) * 60);
     const raSeconds = ((ra - raHours) * 60 - raMinutes) * 60;
-    
-    const decSign = dec < 0 ? '-' : '+';
+
+    const decSign = dec < 0 ? "-" : "+";
     const absDec = Math.abs(dec);
     const decDegrees = Math.floor(absDec);
     const decMinutes = Math.floor((absDec - decDegrees) * 60);
     const decSeconds = ((absDec - decDegrees) * 60 - decMinutes) * 60;
-    
-    const raStr = `${raHours.toString().padStart(2, '0')}h${raMinutes.toString().padStart(2, '0')}m${raSeconds.toFixed(precision).padStart(precision + 3, '0')}s`;
-    const decStr = `${decSign}${decDegrees.toString().padStart(2, '0')}°${decMinutes.toString().padStart(2, '0')}'${decSeconds.toFixed(precision).padStart(precision + 3, '0')}"`;
-    
+
+    const raStr = `${raHours.toString().padStart(2, "0")}h${raMinutes.toString().padStart(2, "0")}m${raSeconds.toFixed(precision).padStart(precision + 3, "0")}s`;
+    const decStr = `${decSign}${decDegrees.toString().padStart(2, "0")}°${decMinutes.toString().padStart(2, "0")}'${decSeconds.toFixed(precision).padStart(precision + 3, "0")}"`;
+
     return { ra: raStr, dec: decStr };
   }
 
@@ -70,7 +70,7 @@ export class DataFormatter {
    * Format magnitude with proper notation
    */
   static magnitude(value: number, precision: number = 2): string {
-    return `${value >= 0 ? '+' : ''}${value.toFixed(precision)}ᵐ`;
+    return `${value >= 0 ? "+" : ""}${value.toFixed(precision)}ᵐ`;
   }
 
   /**
@@ -80,7 +80,7 @@ export class DataFormatter {
     const AU = 1.495978707e11;
     const PARSEC = 3.0857e16;
     const LIGHT_YEAR = 9.4607e15;
-    
+
     if (Math.abs(meters) < 1000) {
       return `${meters.toFixed(precision)} m`;
     } else if (Math.abs(meters) < 1e6) {
@@ -135,7 +135,7 @@ export class DataFormatter {
     const hours = minutes / 60;
     const days = hours / 24;
     const years = days / 365.25;
-    
+
     if (minutes < 60) {
       return `${minutes.toFixed(precision)} min`;
     } else if (hours < 24) {
@@ -159,7 +159,7 @@ export class DataFormatter {
    */
   static luminosity(watts: number, precision: number = 2): string {
     const SOLAR_LUMINOSITY = 3.828e26;
-    
+
     if (Math.abs(watts) < 1e3) {
       return `${watts.toFixed(precision)} W`;
     } else if (Math.abs(watts) < 1e6) {
@@ -177,7 +177,7 @@ export class DataFormatter {
   static mass(kilograms: number, precision: number = 2): string {
     const SOLAR_MASS = 1.98892e30;
     const EARTH_MASS = 5.9722e24;
-    
+
     if (Math.abs(kilograms) < 1e3) {
       return `${kilograms.toFixed(precision)} kg`;
     } else if (Math.abs(kilograms) < 1e6) {
@@ -273,7 +273,7 @@ export class DataFormatter {
     const h = Math.floor(hours);
     const m = Math.floor((hours - h) * 60);
     const s = ((hours - h) * 60 - m) * 60;
-    return `${h.toString().padStart(2, '0')}ʰ${m.toString().padStart(2, '0')}ᵐ${s.toFixed(precision).padStart(precision + 3, '0')}ˢ`;
+    return `${h.toString().padStart(2, "0")}ʰ${m.toString().padStart(2, "0")}ᵐ${s.toFixed(precision).padStart(precision + 3, "0")}ˢ`;
   }
 
   /**
@@ -334,55 +334,55 @@ export class LaTeXFormatter {
    * Format Kepler's Third Law
    */
   static keplersThirdLaw(): string {
-    return this.displayEquation('T^2 = \\frac{4\\pi^2}{GM} a^3');
+    return this.displayEquation("T^2 = \\frac{4\\pi^2}{GM} a^3");
   }
 
   /**
    * Format orbital velocity equation
    */
   static orbitalVelocity(): string {
-    return this.displayEquation('v = \\sqrt{\\frac{GM}{r}}');
+    return this.displayEquation("v = \\sqrt{\\frac{GM}{r}}");
   }
 
   /**
    * Format escape velocity equation
    */
   static escapeVelocity(): string {
-    return this.displayEquation('v_{esc} = \\sqrt{\\frac{2GM}{r}}');
+    return this.displayEquation("v_{esc} = \\sqrt{\\frac{2GM}{r}}");
   }
 
   /**
    * Format gravitational force
    */
   static gravitationalForce(): string {
-    return this.displayEquation('F = G\\frac{m_1 m_2}{r^2}');
+    return this.displayEquation("F = G\\frac{m_1 m_2}{r^2}");
   }
 
   /**
    * Format Stefan-Boltzmann law
    */
   static stefanBoltzmann(): string {
-    return this.displayEquation('L = 4\\pi R^2 \\sigma T^4');
+    return this.displayEquation("L = 4\\pi R^2 \\sigma T^4");
   }
 
   /**
    * Format Wien\'s displacement law
    */
   static wiensLaw(): string {
-    return this.displayEquation('\\lambda_{max} = \\frac{b}{T}');
+    return this.displayEquation("\\lambda_{max} = \\frac{b}{T}");
   }
 
   /**
    * Format magnitude difference
    */
   static magnitudeDifference(): string {
-    return this.displayEquation('m_1 - m_2 = -2.5 \\log_{10}\\left(\\frac{F_1}{F_2}\\right)');
+    return this.displayEquation("m_1 - m_2 = -2.5 \\log_{10}\\left(\\frac{F_1}{F_2}\\right)");
   }
 
   /**
    * Format distance modulus
    */
   static distanceModulus(): string {
-    return this.displayEquation('m - M = 5 \\log_{10}(d) - 5');
+    return this.displayEquation("m - M = 5 \\log_{10}(d) - 5");
   }
 }

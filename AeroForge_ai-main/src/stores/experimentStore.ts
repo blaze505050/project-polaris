@@ -3,13 +3,13 @@
  * Manages saved experiments using localStorage + Zustand
  */
 
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface SavedExperiment {
   id: string;
   name: string;
-  type: 'orbital' | 'gravity' | 'transit' | 'stellar' | 'leo' | 'exoplanet' | 'star-classification';
+  type: "orbital" | "gravity" | "transit" | "stellar" | "leo" | "exoplanet" | "star-classification";
   parameters: Record<string, any>;
   results: Record<string, any>;
   timestamp: number;
@@ -19,15 +19,15 @@ export interface SavedExperiment {
 
 interface ExperimentStore {
   experiments: SavedExperiment[];
-  
+
   // Actions
-  saveExperiment: (experiment: Omit<SavedExperiment, 'id' | 'timestamp'>) => SavedExperiment;
+  saveExperiment: (experiment: Omit<SavedExperiment, "id" | "timestamp">) => SavedExperiment;
   loadExperiment: (id: string) => SavedExperiment | null;
   deleteExperiment: (id: string) => void;
   getAllExperiments: () => SavedExperiment[];
   updateExperiment: (id: string, updates: Partial<SavedExperiment>) => void;
-  exportExperiments: (format: 'json' | 'csv') => string;
-  importExperiments: (data: string, format: 'json' | 'csv') => void;
+  exportExperiments: (format: "json" | "csv") => string;
+  importExperiments: (data: string, format: "json" | "csv") => void;
   clearAllExperiments: () => void;
 }
 
@@ -68,7 +68,7 @@ export const useExperimentStore = create<ExperimentStore>()(
       updateExperiment: (id, updates) => {
         set((state) => ({
           experiments: state.experiments.map((exp) =>
-            exp.id === id ? { ...exp, ...updates } : exp
+            exp.id === id ? { ...exp, ...updates } : exp,
           ),
         }));
       },
@@ -76,12 +76,12 @@ export const useExperimentStore = create<ExperimentStore>()(
       exportExperiments: (format) => {
         const experiments = get().experiments;
 
-        if (format === 'json') {
+        if (format === "json") {
           return JSON.stringify(experiments, null, 2);
         }
 
-        if (format === 'csv') {
-          const headers = ['ID', 'Name', 'Type', 'Date', 'Notes', 'Parameters', 'Results'];
+        if (format === "csv") {
+          const headers = ["ID", "Name", "Type", "Date", "Notes", "Parameters", "Results"];
           const rows = experiments.map((exp) => [
             exp.id,
             exp.name,
@@ -93,35 +93,37 @@ export const useExperimentStore = create<ExperimentStore>()(
           ]);
 
           const csvContent = [
-            headers.join(','),
+            headers.join(","),
             ...rows.map((row) =>
               row
                 .map((cell) => {
                   const str = String(cell);
-                  return str.includes(',') || str.includes('"') ? `"${str.replace(/"/g, '""')}"` : str;
+                  return str.includes(",") || str.includes('"')
+                    ? `"${str.replace(/"/g, '""')}"`
+                    : str;
                 })
-                .join(',')
+                .join(","),
             ),
-          ].join('\n');
+          ].join("\n");
 
           return csvContent;
         }
 
-        return '';
+        return "";
       },
 
       importExperiments: (data, format) => {
         try {
           let parsed: SavedExperiment[] = [];
 
-          if (format === 'json') {
+          if (format === "json") {
             parsed = JSON.parse(data);
-          } else if (format === 'csv') {
+          } else if (format === "csv") {
             // Simple CSV parser
-            const lines = data.split('\n');
-            const headers = lines[0].split(',');
+            const lines = data.split("\n");
+            const headers = lines[0].split(",");
             parsed = lines.slice(1).map((line) => {
-              const values = line.split(',');
+              const values = line.split(",");
               return {
                 id: values[0],
                 name: values[1],
@@ -139,7 +141,7 @@ export const useExperimentStore = create<ExperimentStore>()(
             experiments: [...state.experiments, ...parsed],
           }));
         } catch (error) {
-          console.error('Failed to import experiments:', error);
+          console.error("Failed to import experiments:", error);
         }
       },
 
@@ -148,8 +150,8 @@ export const useExperimentStore = create<ExperimentStore>()(
       },
     }),
     {
-      name: 'astrolab-experiments',
+      name: "astrolab-experiments",
       version: 1,
-    }
-  )
+    },
+  ),
 );

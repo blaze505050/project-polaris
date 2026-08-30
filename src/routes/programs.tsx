@@ -86,7 +86,8 @@ function ProgramsPage() {
               Programs & Workshops
             </h1>
             <p className="mt-3 text-xs sm:text-sm text-muted-foreground max-w-2xl leading-relaxed">
-              Explore live expert masterclasses with scientists, hands-on experiential workshops, student research projects, and past session archives.
+              Explore live expert masterclasses with scientists, hands-on experiential workshops,
+              student research projects, and past session archives.
             </p>
           </ScrollReveal>
 
@@ -148,27 +149,46 @@ function ProgramsPage() {
                     Work on Real Industry Briefs. Build in Squads. Get Mentored.
                   </h2>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Instead of generic tutorials, Polaris delivers authentic problem statements from aerospace, computational physics, and systems engineering. Form remote squads with curious peers or work solo, receive direct weekly code/physics reviews from mentors, and graduate with verified digital credentials and showcase credits.
+                    Instead of generic tutorials, Polaris delivers authentic problem statements from
+                    aerospace, computational physics, and systems engineering. Form remote squads
+                    with curious peers or work solo, receive direct weekly code/physics reviews from
+                    mentors, and graduate with verified digital credentials and showcase credits.
                   </p>
                 </div>
 
                 {/* 4 Pillars Grid */}
                 <div className="grid grid-cols-2 gap-2.5 text-xs">
                   <div className="p-3 rounded-xl bg-surface-2 border border-white/6 space-y-1">
-                    <span className="font-bold text-primary font-mono text-[11px] block">01. Industry Briefs</span>
-                    <span className="text-muted-foreground text-[11px]">Real math & physics constraints</span>
+                    <span className="font-bold text-primary font-mono text-[11px] block">
+                      01. Industry Briefs
+                    </span>
+                    <span className="text-muted-foreground text-[11px]">
+                      Real math & physics constraints
+                    </span>
                   </div>
                   <div className="p-3 rounded-xl bg-surface-2 border border-white/6 space-y-1">
-                    <span className="font-bold text-primary font-mono text-[11px] block">02. Remote Squads</span>
-                    <span className="text-muted-foreground text-[11px]">Collaborate with 2–4 peers</span>
+                    <span className="font-bold text-primary font-mono text-[11px] block">
+                      02. Remote Squads
+                    </span>
+                    <span className="text-muted-foreground text-[11px]">
+                      Collaborate with 2–4 peers
+                    </span>
                   </div>
                   <div className="p-3 rounded-xl bg-surface-2 border border-white/6 space-y-1">
-                    <span className="font-bold text-primary font-mono text-[11px] block">03. Expert Mentorship</span>
-                    <span className="text-muted-foreground text-[11px]">Code, CFD & math critique</span>
+                    <span className="font-bold text-primary font-mono text-[11px] block">
+                      03. Expert Mentorship
+                    </span>
+                    <span className="text-muted-foreground text-[11px]">
+                      Code, CFD & math critique
+                    </span>
                   </div>
                   <div className="p-3 rounded-xl bg-surface-2 border border-white/6 space-y-1">
-                    <span className="font-bold text-primary font-mono text-[11px] block">04. Verified Credits</span>
-                    <span className="text-muted-foreground text-[11px]">Digital certificates & spotlight</span>
+                    <span className="font-bold text-primary font-mono text-[11px] block">
+                      04. Verified Credits
+                    </span>
+                    <span className="text-muted-foreground text-[11px]">
+                      Digital certificates & spotlight
+                    </span>
                   </div>
                 </div>
               </div>
@@ -294,7 +314,11 @@ function ProgramsPage() {
                       <div className="space-y-4">
                         <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
                           <span>{prog.date}</span>
-                          {prog.mode && <span className="text-[11px] text-muted-foreground/80">{prog.mode}</span>}
+                          {prog.mode && (
+                            <span className="text-[11px] text-muted-foreground/80">
+                              {prog.mode}
+                            </span>
+                          )}
                         </div>
 
                         <div>
@@ -312,8 +336,12 @@ function ProgramsPage() {
                               <Mic className="size-4" />
                             </div>
                             <div className="text-xs">
-                              <div className="font-semibold text-foreground">{prog.speaker.name}</div>
-                              <div className="text-[11px] text-muted-foreground">{prog.speaker.designation}</div>
+                              <div className="font-semibold text-foreground">
+                                {prog.speaker.name}
+                              </div>
+                              <div className="text-[11px] text-muted-foreground">
+                                {prog.speaker.designation}
+                              </div>
                             </div>
                           </div>
                         )}
@@ -336,20 +364,40 @@ function ProgramsPage() {
                       </div>
 
                       <div className="mt-6 pt-4 border-t border-white/6 flex items-center justify-between text-xs">
-                        <span className="text-primary font-semibold font-mono">{prog.price || "TBD"}</span>
+                        <span className="text-primary font-semibold font-mono">
+                          {prog.price || "TBD"}
+                        </span>
                         {isComingSoon ? (
-                          <Button size="sm" variant="outline" disabled className="h-8 text-xs border-white/10 opacity-70">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            disabled
+                            className="h-8 text-xs border-white/10 opacity-70"
+                          >
                             Coming Soon
                           </Button>
                         ) : prog.ctaUrl.startsWith("http") ? (
-                          <Button asChild size="sm" className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg">
-                            <a href={prog.ctaUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1">
+                          <Button
+                            asChild
+                            size="sm"
+                            className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg"
+                          >
+                            <a
+                              href={prog.ctaUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-1"
+                            >
                               <span>{prog.ctaText}</span>
                               <ExternalLink className="size-3" />
                             </a>
                           </Button>
                         ) : (
-                          <Button asChild size="sm" className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg">
+                          <Button
+                            asChild
+                            size="sm"
+                            className="h-8 px-4 text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg"
+                          >
                             <Link to={prog.ctaUrl}>
                               <span>{prog.ctaText}</span>
                             </Link>
@@ -374,7 +422,8 @@ function ProgramsPage() {
                 Past Sessions & Workshops
               </h2>
               <p className="text-xs text-muted-foreground mt-1">
-                A chronological record of our expert sessions, career masterclasses, and astronomy workshops.
+                A chronological record of our expert sessions, career masterclasses, and astronomy
+                workshops.
               </p>
             </div>
 
@@ -384,9 +433,7 @@ function ProgramsPage() {
                   <article className="p-6 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-white/16 transition-colors">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
-                        <span className="text-[11px] font-medium text-primary">
-                          {session.date}
-                        </span>
+                        <span className="text-[11px] font-medium text-primary">{session.date}</span>
                         <span className="text-[11px]">{session.participants}</span>
                       </div>
 
@@ -397,7 +444,9 @@ function ProgramsPage() {
                       <div className="p-3 rounded-lg bg-surface-2 border border-white/6 text-xs flex items-center justify-between gap-3">
                         <div>
                           <div className="font-semibold text-primary">{session.speaker}</div>
-                          <div className="text-[11px] text-muted-foreground">{session.designation}</div>
+                          <div className="text-[11px] text-muted-foreground">
+                            {session.designation}
+                          </div>
                         </div>
                         {session.speakerLinkedin && (
                           <a
@@ -505,11 +554,25 @@ function ProgramsPage() {
             </div>
 
             <div className="pt-4 border-t border-white/8 flex flex-wrap justify-between items-center gap-3">
-              <Button onClick={() => setActiveSprintModal(null)} variant="outline" size="sm" className="text-xs">
+              <Button
+                onClick={() => setActiveSprintModal(null)}
+                variant="outline"
+                size="sm"
+                className="text-xs"
+              >
                 Close
               </Button>
-              <Button asChild size="sm" className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg text-xs">
-                <a href="https://tally.so/r/LZL56l" target="_blank" rel="noreferrer" className="flex items-center gap-1.5">
+              <Button
+                asChild
+                size="sm"
+                className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg text-xs"
+              >
+                <a
+                  href="https://tally.so/r/LZL56l"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5"
+                >
                   <span>Register for Sprint Squad ↗</span>
                 </a>
               </Button>

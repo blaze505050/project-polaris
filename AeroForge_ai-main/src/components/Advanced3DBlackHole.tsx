@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
-import { motion } from 'framer-motion';
-import { Play, Pause, RotateCcw, Info } from 'lucide-react';
-import { RelativisticCalculator, CONSTANTS } from '@/services/advancedPhysicsSimulator';
+import React, { useEffect, useRef, useState } from "react";
+import * as THREE from "three";
+import { motion } from "framer-motion";
+import { Play, Pause, RotateCcw, Info } from "lucide-react";
+import { RelativisticCalculator, CONSTANTS } from "@/services/advancedPhysicsSimulator";
 
 interface Advanced3DBlackHoleProps {
   mass?: number; // in solar masses
@@ -43,13 +43,17 @@ export default function Advanced3DBlackHole({
       75,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       schwarzschildRadius * 0.1,
-      schwarzschildRadius * 1000
+      schwarzschildRadius * 1000,
     );
-    camera.position.set(schwarzschildRadius * 15, schwarzschildRadius * 10, schwarzschildRadius * 15);
+    camera.position.set(
+      schwarzschildRadius * 15,
+      schwarzschildRadius * 10,
+      schwarzschildRadius * 15,
+    );
     camera.lookAt(0, 0, 0);
 
     // Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, precision: 'highp' });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, precision: "highp" });
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -73,7 +77,7 @@ export default function Advanced3DBlackHole({
       starPositions[i + 1] = (Math.random() - 0.5) * schwarzschildRadius * 500;
       starPositions[i + 2] = (Math.random() - 0.5) * schwarzschildRadius * 500;
     }
-    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starsGeometry.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
     const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: schwarzschildRadius });
     const stars = new THREE.Points(starsGeometry, starsMaterial);
     scene.add(stars);
@@ -136,8 +140,14 @@ export default function Advanced3DBlackHole({
         }
       }
 
-      diskGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(diskVertices), 3));
-      diskGeometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(diskColors), 3));
+      diskGeometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(new Float32Array(diskVertices), 3),
+      );
+      diskGeometry.setAttribute(
+        "color",
+        new THREE.BufferAttribute(new Float32Array(diskColors), 3),
+      );
 
       const diskMaterial = new THREE.PointsMaterial({
         size: schwarzschildRadius * 0.5,
@@ -175,7 +185,7 @@ export default function Advanced3DBlackHole({
       renderer.setSize(width, height);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Animation loop
     let rotationAngle = 0;
@@ -184,7 +194,7 @@ export default function Advanced3DBlackHole({
 
       if (isRunning) {
         rotationAngle += 0.0001;
-        
+
         // Rotate accretion disk
         scene.children.forEach((child) => {
           if (child.userData.isAccretionDisk) {
@@ -214,7 +224,7 @@ export default function Advanced3DBlackHole({
     animate();
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       if (animationIdRef.current) cancelAnimationFrame(animationIdRef.current);
       containerRef.current?.removeChild(renderer.domElement);
     };

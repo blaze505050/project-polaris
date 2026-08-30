@@ -5,7 +5,11 @@
 
 export interface MLPrediction {
   id: string;
-  type: 'material-optimization' | 'structural-improvement' | 'aerodynamic-enhancement' | 'cost-reduction';
+  type:
+    | "material-optimization"
+    | "structural-improvement"
+    | "aerodynamic-enhancement"
+    | "cost-reduction";
   suggestion: string;
   confidenceScore: number;
   relevanceScore: number;
@@ -40,7 +44,7 @@ class AIMLService {
    */
   async analyzeDesign(designData: any): Promise<DesignAnalysis> {
     const timestamp = new Date();
-    
+
     // Simulate ML analysis with realistic metrics
     const metrics = {
       structuralIntegrity: Math.random() * 40 + 60,
@@ -49,19 +53,19 @@ class AIMLService {
       costEffectiveness: Math.random() * 25 + 75,
       overallScore: 0,
     };
-    
-    metrics.overallScore = (
-      metrics.structuralIntegrity +
-      metrics.aerodynamicEfficiency +
-      metrics.manufacturability +
-      metrics.costEffectiveness
-    ) / 4;
+
+    metrics.overallScore =
+      (metrics.structuralIntegrity +
+        metrics.aerodynamicEfficiency +
+        metrics.manufacturability +
+        metrics.costEffectiveness) /
+      4;
 
     const predictions = this.generateMLPredictions(designData, metrics);
     const recommendations = this.generateRecommendations(metrics, predictions);
 
     return {
-      projectId: designData.id || 'unknown',
+      projectId: designData.id || "unknown",
       timestamp,
       metrics,
       predictions,
@@ -79,8 +83,9 @@ class AIMLService {
     if (metrics.structuralIntegrity < 80) {
       predictions.push({
         id: `pred-${Date.now()}-1`,
-        type: 'material-optimization',
-        suggestion: 'Consider switching to carbon fiber composite for improved strength-to-weight ratio',
+        type: "material-optimization",
+        suggestion:
+          "Consider switching to carbon fiber composite for improved strength-to-weight ratio",
         confidenceScore: 0.92,
         relevanceScore: 0.88,
         estimatedImpact: {
@@ -90,12 +95,12 @@ class AIMLService {
           manufacturability: -5,
         },
         implementationSteps: [
-          'Analyze current material properties',
-          'Simulate with new material',
-          'Validate manufacturing constraints',
-          'Update cost estimates',
+          "Analyze current material properties",
+          "Simulate with new material",
+          "Validate manufacturing constraints",
+          "Update cost estimates",
         ],
-        riskFactors: ['Higher material cost', 'Specialized manufacturing required'],
+        riskFactors: ["Higher material cost", "Specialized manufacturing required"],
       });
     }
 
@@ -103,8 +108,8 @@ class AIMLService {
     if (metrics.aerodynamicEfficiency < 75) {
       predictions.push({
         id: `pred-${Date.now()}-2`,
-        type: 'aerodynamic-enhancement',
-        suggestion: 'Optimize leading edge geometry using parametric design for 12% drag reduction',
+        type: "aerodynamic-enhancement",
+        suggestion: "Optimize leading edge geometry using parametric design for 12% drag reduction",
         confidenceScore: 0.85,
         relevanceScore: 0.91,
         estimatedImpact: {
@@ -113,12 +118,12 @@ class AIMLService {
           manufacturability: 3,
         },
         implementationSteps: [
-          'Generate parametric variations',
-          'Run CFD simulations',
-          'Compare results',
-          'Select optimal configuration',
+          "Generate parametric variations",
+          "Run CFD simulations",
+          "Compare results",
+          "Select optimal configuration",
         ],
-        riskFactors: ['Requires CFD validation', 'May affect structural design'],
+        riskFactors: ["Requires CFD validation", "May affect structural design"],
       });
     }
 
@@ -126,8 +131,8 @@ class AIMLService {
     if (metrics.costEffectiveness < 80) {
       predictions.push({
         id: `pred-${Date.now()}-3`,
-        type: 'cost-reduction',
-        suggestion: 'Simplify internal geometry to reduce manufacturing time by 20%',
+        type: "cost-reduction",
+        suggestion: "Simplify internal geometry to reduce manufacturing time by 20%",
         confidenceScore: 0.78,
         relevanceScore: 0.85,
         estimatedImpact: {
@@ -135,12 +140,12 @@ class AIMLService {
           manufacturability: 15,
         },
         implementationSteps: [
-          'Identify non-critical features',
-          'Simplify geometry',
-          'Validate structural requirements',
-          'Update manufacturing process',
+          "Identify non-critical features",
+          "Simplify geometry",
+          "Validate structural requirements",
+          "Update manufacturing process",
         ],
-        riskFactors: ['May impact aesthetics', 'Requires structural validation'],
+        riskFactors: ["May impact aesthetics", "Requires structural validation"],
       });
     }
 
@@ -148,8 +153,9 @@ class AIMLService {
     if (metrics.manufacturability < 75) {
       predictions.push({
         id: `pred-${Date.now()}-4`,
-        type: 'structural-improvement',
-        suggestion: 'Add draft angles and fillets for improved moldability and reduced stress concentration',
+        type: "structural-improvement",
+        suggestion:
+          "Add draft angles and fillets for improved moldability and reduced stress concentration",
         confidenceScore: 0.88,
         relevanceScore: 0.82,
         estimatedImpact: {
@@ -157,12 +163,12 @@ class AIMLService {
           strength: 5,
         },
         implementationSteps: [
-          'Identify sharp edges',
-          'Apply design rules',
-          'Validate stress distribution',
-          'Update manufacturing specs',
+          "Identify sharp edges",
+          "Apply design rules",
+          "Validate stress distribution",
+          "Update manufacturing specs",
         ],
-        riskFactors: ['Minor geometry changes', 'Requires validation'],
+        riskFactors: ["Minor geometry changes", "Requires validation"],
       });
     }
 
@@ -176,27 +182,33 @@ class AIMLService {
     const recommendations: string[] = [];
 
     if (metrics.overallScore < 70) {
-      recommendations.push('⚠️ Design needs significant optimization - consider implementing AI suggestions');
+      recommendations.push(
+        "⚠️ Design needs significant optimization - consider implementing AI suggestions",
+      );
     }
 
     if (metrics.structuralIntegrity < 65) {
-      recommendations.push('🔧 Structural integrity is below optimal - reinforce critical areas');
+      recommendations.push("🔧 Structural integrity is below optimal - reinforce critical areas");
     }
 
     if (metrics.aerodynamicEfficiency < 70) {
-      recommendations.push('💨 Aerodynamic efficiency can be improved - optimize shape and surfaces');
+      recommendations.push(
+        "💨 Aerodynamic efficiency can be improved - optimize shape and surfaces",
+      );
     }
 
     if (metrics.manufacturability < 70) {
-      recommendations.push('🏭 Manufacturing complexity is high - simplify design for production');
+      recommendations.push("🏭 Manufacturing complexity is high - simplify design for production");
     }
 
     if (metrics.costEffectiveness < 70) {
-      recommendations.push('💰 Cost optimization opportunities identified - review material and process choices');
+      recommendations.push(
+        "💰 Cost optimization opportunities identified - review material and process choices",
+      );
     }
 
     if (metrics.overallScore >= 85) {
-      recommendations.push('✅ Design is well-optimized - consider for production');
+      recommendations.push("✅ Design is well-optimized - consider for production");
     }
 
     return recommendations;
@@ -207,7 +219,7 @@ class AIMLService {
    */
   async generateDesignVariations(baseDesign: any, count: number = 5): Promise<any[]> {
     const variations = [];
-    
+
     for (let i = 0; i < count; i++) {
       variations.push({
         id: `variation-${Date.now()}-${i}`,
@@ -216,7 +228,7 @@ class AIMLService {
           scale: 0.8 + Math.random() * 0.4,
           thickness: 1 + Math.random() * 2,
           curvature: Math.random() * 0.5,
-          material: ['aluminum', 'steel', 'composite', 'titanium'][Math.floor(Math.random() * 4)],
+          material: ["aluminum", "steel", "composite", "titanium"][Math.floor(Math.random() * 4)],
         },
         predictedPerformance: {
           weight: Math.random() * 5 + 2,
@@ -243,13 +255,13 @@ class AIMLService {
     const suggestions: string[] = [];
 
     if (score < 70) {
-      issues.push('Complex geometry detected');
-      suggestions.push('Simplify internal features');
+      issues.push("Complex geometry detected");
+      suggestions.push("Simplify internal features");
     }
 
     if (score < 80) {
-      issues.push('Thin walls detected');
-      suggestions.push('Increase wall thickness for structural integrity');
+      issues.push("Thin walls detected");
+      suggestions.push("Increase wall thickness for structural integrity");
     }
 
     return {

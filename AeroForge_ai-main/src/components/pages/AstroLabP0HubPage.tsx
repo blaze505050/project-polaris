@@ -3,73 +3,73 @@
  * Central navigation for all P0 production-ready features
  */
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Rocket, Zap, Brain, Microscope, Target, Save, Users, ArrowRight } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import React from "react";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Rocket, Zap, Brain, Microscope, Target, Save, Users, ArrowRight } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const SECTIONS = [
   {
-    title: 'Core Simulations',
-    description: 'Production-ready physics engines',
+    title: "Core Simulations",
+    description: "Production-ready physics engines",
     items: [
       {
-        name: 'Orbital Mechanics',
-        desc: 'Kepler orbit calculator',
+        name: "Orbital Mechanics",
+        desc: "Kepler orbit calculator",
         icon: Rocket,
-        path: '/astrolab/p0/orbital',
+        path: "/astrolab/p0/orbital",
       },
       {
-        name: 'Gravity Simulator',
-        desc: 'N-body dynamics',
+        name: "Gravity Simulator",
+        desc: "N-body dynamics",
         icon: Zap,
-        path: '/astrolab/p0/gravity',
+        path: "/astrolab/p0/gravity",
       },
       {
-        name: 'Transit Detection',
-        desc: 'Exoplanet light curves',
+        name: "Transit Detection",
+        desc: "Exoplanet light curves",
         icon: Brain,
-        path: '/astrolab/p0/transit',
+        path: "/astrolab/p0/transit",
       },
       {
-        name: 'Stellar Evolution',
-        desc: 'HR diagram explorer',
+        name: "Stellar Evolution",
+        desc: "HR diagram explorer",
         icon: Microscope,
-        path: '/astrolab/p0/stellar',
+        path: "/astrolab/p0/stellar",
       },
     ],
   },
   {
-    title: 'Learning & Challenges',
-    description: 'Interactive problem-solving',
+    title: "Learning & Challenges",
+    description: "Interactive problem-solving",
     items: [
       {
-        name: 'Space Problems',
-        desc: '8 guided challenges',
+        name: "Space Problems",
+        desc: "8 guided challenges",
         icon: Target,
-        path: '/space-problems',
+        path: "/space-problems",
       },
       {
-        name: 'My Lab',
-        desc: 'Experiment management',
+        name: "My Lab",
+        desc: "Experiment management",
         icon: Save,
-        path: '/my-lab',
+        path: "/my-lab",
       },
     ],
   },
   {
-    title: 'Investor Demo',
-    description: 'Complete platform showcase',
+    title: "Investor Demo",
+    description: "Complete platform showcase",
     items: [
       {
-        name: 'Full Demo',
-        desc: 'All features & capabilities',
+        name: "Full Demo",
+        desc: "All features & capabilities",
         icon: Users,
-        path: '/astrolab/investor-demo',
+        path: "/astrolab/investor-demo",
       },
     ],
   },
@@ -131,7 +131,7 @@ export default function AstroLabP0HubPage() {
                         key={iIdx}
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: (sIdx * 0.1) + (iIdx * 0.05) }}
+                        transition={{ delay: sIdx * 0.1 + iIdx * 0.05 }}
                       >
                         <Link to={item.path}>
                           <Card className="p-6 h-full hover:border-accent hover:bg-primary/50 transition-all cursor-pointer group">
@@ -140,12 +140,8 @@ export default function AstroLabP0HubPage() {
                                 <Icon className="w-6 h-6 text-accent" />
                               </div>
                               <div className="flex-1">
-                                <h3 className="font-heading font-semibold mb-1">
-                                  {item.name}
-                                </h3>
-                                <p className="text-sm text-secondary-foreground">
-                                  {item.desc}
-                                </p>
+                                <h3 className="font-heading font-semibold mb-1">{item.name}</h3>
+                                <p className="text-sm text-secondary-foreground">{item.desc}</p>
                               </div>
                               <div className="flex items-center gap-1 text-accent text-sm font-semibold group-hover:gap-2 transition-all">
                                 Launch <ArrowRight className="w-4 h-4" />
@@ -172,14 +168,14 @@ export default function AstroLabP0HubPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
-                '✓ Centralized Physics Engine',
-                '✓ 4 Production Simulations',
-                '✓ Persistent Experiment Storage',
-                '✓ 8 Interactive Challenges',
-                '✓ Real Physics Constants',
-                '✓ Full Data Export',
-                '✓ Responsive Design',
-                '✓ Error Handling & Validation',
+                "✓ Centralized Physics Engine",
+                "✓ 4 Production Simulations",
+                "✓ Persistent Experiment Storage",
+                "✓ 8 Interactive Challenges",
+                "✓ Real Physics Constants",
+                "✓ Full Data Export",
+                "✓ Responsive Design",
+                "✓ Error Handling & Validation",
               ].map((feature, idx) => (
                 <motion.div
                   key={idx}
@@ -200,27 +196,25 @@ export default function AstroLabP0HubPage() {
           <Card className="p-8 space-y-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-bold font-heading">Quick Start</h2>
-              <p className="text-secondary-foreground">
-                Get started in 3 steps
-              </p>
+              <p className="text-secondary-foreground">Get started in 3 steps</p>
             </div>
 
             <div className="space-y-4">
               {[
                 {
-                  num: '1',
-                  title: 'Choose a Simulation',
-                  desc: 'Pick from Orbital Mechanics, Gravity, Transit, or Stellar Evolution',
+                  num: "1",
+                  title: "Choose a Simulation",
+                  desc: "Pick from Orbital Mechanics, Gravity, Transit, or Stellar Evolution",
                 },
                 {
-                  num: '2',
-                  title: 'Adjust Parameters',
-                  desc: 'Use interactive sliders to modify physical parameters in real-time',
+                  num: "2",
+                  title: "Adjust Parameters",
+                  desc: "Use interactive sliders to modify physical parameters in real-time",
                 },
                 {
-                  num: '3',
-                  title: 'Save & Analyze',
-                  desc: 'Save experiments to My Lab and export data for further analysis',
+                  num: "3",
+                  title: "Save & Analyze",
+                  desc: "Save experiments to My Lab and export data for further analysis",
                 },
               ].map((step, idx) => (
                 <motion.div

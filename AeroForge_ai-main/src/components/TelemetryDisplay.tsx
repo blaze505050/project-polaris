@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { AlertCircle, CheckCircle2, Zap } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { AlertCircle, CheckCircle2, Zap } from "lucide-react";
 
 interface TelemetryMetric {
   name: string;
   value: number | string;
   unit: string;
-  status: 'normal' | 'warning' | 'critical';
+  status: "normal" | "warning" | "critical";
   min?: number;
   max?: number;
   precision?: number;
@@ -20,7 +20,7 @@ interface TelemetryDisplayProps {
 
 export default function TelemetryDisplay({
   metrics,
-  title = 'TELEMETRY',
+  title = "TELEMETRY",
   refreshRate = 1000,
 }: TelemetryDisplayProps) {
   const [displayMetrics, setDisplayMetrics] = useState(metrics);
@@ -33,36 +33,36 @@ export default function TelemetryDisplay({
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'normal':
-        return 'text-[#10B981]';
-      case 'warning':
-        return 'text-[#F59E0B]';
-      case 'critical':
-        return 'text-[#EF4444]';
+      case "normal":
+        return "text-[#10B981]";
+      case "warning":
+        return "text-[#F59E0B]";
+      case "critical":
+        return "text-[#EF4444]";
       default:
-        return 'text-[#00F0FF]';
+        return "text-[#00F0FF]";
     }
   };
 
   const getStatusBgColor = (status: string) => {
     switch (status) {
-      case 'normal':
-        return 'bg-[#10B981]/10 border-[#10B981]/20';
-      case 'warning':
-        return 'bg-[#F59E0B]/10 border-[#F59E0B]/20';
-      case 'critical':
-        return 'bg-[#EF4444]/10 border-[#EF4444]/20';
+      case "normal":
+        return "bg-[#10B981]/10 border-[#10B981]/20";
+      case "warning":
+        return "bg-[#F59E0B]/10 border-[#F59E0B]/20";
+      case "critical":
+        return "bg-[#EF4444]/10 border-[#EF4444]/20";
       default:
-        return 'bg-[#00F0FF]/10 border-[#00F0FF]/20';
+        return "bg-[#00F0FF]/10 border-[#00F0FF]/20";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'normal':
+      case "normal":
         return <CheckCircle2 size={14} />;
-      case 'warning':
-      case 'critical':
+      case "warning":
+      case "critical":
         return <AlertCircle size={14} />;
       default:
         return <Zap size={14} />;
@@ -70,7 +70,7 @@ export default function TelemetryDisplay({
   };
 
   const formatValue = (value: number | string, precision?: number): string => {
-    if (typeof value === 'string') return value;
+    if (typeof value === "string") return value;
     if (precision !== undefined) return value.toFixed(precision);
     return value.toString();
   };
@@ -88,7 +88,7 @@ export default function TelemetryDisplay({
           {title}
         </h3>
         <span className="text-xs font-mono text-secondary-foreground">
-          {lastUpdate.toISOString().split('T')[1].substring(0, 8)}
+          {lastUpdate.toISOString().split("T")[1].substring(0, 8)}
         </span>
       </div>
 
@@ -104,12 +104,8 @@ export default function TelemetryDisplay({
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">
-                <div className={getStatusColor(metric.status)}>
-                  {getStatusIcon(metric.status)}
-                </div>
-                <span className="text-xs font-mono text-secondary-foreground">
-                  {metric.name}
-                </span>
+                <div className={getStatusColor(metric.status)}>{getStatusIcon(metric.status)}</div>
+                <span className="text-xs font-mono text-secondary-foreground">{metric.name}</span>
               </div>
               {metric.min !== undefined && metric.max !== undefined && (
                 <div className="text-xs font-mono text-secondary-foreground">
@@ -123,30 +119,30 @@ export default function TelemetryDisplay({
               <span className={`text-sm font-bold font-mono ${getStatusColor(metric.status)}`}>
                 {formatValue(metric.value, metric.precision)}
               </span>
-              <span className="text-xs font-mono text-secondary-foreground">
-                {metric.unit}
-              </span>
+              <span className="text-xs font-mono text-secondary-foreground">{metric.unit}</span>
             </div>
 
             {/* Progress Bar (if min/max provided) */}
-            {metric.min !== undefined && metric.max !== undefined && typeof metric.value === 'number' && (
-              <div className="mt-2 h-1.5 bg-[#0B0E14] rounded overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{
-                    width: `${((metric.value - metric.min) / (metric.max - metric.min)) * 100}%`,
-                  }}
-                  transition={{ duration: 0.3 }}
-                  className={`h-full ${
-                    metric.status === 'normal'
-                      ? 'bg-[#10B981]'
-                      : metric.status === 'warning'
-                        ? 'bg-[#F59E0B]'
-                        : 'bg-[#EF4444]'
-                  }`}
-                />
-              </div>
-            )}
+            {metric.min !== undefined &&
+              metric.max !== undefined &&
+              typeof metric.value === "number" && (
+                <div className="mt-2 h-1.5 bg-[#0B0E14] rounded overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{
+                      width: `${((metric.value - metric.min) / (metric.max - metric.min)) * 100}%`,
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className={`h-full ${
+                      metric.status === "normal"
+                        ? "bg-[#10B981]"
+                        : metric.status === "warning"
+                          ? "bg-[#F59E0B]"
+                          : "bg-[#EF4444]"
+                    }`}
+                  />
+                </div>
+              )}
           </motion.div>
         ))}
       </div>
@@ -155,11 +151,10 @@ export default function TelemetryDisplay({
       <div className="px-4 py-3 border-t border-[#00F0FF]/10 bg-[#0B0E14]/30">
         <div className="flex items-center justify-between text-xs font-mono text-secondary-foreground">
           <span>
-            {displayMetrics.filter((m) => m.status === 'normal').length}/{displayMetrics.length} NOMINAL
+            {displayMetrics.filter((m) => m.status === "normal").length}/{displayMetrics.length}{" "}
+            NOMINAL
           </span>
-          <span>
-            {displayMetrics.filter((m) => m.status === 'critical').length} CRITICAL
-          </span>
+          <span>{displayMetrics.filter((m) => m.status === "critical").length} CRITICAL</span>
         </div>
       </div>
     </motion.div>

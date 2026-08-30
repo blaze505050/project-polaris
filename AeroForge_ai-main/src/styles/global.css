@@ -1,5 +1,5 @@
-@import './fonts.css';
-@import './professional.css';
+@import "./fonts.css";
+@import "./professional.css";
 
 @tailwind base;
 @tailwind components;
@@ -24,7 +24,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #060B18;
+  background: #060b18;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -38,7 +38,6 @@
 
 /* High contrast focus ring for accessibility */
 *:focus-visible {
-  outline: 2px solid #0EA5E9 !important;
+  outline: 2px solid #0ea5e9 !important;
   outline-offset: 2px !important;
 }
-

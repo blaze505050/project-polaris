@@ -1,6 +1,6 @@
 /**
  * Auto-generated entity types
- * Contains all CMS collection interfaces in a single file 
+ * Contains all CMS collection interfaces in a single file
  */
 
 /**
@@ -22,7 +22,6 @@ export interface AerospaceTemplates {
   /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   previewImage?: string;
 }
-
 
 /**
  * Collection ID: airfoilprofiles
@@ -46,7 +45,6 @@ export interface AirfoilProfiles {
   profileImage?: string;
 }
 
-
 /**
  * Collection ID: aisuggestions
  * Interface for AISuggestions
@@ -69,7 +67,6 @@ export interface AISuggestions {
   generatedTimestamp?: Date | string;
 }
 
-
 /**
  * Collection ID: antigoals
  * Interface for AntiGoals
@@ -89,7 +86,6 @@ export interface AntiGoals {
   /** @wixFieldType text */
   reinforcesPrinciple?: string;
 }
-
 
 /**
  * Collection ID: architectureprinciples
@@ -112,7 +108,6 @@ export interface ArchitecturePrinciples {
   /** @wixFieldType text */
   relatedAntiGoals?: string;
 }
-
 
 /**
  * Collection ID: cadprojects
@@ -137,7 +132,6 @@ export interface CADProjects {
   /** @wixFieldType datetime */
   lastModifiedDate?: Date | string;
 }
-
 
 /**
  * Collection ID: casestudies
@@ -171,7 +165,6 @@ export interface CaseStudies {
   afterImage?: string;
 }
 
-
 /**
  * Collection ID: certifications
  * Interface for Certifications
@@ -193,7 +186,6 @@ export interface Certifications {
   /** @wixFieldType url */
   auditTrailLink?: string;
 }
-
 
 /**
  * Collection ID: cfddatasets
@@ -217,7 +209,6 @@ export interface CFDDatasets {
   category?: string;
 }
 
-
 /**
  * Collection ID: corephilosophy
  * Interface for CorePhilosophy
@@ -238,7 +229,6 @@ export interface CorePhilosophy {
   isKeyPrinciple?: boolean;
 }
 
-
 /**
  * Collection ID: designversions
  * Interface for DesignVersions
@@ -258,7 +248,6 @@ export interface DesignVersions {
   /** @wixFieldType text */
   status?: string;
 }
-
 
 /**
  * Collection ID: experimentreports
@@ -284,7 +273,6 @@ export interface ExperimentReports {
   reportVersion?: number;
 }
 
-
 /**
  * Collection ID: experiments
  * Interface for Experiments
@@ -306,7 +294,6 @@ export interface Experiments {
   /** @wixFieldType text */
   status?: string;
 }
-
 
 /**
  * Collection ID: knowledgebasearticles
@@ -338,7 +325,6 @@ export interface KnowledgeBaseArticles {
   relatedTopics?: string;
 }
 
-
 /**
  * Collection ID: labmodes
  * Interface for LabModes
@@ -361,7 +347,6 @@ export interface LabModes {
   targetAudience?: string;
 }
 
-
 /**
  * Collection ID: mechanicaltemplates
  * Interface for MechanicalTemplates
@@ -383,7 +368,6 @@ export interface MechanicalTemplates {
   /** @wixFieldType text */
   version?: string;
 }
-
 
 /**
  * Collection ID: researchpapers
@@ -411,7 +395,6 @@ export interface ResearchPapers {
   publicationDate?: Date | string;
 }
 
-
 /**
  * Collection ID: roboticstemplates
  * Interface for RoboticsTemplates
@@ -431,7 +414,6 @@ export interface RoboticsTemplates {
   /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   previewImage?: string;
 }
-
 
 /**
  * Collection ID: simulations
@@ -456,7 +438,6 @@ export interface Simulations {
   /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
   visualizations?: string;
 }
-
 
 /**
  * Collection ID: spacechallenges

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { saveUserSubmission } from "@/lib/cms-store";
 import { Sparkles, CheckCircle2, Bell, X } from "lucide-react";
 
@@ -20,23 +22,58 @@ export function WaitlistModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [interest, setInterest] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
 
-    saveUserSubmission({
-      type: "waitlist",
-      name: name || "Explorer",
-      email,
-      programTitle,
-      message: interest || `Priority waitlist registration for ${programTitle}`,
-    });
+    setSubmitting(true);
+    try {
+      const { error } = await supabase.from("applications").insert({
+        full_name: name.trim() || "Explorer",
+        email: email.trim(),
+        role: `Waitlist: ${programTitle}`.slice(0, 100),
+        motivation:
+          interest.trim().slice(0, 1000) || `Priority waitlist registration for ${programTitle}`,
+        consent: true,
+      });
 
-    setSubmitted(true);
+      if (error) {
+        console.error("[Waitlist] Submission error:", error);
+        toast.error(
+          "Unable to join waitlist. Please try again or email projectpolaris.8@gmail.com.",
+        );
+        setSubmitting(false);
+        return;
+      }
+
+      saveUserSubmission({
+        type: "waitlist",
+        name: name || "Explorer",
+        email,
+        programTitle,
+        message: interest || `Priority waitlist registration for ${programTitle}`,
+      });
+
+      setSubmitted(true);
+      toast.success("You're on the priority waitlist!");
+    } catch (err) {
+      console.error("[Waitlist] Client error:", err);
+      toast.error("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -64,9 +101,13 @@ export function WaitlistModal({
               <CheckCircle2 className="size-6" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-xl font-bold font-display text-foreground">You're on the Priority List!</h3>
+              <h3 className="text-xl font-bold font-display text-foreground">
+                You're on the Priority List!
+              </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Thank you, <strong>{name || "Explorer"}</strong>. We've recorded your interest for <strong>{programTitle}</strong>. You'll receive early access and cohort briefing directly at <strong>{email}</strong> before public release.
+                Thank you, <strong>{name || "Explorer"}</strong>. We've recorded your interest for{" "}
+                <strong>{programTitle}</strong>. You'll receive early access and cohort briefing
+                directly at <strong>{email}</strong> before public release.
               </p>
             </div>
             <Button
@@ -117,7 +158,9 @@ export function WaitlistModal({
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-medium text-foreground">What are you most excited to build/learn?</label>
+                <label className="text-xs font-medium text-foreground">
+                  What are you most excited to build/learn?
+                </label>
                 <Input
                   placeholder="e.g. Aerodynamics simulations, organizing a college chapter, etc."
                   value={interest}
@@ -139,10 +182,11 @@ export function WaitlistModal({
               </Button>
               <Button
                 type="submit"
+                disabled={submitting}
                 size="sm"
                 className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 text-xs shadow-sm"
               >
-                <span>Notify Me on Launch →</span>
+                <span>{submitting ? "Joining Waitlist…" : "Notify Me on Launch →"}</span>
               </Button>
             </div>
           </form>

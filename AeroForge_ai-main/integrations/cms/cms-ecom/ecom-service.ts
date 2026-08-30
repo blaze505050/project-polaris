@@ -1,8 +1,8 @@
-import { checkout } from '@wix/ecom';
-import { redirects } from '@wix/redirects';
+import { checkout } from "@wix/ecom";
+import { redirects } from "@wix/redirects";
 
 /** CMS App ID for catalog references */
-const CMS_APP_ID = 'e593b0bd-b783-45b8-97c2-873d42aacaf4';
+const CMS_APP_ID = "e593b0bd-b783-45b8-97c2-873d42aacaf4";
 
 /**
  * Buy now - skips the cart and goes directly to checkout.
@@ -28,10 +28,10 @@ const CMS_APP_ID = 'e593b0bd-b783-45b8-97c2-873d42aacaf4';
  * ```
  */
 export async function buyNow(
-  items: Array<{ collectionId: string; itemId: string; quantity?: number }>
+  items: Array<{ collectionId: string; itemId: string; quantity?: number }>,
 ): Promise<void> {
   if (items.length === 0) {
-    throw new Error('At least one item is required for checkout');
+    throw new Error("At least one item is required for checkout");
   }
 
   const lineItems = items.map((item) => ({
@@ -50,21 +50,21 @@ export async function buyNow(
   });
 
   if (!checkoutResult._id) {
-    throw new Error('Failed to create checkout: missing checkout ID');
+    throw new Error("Failed to create checkout: missing checkout ID");
   }
 
   const { redirectSession } = await redirects.createRedirectSession({
     ecomCheckout: { checkoutId: checkoutResult._id },
     callbacks: {
-      postFlowUrl: typeof window !== 'undefined' ? window.location.href : '',
+      postFlowUrl: typeof window !== "undefined" ? window.location.href : "",
     },
   });
 
   if (!redirectSession?.fullUrl) {
-    throw new Error('Failed to create redirect session: missing redirect URL');
+    throw new Error("Failed to create redirect session: missing redirect URL");
   }
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     window.location.href = redirectSession.fullUrl;
   }
 }

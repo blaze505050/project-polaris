@@ -4,8 +4,8 @@
    ═══════════════════════════════════════════════════════════ */
 
 /* Monospace font stack for data display */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
   /* ── Surface Hierarchy (deep space layering) ── */
@@ -24,17 +24,17 @@
   --bg-interactive: var(--af-surface-interactive);
 
   /* ── Brand & Semantic Colors ── */
-  --af-accent: #0EA5E9;
+  --af-accent: #0ea5e9;
   --af-accent-bright: #38bdf8;
-  --af-accent-warm: #F59E0B;
-  --af-success: #10B981;
-  --af-warning: #F59E0B;
-  --af-danger: #EF4444;
-  --af-info: #0EA5E9;
+  --af-accent-warm: #f59e0b;
+  --af-success: #10b981;
+  --af-warning: #f59e0b;
+  --af-danger: #ef4444;
+  --af-info: #0ea5e9;
 
   /* Legacy aliases */
   --color-primary: var(--af-accent);
-  --color-secondary: #3B82F6;
+  --color-secondary: #3b82f6;
   --color-accent: var(--af-accent-warm);
   --color-success: var(--af-success);
   --color-warning: var(--af-warning);
@@ -42,9 +42,9 @@
   --color-info: var(--af-info);
 
   /* ── Text Hierarchy ── */
-  --af-text-primary: #F1F5F9;
-  --af-text-secondary: #94A3B8;
-  --af-text-muted: #64748B;
+  --af-text-primary: #f1f5f9;
+  --af-text-secondary: #94a3b8;
+  --af-text-muted: #64748b;
   --af-text-data: var(--af-accent);
 
   /* Legacy aliases */
@@ -75,12 +75,12 @@
   --shadow-lg: var(--af-shadow-lg);
 
   /* ── Spacing Scale (4px-based) ── */
-  --spacing-xs: 0.25rem;   /* 4px */
-  --spacing-sm: 0.5rem;    /* 8px */
-  --spacing-md: 1rem;      /* 16px */
-  --spacing-lg: 1.5rem;    /* 24px */
-  --spacing-xl: 2rem;      /* 32px */
-  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
 
   /* ── Radii ── */
   --radius-sm: 4px;
@@ -100,7 +100,13 @@
 /* ─── Base Typography ────────────────────────────────────── */
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   background-color: var(--af-bg);
   color: var(--af-text-primary);
   line-height: 1.5;
@@ -112,23 +118,42 @@ body {
 code,
 pre,
 .font-mono,
-[class*='mono'] {
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
+[class*="mono"] {
+  font-family: "JetBrains Mono", "Courier New", monospace;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
 }
 
 /* Professional headings */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
-h1 { font-size: 2.25rem; font-weight: 700; }
-h2 { font-size: 1.875rem; font-weight: 700; }
-h3 { font-size: 1.5rem; font-weight: 600; }
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
 
 /* ─── Data Tables ────────────────────────────────────────── */
 
@@ -145,7 +170,7 @@ table th {
   text-align: left;
   padding: 0.75rem;
   border-bottom: 1px solid var(--af-border);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -154,7 +179,7 @@ table th {
 table td {
   padding: 0.75rem;
   border-bottom: 1px solid var(--af-border-subtle);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 table tbody tr {
@@ -186,7 +211,7 @@ button:disabled {
 input,
 textarea,
 select {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   background-color: var(--af-surface-1);
   color: var(--af-text-primary);
   border: 1px solid var(--af-border);
@@ -206,10 +231,20 @@ select:focus {
 
 /* ─── Scrollbar ──────────────────────────────────────────── */
 
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--af-surface-1); }
-::-webkit-scrollbar-thumb { background: var(--af-border); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--af-accent); }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--af-surface-1);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--af-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--af-accent);
+}
 
 /* ─── Selection ──────────────────────────────────────────── */
 
@@ -245,7 +280,7 @@ select:focus {
 }
 
 .tool-panel::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -276,14 +311,30 @@ select:focus {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   white-space: nowrap;
 }
 
-.solver-badge.analytical { color: var(--af-accent); border-color: rgba(14, 165, 233, 0.25); background-color: rgba(14, 165, 233, 0.08); }
-.solver-badge.numerical { color: #a78bfa; border-color: rgba(167, 139, 250, 0.25); background-color: rgba(167, 139, 250, 0.08); }
-.solver-badge.experimental { color: var(--af-accent-warm); border-color: rgba(245, 158, 11, 0.25); background-color: rgba(245, 158, 11, 0.08); }
-.solver-badge.validated { color: var(--af-success); border-color: rgba(16, 185, 129, 0.25); background-color: rgba(16, 185, 129, 0.08); }
+.solver-badge.analytical {
+  color: var(--af-accent);
+  border-color: rgba(14, 165, 233, 0.25);
+  background-color: rgba(14, 165, 233, 0.08);
+}
+.solver-badge.numerical {
+  color: #a78bfa;
+  border-color: rgba(167, 139, 250, 0.25);
+  background-color: rgba(167, 139, 250, 0.08);
+}
+.solver-badge.experimental {
+  color: var(--af-accent-warm);
+  border-color: rgba(245, 158, 11, 0.25);
+  background-color: rgba(245, 158, 11, 0.08);
+}
+.solver-badge.validated {
+  color: var(--af-success);
+  border-color: rgba(16, 185, 129, 0.25);
+  background-color: rgba(16, 185, 129, 0.08);
+}
 
 /* ─── Data Instrument Display ────────────────────────────── */
 
@@ -292,7 +343,7 @@ select:focus {
   border: 1px solid var(--af-border);
   border-radius: var(--radius-md);
   padding: var(--spacing-sm) var(--spacing-md);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.8125rem;
 }
 
@@ -328,13 +379,24 @@ select:focus {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.status-indicator.normal { background-color: var(--af-success); }
-.status-indicator.warning { background-color: var(--af-warning); }
-.status-indicator.critical { background-color: var(--af-danger); }
+.status-indicator.normal {
+  background-color: var(--af-success);
+}
+.status-indicator.warning {
+  background-color: var(--af-warning);
+}
+.status-indicator.critical {
+  background-color: var(--af-danger);
+}
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ─── Data Visualization Containers ──────────────────────── */
@@ -344,7 +406,7 @@ select:focus {
   border: 1px solid var(--af-border);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
   font-size: 0.875rem;
   overflow-x: auto;
 }
@@ -398,13 +460,15 @@ select:focus {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: "JetBrains Mono", monospace;
 }
 
 /* ─── Animations ─────────────────────────────────────────── */
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
@@ -412,8 +476,12 @@ select:focus {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .fade-in {
@@ -421,8 +489,14 @@ select:focus {
 }
 
 @keyframes slideIn {
-  from { transform: translateY(10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .slide-in {
@@ -441,8 +515,12 @@ select:focus {
     display: none;
   }
 
-  table { border-collapse: collapse; }
-  table, table th, table td {
+  table {
+    border-collapse: collapse;
+  }
+  table,
+  table th,
+  table td {
     border: 1px solid #000;
   }
 }
@@ -450,7 +528,9 @@ select:focus {
 /* ─── Accessibility ──────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
