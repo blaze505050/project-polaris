@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export function TeamConstellation() {
   const [selectedId, setSelectedId] = useState<string>(
-    TEAM_CONSTELLATION_MEMBERS[0]?.id || "aditya",
+    TEAM_CONSTELLATION_MEMBERS[0]?.id || "engineering-lead",
   );
 
   const selectedMember =

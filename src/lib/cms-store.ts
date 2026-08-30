@@ -402,8 +402,8 @@ export const INITIAL_ARTICLES: ArticleItem[] = [
     title: "Understanding Transonic Compressibility: Why Airfoils Shock",
     slug: "understanding-transonic-compressibility",
     author: {
-      name: "Aditya & Polaris Aerodynamics Squad",
-      role: "Student Research Lead",
+      name: "Polaris Aerodynamics Squad",
+      role: "Student Research Cohort",
     },
     category: "Science & Astronomy",
     publishedAt: "20 August 2026",
@@ -503,14 +503,14 @@ export const INITIAL_SPOTLIGHT: SpotlightEntry[] = [
 
 export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
   {
-    id: "aditya",
-    name: "Aditya",
-    department: "Executive & Engineering",
-    role: "Founder & Technical Lead",
+    id: "engineering-lead",
+    name: "Engineering Squad",
+    department: "Simulation & Systems",
+    role: "Aerospace & Systems Engineering",
     intro:
-      "Aerospace simulation enthusiast focused on making computational physics and rocketry tools accessible to every curious student.",
+      "Computational physics, aerodynamics, and rocketry tools built by students for students to explore real-world mechanics.",
     whatIBring:
-      "Architecting numerical simulation engines, software platforms, and ecosystem direction.",
+      "Architecting numerical simulation engines, software platforms, and scientific workflows.",
     orbitRadius: 130,
     orbitAngle: 0.2,
     speed: 0.0006,

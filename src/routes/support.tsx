@@ -230,7 +230,7 @@ export function SupportPage() {
                     <label className="text-muted-foreground font-medium">Your Name</label>
                     <Input
                       type="text"
-                      placeholder="Aditya Verma"
+                      placeholder="Alex Rivera"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="bg-surface text-xs"
@@ -241,7 +241,7 @@ export function SupportPage() {
                     <label className="text-muted-foreground font-medium">Your Email</label>
                     <Input
                       type="email"
-                      placeholder="aditya@example.com"
+                      placeholder="alex@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className="bg-surface text-xs"

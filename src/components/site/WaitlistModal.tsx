@@ -138,7 +138,7 @@ export function WaitlistModal({
                 <label className="text-xs font-medium text-foreground">Your Full Name</label>
                 <Input
                   required
-                  placeholder="e.g. Aditya Sharma"
+                  placeholder="e.g. Alex Rivera"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="h-9 text-xs bg-surface border-white/10"
@@ -150,7 +150,7 @@ export function WaitlistModal({
                 <Input
                   required
                   type="email"
-                  placeholder="e.g. aditya@example.com"
+                  placeholder="e.g. alex@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="h-9 text-xs bg-surface border-white/10"

@@ -300,7 +300,7 @@ function GetInvolvedPage() {
                       id="inquiry-name"
                       type="text"
                       required
-                      placeholder="e.g. Aditya Sharma"
+                      placeholder="e.g. Alex Rivera"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs"
@@ -314,7 +314,7 @@ function GetInvolvedPage() {
                       id="inquiry-email"
                       type="email"
                       required
-                      placeholder="e.g. aditya@example.com"
+                      placeholder="e.g. alex@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg bg-surface border border-white/10 text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary/50 text-xs"

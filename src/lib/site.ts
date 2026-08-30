@@ -223,34 +223,29 @@ export const STATS = [
 
 export const TEAM_MEMBERS = [
   {
-    name: "Avishi Khare",
-    role: "Founder",
-    note: "Leading the core vision, community ecosystem, and student-led initiatives across Project Polaris.",
+    name: "Vision & Community Lead",
+    role: "Community & Vision",
+    note: "Guiding the core mission, student community ecosystem, and peer-to-peer initiatives across Project Polaris.",
   },
   {
-    name: "Manya Sharma",
-    role: "Founding Member",
-    note: "Co-founding partner driving foundational community outreach, youth engagement, and curriculum design.",
+    name: "Outreach & Partnerships Lead",
+    role: "Outreach & Chapters",
+    note: "Driving school outreach, college chapter engagement, and student workshop programs.",
   },
   {
-    name: "Anshika Singh",
-    role: "Content Head",
-    note: "Directing educational content curation, daily Aaj Ka Gyan series, and community scientific publications.",
+    name: "Content & Publications Lead",
+    role: "Content & Education",
+    note: "Curating scientific inquiry resources, daily Aaj Ka Gyan posts, and educational guides.",
   },
   {
-    name: "Gnana Aditya Suvvari",
-    role: "Research Head",
-    note: "Spearheading student research programs, simulation frameworks, and technical development pipelines.",
+    name: "Simulation & Research Lead",
+    role: "Research & Systems",
+    note: "Coordinating student research cohorts, numerical simulation workstations, and physics validation.",
   },
   {
-    name: "Kanishk Sandhu",
-    role: "Operations Head",
-    note: "Overseeing logistics, workshop execution, volunteer coordination, and cohort operations.",
-  },
-  {
-    name: "Aryan",
-    role: "Research Volunteer",
-    note: "Supporting physics simulation verification, literature surveys, and student research digests.",
+    name: "Operations & Logistics Lead",
+    role: "Operations & Events",
+    note: "Managing logistics, masterclass execution, volunteer coordination, and cohort operations.",
   },
 ] as const;
 
