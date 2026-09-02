@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Button } from "@/components/ui/button";
 import { Compass } from "lucide-react";
 
