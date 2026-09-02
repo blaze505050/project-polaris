@@ -38,8 +38,8 @@ interface CoursesSearchParams {
 
 export const Route = createFileRoute("/courses")({
   validateSearch: (search: Record<string, unknown>): CoursesSearchParams => ({
-    type: (search.type as LearningType) || undefined,
-    topic: (search.topic as Topic) || undefined,
+    type: (search["type"] as LearningType) || undefined,
+    topic: (search["topic"] as Topic) || undefined,
   }),
   head: () => ({
     meta: [
@@ -375,7 +375,7 @@ function CoursesPage() {
               </div>
             )}
 
-            {/* Syllabus / Agenda */}
+            {/* Syllabus */}
             {activeItemModal.syllabus && (
               <div className="mt-5">
                 <h4 className="text-xs font-bold uppercase text-foreground mb-2">
@@ -389,6 +389,26 @@ function CoursesPage() {
                     >
                       <p className="font-bold text-foreground">{s.title}</p>
                       <p className="text-[11px] text-muted-foreground font-body mt-0.5">{s.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Session Agenda (Workshops) */}
+            {activeItemModal.agenda && activeItemModal.agenda.length > 0 && (
+              <div className="mt-5">
+                <h4 className="text-xs font-bold uppercase text-foreground mb-2">
+                  Session Agenda Breakdown
+                </h4>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {activeItemModal.agenda.map((a) => (
+                    <div
+                      key={a.title}
+                      className="p-2.5 rounded-lg bg-surface-2/60 border border-white/6 text-xs"
+                    >
+                      <p className="font-bold text-foreground">{a.title}</p>
+                      <p className="text-[11px] text-muted-foreground font-body mt-0.5">{a.desc}</p>
                     </div>
                   ))}
                 </div>

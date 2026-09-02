@@ -223,7 +223,7 @@ export function PolarisEcosystemGlobe() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const [selectedSector, setSelectedSector] = useState<BrainSector>(POLARIS_BRAIN_SECTORS[0]);
+  const [selectedSector, setSelectedSector] = useState<BrainSector>(POLARIS_BRAIN_SECTORS[0]!);
   const [hoveredSector, setHoveredSector] = useState<BrainSector | null>(null);
   const [activeViewMode, setActiveViewMode] = useState<"brain" | "flowchart">("brain");
 
@@ -452,7 +452,7 @@ export function PolarisEcosystemGlobe() {
           ctx.font = `${isSelected ? "bold 11px" : "10px"} Inter, sans-serif`;
           ctx.fillStyle = isSelected ? "#ffffff" : "rgba(255, 255, 255, 0.75)";
           ctx.textAlign = "center";
-          ctx.fillText(hub.name.split(" ")[0], pt.px, pt.py + (isSelected ? 20 : 16));
+          ctx.fillText(hub.name.split(" ")[0] ?? hub.name, pt.px, pt.py + (isSelected ? 20 : 16));
         }
       });
 
@@ -462,6 +462,7 @@ export function PolarisEcosystemGlobe() {
         if (pulse.progress > 1) pulse.progress = 0;
 
         const hub = POLARIS_BRAIN_SECTORS[pulse.hubIndex];
+        if (!hub) return;
         const pt = project3D(hub.lat, hub.lon, radius);
 
         if (pt.visible) {
@@ -533,18 +534,20 @@ export function PolarisEcosystemGlobe() {
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
+    const touch = e.touches[0];
+    if (e.touches.length === 1 && touch) {
       isDraggingRef.current = true;
       autoRotateRef.current = false;
-      lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      lastMousePosRef.current = { x: touch.clientX, y: touch.clientY };
     }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDraggingRef.current || e.touches.length !== 1) return;
-    const deltaX = e.touches[0].clientX - lastMousePosRef.current.x;
-    const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
-    lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    const touch = e.touches[0];
+    if (!isDraggingRef.current || e.touches.length !== 1 || !touch) return;
+    const deltaX = touch.clientX - lastMousePosRef.current.x;
+    const deltaY = touch.clientY - lastMousePosRef.current.y;
+    lastMousePosRef.current = { x: touch.clientX, y: touch.clientY };
 
     rotationRef.current.rotY += deltaX * 0.008;
     rotationRef.current.rotX = Math.max(

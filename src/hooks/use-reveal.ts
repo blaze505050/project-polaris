@@ -17,7 +17,7 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setVisible(true);
           observer.unobserve(el);
         }
@@ -50,7 +50,7 @@ export function useCountUp(
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !started) {
+        if (entry?.isIntersecting && !started) {
           setStarted(true);
           observer.unobserve(el);
         }

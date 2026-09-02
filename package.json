@@ -12,6 +12,7 @@
     "build:dev": "npm run build:webp && npm run build:aeroforge && vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -83,7 +84,7 @@
     "nitro": "3.0.260603-beta",
     "prettier": "^3.7.3",
     "sharp": "^0.35.3",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "typescript-eslint": "^8.56.1",
     "vite": "^8.2.0"
   }

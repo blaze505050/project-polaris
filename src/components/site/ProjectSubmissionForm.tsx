@@ -7,7 +7,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SHOWCASE_CATEGORIES, SHOWCASE_STAGES } from "@/lib/showcase";
 
-export function ProjectSubmissionForm() {
+export interface ProjectSubmissionFormProps {
+  onSuccess?: () => void;
+}
+
+export function ProjectSubmissionForm({ onSuccess }: ProjectSubmissionFormProps = {}) {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [category, setCategory] = useState("hardware");
@@ -76,6 +80,11 @@ export function ProjectSubmissionForm() {
     setStage("in_progress");
     setDone(true);
     toast.success("Project submitted — thanks for sharing it.");
+    if (onSuccess) {
+      setTimeout(() => {
+        onSuccess();
+      }, 1200);
+    }
   }
 
   if (done) {

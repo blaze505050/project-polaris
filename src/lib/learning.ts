@@ -31,6 +31,7 @@ export interface LearningItem {
   prerequisites?: string[];
   outcomes: string[];
   syllabus?: { title: string; desc: string; duration?: string }[];
+  agenda?: { title: string; desc: string }[];
   finalProject?: { title: string; desc: string; link?: string };
   related?: { label: string; to: string; type: string }[];
   ctaText?: string;

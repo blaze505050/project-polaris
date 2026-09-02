@@ -40,7 +40,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
         vy: (Math.random() - 0.5) * 0.45,
         radius: r,
         baseRadius: r,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)] ?? "#C59DFF",
         alpha: Math.random() * 0.6 + 0.3,
       });
     }
@@ -76,7 +76,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
           vy: (Math.random() - 0.5) * 2,
           radius: Math.random() * 2 + 1,
           baseRadius: 1.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
+          color: colors[Math.floor(Math.random() * colors.length)] ?? "#C59DFF",
           alpha: 0.9,
         });
       }
@@ -95,6 +95,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
       const maxDist = width < 768 ? 75 : 130;
       for (let i = 0; i < stars.length; i++) {
         const s1 = stars[i];
+        if (!s1) continue;
 
         // Movement
         s1.x += s1.vx;
@@ -121,6 +122,7 @@ export function ConstellationCanvas({ className = "" }: { className?: string }) 
         // Draw connections between close stars
         for (let j = i + 1; j < stars.length; j++) {
           const s2 = stars[j];
+          if (!s2) continue;
           const dx = s1.x - s2.x;
           const dy = s1.y - s2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);

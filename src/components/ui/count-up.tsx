@@ -42,7 +42,7 @@ export function CountUp({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasTriggered) {
+        if (entry?.isIntersecting && !hasTriggered) {
           setHasTriggered(true);
           observer.unobserve(el);
         }

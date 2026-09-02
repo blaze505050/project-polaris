@@ -89,11 +89,12 @@ const STAGES = [
 ];
 
 export function InteractiveAeroForgeDemo() {
-  const [selectedPreset, setSelectedPreset] = useState<ProblemPreset>(PRESETS[0]);
-  const [naca, setNaca] = useState(PRESETS[0].defaultNaca);
-  const [mach, setMach] = useState(PRESETS[0].defaultMach);
-  const [alpha, setAlpha] = useState(PRESETS[0].defaultAlpha);
-  const [altitude, setAltitude] = useState(PRESETS[0].defaultAltitude);
+  const defaultPreset = PRESETS[0]!;
+  const [selectedPreset, setSelectedPreset] = useState<ProblemPreset>(defaultPreset);
+  const [naca, setNaca] = useState(defaultPreset.defaultNaca);
+  const [mach, setMach] = useState(defaultPreset.defaultMach);
+  const [alpha, setAlpha] = useState(defaultPreset.defaultAlpha);
+  const [altitude, setAltitude] = useState(defaultPreset.defaultAltitude);
 
   const [activeStep, setActiveStep] = useState<number>(1);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -158,7 +159,8 @@ export function InteractiveAeroForgeDemo() {
     setActiveStep(7);
   };
 
-  const currentStageInfo = STAGES.find((s) => s.step === activeStep) || STAGES[0];
+  const defaultStage = STAGES[0]!;
+  const currentStageInfo = STAGES.find((s) => s.step === activeStep) || defaultStage;
 
   return (
     <section

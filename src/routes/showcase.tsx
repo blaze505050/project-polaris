@@ -103,7 +103,7 @@ function ShowcasePage() {
   const projects = useMemo(() => {
     const list = dbProjects.length > 0 ? dbProjects : FLAGSHIP_SHOWCASE;
     if (selectedCategory === "all") return list;
-    return list.filter((p) => p.category === selectedCategory);
+    return list.filter((p: ShowcaseProject) => p.category === selectedCategory);
   }, [dbProjects, selectedCategory]);
 
   return (
@@ -149,18 +149,18 @@ function ShowcasePage() {
               >
                 All Artifacts ({FLAGSHIP_SHOWCASE.length})
               </button>
-              {SHOWCASE_CATEGORIES.map((cat) => (
+              {SHOWCASE_CATEGORIES.filter((c) => c.value !== "all").map((cat) => (
                 <button
-                  key={cat}
+                  key={cat.value}
                   type="button"
-                  onClick={() => setSelectedCategory(cat)}
+                  onClick={() => setSelectedCategory(cat.value)}
                   className={`px-3.5 py-1.5 rounded-full transition-colors ${
-                    selectedCategory === cat
+                    selectedCategory === cat.value
                       ? "bg-foreground text-background font-bold"
                       : "bg-surface-2 text-muted-foreground hover:text-foreground border border-white/8"
                   }`}
                 >
-                  {SHOWCASE_CATEGORY_LABELS[cat]}
+                  {cat.label}
                 </button>
               ))}
             </div>
@@ -168,7 +168,7 @@ function ShowcasePage() {
 
           {/* Project Showcase Grid */}
           <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((p, i) => (
+            {projects.map((p: ShowcaseProject, i: number) => (
               <ScrollReveal key={p.id} direction="up" delay={i * 60}>
                 <article className="p-6 md:p-8 rounded-2xl border border-white/8 bg-surface/80 backdrop-blur-xl flex flex-col justify-between h-full hover:border-primary/40 transition-all">
                   <div>

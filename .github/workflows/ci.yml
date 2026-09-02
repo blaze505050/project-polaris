@@ -34,6 +34,9 @@ jobs:
       - name: Lint codebase
         run: npm run lint
 
+      - name: TypeScript Type Check
+        run: npm run typecheck
+
       - name: Build AeroForge AI bundle
         run: npm run build:aeroforge
 

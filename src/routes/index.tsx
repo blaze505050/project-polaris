@@ -489,158 +489,160 @@ function HomePage() {
           </ScrollReveal>
 
           {/* Featured Astronomy Masterclass Card */}
-          <ScrollReveal direction="up" delay={40}>
-            <div className="p-6 md:p-8 rounded-2xl border border-primary/25 bg-card relative overflow-hidden font-sans shadow-lg">
-              <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
-                <div className="space-y-4">
-                  <div className="flex flex-wrap items-center gap-3 text-xs">
-                    <span className="flex items-center gap-1 text-muted-foreground text-xs font-mono">
-                      <Calendar className="size-3 text-primary" />
-                      <span>{featuredSession.date}</span>
-                    </span>
-                    <span className="flex items-center gap-1 text-muted-foreground text-xs">
-                      <Clock className="size-3 text-primary" />
-                      <span>{featuredSession.time || "6:00 PM IST"}</span>
-                    </span>
-                    <span className="flex items-center gap-1 text-emerald-400 text-xs">
-                      <MapPin className="size-3" />
-                      <span>{featuredSession.mode}</span>
-                    </span>
-                  </div>
+          {featuredSession && (
+            <ScrollReveal direction="up" delay={40}>
+              <div className="p-6 md:p-8 rounded-2xl border border-primary/25 bg-card relative overflow-hidden font-sans shadow-lg">
+                <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-center gap-3 text-xs">
+                      <span className="flex items-center gap-1 text-muted-foreground text-xs font-mono">
+                        <Calendar className="size-3 text-primary" />
+                        <span>{featuredSession.date}</span>
+                      </span>
+                      <span className="flex items-center gap-1 text-muted-foreground text-xs">
+                        <Clock className="size-3 text-primary" />
+                        <span>{featuredSession.time || "6:00 PM IST"}</span>
+                      </span>
+                      <span className="flex items-center gap-1 text-emerald-400 text-xs">
+                        <MapPin className="size-3" />
+                        <span>{featuredSession.mode}</span>
+                      </span>
+                    </div>
 
-                  <h3 className="text-2xl sm:text-3xl font-bold font-display text-foreground leading-snug">
-                    {featuredSession.title}
-                  </h3>
+                    <h3 className="text-2xl sm:text-3xl font-bold font-display text-foreground leading-snug">
+                      {featuredSession.title}
+                    </h3>
 
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    {featuredSession.details}
-                  </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                      {featuredSession.details}
+                    </p>
 
-                  {/* Speaker Box */}
-                  {featuredSession.speaker && (
-                    <div className="p-4 rounded-xl bg-surface-2/60 border border-white/6 flex items-center gap-3.5">
-                      <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base shrink-0">
-                        <Mic className="size-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-bold font-display text-foreground">
-                          {featuredSession.speaker.name}
+                    {/* Speaker Box */}
+                    {featuredSession.speaker && (
+                      <div className="p-4 rounded-xl bg-surface-2/60 border border-white/6 flex items-center gap-3.5">
+                        <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base shrink-0">
+                          <Mic className="size-5" />
                         </div>
-                        <div className="text-xs text-primary font-medium">
-                          {featuredSession.speaker.designation}
+                        <div>
+                          <div className="text-sm font-bold font-display text-foreground">
+                            {featuredSession.speaker.name}
+                          </div>
+                          <div className="text-xs text-primary font-medium">
+                            {featuredSession.speaker.designation}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Live Countdown HUD */}
+                    <div
+                      aria-live="polite"
+                      aria-atomic="true"
+                      aria-label={`Live countdown: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}
+                      className="p-3.5 rounded-xl bg-surface-2 border border-primary/20 flex flex-wrap items-center justify-between gap-3"
+                    >
+                      <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
+                        <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>Live Session Starts In:</span>
+                      </div>
+                      <div className="flex items-center gap-2 font-mono text-xs">
+                        <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
+                          <span className="text-sm font-bold text-primary block leading-none">
+                            {String(timeLeft.days).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground uppercase">Days</span>
+                        </div>
+                        <span className="text-primary font-bold">:</span>
+                        <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
+                          <span className="text-sm font-bold text-primary block leading-none">
+                            {String(timeLeft.hours).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground uppercase">Hours</span>
+                        </div>
+                        <span className="text-primary font-bold">:</span>
+                        <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
+                          <span className="text-sm font-bold text-primary block leading-none">
+                            {String(timeLeft.minutes).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground uppercase">Mins</span>
+                        </div>
+                        <span className="text-primary font-bold">:</span>
+                        <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
+                          <span className="text-sm font-bold text-emerald-400 block leading-none">
+                            {String(timeLeft.seconds).padStart(2, "0")}
+                          </span>
+                          <span className="text-[9px] text-muted-foreground uppercase">Secs</span>
                         </div>
                       </div>
                     </div>
-                  )}
 
-                  {/* Live Countdown HUD */}
-                  <div
-                    aria-live="polite"
-                    aria-atomic="true"
-                    aria-label={`Live countdown: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`}
-                    className="p-3.5 rounded-xl bg-surface-2 border border-primary/20 flex flex-wrap items-center justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono">
-                      <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span>Live Session Starts In:</span>
-                    </div>
-                    <div className="flex items-center gap-2 font-mono text-xs">
-                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">
-                          {String(timeLeft.days).padStart(2, "0")}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground uppercase">Days</span>
-                      </div>
-                      <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">
-                          {String(timeLeft.hours).padStart(2, "0")}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground uppercase">Hours</span>
-                      </div>
-                      <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-primary block leading-none">
-                          {String(timeLeft.minutes).padStart(2, "0")}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground uppercase">Mins</span>
-                      </div>
-                      <span className="text-primary font-bold">:</span>
-                      <div className="px-2.5 py-1 rounded bg-background border border-border text-center min-w-[48px]">
-                        <span className="text-sm font-bold text-emerald-400 block leading-none">
-                          {String(timeLeft.seconds).padStart(2, "0")}
-                        </span>
-                        <span className="text-[9px] text-muted-foreground uppercase">Secs</span>
-                      </div>
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
+                      <Button
+                        asChild
+                        size="default"
+                        className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs active:scale-[0.97]"
+                      >
+                        <a
+                          href={featuredSession.ctaUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          <span>Register Now (Free)</span>
+                          <ArrowRight className="size-3.5" />
+                        </a>
+                      </Button>
+
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="default"
+                        className="h-11 px-5 rounded-lg font-medium border-white/10 hover:border-white/20 text-xs bg-surface-2/60 text-foreground active:scale-[0.97]"
+                      >
+                        <a
+                          href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Exploring+the+Star+Universe%3A+A+Journey+into+Astronomy+%7C+Project+Polaris&dates=20260829T123000Z%2F20260829T143000Z&details=Live+Astronomy+Workshop+with+Scientist+Baldev+Krishan+Sharma+(Cosmo-scientist).+Hosted+by+Project+Polaris.&location=Online+Google+Meet"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-1.5"
+                        >
+                          <CalendarPlus className="size-3.5 text-primary" />
+                          <span>Add to Google Calendar</span>
+                        </a>
+                      </Button>
                     </div>
                   </div>
 
-                  <div className="pt-2 flex flex-wrap items-center gap-3">
-                    <Button
-                      asChild
-                      size="default"
-                      className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs active:scale-[0.97]"
-                    >
-                      <a
-                        href={featuredSession.ctaUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        <span>Register Now (Free)</span>
-                        <ArrowRight className="size-3.5" />
-                      </a>
-                    </Button>
+                  {/* What You Will Get (Subtle Telescope Image Background) */}
+                  <div className="relative p-5 md:p-6 rounded-xl overflow-hidden border border-white/10 space-y-4 bg-surface-2/70">
+                    <img
+                      src="/media/telescope-milkyway.jpg"
+                      alt="Telescope observing the Milky Way"
+                      loading="lazy"
+                      className="absolute inset-0 size-full object-cover opacity-20 pointer-events-none mix-blend-screen"
+                    />
+                    <div className="relative z-10 space-y-4">
+                      <h4 className="text-xs font-semibold uppercase text-primary tracking-wider font-mono">
+                        What You Will Get
+                      </h4>
+                      <ul className="space-y-2.5 text-xs text-muted-foreground">
+                        {featuredSession.benefits.map((benefit) => (
+                          <li key={benefit} className="flex items-start gap-2.5">
+                            <CheckCircle className="size-3.5 text-primary shrink-0 mt-0.5" />
+                            <span className="text-foreground/90">{benefit}</span>
+                          </li>
+                        ))}
+                      </ul>
 
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="default"
-                      className="h-11 px-5 rounded-lg font-medium border-white/10 hover:border-white/20 text-xs bg-surface-2/60 text-foreground active:scale-[0.97]"
-                    >
-                      <a
-                        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Exploring+the+Star+Universe%3A+A+Journey+into+Astronomy+%7C+Project+Polaris&dates=20260829T123000Z%2F20260829T143000Z&details=Live+Astronomy+Workshop+with+Scientist+Baldev+Krishan+Sharma+(Cosmo-scientist).+Hosted+by+Project+Polaris.&location=Online+Google+Meet"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1.5"
-                      >
-                        <CalendarPlus className="size-3.5 text-primary" />
-                        <span>Add to Google Calendar</span>
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-
-                {/* What You Will Get (Subtle Telescope Image Background) */}
-                <div className="relative p-5 md:p-6 rounded-xl overflow-hidden border border-white/10 space-y-4 bg-surface-2/70">
-                  <img
-                    src="/media/telescope-milkyway.jpg"
-                    alt="Telescope observing the Milky Way"
-                    loading="lazy"
-                    className="absolute inset-0 size-full object-cover opacity-20 pointer-events-none mix-blend-screen"
-                  />
-                  <div className="relative z-10 space-y-4">
-                    <h4 className="text-xs font-semibold uppercase text-primary tracking-wider font-mono">
-                      What You Will Get
-                    </h4>
-                    <ul className="space-y-2.5 text-xs text-muted-foreground">
-                      {featuredSession.benefits.map((benefit) => (
-                        <li key={benefit} className="flex items-start gap-2.5">
-                          <CheckCircle className="size-3.5 text-primary shrink-0 mt-0.5" />
-                          <span className="text-foreground/90">{benefit}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="pt-3 border-t border-white/10 text-[11px] text-muted-foreground">
-                      Whether you are an astronomy enthusiast or simply curious about the Universe,
-                      join us on this journey through the stars! 🌠
+                      <div className="pt-3 border-t border-white/10 text-[11px] text-muted-foreground">
+                        Whether you are an astronomy enthusiast or simply curious about the
+                        Universe, join us on this journey through the stars! 🌠
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          )}
         </div>
       </section>
 
@@ -1141,27 +1143,29 @@ function HomePage() {
             {[
               STUDENT_REVIEWS[reviewIndex],
               STUDENT_REVIEWS[(reviewIndex + 1) % STUDENT_REVIEWS.length],
-            ].map((review) => (
-              <div
-                key={review.name}
-                className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
-              >
-                <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
-                  "{review.quote}"
-                </p>
-                <div className="pt-3 border-t border-white/6 flex items-center gap-3">
-                  <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
-                    {review.name.charAt(0)}
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-foreground font-display">
-                      {review.name}
+            ]
+              .filter((r): r is NonNullable<typeof r> => Boolean(r))
+              .map((review) => (
+                <div
+                  key={review.name}
+                  className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
+                >
+                  <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
+                    "{review.quote}"
+                  </p>
+                  <div className="pt-3 border-t border-white/6 flex items-center gap-3">
+                    <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                      {review.name.charAt(0)}
                     </div>
-                    <div className="text-[10px] text-muted-foreground">{review.role}</div>
+                    <div>
+                      <div className="text-xs font-bold text-foreground font-display">
+                        {review.name}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">{review.role}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>

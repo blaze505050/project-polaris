@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import {
   getPrograms,
   savePrograms,
@@ -74,8 +75,29 @@ export const Route = createFileRoute("/dashboard")({
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"student" | "admin">("student");
   const [adminAuthenticated, setAdminAuthenticated] = useState(false);
-  const [adminPasscode, setAdminPasscode] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
+  const [adminLoading, setAdminLoading] = useState(false);
   const [adminError, setAdminError] = useState("");
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) {
+        const user = data.user;
+        const role =
+          (user.app_metadata as Record<string, unknown> | undefined)?.["role"] ||
+          (user.user_metadata as Record<string, unknown> | undefined)?.["role"];
+        const email = user.email || "";
+        const isAdmin =
+          role === "admin" ||
+          email.endsWith("@projectpolaris.in") ||
+          email === "project.polaris8@gmail.com";
+        if (isAdmin) {
+          setAdminAuthenticated(true);
+        }
+      }
+    });
+  }, []);
 
   // CMS State
   const [programs, setProgramsState] = useState<ProgramEvent[]>(getPrograms());
@@ -155,17 +177,46 @@ function DashboardPage() {
     date: "August 2026",
   });
 
-  const handleAdminLogin = (e: React.FormEvent) => {
+  const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      adminPasscode === "polaris2026" ||
-      adminPasscode === "admin" ||
-      adminPasscode === "polaris"
-    ) {
+    if (!adminEmail || !adminPassword) {
+      setAdminError("Please enter both administrator email and password.");
+      return;
+    }
+    setAdminLoading(true);
+    setAdminError("");
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: adminEmail,
+        password: adminPassword,
+      });
+      if (error) {
+        setAdminError(error.message || "Invalid administrator credentials.");
+        setAdminLoading(false);
+        return;
+      }
+      const user = data.user;
+      const role =
+        (user?.app_metadata as Record<string, unknown> | undefined)?.["role"] ||
+        (user?.user_metadata as Record<string, unknown> | undefined)?.["role"];
+      const email = user?.email || "";
+      const isAdmin =
+        role === "admin" ||
+        email.endsWith("@projectpolaris.in") ||
+        email === "project.polaris8@gmail.com";
+      if (!isAdmin) {
+        setAdminError(
+          "Access denied: You must possess administrator privileges to access this CMS.",
+        );
+        setAdminLoading(false);
+        return;
+      }
       setAdminAuthenticated(true);
       setAdminError("");
-    } else {
-      setAdminError("Invalid admin access key. Please check your credentials.");
+    } catch {
+      setAdminError("Authentication request failed. Please check network connectivity.");
+    } finally {
+      setAdminLoading(false);
     }
   };
 
@@ -180,7 +231,6 @@ function DashboardPage() {
       category: (newProgram.category as any) || "workshop",
       status: (newProgram.status as any) || "upcoming",
       date: newProgram.date || "Upcoming 2026",
-      time: newProgram.time,
       mode: (newProgram.mode as any) || "Online",
       details: newProgram.details || "",
       benefits: [
@@ -193,19 +243,23 @@ function DashboardPage() {
       price: newProgram.price || "Free",
       featured: Boolean(newProgram.featured),
       visibility: true,
-      speaker: newProgram.speaker?.name
+      ...(newProgram.time ? { time: newProgram.time } : {}),
+      ...(newProgram.speaker?.name
         ? {
-            name: newProgram.speaker.name,
-            designation: newProgram.speaker.designation || "",
-            bio: newProgram.speaker.bio || "",
-            linkedin: newProgram.speaker.linkedin || "",
+            speaker: {
+              name: newProgram.speaker.name,
+              designation: newProgram.speaker.designation || "Speaker",
+              ...(newProgram.speaker.bio ? { bio: newProgram.speaker.bio } : {}),
+              ...(newProgram.speaker.photo ? { photo: newProgram.speaker.photo } : {}),
+              ...(newProgram.speaker.linkedin ? { linkedin: newProgram.speaker.linkedin } : {}),
+            },
           }
-        : undefined,
+        : {}),
     };
     const updated = [prog, ...programs];
     setProgramsState(updated);
     savePrograms(updated);
-    setStatusFeedback("✓ Program created successfully and live across the website!");
+    setStatusFeedback("✓ Program saved locally in draft sandbox! Visible in your browser preview.");
     setTimeout(() => setStatusFeedback(null), 4000);
     // Reset
     setNewProgram({
@@ -256,7 +310,9 @@ function DashboardPage() {
       date: newPastSession.date || "2026",
       speaker: newPastSession.speaker || "Guest Speaker",
       designation: newPastSession.designation || "Researcher",
-      speakerLinkedin: newPastSession.speakerLinkedin || undefined,
+      ...(newPastSession.speakerLinkedin
+        ? { speakerLinkedin: newPastSession.speakerLinkedin }
+        : {}),
       topic: newPastSession.topic || "",
       participants: newPastSession.participants || "50+ Participants",
       summary: newPastSession.summary || "",
@@ -680,7 +736,7 @@ function DashboardPage() {
         <section className="section font-sans">
           <div className="shell max-w-5xl mx-auto space-y-6">
             {!adminAuthenticated ? (
-              /* Admin Passcode Gate */
+              /* Admin Authentication Gate */
               <div className="max-w-md mx-auto p-7 rounded-2xl border border-white/10 bg-card text-center space-y-4 shadow-xl">
                 <div className="size-10 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center justify-center mx-auto">
                   <Lock className="size-5" />
@@ -689,31 +745,72 @@ function DashboardPage() {
                   Admin CMS Authentication
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  Enter your team passcode to dynamically create, edit, remove, and manage all
-                  website data in real time.
+                  Sign in with your Project Polaris administrator credentials to access the Content
+                  Management System.
                 </p>
 
-                <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-2">
-                  <input
-                    type="password"
-                    placeholder="Enter admin passcode"
-                    value={adminPasscode}
-                    onChange={(e) => setAdminPasscode(e.target.value)}
-                    className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 text-center font-mono"
-                  />
+                <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-2 text-left">
+                  <div>
+                    <label className="text-[11px] text-muted-foreground block mb-1">
+                      Admin Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="admin@projectpolaris.in"
+                      value={adminEmail}
+                      onChange={(e) => setAdminEmail(e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] text-muted-foreground block mb-1">Password</label>
+                    <input
+                      type="password"
+                      required
+                      placeholder="Enter administrator password"
+                      value={adminPassword}
+                      onChange={(e) => setAdminPassword(e.target.value)}
+                      className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 font-mono"
+                    />
+                  </div>
                   {adminError && <p className="text-rose-400 text-[11px]">{adminError}</p>}
                   <Button
                     type="submit"
                     size="sm"
+                    disabled={adminLoading}
                     className="w-full h-9 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
                   >
-                    Authenticate as Admin
+                    {adminLoading ? "Authenticating..." : "Authenticate as Admin"}
                   </Button>
                 </form>
               </div>
             ) : (
               /* ── Authenticated Admin CMS Workspace ── */
               <div className="space-y-6">
+                {/* Local Sandbox / Draft Mode Disclaimer Banner */}
+                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <div className="font-semibold flex items-center gap-1.5 text-amber-200">
+                      <ShieldCheck className="size-4 text-amber-400" />
+                      <span>Local CMS Sandbox / Draft Mode</span>
+                    </div>
+                    <p className="text-[11px] text-amber-300/80 mt-0.5">
+                      Edits and additions are stored in your local browser sandbox for testing and
+                      preview. Use the &quot;Full Database / Backup&quot; tab to export JSON
+                      snapshots for production deployments.
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setAdminAuthenticated(false)}
+                    className="h-7 text-[11px] border-amber-500/30 text-amber-200 hover:bg-amber-500/20 shrink-0"
+                  >
+                    Lock CMS
+                  </Button>
+                </div>
+
                 {statusFeedback && (
                   <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium flex items-center gap-2">
                     <CheckCircle className="size-4 shrink-0" />
@@ -889,9 +986,9 @@ function DashboardPage() {
                               setNewProgram({
                                 ...newProgram,
                                 speaker: {
-                                  ...newProgram.speaker,
-                                  linkedin: e.target.value,
                                   name: newProgram.speaker?.name || "",
+                                  designation: newProgram.speaker?.designation || "",
+                                  linkedin: e.target.value,
                                 },
                               })
                             }
@@ -1954,9 +2051,9 @@ function DashboardPage() {
                     setEditingProgram({
                       ...editingProgram,
                       speaker: {
-                        ...editingProgram.speaker,
-                        linkedin: e.target.value,
                         name: editingProgram.speaker?.name || "",
+                        designation: editingProgram.speaker?.designation || "",
+                        linkedin: e.target.value,
                       },
                     })
                   }

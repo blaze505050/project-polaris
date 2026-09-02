@@ -18,7 +18,7 @@ export function initAnalytics() {
   if (typeof window === "undefined") return;
 
   // 1. Google Analytics 4 (GA4)
-  const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const gaId = import.meta.env["VITE_GA_MEASUREMENT_ID"];
   if (gaId && !document.getElementById("ga-script")) {
     const script = document.createElement("script");
     script.id = "ga-script";
@@ -39,7 +39,7 @@ export function initAnalytics() {
   }
 
   // 2. Plausible Analytics
-  const plausibleDomain = import.meta.env.VITE_PLAUSIBLE_DOMAIN;
+  const plausibleDomain = import.meta.env["VITE_PLAUSIBLE_DOMAIN"];
   if (plausibleDomain && !document.getElementById("plausible-script")) {
     const pScript = document.createElement("script");
     pScript.id = "plausible-script";
@@ -68,7 +68,7 @@ export function initAnalytics() {
 export function trackPageView(path: string, title?: string) {
   if (typeof window === "undefined") return;
 
-  const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const gaId = import.meta.env["VITE_GA_MEASUREMENT_ID"];
   if (gaId && typeof window.gtag === "function") {
     window.gtag("config", gaId, {
       page_path: path,
@@ -94,7 +94,11 @@ export function trackEvent(name: string, properties?: Record<string, unknown>) {
   }
 
   if (typeof window.plausible === "function") {
-    window.plausible(name, { props: properties });
+    if (properties) {
+      window.plausible(name, { props: properties });
+    } else {
+      window.plausible(name);
+    }
   }
 }
 
@@ -107,7 +111,7 @@ export function reportErrorToTelemetry(error: Error, context?: string) {
     return;
   }
 
-  const sentryDsn = import.meta.env.VITE_SENTRY_DSN;
+  const sentryDsn = import.meta.env["VITE_SENTRY_DSN"];
   if (sentryDsn) {
     // If Sentry DSN is present, error can be sent to endpoint
     try {

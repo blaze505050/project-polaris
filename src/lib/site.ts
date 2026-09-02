@@ -1,3 +1,7 @@
+export const SITE_URL =
+  (typeof import.meta !== "undefined" && import.meta.env && import.meta.env["VITE_SITE_URL"]) ||
+  "https://projectpolaris.in";
+
 export const SITE = {
   name: "Project Polaris",
   headline: "Build real engineering projects.",
@@ -17,6 +21,7 @@ export const SITE = {
   feedbackFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSeg249_cm0l37Yg2jCv3ZxgZ6VtZ3XwLMwQgFz9dpOxMMXhPg/viewform",
   phone: "+91 97970 42664",
+  contactEmail: "project.polaris8@gmail.com",
   emails: ["project.polaris8@gmail.com", "contactprojectpolaris@gmail.com"],
   instagramUrl: "https://www.instagram.com/project_polaris_?igsh=cGR3aGdkdjd2Y2hm",
   linkedinCompanyUrl: "https://www.linkedin.com/company/nova-next-gen-of-vision-and-astronomy/",

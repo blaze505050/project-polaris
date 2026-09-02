@@ -1,7 +1,7 @@
-import { SITE } from "./site";
+import { SITE, SITE_URL } from "./site";
 import { LEARNING_CATALOG, type LearningItem } from "./learning";
 
-export const SITE_URL = "https://projectpolaris.in";
+export { SITE_URL };
 
 /**
  * Global Organization & WebSite JSON-LD Schema
@@ -40,7 +40,7 @@ export function getOrganizationSchema() {
         ],
         sameAs: [
           SITE.instagramUrl,
-          SITE.linkedinUrl,
+          SITE.linkedinCompanyUrl,
           "https://github.com/blaze505050/project-polaris",
         ],
       },
@@ -100,7 +100,7 @@ export function getCoursesSchema(items: LearningItem[] = LEARNING_CATALOG) {
             ? {
                 "@type": "Person",
                 name: item.instructor.name,
-                jobTitle: item.instructor.title,
+                jobTitle: item.instructor.role,
                 worksFor: {
                   "@type": "Organization",
                   name: item.instructor.org,

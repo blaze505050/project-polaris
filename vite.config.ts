@@ -34,6 +34,7 @@ export default defineConfig({
               return "vendor-radix";
             }
           }
+          return undefined;
         },
       },
     },
