@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
 import { SectionHeader } from "@/components/site/SectionHeader";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { SITE, DEPARTMENTS } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 export const Route = createFileRoute("/research")({
   head: () => ({

@@ -1,9 +1,21 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { TeamConstellation } from "@/components/site/TeamConstellation";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
-import { Compass, Target, Sparkles } from "lucide-react";
+import {
+  Compass,
+  Target,
+  Sparkles,
+  X,
+  ZoomIn,
+  BookOpen,
+  Layers,
+  Users,
+  Rocket,
+  Newspaper,
+} from "lucide-react";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 export const Route = createFileRoute("/about")({
@@ -40,17 +52,87 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
+const POLARIS_VISUAL_GALLERY = [
+  {
+    id: "methodology",
+    title: "Polaris Learning Methodology",
+    category: "Pedagogy",
+    image: "/media/polaris-learning-methodology.png",
+    description:
+      "Learn by building, rather than building after learning. Our structured pedagogy guides students from initial scientific curiosity into computational modeling, simulation, and real-world execution.",
+    icon: Layers,
+  },
+  {
+    id: "motto",
+    title: "Polaris Motto & Core Philosophy",
+    category: "Philosophy",
+    image: "/media/polaris-motto.jpeg",
+    description:
+      "Driven by purpose, curiosity, and genuine contribution—not just titles. A student-led ecosystem fostering deep practical understanding and hands-on scientific problem-solving.",
+    icon: Sparkles,
+  },
+  {
+    id: "what-is-polaris",
+    title: "What is Project Polaris?",
+    category: "Ecosystem",
+    image: "/media/what-is-polaris.png",
+    description:
+      "A student-led experiential engineering and research ecosystem bridging classroom physics with industry-grade research, CFD analysis, and collaborative sprints.",
+    icon: Compass,
+  },
+  {
+    id: "vision-mission",
+    title: "Vision & Mission",
+    category: "Purpose",
+    image: "/media/polaris-vision-mission.jpeg",
+    description:
+      "Democratizing access to high-impact aerospace and STEM learning for every student across schools, colleges, and independent research cohorts.",
+    icon: Target,
+  },
+  {
+    id: "programs",
+    title: "Polaris Programs & Masterclasses",
+    category: "Initiatives",
+    image: "/media/polaris-programs-showcase.jpeg",
+    description:
+      "Interactive sessions, webinars with ISRO scientists and astrophysicists, hands-on physics workshops, and collaborative cohort sprints.",
+    icon: Rocket,
+  },
+  {
+    id: "chapters",
+    title: "Polaris Chapters Network",
+    category: "Community",
+    image: "/media/polaris-chapters-showcase.jpeg",
+    description:
+      "Expanding student space clubs and practical observation hubs into Tier-2, Tier-3 cities and remote institutions across India.",
+    icon: Users,
+  },
+  {
+    id: "newsletter",
+    title: "Polaris Newsletter & Publications",
+    category: "Knowledge",
+    image: "/media/polaris-newsletter-showcase.jpeg",
+    description:
+      "Daily curated Aaj Ka Gyan drops, aerospace deep-dives, and student research digests making cutting-edge space science accessible to everyone.",
+    icon: Newspaper,
+  },
+];
+
 function AboutPage() {
+  const [activeModalImage, setActiveModalImage] = useState<
+    (typeof POLARIS_VISUAL_GALLERY)[0] | null
+  >(null);
+
   return (
     <>
       {/* ── 1. ABOUT HERO / STATEMENT (Subtle Ambient Glow + High Contrast Text) ── */}
       <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border bg-background">
         <ParallaxImage
-          src="/media/nebula-hero.jpg"
-          alt="Cosmic nebula deep space"
-          intensity={0.12}
-          imgOpacity={0.08}
-          overlay={0.95}
+          src="/media/bubble-nebula-bg.jpeg"
+          alt="Cosmic bubble nebula deep space"
+          intensity={0.15}
+          imgOpacity={0.12}
+          overlay={0.92}
           kenBurns={true}
           className="absolute inset-0 size-full pointer-events-none"
         />
@@ -207,9 +289,90 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4. WHY WE STARTED (Integrated Astronomical Visual) ── */}
-      <section className="section border-b border-border bg-surface/20" id="why-we-started">
-        <div className="shell">
+      {/* ── 4. VISUAL ECOSYSTEM & METHODOLOGY SHOWCASE (New Integrated Visual Journey) ── */}
+      <section className="section border-b border-border bg-surface/20" id="visual-showcase">
+        <div className="shell space-y-8">
+          <ScrollReveal direction="up">
+            <div className="max-w-2xl space-y-2">
+              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block">
+                Visual Framework & Pillars
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                Inside Project Polaris
+              </h2>
+              <p className="text-xs text-muted-foreground font-sans">
+                Explore the core methodology, initiatives, chapters, and publications that power our
+                student-led mission. Click any card to inspect the full visual.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 font-sans">
+            {POLARIS_VISUAL_GALLERY.map((item, idx) => {
+              const IconComponent = item.icon;
+              return (
+                <ScrollReveal key={item.id} direction="up" delay={idx * 20}>
+                  <div
+                    onClick={() => setActiveModalImage(item)}
+                    className="group relative rounded-xl border border-white/10 bg-card overflow-hidden cursor-pointer hover:border-primary/50 transition-all duration-300 flex flex-col h-full shadow-lg hover:shadow-[0_0_24px_rgba(165,180,252,0.12)]"
+                  >
+                    {/* Visual Media Container */}
+                    <div className="relative aspect-[16/10] bg-surface-2 overflow-hidden border-b border-white/8">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                      <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-background/85 backdrop-blur-md border border-white/12 text-[10px] font-mono text-primary font-semibold flex items-center gap-1.5 shadow-md">
+                        <IconComponent className="size-3" />
+                        <span>{item.category}</span>
+                      </div>
+                      <div className="absolute bottom-3 right-3 size-7 rounded-full bg-background/85 backdrop-blur-md border border-white/12 flex items-center justify-center text-white/80 group-hover:text-primary transition-colors shadow-md">
+                        <ZoomIn className="size-3.5" />
+                      </div>
+                    </div>
+
+                    {/* Card Narrative */}
+                    <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                      <div>
+                        <h3 className="text-sm font-bold font-display text-foreground group-hover:text-primary transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                      <div className="pt-2 text-[11px] text-primary/80 font-mono font-medium flex items-center gap-1">
+                        <span>Click to expand</span>
+                        <span>→</span>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. WHY WE STARTED (Integrated Astronomical Visual with Heart Nebula Backdrop) ── */}
+      <section
+        className="section border-b border-border bg-surface/30 relative overflow-hidden"
+        id="why-we-started"
+      >
+        <ParallaxImage
+          src="/media/heart-nebula-bg.jpeg"
+          alt="Glowing Heart Nebula cosmic interstellar gas"
+          intensity={0.12}
+          imgOpacity={0.08}
+          overlay={0.94}
+          kenBurns={true}
+          className="absolute inset-0 size-full pointer-events-none"
+        />
+
+        <div className="shell relative z-10">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
             <ScrollReveal direction="up">
               <div className="space-y-4 font-sans">
@@ -267,7 +430,7 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 5. PEOPLE BEHIND POLARIS (Allowed Eyebrow 2 of 2) ── */}
+      {/* ── 6. PEOPLE BEHIND POLARIS ── */}
       <section className="section" id="team-constellation">
         <div className="shell space-y-6">
           <ScrollReveal direction="up">
@@ -288,6 +451,55 @@ function AboutPage() {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* ── LIGHTBOX / IMAGE MODAL ── */}
+      {activeModalImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6"
+          onClick={() => setActiveModalImage(null)}
+        >
+          <div
+            className="relative max-w-4xl w-full bg-card border border-white/15 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-surface-2/60">
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-primary font-semibold">
+                  {activeModalImage.category}
+                </span>
+                <h3 className="text-base sm:text-lg font-bold font-display text-foreground">
+                  {activeModalImage.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModalImage(null)}
+                aria-label="Close image preview"
+                className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-white/30 transition-colors"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+
+            {/* Image Preview */}
+            <div className="overflow-auto p-4 sm:p-6 bg-black/40 flex items-center justify-center">
+              <img
+                src={activeModalImage.image}
+                alt={activeModalImage.title}
+                className="max-h-[60vh] w-auto max-w-full rounded-lg object-contain shadow-2xl border border-white/8"
+              />
+            </div>
+
+            {/* Description Footer */}
+            <div className="p-4 sm:p-5 border-t border-white/10 bg-surface-2/40 text-xs text-muted-foreground leading-relaxed font-sans">
+              {activeModalImage.description}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

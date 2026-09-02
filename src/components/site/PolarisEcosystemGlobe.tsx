@@ -508,7 +508,7 @@ export function PolarisEcosystemGlobe() {
     };
   }, [selectedSector, hoveredSector]);
 
-  // Drag Event Handlers for 3D rotation
+  // Drag Event Handlers for 3D rotation (Mouse & Touch)
   const handleMouseDown = (e: React.MouseEvent) => {
     isDraggingRef.current = true;
     autoRotateRef.current = false;
@@ -530,6 +530,27 @@ export function PolarisEcosystemGlobe() {
 
   const handleMouseUp = () => {
     isDraggingRef.current = false;
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      isDraggingRef.current = true;
+      autoRotateRef.current = false;
+      lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDraggingRef.current || e.touches.length !== 1) return;
+    const deltaX = e.touches[0].clientX - lastMousePosRef.current.x;
+    const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
+    lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+
+    rotationRef.current.rotY += deltaX * 0.008;
+    rotationRef.current.rotX = Math.max(
+      -0.8,
+      Math.min(0.8, rotationRef.current.rotX + deltaY * 0.008),
+    );
   };
 
   return (
@@ -601,6 +622,10 @@ export function PolarisEcosystemGlobe() {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleMouseUp}
+          onTouchCancel={handleMouseUp}
           className="relative size-full min-h-[380px] sm:min-h-[460px] rounded-xl bg-card border border-white/8 overflow-hidden cursor-grab active:cursor-grabbing flex items-center justify-center select-none"
         >
           <canvas ref={canvasRef} className="size-full absolute inset-0 pointer-events-none" />

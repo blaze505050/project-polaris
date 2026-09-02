@@ -29,6 +29,16 @@ export const Route = createFileRoute("/chapters")({
 function ChaptersPage() {
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-28 px-4 sm:px-6 md:px-8 font-sans text-left relative overflow-hidden">
+      <ParallaxImage
+        src="/media/crab-nebula-bg.jpeg"
+        alt="Cosmic Crab Nebula deep space supernova remnant"
+        intensity={0.12}
+        imgOpacity={0.07}
+        overlay={0.93}
+        kenBurns={true}
+        className="absolute inset-0 size-full pointer-events-none"
+      />
+
       <div className="max-w-3xl space-y-6 relative z-10 shell">
         <ScrollReveal direction="up">
           <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold font-display text-foreground tracking-tight">
@@ -55,12 +65,12 @@ function ChaptersPage() {
         <ScrollReveal direction="scale" delay={60}>
           <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl max-w-2xl mt-4 bg-card aspect-[16/9]">
             <img
-              src="/media/telescope-milkyway.jpg"
-              alt="Night astronomy sky observation and stargazing"
+              src="/media/polaris-chapters-showcase.jpeg"
+              alt="Polaris Chapters Institutional Network"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4 text-left p-3 rounded-xl bg-surface/85 backdrop-blur-md border border-white/8">
+            <div className="absolute bottom-4 left-4 right-4 text-left p-3.5 rounded-xl bg-surface/85 backdrop-blur-md border border-white/8">
               <div className="text-xs font-bold font-display text-foreground">
                 Community Sky Observation & Space Labs
               </div>

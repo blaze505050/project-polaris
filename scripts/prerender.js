@@ -180,6 +180,96 @@ const ROUTES = [
     subheading: "Got questions? Explore FAQs or submit a support ticket.",
     canonical: `${SITE_URL}/support`,
   },
+  {
+    path: "/courses",
+    title: "Learning Catalog — Project Polaris",
+    description:
+      "Explore interactive workshops, practical mini-courses, cohort bootcamps, and real engineering projects in science, aerospace, and technology.",
+    heading: "The Polaris Learning Catalog",
+    subheading: "Learn science and engineering by doing it.",
+    canonical: `${SITE_URL}/courses`,
+  },
+  {
+    path: "/community",
+    title: "Community — Project Polaris",
+    description:
+      "Daily science drops, interactive challenges, live sessions and discussions with students, mentors and professionals inside the Project Polaris community.",
+    heading: "Project Polaris Community",
+    subheading: "An active laboratory where curiosity is normal.",
+    canonical: `${SITE_URL}/community`,
+  },
+  {
+    path: "/research",
+    title: "Technical Research & Science Digest — Project Polaris",
+    description:
+      "Student-led aerospace and physics research papers, peer-reviewed literature surveys, and bi-weekly scientific digests at Project Polaris.",
+    heading: "Polaris Research",
+    subheading: "Student-led technical inquiry & research digests.",
+    canonical: `${SITE_URL}/research`,
+  },
+  {
+    path: "/resources",
+    title: "Open Resources & Technical Notes — Project Polaris",
+    description:
+      "Free, self-paced knowledge guides, mathematical primers, solver blueprints, and lecture notes curated by student researchers at Project Polaris.",
+    heading: "Open Knowledge",
+    subheading: "Free guides, solver blueprints & lecture notes.",
+    canonical: `${SITE_URL}/resources`,
+  },
+  {
+    path: "/schools",
+    title: "School Outreach — Bring Polaris to Your School",
+    description:
+      "Partner with Project Polaris to run space science workshops, space camps, expert talks and student clubs at your school.",
+    heading: "School Outreach",
+    subheading: "Bring experiential aerospace into your school.",
+    canonical: `${SITE_URL}/schools`,
+  },
+  {
+    path: "/showcase",
+    title: "Student Project Showcase — Project Polaris",
+    description:
+      "Explore real software, simulations, and research projects built by students at Project Polaris. Working code, live demos, and technical whitepapers.",
+    heading: "Student Artifacts",
+    subheading: "What Polaris students are actually building.",
+    canonical: `${SITE_URL}/showcase`,
+  },
+  {
+    path: "/impact",
+    title: "Impact — Project Polaris",
+    description:
+      "An honest account of what Project Polaris has built so far, what we're measuring, and what comes next.",
+    heading: "Verified Impact",
+    subheading: "We'd rather be honest than impressive.",
+    canonical: `${SITE_URL}/impact`,
+  },
+  {
+    path: "/join",
+    title: "Join — Project Polaris",
+    description:
+      "Apply to join Project Polaris. Open to students of any background, with options to join as student, volunteer, or associate.",
+    heading: "Join Polaris",
+    subheading: "Start where you are. Learn by building.",
+    canonical: `${SITE_URL}/join`,
+  },
+  {
+    path: "/contact",
+    title: "Contact & Inquiries — Project Polaris",
+    description:
+      "Get in touch with the Project Polaris team about joining, school collaborations, masterclasses, mentorship, or technical partnerships.",
+    heading: "Direct Line",
+    subheading: "Get in touch with Project Polaris.",
+    canonical: `${SITE_URL}/contact`,
+  },
+  {
+    path: "/auth",
+    title: "Student Portal Login & Authentication — Project Polaris",
+    description:
+      "Sign in or create your Project Polaris account to access your workspace, projects, and learning resources.",
+    heading: "Polaris Authentication",
+    subheading: "Access your student workspace and project tracking.",
+    canonical: `${SITE_URL}/auth`,
+  },
 ];
 
 async function prerender() {

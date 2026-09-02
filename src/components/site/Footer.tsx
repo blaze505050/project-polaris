@@ -78,18 +78,20 @@ export function Footer() {
 
             {/* Social Links */}
             <div className="flex items-center gap-2 pt-2">
-              {SOCIAL_LINKS.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="size-8 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
-                >
-                  <Icon className="size-3.5" />
-                </a>
-              ))}
+              {SOCIAL_LINKS.map(({ href, label, Icon }) => {
+                const isMail = href.startsWith("mailto:");
+                return (
+                  <a
+                    key={label}
+                    href={href}
+                    {...(!isMail ? { target: "_blank", rel: "noreferrer" } : {})}
+                    aria-label={label}
+                    className="size-8 rounded-full border border-border bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                  >
+                    <Icon className="size-3.5" />
+                  </a>
+                );
+              })}
             </div>
             <div className="text-[11px] text-muted-foreground pt-1">
               Contact:{" "}

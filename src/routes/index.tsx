@@ -90,31 +90,43 @@ const METHODOLOGY_STEPS = [
   },
 ];
 
-// Student Testimonials
+// Community & Student Testimonials (Verified)
 const STUDENT_REVIEWS = [
   {
-    name: "Arjun S.",
-    role: "Aerospace Student, Class 12",
+    name: "Debolina Ghosh",
+    role: "Community Member",
     quote:
-      "Learning orbital transfers from textbook diagrams was confusing. In Polaris, simulating Keplerian mechanics in AeroForge made the physics finally click.",
+      "Attending the Project Polaris webinar was a great learning experience. I gained valuable insights, enjoyed the session, and appreciated the opportunity to learn more about science and space. Student-friendly free webinars, along with projects and quizzes, make the learning experience engaging and interactive.",
   },
   {
-    name: "Sneha P.",
-    role: "B.Tech Mechanical 2nd Year",
+    name: "Yash Raj Panda",
+    role: "Volunteer",
     quote:
-      "Interacting directly with an ISRO scientist during the career masterclass gave me a clear, realistic roadmap for spacecraft engineering.",
+      "My experience with Project Polaris was truly valuable and inspiring. I gained new knowledge, strengthened my skills, and had the opportunity to learn from others who share my passion for science and space. What I particularly liked is the genuine commitment of its team members—everyone seems driven by curiosity, purpose, and a willingness to contribute.",
   },
   {
-    name: "Rohan M.",
-    role: "High School Physics Enthusiast",
+    name: "Mohamed Naleem",
+    role: "Community Member",
     quote:
-      "Polaris isn't like typical coaching. You are actually encouraged to build your own numerical codes and debate hypotheses with peers.",
+      "My experience with Project Polaris was truly inspiring. I gained new knowledge and had the opportunity to learn from inspiring speakers and connect with students who share a passion for space, science, and technology. The experience motivated me to explore research further and pursue opportunities in the space sector.",
   },
   {
-    name: "Ananya K.",
-    role: "Astrophysics Explorer",
+    name: "Meghanil Sinha",
+    role: "Community Member",
     quote:
-      "The Galaxies & Nebulae session was phenomenal! Mapping interstellar spectroscopy gave me a taste of real research.",
+      "As a community member, I’m grateful for the opportunity to attend a session with the eminent Baldev Krishan Sir. It was a truly valuable and inspiring experience.",
+  },
+  {
+    name: "Gesandi Gihansa Pathirana",
+    role: "Associate Member",
+    quote:
+      "My experience as a Polaris Associate has been wonderful and inspiring. It has helped me learn new things, expand my knowledge, and connect with people who share my interest in science and astronomy.",
+  },
+  {
+    name: "Mayank",
+    role: "Associate Member",
+    quote:
+      "The session was amazingly conducted and my experience with Project Polaris is awesome. The interactions and practical insights make a huge difference.",
   },
 ];
 
@@ -1066,10 +1078,10 @@ function HomePage() {
       {/* ── NEW: IMAGE SHOWCASE (Cinematic Parallax Interstitial) ── */}
       <section className="cinematic-section border-b border-border py-24 md:py-32 relative">
         <ParallaxImage
-          src="/media/galaxy-spiral.jpg"
-          alt="Majestic spiral galaxy in deep cosmic space"
+          src="/media/black-hole-bg.jpeg"
+          alt="Gravitational lensing around a celestial black hole in deep space"
           intensity={0.3}
-          overlay={0.5}
+          overlay={0.55}
           className="absolute inset-0 size-full pointer-events-none"
         />
 

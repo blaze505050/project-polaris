@@ -47,7 +47,7 @@ export const Route = createFileRoute("/program")({
           provider: {
             "@type": "EducationalOrganization",
             name: "Project Polaris",
-            url: "https://polaris-web-launch.lovable.app",
+            url: "https://projectpolaris.in",
           },
           hasCourseInstance: {
             "@type": "CourseInstance",

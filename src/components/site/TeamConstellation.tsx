@@ -20,9 +20,19 @@ export function TeamConstellation() {
           return (
             <div
               key={member.id}
+              role="button"
+              tabIndex={0}
+              aria-pressed={isSelected}
+              aria-label={`Select ${member.name}, ${member.role}`}
               onClick={() => setSelectedId(member.id)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedId(member.id);
+                }
+              }}
               className={cn(
-                "p-5 rounded-xl border bg-card cursor-pointer transition-all flex flex-col justify-between h-full",
+                "p-5 rounded-xl border bg-card cursor-pointer transition-all flex flex-col justify-between h-full focus:outline-none focus:ring-2 focus:ring-primary/40",
                 isSelected
                   ? "border-primary/50 shadow-[0_0_24px_rgba(197,157,255,0.12)] bg-surface-2/60"
                   : "border-white/8 hover:border-white/20",
