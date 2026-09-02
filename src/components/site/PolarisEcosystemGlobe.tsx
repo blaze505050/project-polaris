@@ -19,6 +19,7 @@ import {
   Zap,
   Globe,
   Radio,
+  type LucideIcon,
 } from "lucide-react";
 import polarisLogo from "@/assets/polaris-logo.png";
 
@@ -29,7 +30,7 @@ export interface BrainSector {
   lobeRole: string; // The cognitive function in the Polaris Digital Brain
   lat: number;
   lon: number;
-  icon: any;
+  icon: LucideIcon;
   status: string;
   headline: string;
   description: string;

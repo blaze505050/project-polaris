@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { saveUserSubmission } from "@/lib/cms-store";
+import { SITE_URL } from "@/lib/site";
 import {
   Handshake,
   Users,
@@ -33,10 +34,10 @@ export const Route = createFileRoute("/get-involved")({
         content:
           "Collaborate with Project Polaris to expand experiential aerospace and science learning.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/get-involved" },
+      { property: "og:url", content: `${SITE_URL}/get-involved` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/get-involved" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/get-involved` }],
   }),
   component: GetInvolvedPage,
 });

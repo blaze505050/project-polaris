@@ -3,15 +3,28 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { SITE_URL } from "@/lib/site";
 import {
   getPrograms,
   savePrograms,
+  fetchProgramsFromSupabase,
+  saveProgramToSupabase,
+  deleteProgramFromSupabase,
   getPastSessions,
   savePastSessions,
+  fetchPastSessionsFromSupabase,
+  savePastSessionToSupabase,
+  deletePastSessionFromSupabase,
   getArticles,
   saveArticles,
+  fetchArticlesFromSupabase,
+  saveArticleToSupabase,
+  deleteArticleFromSupabase,
   getSpotlights,
   saveSpotlights,
+  fetchSpotlightsFromSupabase,
+  saveSpotlightToSupabase,
+  deleteSpotlightFromSupabase,
   getUserSubmissions,
   deleteUserSubmission,
   clearAllUserSubmissions,
@@ -64,10 +77,10 @@ export const Route = createFileRoute("/dashboard")({
       },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Student Dashboard & Admin Portal — Project Polaris" },
-      { property: "og:url", content: "https://projectpolaris.in/dashboard" },
+      { property: "og:url", content: `${SITE_URL}/dashboard` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/dashboard" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/dashboard` }],
   }),
   component: DashboardPage,
 });
@@ -84,9 +97,8 @@ function DashboardPage() {
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {
         const user = data.user;
-        const role =
-          (user.app_metadata as Record<string, unknown> | undefined)?.["role"] ||
-          (user.user_metadata as Record<string, unknown> | undefined)?.["role"];
+        // Rely exclusively on server-managed app_metadata or official Polaris emails
+        const role = (user.app_metadata as Record<string, unknown> | undefined)?.["role"];
         const email = user.email || "";
         const isAdmin =
           role === "admin" ||
@@ -98,6 +110,16 @@ function DashboardPage() {
       }
     });
   }, []);
+
+  // Sync CMS state from Supabase when admin authenticates
+  useEffect(() => {
+    if (adminAuthenticated) {
+      fetchProgramsFromSupabase().then(setProgramsState);
+      fetchPastSessionsFromSupabase().then(setPastSessionsState);
+      fetchArticlesFromSupabase().then(setArticlesState);
+      fetchSpotlightsFromSupabase().then(setSpotlightsState);
+    }
+  }, [adminAuthenticated]);
 
   // CMS State
   const [programs, setProgramsState] = useState<ProgramEvent[]>(getPrograms());
@@ -196,9 +218,7 @@ function DashboardPage() {
         return;
       }
       const user = data.user;
-      const role =
-        (user?.app_metadata as Record<string, unknown> | undefined)?.["role"] ||
-        (user?.user_metadata as Record<string, unknown> | undefined)?.["role"];
+      const role = (user?.app_metadata as Record<string, unknown> | undefined)?.["role"];
       const email = user?.email || "";
       const isAdmin =
         role === "admin" ||
@@ -228,10 +248,10 @@ function DashboardPage() {
       id: `prog-${Date.now()}`,
       title: newProgram.title || "New Program",
       subtitle: newProgram.subtitle || "",
-      category: (newProgram.category as any) || "workshop",
-      status: (newProgram.status as any) || "upcoming",
+      category: (newProgram.category as ProgramEvent["category"]) || "workshop",
+      status: (newProgram.status as ProgramEvent["status"]) || "upcoming",
       date: newProgram.date || "Upcoming 2026",
-      mode: (newProgram.mode as any) || "Online",
+      mode: (newProgram.mode as ProgramEvent["mode"]) || "Online",
       details: newProgram.details || "",
       benefits: [
         "Interactive Session with Scientist",
@@ -259,8 +279,16 @@ function DashboardPage() {
     const updated = [prog, ...programs];
     setProgramsState(updated);
     savePrograms(updated);
-    setStatusFeedback("✓ Program saved locally in draft sandbox! Visible in your browser preview.");
-    setTimeout(() => setStatusFeedback(null), 4000);
+    saveProgramToSupabase(prog).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Program published to Supabase database & live across website!");
+      } else {
+        setStatusFeedback(
+          "✓ Program saved locally in draft sandbox (Supabase offline/unmigrated).",
+        );
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     // Reset
     setNewProgram({
       title: "",
@@ -286,9 +314,15 @@ function DashboardPage() {
     const updated = programs.map((p) => (p.id === editingProgram.id ? editingProgram : p));
     setProgramsState(updated);
     savePrograms(updated);
+    saveProgramToSupabase(editingProgram).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Program updated in Supabase database & live across website!");
+      } else {
+        setStatusFeedback("✓ Program updated in local browser cache.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setEditingProgram(null);
-    setStatusFeedback("✓ Program updated successfully!");
-    setTimeout(() => setStatusFeedback(null), 4000);
   };
 
   const handleDeleteProgram = (id: string) => {
@@ -296,8 +330,10 @@ function DashboardPage() {
     const updated = programs.filter((p) => p.id !== id);
     setProgramsState(updated);
     savePrograms(updated);
-    setStatusFeedback("✓ Program removed.");
-    setTimeout(() => setStatusFeedback(null), 3000);
+    deleteProgramFromSupabase(id).then(() => {
+      setStatusFeedback("✓ Program removed from database.");
+      setTimeout(() => setStatusFeedback(null), 3000);
+    });
   };
 
   // ── Past Sessions CRUD Handlers ──
@@ -320,8 +356,14 @@ function DashboardPage() {
     const updated = [session, ...pastSessions];
     setPastSessionsState(updated);
     savePastSessions(updated);
-    setStatusFeedback("✓ Past session added and visible in Historical Archives!");
-    setTimeout(() => setStatusFeedback(null), 4000);
+    savePastSessionToSupabase(session).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Past session published to Supabase & visible in Historical Archives!");
+      } else {
+        setStatusFeedback("✓ Past session saved locally in draft sandbox.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setNewPastSession({
       title: "",
       date: "",
@@ -342,9 +384,15 @@ function DashboardPage() {
     );
     setPastSessionsState(updated);
     savePastSessions(updated);
+    savePastSessionToSupabase(editingPastSession).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Past session updated in Supabase database!");
+      } else {
+        setStatusFeedback("✓ Past session updated in local cache.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setEditingPastSession(null);
-    setStatusFeedback("✓ Past session updated successfully!");
-    setTimeout(() => setStatusFeedback(null), 4000);
   };
 
   const handleDeletePastSession = (id: string) => {
@@ -352,8 +400,10 @@ function DashboardPage() {
     const updated = pastSessions.filter((s) => s.id !== id);
     setPastSessionsState(updated);
     savePastSessions(updated);
-    setStatusFeedback("✓ Past session removed.");
-    setTimeout(() => setStatusFeedback(null), 3000);
+    deletePastSessionFromSupabase(id).then(() => {
+      setStatusFeedback("✓ Past session removed from database.");
+      setTimeout(() => setStatusFeedback(null), 3000);
+    });
   };
 
   // ── Articles CRUD Handlers ──
@@ -365,7 +415,7 @@ function DashboardPage() {
       title: newArticle.title || "Untitled Article",
       slug: (newArticle.title || "article").toLowerCase().replace(/\s+/g, "-"),
       author: newArticle.author || { name: "Polaris Student", role: "Contributor" },
-      category: (newArticle.category as any) || "Science & Astronomy",
+      category: (newArticle.category as ArticleItem["category"]) || "Science & Astronomy",
       publishedAt: new Date().toLocaleDateString("en-US", {
         day: "numeric",
         month: "long",
@@ -379,8 +429,14 @@ function DashboardPage() {
     const updated = [art, ...articles];
     setArticlesState(updated);
     saveArticles(updated);
-    setStatusFeedback("✓ Article published and live on the Articles page!");
-    setTimeout(() => setStatusFeedback(null), 4000);
+    saveArticleToSupabase(art).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Article published to Supabase & live on the Articles page!");
+      } else {
+        setStatusFeedback("✓ Article saved locally in draft sandbox.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setNewArticle({
       title: "",
       category: "Science & Astronomy",
@@ -398,9 +454,15 @@ function DashboardPage() {
     const updated = articles.map((a) => (a.id === editingArticle.id ? editingArticle : a));
     setArticlesState(updated);
     saveArticles(updated);
+    saveArticleToSupabase(editingArticle).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Article updated in Supabase & live on Articles page!");
+      } else {
+        setStatusFeedback("✓ Article updated in local cache.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setEditingArticle(null);
-    setStatusFeedback("✓ Article updated successfully!");
-    setTimeout(() => setStatusFeedback(null), 4000);
   };
 
   const handleDeleteArticle = (id: string) => {
@@ -408,8 +470,10 @@ function DashboardPage() {
     const updated = articles.filter((a) => a.id !== id);
     setArticlesState(updated);
     saveArticles(updated);
-    setStatusFeedback("✓ Article removed.");
-    setTimeout(() => setStatusFeedback(null), 3000);
+    deleteArticleFromSupabase(id).then(() => {
+      setStatusFeedback("✓ Article removed from database.");
+      setTimeout(() => setStatusFeedback(null), 3000);
+    });
   };
 
   // ── Spotlight CRUD Handlers ──
@@ -419,7 +483,7 @@ function DashboardPage() {
     const spot: SpotlightEntry = {
       id: `spot-${Date.now()}`,
       name: newSpotlight.name || "Featured Builder",
-      category: (newSpotlight.category as any) || "Student Spotlight",
+      category: (newSpotlight.category as SpotlightEntry["category"]) || "Student Spotlight",
       headline: newSpotlight.headline || "",
       story: newSpotlight.story || "",
       accomplishment: newSpotlight.accomplishment || "",
@@ -431,8 +495,16 @@ function DashboardPage() {
     const updated = [spot, ...spotlights];
     setSpotlightsState(updated);
     saveSpotlights(updated);
-    setStatusFeedback("✓ Spotlight feature created and live on the Spotlight page!");
-    setTimeout(() => setStatusFeedback(null), 4000);
+    saveSpotlightToSupabase(spot).then((res) => {
+      if (res.success) {
+        setStatusFeedback(
+          "✓ Spotlight feature published to Supabase & live on the Spotlight page!",
+        );
+      } else {
+        setStatusFeedback("✓ Spotlight feature saved locally in draft sandbox.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setNewSpotlight({
       name: "",
       category: "Student Spotlight",
@@ -451,9 +523,15 @@ function DashboardPage() {
     const updated = spotlights.map((s) => (s.id === editingSpotlight.id ? editingSpotlight : s));
     setSpotlightsState(updated);
     saveSpotlights(updated);
+    saveSpotlightToSupabase(editingSpotlight).then((res) => {
+      if (res.success) {
+        setStatusFeedback("✓ Spotlight updated in Supabase & live across website!");
+      } else {
+        setStatusFeedback("✓ Spotlight updated in local cache.");
+      }
+      setTimeout(() => setStatusFeedback(null), 4000);
+    });
     setEditingSpotlight(null);
-    setStatusFeedback("✓ Spotlight updated successfully!");
-    setTimeout(() => setStatusFeedback(null), 4000);
   };
 
   const handleDeleteSpotlight = (id: string) => {
@@ -461,8 +539,10 @@ function DashboardPage() {
     const updated = spotlights.filter((s) => s.id !== id);
     setSpotlightsState(updated);
     saveSpotlights(updated);
-    setStatusFeedback("✓ Spotlight removed.");
-    setTimeout(() => setStatusFeedback(null), 3000);
+    deleteSpotlightFromSupabase(id).then(() => {
+      setStatusFeedback("✓ Spotlight removed from database.");
+      setTimeout(() => setStatusFeedback(null), 3000);
+    });
   };
 
   // ── Submissions & Data Center Handlers ──
@@ -788,17 +868,16 @@ function DashboardPage() {
             ) : (
               /* ── Authenticated Admin CMS Workspace ── */
               <div className="space-y-6">
-                {/* Local Sandbox / Draft Mode Disclaimer Banner */}
-                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                {/* Supabase Live Sync & Cloud Persistence Banner */}
+                <div className="p-4 rounded-xl bg-primary/10 border border-primary/20 text-primary-300 text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
-                    <div className="font-semibold flex items-center gap-1.5 text-amber-200">
-                      <ShieldCheck className="size-4 text-amber-400" />
-                      <span>Local CMS Sandbox / Draft Mode</span>
+                    <div className="font-semibold flex items-center gap-1.5 text-primary-200">
+                      <ShieldCheck className="size-4 text-primary" />
+                      <span>Supabase Live Database Sync</span>
                     </div>
-                    <p className="text-[11px] text-amber-300/80 mt-0.5">
-                      Edits and additions are stored in your local browser sandbox for testing and
-                      preview. Use the &quot;Full Database / Backup&quot; tab to export JSON
-                      snapshots for production deployments.
+                    <p className="text-[11px] text-muted-foreground mt-0.5">
+                      Edits are securely synchronized with Supabase database tables via Row Level
+                      Security (RLS) and backed up locally for offline performance.
                     </p>
                   </div>
                   <Button
@@ -850,7 +929,7 @@ function DashboardPage() {
                         <button
                           key={sec.id}
                           type="button"
-                          onClick={() => setActiveCmsSection(sec.id as any)}
+                          onClick={() => setActiveCmsSection(sec.id as typeof activeCmsSection)}
                           className={`px-3 py-1.5 rounded-lg text-xs transition-colors flex items-center gap-1.5 active:scale-[0.97] ${
                             activeCmsSection === sec.id
                               ? "bg-primary text-primary-foreground font-semibold"
@@ -915,7 +994,10 @@ function DashboardPage() {
                           <select
                             value={newProgram.category}
                             onChange={(e) =>
-                              setNewProgram({ ...newProgram, category: e.target.value as any })
+                              setNewProgram({
+                                ...newProgram,
+                                category: e.target.value as ProgramEvent["category"],
+                              })
                             }
                             className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                           >
@@ -1328,7 +1410,10 @@ function DashboardPage() {
                             <select
                               value={newArticle.category}
                               onChange={(e) =>
-                                setNewArticle({ ...newArticle, category: e.target.value as any })
+                                setNewArticle({
+                                  ...newArticle,
+                                  category: e.target.value as ArticleItem["category"],
+                                })
                               }
                               className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                             >
@@ -1469,7 +1554,7 @@ function DashboardPage() {
                               onChange={(e) =>
                                 setNewSpotlight({
                                   ...newSpotlight,
-                                  category: e.target.value as any,
+                                  category: e.target.value as SpotlightEntry["category"],
                                 })
                               }
                               className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
@@ -1968,7 +2053,10 @@ function DashboardPage() {
                 <select
                   value={editingProgram.category}
                   onChange={(e) =>
-                    setEditingProgram({ ...editingProgram, category: e.target.value as any })
+                    setEditingProgram({
+                      ...editingProgram,
+                      category: e.target.value as ProgramEvent["category"],
+                    })
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 >
@@ -1983,7 +2071,10 @@ function DashboardPage() {
                 <select
                   value={editingProgram.status}
                   onChange={(e) =>
-                    setEditingProgram({ ...editingProgram, status: e.target.value as any })
+                    setEditingProgram({
+                      ...editingProgram,
+                      status: e.target.value as ProgramEvent["status"],
+                    })
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 >
@@ -2281,7 +2372,10 @@ function DashboardPage() {
                   <select
                     value={editingArticle.category}
                     onChange={(e) =>
-                      setEditingArticle({ ...editingArticle, category: e.target.value as any })
+                      setEditingArticle({
+                        ...editingArticle,
+                        category: e.target.value as ArticleItem["category"],
+                      })
                     }
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                   >
@@ -2391,7 +2485,10 @@ function DashboardPage() {
                   <select
                     value={editingSpotlight.category}
                     onChange={(e) =>
-                      setEditingSpotlight({ ...editingSpotlight, category: e.target.value as any })
+                      setEditingSpotlight({
+                        ...editingSpotlight,
+                        category: e.target.value as SpotlightEntry["category"],
+                      })
                     }
                     className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                   >

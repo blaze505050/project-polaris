@@ -3,6 +3,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Button } from "@/components/ui/button";
 import { InteractiveAeroForgeDemo } from "@/components/site/InteractiveAeroForgeDemo";
+import { SITE_URL } from "@/lib/site";
 import { Cpu, ArrowRight, Code, Layers, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/projects")({
@@ -20,10 +21,10 @@ export const Route = createFileRoute("/projects")({
         content:
           "Open-source aerospace engineering labs, 40+ numerical physics solvers, and student build sprints.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/projects" },
+      { property: "og:url", content: `${SITE_URL}/projects` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/projects" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/projects` }],
   }),
   component: ProjectsPage,
 });

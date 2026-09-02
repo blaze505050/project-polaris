@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { getArticles, type ArticleItem } from "@/lib/cms-store";
+import { SITE_URL } from "@/lib/site";
 import {
   BookOpen,
   Send,
@@ -30,10 +31,10 @@ export const Route = createFileRoute("/articles")({
         content:
           "Articles and regular newsletter drops on science, technology, aerospace simulation, and student perspectives.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/articles" },
+      { property: "og:url", content: `${SITE_URL}/articles` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/articles" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/articles` }],
   }),
   component: ArticlesPage,
 });

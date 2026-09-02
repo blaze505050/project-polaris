@@ -19,6 +19,7 @@ import { BackToTop } from "@/components/ui/back-to-top";
 import { NorthStar } from "@/components/site/NorthStar";
 import { getOrganizationSchema } from "@/lib/structured-data";
 import { initAnalytics, trackPageView } from "@/lib/analytics";
+import { SITE_URL } from "@/lib/site";
 import { FolderKanban, Home as HomeIcon, RotateCcw } from "lucide-react";
 
 function NotFoundComponent() {
@@ -178,8 +179,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:site_name", content: "Project Polaris" },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://projectpolaris.in/" },
-      { property: "og:image", content: "https://projectpolaris.in/polaris-logo.png" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}/polaris-logo.png` },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@project_polaris" },
       { name: "color-scheme", content: "dark light" },
@@ -190,7 +191,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/polaris-logo.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/polaris-logo.png" },
       { rel: "manifest", href: "/manifest.json" },
-      { rel: "canonical", href: "https://projectpolaris.in/" },
+      { rel: "canonical", href: `${SITE_URL}/` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },

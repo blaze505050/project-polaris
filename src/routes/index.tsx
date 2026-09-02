@@ -25,6 +25,7 @@ import { CountUp } from "@/components/ui/count-up";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { WaitlistModal } from "@/components/site/WaitlistModal";
 import { getPrograms } from "@/lib/cms-store";
+import { SITE_URL } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 export const Route = createFileRoute("/")({
@@ -42,10 +43,10 @@ export const Route = createFileRoute("/")({
         content:
           "A student-led experiential engineering ecosystem bridging traditional education and real-world space & engineering practice.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/" },
+      { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
   }),
   component: HomePage,
 });

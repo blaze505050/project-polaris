@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/site/PageHeader";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
+import { SITE_URL } from "@/lib/site";
 import {
   LEARNING_CATALOG,
   TOPIC_LABELS,
@@ -55,10 +56,10 @@ export const Route = createFileRoute("/courses")({
         content:
           "Practical learning for curious students. Masterclasses, self-paced skills, and hands-on cohorts.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/courses" },
+      { property: "og:url", content: `${SITE_URL}/courses` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/courses" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/courses` }],
     scripts: [
       {
         type: "application/ld+json",

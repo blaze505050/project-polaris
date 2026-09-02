@@ -1,8 +1,10 @@
 /**
  * Project Polaris Content Management System & Dynamic Data Store
  * Stores Programs, Past Sessions, Articles, Spotlight Features, and Team Constellation Data.
- * Persists in LocalStorage with initial seed data, editable via Admin Portal (/dashboard).
+ * Persists in Supabase (with offline / initial seed LocalStorage fallback), editable via Admin Portal (/dashboard).
  */
+import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 
 export interface ProgramEvent {
   id: string;
@@ -654,6 +656,410 @@ export function getIndustrySprints(): IndustrySprintProject[] {
 export function saveIndustrySprints(sprints: IndustrySprintProject[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.INDUSTRY_SPRINTS, JSON.stringify(sprints));
+}
+
+// ── 2b. SUPABASE CMS SYNC & REALTIME BACKEND OPERATIONS ──
+
+function mapRowToProgram(row: Record<string, unknown>): ProgramEvent {
+  const speakerObj = row["speaker"] as Record<string, unknown> | null;
+  return {
+    id: String(row["id"] || ""),
+    title: String(row["title"] || ""),
+    subtitle: String(row["subtitle"] || ""),
+    category: (row["category"] as ProgramEvent["category"]) || "workshop",
+    status: (row["status"] as ProgramEvent["status"]) || "upcoming",
+    date: String(row["date"] || ""),
+    ...(row["time"] ? { time: String(row["time"]) } : {}),
+    mode: (row["mode"] as ProgramEvent["mode"]) || "Online",
+    details: String(row["details"] || ""),
+    benefits: Array.isArray(row["benefits"]) ? (row["benefits"] as string[]) : [],
+    ctaText: String(row["cta_text"] || "Register Now →"),
+    ctaUrl: String(row["cta_url"] || "#"),
+    featured: Boolean(row["featured"]),
+    visibility: Boolean(row["visibility"]),
+    price: row["price"] ? String(row["price"]) : "Free",
+    ...(speakerObj?.["name"]
+      ? {
+          speaker: {
+            name: String(speakerObj["name"]),
+            designation: String(speakerObj["designation"] || "Speaker"),
+            ...(speakerObj["bio"] ? { bio: String(speakerObj["bio"]) } : {}),
+            ...(speakerObj["photo"] ? { photo: String(speakerObj["photo"]) } : {}),
+            ...(speakerObj["linkedin"] ? { linkedin: String(speakerObj["linkedin"]) } : {}),
+          },
+        }
+      : {}),
+  };
+}
+
+function mapProgramToRow(prog: ProgramEvent) {
+  return {
+    id: prog.id,
+    title: prog.title,
+    subtitle: prog.subtitle,
+    category: prog.category,
+    status: prog.status,
+    date: prog.date,
+    time: prog.time || null,
+    mode: prog.mode,
+    speaker: (prog.speaker as unknown as Json) || null,
+    details: prog.details,
+    benefits: prog.benefits,
+    cta_text: prog.ctaText,
+    cta_url: prog.ctaUrl,
+    featured: prog.featured,
+    visibility: prog.visibility,
+    price: prog.price || null,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+export async function fetchProgramsFromSupabase(): Promise<ProgramEvent[]> {
+  try {
+    const { data, error } = await supabase
+      .from("programs")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return getPrograms();
+    }
+    const mapped = (data as unknown as Record<string, unknown>[]).map(mapRowToProgram);
+    savePrograms(mapped);
+    return mapped;
+  } catch {
+    return getPrograms();
+  }
+}
+
+export async function saveProgramToSupabase(
+  prog: ProgramEvent,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    // 1. Save locally for instant preview / offline draft
+    const current = getPrograms();
+    const existingIndex = current.findIndex((p) => p.id === prog.id);
+    const updated =
+      existingIndex >= 0 ? current.map((p) => (p.id === prog.id ? prog : p)) : [prog, ...current];
+    savePrograms(updated);
+
+    // 2. Persist to Supabase
+    const row = mapProgramToRow(prog);
+    const { error } = await supabase.from("programs").upsert(row);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function deleteProgramFromSupabase(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getPrograms();
+    const updated = current.filter((p) => p.id !== id);
+    savePrograms(updated);
+
+    const { error } = await supabase.from("programs").delete().eq("id", id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+function mapRowToPastSession(row: Record<string, unknown>): PastSession {
+  return {
+    id: String(row["id"] || ""),
+    title: String(row["title"] || ""),
+    date: String(row["date"] || ""),
+    speaker: String(row["speaker"] || ""),
+    designation: String(row["designation"] || ""),
+    ...(row["speaker_linkedin"] ? { speakerLinkedin: String(row["speaker_linkedin"]) } : {}),
+    topic: String(row["topic"] || ""),
+    participants: String(row["participants"] || ""),
+    summary: String(row["summary"] || ""),
+    ...(row["photo"] ? { photo: String(row["photo"]) } : {}),
+  };
+}
+
+function mapPastSessionToRow(s: PastSession) {
+  return {
+    id: s.id,
+    title: s.title,
+    date: s.date,
+    speaker: s.speaker,
+    designation: s.designation,
+    speaker_linkedin: s.speakerLinkedin || null,
+    topic: s.topic,
+    participants: s.participants,
+    summary: s.summary,
+    photo: s.photo || null,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+export async function fetchPastSessionsFromSupabase(): Promise<PastSession[]> {
+  try {
+    const { data, error } = await supabase
+      .from("past_sessions")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return getPastSessions();
+    }
+    const mapped = (data as unknown as Record<string, unknown>[]).map(mapRowToPastSession);
+    savePastSessions(mapped);
+    return mapped;
+  } catch {
+    return getPastSessions();
+  }
+}
+
+export async function savePastSessionToSupabase(
+  session: PastSession,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getPastSessions();
+    const existingIndex = current.findIndex((s) => s.id === session.id);
+    const updated =
+      existingIndex >= 0
+        ? current.map((s) => (s.id === session.id ? session : s))
+        : [session, ...current];
+    savePastSessions(updated);
+
+    const row = mapPastSessionToRow(session);
+    const { error } = await supabase.from("past_sessions").upsert(row);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function deletePastSessionFromSupabase(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getPastSessions();
+    const updated = current.filter((s) => s.id !== id);
+    savePastSessions(updated);
+
+    const { error } = await supabase.from("past_sessions").delete().eq("id", id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+function mapRowToArticle(row: Record<string, unknown>): ArticleItem {
+  const authorObj = row["author"] as Record<string, unknown> | null;
+  return {
+    id: String(row["id"] || ""),
+    title: String(row["title"] || ""),
+    slug: String(row["slug"] || ""),
+    author: {
+      name: String(authorObj?.["name"] || "Polaris Editorial"),
+      role: String(authorObj?.["role"] || "Contributor"),
+      ...(authorObj?.["avatar"] ? { avatar: String(authorObj["avatar"]) } : {}),
+    },
+    category: (row["category"] as ArticleItem["category"]) || "Science & Astronomy",
+    publishedAt: String(row["published_at"] || ""),
+    readTime: String(row["read_time"] || "5 min read"),
+    excerpt: String(row["excerpt"] || ""),
+    content: String(row["content"] || ""),
+    featured: Boolean(row["featured"]),
+  };
+}
+
+function mapArticleToRow(a: ArticleItem) {
+  return {
+    id: a.id,
+    title: a.title,
+    slug: a.slug,
+    author: (a.author as unknown as Json) || {},
+    category: a.category,
+    published_at: a.publishedAt,
+    read_time: a.readTime,
+    excerpt: a.excerpt,
+    content: a.content,
+    featured: a.featured,
+    published: true,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+export async function fetchArticlesFromSupabase(): Promise<ArticleItem[]> {
+  try {
+    const { data, error } = await supabase
+      .from("articles")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return getArticles();
+    }
+    const mapped = (data as unknown as Record<string, unknown>[]).map(mapRowToArticle);
+    saveArticles(mapped);
+    return mapped;
+  } catch {
+    return getArticles();
+  }
+}
+
+export async function saveArticleToSupabase(
+  article: ArticleItem,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getArticles();
+    const existingIndex = current.findIndex((a) => a.id === article.id);
+    const updated =
+      existingIndex >= 0
+        ? current.map((a) => (a.id === article.id ? article : a))
+        : [article, ...current];
+    saveArticles(updated);
+
+    const row = mapArticleToRow(article);
+    const { error } = await supabase.from("articles").upsert(row);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function deleteArticleFromSupabase(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getArticles();
+    const updated = current.filter((a) => a.id !== id);
+    saveArticles(updated);
+
+    const { error } = await supabase.from("articles").delete().eq("id", id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+function mapRowToSpotlight(row: Record<string, unknown>): SpotlightEntry {
+  return {
+    id: String(row["id"] || ""),
+    name: String(row["name"] || ""),
+    category: (row["category"] as SpotlightEntry["category"]) || "Student Spotlight",
+    headline: String(row["headline"] || ""),
+    story: String(row["story"] || ""),
+    accomplishment: String(row["accomplishment"] || ""),
+    ...(row["contribution_to_polaris"]
+      ? { contributionToPolaris: String(row["contribution_to_polaris"]) }
+      : {}),
+    image: String(row["image"] || "/polaris-logo.png"),
+    featured: Boolean(row["featured"]),
+    date: String(row["date"] || ""),
+    links: Array.isArray(row["links"]) ? (row["links"] as { label: string; url: string }[]) : [],
+  };
+}
+
+function mapSpotlightToRow(s: SpotlightEntry) {
+  return {
+    id: s.id,
+    name: s.name,
+    category: s.category,
+    headline: s.headline,
+    story: s.story,
+    accomplishment: s.accomplishment,
+    contribution_to_polaris: s.contributionToPolaris || null,
+    image: s.image,
+    featured: s.featured,
+    date: s.date,
+    links: (s.links as unknown as Json) || [],
+    updated_at: new Date().toISOString(),
+  };
+}
+
+export async function fetchSpotlightsFromSupabase(): Promise<SpotlightEntry[]> {
+  try {
+    const { data, error } = await supabase
+      .from("spotlights")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return getSpotlights();
+    }
+    const mapped = (data as unknown as Record<string, unknown>[]).map(mapRowToSpotlight);
+    saveSpotlights(mapped);
+    return mapped;
+  } catch {
+    return getSpotlights();
+  }
+}
+
+export async function saveSpotlightToSupabase(
+  spotlight: SpotlightEntry,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getSpotlights();
+    const existingIndex = current.findIndex((sp) => sp.id === spotlight.id);
+    const updated =
+      existingIndex >= 0
+        ? current.map((sp) => (sp.id === spotlight.id ? spotlight : sp))
+        : [spotlight, ...current];
+    saveSpotlights(updated);
+
+    const row = mapSpotlightToRow(spotlight);
+    const { error } = await supabase.from("spotlights").upsert(row);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function deleteSpotlightFromSupabase(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getSpotlights();
+    const updated = current.filter((sp) => sp.id !== id);
+    saveSpotlights(updated);
+
+    const { error } = await supabase.from("spotlights").delete().eq("id", id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function syncAllCmsFromSupabase(): Promise<void> {
+  await Promise.allSettled([
+    fetchProgramsFromSupabase(),
+    fetchPastSessionsFromSupabase(),
+    fetchArticlesFromSupabase(),
+    fetchSpotlightsFromSupabase(),
+  ]);
 }
 
 export function exportAllCmsData(): string {

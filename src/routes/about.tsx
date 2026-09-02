@@ -4,6 +4,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { TeamConstellation } from "@/components/site/TeamConstellation";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
+import { SITE_URL } from "@/lib/site";
 import {
   Compass,
   Target,
@@ -33,10 +34,10 @@ export const Route = createFileRoute("/about")({
         content:
           "Project Polaris is a student-led organisation which aims to provide an experiential learning ecosystem to students.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/about" },
+      { property: "og:url", content: `${SITE_URL}/about` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/about" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
     scripts: [
       {
         type: "application/ld+json",

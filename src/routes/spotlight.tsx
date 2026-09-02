@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import { getSpotlights, type SpotlightEntry } from "@/lib/cms-store";
+import { SITE_URL } from "@/lib/site";
 import {
   Sparkles,
   Award,
@@ -30,10 +31,10 @@ export const Route = createFileRoute("/spotlight")({
         content:
           "Selectively recognising exceptional builders, projects, and contributions within the Polaris ecosystem.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/spotlight" },
+      { property: "og:url", content: `${SITE_URL}/spotlight` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/spotlight" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/spotlight` }],
   }),
   component: SpotlightPage,
 });

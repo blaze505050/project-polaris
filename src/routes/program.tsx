@@ -17,8 +17,9 @@ import {
   SESSION_TYPES,
   ZERO_COST,
 } from "@/lib/curriculum";
+import { SITE_URL } from "@/lib/site";
 
-const URL = "https://projectpolaris.in/program";
+const URL = `${SITE_URL}/program`;
 const DESC =
   "The Polaris Innovation Program: a 14-day interdisciplinary space science, technology and innovation curriculum — discover, investigate, build and showcase a real project.";
 
@@ -47,7 +48,7 @@ export const Route = createFileRoute("/program")({
           provider: {
             "@type": "EducationalOrganization",
             name: "Project Polaris",
-            url: "https://projectpolaris.in",
+            url: SITE_URL,
           },
           hasCourseInstance: {
             "@type": "CourseInstance",

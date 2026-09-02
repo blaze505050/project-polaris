@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Button } from "@/components/ui/button";
+import { SITE_URL } from "@/lib/site";
 import { Compass } from "lucide-react";
 
 export const Route = createFileRoute("/chapters")({
@@ -19,10 +20,10 @@ export const Route = createFileRoute("/chapters")({
         content:
           "Establishing student-led space and aerospace chapters across schools, colleges, and regional clubs.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/chapters" },
+      { property: "og:url", content: `${SITE_URL}/chapters` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/chapters" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/chapters` }],
   }),
   component: ChaptersPage,
 });

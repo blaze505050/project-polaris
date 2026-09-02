@@ -11,6 +11,7 @@ import {
   type IndustrySprintProject,
   type PastSession,
 } from "@/lib/cms-store";
+import { SITE_URL } from "@/lib/site";
 import {
   Calendar,
   Clock,
@@ -47,10 +48,10 @@ export const Route = createFileRoute("/programs")({
         content:
           "Join active workshops with ISRO scientists, remote collaborative industry sprints, and earn verified project credentials.",
       },
-      { property: "og:url", content: "https://projectpolaris.in/programs" },
+      { property: "og:url", content: `${SITE_URL}/programs` },
       { property: "og:type", content: "website" },
     ],
-    links: [{ rel: "canonical", href: "https://projectpolaris.in/programs" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/programs` }],
   }),
   component: ProgramsPage,
 });
