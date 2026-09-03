@@ -17,6 +17,7 @@ import {
   CalendarPlus,
   ExternalLink,
   Calendar,
+  Linkedin,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
@@ -24,7 +25,12 @@ import { ParallaxImage } from "@/components/ui/parallax-image";
 import { CountUp } from "@/components/ui/count-up";
 import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { WaitlistModal } from "@/components/site/WaitlistModal";
-import { getPrograms } from "@/lib/cms-store";
+import {
+  getPrograms,
+  getPastSessions,
+  fetchPastSessionsFromSupabase,
+  type PastSession,
+} from "@/lib/cms-store";
 import { SITE_URL } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
 
@@ -55,33 +61,53 @@ export const Route = createFileRoute("/")({
 const METHODOLOGY_STEPS = [
   {
     step: "01",
-    title: "DISCOVER",
-    desc: "Find questions worth exploring.",
-    detail: "Curiosity-driven inquiry into real astrophysical and physical phenomena.",
+    phase: "Explore",
+    title: "Curiosity Sparks",
+    description:
+      "Join weekly expert sessions, explore astronomy observations, or join a student squad. No prerequisites or prior background needed.",
+    icon: Compass,
+    action: "Browse Programs",
+    href: "/programs",
   },
   {
     step: "02",
-    title: "INVESTIGATE",
-    desc: "Go beyond what you're given.",
-    detail: "Formulate hypotheses and model numerical constraints using mathematics.",
+    phase: "Frame",
+    title: "Frame Real Questions",
+    description:
+      "Move beyond passive lectures. Read scientific literature, formulate hypotheses, and scope practical engineering challenges.",
+    icon: Sparkles,
+    action: "Read Articles",
+    href: "/articles",
   },
   {
     step: "03",
-    title: "BUILD",
-    desc: "Turn knowledge into something tangible.",
-    detail: "Construct numerical simulations, CAD models, and computational solvers.",
+    phase: "Simulate",
+    title: "Numerical Simulation",
+    description:
+      "Run CFD aerodynamics, Keplerian orbital mechanics, and structural simulations using open-source tools and browser-based workstations.",
+    icon: Award,
+    action: "Launch AeroForge",
+    href: "/projects",
   },
   {
     step: "04",
-    title: "VALIDATE",
-    desc: "Test, refine, and challenge your work.",
-    detail: "Peer review with engineers, ISRO scientists, and cohort teammates.",
+    phase: "Build",
+    title: "Prototype & Iterate",
+    description:
+      "Build aerodynamic airfoils, satellite tracking ground systems, and algorithms. Test, fail, refine, and document real engineering models.",
+    icon: Users,
+    action: "Join a Cohort",
+    href: "/programs",
   },
   {
     step: "05",
-    title: "SHOWCASE",
-    desc: "Put your work into the real world.",
-    detail: "Publish verified artifacts, open notebooks, and technical papers.",
+    phase: "Showcase",
+    title: "Publish & Peer Review",
+    description:
+      "Showcase your prototypes, technical papers, and simulation results to the wider community, mentors, and partner institutions.",
+    icon: CheckCircle,
+    action: "View Spotlight",
+    href: "/spotlight",
   },
   {
     step: "06",
@@ -131,38 +157,11 @@ const STUDENT_REVIEWS = [
   },
 ];
 
-// Voices Behind Polaris (Past Speakers & Mentors)
-const PAST_SPEAKERS = [
-  {
-    name: "Scientist Baldev Krishan Sharma",
-    designation: "Cosmo-scientist & Author",
-    topic: "Exploring the Star Universe: A Journey into Wonders of Astronomy",
-    date: "29 August 2026",
-  },
-  {
-    name: "Mr. Ankit Gupta",
-    designation: "Scientist/Engineer 'SC' at ISRO",
-    topic: "How to Pursue Your Career in ISRO & Spacecraft Systems",
-    date: "12 July 2026",
-  },
-  {
-    name: "Mr. Prakhar Vishwakarma",
-    designation: "Missile Man of MP",
-    topic: "Fundamentals of Rocket Development & Staging Dynamics",
-    date: "2 July 2026",
-  },
-  {
-    name: "Ms. Vranda Gupta",
-    designation: "Founder, Stellar Freaks",
-    topic: "Dive into the World of Galaxies & Nebulas",
-    date: "9 August 2026",
-  },
-];
-
 function HomePage() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [waitlistProgram, setWaitlistProgram] = useState<string | null>(null);
+  const [pastSessions, setPastSessions] = useState<PastSession[]>(getPastSessions());
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -172,6 +171,14 @@ function HomePage() {
 
   const allPrograms = getPrograms();
   const featuredSession = allPrograms.find((p) => p.id === "star-universe-aug29") || allPrograms[0];
+
+  useEffect(() => {
+    fetchPastSessionsFromSupabase().then((sessions) => {
+      if (sessions && sessions.length > 0) {
+        setPastSessions(sessions);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const target = new Date("2026-08-29T18:00:00+05:30").getTime();
@@ -1189,24 +1196,44 @@ function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-sans">
-            {PAST_SPEAKERS.map((speaker, idx) => (
-              <ScrollReveal key={speaker.name} direction="up" delay={idx * 30}>
-                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-primary/30 transition-colors">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 font-sans">
+            {pastSessions.map((session, idx) => (
+              <ScrollReveal key={session.id || session.title} direction="up" delay={idx * 30}>
+                <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full hover:border-primary/30 transition-colors group">
                   <div>
-                    <div className="size-10 rounded-full bg-surface-2 border border-white/8 flex items-center justify-center text-primary font-bold text-sm mb-3">
-                      {speaker.name.charAt(0)}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="size-10 rounded-full bg-surface-2 border border-white/8 flex items-center justify-center text-primary font-bold text-sm group-hover:scale-105 transition-transform">
+                        {session.speaker.charAt(0)}
+                      </div>
+                      {session.speakerLinkedin && (
+                        <a
+                          href={session.speakerLinkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors p-1.5 rounded-lg bg-surface-2/60 border border-white/6 hover:border-primary/30"
+                          title={`View ${session.speaker} on LinkedIn`}
+                          aria-label={`View ${session.speaker} on LinkedIn`}
+                        >
+                          <Linkedin className="size-3.5" />
+                        </a>
+                      )}
                     </div>
                     <h3 className="text-sm font-bold font-display text-foreground">
-                      {speaker.name}
+                      {session.speaker}
                     </h3>
-                    <p className="text-xs text-primary font-medium mt-0.5">{speaker.designation}</p>
-                    <p className="text-[11px] text-muted-foreground mt-2 leading-relaxed">
-                      "{speaker.topic}"
+                    <p className="text-xs text-primary font-medium mt-0.5">{session.designation}</p>
+                    <div className="mt-2 text-xs font-semibold text-foreground/90">
+                      {session.title}
+                    </div>
+                    <p className="text-[11px] text-muted-foreground mt-1.5 leading-relaxed">
+                      {session.summary}
                     </p>
                   </div>
-                  <div className="mt-4 pt-2 border-t border-white/6 text-[10px] text-muted-foreground font-mono">
-                    Session: {speaker.date}
+                  <div className="mt-4 pt-3 border-t border-white/6 flex items-center justify-between text-[11px] text-muted-foreground font-mono">
+                    <span>{session.date}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium">
+                      {session.participants}
+                    </span>
                   </div>
                 </div>
               </ScrollReveal>

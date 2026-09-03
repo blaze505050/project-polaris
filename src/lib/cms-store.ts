@@ -350,51 +350,64 @@ export const INITIAL_PAST_SESSIONS: PastSession[] = [
     id: "session-1",
     title: "Fundamentals of Rocket Development",
     date: "2 July 2026",
-    speaker: "Mr. Prakhar Vishwakarma",
+    speaker: "Prakhar Vishwakarma",
     designation: "Missile Man of MP",
-    speakerLinkedin: "https://www.linkedin.com/in/prakhar-vishwakarma-missile-man/",
-    topic: "Solid propulsion physics, structural mass ratios, and staging aerodynamics.",
-    participants: "5 Participants",
+    speakerLinkedin:
+      "https://www.linkedin.com/in/prakharmissileman?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    topic: "Fundamentals of Rocket Development & Space Technology",
+    participants: "5+ Participants",
     summary:
-      "Our very first session introducing foundational propulsion thermodynamics and flight mechanics.",
+      "Project Polaris began its journey with its very first session, introducing students to the fundamentals of rocket development and space technology. Mr. Prakhar Vishwakarma shared insights into how rockets are designed and developed, while also discussing his own experiences and projects in the field. The session aimed to make rocketry more accessible to students and encourage them to explore aerospace beyond the boundaries of traditional classroom learning.",
   },
   {
     id: "session-2",
     title: "How to Pursue Your Career in ISRO",
     date: "12 July 2026",
-    speaker: "Mr. Ankit Gupta",
-    designation: "Scientist/Engineer 'SC' at ISRO",
-    speakerLinkedin: "https://www.linkedin.com/in/ankit-gupta-isro/",
-    topic: "ISRO recruitment pathways, ICRB examination structure, and spacecraft engineering.",
-    participants: "22 Participants",
+    speaker: "Ankit Gupta",
+    designation: "Scientist/Engineer 'SC', Master Control Facility, ISRO",
+    speakerLinkedin:
+      "https://www.linkedin.com/in/ankit-gupta-703b99227?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    topic: "How to Pursue Your Career in ISRO & Spacecraft Systems",
+    participants: "22+ Participants",
     summary:
-      "Direct interactive masterclass on scientific career preparation and space mission development at ISRO.",
+      "Our second session featured Mr. Ankit Gupta, Scientist/Engineer 'SC' at ISRO, who took students through his journey from developing an early interest in aircraft and space to pursuing Aerospace Engineering and eventually working at ISRO's Master Control Facility. Students gained insights into ISRO's work across communication, weather forecasting, navigation, Earth observation, space science, and future missions. The session also introduced students to the lesser-known aspects of space missions after launch, including satellite tracking, orbit determination, collision avoidance, station keeping, and space situational awareness. It concluded by highlighting the diverse career pathways within the space sector, spanning engineering, physics, mathematics, computer science, AI, and data science.",
   },
   {
     id: "session-3",
     title: "Cosmic Conversations",
     date: "26 July 2026",
-    speaker: "Project Polaris Core",
-    designation: "Astrophysics Lead & Moderators",
+    speaker: "Project Polaris Team",
+    designation: "Interactive Discussion",
     speakerLinkedin: "https://www.linkedin.com/company/project-polaris/",
-    topic:
-      "Interactive astronomy storytelling, astrophysical quiz, and constellation-hunting challenge.",
-    participants: "12 Participants",
+    topic: "Cosmic Conversations & Night Sky Exploration",
+    participants: "10–12+ Participants",
     summary:
-      "Community observation night and constellation mapping challenge examining deep-sky objects.",
+      "Our third session, Cosmic Conversations, moved beyond the traditional lecture format into an interactive exploration of space and astronomy. Through storytelling, quizzes, discussions, and a constellation-hunting challenge, participants explored the night sky while actively engaging with one another. The session was designed to make astronomy more experiential and encourage students to observe, question, and connect scientific concepts with the world around them.",
   },
   {
     id: "session-4",
-    title: "Dive into the World of Galaxies & Nebulas",
+    title: "Dive into the World of Galaxies & Nebulae",
     date: "9 August 2026",
-    speaker: "Ms. Vranda Gupta",
+    speaker: "Vranda Gupta",
     designation: "Founder, Stellar Freaks",
-    speakerLinkedin: "https://www.linkedin.com/in/vranda-gupta-stellarfreaks/",
-    topic:
-      "Deep space astrophysics, interstellar nebulae classification, and galactic evolutionary dynamics.",
+    speakerLinkedin: "https://www.linkedin.com/in/vranda-gupta-b34b742a7/",
+    topic: "Dive into the World of Galaxies & Nebulae",
     participants: "60+ Participants",
     summary:
-      "A landmark interactive milestone exploring planetary nebulae, galactic morphology, and spectroscopic observations.",
+      "The fourth session marked a major milestone for Project Polaris, bringing together 60+ participants for an interactive journey through galaxies, nebulae, and stellar evolution. Ms. Vranda Gupta introduced students to the different types and structures of galaxies, including our own Milky Way, before exploring nebulae as both stellar nurseries and remnants of dying stars. Quizzes, rapid-fire facts, discussions, and hands-on activities kept participants actively involved throughout the session. The session concluded with a Build-a-Galaxy Challenge, where participants designed and presented their own fictional galaxies, deciding their characteristics, appearance, and unique identities.",
+  },
+  {
+    id: "session-5",
+    title: "Exploring the Star Universe: A Journey into the Wonders of Astronomy",
+    date: "29 August 2026",
+    speaker: "Dr. Baldev Krishna Sharma",
+    designation: "Cosmologist & Astrophysicist",
+    speakerLinkedin:
+      "https://www.linkedin.com/in/scientist-baldevkrishan-sharma-0343324?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+    topic: "Exploring the Star Universe: A Journey into the Wonders of Astronomy",
+    participants: "90+ Participants",
+    summary:
+      "Our fifth session marked another significant milestone in the journey of Project Polaris, with 90+ participants joining us for an exploration of the Universe with renowned cosmologist and astrophysicist Dr. Baldev Krishna Sharma. The session took students beyond individual celestial objects to explore the broader Universe — from stars and galaxies to cosmology and the questions that continue to shape our understanding of space. Through expert insights and scientific discussion, participants gained a deeper perspective on the scale, complexity, and mysteries of the Universe. The growing participation in this session reflected Project Polaris's expanding community and the increasing curiosity among students to explore astronomy and space science beyond the classroom.",
   },
 ];
 
@@ -599,7 +612,12 @@ export function getPastSessions(): PastSession[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.PAST_SESSIONS);
     if (!raw) return INITIAL_PAST_SESSIONS;
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.length < INITIAL_PAST_SESSIONS.length) {
+      savePastSessions(INITIAL_PAST_SESSIONS);
+      return INITIAL_PAST_SESSIONS;
+    }
+    return parsed;
   } catch {
     return INITIAL_PAST_SESSIONS;
   }

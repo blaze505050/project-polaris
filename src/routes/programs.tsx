@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,7 @@ import {
   getPrograms,
   getIndustrySprints,
   getPastSessions,
+  fetchPastSessionsFromSupabase,
   saveUserSubmission,
   type ProgramEvent,
   type IndustrySprintProject,
@@ -67,10 +68,18 @@ const DOMAIN_FILTERS = [
 function ProgramsPage() {
   const programs = getPrograms();
   const industrySprints = getIndustrySprints();
-  const pastSessions = getPastSessions();
+  const [pastSessions, setPastSessions] = useState<PastSession[]>(getPastSessions());
   const [selectedTab, setSelectedTab] = useState<"sprints" | "active" | "past">("active");
   const [selectedDomain, setSelectedDomain] = useState<string>("All Domains");
   const [activeSprintModal, setActiveSprintModal] = useState<IndustrySprintProject | null>(null);
+
+  useEffect(() => {
+    fetchPastSessionsFromSupabase().then((sessions) => {
+      if (sessions && sessions.length > 0) {
+        setPastSessions(sessions);
+      }
+    });
+  }, []);
 
   const filteredSprints = industrySprints.filter((sprint) => {
     if (selectedDomain === "All Domains") return true;

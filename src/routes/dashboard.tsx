@@ -88,10 +88,12 @@ export const Route = createFileRoute("/dashboard")({
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"student" | "admin">("student");
   const [adminAuthenticated, setAdminAuthenticated] = useState(false);
+  const [adminAuthMode, setAdminAuthMode] = useState<"signin" | "setup" | "reset">("signin");
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
   const [adminLoading, setAdminLoading] = useState(false);
   const [adminError, setAdminError] = useState("");
+  const [adminSuccess, setAdminSuccess] = useState("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
@@ -201,15 +203,80 @@ function DashboardPage() {
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminEmail || !adminPassword) {
-      setAdminError("Please enter both administrator email and password.");
+    if (!adminEmail) {
+      setAdminError("Please enter your administrator email.");
       return;
     }
+    if (adminAuthMode !== "reset" && !adminPassword) {
+      setAdminError("Please enter your administrator password.");
+      return;
+    }
+
+    const email = adminEmail.trim().toLowerCase();
+    const isAuthorizedEmail =
+      email === "project.polaris8@gmail.com" || email.endsWith("@projectpolaris.in");
+
+    if (!isAuthorizedEmail) {
+      setAdminError(
+        "Access restricted: Only verified Project Polaris administrator emails (project.polaris8@gmail.com or @projectpolaris.in) are authorized.",
+      );
+      return;
+    }
+
     setAdminLoading(true);
     setAdminError("");
+    setAdminSuccess("");
+
     try {
+      if (adminAuthMode === "reset") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.href,
+        });
+        if (error) {
+          setAdminError(error.message);
+        } else {
+          setAdminSuccess(
+            "Password reset instructions have been sent to your administrator email.",
+          );
+        }
+        setAdminLoading(false);
+        return;
+      }
+
+      if (adminAuthMode === "setup") {
+        if (adminPassword.length < 8) {
+          setAdminError("Password must be at least 8 characters long.");
+          setAdminLoading(false);
+          return;
+        }
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password: adminPassword,
+          options: {
+            data: { role: "admin", full_name: "Polaris Administrator" },
+          },
+        });
+        if (error) {
+          setAdminError(error.message);
+          setAdminLoading(false);
+          return;
+        }
+        if (data.session) {
+          setAdminAuthenticated(true);
+          setAdminSuccess("Admin credentials created and authenticated successfully!");
+        } else {
+          setAdminSuccess(
+            "Admin account created! Please check your email inbox to verify your address, then sign in.",
+          );
+          setAdminAuthMode("signin");
+        }
+        setAdminLoading(false);
+        return;
+      }
+
+      // Default: Sign In
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: adminEmail,
+        email,
         password: adminPassword,
       });
       if (error) {
@@ -219,11 +286,11 @@ function DashboardPage() {
       }
       const user = data.user;
       const role = (user?.app_metadata as Record<string, unknown> | undefined)?.["role"];
-      const email = user?.email || "";
+      const userEmail = user?.email || "";
       const isAdmin =
         role === "admin" ||
-        email.endsWith("@projectpolaris.in") ||
-        email === "project.polaris8@gmail.com";
+        userEmail.endsWith("@projectpolaris.in") ||
+        userEmail === "project.polaris8@gmail.com";
       if (!isAdmin) {
         setAdminError(
           "Access denied: You must possess administrator privileges to access this CMS.",
@@ -825,43 +892,151 @@ function DashboardPage() {
                   Admin CMS Authentication
                 </h3>
                 <p className="text-xs text-muted-foreground">
-                  Sign in with your Project Polaris administrator credentials to access the Content
-                  Management System.
+                  Sign in with your Project Polaris administrator credentials to manage live
+                  programs, past sessions, articles, and spotlights.
                 </p>
 
-                <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-2 text-left">
+                {/* Mode Selector */}
+                <div className="flex rounded-lg bg-surface-2 p-1 border border-white/8 text-[11px]">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdminAuthMode("signin");
+                      setAdminError("");
+                      setAdminSuccess("");
+                    }}
+                    className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${
+                      adminAuthMode === "signin"
+                        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdminAuthMode("setup");
+                      setAdminError("");
+                      setAdminSuccess("");
+                    }}
+                    className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${
+                      adminAuthMode === "setup"
+                        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Set Password / Setup
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAdminAuthMode("reset");
+                      setAdminError("");
+                      setAdminSuccess("");
+                    }}
+                    className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${
+                      adminAuthMode === "reset"
+                        ? "bg-primary text-primary-foreground font-semibold shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                {/* Authorized Account Hint */}
+                <div className="p-2.5 rounded-lg bg-surface/80 border border-white/6 text-left text-[11px] text-muted-foreground space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-primary font-semibold text-[10px] uppercase">
+                      Authorized Admin Email:
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setAdminEmail("project.polaris8@gmail.com")}
+                      className="text-[10px] text-primary hover:underline font-mono"
+                    >
+                      Use Default
+                    </button>
+                  </div>
+                  <code className="text-[11px] text-foreground font-mono block bg-black/30 px-2 py-1 rounded">
+                    project.polaris8@gmail.com
+                  </code>
+                </div>
+
+                <form onSubmit={handleAdminLogin} className="space-y-3 text-xs pt-1 text-left">
                   <div>
                     <label className="text-[11px] text-muted-foreground block mb-1">
-                      Admin Email
+                      Admin Email *
                     </label>
                     <input
                       type="email"
                       required
-                      placeholder="admin@projectpolaris.in"
+                      placeholder="project.polaris8@gmail.com"
                       value={adminEmail}
                       onChange={(e) => setAdminEmail(e.target.value)}
                       className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 font-mono"
                     />
                   </div>
-                  <div>
-                    <label className="text-[11px] text-muted-foreground block mb-1">Password</label>
-                    <input
-                      type="password"
-                      required
-                      placeholder="Enter administrator password"
-                      value={adminPassword}
-                      onChange={(e) => setAdminPassword(e.target.value)}
-                      className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 font-mono"
-                    />
-                  </div>
-                  {adminError && <p className="text-rose-400 text-[11px]">{adminError}</p>}
+
+                  {adminAuthMode !== "reset" && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="text-[11px] text-muted-foreground">
+                          {adminAuthMode === "setup"
+                            ? "Create Password (min 8 chars) *"
+                            : "Admin Password *"}
+                        </label>
+                        {adminAuthMode === "signin" && (
+                          <button
+                            type="button"
+                            onClick={() => setAdminAuthMode("reset")}
+                            className="text-[10px] text-primary hover:underline"
+                          >
+                            Forgot?
+                          </button>
+                        )}
+                      </div>
+                      <input
+                        type="password"
+                        required
+                        placeholder={
+                          adminAuthMode === "setup"
+                            ? "Enter a secure new password"
+                            : "Enter administrator password"
+                        }
+                        value={adminPassword}
+                        onChange={(e) => setAdminPassword(e.target.value)}
+                        className="w-full px-3.5 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs focus:outline-none focus:border-primary/50 font-mono"
+                      />
+                    </div>
+                  )}
+
+                  {adminError && (
+                    <p className="text-rose-400 text-[11px] bg-rose-500/10 border border-rose-500/20 p-2 rounded-lg">
+                      {adminError}
+                    </p>
+                  )}
+
+                  {adminSuccess && (
+                    <p className="text-emerald-400 text-[11px] bg-emerald-500/10 border border-emerald-500/20 p-2 rounded-lg">
+                      {adminSuccess}
+                    </p>
+                  )}
+
                   <Button
                     type="submit"
                     size="sm"
                     disabled={adminLoading}
                     className="w-full h-9 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
                   >
-                    {adminLoading ? "Authenticating..." : "Authenticate as Admin"}
+                    {adminLoading
+                      ? "Processing..."
+                      : adminAuthMode === "setup"
+                        ? "Save & Authenticate Admin"
+                        : adminAuthMode === "reset"
+                          ? "Send Password Reset Link"
+                          : "Authenticate as Admin"}
                   </Button>
                 </form>
               </div>
