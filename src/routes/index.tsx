@@ -29,7 +29,13 @@ import {
   getPrograms,
   getPastSessions,
   fetchPastSessionsFromSupabase,
+  getWhatsHappening,
+  getUpcomingInitiatives,
+  getStudentReviews,
   type PastSession,
+  type WhatsHappeningConfig,
+  type UpcomingInitiative,
+  type StudentReview,
 } from "@/lib/cms-store";
 import { SITE_URL } from "@/lib/site";
 import polarisLogo from "@/assets/polaris-logo.png";
@@ -117,51 +123,15 @@ const METHODOLOGY_STEPS = [
   },
 ];
 
-// Community & Student Testimonials (Verified)
-const STUDENT_REVIEWS = [
-  {
-    name: "Debolina Ghosh",
-    role: "Community Member",
-    quote:
-      "Attending the Project Polaris webinar was a great learning experience. I gained valuable insights, enjoyed the session, and appreciated the opportunity to learn more about science and space. Student-friendly free webinars, along with projects and quizzes, make the learning experience engaging and interactive.",
-  },
-  {
-    name: "Yash Raj Panda",
-    role: "Volunteer",
-    quote:
-      "My experience with Project Polaris was truly valuable and inspiring. I gained new knowledge, strengthened my skills, and had the opportunity to learn from others who share my passion for science and space. What I particularly liked is the genuine commitment of its team members—everyone seems driven by curiosity, purpose, and a willingness to contribute.",
-  },
-  {
-    name: "Mohamed Naleem",
-    role: "Community Member",
-    quote:
-      "My experience with Project Polaris was truly inspiring. I gained new knowledge and had the opportunity to learn from inspiring speakers and connect with students who share a passion for space, science, and technology. The experience motivated me to explore research further and pursue opportunities in the space sector.",
-  },
-  {
-    name: "Meghanil Sinha",
-    role: "Community Member",
-    quote:
-      "As a community member, I’m grateful for the opportunity to attend a session with the eminent Baldev Krishan Sir. It was a truly valuable and inspiring experience.",
-  },
-  {
-    name: "Gesandi Gihansa Pathirana",
-    role: "Associate Member",
-    quote:
-      "My experience as a Polaris Associate has been wonderful and inspiring. It has helped me learn new things, expand my knowledge, and connect with people who share my interest in science and astronomy.",
-  },
-  {
-    name: "Mayank",
-    role: "Associate Member",
-    quote:
-      "The session was amazingly conducted and my experience with Project Polaris is awesome. The interactions and practical insights make a huge difference.",
-  },
-];
-
 function HomePage() {
   const [activeStep, setActiveStep] = useState<number | null>(null);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [waitlistProgram, setWaitlistProgram] = useState<string | null>(null);
   const [pastSessions, setPastSessions] = useState<PastSession[]>(getPastSessions());
+  const [whatsHappening, setWhatsHappening] = useState<WhatsHappeningConfig>(getWhatsHappening());
+  const [upcomingInitiatives, setUpcomingInitiatives] =
+    useState<UpcomingInitiative[]>(getUpcomingInitiatives());
+  const [studentReviews, setStudentReviews] = useState<StudentReview[]>(getStudentReviews());
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -181,6 +151,9 @@ function HomePage() {
 
     const handleUpdate = () => {
       setPastSessions(getPastSessions());
+      setWhatsHappening(getWhatsHappening());
+      setUpcomingInitiatives(getUpcomingInitiatives());
+      setStudentReviews(getStudentReviews());
     };
     window.addEventListener("polaris_cms_updated", handleUpdate);
     window.addEventListener("storage", handleUpdate);
@@ -191,8 +164,12 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    const target = new Date("2026-08-29T18:00:00+05:30").getTime();
     const updateCountdown = () => {
+      const targetStr = whatsHappening.targetDate || "2026-08-29T18:00:00+05:30";
+      const targetTime = new Date(targetStr).getTime();
+      const target = isNaN(targetTime)
+        ? new Date("2026-08-29T18:00:00+05:30").getTime()
+        : targetTime;
       const now = new Date().getTime();
       const diff = Math.max(0, target - now);
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -205,7 +182,7 @@ function HomePage() {
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [whatsHappening.targetDate]);
 
   return (
     <>
@@ -507,7 +484,7 @@ function HomePage() {
           </ScrollReveal>
 
           {/* Featured Astronomy Masterclass Card */}
-          {featuredSession && (
+          {whatsHappening && (
             <ScrollReveal direction="up" delay={40}>
               <div className="p-6 md:p-8 rounded-2xl border border-primary/25 bg-card relative overflow-hidden font-sans shadow-lg">
                 <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-start">
@@ -515,40 +492,53 @@ function HomePage() {
                     <div className="flex flex-wrap items-center gap-3 text-xs">
                       <span className="flex items-center gap-1 text-muted-foreground text-xs font-mono">
                         <Calendar className="size-3 text-primary" />
-                        <span>{featuredSession.date}</span>
+                        <span>{whatsHappening.date}</span>
                       </span>
                       <span className="flex items-center gap-1 text-muted-foreground text-xs">
                         <Clock className="size-3 text-primary" />
-                        <span>{featuredSession.time || "6:00 PM IST"}</span>
+                        <span>{whatsHappening.time || "6:00 PM IST"}</span>
                       </span>
                       <span className="flex items-center gap-1 text-emerald-400 text-xs">
                         <MapPin className="size-3" />
-                        <span>{featuredSession.mode}</span>
+                        <span>{whatsHappening.mode}</span>
                       </span>
                     </div>
 
                     <h3 className="text-2xl sm:text-3xl font-bold font-display text-foreground leading-snug">
-                      {featuredSession.title}
+                      {whatsHappening.title}
                     </h3>
 
                     <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                      {featuredSession.details}
+                      {whatsHappening.details}
                     </p>
 
                     {/* Speaker Box */}
-                    {featuredSession.speaker && (
-                      <div className="p-4 rounded-xl bg-surface-2/60 border border-white/6 flex items-center gap-3.5">
-                        <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base shrink-0">
-                          <Mic className="size-5" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-bold font-display text-foreground">
-                            {featuredSession.speaker.name}
+                    {whatsHappening.speakerName && (
+                      <div className="p-4 rounded-xl bg-surface-2/60 border border-white/6 flex items-center justify-between gap-3.5">
+                        <div className="flex items-center gap-3.5">
+                          <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base shrink-0">
+                            <Mic className="size-5" />
                           </div>
-                          <div className="text-xs text-primary font-medium">
-                            {featuredSession.speaker.designation}
+                          <div>
+                            <div className="text-sm font-bold font-display text-foreground">
+                              {whatsHappening.speakerName}
+                            </div>
+                            <div className="text-xs text-primary font-medium">
+                              {whatsHappening.speakerDesignation}
+                            </div>
                           </div>
                         </div>
+                        {whatsHappening.speakerLinkedin && (
+                          <a
+                            href={whatsHappening.speakerLinkedin}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="size-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors"
+                            aria-label="Speaker LinkedIn Profile"
+                          >
+                            <Linkedin className="size-3.5" />
+                          </a>
+                        )}
                       </div>
                     )}
 
@@ -601,12 +591,12 @@ function HomePage() {
                         className="h-11 px-7 rounded-lg font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs active:scale-[0.97]"
                       >
                         <a
-                          href={featuredSession.ctaUrl}
-                          target="_blank"
-                          rel="noreferrer"
+                          href={whatsHappening.ctaUrl || "/programs"}
+                          target={whatsHappening.ctaUrl.startsWith("http") ? "_blank" : undefined}
+                          rel={whatsHappening.ctaUrl.startsWith("http") ? "noreferrer" : undefined}
                           className="flex items-center gap-2"
                         >
-                          <span>Register Now (Free)</span>
+                          <span>{whatsHappening.ctaText || "Explore Details"}</span>
                           <ArrowRight className="size-3.5" />
                         </a>
                       </Button>
@@ -643,7 +633,13 @@ function HomePage() {
                         What You Will Get
                       </h4>
                       <ul className="space-y-2.5 text-xs text-muted-foreground">
-                        {featuredSession.benefits.map((benefit) => (
+                        {(
+                          featuredSession?.benefits || [
+                            "Interactive Q&A Session with Researcher",
+                            "Exclusive Astrophysics & Rocketry Resource Pack",
+                            "Community Access & Verified Certificate",
+                          ]
+                        ).map((benefit) => (
                           <li key={benefit} className="flex items-start gap-2.5">
                             <CheckCircle className="size-3.5 text-primary shrink-0 mt-0.5" />
                             <span className="text-foreground/90">{benefit}</span>
@@ -907,34 +903,7 @@ function HomePage() {
           </ScrollReveal>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 font-sans">
-            {[
-              {
-                title: "Remote Industry Sprints",
-                desc: "Collaborate in remote squads on hands-on science, computing, and aerospace projects with mentor reviews.",
-                cta: "Explore Sprints →",
-                to: "/programs",
-                isDirectLink: true,
-              },
-              {
-                title: "Polaris Innovation Program",
-                desc: "Long-term build cohorts developing real science simulations and physical hardware prototypes.",
-                cta: "Join Cohort Waitlist →",
-                isDirectLink: false,
-              },
-              {
-                title: "Chapter Lead Program",
-                desc: "Lead and launch a Polaris space chapter at your school or college in Tier-2/3 cities and remote regions.",
-                cta: "Explore Chapters →",
-                to: "/chapters",
-                isDirectLink: true,
-              },
-              {
-                title: "Scientist Mentor Panel",
-                desc: "Guidance and project reviews directly from experienced scientists and researchers.",
-                cta: "Join Mentor Waitlist →",
-                isDirectLink: false,
-              },
-            ].map((item, idx) => (
+            {upcomingInitiatives.map((item, idx) => (
               <ScrollReveal key={item.title} direction="up" delay={idx * 30}>
                 <div className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between h-full card-gold-hover">
                   <div>
@@ -1132,7 +1101,9 @@ function HomePage() {
                   type="button"
                   aria-label="Previous Review"
                   onClick={() =>
-                    setReviewIndex((prev) => (prev > 0 ? prev - 1 : STUDENT_REVIEWS.length - 1))
+                    setReviewIndex((prev) =>
+                      prev > 0 ? prev - 1 : (studentReviews.length || 1) - 1,
+                    )
                   }
                   className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors active:scale-[0.97]"
                 >
@@ -1142,7 +1113,9 @@ function HomePage() {
                   type="button"
                   aria-label="Next Review"
                   onClick={() =>
-                    setReviewIndex((prev) => (prev < STUDENT_REVIEWS.length - 1 ? prev + 1 : 0))
+                    setReviewIndex((prev) =>
+                      prev < (studentReviews.length || 1) - 1 ? prev + 1 : 0,
+                    )
                   }
                   className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-primary/40 transition-colors active:scale-[0.97]"
                 >
@@ -1158,32 +1131,35 @@ function HomePage() {
             aria-atomic="true"
             className="grid gap-4 md:grid-cols-2 font-sans"
           >
-            {[
-              STUDENT_REVIEWS[reviewIndex],
-              STUDENT_REVIEWS[(reviewIndex + 1) % STUDENT_REVIEWS.length],
-            ]
-              .filter((r): r is NonNullable<typeof r> => Boolean(r))
-              .map((review) => (
-                <div
-                  key={review.name}
-                  className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
-                >
-                  <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
-                    "{review.quote}"
-                  </p>
-                  <div className="pt-3 border-t border-white/6 flex items-center gap-3">
-                    <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
-                      {review.name.charAt(0)}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-foreground font-display">
-                        {review.name}
+            {studentReviews.length > 0 &&
+              [
+                studentReviews[reviewIndex % studentReviews.length],
+                studentReviews.length > 1
+                  ? studentReviews[(reviewIndex + 1) % studentReviews.length]
+                  : null,
+              ]
+                .filter((r): r is NonNullable<typeof r> => Boolean(r))
+                .map((review) => (
+                  <div
+                    key={`${review.name}-${review.role}`}
+                    className="p-6 rounded-xl border border-border bg-card flex flex-col justify-between space-y-4 transition-opacity duration-300"
+                  >
+                    <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-sans italic">
+                      "{review.quote}"
+                    </p>
+                    <div className="pt-3 border-t border-white/6 flex items-center gap-3">
+                      <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                        {review.name.charAt(0)}
                       </div>
-                      <div className="text-[10px] text-muted-foreground">{review.role}</div>
+                      <div>
+                        <div className="text-xs font-bold text-foreground font-display">
+                          {review.name}
+                        </div>
+                        <div className="text-[10px] text-muted-foreground">{review.role}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </section>

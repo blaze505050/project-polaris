@@ -125,6 +125,51 @@ export interface TeamMemberNode {
   speed: number;
 }
 
+export interface WhatsHappeningConfig {
+  title: string;
+  details: string;
+  date: string;
+  time: string;
+  mode: string;
+  targetDate: string; // ISO string for countdown, e.g. "2026-08-29T18:00:00+05:30"
+  speakerName: string;
+  speakerDesignation: string;
+  speakerLinkedin?: string;
+  ctaText: string;
+  ctaUrl: string;
+  badgeText?: string;
+}
+
+export interface UpcomingInitiative {
+  id: string;
+  title: string;
+  desc: string;
+  cta: string;
+  to?: string;
+  isDirectLink: boolean;
+}
+
+export interface StudentReview {
+  id: string;
+  name: string;
+  role: string;
+  quote: string;
+  avatar?: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  title: string;
+  category: "Computational Lab" | "Hardware Simulation" | "AeroForge Physics" | "Research Project";
+  domain: string;
+  summary: string;
+  status: "Active Lab" | "In Progress" | "Completed" | "Open for Contributors";
+  deliverables: string[];
+  link?: string;
+  team: string;
+  featured?: boolean;
+}
+
 // ── 1. SEED DATA ──
 
 export const INITIAL_INDUSTRY_SPRINTS: IndustrySprintProject[] = [
@@ -581,6 +626,168 @@ export const TEAM_CONSTELLATION_MEMBERS: TeamMemberNode[] = [
   },
 ];
 
+export const INITIAL_WHATS_HAPPENING: WhatsHappeningConfig = {
+  title: "Exploring the Star Universe: A Journey into the Wonders of Astronomy",
+  details:
+    "An interactive masterclass with renowned cosmologist and astrophysicist Dr. Baldev Krishna Sharma. Dive into stars, galaxies, cosmological models, and real-world astronomical questions with 90+ participants.",
+  date: "29 August 2026",
+  time: "6:00 PM IST",
+  mode: "Online (Live)",
+  targetDate: "2026-08-29T18:00:00+05:30",
+  speakerName: "Dr. Baldev Krishna Sharma",
+  speakerDesignation: "Cosmologist & Astrophysicist",
+  speakerLinkedin:
+    "https://www.linkedin.com/in/scientist-baldevkrishan-sharma-0343324?utm_source=share_via&utm_content=profile&utm_medium=member_android",
+  ctaText: "Explore Full Session Archives →",
+  ctaUrl: "/programs",
+  badgeText: "Featured Live Masterclass",
+};
+
+export const INITIAL_UPCOMING_INITIATIVES: UpcomingInitiative[] = [
+  {
+    id: "init-sprints",
+    title: "Remote Industry Sprints",
+    desc: "Collaborate in remote squads on hands-on science, computing, and aerospace projects with mentor reviews.",
+    cta: "Explore Sprints →",
+    to: "/programs",
+    isDirectLink: true,
+  },
+  {
+    id: "init-innovation",
+    title: "Polaris Innovation Program",
+    desc: "Long-term build cohorts developing real science simulations and physical hardware prototypes.",
+    cta: "Join Cohort Waitlist →",
+    isDirectLink: false,
+  },
+  {
+    id: "init-chapters",
+    title: "Chapter Lead Program",
+    desc: "Lead and launch a Polaris space chapter at your school or college in Tier-2/3 cities and remote regions.",
+    cta: "Explore Chapters →",
+    to: "/chapters",
+    isDirectLink: true,
+  },
+  {
+    id: "init-mentors",
+    title: "Scientist Mentor Panel",
+    desc: "Guidance and project reviews directly from experienced scientists and researchers.",
+    cta: "Join Mentor Waitlist →",
+    isDirectLink: false,
+  },
+];
+
+export const INITIAL_STUDENT_REVIEWS: StudentReview[] = [
+  {
+    id: "rev-1",
+    name: "Debolina Ghosh",
+    role: "Community Member",
+    quote:
+      "Attending the Project Polaris webinar was a great learning experience. I gained valuable insights, enjoyed the session, and appreciated the opportunity to learn more about science and space. Student-friendly free webinars, along with projects and quizzes, make the learning experience engaging and interactive.",
+  },
+  {
+    id: "rev-2",
+    name: "Yash Raj Panda",
+    role: "Volunteer",
+    quote:
+      "My experience with Project Polaris was truly valuable and inspiring. I gained new knowledge, strengthened my skills, and had the opportunity to learn from others who share my passion for science and space. What I particularly liked is the genuine commitment of its team members—everyone seems driven by curiosity, purpose, and a willingness to contribute.",
+  },
+  {
+    id: "rev-3",
+    name: "Mohamed Naleem",
+    role: "Community Member",
+    quote:
+      "My experience with Project Polaris was truly inspiring. I gained new knowledge and had the opportunity to learn from inspiring speakers and connect with students who share a passion for space, science, and technology. The experience motivated me to explore research further and pursue opportunities in the space sector.",
+  },
+  {
+    id: "rev-4",
+    name: "Meghanil Sinha",
+    role: "Community Member",
+    quote:
+      "As a community member, I’m grateful for the opportunity to attend a session with the eminent Baldev Krishan Sir. It was a truly valuable and inspiring experience.",
+  },
+  {
+    id: "rev-5",
+    name: "Gesandi Gihansa Pathirana",
+    role: "Associate Member",
+    quote:
+      "My experience as a Polaris Associate has been wonderful and inspiring. It has helped me learn new things, expand my knowledge, and connect with people who share my interest in science and astronomy.",
+  },
+  {
+    id: "rev-6",
+    name: "Komal Sahu",
+    role: "Community Member",
+    quote:
+      "The masterclasses at Project Polaris made rocket science and astrophysics feel tangible. Learning directly from ISRO scientists and astrophysicists was an unforgettable highlight.",
+  },
+];
+
+export const INITIAL_PROJECTS: ProjectItem[] = [
+  {
+    id: "proj-aeroforge-ai",
+    title: "AeroForge AI Simulation Workstation",
+    category: "AeroForge Physics",
+    domain: "Computational Fluid & Flight Mechanics",
+    summary:
+      "Browser-based engineering research workstation with 40+ physics solvers across CFD aerodynamics, structural FEA, and orbital Keplerian transfers.",
+    status: "Active Lab",
+    deliverables: [
+      "40+ numerical physics solvers",
+      "Airfoil CFD contour visualizer",
+      "Keplerian orbit transfer simulator",
+    ],
+    link: "/projects#aeroforge-lab",
+    team: "Polaris Core Engineering Squad",
+    featured: true,
+  },
+  {
+    id: "proj-sky-atlas",
+    title: "Sky Atlas Deep-Sky Observational Registry",
+    category: "Computational Lab",
+    domain: "Astrophysics & Space Science",
+    summary:
+      "An open, student-maintained deep-sky catalog and constellation mapping database with observations recorded across community stargazing nights.",
+    status: "Active Lab",
+    deliverables: [
+      "Messier & NGC celestial database",
+      "Coordinates calculator",
+      "Observation log system",
+    ],
+    link: "/projects",
+    team: "Astrophysics Squad",
+    featured: true,
+  },
+  {
+    id: "proj-rocket-dynamics",
+    title: "Suborbital Rocket Ascent Trajectory Solver",
+    category: "Hardware Simulation",
+    domain: "Aerospace & Rocketry",
+    summary:
+      "Numerical 3-DOF & 6-DOF rocket trajectory simulation tool calculating atmospheric drag, dynamic pressure (Max-Q), and thrust curve burn profiles.",
+    status: "In Progress",
+    deliverables: [
+      "Python 6-DOF simulation engine",
+      "Max-Q aerodynamic pressure plots",
+      "Payload deployment timing",
+    ],
+    link: "/programs",
+    team: "Aerospace Simulation Squad",
+    featured: false,
+  },
+  {
+    id: "proj-research-digest",
+    title: "Polaris Bi-Weekly Science Digest",
+    category: "Research Project",
+    domain: "Scientific Research",
+    summary:
+      "A recurring student-written and peer-reviewed technical digest that summarizes and verifies recent space science and propulsion research papers.",
+    status: "Active Lab",
+    deliverables: ["Bi-weekly research breakdown", "Peer review rubric", "Open technical archive"],
+    link: "/research",
+    team: "Research Department",
+    featured: false,
+  },
+];
+
 // ── 2. CMS STATE GETTERS & SETTERS (LocalStorage Persisted) ──
 
 const STORAGE_KEYS = {
@@ -589,6 +796,11 @@ const STORAGE_KEYS = {
   ARTICLES: "polaris_cms_articles",
   SPOTLIGHT: "polaris_cms_spotlight",
   INDUSTRY_SPRINTS: "polaris_cms_industry_sprints",
+  WHATS_HAPPENING: "polaris_cms_whats_happening",
+  UPCOMING_INITIATIVES: "polaris_cms_upcoming_initiatives",
+  STUDENT_REVIEWS: "polaris_cms_student_reviews",
+  TEAM_MEMBERS: "polaris_cms_team_members",
+  PROJECTS: "polaris_cms_projects",
 };
 
 export function getPrograms(): ProgramEvent[] {
@@ -680,6 +892,98 @@ export function getIndustrySprints(): IndustrySprintProject[] {
 export function saveIndustrySprints(sprints: IndustrySprintProject[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.INDUSTRY_SPRINTS, JSON.stringify(sprints));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "sprints" } }));
+}
+
+export function getWhatsHappening(): WhatsHappeningConfig {
+  if (typeof window === "undefined") return INITIAL_WHATS_HAPPENING;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.WHATS_HAPPENING);
+    if (!raw) return INITIAL_WHATS_HAPPENING;
+    return JSON.parse(raw);
+  } catch {
+    return INITIAL_WHATS_HAPPENING;
+  }
+}
+
+export function saveWhatsHappening(config: WhatsHappeningConfig) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.WHATS_HAPPENING, JSON.stringify(config));
+  window.dispatchEvent(
+    new CustomEvent("polaris_cms_updated", { detail: { type: "whats_happening" } }),
+  );
+}
+
+export function getUpcomingInitiatives(): UpcomingInitiative[] {
+  if (typeof window === "undefined") return INITIAL_UPCOMING_INITIATIVES;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.UPCOMING_INITIATIVES);
+    if (!raw) return INITIAL_UPCOMING_INITIATIVES;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_UPCOMING_INITIATIVES;
+  } catch {
+    return INITIAL_UPCOMING_INITIATIVES;
+  }
+}
+
+export function saveUpcomingInitiatives(initiatives: UpcomingInitiative[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.UPCOMING_INITIATIVES, JSON.stringify(initiatives));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "initiatives" } }));
+}
+
+export function getStudentReviews(): StudentReview[] {
+  if (typeof window === "undefined") return INITIAL_STUDENT_REVIEWS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.STUDENT_REVIEWS);
+    if (!raw) return INITIAL_STUDENT_REVIEWS;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_STUDENT_REVIEWS;
+  } catch {
+    return INITIAL_STUDENT_REVIEWS;
+  }
+}
+
+export function saveStudentReviews(reviews: StudentReview[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.STUDENT_REVIEWS, JSON.stringify(reviews));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "reviews" } }));
+}
+
+export function getTeamMembers(): TeamMemberNode[] {
+  if (typeof window === "undefined") return TEAM_CONSTELLATION_MEMBERS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.TEAM_MEMBERS);
+    if (!raw) return TEAM_CONSTELLATION_MEMBERS;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : TEAM_CONSTELLATION_MEMBERS;
+  } catch {
+    return TEAM_CONSTELLATION_MEMBERS;
+  }
+}
+
+export function saveTeamMembers(members: TeamMemberNode[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.TEAM_MEMBERS, JSON.stringify(members));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "team" } }));
+}
+
+export function getProjects(): ProjectItem[] {
+  if (typeof window === "undefined") return INITIAL_PROJECTS;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.PROJECTS);
+    if (!raw) return INITIAL_PROJECTS;
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length > 0 ? parsed : INITIAL_PROJECTS;
+  } catch {
+    return INITIAL_PROJECTS;
+  }
+}
+
+export function saveProjects(projects: ProjectItem[]) {
+  if (typeof window === "undefined") return;
+  localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "projects" } }));
 }
 
 // ── 2b. SUPABASE CMS SYNC & REALTIME BACKEND OPERATIONS ──
@@ -1093,9 +1397,14 @@ export function exportAllCmsData(): string {
     articles: getArticles(),
     spotlights: getSpotlights(),
     industrySprints: getIndustrySprints(),
+    whatsHappening: getWhatsHappening(),
+    upcomingInitiatives: getUpcomingInitiatives(),
+    studentReviews: getStudentReviews(),
+    teamMembers: getTeamMembers(),
+    projects: getProjects(),
     submissions: getUserSubmissions(),
     exportedAt: new Date().toISOString(),
-    version: "2.0",
+    version: "3.0",
   };
   return JSON.stringify(data, null, 2);
 }
@@ -1119,6 +1428,21 @@ export function importAllCmsData(jsonString: string): boolean {
     if (parsed.industrySprints && Array.isArray(parsed.industrySprints)) {
       saveIndustrySprints(parsed.industrySprints);
     }
+    if (parsed.whatsHappening && typeof parsed.whatsHappening === "object") {
+      saveWhatsHappening(parsed.whatsHappening);
+    }
+    if (parsed.upcomingInitiatives && Array.isArray(parsed.upcomingInitiatives)) {
+      saveUpcomingInitiatives(parsed.upcomingInitiatives);
+    }
+    if (parsed.studentReviews && Array.isArray(parsed.studentReviews)) {
+      saveStudentReviews(parsed.studentReviews);
+    }
+    if (parsed.teamMembers && Array.isArray(parsed.teamMembers)) {
+      saveTeamMembers(parsed.teamMembers);
+    }
+    if (parsed.projects && Array.isArray(parsed.projects)) {
+      saveProjects(parsed.projects);
+    }
     if (parsed.submissions && Array.isArray(parsed.submissions)) {
       localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(parsed.submissions));
     }
@@ -1135,6 +1459,11 @@ export function resetAllCmsData() {
   saveArticles(INITIAL_ARTICLES);
   saveSpotlights(INITIAL_SPOTLIGHT);
   saveIndustrySprints(INITIAL_INDUSTRY_SPRINTS);
+  saveWhatsHappening(INITIAL_WHATS_HAPPENING);
+  saveUpcomingInitiatives(INITIAL_UPCOMING_INITIATIVES);
+  saveStudentReviews(INITIAL_STUDENT_REVIEWS);
+  saveTeamMembers(TEAM_CONSTELLATION_MEMBERS);
+  saveProjects(INITIAL_PROJECTS);
   localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(INITIAL_SUBMISSIONS));
 }
 

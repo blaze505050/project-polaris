@@ -31,11 +31,26 @@ import {
   exportAllCmsData,
   importAllCmsData,
   resetAllCmsData,
+  getWhatsHappening,
+  saveWhatsHappening,
+  getUpcomingInitiatives,
+  saveUpcomingInitiatives,
+  getStudentReviews,
+  saveStudentReviews,
+  getTeamMembers,
+  saveTeamMembers,
+  getProjects,
+  saveProjects,
   type ProgramEvent,
   type PastSession,
   type ArticleItem,
   type SpotlightEntry,
   type UserSubmission,
+  type WhatsHappeningConfig,
+  type UpcomingInitiative,
+  type StudentReview,
+  type TeamMemberNode,
+  type ProjectItem,
 } from "@/lib/cms-store";
 import {
   User,
@@ -65,6 +80,12 @@ import {
   X,
   History,
   LogOut,
+  Activity,
+  Compass,
+  MessageSquareQuote,
+  Users,
+  Cpu,
+  CheckCircle2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -152,9 +173,28 @@ function DashboardPage() {
   const [articles, setArticlesState] = useState<ArticleItem[]>(getArticles());
   const [spotlights, setSpotlightsState] = useState<SpotlightEntry[]>(getSpotlights());
   const [submissions, setSubmissionsState] = useState<UserSubmission[]>(getUserSubmissions());
+  const [whatsHappening, setWhatsHappeningState] =
+    useState<WhatsHappeningConfig>(getWhatsHappening());
+  const [upcomingInitiatives, setUpcomingInitiativesState] =
+    useState<UpcomingInitiative[]>(getUpcomingInitiatives());
+  const [studentReviews, setStudentReviewsState] = useState<StudentReview[]>(getStudentReviews());
+  const [teamMembers, setTeamMembersState] = useState<TeamMemberNode[]>(getTeamMembers());
+  const [projects, setProjectsState] = useState<ProjectItem[]>(getProjects());
+
   const [activeCmsSection, setActiveCmsSection] = useState<
-    "programs" | "pastSessions" | "articles" | "spotlight" | "submissions" | "database"
-  >("programs");
+    | "whatsHappening"
+    | "initiatives"
+    | "reviews"
+    | "pastSessions"
+    | "team"
+    | "projects"
+    | "programs"
+    | "articles"
+    | "spotlight"
+    | "submissions"
+    | "database"
+  >("whatsHappening");
+
   const [submissionFilter, setSubmissionFilter] = useState<string>("all");
   const [submissionSearch, setSubmissionSearch] = useState<string>("");
   const [statusFeedback, setStatusFeedback] = useState<string | null>(null);
@@ -164,6 +204,10 @@ function DashboardPage() {
   const [editingPastSession, setEditingPastSession] = useState<PastSession | null>(null);
   const [editingArticle, setEditingArticle] = useState<ArticleItem | null>(null);
   const [editingSpotlight, setEditingSpotlight] = useState<SpotlightEntry | null>(null);
+  const [editingInitiative, setEditingInitiative] = useState<UpcomingInitiative | null>(null);
+  const [editingReview, setEditingReview] = useState<StudentReview | null>(null);
+  const [editingTeamMember, setEditingTeamMember] = useState<TeamMemberNode | null>(null);
+  const [editingProject, setEditingProject] = useState<ProjectItem | null>(null);
   const [importJsonText, setImportJsonText] = useState("");
 
   // New Program Form State
@@ -223,6 +267,48 @@ function DashboardPage() {
     featured: false,
     date: "August 2026",
   });
+
+  // New Upcoming Initiative State
+  const [newInitiative, setNewInitiative] = useState<Partial<UpcomingInitiative>>({
+    title: "",
+    desc: "",
+    cta: "Explore →",
+    to: "/programs",
+    isDirectLink: true,
+  });
+
+  // New Student Review State
+  const [newReview, setNewReview] = useState<Partial<StudentReview>>({
+    name: "",
+    role: "Community Member",
+    quote: "",
+  });
+
+  // New Team Member State
+  const [newTeamMember, setNewTeamMember] = useState<Partial<TeamMemberNode>>({
+    name: "",
+    role: "",
+    department: "Simulation & Systems",
+    intro: "",
+    whatIBring: "",
+    orbitRadius: 180,
+    orbitAngle: 1.0,
+    speed: 0.0005,
+  });
+
+  // New Project State
+  const [newProject, setNewProject] = useState<Partial<ProjectItem>>({
+    title: "",
+    category: "Computational Lab",
+    domain: "Aerospace & Rocketry",
+    summary: "",
+    status: "Active Lab",
+    deliverables: [],
+    link: "/projects",
+    team: "Polaris Student Squad",
+    featured: false,
+  });
+  const [newDeliverableInput, setNewDeliverableInput] = useState("");
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -766,6 +852,11 @@ function DashboardPage() {
       setArticlesState(getArticles());
       setSpotlightsState(getSpotlights());
       setSubmissionsState(getUserSubmissions());
+      setWhatsHappeningState(getWhatsHappening());
+      setUpcomingInitiativesState(getUpcomingInitiatives());
+      setStudentReviewsState(getStudentReviews());
+      setTeamMembersState(getTeamMembers());
+      setProjectsState(getProjects());
       setImportJsonText("");
       setStatusFeedback("✓ Complete website database successfully restored from JSON!");
     } else {
@@ -785,9 +876,214 @@ function DashboardPage() {
       setArticlesState(getArticles());
       setSpotlightsState(getSpotlights());
       setSubmissionsState(getUserSubmissions());
+      setWhatsHappeningState(getWhatsHappening());
+      setUpcomingInitiativesState(getUpcomingInitiatives());
+      setStudentReviewsState(getStudentReviews());
+      setTeamMembersState(getTeamMembers());
+      setProjectsState(getProjects());
       setStatusFeedback("✓ Website database reset to initial seed defaults.");
       setTimeout(() => setStatusFeedback(null), 4000);
     }
+  };
+
+  // ── What's Happening Now Handlers ──
+  const handleSaveWhatsHappening = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveWhatsHappening(whatsHappening);
+    setStatusFeedback("✓ 'What's Happening Now' published live to home page!");
+    setTimeout(() => setStatusFeedback(null), 4000);
+  };
+
+  // ── Upcoming Initiatives Handlers ──
+  const handleAddInitiative = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newInitiative.title) return;
+    const item: UpcomingInitiative = {
+      id: `init-${Date.now()}`,
+      title: newInitiative.title,
+      desc: newInitiative.desc || "",
+      cta: newInitiative.cta || "Explore →",
+      to: newInitiative.to || "/programs",
+      isDirectLink: Boolean(newInitiative.isDirectLink),
+    };
+    const updated = [...upcomingInitiatives, item];
+    setUpcomingInitiativesState(updated);
+    saveUpcomingInitiatives(updated);
+    setStatusFeedback("✓ Upcoming initiative published to live website!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setNewInitiative({
+      title: "",
+      desc: "",
+      cta: "Explore →",
+      to: "/programs",
+      isDirectLink: true,
+    });
+  };
+
+  const handleUpdateInitiative = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingInitiative) return;
+    const updated = upcomingInitiatives.map((it) =>
+      it.id === editingInitiative.id ? editingInitiative : it,
+    );
+    setUpcomingInitiativesState(updated);
+    saveUpcomingInitiatives(updated);
+    setStatusFeedback("✓ Upcoming initiative updated on live website!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setEditingInitiative(null);
+  };
+
+  const handleDeleteInitiative = (id: string) => {
+    if (!window.confirm("Remove this upcoming initiative?")) return;
+    const updated = upcomingInitiatives.filter((it) => it.id !== id);
+    setUpcomingInitiativesState(updated);
+    saveUpcomingInitiatives(updated);
+    setStatusFeedback("✓ Initiative removed.");
+    setTimeout(() => setStatusFeedback(null), 2500);
+  };
+
+  // ── Student Reviews Handlers ──
+  const handleAddReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newReview.name || !newReview.quote) return;
+    const rev: StudentReview = {
+      id: `rev-${Date.now()}`,
+      name: newReview.name,
+      role: newReview.role || "Community Member",
+      quote: newReview.quote,
+    };
+    const updated = [...studentReviews, rev];
+    setStudentReviewsState(updated);
+    saveStudentReviews(updated);
+    setStatusFeedback("✓ Student review published live to testimonials!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setNewReview({ name: "", role: "Community Member", quote: "" });
+  };
+
+  const handleUpdateReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingReview) return;
+    const updated = studentReviews.map((r) => (r.id === editingReview.id ? editingReview : r));
+    setStudentReviewsState(updated);
+    saveStudentReviews(updated);
+    setStatusFeedback("✓ Student review updated live!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setEditingReview(null);
+  };
+
+  const handleDeleteReview = (id: string) => {
+    if (!window.confirm("Remove this student review?")) return;
+    const updated = studentReviews.filter((r) => r.id !== id);
+    setStudentReviewsState(updated);
+    saveStudentReviews(updated);
+    setStatusFeedback("✓ Student review removed.");
+    setTimeout(() => setStatusFeedback(null), 2500);
+  };
+
+  // ── Team Members (People Behind Polaris) Handlers ──
+  const handleAddTeamMember = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newTeamMember.name || !newTeamMember.role) return;
+    const member: TeamMemberNode = {
+      id: `team-${Date.now()}`,
+      name: newTeamMember.name,
+      department: newTeamMember.department || "Operations",
+      role: newTeamMember.role,
+      intro: newTeamMember.intro || "",
+      whatIBring: newTeamMember.whatIBring || "",
+      orbitRadius: Number(newTeamMember.orbitRadius) || 180,
+      orbitAngle: Number(newTeamMember.orbitAngle) || 1.2,
+      speed: Number(newTeamMember.speed) || 0.0005,
+    };
+    const updated = [...teamMembers, member];
+    setTeamMembersState(updated);
+    saveTeamMembers(updated);
+    setStatusFeedback("✓ Team member added to People Behind Polaris!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setNewTeamMember({
+      name: "",
+      role: "",
+      department: "Simulation & Systems",
+      intro: "",
+      whatIBring: "",
+      orbitRadius: 180,
+      orbitAngle: 1.0,
+      speed: 0.0005,
+    });
+  };
+
+  const handleUpdateTeamMember = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingTeamMember) return;
+    const updated = teamMembers.map((m) => (m.id === editingTeamMember.id ? editingTeamMember : m));
+    setTeamMembersState(updated);
+    saveTeamMembers(updated);
+    setStatusFeedback("✓ Team member updated live in Constellation!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setEditingTeamMember(null);
+  };
+
+  const handleDeleteTeamMember = (id: string) => {
+    if (!window.confirm("Remove this team member from People Behind Polaris?")) return;
+    const updated = teamMembers.filter((m) => m.id !== id);
+    setTeamMembersState(updated);
+    saveTeamMembers(updated);
+    setStatusFeedback("✓ Team member removed.");
+    setTimeout(() => setStatusFeedback(null), 2500);
+  };
+
+  // ── Projects Handlers ──
+  const handleAddProject = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newProject.title) return;
+    const proj: ProjectItem = {
+      id: `proj-${Date.now()}`,
+      title: newProject.title,
+      category: (newProject.category as ProjectItem["category"]) || "Computational Lab",
+      domain: newProject.domain || "Aerospace & Rocketry",
+      summary: newProject.summary || "",
+      status: (newProject.status as ProjectItem["status"]) || "Active Lab",
+      deliverables: Array.isArray(newProject.deliverables) ? newProject.deliverables : [],
+      link: newProject.link || "/projects",
+      team: newProject.team || "Polaris Student Squad",
+      featured: Boolean(newProject.featured),
+    };
+    const updated = [proj, ...projects];
+    setProjectsState(updated);
+    saveProjects(updated);
+    setStatusFeedback("✓ Project published live to /projects and labs!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setNewProject({
+      title: "",
+      category: "Computational Lab",
+      domain: "Aerospace & Rocketry",
+      summary: "",
+      status: "Active Lab",
+      deliverables: [],
+      link: "/projects",
+      team: "Polaris Student Squad",
+      featured: false,
+    });
+  };
+
+  const handleUpdateProject = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProject) return;
+    const updated = projects.map((p) => (p.id === editingProject.id ? editingProject : p));
+    setProjectsState(updated);
+    saveProjects(updated);
+    setStatusFeedback("✓ Project updated live across website!");
+    setTimeout(() => setStatusFeedback(null), 3000);
+    setEditingProject(null);
+  };
+
+  const handleDeleteProject = (id: string) => {
+    if (!window.confirm("Remove this project from computational labs?")) return;
+    const updated = projects.filter((p) => p.id !== id);
+    setProjectsState(updated);
+    saveProjects(updated);
+    setStatusFeedback("✓ Project removed.");
+    setTimeout(() => setStatusFeedback(null), 2500);
   };
 
   const filteredSubmissions = submissions.filter((s) => {
@@ -1144,14 +1440,39 @@ function DashboardPage() {
                   <div className="flex flex-wrap gap-1.5 text-xs">
                     {[
                       {
-                        id: "programs",
-                        label: `Live Programs (${programs.length})`,
-                        icon: Calendar,
+                        id: "whatsHappening",
+                        label: "What's Happening Now",
+                        icon: Activity,
+                      },
+                      {
+                        id: "initiatives",
+                        label: `Upcoming Initiatives (${upcomingInitiatives.length})`,
+                        icon: Compass,
+                      },
+                      {
+                        id: "reviews",
+                        label: `What Students Say (${studentReviews.length})`,
+                        icon: MessageSquareQuote,
                       },
                       {
                         id: "pastSessions",
-                        label: `Past Sessions (${pastSessions.length})`,
+                        label: `Voices Behind Polaris (${pastSessions.length})`,
                         icon: History,
+                      },
+                      {
+                        id: "team",
+                        label: `People Behind Polaris (${teamMembers.length})`,
+                        icon: Users,
+                      },
+                      {
+                        id: "projects",
+                        label: `Projects & Labs (${projects.length})`,
+                        icon: Cpu,
+                      },
+                      {
+                        id: "programs",
+                        label: `Programs (${programs.length})`,
+                        icon: Calendar,
                       },
                       { id: "articles", label: `Articles (${articles.length})`, icon: BookOpen },
                       {
@@ -1164,7 +1485,7 @@ function DashboardPage() {
                         label: `Submissions (${submissions.length})`,
                         icon: Database,
                       },
-                      { id: "database", label: "Full Database / Backup", icon: Download },
+                      { id: "database", label: "Backup & Restore", icon: Download },
                     ].map((sec) => {
                       const Icon = sec.icon;
                       return (
@@ -1189,6 +1510,918 @@ function DashboardPage() {
                     <span>Admin Mode Active</span>
                   </span>
                 </div>
+
+                {/* ── 1. WHAT'S HAPPENING NOW CMS ── */}
+                {activeCmsSection === "whatsHappening" && (
+                  <div className="space-y-6">
+                    <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
+                          <Activity className="size-4" />
+                          <span>Manage "What's Happening Now?" Section</span>
+                        </div>
+                        <span className="text-[11px] text-muted-foreground font-mono bg-surface-2 px-2.5 py-0.5 rounded-full border border-white/6">
+                          Live on Home Page (Section 3)
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        Control the featured live masterclass or active announcement shown on the
+                        Project Polaris home page, including the real-time countdown timer, speaker
+                        profile, and registration CTA.
+                      </p>
+
+                      <form
+                        onSubmit={handleSaveWhatsHappening}
+                        className="grid gap-4 sm:grid-cols-2 text-xs"
+                      >
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground font-medium">
+                            Session Title *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={whatsHappening.title}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, title: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground font-medium">
+                            Full Description / Details *
+                          </label>
+                          <textarea
+                            rows={3}
+                            required
+                            value={whatsHappening.details}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, details: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            Date Display *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. 29 August 2026"
+                            value={whatsHappening.date}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, date: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">Time *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. 6:00 PM IST"
+                            value={whatsHappening.time}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, time: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            Delivery Mode *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Online (Live) or Hybrid"
+                            value={whatsHappening.mode}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, mode: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            Countdown Target (ISO format) *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. 2026-08-29T18:00:00+05:30"
+                            value={whatsHappening.targetDate}
+                            onChange={(e) =>
+                              setWhatsHappeningState({
+                                ...whatsHappening,
+                                targetDate: e.target.value,
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono text-xs"
+                          />
+                          <span className="text-[10px] text-muted-foreground">
+                            Used by the real-time live countdown timer.
+                          </span>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            Speaker Name *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Dr. Baldev Krishna Sharma"
+                            value={whatsHappening.speakerName}
+                            onChange={(e) =>
+                              setWhatsHappeningState({
+                                ...whatsHappening,
+                                speakerName: e.target.value,
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            Speaker Designation *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Cosmologist & Astrophysicist"
+                            value={whatsHappening.speakerDesignation}
+                            onChange={(e) =>
+                              setWhatsHappeningState({
+                                ...whatsHappening,
+                                speakerDesignation: e.target.value,
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground font-medium">
+                            Speaker LinkedIn Profile URL
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="https://www.linkedin.com/in/..."
+                            value={whatsHappening.speakerLinkedin || ""}
+                            onChange={(e) =>
+                              setWhatsHappeningState({
+                                ...whatsHappening,
+                                speakerLinkedin: e.target.value,
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            CTA Button Text *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Register Now (Free) or View Details"
+                            value={whatsHappening.ctaText}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, ctaText: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground font-medium">
+                            CTA Destination URL *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. /programs or Google Form link"
+                            value={whatsHappening.ctaUrl}
+                            onChange={(e) =>
+                              setWhatsHappeningState({ ...whatsHappening, ctaUrl: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2 pt-2">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
+                            Save & Publish "What's Happening Now" Live
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── 2. UPCOMING INITIATIVES CMS ── */}
+                {activeCmsSection === "initiatives" && (
+                  <div className="space-y-6">
+                    <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
+                      <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
+                        <Plus className="size-4" />
+                        <span>Add New Upcoming Initiative</span>
+                      </div>
+
+                      <form
+                        onSubmit={handleAddInitiative}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Initiative Title *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Space Hardware Accelerator"
+                            value={newInitiative.title}
+                            onChange={(e) =>
+                              setNewInitiative({ ...newInitiative, title: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Description *</label>
+                          <textarea
+                            rows={2}
+                            required
+                            placeholder="Brief description of the initiative and learning goals..."
+                            value={newInitiative.desc}
+                            onChange={(e) =>
+                              setNewInitiative({ ...newInitiative, desc: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Button Text</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Explore Initiative →"
+                            value={newInitiative.cta}
+                            onChange={(e) =>
+                              setNewInitiative({ ...newInitiative, cta: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Target Route / Link</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. /programs or /chapters"
+                            value={newInitiative.to}
+                            onChange={(e) =>
+                              setNewInitiative({ ...newInitiative, to: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2 flex items-center gap-2 pt-1">
+                          <input
+                            type="checkbox"
+                            id="isDirectLink"
+                            checked={newInitiative.isDirectLink}
+                            onChange={(e) =>
+                              setNewInitiative({ ...newInitiative, isDirectLink: e.target.checked })
+                            }
+                            className="rounded border-white/10 text-primary focus:ring-primary"
+                          />
+                          <label
+                            htmlFor="isDirectLink"
+                            className="text-xs text-muted-foreground cursor-pointer"
+                          >
+                            Direct Page Navigation (Uncheck to trigger Waitlist Notification Modal
+                            instead)
+                          </label>
+                        </div>
+
+                        <div className="sm:col-span-2 pt-2">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
+                            Add Initiative to Website
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Active Initiatives List */}
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
+                        Active Upcoming Initiatives ({upcomingInitiatives.length})
+                      </h4>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {upcomingInitiatives.map((it) => (
+                          <div
+                            key={it.id}
+                            className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-3"
+                          >
+                            <div>
+                              <div className="flex items-start justify-between gap-2">
+                                <h5 className="font-bold text-foreground font-display text-sm">
+                                  {it.title}
+                                </h5>
+                                <span className="text-[10px] px-2 py-0.5 rounded bg-surface border border-white/6 text-primary font-mono shrink-0">
+                                  {it.isDirectLink ? "Direct Link" : "Waitlist Modal"}
+                                </span>
+                              </div>
+                              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                                {it.desc}
+                              </p>
+                              <div className="text-[11px] text-primary/80 font-mono mt-2">
+                                Button: "{it.cta}" → {it.to || "Waitlist Modal"}
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-end gap-2 pt-2 border-t border-white/6">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setEditingInitiative(it)}
+                                className="h-7 text-xs border-white/10"
+                              >
+                                <Edit2 className="size-3 mr-1" />
+                                <span>Edit</span>
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDeleteInitiative(it.id)}
+                                className="h-7 text-xs border-rose-500/30 text-rose-400 hover:bg-rose-500/10"
+                              >
+                                <Trash2 className="size-3 mr-1" />
+                                <span>Remove</span>
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── 3. WHAT STUDENTS SAY (REVIEWS) CMS ── */}
+                {activeCmsSection === "reviews" && (
+                  <div className="space-y-6">
+                    <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
+                      <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
+                        <Plus className="size-4" />
+                        <span>Add Student Testimonial / Review</span>
+                      </div>
+
+                      <form
+                        onSubmit={handleAddReview}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Student Name *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Debolina Ghosh"
+                            value={newReview.name}
+                            onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Role / Designation *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Community Member, Volunteer, Associate Member"
+                            value={newReview.role}
+                            onChange={(e) => setNewReview({ ...newReview, role: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Quote / Testimonial *</label>
+                          <textarea
+                            rows={3}
+                            required
+                            placeholder="What did the student say about Project Polaris workshops, community, or projects?"
+                            value={newReview.quote}
+                            onChange={(e) => setNewReview({ ...newReview, quote: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2 pt-2">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
+                            Publish Testimonial to Website
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Active Reviews Grid */}
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
+                        Student Reviews ({studentReviews.length})
+                      </h4>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {studentReviews.map((r) => (
+                          <div
+                            key={r.id}
+                            className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-3"
+                          >
+                            <p className="text-xs text-foreground/90 italic leading-relaxed">
+                              "{r.quote}"
+                            </p>
+
+                            <div className="flex items-center justify-between pt-3 border-t border-white/6">
+                              <div className="flex items-center gap-2.5">
+                                <div className="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs">
+                                  {r.name.charAt(0)}
+                                </div>
+                                <div>
+                                  <div className="font-bold text-foreground text-xs font-display">
+                                    {r.name}
+                                  </div>
+                                  <div className="text-[10px] text-muted-foreground">{r.role}</div>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-1.5">
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => setEditingReview(r)}
+                                  className="h-7 px-2 text-xs"
+                                >
+                                  <Edit2 className="size-3" />
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => handleDeleteReview(r.id)}
+                                  className="h-7 px-2 text-xs text-rose-400 hover:text-rose-300"
+                                >
+                                  <Trash2 className="size-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── 4. PEOPLE BEHIND POLARIS (TEAM CONSTELLATION) CMS ── */}
+                {activeCmsSection === "team" && (
+                  <div className="space-y-6">
+                    <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
+                      <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
+                        <Plus className="size-4" />
+                        <span>Add Team Member to People Behind Polaris</span>
+                      </div>
+
+                      <form
+                        onSubmit={handleAddTeamMember}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Full Name / Squad Name *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Engineering Squad or Student Name"
+                            value={newTeamMember.name}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, name: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Role Title *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Aerospace & Systems Engineering"
+                            value={newTeamMember.role}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, role: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Department *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Simulation & Systems, Operations, Research"
+                            value={newTeamMember.department}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, department: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">What I Bring (Quote) *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Architecting simulation engines and student workflows."
+                            value={newTeamMember.whatIBring}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, whatIBring: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Intro / Bio *</label>
+                          <textarea
+                            rows={2}
+                            required
+                            placeholder="Tell visitors about this squad or team leader's contribution to Polaris..."
+                            value={newTeamMember.intro}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, intro: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                          />
+                        </div>
+
+                        <div className="sm:col-span-2 pt-2">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
+                            Add Team Member to Constellation
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Team Members List */}
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
+                        Current Team Members ({teamMembers.length})
+                      </h4>
+                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        {teamMembers.map((m) => (
+                          <div
+                            key={m.id}
+                            className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-3"
+                          >
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-3">
+                                <div className="size-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm shrink-0">
+                                  {m.name.charAt(0)}
+                                </div>
+                                <div>
+                                  <h5 className="font-bold text-foreground font-display text-sm">
+                                    {m.name}
+                                  </h5>
+                                  <p className="text-[11px] text-primary">{m.role}</p>
+                                </div>
+                              </div>
+                              <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wide">
+                                {m.department}
+                              </div>
+                              <p className="text-xs text-muted-foreground leading-relaxed">
+                                {m.intro}
+                              </p>
+                              <div className="text-[11px] text-foreground/80 italic font-sans border-l-2 border-primary/40 pl-2">
+                                "{m.whatIBring}"
+                              </div>
+                            </div>
+
+                            <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/6">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setEditingTeamMember(m)}
+                                className="h-7 text-xs border-white/10"
+                              >
+                                <Edit2 className="size-3 mr-1" />
+                                <span>Edit</span>
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleDeleteTeamMember(m.id)}
+                                className="h-7 text-xs border-rose-500/30 text-rose-400 hover:bg-rose-500/10"
+                              >
+                                <Trash2 className="size-3 mr-1" />
+                                <span>Remove</span>
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ── 5. PROJECTS & COMPUTATIONAL LABS CMS ── */}
+                {activeCmsSection === "projects" && (
+                  <div className="space-y-6">
+                    <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
+                      <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
+                        <Plus className="size-4" />
+                        <span>Publish New Computational Lab / Project</span>
+                      </div>
+
+                      <form
+                        onSubmit={handleAddProject}
+                        className="grid gap-3 sm:grid-cols-2 text-xs"
+                      >
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Project Title *</label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. AeroForge Aerodynamics Workstation"
+                            value={newProject.title}
+                            onChange={(e) =>
+                              setNewProject({ ...newProject, title: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Category</label>
+                          <select
+                            value={newProject.category}
+                            onChange={(e) =>
+                              setNewProject({
+                                ...newProject,
+                                category: e.target.value as ProjectItem["category"],
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          >
+                            <option value="Computational Lab">Computational Lab</option>
+                            <option value="AeroForge Physics">AeroForge Physics</option>
+                            <option value="Hardware Simulation">Hardware Simulation</option>
+                            <option value="Research Project">Research Project</option>
+                          </select>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Domain Area</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Computational Fluid Dynamics or Orbital Mechanics"
+                            value={newProject.domain}
+                            onChange={(e) =>
+                              setNewProject({ ...newProject, domain: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Development Status</label>
+                          <select
+                            value={newProject.status}
+                            onChange={(e) =>
+                              setNewProject({
+                                ...newProject,
+                                status: e.target.value as ProjectItem["status"],
+                              })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          >
+                            <option value="Active Lab">Active Lab</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Open for Contributors">Open for Contributors</option>
+                          </select>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground">Team / Squad Name</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Polaris Aerospace Simulation Squad"
+                            value={newProject.team}
+                            onChange={(e) => setNewProject({ ...newProject, team: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Project Link / Route</label>
+                          <input
+                            type="text"
+                            placeholder="e.g. /projects#aeroforge-lab or GitHub URL"
+                            value={newProject.link}
+                            onChange={(e) => setNewProject({ ...newProject, link: e.target.value })}
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">Summary / Mission Goal *</label>
+                          <textarea
+                            rows={3}
+                            required
+                            placeholder="What does this lab calculate, solve, or build?"
+                            value={newProject.summary}
+                            onChange={(e) =>
+                              setNewProject({ ...newProject, summary: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                          />
+                        </div>
+
+                        <div className="space-y-1 sm:col-span-2">
+                          <label className="text-muted-foreground">
+                            Key Deliverables (Add bullet points)
+                          </label>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              placeholder="e.g. Airfoil pressure solver script"
+                              value={newDeliverableInput}
+                              onChange={(e) => setNewDeliverableInput(e.target.value)}
+                              className="flex-1 px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                if (newDeliverableInput.trim()) {
+                                  const list = newProject.deliverables || [];
+                                  setNewProject({
+                                    ...newProject,
+                                    deliverables: [...list, newDeliverableInput.trim()],
+                                  });
+                                  setNewDeliverableInput("");
+                                }
+                              }}
+                              className="h-8 text-xs shrink-0"
+                            >
+                              Add Chip
+                            </Button>
+                          </div>
+                          {newProject.deliverables && newProject.deliverables.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 pt-2">
+                              {newProject.deliverables.map((d, i) => (
+                                <span
+                                  key={i}
+                                  className="text-[10px] px-2 py-0.5 rounded bg-surface-2 border border-white/10 text-foreground font-mono flex items-center gap-1"
+                                >
+                                  <span>{d}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      const updated = [...(newProject.deliverables || [])];
+                                      updated.splice(i, 1);
+                                      setNewProject({ ...newProject, deliverables: updated });
+                                    }}
+                                    className="text-muted-foreground hover:text-foreground"
+                                  >
+                                    ×
+                                  </button>
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="sm:col-span-2 pt-2">
+                          <Button
+                            type="submit"
+                            size="sm"
+                            className="h-9 px-6 bg-primary text-primary-foreground font-semibold rounded-lg active:scale-[0.97]"
+                          >
+                            Publish Project to /projects
+                          </Button>
+                        </div>
+                      </form>
+                    </div>
+
+                    {/* Active Projects List */}
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider font-mono">
+                        Active Projects & Labs ({projects.length})
+                      </h4>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        {projects.map((proj) => (
+                          <div
+                            key={proj.id}
+                            className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-3"
+                          >
+                            <div className="space-y-2">
+                              <div className="flex flex-wrap items-center justify-between gap-1.5">
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-primary/10 border border-primary/20 text-primary">
+                                  {proj.category}
+                                </span>
+                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface border border-white/8 text-muted-foreground">
+                                  {proj.status}
+                                </span>
+                              </div>
+
+                              <div>
+                                <h5 className="font-bold text-foreground font-display text-sm">
+                                  {proj.title}
+                                </h5>
+                                <p className="text-[11px] font-mono text-primary/80">
+                                  {proj.domain}
+                                </p>
+                              </div>
+
+                              <p className="text-xs text-muted-foreground leading-relaxed">
+                                {proj.summary}
+                              </p>
+
+                              {proj.deliverables && proj.deliverables.length > 0 && (
+                                <div className="flex flex-wrap gap-1 pt-1">
+                                  {proj.deliverables.map((d) => (
+                                    <span
+                                      key={d}
+                                      className="text-[9px] px-1.5 py-0.5 rounded bg-surface border border-white/6 text-foreground font-mono"
+                                    >
+                                      {d}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex items-center justify-between pt-3 border-t border-white/6">
+                              <span className="text-[11px] text-muted-foreground">{proj.team}</span>
+
+                              <div className="flex items-center gap-1.5">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    setNewDeliverableInput("");
+                                    setEditingProject(proj);
+                                  }}
+                                  className="h-7 text-xs border-white/10"
+                                >
+                                  <Edit2 className="size-3 mr-1" />
+                                  <span>Edit</span>
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => handleDeleteProject(proj.id)}
+                                  className="h-7 text-xs border-rose-500/30 text-rose-400 hover:bg-rose-500/10"
+                                >
+                                  <Trash2 className="size-3 mr-1" />
+                                  <span>Remove</span>
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* ── A. PROGRAMS CMS ── */}
                 {activeCmsSection === "programs" && (
@@ -1432,13 +2665,13 @@ function DashboardPage() {
                   </div>
                 )}
 
-                {/* ── B. PAST SESSIONS CMS ── */}
+                {/* ── B. VOICES BEHIND POLARIS (PAST SESSIONS CMS) ── */}
                 {activeCmsSection === "pastSessions" && (
                   <div className="space-y-6">
                     <div className="p-6 rounded-2xl border border-primary/20 bg-card space-y-4">
                       <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase font-mono">
                         <Plus className="size-4" />
-                        <span>Add Past Conducted Session Archive</span>
+                        <span>Add Session to "Voices Behind Polaris"</span>
                       </div>
 
                       <form
@@ -2785,6 +4018,482 @@ function DashboardPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setEditingSpotlight(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL: EDIT UPCOMING INITIATIVE ── */}
+      {editingInitiative && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md font-sans">
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-card max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold font-display text-foreground">
+                Edit Upcoming Initiative
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditingInitiative(null)}
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateInitiative} className="space-y-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Initiative Title</label>
+                <input
+                  type="text"
+                  required
+                  value={editingInitiative.title}
+                  onChange={(e) =>
+                    setEditingInitiative({ ...editingInitiative, title: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Description</label>
+                <textarea
+                  rows={3}
+                  required
+                  value={editingInitiative.desc}
+                  onChange={(e) =>
+                    setEditingInitiative({ ...editingInitiative, desc: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-muted-foreground">Button Text</label>
+                  <input
+                    type="text"
+                    value={editingInitiative.cta}
+                    onChange={(e) =>
+                      setEditingInitiative({ ...editingInitiative, cta: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-muted-foreground">Target Route / URL</label>
+                  <input
+                    type="text"
+                    value={editingInitiative.to || ""}
+                    onChange={(e) =>
+                      setEditingInitiative({ ...editingInitiative, to: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="editIsDirectLink"
+                  checked={editingInitiative.isDirectLink}
+                  onChange={(e) =>
+                    setEditingInitiative({
+                      ...editingInitiative,
+                      isDirectLink: e.target.checked,
+                    })
+                  }
+                  className="rounded border-white/10 text-primary focus:ring-primary"
+                />
+                <label
+                  htmlFor="editIsDirectLink"
+                  className="text-xs text-muted-foreground cursor-pointer"
+                >
+                  Direct Page Navigation (Uncheck to trigger Waitlist modal)
+                </label>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingInitiative(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL: EDIT STUDENT REVIEW ── */}
+      {editingReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md font-sans">
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-card max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold font-display text-foreground">
+                Edit Student Review / Testimonial
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditingReview(null)}
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateReview} className="space-y-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Student Name</label>
+                <input
+                  type="text"
+                  required
+                  value={editingReview.name}
+                  onChange={(e) => setEditingReview({ ...editingReview, name: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Role / Designation</label>
+                <input
+                  type="text"
+                  required
+                  value={editingReview.role}
+                  onChange={(e) => setEditingReview({ ...editingReview, role: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Quote / Review</label>
+                <textarea
+                  rows={4}
+                  required
+                  value={editingReview.quote}
+                  onChange={(e) => setEditingReview({ ...editingReview, quote: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingReview(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL: EDIT TEAM MEMBER (PEOPLE BEHIND POLARIS) ── */}
+      {editingTeamMember && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md font-sans">
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-card max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold font-display text-foreground">Edit Team Member</h3>
+              <button
+                type="button"
+                onClick={() => setEditingTeamMember(null)}
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateTeamMember} className="space-y-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Full Name / Squad Name</label>
+                <input
+                  type="text"
+                  required
+                  value={editingTeamMember.name}
+                  onChange={(e) =>
+                    setEditingTeamMember({ ...editingTeamMember, name: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-muted-foreground">Role Title</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingTeamMember.role}
+                    onChange={(e) =>
+                      setEditingTeamMember({ ...editingTeamMember, role: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-muted-foreground">Department</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingTeamMember.department}
+                    onChange={(e) =>
+                      setEditingTeamMember({ ...editingTeamMember, department: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">What I Bring (Quote)</label>
+                <input
+                  type="text"
+                  required
+                  value={editingTeamMember.whatIBring}
+                  onChange={(e) =>
+                    setEditingTeamMember({ ...editingTeamMember, whatIBring: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Intro / Bio</label>
+                <textarea
+                  rows={3}
+                  required
+                  value={editingTeamMember.intro}
+                  onChange={(e) =>
+                    setEditingTeamMember({ ...editingTeamMember, intro: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingTeamMember(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  className="bg-primary text-primary-foreground font-semibold"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL: EDIT PROJECT ── */}
+      {editingProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md font-sans">
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-card max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-bold font-display text-foreground">
+                Edit Computational Lab / Project
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditingProject(null)}
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground"
+              >
+                <X className="size-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleUpdateProject} className="grid gap-3 sm:grid-cols-2 text-xs">
+              <div className="space-y-1 sm:col-span-2">
+                <label className="text-muted-foreground">Project Title</label>
+                <input
+                  type="text"
+                  required
+                  value={editingProject.title}
+                  onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Category</label>
+                <select
+                  value={editingProject.category}
+                  onChange={(e) =>
+                    setEditingProject({
+                      ...editingProject,
+                      category: e.target.value as ProjectItem["category"],
+                    })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                >
+                  <option value="Computational Lab">Computational Lab</option>
+                  <option value="AeroForge Physics">AeroForge Physics</option>
+                  <option value="Hardware Simulation">Hardware Simulation</option>
+                  <option value="Research Project">Research Project</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Domain Area</label>
+                <input
+                  type="text"
+                  value={editingProject.domain}
+                  onChange={(e) => setEditingProject({ ...editingProject, domain: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Status</label>
+                <select
+                  value={editingProject.status}
+                  onChange={(e) =>
+                    setEditingProject({
+                      ...editingProject,
+                      status: e.target.value as ProjectItem["status"],
+                    })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                >
+                  <option value="Active Lab">Active Lab</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Open for Contributors">Open for Contributors</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-muted-foreground">Team / Squad</label>
+                <input
+                  type="text"
+                  value={editingProject.team}
+                  onChange={(e) => setEditingProject({ ...editingProject, team: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="text-muted-foreground">Project Link / Route</label>
+                <input
+                  type="text"
+                  value={editingProject.link || ""}
+                  onChange={(e) => setEditingProject({ ...editingProject, link: e.target.value })}
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="text-muted-foreground">Summary / Mission Goal</label>
+                <textarea
+                  rows={3}
+                  required
+                  value={editingProject.summary}
+                  onChange={(e) =>
+                    setEditingProject({ ...editingProject, summary: e.target.value })
+                  }
+                  className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground resize-none"
+                />
+              </div>
+
+              <div className="space-y-1 sm:col-span-2">
+                <label className="text-muted-foreground">Key Deliverables</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Add deliverable chip..."
+                    value={newDeliverableInput}
+                    onChange={(e) => setNewDeliverableInput(e.target.value)}
+                    className="flex-1 px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (newDeliverableInput.trim()) {
+                        const list = editingProject.deliverables || [];
+                        setEditingProject({
+                          ...editingProject,
+                          deliverables: [...list, newDeliverableInput.trim()],
+                        });
+                        setNewDeliverableInput("");
+                      }
+                    }}
+                    className="h-8 text-xs shrink-0"
+                  >
+                    Add
+                  </Button>
+                </div>
+                {editingProject.deliverables && editingProject.deliverables.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {editingProject.deliverables.map((d, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] px-2 py-0.5 rounded bg-surface-2 border border-white/10 text-foreground font-mono flex items-center gap-1"
+                      >
+                        <span>{d}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...(editingProject.deliverables || [])];
+                            updated.splice(i, 1);
+                            setEditingProject({ ...editingProject, deliverables: updated });
+                          }}
+                          className="text-muted-foreground hover:text-foreground"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="sm:col-span-2 flex justify-end gap-2 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingProject(null)}
                 >
                   Cancel
                 </Button>

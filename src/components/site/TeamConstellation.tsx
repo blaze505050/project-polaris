@@ -1,21 +1,32 @@
-import { useState } from "react";
-import { TEAM_CONSTELLATION_MEMBERS, type TeamMemberNode } from "@/lib/cms-store";
+import { useState, useEffect } from "react";
+import { getTeamMembers, type TeamMemberNode } from "@/lib/cms-store";
 import { UserCheck, Sparkles, Compass } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function TeamConstellation() {
-  const [selectedId, setSelectedId] = useState<string>(
-    TEAM_CONSTELLATION_MEMBERS[0]?.id || "engineering-lead",
-  );
+  const [members, setMembers] = useState<TeamMemberNode[]>(getTeamMembers());
+  const [selectedId, setSelectedId] = useState<string>(members[0]?.id || "engineering-lead");
 
-  const selectedMember =
-    TEAM_CONSTELLATION_MEMBERS.find((m) => m.id === selectedId) || TEAM_CONSTELLATION_MEMBERS[0];
+  useEffect(() => {
+    const handleUpdate = () => {
+      const current = getTeamMembers();
+      setMembers(current);
+    };
+    window.addEventListener("polaris_cms_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("polaris_cms_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, []);
+
+  const selectedMember = members.find((m) => m.id === selectedId) || members[0];
 
   return (
     <div className="space-y-6 font-sans">
       {/* Team Member Cards Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {TEAM_CONSTELLATION_MEMBERS.map((member) => {
+        {members.map((member) => {
           const isSelected = selectedId === member.id;
           return (
             <div
