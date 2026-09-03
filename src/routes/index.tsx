@@ -27,11 +27,13 @@ import { ConstellationCanvas } from "@/components/site/ConstellationCanvas";
 import { WaitlistModal } from "@/components/site/WaitlistModal";
 import {
   getPrograms,
+  fetchProgramsFromSupabase,
   getPastSessions,
   fetchPastSessionsFromSupabase,
   getWhatsHappening,
   getUpcomingInitiatives,
   getStudentReviews,
+  type ProgramEvent,
   type PastSession,
   type WhatsHappeningConfig,
   type UpcomingInitiative,
@@ -139,10 +141,16 @@ function HomePage() {
     seconds: 0,
   });
 
-  const allPrograms = getPrograms();
+  const [allPrograms, setAllPrograms] = useState<ProgramEvent[]>(getPrograms());
   const featuredSession = allPrograms.find((p) => p.id === "star-universe-aug29") || allPrograms[0];
 
   useEffect(() => {
+    fetchProgramsFromSupabase().then((progs) => {
+      if (progs && progs.length > 0) {
+        setAllPrograms(progs);
+      }
+    });
+
     fetchPastSessionsFromSupabase().then((sessions) => {
       if (sessions && sessions.length > 0) {
         setPastSessions(sessions);
@@ -150,6 +158,7 @@ function HomePage() {
     });
 
     const handleUpdate = () => {
+      setAllPrograms(getPrograms());
       setPastSessions(getPastSessions());
       setWhatsHappening(getWhatsHappening());
       setUpcomingInitiatives(getUpcomingInitiatives());

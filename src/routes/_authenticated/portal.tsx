@@ -41,7 +41,7 @@ export const Route = createFileRoute("/_authenticated/portal")({
         content:
           "Active engineering workspace, technical roadmap, sprint deliverables, and AI engineering mentor.",
       },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, nofollow" },
       { property: "og:title", content: "Polaris Engineering Workspace" },
     ],
   }),

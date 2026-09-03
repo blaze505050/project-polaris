@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getTeamMembers, type TeamMemberNode } from "@/lib/cms-store";
+import { getTeamMembers, fetchTeamMembersFromSupabase, type TeamMemberNode } from "@/lib/cms-store";
 import { UserCheck, Sparkles, Compass, Linkedin, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,12 @@ export function TeamConstellation() {
   const [selectedId, setSelectedId] = useState<string>(members[0]?.id || "engineering-lead");
 
   useEffect(() => {
+    fetchTeamMembersFromSupabase().then((data) => {
+      if (data && data.length > 0) {
+        setMembers(data);
+      }
+    });
+
     const handleUpdate = () => {
       const current = getTeamMembers();
       setMembers(current);

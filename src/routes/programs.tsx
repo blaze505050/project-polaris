@@ -4,6 +4,7 @@ import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
 import {
   getPrograms,
+  fetchProgramsFromSupabase,
   getIndustrySprints,
   getPastSessions,
   fetchPastSessionsFromSupabase,
@@ -66,7 +67,7 @@ const DOMAIN_FILTERS = [
 ] as const;
 
 function ProgramsPage() {
-  const programs = getPrograms();
+  const [programs, setPrograms] = useState<ProgramEvent[]>(getPrograms());
   const industrySprints = getIndustrySprints();
   const [pastSessions, setPastSessions] = useState<PastSession[]>(getPastSessions());
   const [selectedTab, setSelectedTab] = useState<"sprints" | "active" | "past">("active");
@@ -74,6 +75,12 @@ function ProgramsPage() {
   const [activeSprintModal, setActiveSprintModal] = useState<IndustrySprintProject | null>(null);
 
   useEffect(() => {
+    fetchProgramsFromSupabase().then((progs) => {
+      if (progs && progs.length > 0) {
+        setPrograms(progs);
+      }
+    });
+
     fetchPastSessionsFromSupabase().then((sessions) => {
       if (sessions && sessions.length > 0) {
         setPastSessions(sessions);
@@ -81,6 +88,7 @@ function ProgramsPage() {
     });
 
     const handleUpdate = () => {
+      setPrograms(getPrograms());
       setPastSessions(getPastSessions());
     };
     window.addEventListener("polaris_cms_updated", handleUpdate);

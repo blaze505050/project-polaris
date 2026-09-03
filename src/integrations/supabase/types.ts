@@ -653,6 +653,57 @@ export type Database = {
         };
         Relationships: [];
       };
+      team_members: {
+        Row: {
+          created_at: string;
+          department: string;
+          id: string;
+          intro: string;
+          linkedin: string | null;
+          name: string;
+          orbit_angle: number;
+          orbit_radius: number;
+          photo: string | null;
+          role: string;
+          speed: number;
+          updated_at: string;
+          visibility: boolean;
+          what_i_bring: string;
+        };
+        Insert: {
+          created_at?: string;
+          department: string;
+          id: string;
+          intro?: string;
+          linkedin?: string | null;
+          name: string;
+          orbit_angle?: number;
+          orbit_radius?: number;
+          photo?: string | null;
+          role: string;
+          speed?: number;
+          updated_at?: string;
+          visibility?: boolean;
+          what_i_bring?: string;
+        };
+        Update: {
+          created_at?: string;
+          department?: string;
+          id?: string;
+          intro?: string;
+          linkedin?: string | null;
+          name?: string;
+          orbit_angle?: number;
+          orbit_radius?: number;
+          photo?: string | null;
+          role?: string;
+          speed?: number;
+          updated_at?: string;
+          visibility?: boolean;
+          what_i_bring?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;

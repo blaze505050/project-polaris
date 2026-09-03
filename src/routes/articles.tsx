@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
-import { getArticles, type ArticleItem } from "@/lib/cms-store";
+import { getArticles, fetchArticlesFromSupabase, type ArticleItem } from "@/lib/cms-store";
 import { SITE_URL } from "@/lib/site";
 import {
   BookOpen,
@@ -50,9 +50,27 @@ const CATEGORIES = [
 ] as const;
 
 function ArticlesPage() {
-  const allArticles = getArticles();
+  const [allArticles, setAllArticles] = useState<ArticleItem[]>(getArticles());
   const [selectedCategory, setSelectedCategory] = useState<string>("All Topics");
   const [activeModalArticle, setActiveModalArticle] = useState<ArticleItem | null>(null);
+
+  useEffect(() => {
+    fetchArticlesFromSupabase().then((arts) => {
+      if (arts && arts.length > 0) {
+        setAllArticles(arts);
+      }
+    });
+
+    const handleUpdate = () => {
+      setAllArticles(getArticles());
+    };
+    window.addEventListener("polaris_cms_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("polaris_cms_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, []);
 
   const filteredArticles = allArticles.filter((art) => {
     if (selectedCategory === "All Topics") return true;

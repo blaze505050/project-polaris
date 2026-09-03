@@ -39,6 +39,9 @@ import {
   saveStudentReviews,
   getTeamMembers,
   saveTeamMembers,
+  fetchTeamMembersFromSupabase,
+  saveTeamMemberToSupabase,
+  deleteTeamMemberFromSupabase,
   getProjects,
   saveProjects,
   type ProgramEvent,
@@ -164,6 +167,7 @@ function DashboardPage() {
       fetchPastSessionsFromSupabase().then(setPastSessionsState);
       fetchArticlesFromSupabase().then(setArticlesState);
       fetchSpotlightsFromSupabase().then(setSpotlightsState);
+      fetchTeamMembersFromSupabase().then(setTeamMembersState);
     }
   }, [adminAuthenticated]);
 
@@ -983,7 +987,7 @@ function DashboardPage() {
   };
 
   // ── Team Members (People Behind Polaris) Handlers ──
-  const handleAddTeamMember = (e: React.FormEvent) => {
+  const handleAddTeamMember = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTeamMember.name || !newTeamMember.role) return;
     const member: TeamMemberNode = {
@@ -1002,6 +1006,7 @@ function DashboardPage() {
     const updated = [...teamMembers, member];
     setTeamMembersState(updated);
     saveTeamMembers(updated);
+    saveTeamMemberToSupabase(member);
     setStatusFeedback("✓ Team member added to People Behind Polaris!");
     setTimeout(() => setStatusFeedback(null), 3000);
     setNewTeamMember({
@@ -1018,22 +1023,24 @@ function DashboardPage() {
     });
   };
 
-  const handleUpdateTeamMember = (e: React.FormEvent) => {
+  const handleUpdateTeamMember = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingTeamMember) return;
     const updated = teamMembers.map((m) => (m.id === editingTeamMember.id ? editingTeamMember : m));
     setTeamMembersState(updated);
     saveTeamMembers(updated);
+    saveTeamMemberToSupabase(editingTeamMember);
     setStatusFeedback("✓ Team member updated live in Constellation!");
     setTimeout(() => setStatusFeedback(null), 3000);
     setEditingTeamMember(null);
   };
 
-  const handleDeleteTeamMember = (id: string) => {
+  const handleDeleteTeamMember = async (id: string) => {
     if (!window.confirm("Remove this team member from People Behind Polaris?")) return;
     const updated = teamMembers.filter((m) => m.id !== id);
     setTeamMembersState(updated);
     saveTeamMembers(updated);
+    deleteTeamMemberFromSupabase(id);
     setStatusFeedback("✓ Team member removed.");
     setTimeout(() => setStatusFeedback(null), 2500);
   };

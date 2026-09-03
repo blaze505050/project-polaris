@@ -1382,12 +1382,106 @@ export async function deleteSpotlightFromSupabase(
   }
 }
 
+function mapRowToTeamMember(row: Record<string, unknown>): TeamMemberNode {
+  return {
+    id: String(row["id"] || ""),
+    name: String(row["name"] || ""),
+    department: String(row["department"] || "Operations"),
+    role: String(row["role"] || "Contributor"),
+    intro: String(row["intro"] || ""),
+    whatIBring: String(row["what_i_bring"] || ""),
+    ...(row["photo"] ? { photo: String(row["photo"]) } : {}),
+    ...(row["linkedin"] ? { linkedin: String(row["linkedin"]) } : {}),
+    orbitRadius: Number(row["orbit_radius"]) || 180,
+    orbitAngle: Number(row["orbit_angle"]) || 1.0,
+    speed: Number(row["speed"]) || 0.0005,
+  };
+}
+
+function mapTeamMemberToRow(m: TeamMemberNode) {
+  return {
+    id: m.id,
+    name: m.name,
+    department: m.department,
+    role: m.role,
+    intro: m.intro,
+    what_i_bring: m.whatIBring,
+    photo: m.photo || null,
+    linkedin: m.linkedin || null,
+    orbit_radius: m.orbitRadius,
+    orbit_angle: m.orbitAngle,
+    speed: m.speed,
+    visibility: true,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+export async function fetchTeamMembersFromSupabase(): Promise<TeamMemberNode[]> {
+  try {
+    const { data, error } = await supabase
+      .from("team_members")
+      .select("*")
+      .order("created_at", { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return getTeamMembers();
+    }
+    const mapped = (data as unknown as Record<string, unknown>[]).map(mapRowToTeamMember);
+    saveTeamMembers(mapped);
+    return mapped;
+  } catch {
+    return getTeamMembers();
+  }
+}
+
+export async function saveTeamMemberToSupabase(
+  member: TeamMemberNode,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getTeamMembers();
+    const existingIndex = current.findIndex((m) => m.id === member.id);
+    const updated =
+      existingIndex >= 0
+        ? current.map((m) => (m.id === member.id ? member : m))
+        : [...current, member];
+    saveTeamMembers(updated);
+
+    const row = mapTeamMemberToRow(member);
+    const { error } = await supabase.from("team_members").upsert(row);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
+export async function deleteTeamMemberFromSupabase(
+  id: string,
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const current = getTeamMembers();
+    const updated = current.filter((m) => m.id !== id);
+    saveTeamMembers(updated);
+
+    const { error } = await supabase.from("team_members").delete().eq("id", id);
+    if (error) {
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (err: unknown) {
+    return { success: false, error: err instanceof Error ? err.message : "Network error" };
+  }
+}
+
 export async function syncAllCmsFromSupabase(): Promise<void> {
   await Promise.allSettled([
     fetchProgramsFromSupabase(),
     fetchPastSessionsFromSupabase(),
     fetchArticlesFromSupabase(),
     fetchSpotlightsFromSupabase(),
+    fetchTeamMembersFromSupabase(),
   ]);
 }
 

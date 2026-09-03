@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Button } from "@/components/ui/button";
-import { getSpotlights, type SpotlightEntry } from "@/lib/cms-store";
+import { getSpotlights, fetchSpotlightsFromSupabase, type SpotlightEntry } from "@/lib/cms-store";
 import { SITE_URL } from "@/lib/site";
 import {
   Sparkles,
@@ -49,9 +49,27 @@ const SPOTLIGHT_CATEGORIES = [
 ] as const;
 
 function SpotlightPage() {
-  const spotlights = getSpotlights();
+  const [spotlights, setSpotlights] = useState<SpotlightEntry[]>(getSpotlights());
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeModalSpotlight, setActiveModalSpotlight] = useState<SpotlightEntry | null>(null);
+
+  useEffect(() => {
+    fetchSpotlightsFromSupabase().then((sps) => {
+      if (sps && sps.length > 0) {
+        setSpotlights(sps);
+      }
+    });
+
+    const handleUpdate = () => {
+      setSpotlights(getSpotlights());
+    };
+    window.addEventListener("polaris_cms_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("polaris_cms_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, []);
 
   const featuredSpotlight = spotlights.find((s) => s.featured) || spotlights[0];
   const previousSpotlights = spotlights.filter((s) => s.id !== featuredSpotlight?.id);

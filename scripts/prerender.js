@@ -89,6 +89,17 @@ const ROUTES = [
     heading: "Polaris Portal",
     subheading: "Student workspace access and dynamic Admin CMS management.",
     canonical: `${SITE_URL}/dashboard`,
+    robots: "noindex, nofollow",
+  },
+  {
+    path: "/portal",
+    title: "Polaris Engineering Workspace — Student Portal",
+    description:
+      "Active engineering workspace, technical roadmap, sprint deliverables, and AI engineering mentor.",
+    heading: "Engineering Workspace",
+    subheading: "Student workspace and project tracking portal.",
+    canonical: `${SITE_URL}/portal`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/privacy",
@@ -113,6 +124,7 @@ const ROUTES = [
     heading: "Coordinates Not Found",
     subheading: "Lost in deep space? Return to the main Polaris platform.",
     canonical: `${SITE_URL}/404`,
+    robots: "noindex, follow",
   },
   {
     path: "/cookies",
@@ -138,6 +150,7 @@ const ROUTES = [
     heading: "Payment Incomplete",
     subheading: "Troubleshoot transaction issues or retry your registration.",
     canonical: `${SITE_URL}/payment-failed`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/reset-password",
@@ -146,6 +159,7 @@ const ROUTES = [
     heading: "Reset Password",
     subheading: "Recover your student or administrator credentials securely.",
     canonical: `${SITE_URL}/reset-password`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/verify-email",
@@ -154,6 +168,7 @@ const ROUTES = [
     heading: "Email Verification",
     subheading: "Activate your profile and access AeroForge computational labs.",
     canonical: `${SITE_URL}/verify-email`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/access-denied",
@@ -162,6 +177,7 @@ const ROUTES = [
     heading: "Access Restricted",
     subheading: "Security protocol: Elevated role clearance required.",
     canonical: `${SITE_URL}/access-denied`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/maintenance",
@@ -170,6 +186,7 @@ const ROUTES = [
     heading: "System Maintenance",
     subheading: "Deploying infrastructure updates to the Polaris ecosystem.",
     canonical: `${SITE_URL}/maintenance`,
+    robots: "noindex, nofollow",
   },
   {
     path: "/support",
@@ -330,6 +347,21 @@ function generateRouteHtml(html, route) {
       "</head>",
       `  <meta name="description" content="${escapeHtml(route.description)}" />\n  </head>`,
     );
+  }
+
+  // Robots Meta Tag
+  if (route.robots) {
+    if (output.includes('name="robots"')) {
+      output = output.replace(
+        /<meta\s+name="robots"\s+content=".*?"\s*\/?>/i,
+        `<meta name="robots" content="${escapeHtml(route.robots)}" />`,
+      );
+    } else {
+      output = output.replace(
+        "</head>",
+        `  <meta name="robots" content="${escapeHtml(route.robots)}" />\n  </head>`,
+      );
+    }
   }
 
   // Canonical Tag
