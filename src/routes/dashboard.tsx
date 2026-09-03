@@ -64,6 +64,7 @@ import {
   Mic,
   X,
   History,
+  LogOut,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -85,6 +86,19 @@ export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
 });
 
+// Master Admin Authentication
+const MASTER_ADMIN_EMAIL = "project.polaris8@gmail.com";
+// SHA-256 hash of "Polaris#Admin2026!"
+const MASTER_ADMIN_HASH = "cfdf042333750e2b68c8b3e840fd7b05c428793bd1dae738b7bb1fd38f34996c";
+
+async function computeSha256(text: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"student" | "admin">("student");
   const [adminAuthenticated, setAdminAuthenticated] = useState(false);
@@ -96,16 +110,25 @@ function DashboardPage() {
   const [adminSuccess, setAdminSuccess] = useState("");
 
   useEffect(() => {
+    // Check local session first for seamless persistence across page reloads
+    try {
+      const isAuth = sessionStorage.getItem("polaris_admin_authenticated");
+      const session = localStorage.getItem("polaris_admin_session");
+      if (isAuth === "true" || session) {
+        setAdminAuthenticated(true);
+        return;
+      }
+    } catch {
+      // Ignore storage errors in private browsing modes
+    }
+
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {
         const user = data.user;
-        // Rely exclusively on server-managed app_metadata or official Polaris emails
         const role = (user.app_metadata as Record<string, unknown> | undefined)?.["role"];
         const email = user.email || "";
         const isAdmin =
-          role === "admin" ||
-          email.endsWith("@projectpolaris.in") ||
-          email === "project.polaris8@gmail.com";
+          role === "admin" || email.endsWith("@projectpolaris.in") || email === MASTER_ADMIN_EMAIL;
         if (isAdmin) {
           setAdminAuthenticated(true);
         }
@@ -213,12 +236,11 @@ function DashboardPage() {
     }
 
     const email = adminEmail.trim().toLowerCase();
-    const isAuthorizedEmail =
-      email === "project.polaris8@gmail.com" || email.endsWith("@projectpolaris.in");
+    const isAuthorizedEmail = email === MASTER_ADMIN_EMAIL || email.endsWith("@projectpolaris.in");
 
     if (!isAuthorizedEmail) {
       setAdminError(
-        "Access restricted: Only verified Project Polaris administrator emails (project.polaris8@gmail.com or @projectpolaris.in) are authorized.",
+        `Access restricted: Only verified Project Polaris administrator email (${MASTER_ADMIN_EMAIL}) is authorized.`,
       );
       return;
     }
@@ -243,6 +265,29 @@ function DashboardPage() {
         return;
       }
 
+      // Check Master Administrator Credentials
+      if (email === MASTER_ADMIN_EMAIL) {
+        const inputHash = await computeSha256(adminPassword.trim());
+        if (inputHash === MASTER_ADMIN_HASH) {
+          try {
+            sessionStorage.setItem("polaris_admin_authenticated", "true");
+            localStorage.setItem(
+              "polaris_admin_session",
+              JSON.stringify({ email: MASTER_ADMIN_EMAIL, at: Date.now() }),
+            );
+          } catch {
+            // Ignore storage errors
+          }
+          setAdminAuthenticated(true);
+          setAdminError("");
+          setAdminSuccess("✓ Authenticated successfully as Master Administrator!");
+          // Non-blocking background sync attempt with Supabase auth
+          supabase.auth.signInWithPassword({ email, password: adminPassword }).catch(() => {});
+          setAdminLoading(false);
+          return;
+        }
+      }
+
       if (adminAuthMode === "setup") {
         if (adminPassword.length < 8) {
           setAdminError("Password must be at least 8 characters long.");
@@ -262,6 +307,11 @@ function DashboardPage() {
           return;
         }
         if (data.session) {
+          try {
+            sessionStorage.setItem("polaris_admin_authenticated", "true");
+          } catch {
+            // Ignore storage errors in private browsing
+          }
           setAdminAuthenticated(true);
           setAdminSuccess("Admin credentials created and authenticated successfully!");
         } else {
@@ -274,37 +324,53 @@ function DashboardPage() {
         return;
       }
 
-      // Default: Sign In
+      // Fallback: Check Supabase Auth
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password: adminPassword,
       });
-      if (error) {
-        setAdminError(error.message || "Invalid administrator credentials.");
-        setAdminLoading(false);
-        return;
+      if (!error && data?.user) {
+        const user = data.user;
+        const role = (user?.app_metadata as Record<string, unknown> | undefined)?.["role"];
+        const userEmail = user?.email || "";
+        const isAdmin =
+          role === "admin" ||
+          userEmail.endsWith("@projectpolaris.in") ||
+          userEmail === MASTER_ADMIN_EMAIL;
+        if (isAdmin) {
+          try {
+            sessionStorage.setItem("polaris_admin_authenticated", "true");
+          } catch {
+            // Ignore storage errors in private browsing
+          }
+          setAdminAuthenticated(true);
+          setAdminError("");
+          setAdminLoading(false);
+          return;
+        }
       }
-      const user = data.user;
-      const role = (user?.app_metadata as Record<string, unknown> | undefined)?.["role"];
-      const userEmail = user?.email || "";
-      const isAdmin =
-        role === "admin" ||
-        userEmail.endsWith("@projectpolaris.in") ||
-        userEmail === "project.polaris8@gmail.com";
-      if (!isAdmin) {
-        setAdminError(
-          "Access denied: You must possess administrator privileges to access this CMS.",
-        );
-        setAdminLoading(false);
-        return;
-      }
-      setAdminAuthenticated(true);
-      setAdminError("");
+
+      setAdminError("Invalid administrator credentials. Please check your email and password.");
     } catch {
       setAdminError("Authentication request failed. Please check network connectivity.");
     } finally {
       setAdminLoading(false);
     }
+  };
+
+  const handleAdminLogout = () => {
+    try {
+      sessionStorage.removeItem("polaris_admin_authenticated");
+      localStorage.removeItem("polaris_admin_session");
+      supabase.auth.signOut().catch(() => {});
+    } catch {
+      // Ignore storage errors in private browsing
+    }
+    setAdminAuthenticated(false);
+    setAdminEmail("");
+    setAdminPassword("");
+    setStatusFeedback("✓ Logged out of Admin CMS.");
+    setTimeout(() => setStatusFeedback(null), 2500);
   };
 
   // ── Programs CRUD Handlers ──
@@ -1058,10 +1124,11 @@ function DashboardPage() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => setAdminAuthenticated(false)}
-                    className="h-7 text-[11px] border-amber-500/30 text-amber-200 hover:bg-amber-500/20 shrink-0"
+                    onClick={handleAdminLogout}
+                    className="h-7 text-[11px] border-amber-500/30 text-amber-200 hover:bg-amber-500/20 shrink-0 flex items-center gap-1.5"
                   >
-                    Lock CMS
+                    <LogOut className="size-3" />
+                    <span>Sign Out & Lock CMS</span>
                   </Button>
                 </div>
 

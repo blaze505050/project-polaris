@@ -79,6 +79,16 @@ function ProgramsPage() {
         setPastSessions(sessions);
       }
     });
+
+    const handleUpdate = () => {
+      setPastSessions(getPastSessions());
+    };
+    window.addEventListener("polaris_cms_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("polaris_cms_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const filteredSprints = industrySprints.filter((sprint) => {

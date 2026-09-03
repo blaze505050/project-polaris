@@ -605,6 +605,7 @@ export function getPrograms(): ProgramEvent[] {
 export function savePrograms(programs: ProgramEvent[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.PROGRAMS, JSON.stringify(programs));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "programs" } }));
 }
 
 export function getPastSessions(): PastSession[] {
@@ -626,6 +627,9 @@ export function getPastSessions(): PastSession[] {
 export function savePastSessions(sessions: PastSession[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.PAST_SESSIONS, JSON.stringify(sessions));
+  window.dispatchEvent(
+    new CustomEvent("polaris_cms_updated", { detail: { type: "past_sessions" } }),
+  );
 }
 
 export function getArticles(): ArticleItem[] {
@@ -642,6 +646,7 @@ export function getArticles(): ArticleItem[] {
 export function saveArticles(articles: ArticleItem[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.ARTICLES, JSON.stringify(articles));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "articles" } }));
 }
 
 export function getSpotlights(): SpotlightEntry[] {
@@ -658,6 +663,7 @@ export function getSpotlights(): SpotlightEntry[] {
 export function saveSpotlights(spotlights: SpotlightEntry[]) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEYS.SPOTLIGHT, JSON.stringify(spotlights));
+  window.dispatchEvent(new CustomEvent("polaris_cms_updated", { detail: { type: "spotlights" } }));
 }
 
 export function getIndustrySprints(): IndustrySprintProject[] {
