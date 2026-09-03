@@ -119,7 +119,8 @@ export interface TeamMemberNode {
   role: string;
   intro: string;
   whatIBring: string;
-  photo?: string;
+  photo?: string | undefined;
+  linkedin?: string | undefined;
   orbitRadius: number; // For constellation coordinate positioning
   orbitAngle: number;
   speed: number;

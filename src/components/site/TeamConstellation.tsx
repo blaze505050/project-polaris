@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getTeamMembers, type TeamMemberNode } from "@/lib/cms-store";
-import { UserCheck, Sparkles, Compass } from "lucide-react";
+import { UserCheck, Sparkles, Compass, Linkedin, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function TeamConstellation() {
@@ -50,16 +50,42 @@ export function TeamConstellation() {
               )}
             >
               <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className="size-11 rounded-full border border-primary/30 bg-surface-2 flex items-center justify-center text-sm font-bold text-primary shrink-0">
-                    {member.name.charAt(0)}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="size-11 rounded-full border border-primary/30 bg-surface-2 flex items-center justify-center text-sm font-bold text-primary shrink-0 overflow-hidden">
+                      {member.photo ? (
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="size-full object-cover rounded-full"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        <span>{member.name.charAt(0)}</span>
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold font-display text-foreground">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs text-primary font-medium">{member.role}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-base font-bold font-display text-foreground">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs text-primary font-medium">{member.role}</p>
-                  </div>
+
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="size-8 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors shrink-0"
+                      aria-label={`${member.name}'s LinkedIn Profile`}
+                    >
+                      <Linkedin className="size-3.5" />
+                    </a>
+                  )}
                 </div>
 
                 <div className="text-[11px] font-mono text-muted-foreground">
@@ -83,13 +109,24 @@ export function TeamConstellation() {
       {/* Expanded Focus Detail for Selected Member */}
       {selectedMember && (
         <div className="p-6 md:p-7 rounded-2xl border border-white/10 bg-surface-2/40 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-3">
-              <div className="size-12 rounded-full border border-primary/40 bg-card flex items-center justify-center text-base font-bold text-primary shrink-0">
-                {selectedMember.name.charAt(0)}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3.5">
+              <div className="size-14 rounded-full border border-primary/40 bg-card flex items-center justify-center text-lg font-bold text-primary shrink-0 overflow-hidden">
+                {selectedMember.photo ? (
+                  <img
+                    src={selectedMember.photo}
+                    alt={selectedMember.name}
+                    className="size-full object-cover rounded-full"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <span>{selectedMember.name.charAt(0)}</span>
+                )}
               </div>
               <div>
-                <h3 className="text-lg font-bold font-display text-foreground">
+                <h3 className="text-xl font-bold font-display text-foreground">
                   {selectedMember.name}
                 </h3>
                 <p className="text-xs text-primary font-medium">
@@ -97,9 +134,24 @@ export function TeamConstellation() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
-              <UserCheck className="size-3.5" />
-              <span>Core Contributor</span>
+
+            <div className="flex items-center gap-3">
+              {selectedMember.linkedin && (
+                <a
+                  href={selectedMember.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="h-8 px-3 rounded-lg border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 text-xs font-medium flex items-center gap-1.5 transition-colors"
+                >
+                  <Linkedin className="size-3.5" />
+                  <span>LinkedIn Profile</span>
+                  <ExternalLink className="size-3" />
+                </a>
+              )}
+              <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-mono">
+                <UserCheck className="size-3.5" />
+                <span>Core Contributor</span>
+              </div>
             </div>
           </div>
 

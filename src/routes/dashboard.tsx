@@ -291,6 +291,8 @@ function DashboardPage() {
     department: "Simulation & Systems",
     intro: "",
     whatIBring: "",
+    photo: "",
+    linkedin: "",
     orbitRadius: 180,
     orbitAngle: 1.0,
     speed: 0.0005,
@@ -991,6 +993,8 @@ function DashboardPage() {
       role: newTeamMember.role,
       intro: newTeamMember.intro || "",
       whatIBring: newTeamMember.whatIBring || "",
+      ...(newTeamMember.photo?.trim() ? { photo: newTeamMember.photo.trim() } : {}),
+      ...(newTeamMember.linkedin?.trim() ? { linkedin: newTeamMember.linkedin.trim() } : {}),
       orbitRadius: Number(newTeamMember.orbitRadius) || 180,
       orbitAngle: Number(newTeamMember.orbitAngle) || 1.2,
       speed: Number(newTeamMember.speed) || 0.0005,
@@ -1006,6 +1010,8 @@ function DashboardPage() {
       department: "Simulation & Systems",
       intro: "",
       whatIBring: "",
+      photo: "",
+      linkedin: "",
       orbitRadius: 180,
       orbitAngle: 1.0,
       speed: 0.0005,
@@ -2072,6 +2078,37 @@ function DashboardPage() {
                           />
                         </div>
 
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground flex items-center gap-1">
+                            <span>Photo Image URL (Optional)</span>
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="e.g. /media/... or https://..."
+                            value={newTeamMember.photo || ""}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, photo: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-muted-foreground flex items-center gap-1">
+                            <Linkedin className="size-3 text-primary" />
+                            <span>LinkedIn Profile URL (Optional)</span>
+                          </label>
+                          <input
+                            type="url"
+                            placeholder="https://www.linkedin.com/in/..."
+                            value={newTeamMember.linkedin || ""}
+                            onChange={(e) =>
+                              setNewTeamMember({ ...newTeamMember, linkedin: e.target.value })
+                            }
+                            className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono"
+                          />
+                        </div>
+
                         <div className="space-y-1 sm:col-span-2">
                           <label className="text-muted-foreground">Intro / Bio *</label>
                           <textarea
@@ -2110,16 +2147,41 @@ function DashboardPage() {
                             className="p-5 rounded-xl border border-white/8 bg-card flex flex-col justify-between space-y-3"
                           >
                             <div className="space-y-2">
-                              <div className="flex items-center gap-3">
-                                <div className="size-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm shrink-0">
-                                  {m.name.charAt(0)}
+                              <div className="flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-3">
+                                  <div className="size-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm shrink-0 overflow-hidden">
+                                    {m.photo ? (
+                                      <img
+                                        src={m.photo}
+                                        alt={m.name}
+                                        className="size-full object-cover rounded-full"
+                                        onError={(e) => {
+                                          (e.target as HTMLElement).style.display = "none";
+                                        }}
+                                      />
+                                    ) : (
+                                      <span>{m.name.charAt(0)}</span>
+                                    )}
+                                  </div>
+                                  <div>
+                                    <h5 className="font-bold text-foreground font-display text-sm">
+                                      {m.name}
+                                    </h5>
+                                    <p className="text-[11px] text-primary">{m.role}</p>
+                                  </div>
                                 </div>
-                                <div>
-                                  <h5 className="font-bold text-foreground font-display text-sm">
-                                    {m.name}
-                                  </h5>
-                                  <p className="text-[11px] text-primary">{m.role}</p>
-                                </div>
+
+                                {m.linkedin && (
+                                  <a
+                                    href={m.linkedin}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="size-7 rounded-full border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors shrink-0"
+                                    aria-label="LinkedIn profile"
+                                  >
+                                    <Linkedin className="size-3.5" />
+                                  </a>
+                                )}
                               </div>
                               <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wide">
                                 {m.department}
@@ -4287,6 +4349,37 @@ function DashboardPage() {
                   }
                   className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground"
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="text-muted-foreground">Photo Image URL (Optional)</label>
+                  <input
+                    type="url"
+                    placeholder="https://... or /media/..."
+                    value={editingTeamMember.photo || ""}
+                    onChange={(e) =>
+                      setEditingTeamMember({ ...editingTeamMember, photo: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground text-xs"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-muted-foreground flex items-center gap-1">
+                    <Linkedin className="size-3 text-primary" />
+                    <span>LinkedIn URL (Optional)</span>
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://www.linkedin.com/in/..."
+                    value={editingTeamMember.linkedin || ""}
+                    onChange={(e) =>
+                      setEditingTeamMember({ ...editingTeamMember, linkedin: e.target.value })
+                    }
+                    className="w-full px-3 py-2 rounded-lg bg-surface border border-white/10 text-foreground font-mono text-xs"
+                  />
+                </div>
               </div>
 
               <div className="space-y-1">
