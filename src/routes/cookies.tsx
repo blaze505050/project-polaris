@@ -254,8 +254,8 @@ export function CookiesPage() {
                 Privacy Policy
               </Link>{" "}
               or contact us at{" "}
-              <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">
-                projectpolaris.8@gmail.com
+              <a href="mailto:project.polaris8@gmail.com" className="text-primary hover:underline">
+                project.polaris8@gmail.com
               </a>
               .
             </div>

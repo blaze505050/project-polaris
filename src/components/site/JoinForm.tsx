@@ -73,7 +73,7 @@ export function JoinForm({ opportunitySlug }: { opportunitySlug?: string | undef
       if (error) {
         console.error("[Application] DB insertion failed:", error);
         toast.error(
-          "Unable to submit application right now. Please try again or email projectpolaris.8@gmail.com.",
+          "Unable to submit application right now. Please try again or email project.polaris8@gmail.com.",
         );
         setSubmitting(false);
         return;

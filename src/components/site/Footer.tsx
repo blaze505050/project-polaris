@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Wordmark, NorthStar } from "./NorthStar";
 import { MessageCircle, Instagram, Linkedin, Mail, Send } from "lucide-react";
+import { SITE } from "@/lib/site";
 
 const FOOTER_COLUMNS = [
   {
@@ -55,7 +56,7 @@ const SOCIAL_LINKS = [
     label: "LinkedIn",
     Icon: Linkedin,
   },
-  { href: "mailto:projectpolaris.8@gmail.com", label: "Email Us", Icon: Mail },
+  { href: `mailto:${SITE.contactEmail}`, label: "Email Us", Icon: Mail },
 ] as const;
 
 export function Footer() {
@@ -95,8 +96,8 @@ export function Footer() {
             </div>
             <div className="text-[11px] text-muted-foreground pt-1">
               Contact:{" "}
-              <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">
-                projectpolaris.8@gmail.com
+              <a href={`mailto:${SITE.contactEmail}`} className="text-primary hover:underline">
+                {SITE.contactEmail}
               </a>
             </div>
           </div>

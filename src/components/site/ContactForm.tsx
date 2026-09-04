@@ -49,7 +49,7 @@ export function ContactForm() {
       if (error) {
         console.error("[Contact] DB insertion failed:", error);
         toast.error(
-          "Unable to send message right now. Please try again or email projectpolaris.8@gmail.com directly.",
+          "Unable to send message right now. Please try again or email project.polaris8@gmail.com directly.",
         );
         setSubmitting(false);
         return;

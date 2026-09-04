@@ -97,7 +97,7 @@ export function RefundPolicyPage() {
                   className="h-9 px-5 bg-primary text-primary-foreground font-semibold rounded-lg text-xs"
                 >
                   <a
-                    href="mailto:projectpolaris.8@gmail.com?subject=Refund%20/%20Payment%20Inquiry"
+                    href="mailto:project.polaris8@gmail.com?subject=Refund%20/%20Payment%20Inquiry"
                     className="flex items-center gap-1.5"
                   >
                     <Mail className="size-3.5" />

@@ -406,8 +406,8 @@ function GetInvolvedPage() {
               },
               {
                 name: "Direct Email",
-                note: "projectpolaris.8@gmail.com",
-                url: "mailto:projectpolaris.8@gmail.com",
+                note: "project.polaris8@gmail.com",
+                url: "mailto:project.polaris8@gmail.com",
                 icon: Mail,
               },
             ].map((soc) => (

@@ -101,15 +101,16 @@ npm run preview
 
 ---
 
-## 6. Cloudflare Pages Deployment
+## 6. Vercel Production Deployment
 
-The application is structured for instant zero-configuration deployment on **Cloudflare Pages**:
+The platform is configured for automated continuous deployment on **Vercel**:
 
-1. **Framework Preset**: None / Vite
-2. **Build Command**: `npm run build`
+1. **Framework Preset**: Vite
+2. **Build Command**: `npm run build` (runs `build:webp`, `build:aeroforge`, `vite build`, and `build:prerender`)
 3. **Build Output Directory**: `dist`
-4. **Node.js Version**: `20`
-5. **SPA Routing**: Handled automatically via `/public/_redirects` (`/* /index.html 200` and `/aeroforge/* /aeroforge/index.html 200`).
+4. **Configuration File**: `vercel.json` (defines routing rewrites, immutable asset caching, HSTS, CSP, and security headers)
+5. **Static Prerender (SSG)**: 34+ pre-rendered static routes generated with automated `sitemap.xml` updates on every deployment.
+6. **Live URL**: `https://project-polaris-green.vercel.app`
 
 ---
 

@@ -85,8 +85,8 @@ export function PaymentFailedPage() {
         <div className="pt-4 border-t border-white/8 text-[11px] text-muted-foreground">
           If your bank account was debited, your bank will automatically reverse the hold within
           24–48 hours. If you need assistance, email{" "}
-          <a href="mailto:projectpolaris.8@gmail.com" className="text-primary hover:underline">
-            projectpolaris.8@gmail.com
+          <a href="mailto:project.polaris8@gmail.com" className="text-primary hover:underline">
+            project.polaris8@gmail.com
           </a>
           .
         </div>

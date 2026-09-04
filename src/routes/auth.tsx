@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -182,6 +182,15 @@ function AuthPage() {
                     ? "Initialize Workspace Account"
                     : "Sign In to Workspace"}
               </Button>
+
+              <div className="flex items-center justify-between text-[11px] pt-1 text-muted-foreground">
+                <Link to="/reset-password" className="text-primary hover:underline">
+                  Forgot password?
+                </Link>
+                <Link to="/verify-email" className="hover:text-foreground">
+                  Verify email code →
+                </Link>
+              </div>
             </form>
 
             <div className="my-5 flex items-center gap-3 text-[11px] font-mono text-muted-foreground">

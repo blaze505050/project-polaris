@@ -287,6 +287,33 @@ const ROUTES = [
     subheading: "Access your student workspace and project tracking.",
     canonical: `${SITE_URL}/auth`,
   },
+  {
+    path: "/program",
+    title: "Polaris Innovation Program — 14-Day Curriculum | Project Polaris",
+    description:
+      "The Polaris Innovation Program: a 14-day interdisciplinary space science, technology and innovation curriculum — discover, investigate, build and showcase a real project.",
+    heading: "Polaris Innovation Program",
+    subheading: "Learn while building — not building after learning.",
+    canonical: `${SITE_URL}/program`,
+  },
+  {
+    path: "/opportunities",
+    title: "Open Opportunities & Build Squads — Project Polaris",
+    description:
+      "Browse open research projects, workshops, volunteer roles, and engineering sprint squads you can join at Project Polaris.",
+    heading: "Opportunities",
+    subheading: "Find something worth building. Open to all students.",
+    canonical: `${SITE_URL}/opportunities`,
+  },
+  {
+    path: "/aeroforge",
+    title: "AeroForge AI Simulation Workstation — Project Polaris",
+    description:
+      "Interactive Aerospace & Mechanical Engineering research workstation with 40+ numerical physics solvers, CFD aerodynamics, and orbital mechanics in the browser.",
+    heading: "AeroForge AI Simulation Workstation",
+    subheading: "Open-source computational physics laboratory and engineering solvers.",
+    canonical: `${SITE_URL}/aeroforge`,
+  },
 ];
 
 async function prerender() {
@@ -436,15 +463,81 @@ function generateRouteHtml(html, route) {
   // Inject semantic HTML snapshot into <div id="root"></div> for zero-JS crawlers
   const semanticSnapshot = `
     <div id="root">
-      <main id="main-content" style="padding-top: 5rem;">
-        <header style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; text-align: center;">
-          <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">${escapeHtml(route.heading)}</h1>
-          <p style="font-size: 1.25rem; color: #a5b4fc; max-width: 800px; margin: 0 auto;">${escapeHtml(route.subheading)}</p>
+      <header role="banner" style="position: sticky; top: 0; z-index: 50; background: rgba(5,5,5,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.75rem 1.5rem;">
+        <nav aria-label="Main" style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <a href="/" style="font-weight: 700; color: #fff; text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>PROJECT POLARIS</span>
+          </a>
+          <div style="display: flex; align-items: center; gap: 1.25rem; font-size: 0.85rem;">
+            <a href="/about" style="color: #94a3b8; text-decoration: none;">About</a>
+            <a href="/programs" style="color: #94a3b8; text-decoration: none;">Programs</a>
+            <a href="/projects" style="color: #94a3b8; text-decoration: none;">Projects</a>
+            <a href="/aeroforge" style="color: #38bdf8; text-decoration: none; font-weight: 600;">AeroForge Lab</a>
+            <a href="/chapters" style="color: #94a3b8; text-decoration: none;">Chapters</a>
+            <a href="/articles" style="color: #94a3b8; text-decoration: none;">Articles</a>
+            <a href="/showcase" style="color: #94a3b8; text-decoration: none;">Showcase</a>
+            <a href="/research" style="color: #94a3b8; text-decoration: none;">Research</a>
+            <a href="/community" style="color: #94a3b8; text-decoration: none;">Community</a>
+            <a href="/contact" style="color: #94a3b8; text-decoration: none;">Contact</a>
+          </div>
+        </nav>
+      </header>
+      <main id="main-content" style="padding-top: 3rem; min-height: 70vh;">
+        <header style="max-width: 1200px; margin: 0 auto; padding: 2.5rem 1.5rem; text-align: center;">
+          <p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: #38bdf8; font-weight: 600; margin-bottom: 0.5rem;">Project Polaris Ecosystem</p>
+          <h1 style="font-size: 2.75rem; font-weight: 800; margin-bottom: 1rem; color: #f8fafc; line-height: 1.15;">${escapeHtml(route.heading)}</h1>
+          <p style="font-size: 1.25rem; color: #a5b4fc; max-width: 800px; margin: 0 auto; line-height: 1.6;">${escapeHtml(route.subheading)}</p>
         </header>
-        <section style="max-width: 1200px; margin: 0 auto; padding: 1rem;">
-          <p style="color: #9ca3af; text-align: center;">${escapeHtml(route.description)}</p>
+        <section style="max-width: 900px; margin: 0 auto; padding: 1.5rem; line-height: 1.7; color: #cbd5e1; font-size: 1rem;">
+          <p style="text-align: center; margin-bottom: 2rem;">${escapeHtml(route.description)}</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            <article style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1.25rem; rounded: 12px; border-radius: 12px;">
+              <h2 style="font-size: 1.1rem; color: #38bdf8; margin-bottom: 0.5rem; font-weight: 600;">Learn by Building</h2>
+              <p style="font-size: 0.875rem; color: #94a3b8;">Hands-on experiential engineering. Practice real aerospace modeling, astrodynamics, and computational physics.</p>
+            </article>
+            <article style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1.25rem; rounded: 12px; border-radius: 12px;">
+              <h2 style="font-size: 1.1rem; color: #38bdf8; margin-bottom: 0.5rem; font-weight: 600;">AeroForge AI Suite</h2>
+              <p style="font-size: 0.875rem; color: #94a3b8;">40+ browser-based numerical physics engines, transonic CFD solvers, and orbital trajectory propagators.</p>
+            </article>
+            <article style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 1.25rem; rounded: 12px; border-radius: 12px;">
+              <h2 style="font-size: 1.1rem; color: #38bdf8; margin-bottom: 0.5rem; font-weight: 600;">Open Community</h2>
+              <p style="font-size: 0.875rem; color: #94a3b8;">Mentorship from ISRO scientists, domain researchers, and peer sprint squads across India and beyond.</p>
+            </article>
+          </div>
         </section>
       </main>
+      <footer role="contentinfo" style="border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 1.5rem; background: rgba(5,5,5,0.9); margin-top: 4rem; font-size: 0.85rem; color: #94a3b8;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem;">
+          <div>
+            <p style="font-weight: 700; color: #fff; margin-bottom: 0.5rem;">Project Polaris</p>
+            <p style="color: #64748b; max-width: 360px;">A student-led experiential engineering ecosystem built by students, for students.</p>
+          </div>
+          <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+            <div>
+              <p style="font-weight: 600; color: #cbd5e1; margin-bottom: 0.5rem;">Explore</p>
+              <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8;">
+                <li><a href="/programs" style="color: #94a3b8; text-decoration: none;">Programs & Masterclasses</a></li>
+                <li><a href="/projects" style="color: #94a3b8; text-decoration: none;">Projects & AeroForge</a></li>
+                <li><a href="/showcase" style="color: #94a3b8; text-decoration: none;">Student Showcase</a></li>
+                <li><a href="/research" style="color: #94a3b8; text-decoration: none;">Research Digests</a></li>
+              </ul>
+            </div>
+            <div>
+              <p style="font-weight: 600; color: #cbd5e1; margin-bottom: 0.5rem;">Governance</p>
+              <ul style="list-style: none; padding: 0; margin: 0; line-height: 1.8;">
+                <li><a href="/privacy" style="color: #94a3b8; text-decoration: none;">Privacy Policy</a></li>
+                <li><a href="/terms" style="color: #94a3b8; text-decoration: none;">Terms of Service</a></li>
+                <li><a href="/cookies" style="color: #94a3b8; text-decoration: none;">Cookie Preferences</a></li>
+                <li><a href="/refund-policy" style="color: #94a3b8; text-decoration: none;">Refund Policy</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; color: #64748b; font-size: 0.75rem;">
+          <p>© 2026 Project Polaris. Built by students, for students.</p>
+          <p>Contact: project.polaris8@gmail.com</p>
+        </div>
+      </footer>
     </div>
   `;
 

@@ -52,7 +52,7 @@ export function WaitlistModal({
       if (error) {
         console.error("[Waitlist] Submission error:", error);
         toast.error(
-          "Unable to join waitlist. Please try again or email projectpolaris.8@gmail.com.",
+          "Unable to join waitlist. Please try again or email project.polaris8@gmail.com.",
         );
         setSubmitting(false);
         return;

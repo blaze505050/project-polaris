@@ -53,7 +53,7 @@ const FAQS = [
   },
   {
     q: "Who can I contact if I face technical issues with my registration?",
-    a: "You can submit the support inquiry form below or email projectpolaris.8@gmail.com. Our student support desk typically responds within 24 hours.",
+    a: "You can submit the support inquiry form below or email project.polaris8@gmail.com. Our student support desk typically responds within 24 hours.",
   },
 ];
 
@@ -89,7 +89,7 @@ export function SupportPage() {
       if (error) {
         console.error("[Support] Ticket submission error:", error);
         toast.error(
-          "Unable to submit support ticket. Please try again or email projectpolaris.8@gmail.com directly.",
+          "Unable to submit support ticket. Please try again or email project.polaris8@gmail.com directly.",
         );
         setSubmitting(false);
         return;
@@ -141,7 +141,7 @@ export function SupportPage() {
             </a>
 
             <a
-              href="mailto:projectpolaris.8@gmail.com"
+              href="mailto:project.polaris8@gmail.com"
               className="p-5 rounded-2xl border border-white/8 bg-card hover:border-primary/40 hover:bg-surface-2 transition-all block group space-y-2"
             >
               <div className="size-10 rounded-xl bg-primary/10 text-primary border border-primary/20 flex items-center justify-center group-hover:scale-105 transition-transform">
@@ -149,7 +149,7 @@ export function SupportPage() {
               </div>
               <h3 className="font-bold text-foreground font-display text-sm">Email Helpdesk</h3>
               <p className="text-xs text-muted-foreground">
-                projectpolaris.8@gmail.com for institutional and registration inquiries.
+                project.polaris8@gmail.com for institutional and registration inquiries.
               </p>
             </a>
 
