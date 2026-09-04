@@ -42,7 +42,6 @@ export const Route = createFileRoute("/about")({
 });
 
 function AboutPage() {
-
   return (
     <>
       {/* ── 1. ABOUT HERO / STATEMENT (Subtle Ambient Glow + High Contrast Text) ── */}
@@ -148,8 +147,12 @@ function AboutPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 text-xs font-sans text-muted-foreground flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-                <span className="text-foreground font-medium">Experiential STEM &amp; Engineering in Action</span>
-                <span className="font-mono text-[11px] text-primary font-semibold">Hands-on Prototyping &amp; Research</span>
+                <span className="text-foreground font-medium">
+                  Experiential STEM &amp; Engineering in Action
+                </span>
+                <span className="font-mono text-[11px] text-primary font-semibold">
+                  Hands-on Prototyping &amp; Research
+                </span>
               </div>
             </div>
           </ScrollReveal>
@@ -220,7 +223,9 @@ function AboutPage() {
                     {card.note ? (
                       <p
                         className={`text-xs mt-2 leading-relaxed font-sans ${
-                          card.highlight ? "text-foreground/90 font-medium" : "text-muted-foreground"
+                          card.highlight
+                            ? "text-foreground/90 font-medium"
+                            : "text-muted-foreground"
                         }`}
                       >
                         {card.note}
@@ -252,8 +257,8 @@ function AboutPage() {
                   astrophysics, and systems engineering.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Driven by purpose, curiosity, and genuine contribution — not just titles.
-                  Everyone is here to build, learn, and push boundaries.
+                  Driven by purpose, curiosity, and genuine contribution — not just titles. Everyone
+                  is here to build, learn, and push boundaries.
                 </p>
               </div>
             </ScrollReveal>

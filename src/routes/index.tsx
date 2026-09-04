@@ -284,8 +284,12 @@ function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-3 left-4 right-4 hidden sm:flex items-center justify-between text-[11px] font-mono text-muted-foreground pointer-events-none">
-                  <span className="text-white/90 font-medium">Learn by building, rather than building after learning</span>
-                  <span className="text-primary font-semibold">6-Phase Experiential Continuum →</span>
+                  <span className="text-white/90 font-medium">
+                    Learn by building, rather than building after learning
+                  </span>
+                  <span className="text-primary font-semibold">
+                    6-Phase Experiential Continuum →
+                  </span>
                 </div>
               </div>
 

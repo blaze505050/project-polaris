@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 
-const images = [
+const assetImages = [
   {
     input: path.join(rootDir, "src/assets/polaris-logo.png"),
     outputWebp: path.join(rootDir, "src/assets/polaris-logo.webp"),
@@ -36,7 +36,9 @@ const images = [
 
 async function run() {
   console.log("Generating high-efficiency WebP images...");
-  for (const img of images) {
+
+  // 1. Process asset images
+  for (const img of assetImages) {
     if (fs.existsSync(img.input)) {
       const buffer = await sharp(img.input)
         .resize(img.width, img.height, { fit: "inside", withoutEnlargement: true })
@@ -46,8 +48,30 @@ async function run() {
       fs.writeFileSync(img.outputWebp, buffer);
       fs.writeFileSync(img.outputPublicWebp, buffer);
       console.log(
-        `✓ Created: ${path.basename(img.outputWebp)} (${(buffer.length / 1024).toFixed(1)} KiB)`,
+        `✓ Created asset: ${path.basename(img.outputWebp)} (${(buffer.length / 1024).toFixed(1)} KiB)`,
       );
+    }
+  }
+
+  // 2. Process all public/media images
+  const mediaDir = path.join(rootDir, "public/media");
+  if (fs.existsSync(mediaDir)) {
+    const mediaFiles = fs.readdirSync(mediaDir);
+    for (const file of mediaFiles) {
+      const ext = path.extname(file).toLowerCase();
+      if (ext === ".png" || ext === ".jpg" || ext === ".jpeg") {
+        const filePath = path.join(mediaDir, file);
+        const webpPath = path.join(mediaDir, `${path.basename(file, ext)}.webp`);
+
+        const buffer = await sharp(filePath)
+          .webp({ quality: 84, effort: 5 })
+          .toBuffer();
+
+        fs.writeFileSync(webpPath, buffer);
+        console.log(
+          `✓ Created media WebP: ${path.basename(webpPath)} (${(buffer.length / 1024).toFixed(1)} KiB)`,
+        );
+      }
     }
   }
 }

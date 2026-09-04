@@ -325,6 +325,47 @@ async function prerender() {
     );
   }
 
+  // Generate dynamic sitemap.xml with current build date
+  const today = new Date().toISOString().split("T")[0];
+  const publicRoutes = ROUTES.filter(
+    (r) =>
+      ![
+        "/dashboard",
+        "/portal",
+        "/auth",
+        "/access-denied",
+        "/maintenance",
+        "/404",
+        "/verify-email",
+        "/reset-password",
+        "/payment-failed",
+      ].includes(r.path),
+  );
+
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${publicRoutes
+  .map((r) => {
+    const priority = r.path === "/" ? "1.00" : r.path === "/programs" ? "0.95" : "0.90";
+    const freq =
+      r.path === "/" || r.path === "/programs" || r.path === "/articles" ? "daily" : "weekly";
+    return `  <url>
+    <loc>${r.canonical}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${freq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+  })
+  .join("\n")}
+</urlset>
+`;
+
+  const publicSitemap = path.resolve(__dirname, "../public/sitemap.xml");
+  const distSitemap = path.join(DIST_DIR, "sitemap.xml");
+  fs.writeFileSync(publicSitemap, sitemapXml, "utf-8");
+  fs.writeFileSync(distSitemap, sitemapXml, "utf-8");
+  console.log(`✓ Generated dynamic sitemap.xml (${publicRoutes.length} public URLs) with build date: ${today}`);
+
   console.log("==================================================");
   console.log(`[PRERENDER] Successfully generated ${ROUTES.length} static HTML routes.`);
   console.log("==================================================");

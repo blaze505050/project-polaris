@@ -278,8 +278,8 @@ function ArticlesPage() {
                   Have something worth sharing?
                 </h2>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  Students, researchers, and community thinkers are invited to submit their
-                  original articles, astrophysics explainers, engineering case studies, or student
+                  Students, researchers, and community thinkers are invited to submit their original
+                  articles, astrophysics explainers, engineering case studies, or student
                   perspectives for editorial publication.
                 </p>
                 <p className="text-[11px] text-primary/90 font-medium">
