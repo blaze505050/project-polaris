@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DIST_DIR = path.resolve(__dirname, "../dist");
-const SITE_URL = "https://projectpolaris.in";
+const SITE_URL = process.env.VITE_SITE_URL || "https://project-polaris-green.vercel.app";
 
 // The 9 core pages + legal routes
 const ROUTES = [

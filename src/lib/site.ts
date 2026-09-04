@@ -1,6 +1,6 @@
 export const SITE_URL =
   (typeof import.meta !== "undefined" && import.meta.env && import.meta.env["VITE_SITE_URL"]) ||
-  "https://projectpolaris.in";
+  "https://project-polaris-green.vercel.app";
 
 export const SITE = {
   name: "Project Polaris",
