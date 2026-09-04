@@ -1,22 +1,10 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { TeamConstellation } from "@/components/site/TeamConstellation";
 import { getBreadcrumbSchema } from "@/lib/structured-data";
 import { SITE_URL } from "@/lib/site";
-import {
-  Compass,
-  Target,
-  Sparkles,
-  X,
-  ZoomIn,
-  BookOpen,
-  Layers,
-  Users,
-  Rocket,
-  Newspaper,
-} from "lucide-react";
+import { Compass, Target, Sparkles } from "lucide-react";
 import polarisLogo from "@/assets/polaris-logo.png";
 
 export const Route = createFileRoute("/about")({
@@ -53,76 +41,7 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
-const POLARIS_VISUAL_GALLERY = [
-  {
-    id: "methodology",
-    title: "Polaris Learning Methodology",
-    category: "Pedagogy",
-    image: "/media/polaris-learning-methodology.png",
-    description:
-      "Learn by building, rather than building after learning. Our structured pedagogy guides students from initial scientific curiosity into computational modeling, simulation, and real-world execution.",
-    icon: Layers,
-  },
-  {
-    id: "motto",
-    title: "Polaris Motto & Core Philosophy",
-    category: "Philosophy",
-    image: "/media/polaris-motto.jpeg",
-    description:
-      "Driven by purpose, curiosity, and genuine contribution—not just titles. A student-led ecosystem fostering deep practical understanding and hands-on scientific problem-solving.",
-    icon: Sparkles,
-  },
-  {
-    id: "what-is-polaris",
-    title: "What is Project Polaris?",
-    category: "Ecosystem",
-    image: "/media/what-is-polaris.png",
-    description:
-      "A student-led experiential engineering and research ecosystem bridging classroom physics with industry-grade research, CFD analysis, and collaborative sprints.",
-    icon: Compass,
-  },
-  {
-    id: "vision-mission",
-    title: "Vision & Mission",
-    category: "Purpose",
-    image: "/media/polaris-vision-mission.jpeg",
-    description:
-      "Democratizing access to high-impact aerospace and STEM learning for every student across schools, colleges, and independent research cohorts.",
-    icon: Target,
-  },
-  {
-    id: "programs",
-    title: "Polaris Programs & Masterclasses",
-    category: "Initiatives",
-    image: "/media/polaris-programs-showcase.jpeg",
-    description:
-      "Interactive sessions, webinars with ISRO scientists and astrophysicists, hands-on physics workshops, and collaborative cohort sprints.",
-    icon: Rocket,
-  },
-  {
-    id: "chapters",
-    title: "Polaris Chapters Network",
-    category: "Community",
-    image: "/media/polaris-chapters-showcase.jpeg",
-    description:
-      "Expanding student space clubs and practical observation hubs into Tier-2, Tier-3 cities and remote institutions across India.",
-    icon: Users,
-  },
-  {
-    id: "newsletter",
-    title: "Polaris Newsletter & Publications",
-    category: "Knowledge",
-    image: "/media/polaris-newsletter-showcase.jpeg",
-    description:
-      "Daily curated Aaj Ka Gyan drops, aerospace deep-dives, and student research digests making cutting-edge space science accessible to everyone.",
-    icon: Newspaper,
-  },
-];
-
 function AboutPage() {
-  const [activeModalImage, setActiveModalImage] = useState<
-    (typeof POLARIS_VISUAL_GALLERY)[0] | null
-  >(null);
 
   return (
     <>
@@ -132,14 +51,14 @@ function AboutPage() {
           src="/media/bubble-nebula-bg.jpeg"
           alt="Cosmic bubble nebula deep space"
           intensity={0.15}
-          imgOpacity={0.12}
-          overlay={0.92}
+          imgOpacity={0.25}
+          overlay={0.78}
           kenBurns={true}
           className="absolute inset-0 size-full pointer-events-none"
         />
 
         {/* Solid Center Contrast Mask */}
-        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(8,10,15,0.7)_0%,rgba(8,10,15,0.98)_100%)]" />
+        <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_75%_60%_at_50%_45%,rgba(8,10,15,0.55)_0%,rgba(8,10,15,0.92)_100%)]" />
 
         <div className="shell relative z-10 max-w-4xl space-y-5 font-sans">
           <ScrollReveal direction="up">
@@ -217,6 +136,23 @@ function AboutPage() {
               </div>
             </ScrollReveal>
           </div>
+
+          {/* Integrated Vision & Mission Experiential Lab Media */}
+          <ScrollReveal direction="up" delay={80}>
+            <div className="mt-8 max-w-4xl rounded-2xl overflow-hidden border border-white/10 bg-card shadow-2xl relative aspect-[16/9] sm:aspect-[21/9] group">
+              <img
+                src="/media/polaris-vision-mission.jpeg"
+                alt="Students and mentors collaborating on robotics, aerospace prototypes, and electronics in an experiential lab"
+                loading="lazy"
+                className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 text-xs font-sans text-muted-foreground flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                <span className="text-foreground font-medium">Experiential STEM &amp; Engineering in Action</span>
+                <span className="font-mono text-[11px] text-primary font-semibold">Hands-on Prototyping &amp; Research</span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -258,14 +194,14 @@ function AboutPage() {
                 <div
                   className={`p-6 rounded-xl border h-full flex flex-col justify-between transition-all duration-200 ${
                     card.highlight
-                      ? "border-primary/40 bg-primary/10 shadow-[0_0_24px_rgba(165,180,252,0.15)]"
+                      ? "border-primary/60 bg-surface-2 shadow-[0_0_24px_rgba(197,157,255,0.12)] ring-1 ring-primary/30"
                       : "border-white/8 bg-card hover:border-white/20"
                   }`}
                 >
                   <div>
                     <div className="mb-3">
                       {card.highlight ? (
-                        <span className="size-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold">
+                        <span className="size-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-xs font-bold ring-1 ring-primary/40">
                           ✓
                         </span>
                       ) : (
@@ -274,11 +210,19 @@ function AboutPage() {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-sm font-bold font-display text-foreground leading-snug">
+                    <h3
+                      className={`text-sm font-bold font-display leading-snug ${
+                        card.highlight ? "text-primary" : "text-foreground"
+                      }`}
+                    >
                       {card.statement}
                     </h3>
                     {card.note ? (
-                      <p className="text-xs text-muted-foreground mt-2 leading-relaxed font-sans">
+                      <p
+                        className={`text-xs mt-2 leading-relaxed font-sans ${
+                          card.highlight ? "text-foreground/90 font-medium" : "text-muted-foreground"
+                        }`}
+                      >
                         {card.note}
                       </p>
                     ) : null}
@@ -290,70 +234,40 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* ── 4. VISUAL ECOSYSTEM & METHODOLOGY SHOWCASE (New Integrated Visual Journey) ── */}
-      <section className="section border-b border-border bg-surface/20" id="visual-showcase">
-        <div className="shell space-y-8">
-          <ScrollReveal direction="up">
-            <div className="max-w-2xl space-y-2">
-              <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block">
-                Visual Framework & Pillars
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
-                Inside Project Polaris
-              </h2>
-              <p className="text-xs text-muted-foreground font-sans">
-                Explore the core methodology, initiatives, chapters, and publications that power our
-                student-led mission. Click any card to inspect the full visual.
-              </p>
-            </div>
-          </ScrollReveal>
+      {/* ── 4. WHAT IS POLARIS — Visual Showcase ── */}
+      <section className="section border-b border-border bg-surface/20" id="what-is-polaris">
+        <div className="shell">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] items-center">
+            <ScrollReveal direction="up">
+              <div className="space-y-4 font-sans">
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                  What is Project Polaris?
+                </h2>
+                <p className="text-sm text-foreground/90 font-medium font-display leading-snug">
+                  A student-led experiential engineering and research ecosystem.
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  We bridge classroom physics with industry-grade research, CFD analysis,
+                  collaborative sprints, and real-world problem-solving across aerospace,
+                  astrophysics, and systems engineering.
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Driven by purpose, curiosity, and genuine contribution — not just titles.
+                  Everyone is here to build, learn, and push boundaries.
+                </p>
+              </div>
+            </ScrollReveal>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 font-sans">
-            {POLARIS_VISUAL_GALLERY.map((item, idx) => {
-              const IconComponent = item.icon;
-              return (
-                <ScrollReveal key={item.id} direction="up" delay={idx * 20}>
-                  <div
-                    onClick={() => setActiveModalImage(item)}
-                    className="group relative rounded-xl border border-white/10 bg-card overflow-hidden cursor-pointer hover:border-primary/50 transition-all duration-300 flex flex-col h-full shadow-lg hover:shadow-[0_0_24px_rgba(165,180,252,0.12)]"
-                  >
-                    {/* Visual Media Container */}
-                    <div className="relative aspect-[16/10] bg-surface-2 overflow-hidden border-b border-white/8">
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        loading="lazy"
-                        className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                      <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-background/85 backdrop-blur-md border border-white/12 text-[10px] font-mono text-primary font-semibold flex items-center gap-1.5 shadow-md">
-                        <IconComponent className="size-3" />
-                        <span>{item.category}</span>
-                      </div>
-                      <div className="absolute bottom-3 right-3 size-7 rounded-full bg-background/85 backdrop-blur-md border border-white/12 flex items-center justify-center text-white/80 group-hover:text-primary transition-colors shadow-md">
-                        <ZoomIn className="size-3.5" />
-                      </div>
-                    </div>
-
-                    {/* Card Narrative */}
-                    <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
-                      <div>
-                        <h3 className="text-sm font-bold font-display text-foreground group-hover:text-primary transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                      <div className="pt-2 text-[11px] text-primary/80 font-mono font-medium flex items-center gap-1">
-                        <span>Click to expand</span>
-                        <span>→</span>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              );
-            })}
+            <ScrollReveal direction="clip" delay={40}>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card shadow-xl">
+                <img
+                  src="/media/what-is-polaris.png"
+                  alt="What is Project Polaris — Experiential Learning Ecosystem"
+                  loading="lazy"
+                  className="w-full object-contain"
+                />
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -381,25 +295,25 @@ function AboutPage() {
                   Why We Started
                 </h2>
                 <p className="text-sm text-foreground/90 font-medium font-display leading-snug">
-                  Students are taught to ask, “What do you want to become?” — but rarely, “What
-                  problem do you want to solve?”
+                  Students are taught to ask, &ldquo;What do you want to become?&rdquo; &mdash; but
+                  rarely, &ldquo;What problem do you want to solve?&rdquo;
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   We saw a gap between learning and doing. Students prepare for exams, but often
                   lack opportunities to build, research, collaborate, and work with mentors.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Project Polaris began with a simple idea: students shouldn't have to wait until
-                  college to start creating, researching, innovating, and leading.
+                  Project Polaris began with a simple idea: students shouldn&apos;t have to wait
+                  until college to start creating, researching, innovating, and leading.
                 </p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   Inspired by the North Star, Polaris aims to guide students toward practical
-                  learning, meaningful opportunities, and purpose — regardless of their age,
+                  learning, meaningful opportunities, and purpose &mdash; regardless of their age,
                   background, or location.
                 </p>
                 <div className="p-4 rounded-xl bg-card border border-primary/20 text-xs font-medium text-primary flex items-center gap-2">
                   <Sparkles className="size-4 text-gold shrink-0" />
-                  <span>"Because learning becomes meaningful when you apply it."</span>
+                  <span>&quot;Because learning becomes meaningful when you apply it.&quot;</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -407,10 +321,10 @@ function AboutPage() {
             <ScrollReveal direction="clip" delay={40}>
               <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card aspect-[4/3] flex items-center justify-center p-8 shadow-xl">
                 <img
-                  src="/media/telescope-milkyway.jpg"
-                  alt="Night Sky Observation & Astronomy"
+                  src="/media/polaris-motto.jpeg"
+                  alt="Polaris Motto &amp; Core Philosophy"
                   loading="lazy"
-                  className="absolute inset-0 size-full object-cover opacity-60 hover:opacity-80 transition-opacity duration-500"
+                  className="absolute inset-0 size-full object-cover opacity-70 hover:opacity-90 transition-opacity duration-500"
                 />
                 <div className="relative z-10 p-5 rounded-xl bg-background/85 backdrop-blur-md border border-white/12 text-center max-w-xs font-sans shadow-2xl">
                   <img
@@ -452,55 +366,6 @@ function AboutPage() {
           </ScrollReveal>
         </div>
       </section>
-
-      {/* ── LIGHTBOX / IMAGE MODAL ── */}
-      {activeModalImage && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 sm:p-6"
-          onClick={() => setActiveModalImage(null)}
-        >
-          <div
-            className="relative max-w-4xl w-full bg-card border border-white/15 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-surface-2/60">
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-wider text-primary font-semibold">
-                  {activeModalImage.category}
-                </span>
-                <h3 className="text-base sm:text-lg font-bold font-display text-foreground">
-                  {activeModalImage.title}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setActiveModalImage(null)}
-                aria-label="Close image preview"
-                className="size-8 rounded-full border border-white/10 bg-surface flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-white/30 transition-colors"
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-
-            {/* Image Preview */}
-            <div className="overflow-auto p-4 sm:p-6 bg-black/40 flex items-center justify-center">
-              <img
-                src={activeModalImage.image}
-                alt={activeModalImage.title}
-                className="max-h-[60vh] w-auto max-w-full rounded-lg object-contain shadow-2xl border border-white/8"
-              />
-            </div>
-
-            {/* Description Footer */}
-            <div className="p-4 sm:p-5 border-t border-white/10 bg-surface-2/40 text-xs text-muted-foreground leading-relaxed font-sans">
-              {activeModalImage.description}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

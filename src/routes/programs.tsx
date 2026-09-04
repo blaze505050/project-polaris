@@ -158,6 +158,25 @@ function ProgramsPage() {
               <span>Past Archive ({pastSessions.length})</span>
             </button>
           </div>
+
+          {/* Integrated Programs Showcase Media */}
+          <ScrollReveal direction="scale" delay={60}>
+            <div className="mt-8 relative rounded-2xl overflow-hidden border border-white/10 bg-card shadow-2xl aspect-[16/9] sm:aspect-[21/9] group">
+              <img
+                src="/media/polaris-programs-showcase.jpeg"
+                alt="Polaris Programs, Masterclasses and Hands-on Workshops"
+                loading="lazy"
+                className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-4 right-4 hidden sm:flex items-center justify-between text-[11px] font-mono text-muted-foreground pointer-events-none">
+                <span className="text-white/90 font-medium">
+                  Expert Masterclasses • Industry Cohorts • Hands-on Prototyping
+                </span>
+                <span className="text-primary font-semibold">Live &amp; Remote Sprints →</span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

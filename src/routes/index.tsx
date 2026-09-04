@@ -274,6 +274,21 @@ function HomePage() {
                 The Polaris Learning Methodology
               </span>
 
+              {/* Visual Methodology Infographic Banner */}
+              <div className="relative mb-6 rounded-2xl overflow-hidden border border-white/10 bg-card shadow-2xl group">
+                <img
+                  src="/media/polaris-learning-methodology.png"
+                  alt="Polaris 6-Step Experiential Methodology: Discover, Investigate, Build, Validate, Showcase, Progress"
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-4 right-4 hidden sm:flex items-center justify-between text-[11px] font-mono text-muted-foreground pointer-events-none">
+                  <span className="text-white/90 font-medium">Learn by building, rather than building after learning</span>
+                  <span className="text-primary font-semibold">6-Phase Experiential Continuum →</span>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-left font-sans">
                 {METHODOLOGY_STEPS.map((m, idx) => {
                   const isHovered = activeStep === idx;

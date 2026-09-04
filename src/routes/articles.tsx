@@ -265,41 +265,67 @@ function ArticlesPage() {
         </div>
       </section>
 
-      {/* ── 4. SUBMIT YOUR ARTICLE ── */}
-      <section className="section bg-surface-2/10" id="submit">
-        <div className="shell max-w-2xl space-y-4 font-sans text-left">
-          <ScrollReveal direction="up">
-            <span className="text-xs font-sans text-primary uppercase tracking-widest font-semibold block mb-1">
-              Open Submissions
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
-              Have something worth sharing?
-            </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Students and community members can submit their original articles, research
-              explainers, opinions, or educational content for editorial review.
-            </p>
-            <p className="text-[11px] text-primary/80 font-medium">
-              Selected submissions may be edited and published on the Polaris platform.
-            </p>
+      {/* ── 4. SUBMIT YOUR ARTICLE & EDITORIAL HUB ── */}
+      <section className="section bg-surface-2/10 border-t border-white/8" id="submit">
+        <div className="shell">
+          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+            <ScrollReveal direction="up">
+              <div className="space-y-4 font-sans text-left">
+                <span className="text-xs font-mono text-primary uppercase tracking-widest font-semibold block">
+                  Open Submissions &amp; Publications
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold font-display text-foreground">
+                  Have something worth sharing?
+                </h2>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Students, researchers, and community thinkers are invited to submit their
+                  original articles, astrophysics explainers, engineering case studies, or student
+                  perspectives for editorial publication.
+                </p>
+                <p className="text-[11px] text-primary/90 font-medium">
+                  Selected submissions are reviewed by the editorial squad and published across the
+                  Polaris platform and community newsletter.
+                </p>
 
-            <div className="pt-4">
-              <Button
-                asChild
-                size="default"
-                className="h-10 px-6 rounded-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs"
-              >
-                <a
-                  href="https://tally.so/r/ZjrPzA"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  <span>Submit an Article →</span>
-                </a>
-              </Button>
-            </div>
-          </ScrollReveal>
+                <div className="pt-2">
+                  <Button
+                    asChild
+                    size="default"
+                    className="h-10 px-6 rounded-lg font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm transition-colors text-xs active:scale-[0.97]"
+                  >
+                    <a
+                      href="https://tally.so/r/ZjrPzA"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <span>Submit an Article →</span>
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal direction="clip" delay={40}>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card shadow-2xl aspect-[16/10] group">
+                <img
+                  src="/media/polaris-newsletter-showcase.jpeg"
+                  alt="Polaris Student Editorial &amp; Ideas Hub"
+                  loading="lazy"
+                  className="size-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 left-3 right-3 text-left p-3 rounded-xl bg-surface/85 backdrop-blur-md border border-white/8">
+                  <div className="text-xs font-bold font-display text-foreground">
+                    Polaris Editorial &amp; Research Hub
+                  </div>
+                  <div className="text-[11px] text-muted-foreground mt-0.5">
+                    Empowering students to publish rigorous ideas, insights, and stories.
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
