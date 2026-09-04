@@ -63,9 +63,7 @@ async function run() {
         const filePath = path.join(mediaDir, file);
         const webpPath = path.join(mediaDir, `${path.basename(file, ext)}.webp`);
 
-        const buffer = await sharp(filePath)
-          .webp({ quality: 84, effort: 5 })
-          .toBuffer();
+        const buffer = await sharp(filePath).webp({ quality: 84, effort: 5 }).toBuffer();
 
         fs.writeFileSync(webpPath, buffer);
         console.log(

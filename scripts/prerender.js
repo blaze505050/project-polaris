@@ -364,7 +364,9 @@ ${publicRoutes
   const distSitemap = path.join(DIST_DIR, "sitemap.xml");
   fs.writeFileSync(publicSitemap, sitemapXml, "utf-8");
   fs.writeFileSync(distSitemap, sitemapXml, "utf-8");
-  console.log(`✓ Generated dynamic sitemap.xml (${publicRoutes.length} public URLs) with build date: ${today}`);
+  console.log(
+    `✓ Generated dynamic sitemap.xml (${publicRoutes.length} public URLs) with build date: ${today}`,
+  );
 
   console.log("==================================================");
   console.log(`[PRERENDER] Successfully generated ${ROUTES.length} static HTML routes.`);

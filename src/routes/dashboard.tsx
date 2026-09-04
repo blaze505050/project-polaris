@@ -110,18 +110,8 @@ export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
 });
 
-// Master Admin Authentication
+// Master Admin Email Identifier
 const MASTER_ADMIN_EMAIL = "project.polaris8@gmail.com";
-// SHA-256 hash of "Polaris#Admin2026!"
-const MASTER_ADMIN_HASH = "cfdf042333750e2b68c8b3e840fd7b05c428793bd1dae738b7bb1fd38f34996c";
-
-async function computeSha256(text: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-}
 
 function DashboardPage() {
   const [activeTab, setActiveTab] = useState<"student" | "admin">("student");
@@ -134,18 +124,7 @@ function DashboardPage() {
   const [adminSuccess, setAdminSuccess] = useState("");
 
   useEffect(() => {
-    // Check local session first for seamless persistence across page reloads
-    try {
-      const isAuth = sessionStorage.getItem("polaris_admin_authenticated");
-      const session = localStorage.getItem("polaris_admin_session");
-      if (isAuth === "true" || session) {
-        setAdminAuthenticated(true);
-        return;
-      }
-    } catch {
-      // Ignore storage errors in private browsing modes
-    }
-
+    // Verify server-side session with Supabase
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {
         const user = data.user;
@@ -153,11 +132,30 @@ function DashboardPage() {
         const email = user.email || "";
         const isAdmin =
           role === "admin" || email.endsWith("@projectpolaris.in") || email === MASTER_ADMIN_EMAIL;
-        if (isAdmin) {
-          setAdminAuthenticated(true);
-        }
+        setAdminAuthenticated(isAdmin);
+      } else {
+        setAdminAuthenticated(false);
       }
     });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        const user = session.user;
+        const role = (user.app_metadata as Record<string, unknown> | undefined)?.["role"];
+        const email = user.email || "";
+        const isAdmin =
+          role === "admin" || email.endsWith("@projectpolaris.in") || email === MASTER_ADMIN_EMAIL;
+        setAdminAuthenticated(isAdmin);
+      } else {
+        setAdminAuthenticated(false);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   // Sync CMS state from Supabase when admin authenticates
@@ -357,29 +355,6 @@ function DashboardPage() {
         return;
       }
 
-      // Check Master Administrator Credentials
-      if (email === MASTER_ADMIN_EMAIL) {
-        const inputHash = await computeSha256(adminPassword.trim());
-        if (inputHash === MASTER_ADMIN_HASH) {
-          try {
-            sessionStorage.setItem("polaris_admin_authenticated", "true");
-            localStorage.setItem(
-              "polaris_admin_session",
-              JSON.stringify({ email: MASTER_ADMIN_EMAIL, at: Date.now() }),
-            );
-          } catch {
-            // Ignore storage errors
-          }
-          setAdminAuthenticated(true);
-          setAdminError("");
-          setAdminSuccess("✓ Authenticated successfully as Master Administrator!");
-          // Non-blocking background sync attempt with Supabase auth
-          supabase.auth.signInWithPassword({ email, password: adminPassword }).catch(() => {});
-          setAdminLoading(false);
-          return;
-        }
-      }
-
       if (adminAuthMode === "setup") {
         if (adminPassword.length < 8) {
           setAdminError("Password must be at least 8 characters long.");
@@ -399,11 +374,6 @@ function DashboardPage() {
           return;
         }
         if (data.session) {
-          try {
-            sessionStorage.setItem("polaris_admin_authenticated", "true");
-          } catch {
-            // Ignore storage errors in private browsing
-          }
           setAdminAuthenticated(true);
           setAdminSuccess("Admin credentials created and authenticated successfully!");
         } else {
@@ -416,12 +386,19 @@ function DashboardPage() {
         return;
       }
 
-      // Fallback: Check Supabase Auth
+      // Supabase Authenticated Administrator Sign In
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password: adminPassword,
       });
-      if (!error && data?.user) {
+
+      if (error) {
+        setAdminError(error.message);
+        setAdminLoading(false);
+        return;
+      }
+
+      if (data?.user) {
         const user = data.user;
         const role = (user?.app_metadata as Record<string, unknown> | undefined)?.["role"];
         const userEmail = user?.email || "";
@@ -429,14 +406,16 @@ function DashboardPage() {
           role === "admin" ||
           userEmail.endsWith("@projectpolaris.in") ||
           userEmail === MASTER_ADMIN_EMAIL;
+
         if (isAdmin) {
-          try {
-            sessionStorage.setItem("polaris_admin_authenticated", "true");
-          } catch {
-            // Ignore storage errors in private browsing
-          }
           setAdminAuthenticated(true);
           setAdminError("");
+          setAdminSuccess("✓ Authenticated successfully as Administrator!");
+          setAdminLoading(false);
+          return;
+        } else {
+          setAdminError("Access restricted: This account does not have administrator privileges.");
+          await supabase.auth.signOut();
           setAdminLoading(false);
           return;
         }
@@ -450,13 +429,11 @@ function DashboardPage() {
     }
   };
 
-  const handleAdminLogout = () => {
+  const handleAdminLogout = async () => {
     try {
-      sessionStorage.removeItem("polaris_admin_authenticated");
-      localStorage.removeItem("polaris_admin_session");
-      supabase.auth.signOut().catch(() => {});
+      await supabase.auth.signOut();
     } catch {
-      // Ignore storage errors in private browsing
+      // Ignore network errors
     }
     setAdminAuthenticated(false);
     setAdminEmail("");

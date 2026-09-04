@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SITE_URL } from "@/lib/site";
 
-const BASE = "https://projectpolaris.in";
+const BASE = SITE_URL;
 
 const PAGES: { path: string; priority: string; changefreq: string }[] = [
   { path: "/", priority: "1.0", changefreq: "daily" },
