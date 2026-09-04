@@ -32,8 +32,8 @@ function ChaptersPage() {
   return (
     <div className="min-h-[85vh] flex flex-col justify-center py-28 px-4 sm:px-6 md:px-8 font-sans text-left relative overflow-hidden">
       <ParallaxImage
-        src="/media/crab-nebula-bg.jpeg"
-        alt="Cosmic Crab Nebula deep space supernova remnant"
+        src="/media/galaxy-nebula-bg.jpeg"
+        alt="Majestic purple spiral galaxy with luminous golden core"
         intensity={0.12}
         imgOpacity={0.07}
         overlay={0.93}

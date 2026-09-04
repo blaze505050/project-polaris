@@ -199,8 +199,8 @@ function HomePage() {
       <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28 border-b border-border">
         {/* Subtle Full-bleed Nebula Parallax Background (Gentle Intensity) */}
         <ParallaxImage
-          src="/media/nebula-hero.jpg"
-          alt="Deep space nebula cosmic backdrop"
+          src="/media/nebula-hero-new.jpeg"
+          alt="Vibrant red and purple cosmic nebula in deep space"
           intensity={0.16}
           imgOpacity={0.26}
           overlay={0.85}
@@ -468,8 +468,8 @@ function HomePage() {
               <ScrollReveal direction="clip" delay={60}>
                 <div className="relative rounded-2xl overflow-hidden border border-white/12 shadow-2xl bg-card">
                   <img
-                    src="/media/galaxy-wide.jpg"
-                    alt="Observational astronomical galaxy wide structure"
+                    src="/media/galaxy-nebula-bg.jpeg"
+                    alt="Majestic purple spiral galaxy with luminous golden core"
                     loading="lazy"
                     className="w-full h-[380px] sm:h-[460px] object-cover transition-transform duration-700 hover:scale-105"
                   />
@@ -1095,8 +1095,8 @@ function HomePage() {
       {/* ── NEW: IMAGE SHOWCASE (Cinematic Parallax Interstitial) ── */}
       <section className="cinematic-section border-b border-border py-24 md:py-32 relative">
         <ParallaxImage
-          src="/media/black-hole-bg.jpeg"
-          alt="Gravitational lensing around a celestial black hole in deep space"
+          src="/media/astronaut-moon-bg.jpeg"
+          alt="Astronaut holding a glowing moon against the infinite cosmos"
           intensity={0.3}
           overlay={0.55}
           className="absolute inset-0 size-full pointer-events-none"

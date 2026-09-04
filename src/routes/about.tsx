@@ -47,8 +47,8 @@ function AboutPage() {
       {/* ── 1. ABOUT HERO / STATEMENT (Subtle Ambient Glow + High Contrast Text) ── */}
       <section className="relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-24 border-b border-border bg-background">
         <ParallaxImage
-          src="/media/bubble-nebula-bg.jpeg"
-          alt="Cosmic bubble nebula deep space"
+          src="/media/blackhole-accretion-bg.jpeg"
+          alt="Dramatic black hole with luminous purple accretion disk in deep space"
           intensity={0.15}
           imgOpacity={0.25}
           overlay={0.78}
@@ -283,8 +283,8 @@ function AboutPage() {
         id="why-we-started"
       >
         <ParallaxImage
-          src="/media/heart-nebula-bg.jpeg"
-          alt="Glowing Heart Nebula cosmic interstellar gas"
+          src="/media/cosmic-nebula-bg.jpeg"
+          alt="Expansive purple and orange cosmic nebula cloud"
           intensity={0.12}
           imgOpacity={0.08}
           overlay={0.94}
